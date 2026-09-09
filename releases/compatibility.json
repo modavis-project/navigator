@@ -15,7 +15,6 @@
     "backend/navigator_app/db.py": "5adb6503d79c718c668551b42a712c7f68923005837100b7f3f11eab9e4afa36",
     "backend/navigator_app/entity_exports.py": "5df55a62cccb1bc7a8648a67d7f63f7de12000662cfc970d20bcbec6ea92f82b",
     "backend/navigator_app/exploration_policy.py": "e1907027fbd1573fec780fa846d244721271a8c11c22283ee7e37f0abb0db46e",
-    "backend/navigator_app/historical_renderers.py": "bb0fa8da20378424a80c5857599fd526a21560fa50ec9a1c92ae3e2b4c721283",
     "backend/navigator_app/identity_ledger.py": "e2dd0a7897001f0c63249412fd9672a554a71f94f469fe977f467754ecb0f03c",
     "backend/navigator_app/identity_occurrences.py": "78d6f06def7f5d269d12fbfae8292f9f11887a95bb36768779f12d4ef6eccdd7",
     "backend/navigator_app/lod.py": "74d047d08158e35f086fe73440e8236f3fa21d6f3ecf10fff8fba0610d15d6e0",
@@ -136,7 +135,8 @@
   "entryPointChanges": [
     "backend/navigator_app/__init__.py",
     "backend/navigator_app/app.py",
-    "backend/navigator_app/config.py"
+    "backend/navigator_app/config.py",
+    "backend/navigator_app/historical_renderers.py"
   ],
-  "scope": "Standalone public application entry point and defaults; public readers and semantic serializers retain deployed code. Frontend adds project context and removes an internal documentation link."
+  "scope": "Standalone public application entry point and defaults; public readers and semantic serializers retain deployed code. Frontend adds project context and removes an internal documentation link. Historical delivery additionally supports an explicitly configured public upstream host header."
 }

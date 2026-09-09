@@ -7,7 +7,8 @@ The current database must never be relabeled as an earlier release.
 The optional `compose.history.yaml` connects historical version routes for
 1.5 through 1.5.6 to the live MODAVIS archival delivery service. It verifies the
 upstream renderer's release and readiness at startup and preserves returned bytes.
-This mode requires network access and continued upstream availability. It is not
+The public-origin binding forwards the archival host name so the upstream TLS
+reverse proxy selects the correct site. This mode requires network access and continued upstream availability. It is not
 an offline backup of historical datasets.
 
 ```bash

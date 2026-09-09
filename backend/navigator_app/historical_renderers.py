@@ -22,6 +22,7 @@ def register_historical_renderers(app, settings, *, configuration=None, transpor
     if not isinstance(entries, dict):
         raise ValueError("historical renderers must be a release mapping")
     origins = {}
+    public_origins = {}
     client = transport or requests.Session()
     client.trust_env = False
     verified = set()
@@ -53,6 +54,8 @@ def register_historical_renderers(app, settings, *, configuration=None, transpor
                     response.close()
             verified.add(key)
         origins[version] = base
+        if entry.get("forwardUpstreamHost", False):
+            public_origins[version] = (parts.netloc, parts.scheme)
     if not origins:
         client.close()
         return set()
@@ -82,6 +85,8 @@ def register_historical_renderers(app, settings, *, configuration=None, transpor
         headers.setdefault("Accept-Encoding", "identity")
         headers["Host"] = request.host if request.host in public_hosts else canonical_host
         headers["X-Forwarded-Proto"] = canonical_scheme
+        if version in public_origins:
+            headers["Host"], headers["X-Forwarded-Proto"] = public_origins[version]
         target = base + request.path
         if request.query_string:
             target += "?" + request.query_string.decode("latin-1")

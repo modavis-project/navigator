@@ -105,3 +105,15 @@ def test_real_http_roundtrip_retains_compressed_unicode_evidence():
     finally:
         app.extensions['historical_renderer_client'].close()
         server.shutdown();server.server_close();thread.join()
+
+
+def test_public_archival_origin_uses_its_own_host_header():
+    app=Flask(__name__);transport=Transport()
+    settings=SimpleNamespace(**{**vars(SETTINGS),'public_base_url':'http://localhost:8080'})
+    config=json.dumps({'1.5.6':{'baseUrl':'https://archive.example','rendererRelease':'1.5.6','forwardUpstreamHost':True}})
+    register_historical_renderers(app,settings,configuration=config,transport=transport)
+    response=app.test_client().get('/dataset/pod/version/1.5.6/entity/X.modavis.ttl')
+    assert response.data==b'accepted bytes'
+    headers=transport.calls[-1][2]['headers']
+    assert headers['Host']=='archive.example'
+    assert headers['X-Forwarded-Proto']=='https'

@@ -13,7 +13,7 @@ services:
       - ${NAVIGATOR_RUNTIME:?Run scripts/prepare.py first}/artifacts:/artifacts:ro
       - ./deploy/restore.sh:/docker-entrypoint-initdb.d/10-restore.sh:ro
     healthcheck:
-      test: [CMD-SHELL, "pg_isready -U postgres -d navigator_pod && psql -U postgres -d navigator_pod -Atc \"select 1 from pg_roles where rolname='navigator_read'\" | grep -q 1"]
+      test: [CMD-SHELL, "pg_isready -h 127.0.0.1 -U postgres -d navigator_pod && PGPASSWORD=$$POSTGRES_PASSWORD psql -h 127.0.0.1 -U postgres -d navigator_pod -Atc \"select 1 from pg_roles where rolname='navigator_read'\" | grep -q 1"]
       interval: 10s
       timeout: 5s
       retries: 120

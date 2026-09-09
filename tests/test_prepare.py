@@ -33,3 +33,9 @@ def test_valid_archive_retains_bytes(tmp_path):
         entry=tarfile.TarInfo('folder/data');entry.size=3;t.addfile(entry,io.BytesIO(b'abc'))
     prepare.unpack(src,tmp_path/'out')
     assert (tmp_path/'out/folder/data').read_bytes()==b'abc'
+
+
+def test_database_readiness_waits_for_final_tcp_server():
+    text=(Path(__file__).parents[1]/'compose.yaml').read_text()
+    assert 'pg_isready -h 127.0.0.1' in text
+    assert 'psql -h 127.0.0.1' in text

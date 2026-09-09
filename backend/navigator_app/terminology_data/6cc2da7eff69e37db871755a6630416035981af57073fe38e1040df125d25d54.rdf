@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">Pipe-organ specialization of the generic MODAVIS instrument, component, membership, configuration, and role model.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Pipe Organ Ontology</ns1:title>
+    <ns2:preferredNamespacePrefix>modorgan</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology/organ#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/instrument/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/organ/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#Console">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">organ console</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#ComponentCollection" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An organized pipe-organ component containing playing interfaces, stop controls, indicators, and related control mechanisms.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#OrganAccessory">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">organ accessory</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A pipe-organ component providing an auxiliary control, effect, indication, or convenience not adequately described by the more specific component classes.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#OrganComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">pipe-organ component</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An instrument component described specifically within the structural or functional context of a pipe organ.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#OrganCoupler">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">organ coupler</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A pipe-organ component or logical mechanism that causes controls associated with one component or division to act on another.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#OrganDivision">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">organ division</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#ComponentCollection" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A named or functionally coherent collection of pipe-organ components, commonly associated with a manual, pedal division, windchest, spatial location, or tonal purpose.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#OrganKeyboard">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">organ keyboard</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#PlayingInterface" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A manual or pedal playing interface consisting of ordered keys used to control a pipe organ.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#OrganPipe">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">organ pipe</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An individual pipe-organ component designed to produce or influence sound through an air column or associated resonant mechanism.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Sound-generator or resonator function is represented through contextual role assignment.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#OrganRank">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">organ rank</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#ComponentCollection" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An organized collection of organ pipes intended to provide a related sequence of pitches or another coherent tonal function.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#OrganStop">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">organ stop</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A pipe-organ component representing a selectable tonal resource or control, which may govern one or more ranks or another sound-producing arrangement.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Selection/control behavior is expressed through a contextual functional-role assignment rather than asserted as permanent identity.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#PipeOrgan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">pipe organ</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A musical instrument in which pressurized air sounds one or more sets of pipes selected and controlled through stops, keys, or analogous mechanisms.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#WindSystem">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">organ wind system</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#ComponentCollection" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A pipe-organ component collection that generates, stores, regulates, or distributes pressurized air.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#couplesFrom">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/organ#OrganCoupler" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">couples from</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the source component, interface, or division from which an organ coupler propagates control.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#couplesTo">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/organ#OrganCoupler" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">couples to</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/organ#OrganComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the target component, interface, or division to which an organ coupler propagates control.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">has nominal pitch designation</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Records a source-preserving nominal organ pitch designation such as 8′ or 2 2/3′ without treating it as an exact measured frequency.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The exchange profile permits this source designation on organ stops and ranks. It is documentary notation, not a numeric acoustical measurement or tuning assertion.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#hasRank">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/organ#OrganStop" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">has rank</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/organ#OrganRank" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an organ stop to a rank used by that stop in a discovery-oriented convenience graph.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Convenience relation; use ComponentMembership when time, configuration, or evidence must be retained.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#intervalSemitones">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/organ#OrganCoupler" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">interval in semitones</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The signed nominal transposition interval of a coupler expressed in equal-tempered semitone units.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#rankCount">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/organ#OrganStop" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">rank count</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The reported number of ranks associated with an organ stop in the described configuration.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/organ#rankMember">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/organ#OrganRank" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/organ" />
+    <ns4:label xml:lang="en">rank member</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/organ#OrganPipe" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an organ rank to an organ pipe that is a member of the rank in a discovery-oriented convenience graph.</ns6:definition>
+  </rdf:Description>
+</rdf:RDF>

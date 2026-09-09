@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">A modular semantic standard for evidence-backed, time-aware, provenance-aware knowledge about musical instruments, their digital representations, and virtual realizations.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Ontology Network</ns1:title>
+    <ns2:preferredNamespacePrefix>modavisnet</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/assertion/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/audio/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/context/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/events/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/evidence/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/heritage/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/instrument/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/media/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/midi/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/organ/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/provenance/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/vocab/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+</rdf:RDF>

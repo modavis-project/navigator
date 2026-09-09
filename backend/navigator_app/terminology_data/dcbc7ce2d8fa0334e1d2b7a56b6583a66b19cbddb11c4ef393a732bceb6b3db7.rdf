@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/prov-o/" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">A conservative PROV-O profile for MODAVIS processing, editorial, digitization, and release activities.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Provenance Ontology</ns1:title>
+    <ns2:preferredNamespacePrefix>modprov</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology/provenance#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/evidence/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/provenance/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#DigitizationActivity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">digitization activity</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A processing activity that creates a digital representation from a physical, analogue, or previously inaccessible source.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#EditorialActivity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">editorial activity</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A processing activity in which an accountable agent reviews, selects, corrects, or interprets knowledge resources.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#ExtractionActivity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">extraction activity</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A processing activity that derives structured values, fragments, features, or candidate assertions from source material.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#IngestionActivity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">ingestion activity</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A processing activity that admits and records source material or data into a managed workflow.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#NormalizationActivity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">normalization activity</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A processing activity that transforms source values into a documented canonical or comparison form without erasing the source values.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#ParameterSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">parameter set</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An immutable parameter bundle used by a processing activity.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#ProcessingActivity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">processing activity</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A computational, ingestion, extraction, normalization, editorial, digitization, or publication activity that uses or generates MODAVIS resources.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#ReleaseActivity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">release activity</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A processing activity that freezes, validates, packages, or publishes a versioned set of resources.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#SoftwareAgent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">software agent</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#SoftwareAgent" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Agent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A software system identified as an accountable PROV-O agent in a processing activity.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#activityType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">processing activity type</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies a processing activity with a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#usedParameterSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">used parameter set</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/provenance#ParameterSet" />
+    <ns4:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#used" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a processing activity to an immutable parameter bundle it used.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/provenance#usedSoftware">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/provenance" />
+    <ns4:label xml:lang="en">used software</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/ns/prov#SoftwareAgent" />
+    <ns4:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasAssociatedWith" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a processing activity to the identified software agent responsible for executing or materially controlling it.</ns6:definition>
+  </rdf:Description>
+</rdf:RDF>

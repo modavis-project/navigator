@@ -1,0 +1,126 @@
+<https://w3id.org/modavis/ontology/midi#MidiExtractionBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/midi#MidiExtractionBinding> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#MidiExtractionBinding> <http://www.w3.org/2000/01/rdf-schema#label> "MIDI extraction binding"@en .
+<https://w3id.org/modavis/ontology/midi#MidiExtractionBinding> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/midi#MidiExtractionBinding> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#MidiExtractionBinding> <http://www.w3.org/2004/02/skos/core#definition> "A MIDI note-number assignment bound to a protocol-neutral sample extraction region."@en .
+<https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> <http://www.w3.org/2000/01/rdf-schema#label> "MIDI playback binding"@en .
+<https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> <http://www.w3.org/2004/02/skos/core#definition> "A MIDI 1.0 note-number and note-on-velocity selection domain bound to protocol-neutral sampled-playback parameters."@en .
+<https://w3id.org/modavis/ontology/midi#MidiReferencePitchBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/midi#MidiReferencePitchBinding> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#MidiReferencePitchBinding> <http://www.w3.org/2000/01/rdf-schema#label> "MIDI reference-pitch binding"@en .
+<https://w3id.org/modavis/ontology/midi#MidiReferencePitchBinding> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/midi#MidiReferencePitchBinding> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#MidiReferencePitchBinding> <http://www.w3.org/2004/02/skos/core#definition> "A MIDI note number bound to a protocol-neutral tuning reference."@en .
+<https://w3id.org/modavis/ontology/midi#MidiTuningEntryBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/midi#MidiTuningEntryBinding> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#MidiTuningEntryBinding> <http://www.w3.org/2000/01/rdf-schema#label> "MIDI tuning-entry binding"@en .
+<https://w3id.org/modavis/ontology/midi#MidiTuningEntryBinding> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/midi#MidiTuningEntryBinding> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#MidiTuningEntryBinding> <http://www.w3.org/2004/02/skos/core#definition> "A MIDI note number bound to a protocol-neutral tuning entry."@en .
+<https://w3id.org/modavis/ontology/midi#assignedNoteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/midi#assignedNoteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#assignedNoteNumber> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiExtractionBinding> .
+<https://w3id.org/modavis/ontology/midi#assignedNoteNumber> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#assignedNoteNumber> <http://www.w3.org/2000/01/rdf-schema#label> "assigned MIDI note number"@en .
+<https://w3id.org/modavis/ontology/midi#assignedNoteNumber> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/midi#assignedNoteNumber> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#assignedNoteNumber> <http://www.w3.org/2004/02/skos/core#definition> "The MIDI note number assigned to the bound sample extraction region."@en .
+<https://w3id.org/modavis/ontology/midi#extractionRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#extractionRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/midi#extractionRegion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiExtractionBinding> .
+<https://w3id.org/modavis/ontology/midi#extractionRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#extractionRegion> <http://www.w3.org/2000/01/rdf-schema#label> "extraction region"@en .
+<https://w3id.org/modavis/ontology/midi#extractionRegion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> .
+<https://w3id.org/modavis/ontology/midi#extractionRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#extractionRegion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the sample extraction region assigned to a MIDI note number."@en .
+<https://w3id.org/modavis/ontology/midi#maximumNoteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteNumber> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteNumber> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteNumber> <http://www.w3.org/2000/01/rdf-schema#label> "maximum MIDI note number"@en .
+<https://w3id.org/modavis/ontology/midi#maximumNoteNumber> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteNumber> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#maximumNoteNumber> <http://www.w3.org/2004/02/skos/core#definition> "The inclusive highest MIDI note number selecting the bound playback parameters."@en .
+<https://w3id.org/modavis/ontology/midi#maximumNoteOnVelocity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteOnVelocity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteOnVelocity> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteOnVelocity> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteOnVelocity> <http://www.w3.org/2000/01/rdf-schema#label> "maximum MIDI note-on velocity"@en .
+<https://w3id.org/modavis/ontology/midi#maximumNoteOnVelocity> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#positiveInteger> .
+<https://w3id.org/modavis/ontology/midi#maximumNoteOnVelocity> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#maximumNoteOnVelocity> <http://www.w3.org/2004/02/skos/core#definition> "The inclusive highest MIDI note-on velocity selecting the bound playback parameters."@en .
+<https://w3id.org/modavis/ontology/midi#minimumNoteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteNumber> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteNumber> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteNumber> <http://www.w3.org/2000/01/rdf-schema#label> "minimum MIDI note number"@en .
+<https://w3id.org/modavis/ontology/midi#minimumNoteNumber> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteNumber> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#minimumNoteNumber> <http://www.w3.org/2004/02/skos/core#definition> "The inclusive lowest MIDI note number selecting the bound playback parameters."@en .
+<https://w3id.org/modavis/ontology/midi#minimumNoteOnVelocity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteOnVelocity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteOnVelocity> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteOnVelocity> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteOnVelocity> <http://www.w3.org/2000/01/rdf-schema#label> "minimum MIDI note-on velocity"@en .
+<https://w3id.org/modavis/ontology/midi#minimumNoteOnVelocity> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#positiveInteger> .
+<https://w3id.org/modavis/ontology/midi#minimumNoteOnVelocity> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#minimumNoteOnVelocity> <http://www.w3.org/2004/02/skos/core#definition> "The inclusive lowest MIDI note-on velocity selecting the bound playback parameters."@en .
+<https://w3id.org/modavis/ontology/midi#noteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/midi#noteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#noteNumber> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#noteNumber> <http://www.w3.org/2000/01/rdf-schema#label> "MIDI note number"@en .
+<https://w3id.org/modavis/ontology/midi#noteNumber> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/midi#noteNumber> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#noteNumber> <http://www.w3.org/2004/02/skos/core#definition> "The MIDI note number bound to a tuning entry or tuning reference."@en .
+<https://w3id.org/modavis/ontology/midi#noteNumber> <http://www.w3.org/2004/02/skos/core#scopeNote> "The exchange profile permits this property on TuningEntry and TuningReference and restricts it to the MIDI range 0–127. A global domain is omitted because asserting both domains would infer an invalid intersection."@en .
+<https://w3id.org/modavis/ontology/midi#playbackParameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#playbackParameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/midi#playbackParameters> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> .
+<https://w3id.org/modavis/ontology/midi#playbackParameters> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#playbackParameters> <http://www.w3.org/2000/01/rdf-schema#label> "playback parameters"@en .
+<https://w3id.org/modavis/ontology/midi#playbackParameters> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/midi#playbackParameters> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#playbackParameters> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the protocol-neutral sampled-playback parameters to which the MIDI selection domain applies."@en .
+<https://w3id.org/modavis/ontology/midi#rootNoteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/midi#rootNoteNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#rootNoteNumber> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiPlaybackBinding> .
+<https://w3id.org/modavis/ontology/midi#rootNoteNumber> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#rootNoteNumber> <http://www.w3.org/2000/01/rdf-schema#label> "root MIDI note number"@en .
+<https://w3id.org/modavis/ontology/midi#rootNoteNumber> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/midi#rootNoteNumber> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#rootNoteNumber> <http://www.w3.org/2004/02/skos/core#definition> "The MIDI note number at which the sample plays at its untransposed reference pitch."@en .
+<https://w3id.org/modavis/ontology/midi#tuningEntry> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#tuningEntry> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/midi#tuningEntry> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiTuningEntryBinding> .
+<https://w3id.org/modavis/ontology/midi#tuningEntry> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#tuningEntry> <http://www.w3.org/2000/01/rdf-schema#label> "binds tuning entry"@en .
+<https://w3id.org/modavis/ontology/midi#tuningEntry> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#TuningEntry> .
+<https://w3id.org/modavis/ontology/midi#tuningEntry> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#tuningEntry> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the protocol-neutral tuning entry bound to a MIDI note number."@en .
+<https://w3id.org/modavis/ontology/midi#tuningReference> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/midi#tuningReference> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/midi#tuningReference> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/midi#MidiReferencePitchBinding> .
+<https://w3id.org/modavis/ontology/midi#tuningReference> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/midi> .
+<https://w3id.org/modavis/ontology/midi#tuningReference> <http://www.w3.org/2000/01/rdf-schema#label> "binds tuning reference"@en .
+<https://w3id.org/modavis/ontology/midi#tuningReference> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#TuningReference> .
+<https://w3id.org/modavis/ontology/midi#tuningReference> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/midi#tuningReference> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the protocol-neutral tuning reference bound to a MIDI note number."@en .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/dc/terms/description> "MIDI-specific bindings for protocol-neutral MODAVIS audio regions, sampled-playback parameters, and tuning records."@en .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/dc/terms/title> "MODAVIS MIDI Binding Ontology"@en .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modmidi" .
+<https://w3id.org/modavis/ontology/midi> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/midi#" .
+<https://w3id.org/modavis/ontology/midi> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/midi> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/audio/0.1.0> .
+<https://w3id.org/modavis/ontology/midi> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/midi/0.1.0> .
+<https://w3id.org/modavis/ontology/midi> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

@@ -1,0 +1,237 @@
+<http://purl.org/dc/terms/conformsTo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://purl.org/dc/terms/creator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://purl.org/dc/terms/description> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://purl.org/dc/terms/issued> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://purl.org/dc/terms/license> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://purl.org/dc/terms/modified> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://purl.org/dc/terms/publisher> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://purl.org/dc/terms/title> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://purl.org/vocab/vann/preferredNamespacePrefix> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://purl.org/vocab/vann/preferredNamespaceUri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://www.w3.org/2004/02/skos/core#Concept> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.w3.org/2004/02/skos/core#ConceptScheme> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.w3.org/2004/02/skos/core#definition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://www.w3.org/2004/02/skos/core#inScheme> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/2004/02/skos/core#notation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://www.w3.org/2004/02/skos/core#prefLabel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://www.w3.org/2004/02/skos/core#scopeNote> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AnnotationProperty> .
+<http://www.w3.org/ns/oa#Selector> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.w3.org/ns/oa#hasSelector> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/ns/prov#Activity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.w3.org/ns/prov#Agent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.w3.org/ns/prov#Entity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.w3.org/ns/prov#SoftwareAgent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.w3.org/ns/prov#generatedAtTime> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.w3.org/ns/prov#used> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/ns/prov#wasAssociatedWith> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/ns/prov#wasDerivedFrom> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.w3.org/ns/prov#wasGeneratedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#Agent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#Agent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#Agent> <http://www.w3.org/2000/01/rdf-schema#label> "agent"@en .
+<https://w3id.org/modavis/ontology/core#Agent> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Agent> .
+<https://w3id.org/modavis/ontology/core#Agent> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Continuant> .
+<https://w3id.org/modavis/ontology/core#Agent> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#Agent> <http://www.w3.org/2004/02/skos/core#definition> "A person, organization, group, or other entity capable of bearing responsibility or participating agentively in an activity."@en .
+<https://w3id.org/modavis/ontology/core#Continuant> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#Continuant> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#Continuant> <http://www.w3.org/2000/01/rdf-schema#label> "continuant"@en .
+<https://w3id.org/modavis/ontology/core#Continuant> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/core#Continuant> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#Continuant> <http://www.w3.org/2004/02/skos/core#definition> "An entity that persists through time while being capable of changing state, location, configuration, or composition."@en .
+<https://w3id.org/modavis/ontology/core#Entity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#Entity> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#Entity> <http://www.w3.org/2000/01/rdf-schema#label> "entity"@en .
+<https://w3id.org/modavis/ontology/core#Entity> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/core#Entity> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#Entity> <http://www.w3.org/2004/02/skos/core#definition> "A physical, digital, conceptual, or informational thing represented with stable MODAVIS identity."@en .
+<https://w3id.org/modavis/ontology/core#IdentifiedResource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#IdentifiedResource> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#IdentifiedResource> <http://www.w3.org/2000/01/rdf-schema#label> "identified resource"@en .
+<https://w3id.org/modavis/ontology/core#IdentifiedResource> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#IdentifiedResource> <http://www.w3.org/2004/02/skos/core#definition> "Anything represented by a stable IRI, including entities, events, assertions, qualified relations, and provenance activities."@en .
+<https://w3id.org/modavis/ontology/core#IdentifiedResource> <http://www.w3.org/2004/02/skos/core#scopeNote> "Being an identified resource does not imply that MODAVIS has allocated an MDVS identifier. Exchange profiles may use repository IRIs or UUID URNs; the MODAVIS publication profile applies the narrower managed-resource rules."@en .
+<https://w3id.org/modavis/ontology/core#Identifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#Identifier> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#Identifier> <http://www.w3.org/2000/01/rdf-schema#label> "identifier"@en .
+<https://w3id.org/modavis/ontology/core#Identifier> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/core#Identifier> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#Identifier> <http://www.w3.org/2004/02/skos/core#definition> "A reified identifier value together with its assigning scheme and, where available, provenance."@en .
+<https://w3id.org/modavis/ontology/core#MODAVISManagedResource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#MODAVISManagedResource> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#MODAVISManagedResource> <http://www.w3.org/2000/01/rdf-schema#label> "MODAVIS-managed resource"@en .
+<https://w3id.org/modavis/ontology/core#MODAVISManagedResource> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/core#MODAVISManagedResource> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#MODAVISManagedResource> <http://www.w3.org/2004/02/skos/core#definition> "An identified resource admitted to a MODAVIS-governed public record with a stable HTTP IRI and documented lifecycle."@en .
+<https://w3id.org/modavis/ontology/core#MODAVISManagedResource> <http://www.w3.org/2004/02/skos/core#scopeNote> "The class does not require an MDVS identifier. Stable HTTP IRIs are normative identity in MODAVIS 0.1.0."@en .
+<https://w3id.org/modavis/ontology/core#Name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#Name> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#Name> <http://www.w3.org/2000/01/rdf-schema#label> "name"@en .
+<https://w3id.org/modavis/ontology/core#Name> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/core#Name> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#Name> <http://www.w3.org/2004/02/skos/core#definition> "A citable appellation associated with an identified resource."@en .
+<https://w3id.org/modavis/ontology/core#Organization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#Organization> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#Organization> <http://www.w3.org/2000/01/rdf-schema#label> "organization"@en .
+<https://w3id.org/modavis/ontology/core#Organization> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Agent> .
+<https://w3id.org/modavis/ontology/core#Organization> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#Organization> <http://www.w3.org/2004/02/skos/core#definition> "An agent constituted by people or other agents acting under a shared identity or purpose."@en .
+<https://w3id.org/modavis/ontology/core#Person> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#Person> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#Person> <http://www.w3.org/2000/01/rdf-schema#label> "person"@en .
+<https://w3id.org/modavis/ontology/core#Person> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Agent> .
+<https://w3id.org/modavis/ontology/core#Person> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#Person> <http://www.w3.org/2004/02/skos/core#definition> "A human agent."@en .
+<https://w3id.org/modavis/ontology/core#Place> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#Place> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#Place> <http://www.w3.org/2000/01/rdf-schema#label> "place"@en .
+<https://w3id.org/modavis/ontology/core#Place> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/core#Place> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#Place> <http://www.w3.org/2004/02/skos/core#definition> "A spatially identifiable location or region."@en .
+<https://w3id.org/modavis/ontology/core#TimeSpan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/core#TimeSpan> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#TimeSpan> <http://www.w3.org/2000/01/rdf-schema#label> "time span"@en .
+<https://w3id.org/modavis/ontology/core#TimeSpan> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/core#TimeSpan> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#TimeSpan> <http://www.w3.org/2004/02/skos/core#definition> "A temporal extent whose boundaries, expression, precision, or certainty may be known incompletely."@en .
+<https://w3id.org/modavis/ontology/core#canonicalLabel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/core#canonicalLabel> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/core#canonicalLabel> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#canonicalLabel> <http://www.w3.org/2000/01/rdf-schema#label> "canonical label"@en .
+<https://w3id.org/modavis/ontology/core#canonicalLabel> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#canonicalLabel> <http://www.w3.org/2004/02/skos/core#definition> "A preferred language-tagged human-readable label selected for an identified resource in a stated publication context."@en .
+<https://w3id.org/modavis/ontology/core#canonicalLabel> <http://www.w3.org/2004/02/skos/core#scopeNote> "The exchange SHACL profile enforces rdf:langString because rdf:langString is outside the OWL 2 RL datatype map."@en .
+<https://w3id.org/modavis/ontology/core#endDate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/core#endDate> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#TimeSpan> .
+<https://w3id.org/modavis/ontology/core#endDate> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#endDate> <http://www.w3.org/2000/01/rdf-schema#label> "end date"@en .
+<https://w3id.org/modavis/ontology/core#endDate> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#endDate> <http://www.w3.org/2004/02/skos/core#definition> "The inclusive calendar date at which a time span ends, when known at day precision."@en .
+<https://w3id.org/modavis/ontology/core#endDate> <http://www.w3.org/2004/02/skos/core#scopeNote> "The exchange SHACL profile enforces xsd:date because xsd:date is outside the OWL 2 RL datatype map."@en .
+<https://w3id.org/modavis/ontology/core#endDateTime> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/core#endDateTime> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#TimeSpan> .
+<https://w3id.org/modavis/ontology/core#endDateTime> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#endDateTime> <http://www.w3.org/2000/01/rdf-schema#label> "end date and time"@en .
+<https://w3id.org/modavis/ontology/core#endDateTime> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<https://w3id.org/modavis/ontology/core#endDateTime> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#endDateTime> <http://www.w3.org/2004/02/skos/core#definition> "The timezone-qualified date-time at which a time span ends."@en .
+<https://w3id.org/modavis/ontology/core#hasIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#hasIdentifier> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#hasIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "has identifier"@en .
+<https://w3id.org/modavis/ontology/core#hasIdentifier> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Identifier> .
+<https://w3id.org/modavis/ontology/core#hasIdentifier> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#hasIdentifier> <http://www.w3.org/2004/02/skos/core#definition> "Relates an identified resource to a reified identifier record."@en .
+<https://w3id.org/modavis/ontology/core#hasIdentifier> <http://www.w3.org/2004/02/skos/core#scopeNote> "No global domain is asserted so externally defined resources can carry qualified MODAVIS identifier records without receiving an unintended class inference."@en .
+<https://w3id.org/modavis/ontology/core#hasName> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#hasName> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#hasName> <http://www.w3.org/2000/01/rdf-schema#label> "has name"@en .
+<https://w3id.org/modavis/ontology/core#hasName> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Name> .
+<https://w3id.org/modavis/ontology/core#hasName> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#hasName> <http://www.w3.org/2004/02/skos/core#definition> "Relates an identified resource to a reified name that can carry language, type, provenance, and validity information."@en .
+<https://w3id.org/modavis/ontology/core#hasName> <http://www.w3.org/2004/02/skos/core#scopeNote> "No global domain is asserted so externally defined identified resources can use the naming pattern without being inferred into a narrower MODAVIS class."@en .
+<https://w3id.org/modavis/ontology/core#hasStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#hasStatus> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#hasStatus> <http://www.w3.org/2000/01/rdf-schema#label> "has status"@en .
+<https://w3id.org/modavis/ontology/core#hasStatus> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/core#hasStatus> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#hasStatus> <http://www.w3.org/2004/02/skos/core#definition> "Classifies a resource with a governed lifecycle, review, or publication-status concept."@en .
+<https://w3id.org/modavis/ontology/core#hasStatus> <http://www.w3.org/2004/02/skos/core#scopeNote> "This generic status property is intentionally domain-neutral. The applicable profile must identify the status concept scheme and the resources to which it applies."@en .
+<https://w3id.org/modavis/ontology/core#hasType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#hasType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#hasType> <http://www.w3.org/2000/01/rdf-schema#label> "has type"@en .
+<https://w3id.org/modavis/ontology/core#hasType> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/core#hasType> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#hasType> <http://www.w3.org/2004/02/skos/core#definition> "Classifies a resource with a governed concept without promoting the concept to an OWL class."@en .
+<https://w3id.org/modavis/ontology/core#hasType> <http://www.w3.org/2004/02/skos/core#scopeNote> "This generic classification property is intentionally domain-neutral. Prefer a module-specific subproperty when one exists."@en .
+<https://w3id.org/modavis/ontology/core#identifierScheme> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#identifierScheme> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#Identifier> .
+<https://w3id.org/modavis/ontology/core#identifierScheme> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#identifierScheme> <http://www.w3.org/2000/01/rdf-schema#label> "identifier scheme"@en .
+<https://w3id.org/modavis/ontology/core#identifierScheme> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/core#identifierScheme> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#identifierScheme> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the governed scheme under which an identifier value was assigned."@en .
+<https://w3id.org/modavis/ontology/core#identifierValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/core#identifierValue> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#Identifier> .
+<https://w3id.org/modavis/ontology/core#identifierValue> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#identifierValue> <http://www.w3.org/2000/01/rdf-schema#label> "identifier value"@en .
+<https://w3id.org/modavis/ontology/core#identifierValue> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/core#identifierValue> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#identifierValue> <http://www.w3.org/2004/02/skos/core#definition> "The lexical value assigned by an identifier scheme."@en .
+<https://w3id.org/modavis/ontology/core#locatedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#locatedAt> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#locatedAt> <http://www.w3.org/2000/01/rdf-schema#label> "located at"@en .
+<https://w3id.org/modavis/ontology/core#locatedAt> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Place> .
+<https://w3id.org/modavis/ontology/core#locatedAt> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#locatedAt> <http://www.w3.org/2004/02/skos/core#definition> "Relates an entity to a place at which it is located in the described context."@en .
+<https://w3id.org/modavis/ontology/core#locatedAt> <http://www.w3.org/2004/02/skos/core#scopeNote> "Location may be time- or context-dependent. Qualify it with an assertion, context binding, state, or event when an unscoped direct triple would overstate the claim."@en .
+<https://w3id.org/modavis/ontology/core#mdvsIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/core#mdvsIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/core#mdvsIdentifier> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#mdvsIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "MDVS identifier"@en .
+<https://w3id.org/modavis/ontology/core#mdvsIdentifier> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/core#mdvsIdentifier> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#mdvsIdentifier> <http://www.w3.org/2004/02/skos/core#definition> "An optional legacy MODAVIS v1 identifier string retained for compatibility with existing Release 1.3 data."@en .
+<https://w3id.org/modavis/ontology/core#mdvsIdentifier> <http://www.w3.org/2004/02/skos/core#scopeNote> "MDVS v1 is not a persistent-identifier standard: its historical check character is ineffective, the payload has limited entropy, and no public global allocation ledger exists. Do not mint new independent identifiers with this property; see the MDVS v1 compatibility note."@en .
+<https://w3id.org/modavis/ontology/core#nameValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/core#nameValue> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#Name> .
+<https://w3id.org/modavis/ontology/core#nameValue> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#nameValue> <http://www.w3.org/2000/01/rdf-schema#label> "name value"@en .
+<https://w3id.org/modavis/ontology/core#nameValue> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#nameValue> <http://www.w3.org/2004/02/skos/core#definition> "The language-tagged lexical form of a reified name."@en .
+<https://w3id.org/modavis/ontology/core#nameValue> <http://www.w3.org/2004/02/skos/core#scopeNote> "The exchange SHACL profile enforces rdf:langString because rdf:langString is outside the OWL 2 RL datatype map."@en .
+<https://w3id.org/modavis/ontology/core#rawTemporalExpression> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/core#rawTemporalExpression> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#TimeSpan> .
+<https://w3id.org/modavis/ontology/core#rawTemporalExpression> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#rawTemporalExpression> <http://www.w3.org/2000/01/rdf-schema#label> "raw temporal expression"@en .
+<https://w3id.org/modavis/ontology/core#rawTemporalExpression> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/core#rawTemporalExpression> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#rawTemporalExpression> <http://www.w3.org/2004/02/skos/core#definition> "A source-preserving temporal expression retained when normalized boundaries are incomplete, uncertain, or inappropriate."@en .
+<https://w3id.org/modavis/ontology/core#startDate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/core#startDate> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#TimeSpan> .
+<https://w3id.org/modavis/ontology/core#startDate> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#startDate> <http://www.w3.org/2000/01/rdf-schema#label> "start date"@en .
+<https://w3id.org/modavis/ontology/core#startDate> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#startDate> <http://www.w3.org/2004/02/skos/core#definition> "The inclusive calendar date at which a time span begins, when known at day precision."@en .
+<https://w3id.org/modavis/ontology/core#startDate> <http://www.w3.org/2004/02/skos/core#scopeNote> "The exchange SHACL profile enforces xsd:date because xsd:date is outside the OWL 2 RL datatype map."@en .
+<https://w3id.org/modavis/ontology/core#startDateTime> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/core#startDateTime> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#TimeSpan> .
+<https://w3id.org/modavis/ontology/core#startDateTime> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#startDateTime> <http://www.w3.org/2000/01/rdf-schema#label> "start date and time"@en .
+<https://w3id.org/modavis/ontology/core#startDateTime> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<https://w3id.org/modavis/ontology/core#startDateTime> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#startDateTime> <http://www.w3.org/2004/02/skos/core#definition> "The timezone-qualified date-time at which a time span begins."@en .
+<https://w3id.org/modavis/ontology/core#temporalCertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#temporalCertainty> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#TimeSpan> .
+<https://w3id.org/modavis/ontology/core#temporalCertainty> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#temporalCertainty> <http://www.w3.org/2000/01/rdf-schema#label> "temporal certainty"@en .
+<https://w3id.org/modavis/ontology/core#temporalCertainty> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/core#temporalCertainty> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#temporalCertainty> <http://www.w3.org/2004/02/skos/core#definition> "Classifies the evidential certainty of a time span or boundary."@en .
+<https://w3id.org/modavis/ontology/core#temporalPrecision> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#temporalPrecision> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/core#TimeSpan> .
+<https://w3id.org/modavis/ontology/core#temporalPrecision> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#temporalPrecision> <http://www.w3.org/2000/01/rdf-schema#label> "temporal precision"@en .
+<https://w3id.org/modavis/ontology/core#temporalPrecision> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/core#temporalPrecision> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#temporalPrecision> <http://www.w3.org/2004/02/skos/core#definition> "Classifies the granularity at which a time span or boundary is expressed."@en .
+<https://w3id.org/modavis/ontology/core#validDuring> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/core#validDuring> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/core> .
+<https://w3id.org/modavis/ontology/core#validDuring> <http://www.w3.org/2000/01/rdf-schema#label> "valid during"@en .
+<https://w3id.org/modavis/ontology/core#validDuring> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#TimeSpan> .
+<https://w3id.org/modavis/ontology/core#validDuring> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/core#validDuring> <http://www.w3.org/2004/02/skos/core#definition> "Relates a resource or qualified relation to the time span during which it applies."@en .
+<https://w3id.org/modavis/ontology/core#validDuring> <http://www.w3.org/2004/02/skos/core#scopeNote> "The subject may be a domain resource or a qualified relation. A module or application profile determines whether the interval expresses existence, validity, applicability, or another named temporal role."@en .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/dc/terms/description> "Stable identity, naming, typing, spatial, and temporal concepts shared by the MODAVIS Ontology Network."@en .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/dc/terms/title> "MODAVIS Core Ontology"@en .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modavis" .
+<https://w3id.org/modavis/ontology/core> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/core#" .
+<https://w3id.org/modavis/ontology/core> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/core> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology/core> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

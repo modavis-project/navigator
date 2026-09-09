@@ -1,0 +1,111 @@
+.navigator-mark { display: block; width: 32px; height: 32px; flex: 0 0 32px; }
+.brand-block .brand-mark { background: transparent; color: #f4eddb; width: 44px; height: 44px; flex: 0 0 44px; }
+.sidebar-collapsed .entity-sidebar .brand-block { justify-content: center; width: 100%; padding: 0; }
+.identifier-copy { align-items: center; background: #ecf2ee; border: 1px solid #cedbd3; border-radius: 7px; color: #245d56; cursor: pointer; display: inline-flex; font: inherit; font-size: .76rem; font-weight: 650; gap: 7px; max-width: 100%; padding: 6px 9px; text-align: left; }
+.identifier-copy span { overflow-wrap: anywhere; }
+.identifier-copy svg { flex-shrink: 0; }
+.identifier-copy:hover { background: #dae8e0; border-color: #6a9382; }
+.organ-detail-context .catalog-back, .evidence-route-back { align-items: center; background: #fff; border: 1px solid #d6ded8; border-radius: 9px; color: #245d56; display: inline-flex; font-size: .83rem; font-weight: 650; gap: 6px; min-height: 40px; padding: 9px 14px; text-decoration: none; width: fit-content; }
+.organ-detail-context .catalog-back:hover, .evidence-route-back:hover { background: #eaf1ec; border-color: #8ba99c; }
+.public-modal { background: #fcfbf8; border: 1px solid #d1d8cf; border-radius: 18px; box-shadow: 0 20px 100px #13292240; color: #1d302b; margin: auto; max-height: min(88dvh, 900px); padding: 0; width: min(620px, calc(100vw - 28px)); }
+.public-modal::backdrop { background: #0b2428a3; }
+.public-modal-wide { width: min(1020px, calc(100vw - 28px)); }
+.public-modal > header { align-items: center; background: #fcfbf8; border-bottom: 1px solid #dce2d9; display: flex; gap: 16px; justify-content: space-between; padding: 20px 24px; position: sticky; top: 0; z-index: 1; }
+.public-modal > header h2 { font-size: 1.2rem; line-height: 1.35; margin: 0; }
+.public-modal-content { padding: 24px; }
+.public-modal-content > :first-child { margin-top: 0; }
+.record-citation-text { font-family: Georgia, serif; font-size: 1.07rem; line-height: 1.75; overflow-wrap: anywhere; }
+.record-citation-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
+.record-citation-actions button { align-items: center; display: inline-flex; gap: 7px; }
+.organ-data-note { align-items: center; border-top: 1px solid #dce1d9; color: #64716b; display: flex; flex-wrap: wrap; font-size: .75rem; gap: 8px; justify-content: space-between; margin-top: 28px; padding: 16px 0; }
+.organ-data-note button { background: transparent; border: 0; color: #245d56; cursor: pointer; font: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.organ-landing-grid { display: grid; gap: 18px; grid-template-columns: 1.05fr 1.2fr .85fr; }
+.organ-landing-card { background: #fff; border: 1px solid #dce2d9; border-radius: 14px; display: flex; flex-direction: column; padding: 24px; }
+.instrument-landing-card { background: #eef3ed; }
+.landing-kicker { align-items: center; color: #345b4e; display: flex; gap: 9px; margin-bottom: 16px; }
+.landing-kicker h3 { font-size: .9rem; margin: 0; }
+.organ-landing-card p { color: #5f6b64; font-size: .86rem; line-height: 1.6; margin: 4px 0 16px; }
+.organ-landing-card .landing-feature-number { color: #264d3e; }
+.landing-feature-number strong { display: block; font-family: Georgia, serif; font-size: 3.2rem; font-weight: 500; line-height: 1.15; }
+.organ-landing-card .landing-history-range { color: #264d3e; font-family: Georgia, serif; font-size: 1.8rem; margin-top: -4px; }
+.landing-detail-link { align-items: center; color: #245d56; display: inline-flex; font-size: .8rem; font-weight: 700; gap: 8px; margin-top: auto; padding-top: 18px; text-decoration: none; }
+.landing-detail-link:hover { text-decoration: underline; }
+.landing-description-periods { display: flex; flex-wrap: wrap; gap: 6px; }
+.landing-description-periods span { background: #fff9; border: 1px solid #cfdbcc; border-radius: 5px; color: #526957; font-size: .7rem; padding: 3px 7px; }
+.landing-milestones { display: grid; gap: 12px; list-style: none; margin: 0 0 8px; padding: 0; }
+.landing-milestones li { display: grid; font-size: .8rem; gap: 10px; grid-template-columns: 68px 1fr; }
+.landing-milestones time { color: #567260; font-variant-numeric: tabular-nums; }
+.landing-milestones strong { display: block; font-weight: 650; }
+.activity-person { display: block; font-size: .8rem; }
+.activity-person small { color: #68746d; display: inline; font-size: .72rem; margin-left: 6px; }
+.activity-person a { color: #245d56; }
+.landing-source-links { list-style: none; margin: 0; padding: 0; }
+.landing-source-links a { color: #245d56; display: inline-block; font-size: .87rem; padding: 5px 0; }
+.organ-virtual-highlight { align-items: center; background: #edf2f4; border: 1px solid #d3dfe3; border-radius: 12px; display: flex; gap: 18px; margin-top: 20px; padding: 20px 24px; }
+.organ-virtual-highlight h3 { font-size: .95rem; margin: 0 0 3px; }
+.organ-virtual-highlight p { color: #5c6c73; font-size: .8rem; margin: 0; }
+.organ-virtual-highlight .landing-detail-link { flex-shrink: 0; margin: 0 0 0 auto; padding: 0; }
+.organ-object-biography-note summary { cursor: pointer; font-weight: 650; }
+.history-heading-actions { align-items: center; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; margin-bottom: 15px; }
+.history-heading-actions h3 { margin: 0; }
+.history-heading-actions button { align-items: center; display: inline-flex; gap: 7px; }
+.biography-timeline ol { list-style: none; margin: 24px 0 0; padding: 0; }
+.biography-timeline li { display: grid; gap: 30px; grid-template-columns: 110px 1fr; position: relative; }
+.biography-timeline li > div { border-left: 2px solid #c3d4c5; padding: 0 0 26px 28px; position: relative; }
+.biography-timeline li > div::before { background: #4b735b; border: 4px solid #edf3ec; border-radius: 50%; content: ""; height: 13px; left: -8px; position: absolute; top: 3px; width: 13px; box-sizing: border-box; }
+.biography-timeline time { color: #375e48; font-size: 1rem; font-variant-numeric: tabular-nums; text-align: right; }
+.biography-timeline h3 { font-size: 1rem; margin: 0 0 7px; }
+.biography-timeline h3 a { color: inherit; text-decoration: none; }
+.biography-timeline h3 a:hover { text-decoration: underline; }
+.biography-timeline small { color: #68746d; display: block; font-size: .74rem; margin-top: 6px; }
+.diagram-totals { background: #e9f0e8; border-radius: 10px; display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); margin-bottom: 28px; padding: 20px; }
+.diagram-totals strong { color: #31553e; display: block; font-size: 1.7rem; }
+.diagram-totals span { color: #5f7061; font-size: .78rem; }
+.activity-diagrams h3 { font-size: 1rem; }
+.activity-bars { display: grid; gap: 12px; list-style: none; margin: 20px 0 30px; padding: 0; }
+.activity-bars li { align-items: center; display: grid; font-size: .85rem; gap: 16px; grid-template-columns: minmax(115px, 200px) 1fr 35px; }
+.activity-bars meter { accent-color: #487557; height: 17px; width: 100%; }
+.activity-bars meter::-webkit-meter-optimum-value { background: #487557; }
+.activity-bars meter::-moz-meter-bar { background: #487557; }
+.activity-participant-counts { list-style: none; padding: 0; }
+.activity-participant-counts li { border-bottom: 1px solid #dde3d9; display: flex; font-size: .85rem; gap: 20px; justify-content: space-between; padding: 11px 0; }
+.activity-participant-counts li > span:last-child { color: #647360; flex-shrink: 0; }
+.literature-list strong a, .digital-score-card-heading strong a, .temperament-list strong a { color: inherit; text-decoration: none; }
+.literature-list strong a:hover, .digital-score-card-heading strong a:hover, .temperament-list strong a:hover { color: #245d56; text-decoration: underline; }
+.literature-pagination button, .catalog-pagination button, .score-catalog-pagination button { align-items: center; background: white; border: 1px solid #cad7cf; border-radius: 8px; color: #245d56; cursor: pointer; display: inline-flex; font: inherit; font-size: .84rem; font-weight: 650; gap: 7px; min-height: 40px; padding: 8px 14px; }
+.literature-pagination button:disabled, .catalog-pagination button:disabled, .score-catalog-pagination button:disabled { color: #7e8880; cursor: default; opacity: .55; }
+@media(max-width: 1150px) { .organ-landing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .organ-landing-card:last-child { grid-column: 1 / -1; } }
+@media(max-width: 650px) { .organ-landing-grid { grid-template-columns: minmax(0, 1fr); } .organ-landing-card { padding: 20px; } .public-modal-content { padding: 18px; } .public-modal > header { padding: 16px 18px; } .organ-virtual-highlight { align-items: flex-start; flex-wrap: wrap; padding: 18px; } .organ-virtual-highlight > div { flex: 1; } .organ-virtual-highlight .landing-detail-link { margin: 0; } .biography-timeline li { gap: 15px; grid-template-columns: 76px 1fr; } .biography-timeline li > div { padding-left: 18px; } .biography-timeline time { font-size: .8rem; } .diagram-totals { gap: 12px; padding: 14px; } .diagram-totals span { font-size: .69rem; } .activity-bars li { gap: 10px; grid-template-columns: minmax(100px, 40%) 1fr 24px; } }
+.public-record-page { max-width: 1050px; margin: 1.5rem auto; }
+.public-record-header { margin-bottom: 2rem; }
+.public-record-header h1 { font-size: clamp(1.7rem, 3.2vw, 2.6rem); line-height: 1.2; letter-spacing: -.025em; }
+.public-record-header p { max-width: 72ch; }
+.public-record-page .panel-block { margin: 1rem 0; padding: clamp(1rem, 2.5vw, 1.8rem); }
+.public-record-page h2 { font-size: 1.2rem; margin-top: 0; }
+.public-record-list { display: grid; gap: .7rem; }
+.public-record-list > a { display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; padding: .75rem 0; text-decoration: none; border-bottom: 1px solid var(--border-soft, #e1e6df); }
+.public-record-list > a:hover strong { text-decoration: underline; }
+.public-record-list span { color: var(--muted, #586a65); font-size: .875rem; }
+.public-source-statistics { display: flex; flex-wrap: wrap; gap: 1.3rem; margin: 1.4rem 0 .4rem; }
+.public-source-statistics a { display: flex; flex-direction: column; gap: .2rem; text-decoration: none; }
+.public-source-statistics strong { font-size: 1.5rem; }
+.public-action-link { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1rem; border: 1px solid currentColor; border-radius: .6rem; text-decoration: none; }
+.place-hierarchy-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.place-hierarchy { border: 1px solid var(--border-soft, #dfe7df); border-radius: .8rem; padding: 1rem; }
+.place-hierarchy h3 { font-size: .95rem; margin: 0 0 .8rem; }
+.place-hierarchy ol { display: grid; gap: .65rem; list-style: none; margin: 0; padding: 0; }
+.place-hierarchy li { display: grid; gap: .1rem; grid-template-columns: minmax(6rem, .45fr) 1fr; }
+.place-hierarchy li span, .place-hierarchy li small { color: var(--muted, #586a65); font-size: .76rem; text-transform: capitalize; }
+.place-name-list, .provider-reference-list { display: grid; gap: .65rem; }
+.place-name-list > div, .provider-reference-list > div { align-items: center; border-bottom: 1px solid var(--border-soft, #e1e6df); display: flex; flex-wrap: wrap; gap: .6rem 1rem; justify-content: space-between; padding: .75rem 0; }
+.place-name-list span, .provider-reference-list span { color: var(--muted, #586a65); font-size: .8rem; }
+.provider-reference-list > div > div { display: grid; gap: .2rem; }
+.provider-reference-list a { align-items: center; display: inline-flex; gap: .35rem; }
+.public-source-actions { display: flex; flex-wrap: wrap; gap: .7rem; }
+@media(max-width: 700px) { .place-hierarchy-grid { grid-template-columns: minmax(0, 1fr); } .place-name-list > div, .provider-reference-list > div { align-items: flex-start; flex-direction: column; } }
+
+.organ-record-actions > button, .history-heading-actions > button, .record-citation-actions > button {
+  align-items: center; background: #f5f8f4; border: 1px solid #bed0c4; border-radius: 8px; color: #254f40; cursor: pointer; display: inline-flex; font: inherit; font-size: .84rem; font-weight: 650; gap: 7px; min-height: 40px; padding: 9px 13px;
+}
+.organ-record-actions > button:hover, .history-heading-actions > button:hover, .record-citation-actions > button:hover { background: #e4eee5; border-color: #739682; }
+.organ-record-actions > button:focus-visible, .history-heading-actions > button:focus-visible, .identifier-copy:focus-visible, .record-citation-actions > button:focus-visible { outline: 3px solid #668f79; outline-offset: 3px; }

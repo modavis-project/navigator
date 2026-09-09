@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/prov-o/" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">Semantics for playable virtual instruments, product identities, versions, packages, compatibility, and evidence-qualified relations to source instruments and states.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Virtual Musical Instrument Ontology</ns1:title>
+    <ns2:preferredNamespacePrefix>modvmi</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology/virtual-instrument#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/assertion/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/evidence/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/instrument/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/media/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">virtual-instrument compatibility statement</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A qualified, evidence-backed statement about the compatibility of a virtual-instrument version with a host, platform, protocol, plugin format, or operating environment.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">A compatibility statement applies only to the named version and target under the conditions supported by its evidence. It is not a certification or a guarantee for other versions, environments, or future states.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">virtual-instrument source relation</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A qualified and evidence-backed relation connecting a virtual instrument, product, or version to a specific musical instrument or instrument state used as a sample source, model, reconstruction target, composite source, or inspiration.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">A source relation does not assert that the virtual and source instruments are identical. Ambiguous candidates remain assertions or review proposals rather than accepted source relations.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">virtual-instrument package</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/media#DigitalAsset" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An installable, downloadable, or preservable digital asset distributing all or part of a virtual-instrument version.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">A package is not automatically the playable instrument; it may require a host, engine, dependency, license, configuration, or additional package.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">virtual-instrument product</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A stable product, library, sample-set, plugin, or project identity under which one or more virtual-instrument versions are developed or distributed.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">A product may realize one playable virtual musical instrument or contain several instruments. Product identity is not automatically musical-instrument identity; generic hosts and dependencies that implement no playable instrument are outside this class.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">virtual-instrument version</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A versioned edition or release state of a virtual-instrument product, distinct from both the stable product identity and its downloadable packages.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">virtual musical instrument</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A musical instrument whose playable sound-producing or control behavior is realized substantially through software, digital computation, or a software-controlled sample or synthesis system.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This class identifies the playable instrument, not merely a catalog row, download page, package, sample library component, or representation of a physical instrument.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">compatibility status</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies the result of a compatibility statement with a governed status concept.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Indeterminate means that the available evidence supports neither a positive nor a negative result; it must not be interpreted as compatible-with-limitations.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#compatibilityTarget">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">compatibility target</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the governed concept, specification, platform, host, product version, protocol, plugin format, or operating environment evaluated by a compatibility statement.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The target is an IRI. Profiles may require a SKOS concept for a closed classification or an identified resource for a version-specific environment.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">compatibility version</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the virtual-instrument version evaluated by a compatibility statement.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#developedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">developed by</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Agent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a virtual-instrument product or version to an agent responsible for its development.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The subject is a product or version. A global domain is omitted because multiple domain axioms would infer that every subject is both classes.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#hasCompatibilityStatement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">has compatibility statement</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement" />
+    <ns3:inverseOf rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a virtual-instrument version to a qualified statement about a supported or unsupported environment.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#hasEvidenceRelation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">has virtual-instrument evidence</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/evidence#EvidenceRelation" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a virtual-instrument source relation or compatibility statement to qualified source-fragment evidence evaluating it.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The subject must be the same resource named by modevidence:evaluates on each linked evidence relation. The exchange profile enforces that inverse consistency.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#hasPackage">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">has distribution package</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage" />
+    <ns3:inverseOf rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a virtual-instrument version to a package through which all or part of it is distributed or preserved.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#hasSourceRelation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">has instrument source relation</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation" />
+    <ns3:inverseOf rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a virtual instrument, product, or version to a qualified relation describing its connection to a source musical instrument or state.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The exchange profile restricts the subject to a playable virtual instrument, stable product, or version. The qualified relation, not this discovery link alone, records source type, evidence, confidence, and source state.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#hasVersion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">has virtual-instrument version</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns3:inverseOf rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a stable virtual-instrument product to one of its versioned editions or releases.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#implementsInstrument">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">implements virtual instrument</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a versioned product edition to a playable virtual musical instrument whose behavior it implements.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This is the version-level implementation claim. It neither identifies the stable product nor states which package bytes distribute that version.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">package of version</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies one or more virtual-instrument versions distributed or preserved by a package.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#productionMethod">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">sound-production method</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies the primary sound-production method of a virtual instrument or version with a governed concept.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The exchange profile restricts subjects to VirtualMusicalInstrument or VirtualInstrumentVersion and values to the closed 0.1.0 production-method scheme.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#publishedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">published by</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Agent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a virtual-instrument product, version, or package to an agent responsible for its publication or distribution.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The subject is a product, version, or package; the relation does not identify the developer, rights holder, or publisher of a represented source instrument.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#realizesInstrument">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">realizes virtual instrument</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a stable product identity to a playable virtual musical instrument it implements or distributes.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This is a product-level association and does not imply that every version implements the same playable instrument. Use implementsInstrument for a version-specific claim.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#releaseDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">release date</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The documented date on which a virtual-instrument version was released.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The exchange SHACL profile enforces xsd:date because xsd:date is outside the OWL 2 RL datatype map.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#sourceConfidence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">source-relation confidence</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A decimal from zero through one expressing confidence in the identification or classification recorded by a virtual-instrument source relation.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#sourceInstrument">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">source instrument</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the musical instrument connected to a virtual instrument by a qualified source relation.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">source-relation subject</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the virtual instrument, product, or version whose source relationship is being qualified.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Although the OWL range is the common Entity superclass, the exchange profile restricts this value to VirtualMusicalInstrument, VirtualInstrumentProduct, or VirtualInstrumentVersion.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">source-relation type</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies a virtual-instrument source relation as sampled, modeled, reconstructed, composite, inspired, or another governed relation type.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#sourceState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">source instrument state</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentState" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the specific instrument state captured, modeled, reconstructed, or otherwise used by a virtual-instrument source relation.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#versionLabel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">version label</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The source-preserving version or edition label supplied for a virtual-instrument version.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument" />
+    <ns4:label xml:lang="en">version of virtual-instrument product</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one stable product identity of which a virtual-instrument version is an edition or release.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="cb0">
+    <rdf:first rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument" />
+    <rdf:rest rdf:nodeID="cb7196b6c5169478ef0c9655ec850bf04287143eeae3ad2d22ecda66617635ba0f" />
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="cb14a386eca46cf4a6adaf6308658287b55265a57c7ede854f71621249d44522769">
+    <rdf:first rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage" />
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil" />
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="cb1b90fda862f476d6dad150960cc205a0099cbe63cd06a56f5a1db721adb26fe">
+    <rdf:first rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <rdf:rest rdf:nodeID="cb14a386eca46cf4a6adaf6308658287b55265a57c7ede854f71621249d44522769" />
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="cb7196b6c5169478ef0c9655ec850bf04287143eeae3ad2d22ecda66617635ba0f">
+    <rdf:first rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct" />
+    <rdf:rest rdf:nodeID="cb1b90fda862f476d6dad150960cc205a0099cbe63cd06a56f5a1db721adb26fe" />
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="cbb56c7c9b0751963ca43928a539dec044fa3caa55bb3ec2d9c3943b52cc4ce3a3">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses" />
+    <ns3:members rdf:nodeID="cb0" />
+  </rdf:Description>
+</rdf:RDF>

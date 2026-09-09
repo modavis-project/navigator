@@ -1,0 +1,326 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modassert: <https://w3id.org/modavis/ontology/assertion#> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modheritage: <https://w3id.org/modavis/ontology/heritage#> .
+@prefix modinst: <https://w3id.org/modavis/ontology/instrument#> .
+@prefix modmedia: <https://w3id.org/modavis/ontology/media#> .
+@prefix modprov: <https://w3id.org/modavis/ontology/provenance#> .
+@prefix modvmi: <https://w3id.org/modavis/ontology/virtual-instrument#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/heritage> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0>,
+              <https://w3id.org/modavis/ontology/instrument/0.1.0>,
+              <https://w3id.org/modavis/ontology/evidence/0.1.0>,
+              <https://w3id.org/modavis/ontology/provenance/0.1.0>,
+              <https://w3id.org/modavis/ontology/assertion/0.1.0>,
+              <https://w3id.org/modavis/ontology/media/0.1.0>,
+              <https://w3id.org/modavis/ontology/virtual-instrument/0.1.0> ;
+  dcterms:title "MODAVIS Heritage Knowledge Ontology"@en ;
+  dcterms:description "Contextual heritage recognition, curated knowledge collections, fixed knowledge snapshots, revision lineage, and accountable historical-claim review."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL>,
+                     <https://www.w3.org/TR/prov-o/> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/heritage/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modheritage" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/heritage#" .
+
+modheritage:HeritageRecognition a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "heritage recognition"@en ;
+  skos:definition "A citable, qualified record that an accountable community, organization, or other agent assigned a stated heritage status to a resource under identified criteria and temporal scope."@en ;
+  skos:scopeNote "Heritage significance is represented as an attributed and revisable status, not as an intrinsic or permanent class of the recognized resource. Different agents may issue concurrent or conflicting recognitions."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:CuratedKnowledgeCollection a owl:Class ;
+  rdfs:subClassOf modavis:Entity, prov:Entity ;
+  rdfs:label "curated knowledge collection"@en ;
+  skos:definition "A governed, evolving intellectual collection of assertions about one or more identified resources, whose publishable states are represented by fixed knowledge snapshots."@en ;
+  skos:scopeNote "The collection is not a musical instrument, digital surrogate, software product, version, distribution package, or serialization. Those resources may be documented by or materialize parts of the collection while retaining separate identities."@en ;
+  owl:disjointWith modheritage:KnowledgeSnapshot,
+                   modinst:MusicalInstrument,
+                   modmedia:DigitalAsset,
+                   modmedia:DigitalSurrogate,
+                   modvmi:VirtualInstrumentProduct,
+                   modvmi:VirtualInstrumentVersion,
+                   modvmi:VirtualInstrumentPackage ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:KnowledgeSnapshot a owl:Class ;
+  rdfs:subClassOf modavis:Entity, prov:Entity ;
+  rdfs:label "knowledge snapshot"@en ;
+  skos:definition "An immutable state of a curated knowledge collection whose assertion membership, named graph, RDFC-1.0 canonicalization contract, and exact canonical N-Quads materialization are explicitly recorded."@en ;
+  skos:scopeNote "Snapshot identity depends on declared assertion membership and graph identity. Its canonical materialization is an exact bitstream fixed by byte size and checksum; the snapshot resource itself is not assigned a self-referential checksum."@en ;
+  owl:disjointWith modinst:MusicalInstrument,
+                   modmedia:DigitalAsset,
+                   modmedia:DigitalSurrogate,
+                   modvmi:VirtualInstrumentProduct,
+                   modvmi:VirtualInstrumentVersion,
+                   modvmi:VirtualInstrumentPackage ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:KnowledgeMaintenanceActivity a owl:Class ;
+  rdfs:subClassOf modprov:EditorialActivity ;
+  rdfs:label "knowledge maintenance activity"@en ;
+  skos:definition "An accountable editorial activity that creates one fixed knowledge snapshot and records the assertions added to or removed from the preceding snapshot."@en ;
+  skos:scopeNote "Removal changes membership in a later snapshot; it never deletes the assertion, its evidence, or an earlier snapshot from the scholarly record."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:HistoricalClaimReview a owl:Class ;
+  rdfs:subClassOf modprov:EditorialActivity ;
+  rdfs:label "historical claim review"@en ;
+  skos:definition "An accountable editorial activity that reviews assertions about an entity's origin, attribution, custody, ownership, location, interventions, or other documented history and produces a distinct conclusion assertion."@en ;
+  skos:scopeNote "This class concerns scholarly object-history review. It does not replace PROV-O lineage for the computational or editorial processes that generated records."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:recognizesResource a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:HeritageRecognition ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "recognizes resource"@en ;
+  skos:definition "Identifies the one resource whose heritage status is recorded by a heritage recognition."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:recognitionAssignedBy a owl:ObjectProperty ;
+  rdfs:domain modheritage:HeritageRecognition ;
+  rdfs:range modavis:Agent ;
+  rdfs:label "recognition assigned by"@en ;
+  skos:definition "Identifies an accountable community, organization, person, or other agent that assigned the recorded heritage status."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:recognitionBasis a owl:ObjectProperty ;
+  rdfs:domain modheritage:HeritageRecognition ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "recognition basis"@en ;
+  skos:definition "Identifies a criterion, policy, register, legal instrument, assessment framework, or other citable basis under which the heritage status was assigned."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:recognitionStatus a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:HeritageRecognition ;
+  rdfs:range skos:Concept ;
+  rdfs:label "recognition status"@en ;
+  skos:definition "Classifies the outcome or lifecycle state of a heritage recognition with a governed concept."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:recognitionRecordedBy a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf prov:wasGeneratedBy ;
+  rdfs:domain modheritage:HeritageRecognition ;
+  rdfs:range modprov:ProcessingActivity ;
+  rdfs:label "recognition recorded by"@en ;
+  skos:definition "Identifies the processing or editorial activity that created the MODAVIS recognition record, separately from the agent that assigned the heritage status."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:hasEvidenceRelation a owl:ObjectProperty ;
+  rdfs:domain modheritage:HeritageRecognition ;
+  rdfs:range modevidence:EvidenceRelation ;
+  rdfs:label "has heritage-recognition evidence"@en ;
+  skos:definition "Relates a heritage recognition to qualified source-fragment evidence that evaluates the recognition record."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:supersedesRecognition a owl:ObjectProperty ;
+  rdfs:domain modheritage:HeritageRecognition ;
+  rdfs:range modheritage:HeritageRecognition ;
+  rdfs:label "supersedes recognition"@en ;
+  skos:definition "Relates a later heritage recognition record to an earlier record for the same resource whose active role it replaces without erasing the earlier record."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:documentsResource a owl:ObjectProperty ;
+  rdfs:domain modheritage:CuratedKnowledgeCollection ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "documents resource"@en ;
+  skos:definition "Identifies a resource that is an explicit documentary subject of a curated knowledge collection."@en ;
+  skos:scopeNote "This relation does not assert identity, completeness, heritage status, or representation fidelity."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:curatedBy a owl:ObjectProperty ;
+  rdfs:domain modheritage:CuratedKnowledgeCollection ;
+  rdfs:range modavis:Agent ;
+  rdfs:label "curated by"@en ;
+  skos:definition "Identifies an agent accountable for governing the scope and maintenance of a curated knowledge collection."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:hasKnowledgeSnapshot a owl:ObjectProperty ;
+  owl:inverseOf modheritage:snapshotOfCollection ;
+  rdfs:domain modheritage:CuratedKnowledgeCollection ;
+  rdfs:range modheritage:KnowledgeSnapshot ;
+  rdfs:label "has knowledge snapshot"@en ;
+  skos:definition "Relates a curated knowledge collection to one of its retained immutable snapshot states."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:currentSnapshot a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf modheritage:hasKnowledgeSnapshot ;
+  rdfs:domain modheritage:CuratedKnowledgeCollection ;
+  rdfs:range modheritage:KnowledgeSnapshot ;
+  rdfs:label "current knowledge snapshot"@en ;
+  skos:definition "Identifies the one snapshot selected as current under the collection's recorded governance state while retaining earlier snapshots."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:snapshotOfCollection a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:KnowledgeSnapshot ;
+  rdfs:range modheritage:CuratedKnowledgeCollection ;
+  rdfs:label "snapshot of knowledge collection"@en ;
+  skos:definition "Identifies the one curated knowledge collection whose fixed state a knowledge snapshot records."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:includesAssertion a owl:ObjectProperty ;
+  rdfs:domain modheritage:KnowledgeSnapshot ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "includes assertion"@en ;
+  skos:definition "Records exact membership of an assertion in a fixed knowledge snapshot."@en ;
+  skos:scopeNote "Membership is documentary inclusion, not acceptance; an included assertion retains its own status, evidence, context, and conflict relations."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:canonicalizationProfile a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:KnowledgeSnapshot ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "canonicalization profile"@en ;
+  skos:definition "Identifies the immutable RDF Dataset Canonicalization profile used to produce the snapshot's canonical N-Quads materialization."@en ;
+  skos:scopeNote "MODAVIS 0.1.0 fixes this value to the dated RDFC-1.0 W3C Recommendation. The input dataset contains exactly one named graph identified by snapshotGraphIri; that graph contains exactly the outgoing assertion-record triples for every includesAssertion resource and no triples for assertions outside that membership. Snapshot metadata and canonical-materialization fixity statements are outside the input dataset, preventing self-reference."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:snapshotGraphIri a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:KnowledgeSnapshot ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "snapshot graph IRI"@en ;
+  skos:definition "Records the absolute named-graph IRI assigned to a knowledge snapshot when it is exposed as an RDF graph."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:materializedAs a owl:ObjectProperty ;
+  rdfs:domain modheritage:KnowledgeSnapshot ;
+  rdfs:range modmedia:DigitalAsset ;
+  rdfs:label "materialized as"@en ;
+  skos:definition "Relates an abstract fixed knowledge snapshot to a digital asset that serializes, packages, or otherwise materializes that snapshot."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:canonicalMaterialization a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf modheritage:materializedAs ;
+  rdfs:domain modheritage:KnowledgeSnapshot ;
+  rdfs:range modmedia:Bitstream ;
+  rdfs:label "canonical snapshot materialization"@en ;
+  skos:definition "Identifies the one application/n-quads bitstream whose bytes are exactly the RDFC-1.0 canonical serialization of the snapshot dataset and whose byte size and checksum provide the snapshot's reproducible fixity anchor."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:snapshotCreatedAt a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:KnowledgeSnapshot ;
+  rdfs:range xsd:dateTime ;
+  rdfs:label "snapshot created at"@en ;
+  skos:definition "Records the timezone-qualified date and time at which the fixed knowledge snapshot was created."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:snapshotCreatedBy a owl:ObjectProperty, owl:FunctionalProperty ;
+  owl:inverseOf modheritage:resultingSnapshot ;
+  rdfs:subPropertyOf prov:wasGeneratedBy ;
+  rdfs:domain modheritage:KnowledgeSnapshot ;
+  rdfs:range modheritage:KnowledgeMaintenanceActivity ;
+  rdfs:label "snapshot created by"@en ;
+  skos:definition "Identifies the one knowledge maintenance activity that created a fixed knowledge snapshot."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:maintainedCollection a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:KnowledgeMaintenanceActivity ;
+  rdfs:range modheritage:CuratedKnowledgeCollection ;
+  rdfs:label "maintained collection"@en ;
+  skos:definition "Identifies the one curated knowledge collection revised by a knowledge maintenance activity."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:previousSnapshot a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf prov:used ;
+  rdfs:domain modheritage:KnowledgeMaintenanceActivity ;
+  rdfs:range modheritage:KnowledgeSnapshot ;
+  rdfs:label "previous snapshot"@en ;
+  skos:definition "Identifies the preceding snapshot used as the revision base; it is absent only when the activity creates the collection's initial snapshot."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:resultingSnapshot a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:KnowledgeMaintenanceActivity ;
+  rdfs:range modheritage:KnowledgeSnapshot ;
+  rdfs:label "resulting snapshot"@en ;
+  skos:definition "Identifies the one fixed snapshot produced by a knowledge maintenance activity."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:addedAssertion a owl:ObjectProperty ;
+  rdfs:domain modheritage:KnowledgeMaintenanceActivity ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "added assertion"@en ;
+  skos:definition "Identifies an assertion present in the resulting snapshot but absent from the preceding snapshot, or introduced with the initial snapshot."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:removedAssertion a owl:ObjectProperty ;
+  rdfs:domain modheritage:KnowledgeMaintenanceActivity ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "removed assertion"@en ;
+  skos:definition "Identifies an assertion present in the preceding snapshot and absent from the resulting snapshot while preserving the assertion and preceding snapshot."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:reviewSubject a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:HistoricalClaimReview ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "historical review subject"@en ;
+  skos:definition "Identifies the one resource whose historical claims are evaluated by a historical claim review."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:reviewsAssertion a owl:ObjectProperty ;
+  rdfs:subPropertyOf prov:used ;
+  rdfs:domain modheritage:HistoricalClaimReview ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "reviews assertion"@en ;
+  skos:definition "Identifies an existing historical assertion used as input to a historical claim review."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:producesAssertion a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:HistoricalClaimReview ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "produces assertion"@en ;
+  skos:definition "Identifies the distinct conclusion assertion generated by a historical claim review."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .
+
+modheritage:reviewRationale a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modheritage:HistoricalClaimReview ;
+  rdfs:range xsd:string ;
+  rdfs:label "historical review rationale"@en ;
+  skos:definition "A non-empty human-readable account of the evidence and reasoning used by a historical claim review."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/heritage> ;
+  vs:term_status "testing" .

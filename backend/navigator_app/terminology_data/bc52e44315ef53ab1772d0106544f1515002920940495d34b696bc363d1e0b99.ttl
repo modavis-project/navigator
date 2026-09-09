@@ -1,0 +1,241 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modinst: <https://w3id.org/modavis/ontology/instrument#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/instrument> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0> ;
+  dcterms:title "MODAVIS Instrument Ontology"@en ;
+  dcterms:description "Instrument-neutral semantics for musical instruments, states, components, configurations, memberships, classifications, and contextual functional roles."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/instrument/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modinst" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/instrument#" .
+
+modinst:MusicalInstrument a owl:Class ;
+  rdfs:subClassOf modavis:Continuant ;
+  rdfs:label "musical instrument"@en ;
+  skos:definition "A continuant intentionally made, configured, or used to produce, control, or organize musical sound."@en ;
+  skos:scopeNote "Physical, electroacoustic, digital, virtual, and hybrid instruments may instantiate this class. A recording, model, package, or other representation of an instrument is not thereby the represented instrument."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:InstrumentState a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "instrument state"@en ;
+  skos:definition "A time-scoped described condition of a musical instrument, distinct from the configurations that may apply during that condition."@en ;
+  skos:scopeNote "Evidence for the recorded state may be attached through explicit assertions and evidence relations; state identity alone does not imply that evidence has been supplied."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:InstrumentConfiguration a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "instrument configuration"@en ;
+  skos:definition "An arrangement of components, settings, and functional relationships applicable to an instrument or state."@en ;
+  skos:scopeNote "A configuration describes an arrangement. Its actual applicability is asserted through hasConfiguration or a qualified record scoped with appliesInConfiguration; configuration identity alone does not claim that the arrangement was active at every time."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+[] a owl:AllDisjointClasses ;
+  owl:members (
+    modinst:MusicalInstrument
+    modinst:InstrumentState
+    modinst:InstrumentConfiguration
+  ) .
+
+modinst:InstrumentComponent a owl:Class ;
+  rdfs:subClassOf modavis:Continuant ;
+  rdfs:label "instrument component"@en ;
+  skos:definition "A persistent physical, digital, or logical part that can participate in one or more instrument configurations."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:ComponentCollection a owl:Class ;
+  rdfs:subClassOf modinst:InstrumentComponent ;
+  rdfs:label "component collection"@en ;
+  skos:definition "An instrument component whose identity is constituted by an organized collection of component members."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:PlayingInterface a owl:Class ;
+  rdfs:subClassOf modinst:InstrumentComponent ;
+  rdfs:label "playing interface"@en ;
+  skos:definition "A component designed to mediate a performer’s interaction with an instrument; contextual use is represented separately by role assignment."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:ComponentMembership a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "component membership"@en ;
+  skos:definition "A qualified, potentially time- and configuration-scoped relation between a parent component or instrument and a child component."@en ;
+  skos:scopeNote "The membershipInstrument always names the overall instrument and childComponent names the member. When parentComponent is absent, the child is a direct member of the instrument rather than of another recorded component."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:FunctionalRoleAssignment a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "functional role assignment"@en ;
+  skos:definition "A contextual assignment of a governed functional-role concept to a component."@en ;
+  skos:scopeNote "The absence of a time, state, or configuration qualifier means that scope was not further specified; it does not prove that the role is permanent or universally applicable."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:hasState a owl:ObjectProperty ;
+  owl:inverseOf modinst:stateOf ;
+  rdfs:domain modinst:MusicalInstrument ;
+  rdfs:range modinst:InstrumentState ;
+  rdfs:label "has state"@en ;
+  skos:definition "Relates a musical instrument to a described condition during a time span."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:stateOf a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modinst:InstrumentState ;
+  rdfs:range modinst:MusicalInstrument ;
+  rdfs:label "state of"@en ;
+  skos:definition "Identifies the one musical instrument whose condition an instrument state describes."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:hasConfiguration a owl:ObjectProperty ;
+  rdfs:range modinst:InstrumentConfiguration ;
+  rdfs:label "has configuration"@en ;
+  skos:definition "Relates an instrument or instrument state to an applicable arrangement of components, settings, and functional relationships."@en ;
+  skos:scopeNote "The domain is intentionally not global because both MusicalInstrument and InstrumentState are valid subjects. The exchange profile checks that the configuration is defined for the same instrument."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:configurationOf a owl:ObjectProperty ;
+  rdfs:domain modinst:InstrumentConfiguration ;
+  rdfs:range modinst:MusicalInstrument ;
+  rdfs:label "configuration of"@en ;
+  skos:definition "Relates an instrument configuration to the musical instrument for which it is defined."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:hasComponent a owl:ObjectProperty ;
+  owl:inverseOf modinst:componentOf ;
+  rdfs:domain modinst:MusicalInstrument ;
+  rdfs:range modinst:InstrumentComponent ;
+  rdfs:label "has component"@en ;
+  skos:definition "Relates an instrument directly to a component in a discovery-oriented convenience graph."@en ;
+  skos:scopeNote "Convenience projection. Use ComponentMembership when time, configuration, relationship kind, assertion, or provenance must be retained."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:componentOf a owl:ObjectProperty ;
+  rdfs:domain modinst:InstrumentComponent ;
+  rdfs:range modinst:MusicalInstrument ;
+  rdfs:label "component of"@en ;
+  skos:definition "Relates a component directly to an instrument in a discovery-oriented convenience graph."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:hasMembership a owl:ObjectProperty ;
+  rdfs:range modinst:ComponentMembership ;
+  rdfs:label "has component membership"@en ;
+  skos:definition "Relates an instrument or component to a qualified component-membership resource."@en ;
+  skos:scopeNote "This is a discovery link. Its subject may be the membershipInstrument or the parentComponent; inspect the qualified record to determine that role. The link does not replace membershipInstrument, parentComponent, or childComponent."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:membershipInstrument a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modinst:ComponentMembership ;
+  rdfs:range modinst:MusicalInstrument ;
+  rdfs:label "membership instrument"@en ;
+  skos:definition "Identifies the instrument within whose structure a component membership is asserted."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:parentComponent a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modinst:ComponentMembership ;
+  rdfs:range modinst:InstrumentComponent ;
+  rdfs:label "parent component"@en ;
+  skos:definition "Identifies the optional containing, controlling, or otherwise parent component in a qualified membership."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:childComponent a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modinst:ComponentMembership ;
+  rdfs:range modinst:InstrumentComponent ;
+  rdfs:label "child component"@en ;
+  skos:definition "Identifies the component whose membership is qualified by a component-membership resource."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:membershipType a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modinst:ComponentMembership ;
+  rdfs:range skos:Concept ;
+  rdfs:label "membership type"@en ;
+  skos:definition "Classifies the structural or functional kind of a component membership with a governed concept."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:appliesInConfiguration a owl:ObjectProperty ;
+  rdfs:range modinst:InstrumentConfiguration ;
+  rdfs:label "applies in configuration"@en ;
+  skos:definition "Scopes a qualified relation, decision, or profile to an instrument configuration."@en ;
+  skos:scopeNote "Memberships and functional-role assignments are the constrained 0.1.0 uses. No global domain is asserted so another explicitly governed qualified record can reuse the scoping relation without an incorrect type inference."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:appliesInState a owl:ObjectProperty ;
+  rdfs:range modinst:InstrumentState ;
+  rdfs:label "applies in instrument state"@en ;
+  skos:definition "Scopes a membership, role assignment, configuration, or other qualified relation to an instrument state."@en ;
+  skos:scopeNote "Memberships and functional-role assignments are the constrained 0.1.0 uses. The state must concern the same instrument as any accompanying configuration or membership-instrument qualifier."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:hasRoleAssignment a owl:ObjectProperty ;
+  rdfs:domain modinst:InstrumentComponent ;
+  rdfs:range modinst:FunctionalRoleAssignment ;
+  rdfs:label "has functional role assignment"@en ;
+  skos:definition "Relates an instrument component to a qualified assignment of a contextual functional role."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:roleOfComponent a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modinst:FunctionalRoleAssignment ;
+  rdfs:range modinst:InstrumentComponent ;
+  rdfs:label "role of component"@en ;
+  skos:definition "Identifies the component to which a functional role is assigned."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:assignedRole a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modinst:FunctionalRoleAssignment ;
+  rdfs:range skos:Concept ;
+  rdfs:label "assigned role"@en ;
+  skos:definition "Identifies the governed functional-role concept assigned to a component in context."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:instrumentType a owl:ObjectProperty ;
+  rdfs:domain modinst:MusicalInstrument ;
+  rdfs:range skos:Concept ;
+  rdfs:subPropertyOf modavis:hasType ;
+  rdfs:label "instrument type"@en ;
+  skos:definition "Classifies a musical instrument with a governed instrument-type concept or externally maintained classification concept."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .
+
+modinst:hasBuilder a owl:ObjectProperty ;
+  rdfs:domain modinst:MusicalInstrument ;
+  rdfs:range modavis:Agent ;
+  rdfs:label "has builder"@en ;
+  skos:definition "Relates an instrument to an agent accepted as its builder in a reviewed convenience graph."@en ;
+  skos:scopeNote "Convenience projection of an accepted, source-backed builder assertion."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/instrument> ;
+  vs:term_status "testing" .

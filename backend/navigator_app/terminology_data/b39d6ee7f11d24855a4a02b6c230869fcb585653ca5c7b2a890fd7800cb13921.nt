@@ -1,0 +1,213 @@
+<https://w3id.org/modavis/ontology/instrument#ComponentCollection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/instrument#ComponentCollection> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#ComponentCollection> <http://www.w3.org/2000/01/rdf-schema#label> "component collection"@en .
+<https://w3id.org/modavis/ontology/instrument#ComponentCollection> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/instrument#ComponentCollection> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#ComponentCollection> <http://www.w3.org/2004/02/skos/core#definition> "An instrument component whose identity is constituted by an organized collection of component members."@en .
+<https://w3id.org/modavis/ontology/instrument#ComponentMembership> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/instrument#ComponentMembership> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#ComponentMembership> <http://www.w3.org/2000/01/rdf-schema#label> "component membership"@en .
+<https://w3id.org/modavis/ontology/instrument#ComponentMembership> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/instrument#ComponentMembership> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#ComponentMembership> <http://www.w3.org/2004/02/skos/core#definition> "A qualified, potentially time- and configuration-scoped relation between a parent component or instrument and a child component."@en .
+<https://w3id.org/modavis/ontology/instrument#ComponentMembership> <http://www.w3.org/2004/02/skos/core#scopeNote> "The membershipInstrument always names the overall instrument and childComponent names the member. When parentComponent is absent, the child is a direct member of the instrument rather than of another recorded component."@en .
+<https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> <http://www.w3.org/2000/01/rdf-schema#label> "functional role assignment"@en .
+<https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> <http://www.w3.org/2004/02/skos/core#definition> "A contextual assignment of a governed functional-role concept to a component."@en .
+<https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> <http://www.w3.org/2004/02/skos/core#scopeNote> "The absence of a time, state, or configuration qualifier means that scope was not further specified; it does not prove that the role is permanent or universally applicable."@en .
+<https://w3id.org/modavis/ontology/instrument#InstrumentComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/instrument#InstrumentComponent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#InstrumentComponent> <http://www.w3.org/2000/01/rdf-schema#label> "instrument component"@en .
+<https://w3id.org/modavis/ontology/instrument#InstrumentComponent> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Continuant> .
+<https://w3id.org/modavis/ontology/instrument#InstrumentComponent> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#InstrumentComponent> <http://www.w3.org/2004/02/skos/core#definition> "A persistent physical, digital, or logical part that can participate in one or more instrument configurations."@en .
+<https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> <http://www.w3.org/2000/01/rdf-schema#label> "instrument configuration"@en .
+<https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> <http://www.w3.org/2004/02/skos/core#definition> "An arrangement of components, settings, and functional relationships applicable to an instrument or state."@en .
+<https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> <http://www.w3.org/2004/02/skos/core#scopeNote> "A configuration describes an arrangement. Its actual applicability is asserted through hasConfiguration or a qualified record scoped with appliesInConfiguration; configuration identity alone does not claim that the arrangement was active at every time."@en .
+<https://w3id.org/modavis/ontology/instrument#InstrumentState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/instrument#InstrumentState> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#InstrumentState> <http://www.w3.org/2000/01/rdf-schema#label> "instrument state"@en .
+<https://w3id.org/modavis/ontology/instrument#InstrumentState> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/instrument#InstrumentState> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#InstrumentState> <http://www.w3.org/2004/02/skos/core#definition> "A time-scoped described condition of a musical instrument, distinct from the configurations that may apply during that condition."@en .
+<https://w3id.org/modavis/ontology/instrument#InstrumentState> <http://www.w3.org/2004/02/skos/core#scopeNote> "Evidence for the recorded state may be attached through explicit assertions and evidence relations; state identity alone does not imply that evidence has been supplied."@en .
+<https://w3id.org/modavis/ontology/instrument#MusicalInstrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/instrument#MusicalInstrument> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#MusicalInstrument> <http://www.w3.org/2000/01/rdf-schema#label> "musical instrument"@en .
+<https://w3id.org/modavis/ontology/instrument#MusicalInstrument> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Continuant> .
+<https://w3id.org/modavis/ontology/instrument#MusicalInstrument> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#MusicalInstrument> <http://www.w3.org/2004/02/skos/core#definition> "A continuant intentionally made, configured, or used to produce, control, or organize musical sound."@en .
+<https://w3id.org/modavis/ontology/instrument#MusicalInstrument> <http://www.w3.org/2004/02/skos/core#scopeNote> "Physical, electroacoustic, digital, virtual, and hybrid instruments may instantiate this class. A recording, model, package, or other representation of an instrument is not thereby the represented instrument."@en .
+<https://w3id.org/modavis/ontology/instrument#PlayingInterface> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/instrument#PlayingInterface> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#PlayingInterface> <http://www.w3.org/2000/01/rdf-schema#label> "playing interface"@en .
+<https://w3id.org/modavis/ontology/instrument#PlayingInterface> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/instrument#PlayingInterface> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#PlayingInterface> <http://www.w3.org/2004/02/skos/core#definition> "A component designed to mediate a performer’s interaction with an instrument; contextual use is represented separately by role assignment."@en .
+<https://w3id.org/modavis/ontology/instrument#appliesInConfiguration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#appliesInConfiguration> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#appliesInConfiguration> <http://www.w3.org/2000/01/rdf-schema#label> "applies in configuration"@en .
+<https://w3id.org/modavis/ontology/instrument#appliesInConfiguration> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> .
+<https://w3id.org/modavis/ontology/instrument#appliesInConfiguration> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#appliesInConfiguration> <http://www.w3.org/2004/02/skos/core#definition> "Scopes a qualified relation, decision, or profile to an instrument configuration."@en .
+<https://w3id.org/modavis/ontology/instrument#appliesInConfiguration> <http://www.w3.org/2004/02/skos/core#scopeNote> "Memberships and functional-role assignments are the constrained 0.1.0 uses. No global domain is asserted so another explicitly governed qualified record can reuse the scoping relation without an incorrect type inference."@en .
+<https://w3id.org/modavis/ontology/instrument#appliesInState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#appliesInState> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#appliesInState> <http://www.w3.org/2000/01/rdf-schema#label> "applies in instrument state"@en .
+<https://w3id.org/modavis/ontology/instrument#appliesInState> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentState> .
+<https://w3id.org/modavis/ontology/instrument#appliesInState> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#appliesInState> <http://www.w3.org/2004/02/skos/core#definition> "Scopes a membership, role assignment, configuration, or other qualified relation to an instrument state."@en .
+<https://w3id.org/modavis/ontology/instrument#appliesInState> <http://www.w3.org/2004/02/skos/core#scopeNote> "Memberships and functional-role assignments are the constrained 0.1.0 uses. The state must concern the same instrument as any accompanying configuration or membership-instrument qualifier."@en .
+<https://w3id.org/modavis/ontology/instrument#assignedRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/instrument#assignedRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#assignedRole> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> .
+<https://w3id.org/modavis/ontology/instrument#assignedRole> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#assignedRole> <http://www.w3.org/2000/01/rdf-schema#label> "assigned role"@en .
+<https://w3id.org/modavis/ontology/instrument#assignedRole> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/instrument#assignedRole> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#assignedRole> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the governed functional-role concept assigned to a component in context."@en .
+<https://w3id.org/modavis/ontology/instrument#childComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/instrument#childComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#childComponent> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#ComponentMembership> .
+<https://w3id.org/modavis/ontology/instrument#childComponent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#childComponent> <http://www.w3.org/2000/01/rdf-schema#label> "child component"@en .
+<https://w3id.org/modavis/ontology/instrument#childComponent> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/instrument#childComponent> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#childComponent> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the component whose membership is qualified by a component-membership resource."@en .
+<https://w3id.org/modavis/ontology/instrument#componentOf> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#componentOf> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/instrument#componentOf> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#componentOf> <http://www.w3.org/2000/01/rdf-schema#label> "component of"@en .
+<https://w3id.org/modavis/ontology/instrument#componentOf> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/instrument#componentOf> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#componentOf> <http://www.w3.org/2004/02/skos/core#definition> "Relates a component directly to an instrument in a discovery-oriented convenience graph."@en .
+<https://w3id.org/modavis/ontology/instrument#configurationOf> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#configurationOf> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> .
+<https://w3id.org/modavis/ontology/instrument#configurationOf> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#configurationOf> <http://www.w3.org/2000/01/rdf-schema#label> "configuration of"@en .
+<https://w3id.org/modavis/ontology/instrument#configurationOf> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/instrument#configurationOf> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#configurationOf> <http://www.w3.org/2004/02/skos/core#definition> "Relates an instrument configuration to the musical instrument for which it is defined."@en .
+<https://w3id.org/modavis/ontology/instrument#hasBuilder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#hasBuilder> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/instrument#hasBuilder> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#hasBuilder> <http://www.w3.org/2000/01/rdf-schema#label> "has builder"@en .
+<https://w3id.org/modavis/ontology/instrument#hasBuilder> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Agent> .
+<https://w3id.org/modavis/ontology/instrument#hasBuilder> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#hasBuilder> <http://www.w3.org/2004/02/skos/core#definition> "Relates an instrument to an agent accepted as its builder in a reviewed convenience graph."@en .
+<https://w3id.org/modavis/ontology/instrument#hasBuilder> <http://www.w3.org/2004/02/skos/core#scopeNote> "Convenience projection of an accepted, source-backed builder assertion."@en .
+<https://w3id.org/modavis/ontology/instrument#hasComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#hasComponent> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/instrument#hasComponent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#hasComponent> <http://www.w3.org/2000/01/rdf-schema#label> "has component"@en .
+<https://w3id.org/modavis/ontology/instrument#hasComponent> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/instrument#hasComponent> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/instrument#componentOf> .
+<https://w3id.org/modavis/ontology/instrument#hasComponent> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#hasComponent> <http://www.w3.org/2004/02/skos/core#definition> "Relates an instrument directly to a component in a discovery-oriented convenience graph."@en .
+<https://w3id.org/modavis/ontology/instrument#hasComponent> <http://www.w3.org/2004/02/skos/core#scopeNote> "Convenience projection. Use ComponentMembership when time, configuration, relationship kind, assertion, or provenance must be retained."@en .
+<https://w3id.org/modavis/ontology/instrument#hasConfiguration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#hasConfiguration> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#hasConfiguration> <http://www.w3.org/2000/01/rdf-schema#label> "has configuration"@en .
+<https://w3id.org/modavis/ontology/instrument#hasConfiguration> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> .
+<https://w3id.org/modavis/ontology/instrument#hasConfiguration> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#hasConfiguration> <http://www.w3.org/2004/02/skos/core#definition> "Relates an instrument or instrument state to an applicable arrangement of components, settings, and functional relationships."@en .
+<https://w3id.org/modavis/ontology/instrument#hasConfiguration> <http://www.w3.org/2004/02/skos/core#scopeNote> "The domain is intentionally not global because both MusicalInstrument and InstrumentState are valid subjects. The exchange profile checks that the configuration is defined for the same instrument."@en .
+<https://w3id.org/modavis/ontology/instrument#hasMembership> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#hasMembership> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#hasMembership> <http://www.w3.org/2000/01/rdf-schema#label> "has component membership"@en .
+<https://w3id.org/modavis/ontology/instrument#hasMembership> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#ComponentMembership> .
+<https://w3id.org/modavis/ontology/instrument#hasMembership> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#hasMembership> <http://www.w3.org/2004/02/skos/core#definition> "Relates an instrument or component to a qualified component-membership resource."@en .
+<https://w3id.org/modavis/ontology/instrument#hasMembership> <http://www.w3.org/2004/02/skos/core#scopeNote> "This is a discovery link. Its subject may be the membershipInstrument or the parentComponent; inspect the qualified record to determine that role. The link does not replace membershipInstrument, parentComponent, or childComponent."@en .
+<https://w3id.org/modavis/ontology/instrument#hasRoleAssignment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#hasRoleAssignment> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/instrument#hasRoleAssignment> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#hasRoleAssignment> <http://www.w3.org/2000/01/rdf-schema#label> "has functional role assignment"@en .
+<https://w3id.org/modavis/ontology/instrument#hasRoleAssignment> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> .
+<https://w3id.org/modavis/ontology/instrument#hasRoleAssignment> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#hasRoleAssignment> <http://www.w3.org/2004/02/skos/core#definition> "Relates an instrument component to a qualified assignment of a contextual functional role."@en .
+<https://w3id.org/modavis/ontology/instrument#hasState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#hasState> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/instrument#hasState> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#hasState> <http://www.w3.org/2000/01/rdf-schema#label> "has state"@en .
+<https://w3id.org/modavis/ontology/instrument#hasState> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentState> .
+<https://w3id.org/modavis/ontology/instrument#hasState> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/instrument#stateOf> .
+<https://w3id.org/modavis/ontology/instrument#hasState> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#hasState> <http://www.w3.org/2004/02/skos/core#definition> "Relates a musical instrument to a described condition during a time span."@en .
+<https://w3id.org/modavis/ontology/instrument#instrumentType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#instrumentType> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/instrument#instrumentType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#instrumentType> <http://www.w3.org/2000/01/rdf-schema#label> "instrument type"@en .
+<https://w3id.org/modavis/ontology/instrument#instrumentType> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/instrument#instrumentType> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <https://w3id.org/modavis/ontology/core#hasType> .
+<https://w3id.org/modavis/ontology/instrument#instrumentType> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#instrumentType> <http://www.w3.org/2004/02/skos/core#definition> "Classifies a musical instrument with a governed instrument-type concept or externally maintained classification concept."@en .
+<https://w3id.org/modavis/ontology/instrument#membershipInstrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/instrument#membershipInstrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#membershipInstrument> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#ComponentMembership> .
+<https://w3id.org/modavis/ontology/instrument#membershipInstrument> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#membershipInstrument> <http://www.w3.org/2000/01/rdf-schema#label> "membership instrument"@en .
+<https://w3id.org/modavis/ontology/instrument#membershipInstrument> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/instrument#membershipInstrument> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#membershipInstrument> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the instrument within whose structure a component membership is asserted."@en .
+<https://w3id.org/modavis/ontology/instrument#membershipType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/instrument#membershipType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#membershipType> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#ComponentMembership> .
+<https://w3id.org/modavis/ontology/instrument#membershipType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#membershipType> <http://www.w3.org/2000/01/rdf-schema#label> "membership type"@en .
+<https://w3id.org/modavis/ontology/instrument#membershipType> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/instrument#membershipType> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#membershipType> <http://www.w3.org/2004/02/skos/core#definition> "Classifies the structural or functional kind of a component membership with a governed concept."@en .
+<https://w3id.org/modavis/ontology/instrument#parentComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/instrument#parentComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#parentComponent> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#ComponentMembership> .
+<https://w3id.org/modavis/ontology/instrument#parentComponent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#parentComponent> <http://www.w3.org/2000/01/rdf-schema#label> "parent component"@en .
+<https://w3id.org/modavis/ontology/instrument#parentComponent> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/instrument#parentComponent> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#parentComponent> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the optional containing, controlling, or otherwise parent component in a qualified membership."@en .
+<https://w3id.org/modavis/ontology/instrument#roleOfComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/instrument#roleOfComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#roleOfComponent> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment> .
+<https://w3id.org/modavis/ontology/instrument#roleOfComponent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#roleOfComponent> <http://www.w3.org/2000/01/rdf-schema#label> "role of component"@en .
+<https://w3id.org/modavis/ontology/instrument#roleOfComponent> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/instrument#roleOfComponent> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#roleOfComponent> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the component to which a functional role is assigned."@en .
+<https://w3id.org/modavis/ontology/instrument#stateOf> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/instrument#stateOf> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/instrument#stateOf> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/instrument#InstrumentState> .
+<https://w3id.org/modavis/ontology/instrument#stateOf> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/instrument> .
+<https://w3id.org/modavis/ontology/instrument#stateOf> <http://www.w3.org/2000/01/rdf-schema#label> "state of"@en .
+<https://w3id.org/modavis/ontology/instrument#stateOf> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/instrument#stateOf> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/instrument#stateOf> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one musical instrument whose condition an instrument state describes."@en .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/dc/terms/description> "Instrument-neutral semantics for musical instruments, states, components, configurations, memberships, classifications, and contextual functional roles."@en .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/dc/terms/title> "MODAVIS Instrument Ontology"@en .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modinst" .
+<https://w3id.org/modavis/ontology/instrument> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/instrument#" .
+<https://w3id.org/modavis/ontology/instrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/instrument> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology/instrument> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/instrument/0.1.0> .
+<https://w3id.org/modavis/ontology/instrument> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .
+_:cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+_:cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:cbd81bbfbcb60b0749757d68d91e07e7662a937628d4541cf0becf8029446916ea .
+_:cb1090be8d13f45dc9e0d4644695e6ca44f0956c1cd65de920e0c00db9b928b7b14 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration> .
+_:cb1090be8d13f45dc9e0d4644695e6ca44f0956c1cd65de920e0c00db9b928b7b14 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:cbb56c7c9b0751963ca43928a539dec044fa3caa55bb3ec2d9c3943b52cc4ce3a3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AllDisjointClasses> .
+_:cbb56c7c9b0751963ca43928a539dec044fa3caa55bb3ec2d9c3943b52cc4ce3a3 <http://www.w3.org/2002/07/owl#members> _:cb0 .
+_:cbd81bbfbcb60b0749757d68d91e07e7662a937628d4541cf0becf8029446916ea <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://w3id.org/modavis/ontology/instrument#InstrumentState> .
+_:cbd81bbfbcb60b0749757d68d91e07e7662a937628d4541cf0becf8029446916ea <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:cb1090be8d13f45dc9e0d4644695e6ca44f0956c1cd65de920e0c00db9b928b7b14 .

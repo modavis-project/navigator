@@ -1,0 +1,117 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modprov: <https://w3id.org/modavis/ontology/provenance#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/provenance> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0>,
+              <https://w3id.org/modavis/ontology/evidence/0.1.0> ;
+  dcterms:title "MODAVIS Provenance Ontology"@en ;
+  dcterms:description "A conservative PROV-O profile for MODAVIS processing, editorial, digitization, and release activities."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL>,
+                     <https://www.w3.org/TR/prov-o/> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/provenance/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modprov" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/provenance#" .
+
+modprov:ProcessingActivity a owl:Class ;
+  rdfs:subClassOf prov:Activity, modavis:IdentifiedResource ;
+  rdfs:label "processing activity"@en ;
+  skos:definition "A computational, ingestion, extraction, normalization, editorial, digitization, or publication activity that uses or generates MODAVIS resources."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:IngestionActivity a owl:Class ;
+  rdfs:subClassOf modprov:ProcessingActivity ;
+  rdfs:label "ingestion activity"@en ;
+  skos:definition "A processing activity that admits and records source material or data into a managed workflow."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:ExtractionActivity a owl:Class ;
+  rdfs:subClassOf modprov:ProcessingActivity ;
+  rdfs:label "extraction activity"@en ;
+  skos:definition "A processing activity that derives structured values, fragments, features, or candidate assertions from source material."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:NormalizationActivity a owl:Class ;
+  rdfs:subClassOf modprov:ProcessingActivity ;
+  rdfs:label "normalization activity"@en ;
+  skos:definition "A processing activity that transforms source values into a documented canonical or comparison form without erasing the source values."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:EditorialActivity a owl:Class ;
+  rdfs:subClassOf modprov:ProcessingActivity ;
+  rdfs:label "editorial activity"@en ;
+  skos:definition "A processing activity in which an accountable agent reviews, selects, corrects, or interprets knowledge resources."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:DigitizationActivity a owl:Class ;
+  rdfs:subClassOf modprov:ProcessingActivity ;
+  rdfs:label "digitization activity"@en ;
+  skos:definition "A processing activity that creates a digital representation from a physical, analogue, or previously inaccessible source."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:ReleaseActivity a owl:Class ;
+  rdfs:subClassOf modprov:ProcessingActivity ;
+  rdfs:label "release activity"@en ;
+  skos:definition "A processing activity that freezes, validates, packages, or publishes a versioned set of resources."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:ParameterSet a owl:Class ;
+  rdfs:subClassOf prov:Entity, modavis:Entity ;
+  rdfs:label "parameter set"@en ;
+  skos:definition "An immutable parameter bundle used by a processing activity."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:SoftwareAgent a owl:Class ;
+  rdfs:subClassOf prov:SoftwareAgent, modavis:Agent ;
+  rdfs:label "software agent"@en ;
+  skos:definition "A software system identified as an accountable PROV-O agent in a processing activity."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:usedParameterSet a owl:ObjectProperty ;
+  rdfs:subPropertyOf prov:used ;
+  rdfs:domain modprov:ProcessingActivity ;
+  rdfs:range modprov:ParameterSet ;
+  rdfs:label "used parameter set"@en ;
+  skos:definition "Relates a processing activity to an immutable parameter bundle it used."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:usedSoftware a owl:ObjectProperty ;
+  rdfs:subPropertyOf prov:wasAssociatedWith ;
+  rdfs:domain modprov:ProcessingActivity ;
+  rdfs:range prov:SoftwareAgent ;
+  rdfs:label "used software"@en ;
+  skos:definition "Relates a processing activity to the identified software agent responsible for executing or materially controlling it."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .
+
+modprov:activityType a owl:ObjectProperty ;
+  rdfs:domain modprov:ProcessingActivity ;
+  rdfs:range skos:Concept ;
+  rdfs:label "processing activity type"@en ;
+  skos:definition "Classifies a processing activity with a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/provenance> ;
+  vs:term_status "testing" .

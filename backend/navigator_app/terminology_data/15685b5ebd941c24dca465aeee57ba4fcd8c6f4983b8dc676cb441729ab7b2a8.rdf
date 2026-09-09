@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">Instrument-neutral semantics for musical instruments, states, components, configurations, memberships, classifications, and contextual functional roles.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Instrument Ontology</ns1:title>
+    <ns2:preferredNamespacePrefix>modinst</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology/instrument#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/instrument/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#ComponentCollection">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">component collection</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An instrument component whose identity is constituted by an organized collection of component members.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#ComponentMembership">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">component membership</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A qualified, potentially time- and configuration-scoped relation between a parent component or instrument and a child component.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The membershipInstrument always names the overall instrument and childComponent names the member. When parentComponent is absent, the child is a direct member of the instrument rather than of another recorded component.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">functional role assignment</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A contextual assignment of a governed functional-role concept to a component.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The absence of a time, state, or configuration qualifier means that scope was not further specified; it does not prove that the role is permanent or universally applicable.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#InstrumentComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">instrument component</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Continuant" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A persistent physical, digital, or logical part that can participate in one or more instrument configurations.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">instrument configuration</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An arrangement of components, settings, and functional relationships applicable to an instrument or state.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">A configuration describes an arrangement. Its actual applicability is asserted through hasConfiguration or a qualified record scoped with appliesInConfiguration; configuration identity alone does not claim that the arrangement was active at every time.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#InstrumentState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">instrument state</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A time-scoped described condition of a musical instrument, distinct from the configurations that may apply during that condition.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Evidence for the recorded state may be attached through explicit assertions and evidence relations; state identity alone does not imply that evidence has been supplied.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#MusicalInstrument">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">musical instrument</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Continuant" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A continuant intentionally made, configured, or used to produce, control, or organize musical sound.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Physical, electroacoustic, digital, virtual, and hybrid instruments may instantiate this class. A recording, model, package, or other representation of an instrument is not thereby the represented instrument.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#PlayingInterface">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">playing interface</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A component designed to mediate a performer’s interaction with an instrument; contextual use is represented separately by role assignment.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#appliesInConfiguration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">applies in configuration</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Scopes a qualified relation, decision, or profile to an instrument configuration.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Memberships and functional-role assignments are the constrained 0.1.0 uses. No global domain is asserted so another explicitly governed qualified record can reuse the scoping relation without an incorrect type inference.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#appliesInState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">applies in instrument state</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentState" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Scopes a membership, role assignment, configuration, or other qualified relation to an instrument state.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Memberships and functional-role assignments are the constrained 0.1.0 uses. The state must concern the same instrument as any accompanying configuration or membership-instrument qualifier.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#assignedRole">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">assigned role</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the governed functional-role concept assigned to a component in context.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#childComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#ComponentMembership" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">child component</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the component whose membership is qualified by a component-membership resource.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#componentOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">component of</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a component directly to an instrument in a discovery-oriented convenience graph.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#configurationOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">configuration of</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an instrument configuration to the musical instrument for which it is defined.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#hasBuilder">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">has builder</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Agent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an instrument to an agent accepted as its builder in a reviewed convenience graph.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Convenience projection of an accepted, source-backed builder assertion.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#hasComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">has component</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns3:inverseOf rdf:resource="https://w3id.org/modavis/ontology/instrument#componentOf" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an instrument directly to a component in a discovery-oriented convenience graph.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Convenience projection. Use ComponentMembership when time, configuration, relationship kind, assertion, or provenance must be retained.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#hasConfiguration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">has configuration</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an instrument or instrument state to an applicable arrangement of components, settings, and functional relationships.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The domain is intentionally not global because both MusicalInstrument and InstrumentState are valid subjects. The exchange profile checks that the configuration is defined for the same instrument.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#hasMembership">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">has component membership</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#ComponentMembership" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an instrument or component to a qualified component-membership resource.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This is a discovery link. Its subject may be the membershipInstrument or the parentComponent; inspect the qualified record to determine that role. The link does not replace membershipInstrument, parentComponent, or childComponent.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#hasRoleAssignment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">has functional role assignment</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an instrument component to a qualified assignment of a contextual functional role.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#hasState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">has state</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentState" />
+    <ns3:inverseOf rdf:resource="https://w3id.org/modavis/ontology/instrument#stateOf" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a musical instrument to a described condition during a time span.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#instrumentType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">instrument type</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:subPropertyOf rdf:resource="https://w3id.org/modavis/ontology/core#hasType" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies a musical instrument with a governed instrument-type concept or externally maintained classification concept.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#membershipInstrument">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#ComponentMembership" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">membership instrument</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the instrument within whose structure a component membership is asserted.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#membershipType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#ComponentMembership" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">membership type</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies the structural or functional kind of a component membership with a governed concept.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#parentComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#ComponentMembership" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">parent component</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the optional containing, controlling, or otherwise parent component in a qualified membership.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#roleOfComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#FunctionalRoleAssignment" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">role of component</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the component to which a functional role is assigned.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/instrument#stateOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentState" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/instrument" />
+    <ns4:label xml:lang="en">state of</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one musical instrument whose condition an instrument state describes.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="cb0">
+    <rdf:first rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <rdf:rest rdf:nodeID="cbd81bbfbcb60b0749757d68d91e07e7662a937628d4541cf0becf8029446916ea" />
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="cb1090be8d13f45dc9e0d4644695e6ca44f0956c1cd65de920e0c00db9b928b7b14">
+    <rdf:first rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentConfiguration" />
+    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil" />
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="cbb56c7c9b0751963ca43928a539dec044fa3caa55bb3ec2d9c3943b52cc4ce3a3">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses" />
+    <ns3:members rdf:nodeID="cb0" />
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="cbd81bbfbcb60b0749757d68d91e07e7662a937628d4541cf0becf8029446916ea">
+    <rdf:first rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentState" />
+    <rdf:rest rdf:nodeID="cb1090be8d13f45dc9e0d4644695e6ca44f0956c1cd65de920e0c00db9b928b7b14" />
+  </rdf:Description>
+</rdf:RDF>

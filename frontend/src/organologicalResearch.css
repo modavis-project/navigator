@@ -1,0 +1,22 @@
+.organological-research { margin-block: 1.5rem; padding: clamp(.8rem,2vw,1.5rem); border:1px solid #ccd8d2; border-radius:12px; background:var(--surface,#fff); color:var(--text,#23342c); min-width:0; }
+.organological-research h2,.organological-research h3,.organological-research h4 { margin-block:.6rem; }
+.organological-research label { display:grid; gap:.4rem; margin-block:.8rem; }
+.organological-research input { padding:.65rem; border:1px solid #a5b6ad; border-radius:6px; width:100%; box-sizing:border-box; color:inherit; background:transparent; }
+.organological-research button { padding:.5rem .7rem; border:1px solid #9fb1a7; border-radius:6px; background:#f1f6f2; color:#183a2b; cursor:pointer; white-space:normal; }
+.organological-research button:disabled { opacity:.5; cursor:default; }
+.organological-research button[aria-pressed=true] { color:white; background:#24543d; }
+.organological-research button:focus-visible,.organological-research a:focus-visible { outline:3px solid #b77822; outline-offset:3px; }
+.organological-research nav,.research-section-buttons,.research-peer,.research-builder-results { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-block:.8rem; }
+.research-builder-results { align-items:stretch; }
+.research-builder-results button { flex:1 1 220px; text-align:left; }
+.research-results { display:grid; gap:.8rem; }
+.research-results>article,.research-account-grid>article,.research-event { border:1px solid #d4ded8; border-radius:8px; padding:1rem; min-width:0; }
+.research-account-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.research-qualification { background:#f5f1e6; border-left:3px solid #a28343; padding:.75rem; color:#51452c; }
+.organological-research p,.organological-research a { overflow-wrap:anywhere; }
+.organological-research pre { overflow:auto; max-height:24rem; white-space:pre-wrap; overflow-wrap:anywhere; font-size:.8rem; }
+.organological-research details { margin-block:.6rem; }
+.organological-research summary { cursor:pointer; padding:.4rem 0; }
+@media(max-width:700px) { .research-account-grid { grid-template-columns:1fr; } .organological-research { padding:.65rem; } }
+
+.organological-research a { color:#24543d; text-decoration:underline; text-underline-offset:2px; }

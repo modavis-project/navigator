@@ -1,0 +1,152 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modmedia: <https://w3id.org/modavis/ontology/media#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/media> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0>,
+              <https://w3id.org/modavis/ontology/evidence/0.1.0>,
+              <https://w3id.org/modavis/ontology/provenance/0.1.0> ;
+  dcterms:title "MODAVIS Media and Digital Representation Ontology"@en ;
+  dcterms:description "Representation-neutral semantics for digital surrogates, managed assets, bitstreams, fixity, derivation, and representation status."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL>,
+                     <https://www.w3.org/TR/prov-o/> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/media/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modmedia" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/media#" .
+
+modmedia:Representation a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "representation"@en ;
+  skos:definition "An entity intentionally standing for, documenting, modeling, or rendering some aspect of another identified resource."@en ;
+  skos:scopeNote "A representation is not asserted to be complete, authentic, or identical to the represented resource."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:DigitalRepresentation a owl:Class ;
+  rdfs:subClassOf modmedia:Representation, modmedia:DigitalAsset, prov:Entity ;
+  rdfs:label "digital representation"@en ;
+  skos:definition "A representation encoded in digital form and capable of being versioned, fixed, derived, or rendered by a computational system."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:DigitalSurrogate a owl:Class ;
+  rdfs:subClassOf modmedia:DigitalRepresentation ;
+  rdfs:label "digital surrogate"@en ;
+  skos:definition "A digital representation intended to stand in for selected documentary, analytical, experiential, or operational aspects of a physical or otherwise distinct resource."@en ;
+  skos:scopeNote "A surrogate does not replace the represented object. A playable virtual instrument may itself be a musical instrument while also serving as a surrogate for aspects of another instrument; the two retain distinct identities."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:DigitalAsset a owl:Class ;
+  rdfs:subClassOf modavis:Entity, prov:Entity ;
+  rdfs:label "digital asset"@en ;
+  skos:definition "An identified digital unit managed as retrievable, exchangeable, or preservable content with format, rights, fixity, and provenance where applicable."@en ;
+  skos:scopeNote "A digital asset need not represent another resource. Digital representations are digital assets with an explicit representation relation."@en ;
+  skos:scopeNote "An asset may be a file, compound object, package, stream, model, or another managed unit; storage layout is not inferred from this class."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:Bitstream a owl:Class ;
+  rdfs:subClassOf modmedia:DigitalAsset ;
+  rdfs:label "bitstream"@en ;
+  skos:definition "A finite sequence of bytes whose exact content can be fixed by a byte size and checksum."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:hasRepresentation a owl:ObjectProperty ;
+  owl:inverseOf modmedia:representationOf ;
+  rdfs:range modmedia:Representation ;
+  rdfs:label "has representation"@en ;
+  skos:definition "Relates an identified resource to a representation of some documented aspect of that resource."@en ;
+  skos:scopeNote "The subject remains the represented resource and is not inferred to be a MODAVIS Entity solely from this link. The inverse representationOf carries the representation-side domain."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:representationOf a owl:ObjectProperty ;
+  rdfs:domain modmedia:Representation ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "representation of"@en ;
+  skos:definition "Identifies a resource represented by a representation without asserting identity, completeness, or evidential status."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:representationStatus a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modmedia:DigitalRepresentation ;
+  rdfs:range skos:Concept ;
+  rdfs:label "representation status"@en ;
+  skos:definition "Classifies how a digital representation was produced or what epistemic status it carries, separately from its detailed generating provenance."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:mediaType a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modmedia:DigitalAsset ;
+  rdfs:range xsd:string ;
+  rdfs:label "media type"@en ;
+  skos:definition "The lowercase IANA media type of a digital asset, without using a filename extension as the authoritative format declaration."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:byteSize a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modmedia:Bitstream ;
+  rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "byte size"@en ;
+  skos:definition "The exact number of bytes in a fixed bitstream."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:contentUrl a owl:DatatypeProperty ;
+  rdfs:domain modmedia:DigitalAsset ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "content URL"@en ;
+  skos:definition "A retrieval location for the digital asset; it is not required to be the asset's persistent identity IRI."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:conformsToProfile a owl:ObjectProperty ;
+  rdfs:domain modmedia:DigitalRepresentation ;
+  rdfs:label "conforms to profile"@en ;
+  skos:definition "Identifies a specification, profile, or format contract to which a digital representation conforms."@en ;
+  skos:scopeNote "The object should be the persistent IRI of a citable specification or profile. This assertion does not by itself record which validator, versioned test suite, or conformance result established the claim."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:derivedFrom a owl:ObjectProperty ;
+  rdfs:subPropertyOf prov:wasDerivedFrom ;
+  rdfs:domain modmedia:DigitalAsset ;
+  rdfs:range modmedia:DigitalAsset ;
+  rdfs:label "derived from digital asset"@en ;
+  skos:definition "Relates a digital asset to a source digital asset from which it was derived while preserving both identities."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:generatedBy a owl:ObjectProperty ;
+  rdfs:subPropertyOf prov:wasGeneratedBy ;
+  rdfs:domain modmedia:DigitalAsset ;
+  rdfs:range prov:Activity ;
+  rdfs:label "generated by activity"@en ;
+  skos:definition "Identifies the capture, processing, reconstruction, simulation, inference, authoring, or other activity that generated a digital asset."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .
+
+modmedia:hasChecksum a owl:ObjectProperty ;
+  rdfs:subPropertyOf modevidence:hasChecksum ;
+  rdfs:domain modmedia:Bitstream ;
+  rdfs:range modevidence:Checksum ;
+  rdfs:label "has bitstream checksum"@en ;
+  skos:definition "Relates a bitstream to a qualified checksum recording its digest algorithm and value."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/media> ;
+  vs:term_status "testing" .

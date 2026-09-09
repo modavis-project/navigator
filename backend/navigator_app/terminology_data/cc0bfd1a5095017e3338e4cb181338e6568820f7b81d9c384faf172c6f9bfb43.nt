@@ -1,0 +1,27 @@
+<https://w3id.org/modavis/ontology> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology> <http://purl.org/dc/terms/description> "A modular semantic standard for evidence-backed, time-aware, provenance-aware knowledge about musical instruments, their digital representations, and virtual realizations."@en .
+<https://w3id.org/modavis/ontology> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology> <http://purl.org/dc/terms/title> "MODAVIS Ontology Network"@en .
+<https://w3id.org/modavis/ontology> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modavisnet" .
+<https://w3id.org/modavis/ontology> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology#" .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/assertion/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/audio/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/context/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/events/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/evidence/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/heritage/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/instrument/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/media/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/midi/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/organ/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/provenance/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/virtual-instrument/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/vocab/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/0.1.0> .
+<https://w3id.org/modavis/ontology> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

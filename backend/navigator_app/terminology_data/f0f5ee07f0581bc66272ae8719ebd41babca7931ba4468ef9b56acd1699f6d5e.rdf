@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:ns7="https://w3id.org/modavis/ontology/assertion#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/skos-reference/" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">Reviewed SKOS concept schemes used by the MODAVIS 0.1.0 ontology and validation profiles.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Controlled Vocabularies</ns1:title>
+    <ns2:preferredNamespacePrefix>mdvsv</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/vocab/</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/assertion/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/vocab/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/assertion-predicate">
+    <ns1:title xml:lang="en">MODAVIS assertion predicates</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Governed predicate concepts used inside reified assertions before any reviewed projection to native OWL properties.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Assertion predicates</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/assertion-predicate/has-builder">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns4:seeAlso rdf:resource="https://w3id.org/modavis/ontology/instrument#hasBuilder" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Claims that the subject instrument has the identified builder.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/assertion-predicate" />
+    <ns6:prefLabel xml:lang="en">has-builder assertion predicate</ns6:prefLabel>
+    <ns7:projectedPropertyIri rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://w3id.org/modavis/ontology/instrument#hasBuilder</ns7:projectedPropertyIri>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/assertion-status">
+    <ns1:title xml:lang="en">MODAVIS assertion statuses</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Review and lifecycle states for explicit MODAVIS assertions.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Assertion statuses</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/assertion-status/accepted">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The assertion has been accepted under a recorded review or decision policy.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/assertion-status" />
+    <ns6:prefLabel xml:lang="en">accepted</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/assertion-status/draft">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The assertion has been recorded but has not been accepted through the applicable review process.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/assertion-status" />
+    <ns6:prefLabel xml:lang="en">draft</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/assertion-status/rejected">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The assertion has been reviewed and not accepted under the recorded policy.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/assertion-status" />
+    <ns6:prefLabel xml:lang="en">rejected</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/assertion-status/superseded">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The assertion remains part of the record but a later assertion or decision has replaced its active role.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/assertion-status" />
+    <ns6:prefLabel xml:lang="en">superseded</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/checksum-algorithm">
+    <ns1:title xml:lang="en">MODAVIS checksum algorithms</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Digest algorithms permitted by MODAVIS fixity profiles.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Checksum algorithms</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/checksum-algorithm/sha-256">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns4:seeAlso rdf:resource="https://doi.org/10.6028/NIST.FIPS.180-4" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The SHA-256 cryptographic hash function standardized by NIST FIPS 180-4.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/checksum-algorithm" />
+    <ns6:notation>sha256</ns6:notation>
+    <ns6:prefLabel xml:lang="en">SHA-256</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/compatibility-status">
+    <ns1:title xml:lang="en">MODAVIS compatibility statuses</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Evidence-backed outcomes for evaluating a versioned resource against a specified host, platform, protocol, format, or operating environment.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Compatibility statuses</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/compatibility-status/compatible">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The evaluated version satisfies the documented compatibility criteria for the specified target without a known material limitation.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/compatibility-status" />
+    <ns6:prefLabel xml:lang="en">compatible</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/compatibility-status/compatible-with-limitations">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The evaluated version satisfies the documented compatibility criteria only under stated restrictions, workarounds, or loss of capability.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/compatibility-status" />
+    <ns6:prefLabel xml:lang="en">compatible with limitations</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/compatibility-status/incompatible">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The evaluated version fails one or more documented compatibility criteria for the specified target.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/compatibility-status" />
+    <ns6:prefLabel xml:lang="en">incompatible</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/compatibility-status/indeterminate">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Available evidence is insufficient or conflicting, so compatibility with the specified target cannot be determined.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/compatibility-status" />
+    <ns6:prefLabel xml:lang="en">indeterminate compatibility</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/component-membership-type">
+    <ns1:title xml:lang="en">MODAVIS component-membership types</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Kinds of qualified structural or functional relation between an instrument, a parent component, and a child component.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Component-membership types</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/component-membership-type/connected-to">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The components participate in a documented connection whose more specific nature is not asserted by this concept.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/component-membership-type" />
+    <ns6:prefLabel xml:lang="en">connected to</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/component-membership-type/controlled-by">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The child component's activation or behavior is controlled by the parent component in the stated scope.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/component-membership-type" />
+    <ns6:prefLabel xml:lang="en">controlled by</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/component-membership-type/member-of-collection">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The child is an organized member of the parent component collection in the stated scope.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/component-membership-type" />
+    <ns6:prefLabel xml:lang="en">member of collection</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/component-membership-type/structural-part">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The child is a structural part of the instrument or parent component in the stated scope.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/component-membership-type" />
+    <ns6:prefLabel xml:lang="en">structural part</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/event-type">
+    <ns1:title xml:lang="en">MODAVIS event types</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Broad types for occurrences and activities in the documented history of instruments and related entities.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Event types</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/event-type/construction">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An event in which an instrument or substantial part of it is built or assembled.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/event-type" />
+    <ns6:prefLabel xml:lang="en">construction</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/event-type/digitization">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An event in the documented world involving the creation of a digital representation from physical or analogue material.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/event-type" />
+    <ns6:prefLabel xml:lang="en">digitization</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/event-type/measurement">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An event in which a property is observed under a stated method, unit, and context.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/event-type" />
+    <ns6:prefLabel xml:lang="en">measurement</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/event-type/recording">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An event in which sound, image, performance, measurement, or related signals are intentionally recorded.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/event-type" />
+    <ns6:prefLabel xml:lang="en">recording</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/event-type/relocation">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An event in which an instrument or other entity is moved between places or spatial contexts.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/event-type" />
+    <ns6:prefLabel xml:lang="en">relocation</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/event-type/restoration">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An intervention intended to recover, reveal, or stabilize a documented earlier condition or significance.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/event-type" />
+    <ns6:prefLabel xml:lang="en">restoration</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/evidence-role">
+    <ns1:title xml:lang="en">MODAVIS evidence roles</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Ways in which a cited source fragment bears on the resource evaluated by a qualified evidence relation.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Evidence roles</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/evidence-role/contextual">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Evidence that supplies relevant context without being classified as directly supporting or opposing.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/evidence-role" />
+    <ns6:prefLabel xml:lang="en">contextual evidence</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/evidence-role/opposing">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Evidence presented as contradicting or decreasing support for the evaluated resource.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/evidence-role" />
+    <ns6:prefLabel xml:lang="en">opposing evidence</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/evidence-role/supporting">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Evidence presented as increasing support for the evaluated resource.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/evidence-role" />
+    <ns6:prefLabel xml:lang="en">supporting evidence</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/functional-role">
+    <ns1:title xml:lang="en">MODAVIS instrument-component functional roles</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Contextual functions that instrument components may perform without turning those functions into permanent component identities.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Functional roles</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/functional-role/action-mechanism">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Transmits, transforms, or coordinates control actions between instrument components.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/functional-role" />
+    <ns6:prefLabel xml:lang="en">action mechanism</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/functional-role/playing-interface">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Mediates a performer's intentional control of a musical instrument.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/functional-role" />
+    <ns6:prefLabel xml:lang="en">playing-interface functional role</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/functional-role/resonator">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Selectively reinforces, shapes, or sustains vibration or sound energy.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/functional-role" />
+    <ns6:prefLabel xml:lang="en">resonator</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/functional-role/selector">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Selects a resource, pathway, voice, component group, or configuration for use.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/functional-role" />
+    <ns6:prefLabel xml:lang="en">selector</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/functional-role/sound-generator">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Produces an acoustic or electronic signal that contributes directly to the instrument's output.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/functional-role" />
+    <ns6:prefLabel xml:lang="en">sound generator</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/functional-role/sound-initiator">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Initiates excitation or activation that leads to sound production.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/functional-role" />
+    <ns6:prefLabel xml:lang="en">sound initiator</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/functional-role/sound-modulator">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Varies one or more parameters of an existing sound-producing process or signal.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/functional-role" />
+    <ns6:prefLabel xml:lang="en">sound modulator</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/heritage-recognition-status">
+    <ns1:title xml:lang="en">MODAVIS heritage-recognition statuses</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Outcomes and lifecycle states assigned by a qualified heritage-recognition record without treating heritage significance as an intrinsic class of the recognized resource.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Heritage-recognition statuses</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/heritage-recognition-status/declined">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The assigning agent reviewed the proposal and did not assign a positive heritage status under the identified criteria.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/heritage-recognition-status" />
+    <ns6:prefLabel xml:lang="en">recognition declined</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/heritage-recognition-status/proposed">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Recognition has been formally proposed under the identified criteria but no positive or negative determination has been recorded.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/heritage-recognition-status" />
+    <ns6:prefLabel xml:lang="en">proposed recognition</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/heritage-recognition-status/recognized">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The assigning agent has made a positive heritage-recognition determination under the identified criteria and temporal scope.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/heritage-recognition-status" />
+    <ns6:prefLabel xml:lang="en">recognized</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/heritage-recognition-status/withdrawn">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A previously applicable recognition has been withdrawn for the stated temporal scope without erasing the earlier recognition record.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/heritage-recognition-status" />
+    <ns6:prefLabel xml:lang="en">recognition withdrawn</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/instrument-type">
+    <ns1:title xml:lang="en">MODAVIS instrument types</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A small seed vocabulary for broad musical-instrument types used by the first MODAVIS examples; detailed classifications should retain their external scheme and edition.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Instrument types</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/instrument-type/piano">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A keyboard instrument in which controlled hammers normally strike tensioned strings.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/instrument-type" />
+    <ns6:prefLabel xml:lang="en">piano</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/instrument-type/pipe-organ">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A wind keyboard instrument in which pressurized air sounds pipes selected through stops or analogous controls.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/instrument-type" />
+    <ns6:prefLabel xml:lang="en">pipe-organ instrument type</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/instrument-type/violin">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A bowed string instrument of the violin family, normally played at soprano register.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/instrument-type" />
+    <ns6:prefLabel xml:lang="en">violin</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/instrument-type/virtual-musical-instrument">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A musical instrument whose playable behavior is realized substantially through software, digital computation, or a software-controlled sample or synthesis system.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/instrument-type" />
+    <ns6:prefLabel xml:lang="en">virtual-musical-instrument type</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status">
+    <ns1:title xml:lang="en">MODAVIS representation statuses</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Epistemic and production statuses that distinguish capture, documentation, processing, reconstruction, simulation, inference, learning, and creative transformation.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Representation statuses</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/authored">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Created intentionally as documentation rather than obtained by direct capture.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">authored documentary content</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/captured">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Created by direct sensing or recording of the represented object, event, environment, or signal under documented conditions.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">directly captured</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/creative">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Intentionally transforms source material for expressive or speculative purposes and is not presented as documentary capture.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">creative transformation</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/hybrid">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Combines two or more representation statuses in a way that cannot be faithfully reduced to one status.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">hybrid representation</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/inferred">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Produced by analytical inference from evidence and method rather than directly observed as represented.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">analytically inferred</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/learned">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Generated by a learned model whose training inputs, model artifact, validation, and inference activity are separately identified.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">machine-learned representation</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/measured">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Represents quantities obtained through a documented measurement procedure, including its calibration and uncertainty where applicable.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">measured representation</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/processed">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Derived through a documented transformation from one or more prior representations.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">processed derivative</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/reconstructed">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Created by reconstructing a missing, past, incomplete, or inaccessible state from identified evidence and documented decisions.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">evidence-based reconstruction</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/representation-status/simulated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Generated by a declared computational or physical simulation rather than directly measured at every represented state.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/representation-status" />
+    <ns6:prefLabel xml:lang="en">simulation result</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-production-method">
+    <ns1:title xml:lang="en">MODAVIS virtual-instrument production methods</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Primary methods by which a virtual musical instrument produces or transforms sound.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Virtual-instrument production methods</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-production-method/algorithmic-synthesis">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Produces sound primarily through a signal-generation algorithm not limited to playback of captured samples.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-production-method" />
+    <ns6:prefLabel xml:lang="en">algorithmic synthesis</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-production-method/convolution-based">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Depends substantially on convolution with identified response data or filters.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-production-method" />
+    <ns6:prefLabel xml:lang="en">convolution based</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-production-method/hybrid">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Combines sampling, physical modeling, algorithmic synthesis, convolution, or other production methods.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-production-method" />
+    <ns6:prefLabel xml:lang="en">hybrid</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-production-method/physical-modeling">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Produces sound primarily through a computational model of physical sound-generation behavior.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-production-method" />
+    <ns6:prefLabel xml:lang="en">physical modeling</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-production-method/sampled">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Produces sound primarily by selecting and rendering recorded audio samples.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-production-method" />
+    <ns6:prefLabel xml:lang="en">sampled</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-source-relation">
+    <ns1:title xml:lang="en">MODAVIS virtual-instrument source relations</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Evidence-qualified ways in which a virtual instrument or product relates to a specific source musical instrument or instrument state.</ns6:definition>
+    <ns6:prefLabel xml:lang="en">Virtual-instrument source relations</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-source-relation/composite-source">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The virtual instrument combines recorded, modeled, or reconstructed material from more than one identified source instrument or state.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-source-relation" />
+    <ns6:prefLabel xml:lang="en">composite source</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-source-relation/historical-reconstruction">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The virtual instrument reconstructs an identified historical instrument or state from documented evidence and decisions.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-source-relation" />
+    <ns6:prefLabel xml:lang="en">historical reconstruction of</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-source-relation/inspired-by">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The virtual instrument draws documented conceptual or aesthetic inspiration from the source without claiming capture, modeling, or reconstruction.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-source-relation" />
+    <ns6:prefLabel xml:lang="en">inspired by</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-source-relation/modeled-after">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The virtual instrument's structure or behavior was modeled after the identified source instrument or state.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-source-relation" />
+    <ns6:prefLabel xml:lang="en">modeled after</ns6:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vocab/virtual-instrument-source-relation/sampled-from">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/vocab" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The virtual instrument uses recordings captured from the identified source instrument or state.</ns6:definition>
+    <ns6:inScheme rdf:resource="https://w3id.org/modavis/vocab/virtual-instrument-source-relation" />
+    <ns6:prefLabel xml:lang="en">sampled from</ns6:prefLabel>
+  </rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,32 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/modavis/ontology> a owl:Ontology ;
+  dcterms:title "MODAVIS Ontology Network"@en ;
+  dcterms:description "A modular semantic standard for evidence-backed, time-aware, provenance-aware knowledge about musical instruments, their digital representations, and virtual realizations."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modavisnet" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology#" ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0>,
+              <https://w3id.org/modavis/ontology/instrument/0.1.0>,
+              <https://w3id.org/modavis/ontology/evidence/0.1.0>,
+              <https://w3id.org/modavis/ontology/provenance/0.1.0>,
+              <https://w3id.org/modavis/ontology/assertion/0.1.0>,
+              <https://w3id.org/modavis/ontology/events/0.1.0>,
+              <https://w3id.org/modavis/ontology/organ/0.1.0>,
+              <https://w3id.org/modavis/ontology/media/0.1.0>,
+              <https://w3id.org/modavis/ontology/virtual-instrument/0.1.0>,
+              <https://w3id.org/modavis/ontology/audio/0.1.0>,
+              <https://w3id.org/modavis/ontology/midi/0.1.0>,
+              <https://w3id.org/modavis/ontology/context/0.1.0>,
+              <https://w3id.org/modavis/ontology/heritage/0.1.0>,
+              <https://w3id.org/modavis/vocab/0.1.0> .

@@ -1,0 +1,91 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modassert: <https://w3id.org/modavis/ontology/assertion#> .
+@prefix modcontext: <https://w3id.org/modavis/ontology/context#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/context> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0>,
+              <https://w3id.org/modavis/ontology/assertion/0.1.0> ;
+  dcterms:title "MODAVIS Assertion Context Ontology"@en ;
+  dcterms:description "RDF 1.1 semantics for explicitly qualifying the contextual applicability of identified assertions without conflating context with provenance."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/context/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modcontext" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/context#" .
+
+modcontext:ContextDimension a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "context dimension"@en ;
+  skos:definition "An identified axis along which an assertion's applicability may be qualified, such as time, place, institutional perspective, configuration, or performance conditions."@en ;
+  skos:scopeNote "Dimensions are not restricted to a fixed universal list. Application profiles should reuse established temporal, spatial, measurement, and domain value models where available."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/context> ;
+  vs:term_status "testing" .
+
+modcontext:ContextBinding a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "assertion context binding"@en ;
+  skos:definition "An explicit relation qualifying one assertion with one dimension, one contextual relation, and one identified context value."@en ;
+  skos:scopeNote "Absence of a context binding means that applicability is unqualified or unknown; it never means universally valid or invalid. Multiple bindings have no implicit conjunction or disjunction semantics. An application profile must define how bindings combine, or model alternatives as distinct assertions."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/context> ;
+  vs:term_status "testing" .
+
+modcontext:hasContextBinding a owl:ObjectProperty ;
+  owl:inverseOf modcontext:contextualizesAssertion ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range modcontext:ContextBinding ;
+  rdfs:label "has context binding"@en ;
+  skos:definition "Relates an assertion to an explicit contextual applicability binding."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/context> ;
+  vs:term_status "testing" .
+
+modcontext:contextualizesAssertion a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modcontext:ContextBinding ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "contextualizes assertion"@en ;
+  skos:definition "Identifies the one assertion whose contextual applicability is qualified by a binding."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/context> ;
+  vs:term_status "testing" .
+
+modcontext:dimension a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modcontext:ContextBinding ;
+  rdfs:range modcontext:ContextDimension ;
+  rdfs:label "has context dimension"@en ;
+  skos:definition "Identifies the dimension along which a context binding qualifies an assertion."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/context> ;
+  vs:term_status "testing" .
+
+modcontext:contextRelation a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modcontext:ContextBinding ;
+  rdfs:range skos:Concept ;
+  rdfs:label "context relation"@en ;
+  skos:definition "Identifies the governed or profile-defined relation between the assertion and the supplied dimension value."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/context> ;
+  vs:term_status "testing" .
+
+modcontext:contextValue a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modcontext:ContextBinding ;
+  rdfs:label "context value"@en ;
+  skos:definition "Identifies the value, interval, region, perspective, configuration, or other resource used to qualify applicability along the dimension."@en ;
+  skos:scopeNote "The value is an identified resource. Its type and comparison semantics come from the context dimension's valueModel or an application profile; MODAVIS does not infer them from this generic property."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/context> ;
+  vs:term_status "testing" .
+
+modcontext:valueModel a owl:ObjectProperty ;
+  rdfs:domain modcontext:ContextDimension ;
+  rdfs:label "value model"@en ;
+  skos:definition "Identifies a vocabulary, ontology, SHACL profile, or specification that defines values and comparison semantics for a context dimension."@en ;
+  skos:scopeNote "MODAVIS does not invent generic ordering, containment, or hierarchy semantics for dimension values. Profiles should reference standards such as OWL-Time or GeoSPARQL when applicable."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/context> ;
+  vs:term_status "testing" .

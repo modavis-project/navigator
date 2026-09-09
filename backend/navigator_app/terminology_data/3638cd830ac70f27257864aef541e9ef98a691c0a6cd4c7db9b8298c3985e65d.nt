@@ -1,0 +1,444 @@
+<https://w3id.org/modavis/vocab/assertion-predicate/has-builder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/assertion-predicate/has-builder> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/assertion-predicate/has-builder> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://w3id.org/modavis/ontology/instrument#hasBuilder> .
+<https://w3id.org/modavis/vocab/assertion-predicate/has-builder> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/assertion-predicate/has-builder> <http://www.w3.org/2004/02/skos/core#definition> "Claims that the subject instrument has the identified builder."@en .
+<https://w3id.org/modavis/vocab/assertion-predicate/has-builder> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/assertion-predicate> .
+<https://w3id.org/modavis/vocab/assertion-predicate/has-builder> <http://www.w3.org/2004/02/skos/core#prefLabel> "has-builder assertion predicate"@en .
+<https://w3id.org/modavis/vocab/assertion-predicate/has-builder> <https://w3id.org/modavis/ontology/assertion#projectedPropertyIri> "https://w3id.org/modavis/ontology/instrument#hasBuilder"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://w3id.org/modavis/vocab/assertion-predicate> <http://purl.org/dc/terms/title> "MODAVIS assertion predicates"@en .
+<https://w3id.org/modavis/vocab/assertion-predicate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/assertion-predicate> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/assertion-predicate> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/assertion-predicate> <http://www.w3.org/2004/02/skos/core#definition> "Governed predicate concepts used inside reified assertions before any reviewed projection to native OWL properties."@en .
+<https://w3id.org/modavis/vocab/assertion-predicate> <http://www.w3.org/2004/02/skos/core#prefLabel> "Assertion predicates"@en .
+<https://w3id.org/modavis/vocab/assertion-status/accepted> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/assertion-status/accepted> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/assertion-status/accepted> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/assertion-status/accepted> <http://www.w3.org/2004/02/skos/core#definition> "The assertion has been accepted under a recorded review or decision policy."@en .
+<https://w3id.org/modavis/vocab/assertion-status/accepted> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/assertion-status> .
+<https://w3id.org/modavis/vocab/assertion-status/accepted> <http://www.w3.org/2004/02/skos/core#prefLabel> "accepted"@en .
+<https://w3id.org/modavis/vocab/assertion-status/draft> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/assertion-status/draft> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/assertion-status/draft> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/assertion-status/draft> <http://www.w3.org/2004/02/skos/core#definition> "The assertion has been recorded but has not been accepted through the applicable review process."@en .
+<https://w3id.org/modavis/vocab/assertion-status/draft> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/assertion-status> .
+<https://w3id.org/modavis/vocab/assertion-status/draft> <http://www.w3.org/2004/02/skos/core#prefLabel> "draft"@en .
+<https://w3id.org/modavis/vocab/assertion-status/rejected> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/assertion-status/rejected> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/assertion-status/rejected> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/assertion-status/rejected> <http://www.w3.org/2004/02/skos/core#definition> "The assertion has been reviewed and not accepted under the recorded policy."@en .
+<https://w3id.org/modavis/vocab/assertion-status/rejected> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/assertion-status> .
+<https://w3id.org/modavis/vocab/assertion-status/rejected> <http://www.w3.org/2004/02/skos/core#prefLabel> "rejected"@en .
+<https://w3id.org/modavis/vocab/assertion-status/superseded> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/assertion-status/superseded> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/assertion-status/superseded> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/assertion-status/superseded> <http://www.w3.org/2004/02/skos/core#definition> "The assertion remains part of the record but a later assertion or decision has replaced its active role."@en .
+<https://w3id.org/modavis/vocab/assertion-status/superseded> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/assertion-status> .
+<https://w3id.org/modavis/vocab/assertion-status/superseded> <http://www.w3.org/2004/02/skos/core#prefLabel> "superseded"@en .
+<https://w3id.org/modavis/vocab/assertion-status> <http://purl.org/dc/terms/title> "MODAVIS assertion statuses"@en .
+<https://w3id.org/modavis/vocab/assertion-status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/assertion-status> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/assertion-status> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/assertion-status> <http://www.w3.org/2004/02/skos/core#definition> "Review and lifecycle states for explicit MODAVIS assertions."@en .
+<https://w3id.org/modavis/vocab/assertion-status> <http://www.w3.org/2004/02/skos/core#prefLabel> "Assertion statuses"@en .
+<https://w3id.org/modavis/vocab/checksum-algorithm/sha-256> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/checksum-algorithm/sha-256> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/checksum-algorithm/sha-256> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <https://doi.org/10.6028/NIST.FIPS.180-4> .
+<https://w3id.org/modavis/vocab/checksum-algorithm/sha-256> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/checksum-algorithm/sha-256> <http://www.w3.org/2004/02/skos/core#definition> "The SHA-256 cryptographic hash function standardized by NIST FIPS 180-4."@en .
+<https://w3id.org/modavis/vocab/checksum-algorithm/sha-256> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/checksum-algorithm> .
+<https://w3id.org/modavis/vocab/checksum-algorithm/sha-256> <http://www.w3.org/2004/02/skos/core#notation> "sha256" .
+<https://w3id.org/modavis/vocab/checksum-algorithm/sha-256> <http://www.w3.org/2004/02/skos/core#prefLabel> "SHA-256"@en .
+<https://w3id.org/modavis/vocab/checksum-algorithm> <http://purl.org/dc/terms/title> "MODAVIS checksum algorithms"@en .
+<https://w3id.org/modavis/vocab/checksum-algorithm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/checksum-algorithm> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/checksum-algorithm> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/checksum-algorithm> <http://www.w3.org/2004/02/skos/core#definition> "Digest algorithms permitted by MODAVIS fixity profiles."@en .
+<https://w3id.org/modavis/vocab/checksum-algorithm> <http://www.w3.org/2004/02/skos/core#prefLabel> "Checksum algorithms"@en .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible-with-limitations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible-with-limitations> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible-with-limitations> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible-with-limitations> <http://www.w3.org/2004/02/skos/core#definition> "The evaluated version satisfies the documented compatibility criteria only under stated restrictions, workarounds, or loss of capability."@en .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible-with-limitations> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/compatibility-status> .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible-with-limitations> <http://www.w3.org/2004/02/skos/core#prefLabel> "compatible with limitations"@en .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible> <http://www.w3.org/2004/02/skos/core#definition> "The evaluated version satisfies the documented compatibility criteria for the specified target without a known material limitation."@en .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/compatibility-status> .
+<https://w3id.org/modavis/vocab/compatibility-status/compatible> <http://www.w3.org/2004/02/skos/core#prefLabel> "compatible"@en .
+<https://w3id.org/modavis/vocab/compatibility-status/incompatible> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/compatibility-status/incompatible> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/compatibility-status/incompatible> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/compatibility-status/incompatible> <http://www.w3.org/2004/02/skos/core#definition> "The evaluated version fails one or more documented compatibility criteria for the specified target."@en .
+<https://w3id.org/modavis/vocab/compatibility-status/incompatible> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/compatibility-status> .
+<https://w3id.org/modavis/vocab/compatibility-status/incompatible> <http://www.w3.org/2004/02/skos/core#prefLabel> "incompatible"@en .
+<https://w3id.org/modavis/vocab/compatibility-status/indeterminate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/compatibility-status/indeterminate> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/compatibility-status/indeterminate> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/compatibility-status/indeterminate> <http://www.w3.org/2004/02/skos/core#definition> "Available evidence is insufficient or conflicting, so compatibility with the specified target cannot be determined."@en .
+<https://w3id.org/modavis/vocab/compatibility-status/indeterminate> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/compatibility-status> .
+<https://w3id.org/modavis/vocab/compatibility-status/indeterminate> <http://www.w3.org/2004/02/skos/core#prefLabel> "indeterminate compatibility"@en .
+<https://w3id.org/modavis/vocab/compatibility-status> <http://purl.org/dc/terms/title> "MODAVIS compatibility statuses"@en .
+<https://w3id.org/modavis/vocab/compatibility-status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/compatibility-status> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/compatibility-status> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/compatibility-status> <http://www.w3.org/2004/02/skos/core#definition> "Evidence-backed outcomes for evaluating a versioned resource against a specified host, platform, protocol, format, or operating environment."@en .
+<https://w3id.org/modavis/vocab/compatibility-status> <http://www.w3.org/2004/02/skos/core#prefLabel> "Compatibility statuses"@en .
+<https://w3id.org/modavis/vocab/component-membership-type/connected-to> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/component-membership-type/connected-to> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/component-membership-type/connected-to> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/component-membership-type/connected-to> <http://www.w3.org/2004/02/skos/core#definition> "The components participate in a documented connection whose more specific nature is not asserted by this concept."@en .
+<https://w3id.org/modavis/vocab/component-membership-type/connected-to> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/component-membership-type> .
+<https://w3id.org/modavis/vocab/component-membership-type/connected-to> <http://www.w3.org/2004/02/skos/core#prefLabel> "connected to"@en .
+<https://w3id.org/modavis/vocab/component-membership-type/controlled-by> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/component-membership-type/controlled-by> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/component-membership-type/controlled-by> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/component-membership-type/controlled-by> <http://www.w3.org/2004/02/skos/core#definition> "The child component's activation or behavior is controlled by the parent component in the stated scope."@en .
+<https://w3id.org/modavis/vocab/component-membership-type/controlled-by> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/component-membership-type> .
+<https://w3id.org/modavis/vocab/component-membership-type/controlled-by> <http://www.w3.org/2004/02/skos/core#prefLabel> "controlled by"@en .
+<https://w3id.org/modavis/vocab/component-membership-type/member-of-collection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/component-membership-type/member-of-collection> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/component-membership-type/member-of-collection> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/component-membership-type/member-of-collection> <http://www.w3.org/2004/02/skos/core#definition> "The child is an organized member of the parent component collection in the stated scope."@en .
+<https://w3id.org/modavis/vocab/component-membership-type/member-of-collection> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/component-membership-type> .
+<https://w3id.org/modavis/vocab/component-membership-type/member-of-collection> <http://www.w3.org/2004/02/skos/core#prefLabel> "member of collection"@en .
+<https://w3id.org/modavis/vocab/component-membership-type/structural-part> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/component-membership-type/structural-part> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/component-membership-type/structural-part> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/component-membership-type/structural-part> <http://www.w3.org/2004/02/skos/core#definition> "The child is a structural part of the instrument or parent component in the stated scope."@en .
+<https://w3id.org/modavis/vocab/component-membership-type/structural-part> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/component-membership-type> .
+<https://w3id.org/modavis/vocab/component-membership-type/structural-part> <http://www.w3.org/2004/02/skos/core#prefLabel> "structural part"@en .
+<https://w3id.org/modavis/vocab/component-membership-type> <http://purl.org/dc/terms/title> "MODAVIS component-membership types"@en .
+<https://w3id.org/modavis/vocab/component-membership-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/component-membership-type> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/component-membership-type> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/component-membership-type> <http://www.w3.org/2004/02/skos/core#definition> "Kinds of qualified structural or functional relation between an instrument, a parent component, and a child component."@en .
+<https://w3id.org/modavis/vocab/component-membership-type> <http://www.w3.org/2004/02/skos/core#prefLabel> "Component-membership types"@en .
+<https://w3id.org/modavis/vocab/event-type/construction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/event-type/construction> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/event-type/construction> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/event-type/construction> <http://www.w3.org/2004/02/skos/core#definition> "An event in which an instrument or substantial part of it is built or assembled."@en .
+<https://w3id.org/modavis/vocab/event-type/construction> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/event-type> .
+<https://w3id.org/modavis/vocab/event-type/construction> <http://www.w3.org/2004/02/skos/core#prefLabel> "construction"@en .
+<https://w3id.org/modavis/vocab/event-type/digitization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/event-type/digitization> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/event-type/digitization> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/event-type/digitization> <http://www.w3.org/2004/02/skos/core#definition> "An event in the documented world involving the creation of a digital representation from physical or analogue material."@en .
+<https://w3id.org/modavis/vocab/event-type/digitization> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/event-type> .
+<https://w3id.org/modavis/vocab/event-type/digitization> <http://www.w3.org/2004/02/skos/core#prefLabel> "digitization"@en .
+<https://w3id.org/modavis/vocab/event-type/measurement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/event-type/measurement> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/event-type/measurement> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/event-type/measurement> <http://www.w3.org/2004/02/skos/core#definition> "An event in which a property is observed under a stated method, unit, and context."@en .
+<https://w3id.org/modavis/vocab/event-type/measurement> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/event-type> .
+<https://w3id.org/modavis/vocab/event-type/measurement> <http://www.w3.org/2004/02/skos/core#prefLabel> "measurement"@en .
+<https://w3id.org/modavis/vocab/event-type/recording> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/event-type/recording> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/event-type/recording> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/event-type/recording> <http://www.w3.org/2004/02/skos/core#definition> "An event in which sound, image, performance, measurement, or related signals are intentionally recorded."@en .
+<https://w3id.org/modavis/vocab/event-type/recording> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/event-type> .
+<https://w3id.org/modavis/vocab/event-type/recording> <http://www.w3.org/2004/02/skos/core#prefLabel> "recording"@en .
+<https://w3id.org/modavis/vocab/event-type/relocation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/event-type/relocation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/event-type/relocation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/event-type/relocation> <http://www.w3.org/2004/02/skos/core#definition> "An event in which an instrument or other entity is moved between places or spatial contexts."@en .
+<https://w3id.org/modavis/vocab/event-type/relocation> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/event-type> .
+<https://w3id.org/modavis/vocab/event-type/relocation> <http://www.w3.org/2004/02/skos/core#prefLabel> "relocation"@en .
+<https://w3id.org/modavis/vocab/event-type/restoration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/event-type/restoration> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/event-type/restoration> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/event-type/restoration> <http://www.w3.org/2004/02/skos/core#definition> "An intervention intended to recover, reveal, or stabilize a documented earlier condition or significance."@en .
+<https://w3id.org/modavis/vocab/event-type/restoration> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/event-type> .
+<https://w3id.org/modavis/vocab/event-type/restoration> <http://www.w3.org/2004/02/skos/core#prefLabel> "restoration"@en .
+<https://w3id.org/modavis/vocab/event-type> <http://purl.org/dc/terms/title> "MODAVIS event types"@en .
+<https://w3id.org/modavis/vocab/event-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/event-type> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/event-type> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/event-type> <http://www.w3.org/2004/02/skos/core#definition> "Broad types for occurrences and activities in the documented history of instruments and related entities."@en .
+<https://w3id.org/modavis/vocab/event-type> <http://www.w3.org/2004/02/skos/core#prefLabel> "Event types"@en .
+<https://w3id.org/modavis/vocab/evidence-role/contextual> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/evidence-role/contextual> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/evidence-role/contextual> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/evidence-role/contextual> <http://www.w3.org/2004/02/skos/core#definition> "Evidence that supplies relevant context without being classified as directly supporting or opposing."@en .
+<https://w3id.org/modavis/vocab/evidence-role/contextual> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/evidence-role> .
+<https://w3id.org/modavis/vocab/evidence-role/contextual> <http://www.w3.org/2004/02/skos/core#prefLabel> "contextual evidence"@en .
+<https://w3id.org/modavis/vocab/evidence-role/opposing> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/evidence-role/opposing> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/evidence-role/opposing> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/evidence-role/opposing> <http://www.w3.org/2004/02/skos/core#definition> "Evidence presented as contradicting or decreasing support for the evaluated resource."@en .
+<https://w3id.org/modavis/vocab/evidence-role/opposing> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/evidence-role> .
+<https://w3id.org/modavis/vocab/evidence-role/opposing> <http://www.w3.org/2004/02/skos/core#prefLabel> "opposing evidence"@en .
+<https://w3id.org/modavis/vocab/evidence-role/supporting> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/evidence-role/supporting> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/evidence-role/supporting> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/evidence-role/supporting> <http://www.w3.org/2004/02/skos/core#definition> "Evidence presented as increasing support for the evaluated resource."@en .
+<https://w3id.org/modavis/vocab/evidence-role/supporting> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/evidence-role> .
+<https://w3id.org/modavis/vocab/evidence-role/supporting> <http://www.w3.org/2004/02/skos/core#prefLabel> "supporting evidence"@en .
+<https://w3id.org/modavis/vocab/evidence-role> <http://purl.org/dc/terms/title> "MODAVIS evidence roles"@en .
+<https://w3id.org/modavis/vocab/evidence-role> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/evidence-role> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/evidence-role> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/evidence-role> <http://www.w3.org/2004/02/skos/core#definition> "Ways in which a cited source fragment bears on the resource evaluated by a qualified evidence relation."@en .
+<https://w3id.org/modavis/vocab/evidence-role> <http://www.w3.org/2004/02/skos/core#prefLabel> "Evidence roles"@en .
+<https://w3id.org/modavis/vocab/functional-role/action-mechanism> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/functional-role/action-mechanism> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/functional-role/action-mechanism> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/functional-role/action-mechanism> <http://www.w3.org/2004/02/skos/core#definition> "Transmits, transforms, or coordinates control actions between instrument components."@en .
+<https://w3id.org/modavis/vocab/functional-role/action-mechanism> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/functional-role> .
+<https://w3id.org/modavis/vocab/functional-role/action-mechanism> <http://www.w3.org/2004/02/skos/core#prefLabel> "action mechanism"@en .
+<https://w3id.org/modavis/vocab/functional-role/playing-interface> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/functional-role/playing-interface> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/functional-role/playing-interface> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/functional-role/playing-interface> <http://www.w3.org/2004/02/skos/core#definition> "Mediates a performer's intentional control of a musical instrument."@en .
+<https://w3id.org/modavis/vocab/functional-role/playing-interface> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/functional-role> .
+<https://w3id.org/modavis/vocab/functional-role/playing-interface> <http://www.w3.org/2004/02/skos/core#prefLabel> "playing-interface functional role"@en .
+<https://w3id.org/modavis/vocab/functional-role/resonator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/functional-role/resonator> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/functional-role/resonator> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/functional-role/resonator> <http://www.w3.org/2004/02/skos/core#definition> "Selectively reinforces, shapes, or sustains vibration or sound energy."@en .
+<https://w3id.org/modavis/vocab/functional-role/resonator> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/functional-role> .
+<https://w3id.org/modavis/vocab/functional-role/resonator> <http://www.w3.org/2004/02/skos/core#prefLabel> "resonator"@en .
+<https://w3id.org/modavis/vocab/functional-role/selector> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/functional-role/selector> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/functional-role/selector> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/functional-role/selector> <http://www.w3.org/2004/02/skos/core#definition> "Selects a resource, pathway, voice, component group, or configuration for use."@en .
+<https://w3id.org/modavis/vocab/functional-role/selector> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/functional-role> .
+<https://w3id.org/modavis/vocab/functional-role/selector> <http://www.w3.org/2004/02/skos/core#prefLabel> "selector"@en .
+<https://w3id.org/modavis/vocab/functional-role/sound-generator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/functional-role/sound-generator> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/functional-role/sound-generator> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/functional-role/sound-generator> <http://www.w3.org/2004/02/skos/core#definition> "Produces an acoustic or electronic signal that contributes directly to the instrument's output."@en .
+<https://w3id.org/modavis/vocab/functional-role/sound-generator> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/functional-role> .
+<https://w3id.org/modavis/vocab/functional-role/sound-generator> <http://www.w3.org/2004/02/skos/core#prefLabel> "sound generator"@en .
+<https://w3id.org/modavis/vocab/functional-role/sound-initiator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/functional-role/sound-initiator> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/functional-role/sound-initiator> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/functional-role/sound-initiator> <http://www.w3.org/2004/02/skos/core#definition> "Initiates excitation or activation that leads to sound production."@en .
+<https://w3id.org/modavis/vocab/functional-role/sound-initiator> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/functional-role> .
+<https://w3id.org/modavis/vocab/functional-role/sound-initiator> <http://www.w3.org/2004/02/skos/core#prefLabel> "sound initiator"@en .
+<https://w3id.org/modavis/vocab/functional-role/sound-modulator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/functional-role/sound-modulator> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/functional-role/sound-modulator> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/functional-role/sound-modulator> <http://www.w3.org/2004/02/skos/core#definition> "Varies one or more parameters of an existing sound-producing process or signal."@en .
+<https://w3id.org/modavis/vocab/functional-role/sound-modulator> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/functional-role> .
+<https://w3id.org/modavis/vocab/functional-role/sound-modulator> <http://www.w3.org/2004/02/skos/core#prefLabel> "sound modulator"@en .
+<https://w3id.org/modavis/vocab/functional-role> <http://purl.org/dc/terms/title> "MODAVIS instrument-component functional roles"@en .
+<https://w3id.org/modavis/vocab/functional-role> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/functional-role> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/functional-role> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/functional-role> <http://www.w3.org/2004/02/skos/core#definition> "Contextual functions that instrument components may perform without turning those functions into permanent component identities."@en .
+<https://w3id.org/modavis/vocab/functional-role> <http://www.w3.org/2004/02/skos/core#prefLabel> "Functional roles"@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/declined> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/declined> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/declined> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/declined> <http://www.w3.org/2004/02/skos/core#definition> "The assigning agent reviewed the proposal and did not assign a positive heritage status under the identified criteria."@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/declined> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/heritage-recognition-status> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/declined> <http://www.w3.org/2004/02/skos/core#prefLabel> "recognition declined"@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/proposed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/proposed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/proposed> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/proposed> <http://www.w3.org/2004/02/skos/core#definition> "Recognition has been formally proposed under the identified criteria but no positive or negative determination has been recorded."@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/proposed> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/heritage-recognition-status> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/proposed> <http://www.w3.org/2004/02/skos/core#prefLabel> "proposed recognition"@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/recognized> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/recognized> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/recognized> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/recognized> <http://www.w3.org/2004/02/skos/core#definition> "The assigning agent has made a positive heritage-recognition determination under the identified criteria and temporal scope."@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/recognized> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/heritage-recognition-status> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/recognized> <http://www.w3.org/2004/02/skos/core#prefLabel> "recognized"@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/withdrawn> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/withdrawn> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/withdrawn> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/withdrawn> <http://www.w3.org/2004/02/skos/core#definition> "A previously applicable recognition has been withdrawn for the stated temporal scope without erasing the earlier recognition record."@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/withdrawn> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/heritage-recognition-status> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status/withdrawn> <http://www.w3.org/2004/02/skos/core#prefLabel> "recognition withdrawn"@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status> <http://purl.org/dc/terms/title> "MODAVIS heritage-recognition statuses"@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/heritage-recognition-status> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/heritage-recognition-status> <http://www.w3.org/2004/02/skos/core#definition> "Outcomes and lifecycle states assigned by a qualified heritage-recognition record without treating heritage significance as an intrinsic class of the recognized resource."@en .
+<https://w3id.org/modavis/vocab/heritage-recognition-status> <http://www.w3.org/2004/02/skos/core#prefLabel> "Heritage-recognition statuses"@en .
+<https://w3id.org/modavis/vocab/instrument-type/piano> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/instrument-type/piano> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/instrument-type/piano> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/instrument-type/piano> <http://www.w3.org/2004/02/skos/core#definition> "A keyboard instrument in which controlled hammers normally strike tensioned strings."@en .
+<https://w3id.org/modavis/vocab/instrument-type/piano> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/instrument-type> .
+<https://w3id.org/modavis/vocab/instrument-type/piano> <http://www.w3.org/2004/02/skos/core#prefLabel> "piano"@en .
+<https://w3id.org/modavis/vocab/instrument-type/pipe-organ> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/instrument-type/pipe-organ> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/instrument-type/pipe-organ> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/instrument-type/pipe-organ> <http://www.w3.org/2004/02/skos/core#definition> "A wind keyboard instrument in which pressurized air sounds pipes selected through stops or analogous controls."@en .
+<https://w3id.org/modavis/vocab/instrument-type/pipe-organ> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/instrument-type> .
+<https://w3id.org/modavis/vocab/instrument-type/pipe-organ> <http://www.w3.org/2004/02/skos/core#prefLabel> "pipe-organ instrument type"@en .
+<https://w3id.org/modavis/vocab/instrument-type/violin> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/instrument-type/violin> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/instrument-type/violin> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/instrument-type/violin> <http://www.w3.org/2004/02/skos/core#definition> "A bowed string instrument of the violin family, normally played at soprano register."@en .
+<https://w3id.org/modavis/vocab/instrument-type/violin> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/instrument-type> .
+<https://w3id.org/modavis/vocab/instrument-type/violin> <http://www.w3.org/2004/02/skos/core#prefLabel> "violin"@en .
+<https://w3id.org/modavis/vocab/instrument-type/virtual-musical-instrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/instrument-type/virtual-musical-instrument> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/instrument-type/virtual-musical-instrument> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/instrument-type/virtual-musical-instrument> <http://www.w3.org/2004/02/skos/core#definition> "A musical instrument whose playable behavior is realized substantially through software, digital computation, or a software-controlled sample or synthesis system."@en .
+<https://w3id.org/modavis/vocab/instrument-type/virtual-musical-instrument> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/instrument-type> .
+<https://w3id.org/modavis/vocab/instrument-type/virtual-musical-instrument> <http://www.w3.org/2004/02/skos/core#prefLabel> "virtual-musical-instrument type"@en .
+<https://w3id.org/modavis/vocab/instrument-type> <http://purl.org/dc/terms/title> "MODAVIS instrument types"@en .
+<https://w3id.org/modavis/vocab/instrument-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/instrument-type> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/instrument-type> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/instrument-type> <http://www.w3.org/2004/02/skos/core#definition> "A small seed vocabulary for broad musical-instrument types used by the first MODAVIS examples; detailed classifications should retain their external scheme and edition."@en .
+<https://w3id.org/modavis/vocab/instrument-type> <http://www.w3.org/2004/02/skos/core#prefLabel> "Instrument types"@en .
+<https://w3id.org/modavis/vocab/representation-status/authored> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/authored> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/authored> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/authored> <http://www.w3.org/2004/02/skos/core#definition> "Created intentionally as documentation rather than obtained by direct capture."@en .
+<https://w3id.org/modavis/vocab/representation-status/authored> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/authored> <http://www.w3.org/2004/02/skos/core#prefLabel> "authored documentary content"@en .
+<https://w3id.org/modavis/vocab/representation-status/captured> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/captured> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/captured> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/captured> <http://www.w3.org/2004/02/skos/core#definition> "Created by direct sensing or recording of the represented object, event, environment, or signal under documented conditions."@en .
+<https://w3id.org/modavis/vocab/representation-status/captured> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/captured> <http://www.w3.org/2004/02/skos/core#prefLabel> "directly captured"@en .
+<https://w3id.org/modavis/vocab/representation-status/creative> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/creative> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/creative> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/creative> <http://www.w3.org/2004/02/skos/core#definition> "Intentionally transforms source material for expressive or speculative purposes and is not presented as documentary capture."@en .
+<https://w3id.org/modavis/vocab/representation-status/creative> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/creative> <http://www.w3.org/2004/02/skos/core#prefLabel> "creative transformation"@en .
+<https://w3id.org/modavis/vocab/representation-status/hybrid> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/hybrid> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/hybrid> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/hybrid> <http://www.w3.org/2004/02/skos/core#definition> "Combines two or more representation statuses in a way that cannot be faithfully reduced to one status."@en .
+<https://w3id.org/modavis/vocab/representation-status/hybrid> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/hybrid> <http://www.w3.org/2004/02/skos/core#prefLabel> "hybrid representation"@en .
+<https://w3id.org/modavis/vocab/representation-status/inferred> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/inferred> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/inferred> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/inferred> <http://www.w3.org/2004/02/skos/core#definition> "Produced by analytical inference from evidence and method rather than directly observed as represented."@en .
+<https://w3id.org/modavis/vocab/representation-status/inferred> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/inferred> <http://www.w3.org/2004/02/skos/core#prefLabel> "analytically inferred"@en .
+<https://w3id.org/modavis/vocab/representation-status/learned> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/learned> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/learned> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/learned> <http://www.w3.org/2004/02/skos/core#definition> "Generated by a learned model whose training inputs, model artifact, validation, and inference activity are separately identified."@en .
+<https://w3id.org/modavis/vocab/representation-status/learned> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/learned> <http://www.w3.org/2004/02/skos/core#prefLabel> "machine-learned representation"@en .
+<https://w3id.org/modavis/vocab/representation-status/measured> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/measured> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/measured> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/measured> <http://www.w3.org/2004/02/skos/core#definition> "Represents quantities obtained through a documented measurement procedure, including its calibration and uncertainty where applicable."@en .
+<https://w3id.org/modavis/vocab/representation-status/measured> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/measured> <http://www.w3.org/2004/02/skos/core#prefLabel> "measured representation"@en .
+<https://w3id.org/modavis/vocab/representation-status/processed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/processed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/processed> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/processed> <http://www.w3.org/2004/02/skos/core#definition> "Derived through a documented transformation from one or more prior representations."@en .
+<https://w3id.org/modavis/vocab/representation-status/processed> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/processed> <http://www.w3.org/2004/02/skos/core#prefLabel> "processed derivative"@en .
+<https://w3id.org/modavis/vocab/representation-status/reconstructed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/reconstructed> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/reconstructed> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/reconstructed> <http://www.w3.org/2004/02/skos/core#definition> "Created by reconstructing a missing, past, incomplete, or inaccessible state from identified evidence and documented decisions."@en .
+<https://w3id.org/modavis/vocab/representation-status/reconstructed> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/reconstructed> <http://www.w3.org/2004/02/skos/core#prefLabel> "evidence-based reconstruction"@en .
+<https://w3id.org/modavis/vocab/representation-status/simulated> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/representation-status/simulated> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status/simulated> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status/simulated> <http://www.w3.org/2004/02/skos/core#definition> "Generated by a declared computational or physical simulation rather than directly measured at every represented state."@en .
+<https://w3id.org/modavis/vocab/representation-status/simulated> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/representation-status> .
+<https://w3id.org/modavis/vocab/representation-status/simulated> <http://www.w3.org/2004/02/skos/core#prefLabel> "simulation result"@en .
+<https://w3id.org/modavis/vocab/representation-status> <http://purl.org/dc/terms/title> "MODAVIS representation statuses"@en .
+<https://w3id.org/modavis/vocab/representation-status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/representation-status> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/representation-status> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/representation-status> <http://www.w3.org/2004/02/skos/core#definition> "Epistemic and production statuses that distinguish capture, documentation, processing, reconstruction, simulation, inference, learning, and creative transformation."@en .
+<https://w3id.org/modavis/vocab/representation-status> <http://www.w3.org/2004/02/skos/core#prefLabel> "Representation statuses"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/algorithmic-synthesis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/algorithmic-synthesis> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/algorithmic-synthesis> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/algorithmic-synthesis> <http://www.w3.org/2004/02/skos/core#definition> "Produces sound primarily through a signal-generation algorithm not limited to playback of captured samples."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/algorithmic-synthesis> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-production-method> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/algorithmic-synthesis> <http://www.w3.org/2004/02/skos/core#prefLabel> "algorithmic synthesis"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/convolution-based> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/convolution-based> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/convolution-based> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/convolution-based> <http://www.w3.org/2004/02/skos/core#definition> "Depends substantially on convolution with identified response data or filters."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/convolution-based> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-production-method> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/convolution-based> <http://www.w3.org/2004/02/skos/core#prefLabel> "convolution based"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/hybrid> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/hybrid> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/hybrid> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/hybrid> <http://www.w3.org/2004/02/skos/core#definition> "Combines sampling, physical modeling, algorithmic synthesis, convolution, or other production methods."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/hybrid> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-production-method> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/hybrid> <http://www.w3.org/2004/02/skos/core#prefLabel> "hybrid"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/physical-modeling> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/physical-modeling> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/physical-modeling> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/physical-modeling> <http://www.w3.org/2004/02/skos/core#definition> "Produces sound primarily through a computational model of physical sound-generation behavior."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/physical-modeling> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-production-method> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/physical-modeling> <http://www.w3.org/2004/02/skos/core#prefLabel> "physical modeling"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/sampled> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/sampled> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/sampled> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/sampled> <http://www.w3.org/2004/02/skos/core#definition> "Produces sound primarily by selecting and rendering recorded audio samples."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/sampled> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-production-method> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method/sampled> <http://www.w3.org/2004/02/skos/core#prefLabel> "sampled"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method> <http://purl.org/dc/terms/title> "MODAVIS virtual-instrument production methods"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method> <http://www.w3.org/2004/02/skos/core#definition> "Primary methods by which a virtual musical instrument produces or transforms sound."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-production-method> <http://www.w3.org/2004/02/skos/core#prefLabel> "Virtual-instrument production methods"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/composite-source> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/composite-source> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/composite-source> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/composite-source> <http://www.w3.org/2004/02/skos/core#definition> "The virtual instrument combines recorded, modeled, or reconstructed material from more than one identified source instrument or state."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/composite-source> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-source-relation> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/composite-source> <http://www.w3.org/2004/02/skos/core#prefLabel> "composite source"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/historical-reconstruction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/historical-reconstruction> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/historical-reconstruction> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/historical-reconstruction> <http://www.w3.org/2004/02/skos/core#definition> "The virtual instrument reconstructs an identified historical instrument or state from documented evidence and decisions."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/historical-reconstruction> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-source-relation> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/historical-reconstruction> <http://www.w3.org/2004/02/skos/core#prefLabel> "historical reconstruction of"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/inspired-by> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/inspired-by> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/inspired-by> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/inspired-by> <http://www.w3.org/2004/02/skos/core#definition> "The virtual instrument draws documented conceptual or aesthetic inspiration from the source without claiming capture, modeling, or reconstruction."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/inspired-by> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-source-relation> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/inspired-by> <http://www.w3.org/2004/02/skos/core#prefLabel> "inspired by"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/modeled-after> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/modeled-after> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/modeled-after> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/modeled-after> <http://www.w3.org/2004/02/skos/core#definition> "The virtual instrument's structure or behavior was modeled after the identified source instrument or state."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/modeled-after> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-source-relation> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/modeled-after> <http://www.w3.org/2004/02/skos/core#prefLabel> "modeled after"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/sampled-from> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/sampled-from> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/sampled-from> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/sampled-from> <http://www.w3.org/2004/02/skos/core#definition> "The virtual instrument uses recordings captured from the identified source instrument or state."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/sampled-from> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vocab/virtual-instrument-source-relation> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation/sampled-from> <http://www.w3.org/2004/02/skos/core#prefLabel> "sampled from"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation> <http://purl.org/dc/terms/title> "MODAVIS virtual-instrument source relations"@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/vocab> .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation> <http://www.w3.org/2004/02/skos/core#definition> "Evidence-qualified ways in which a virtual instrument or product relates to a specific source musical instrument or instrument state."@en .
+<https://w3id.org/modavis/vocab/virtual-instrument-source-relation> <http://www.w3.org/2004/02/skos/core#prefLabel> "Virtual-instrument source relations"@en .
+<https://w3id.org/modavis/vocab> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/skos-reference/> .
+<https://w3id.org/modavis/vocab> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/vocab> <http://purl.org/dc/terms/description> "Reviewed SKOS concept schemes used by the MODAVIS 0.1.0 ontology and validation profiles."@en .
+<https://w3id.org/modavis/vocab> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/vocab> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/vocab> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/vocab> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/vocab> <http://purl.org/dc/terms/title> "MODAVIS Controlled Vocabularies"@en .
+<https://w3id.org/modavis/vocab> <http://purl.org/vocab/vann/preferredNamespacePrefix> "mdvsv" .
+<https://w3id.org/modavis/vocab> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/vocab/" .
+<https://w3id.org/modavis/vocab> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/vocab> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/assertion/0.1.0> .
+<https://w3id.org/modavis/vocab> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/vocab/0.1.0> .
+<https://w3id.org/modavis/vocab> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

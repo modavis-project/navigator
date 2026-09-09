@@ -1,0 +1,162 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modinst: <https://w3id.org/modavis/ontology/instrument#> .
+@prefix modorgan: <https://w3id.org/modavis/ontology/organ#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/organ> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0>,
+              <https://w3id.org/modavis/ontology/instrument/0.1.0> ;
+  dcterms:title "MODAVIS Pipe Organ Ontology"@en ;
+  dcterms:description "Pipe-organ specialization of the generic MODAVIS instrument, component, membership, configuration, and role model."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/organ/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modorgan" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/organ#" .
+
+modorgan:PipeOrgan a owl:Class ;
+  rdfs:subClassOf modinst:MusicalInstrument ;
+  rdfs:label "pipe organ"@en ;
+  skos:definition "A musical instrument in which pressurized air sounds one or more sets of pipes selected and controlled through stops, keys, or analogous mechanisms."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:OrganComponent a owl:Class ;
+  rdfs:subClassOf modinst:InstrumentComponent ;
+  rdfs:label "pipe-organ component"@en ;
+  skos:definition "An instrument component described specifically within the structural or functional context of a pipe organ."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:OrganDivision a owl:Class ;
+  rdfs:subClassOf modinst:ComponentCollection, modorgan:OrganComponent ;
+  rdfs:label "organ division"@en ;
+  skos:definition "A named or functionally coherent collection of pipe-organ components, commonly associated with a manual, pedal division, windchest, spatial location, or tonal purpose."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:OrganStop a owl:Class ;
+  rdfs:subClassOf modorgan:OrganComponent ;
+  rdfs:label "organ stop"@en ;
+  skos:definition "A pipe-organ component representing a selectable tonal resource or control, which may govern one or more ranks or another sound-producing arrangement."@en ;
+  skos:scopeNote "Selection/control behavior is expressed through a contextual functional-role assignment rather than asserted as permanent identity."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:OrganRank a owl:Class ;
+  rdfs:subClassOf modinst:ComponentCollection, modorgan:OrganComponent ;
+  rdfs:label "organ rank"@en ;
+  skos:definition "An organized collection of organ pipes intended to provide a related sequence of pitches or another coherent tonal function."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:OrganPipe a owl:Class ;
+  rdfs:subClassOf modorgan:OrganComponent ;
+  rdfs:label "organ pipe"@en ;
+  skos:definition "An individual pipe-organ component designed to produce or influence sound through an air column or associated resonant mechanism."@en ;
+  skos:scopeNote "Sound-generator or resonator function is represented through contextual role assignment."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:OrganKeyboard a owl:Class ;
+  rdfs:subClassOf modinst:PlayingInterface, modorgan:OrganComponent ;
+  rdfs:label "organ keyboard"@en ;
+  skos:definition "A manual or pedal playing interface consisting of ordered keys used to control a pipe organ."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:OrganCoupler a owl:Class ;
+  rdfs:subClassOf modorgan:OrganComponent ;
+  rdfs:label "organ coupler"@en ;
+  skos:definition "A pipe-organ component or logical mechanism that causes controls associated with one component or division to act on another."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:OrganAccessory a owl:Class ;
+  rdfs:subClassOf modorgan:OrganComponent ;
+  rdfs:label "organ accessory"@en ;
+  skos:definition "A pipe-organ component providing an auxiliary control, effect, indication, or convenience not adequately described by the more specific component classes."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:WindSystem a owl:Class ;
+  rdfs:subClassOf modinst:ComponentCollection, modorgan:OrganComponent ;
+  rdfs:label "organ wind system"@en ;
+  skos:definition "A pipe-organ component collection that generates, stores, regulates, or distributes pressurized air."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:Console a owl:Class ;
+  rdfs:subClassOf modinst:ComponentCollection, modorgan:OrganComponent ;
+  rdfs:label "organ console"@en ;
+  skos:definition "An organized pipe-organ component containing playing interfaces, stop controls, indicators, and related control mechanisms."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:hasRank a owl:ObjectProperty ;
+  rdfs:domain modorgan:OrganStop ;
+  rdfs:range modorgan:OrganRank ;
+  rdfs:label "has rank"@en ;
+  skos:definition "Relates an organ stop to a rank used by that stop in a discovery-oriented convenience graph."@en ;
+  skos:scopeNote "Convenience relation; use ComponentMembership when time, configuration, or evidence must be retained."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:rankMember a owl:ObjectProperty ;
+  rdfs:domain modorgan:OrganRank ;
+  rdfs:range modorgan:OrganPipe ;
+  rdfs:label "rank member"@en ;
+  skos:definition "Relates an organ rank to an organ pipe that is a member of the rank in a discovery-oriented convenience graph."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:couplesFrom a owl:ObjectProperty ;
+  rdfs:domain modorgan:OrganCoupler ;
+  rdfs:range modorgan:OrganComponent ;
+  rdfs:label "couples from"@en ;
+  skos:definition "Identifies the source component, interface, or division from which an organ coupler propagates control."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:couplesTo a owl:ObjectProperty ;
+  rdfs:domain modorgan:OrganCoupler ;
+  rdfs:range modorgan:OrganComponent ;
+  rdfs:label "couples to"@en ;
+  skos:definition "Identifies the target component, interface, or division to which an organ coupler propagates control."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:hasNominalPitchDesignation a owl:DatatypeProperty ;
+  rdfs:range xsd:string ;
+  rdfs:label "has nominal pitch designation"@en ;
+  skos:definition "Records a source-preserving nominal organ pitch designation such as 8′ or 2 2/3′ without treating it as an exact measured frequency."@en ;
+  skos:scopeNote "The exchange profile permits this source designation on organ stops and ranks. It is documentary notation, not a numeric acoustical measurement or tuning assertion."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:rankCount a owl:DatatypeProperty ;
+  rdfs:domain modorgan:OrganStop ;
+  rdfs:range xsd:positiveInteger ;
+  rdfs:label "rank count"@en ;
+  skos:definition "The reported number of ranks associated with an organ stop in the described configuration."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .
+
+modorgan:intervalSemitones a owl:DatatypeProperty ;
+  rdfs:domain modorgan:OrganCoupler ;
+  rdfs:range xsd:integer ;
+  rdfs:label "interval in semitones"@en ;
+  skos:definition "The signed nominal transposition interval of a coupler expressed in equal-tempered semitone units."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/organ> ;
+  vs:term_status "testing" .

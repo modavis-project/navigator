@@ -1,0 +1,131 @@
+<https://w3id.org/modavis/ontology/media#Bitstream> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/media#Bitstream> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#Bitstream> <http://www.w3.org/2000/01/rdf-schema#label> "bitstream"@en .
+<https://w3id.org/modavis/ontology/media#Bitstream> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/media#Bitstream> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#Bitstream> <http://www.w3.org/2004/02/skos/core#definition> "A finite sequence of bytes whose exact content can be fixed by a byte size and checksum."@en .
+<https://w3id.org/modavis/ontology/media#DigitalAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/media#DigitalAsset> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#DigitalAsset> <http://www.w3.org/2000/01/rdf-schema#label> "digital asset"@en .
+<https://w3id.org/modavis/ontology/media#DigitalAsset> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<https://w3id.org/modavis/ontology/media#DigitalAsset> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/media#DigitalAsset> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#DigitalAsset> <http://www.w3.org/2004/02/skos/core#definition> "An identified digital unit managed as retrievable, exchangeable, or preservable content with format, rights, fixity, and provenance where applicable."@en .
+<https://w3id.org/modavis/ontology/media#DigitalAsset> <http://www.w3.org/2004/02/skos/core#scopeNote> "A digital asset need not represent another resource. Digital representations are digital assets with an explicit representation relation."@en .
+<https://w3id.org/modavis/ontology/media#DigitalAsset> <http://www.w3.org/2004/02/skos/core#scopeNote> "An asset may be a file, compound object, package, stream, model, or another managed unit; storage layout is not inferred from this class."@en .
+<https://w3id.org/modavis/ontology/media#DigitalRepresentation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/media#DigitalRepresentation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#DigitalRepresentation> <http://www.w3.org/2000/01/rdf-schema#label> "digital representation"@en .
+<https://w3id.org/modavis/ontology/media#DigitalRepresentation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<https://w3id.org/modavis/ontology/media#DigitalRepresentation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/media#DigitalRepresentation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/media#Representation> .
+<https://w3id.org/modavis/ontology/media#DigitalRepresentation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#DigitalRepresentation> <http://www.w3.org/2004/02/skos/core#definition> "A representation encoded in digital form and capable of being versioned, fixed, derived, or rendered by a computational system."@en .
+<https://w3id.org/modavis/ontology/media#DigitalSurrogate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/media#DigitalSurrogate> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#DigitalSurrogate> <http://www.w3.org/2000/01/rdf-schema#label> "digital surrogate"@en .
+<https://w3id.org/modavis/ontology/media#DigitalSurrogate> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/media#DigitalRepresentation> .
+<https://w3id.org/modavis/ontology/media#DigitalSurrogate> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#DigitalSurrogate> <http://www.w3.org/2004/02/skos/core#definition> "A digital representation intended to stand in for selected documentary, analytical, experiential, or operational aspects of a physical or otherwise distinct resource."@en .
+<https://w3id.org/modavis/ontology/media#DigitalSurrogate> <http://www.w3.org/2004/02/skos/core#scopeNote> "A surrogate does not replace the represented object. A playable virtual instrument may itself be a musical instrument while also serving as a surrogate for aspects of another instrument; the two retain distinct identities."@en .
+<https://w3id.org/modavis/ontology/media#Representation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/media#Representation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#Representation> <http://www.w3.org/2000/01/rdf-schema#label> "representation"@en .
+<https://w3id.org/modavis/ontology/media#Representation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/media#Representation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#Representation> <http://www.w3.org/2004/02/skos/core#definition> "An entity intentionally standing for, documenting, modeling, or rendering some aspect of another identified resource."@en .
+<https://w3id.org/modavis/ontology/media#Representation> <http://www.w3.org/2004/02/skos/core#scopeNote> "A representation is not asserted to be complete, authentic, or identical to the represented resource."@en .
+<https://w3id.org/modavis/ontology/media#byteSize> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/media#byteSize> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/media#byteSize> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/media#Bitstream> .
+<https://w3id.org/modavis/ontology/media#byteSize> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#byteSize> <http://www.w3.org/2000/01/rdf-schema#label> "byte size"@en .
+<https://w3id.org/modavis/ontology/media#byteSize> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/media#byteSize> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#byteSize> <http://www.w3.org/2004/02/skos/core#definition> "The exact number of bytes in a fixed bitstream."@en .
+<https://w3id.org/modavis/ontology/media#conformsToProfile> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/media#conformsToProfile> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/media#DigitalRepresentation> .
+<https://w3id.org/modavis/ontology/media#conformsToProfile> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#conformsToProfile> <http://www.w3.org/2000/01/rdf-schema#label> "conforms to profile"@en .
+<https://w3id.org/modavis/ontology/media#conformsToProfile> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#conformsToProfile> <http://www.w3.org/2004/02/skos/core#definition> "Identifies a specification, profile, or format contract to which a digital representation conforms."@en .
+<https://w3id.org/modavis/ontology/media#conformsToProfile> <http://www.w3.org/2004/02/skos/core#scopeNote> "The object should be the persistent IRI of a citable specification or profile. This assertion does not by itself record which validator, versioned test suite, or conformance result established the claim."@en .
+<https://w3id.org/modavis/ontology/media#contentUrl> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/media#contentUrl> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/media#contentUrl> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#contentUrl> <http://www.w3.org/2000/01/rdf-schema#label> "content URL"@en .
+<https://w3id.org/modavis/ontology/media#contentUrl> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://w3id.org/modavis/ontology/media#contentUrl> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#contentUrl> <http://www.w3.org/2004/02/skos/core#definition> "A retrieval location for the digital asset; it is not required to be the asset's persistent identity IRI."@en .
+<https://w3id.org/modavis/ontology/media#derivedFrom> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/media#derivedFrom> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/media#derivedFrom> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#derivedFrom> <http://www.w3.org/2000/01/rdf-schema#label> "derived from digital asset"@en .
+<https://w3id.org/modavis/ontology/media#derivedFrom> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/media#derivedFrom> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#wasDerivedFrom> .
+<https://w3id.org/modavis/ontology/media#derivedFrom> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#derivedFrom> <http://www.w3.org/2004/02/skos/core#definition> "Relates a digital asset to a source digital asset from which it was derived while preserving both identities."@en .
+<https://w3id.org/modavis/ontology/media#generatedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/media#generatedBy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/media#generatedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#generatedBy> <http://www.w3.org/2000/01/rdf-schema#label> "generated by activity"@en .
+<https://w3id.org/modavis/ontology/media#generatedBy> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/prov#Activity> .
+<https://w3id.org/modavis/ontology/media#generatedBy> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+<https://w3id.org/modavis/ontology/media#generatedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#generatedBy> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the capture, processing, reconstruction, simulation, inference, authoring, or other activity that generated a digital asset."@en .
+<https://w3id.org/modavis/ontology/media#hasChecksum> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/media#hasChecksum> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/media#Bitstream> .
+<https://w3id.org/modavis/ontology/media#hasChecksum> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#hasChecksum> <http://www.w3.org/2000/01/rdf-schema#label> "has bitstream checksum"@en .
+<https://w3id.org/modavis/ontology/media#hasChecksum> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/evidence#Checksum> .
+<https://w3id.org/modavis/ontology/media#hasChecksum> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <https://w3id.org/modavis/ontology/evidence#hasChecksum> .
+<https://w3id.org/modavis/ontology/media#hasChecksum> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#hasChecksum> <http://www.w3.org/2004/02/skos/core#definition> "Relates a bitstream to a qualified checksum recording its digest algorithm and value."@en .
+<https://w3id.org/modavis/ontology/media#hasRepresentation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/media#hasRepresentation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#hasRepresentation> <http://www.w3.org/2000/01/rdf-schema#label> "has representation"@en .
+<https://w3id.org/modavis/ontology/media#hasRepresentation> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/media#Representation> .
+<https://w3id.org/modavis/ontology/media#hasRepresentation> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/media#representationOf> .
+<https://w3id.org/modavis/ontology/media#hasRepresentation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#hasRepresentation> <http://www.w3.org/2004/02/skos/core#definition> "Relates an identified resource to a representation of some documented aspect of that resource."@en .
+<https://w3id.org/modavis/ontology/media#hasRepresentation> <http://www.w3.org/2004/02/skos/core#scopeNote> "The subject remains the represented resource and is not inferred to be a MODAVIS Entity solely from this link. The inverse representationOf carries the representation-side domain."@en .
+<https://w3id.org/modavis/ontology/media#mediaType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/media#mediaType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/media#mediaType> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/media#mediaType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#mediaType> <http://www.w3.org/2000/01/rdf-schema#label> "media type"@en .
+<https://w3id.org/modavis/ontology/media#mediaType> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/media#mediaType> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#mediaType> <http://www.w3.org/2004/02/skos/core#definition> "The lowercase IANA media type of a digital asset, without using a filename extension as the authoritative format declaration."@en .
+<https://w3id.org/modavis/ontology/media#representationOf> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/media#representationOf> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/media#Representation> .
+<https://w3id.org/modavis/ontology/media#representationOf> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#representationOf> <http://www.w3.org/2000/01/rdf-schema#label> "representation of"@en .
+<https://w3id.org/modavis/ontology/media#representationOf> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/media#representationOf> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#representationOf> <http://www.w3.org/2004/02/skos/core#definition> "Identifies a resource represented by a representation without asserting identity, completeness, or evidential status."@en .
+<https://w3id.org/modavis/ontology/media#representationStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/media#representationStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/media#representationStatus> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/media#DigitalRepresentation> .
+<https://w3id.org/modavis/ontology/media#representationStatus> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/media> .
+<https://w3id.org/modavis/ontology/media#representationStatus> <http://www.w3.org/2000/01/rdf-schema#label> "representation status"@en .
+<https://w3id.org/modavis/ontology/media#representationStatus> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/media#representationStatus> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/media#representationStatus> <http://www.w3.org/2004/02/skos/core#definition> "Classifies how a digital representation was produced or what epistemic status it carries, separately from its detailed generating provenance."@en .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/prov-o/> .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/dc/terms/description> "Representation-neutral semantics for digital surrogates, managed assets, bitstreams, fixity, derivation, and representation status."@en .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/dc/terms/title> "MODAVIS Media and Digital Representation Ontology"@en .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modmedia" .
+<https://w3id.org/modavis/ontology/media> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/media#" .
+<https://w3id.org/modavis/ontology/media> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/media> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology/media> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/evidence/0.1.0> .
+<https://w3id.org/modavis/ontology/media> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/provenance/0.1.0> .
+<https://w3id.org/modavis/ontology/media> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/media/0.1.0> .
+<https://w3id.org/modavis/ontology/media> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

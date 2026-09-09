@@ -1,0 +1,200 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/evidence> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0> ;
+  dcterms:title "MODAVIS Evidence Ontology"@en ;
+  dcterms:description "Citable source resources, captured snapshots, precise fragments, selectors, checksums, and qualified evidence relations."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL>,
+                     <https://www.w3.org/TR/annotation-vocab/> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/evidence/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modevidence" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/evidence#" .
+
+modevidence:SourceResource a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "source resource"@en ;
+  skos:definition "A citable resource such as a publication, archive item, web page, dataset, image, recording, transcript, or file."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:SourceSnapshot a owl:Class ;
+  rdfs:subClassOf modavis:Entity, prov:Entity ;
+  rdfs:label "source snapshot"@en ;
+  skos:definition "A captured, time-specific state of a source resource with explicit fixity, a timezone-qualified capture time, and an accountable generating activity."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:SourceFragment a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "source fragment"@en ;
+  skos:definition "A precisely selectable part of a source snapshot, such as a page, text range, image region, timecode, path, or three-dimensional region."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:EvidenceRelation a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "evidence relation"@en ;
+  skos:definition "A qualified relation recording how a source fragment evaluates an assertion or other identified claim-like resource, including supporting, opposing, and contextual roles."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:Selector a owl:Class ;
+  rdfs:subClassOf oa:Selector, modavis:Entity ;
+  rdfs:label "source selector"@en ;
+  skos:definition "A structured description of how to identify a segment within a source snapshot, optionally conforming to Web Annotation, Media Fragments, or a reviewed media-specific selector specification."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:Checksum a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "checksum"@en ;
+  skos:definition "A qualified fixity value that records both the digest algorithm and digest value for a resource."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:snapshotOf a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modevidence:SourceSnapshot ;
+  rdfs:range modevidence:SourceResource ;
+  rdfs:label "snapshot of"@en ;
+  skos:definition "Identifies the source resource of which a source snapshot captures a particular state."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:snapshotCapturedAt a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf prov:generatedAtTime ;
+  rdfs:domain modevidence:SourceSnapshot ;
+  rdfs:range xsd:dateTime ;
+  rdfs:label "source snapshot captured at"@en ;
+  skos:definition "Records the timezone-qualified instant at which the fixed source state was captured."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:snapshotCapturedBy a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf prov:wasGeneratedBy ;
+  rdfs:domain modevidence:SourceSnapshot ;
+  rdfs:range prov:Activity ;
+  rdfs:label "source snapshot captured by"@en ;
+  skos:definition "Identifies the accountable capture, retrieval, or digitization activity that generated the fixed source snapshot."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:fragmentOf a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modevidence:SourceFragment ;
+  rdfs:range modevidence:SourceSnapshot ;
+  rdfs:label "fragment of"@en ;
+  skos:definition "Identifies the fixed source snapshot within which a fragment is selected."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:selectorValue a owl:DatatypeProperty ;
+  rdfs:domain modevidence:Selector ;
+  rdfs:range xsd:string ;
+  rdfs:label "selector value"@en ;
+  skos:definition "The serialized selector expression interpreted according to the selector's declared conformance specification and type."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:selectorType a owl:ObjectProperty ;
+  rdfs:domain modevidence:Selector ;
+  rdfs:range skos:Concept ;
+  rdfs:label "selector type"@en ;
+  skos:definition "Classifies the selector with a concept governed by the applicable exchange profile or selector specification."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:hasSelector a owl:ObjectProperty ;
+  rdfs:domain modevidence:SourceFragment ;
+  rdfs:range modevidence:Selector ;
+  rdfs:subPropertyOf oa:hasSelector ;
+  rdfs:label "has selector"@en ;
+  skos:definition "Relates a source fragment to a structured selector locating it within a fixed source snapshot."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:selectorConformsTo a owl:ObjectProperty ;
+  rdfs:domain modevidence:Selector ;
+  rdfs:label "selector conforms to"@en ;
+  skos:definition "Identifies the specification or profile under which a selector value is interpreted."@en ;
+  skos:scopeNote "The value must be an IRI identifying the citable selector specification or profile. A human-readable format label is insufficient to define interpretation semantics."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:sourceUri a owl:DatatypeProperty ;
+  rdfs:domain modevidence:SourceResource ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "source URI"@en ;
+  skos:definition "An absolute retrieval or reference URI recorded for a source resource; it is not required to be the resource's persistent identity IRI."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:hasChecksum a owl:ObjectProperty ;
+  rdfs:range modevidence:Checksum ;
+  rdfs:label "has checksum"@en ;
+  skos:definition "Relates a resource to a qualified checksum that names both digest algorithm and value."@en ;
+  skos:scopeNote "The applicable SHACL profile determines which fixed resource is being checked. A checksum establishes fixity only for the declared bytes or canonical materialization and does not establish authenticity or truth."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:checksumAlgorithm a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modevidence:Checksum ;
+  rdfs:range skos:Concept ;
+  rdfs:label "checksum algorithm"@en ;
+  skos:definition "Identifies the digest algorithm used to calculate a checksum value."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:checksumValue a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modevidence:Checksum ;
+  rdfs:range xsd:string ;
+  rdfs:label "checksum value"@en ;
+  skos:definition "The normalized digest value produced by the declared checksum algorithm."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:evaluates a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modevidence:EvidenceRelation ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "evaluates"@en ;
+  skos:definition "Relates a qualified evidence relation to the assertion, event, relation, or other identified claim-like resource it evaluates."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:usesFragment a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modevidence:EvidenceRelation ;
+  rdfs:range modevidence:SourceFragment ;
+  rdfs:label "uses fragment"@en ;
+  skos:definition "Identifies a precise source fragment used by an evidence relation."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:evidenceRole a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modevidence:EvidenceRelation ;
+  rdfs:range skos:Concept ;
+  rdfs:label "evidence role"@en ;
+  skos:definition "Classifies how a source fragment bears on the evaluated resource, such as supporting, opposing, or contextual evidence."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .
+
+modevidence:extractionConfidence a owl:DatatypeProperty ;
+  rdfs:domain modevidence:EvidenceRelation ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "extraction confidence"@en ;
+  skos:definition "A decimal from zero through one expressing confidence in the extraction or association represented by an evidence relation."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/evidence> ;
+  vs:term_status "testing" .

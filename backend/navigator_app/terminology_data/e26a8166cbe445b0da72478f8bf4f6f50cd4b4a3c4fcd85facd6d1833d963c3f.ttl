@@ -1,0 +1,538 @@
+@prefix mdvsv: <https://w3id.org/modavis/vocab/> .
+@prefix insttype: <https://w3id.org/modavis/vocab/instrument-type/> .
+@prefix role: <https://w3id.org/modavis/vocab/functional-role/> .
+@prefix membership: <https://w3id.org/modavis/vocab/component-membership-type/> .
+@prefix assertionstatus: <https://w3id.org/modavis/vocab/assertion-status/> .
+@prefix assertionpredicate: <https://w3id.org/modavis/vocab/assertion-predicate/> .
+@prefix evidencerole: <https://w3id.org/modavis/vocab/evidence-role/> .
+@prefix eventtype: <https://w3id.org/modavis/vocab/event-type/> .
+@prefix repstatus: <https://w3id.org/modavis/vocab/representation-status/> .
+@prefix vmiproduction: <https://w3id.org/modavis/vocab/virtual-instrument-production-method/> .
+@prefix vmisource: <https://w3id.org/modavis/vocab/virtual-instrument-source-relation/> .
+@prefix compatstatus: <https://w3id.org/modavis/vocab/compatibility-status/> .
+@prefix checksum: <https://w3id.org/modavis/vocab/checksum-algorithm/> .
+@prefix recognitionstatus: <https://w3id.org/modavis/vocab/heritage-recognition-status/> .
+@prefix modassert: <https://w3id.org/modavis/ontology/assertion#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/vocab> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/assertion/0.1.0> ;
+  dcterms:title "MODAVIS Controlled Vocabularies"@en ;
+  dcterms:description "Reviewed SKOS concept schemes used by the MODAVIS 0.1.0 ontology and validation profiles."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/skos-reference/> ;
+  owl:versionIRI <https://w3id.org/modavis/vocab/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "mdvsv" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/vocab/" .
+
+mdvsv:instrument-type a skos:ConceptScheme ;
+  dcterms:title "MODAVIS instrument types"@en ;
+  skos:prefLabel "Instrument types"@en ;
+  skos:definition "A small seed vocabulary for broad musical-instrument types used by the first MODAVIS examples; detailed classifications should retain their external scheme and edition."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+insttype:pipe-organ a skos:Concept ;
+  skos:inScheme mdvsv:instrument-type ;
+  skos:prefLabel "pipe-organ instrument type"@en ;
+  skos:definition "A wind keyboard instrument in which pressurized air sounds pipes selected through stops or analogous controls."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+insttype:violin a skos:Concept ;
+  skos:inScheme mdvsv:instrument-type ;
+  skos:prefLabel "violin"@en ;
+  skos:definition "A bowed string instrument of the violin family, normally played at soprano register."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+insttype:piano a skos:Concept ;
+  skos:inScheme mdvsv:instrument-type ;
+  skos:prefLabel "piano"@en ;
+  skos:definition "A keyboard instrument in which controlled hammers normally strike tensioned strings."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+insttype:virtual-musical-instrument a skos:Concept ;
+  skos:inScheme mdvsv:instrument-type ;
+  skos:prefLabel "virtual-musical-instrument type"@en ;
+  skos:definition "A musical instrument whose playable behavior is realized substantially through software, digital computation, or a software-controlled sample or synthesis system."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:functional-role a skos:ConceptScheme ;
+  dcterms:title "MODAVIS instrument-component functional roles"@en ;
+  skos:prefLabel "Functional roles"@en ;
+  skos:definition "Contextual functions that instrument components may perform without turning those functions into permanent component identities."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+role:sound-generator a skos:Concept ;
+  skos:inScheme mdvsv:functional-role ;
+  skos:prefLabel "sound generator"@en ;
+  skos:definition "Produces an acoustic or electronic signal that contributes directly to the instrument's output."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+role:resonator a skos:Concept ;
+  skos:inScheme mdvsv:functional-role ;
+  skos:prefLabel "resonator"@en ;
+  skos:definition "Selectively reinforces, shapes, or sustains vibration or sound energy."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+role:sound-initiator a skos:Concept ;
+  skos:inScheme mdvsv:functional-role ;
+  skos:prefLabel "sound initiator"@en ;
+  skos:definition "Initiates excitation or activation that leads to sound production."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+role:sound-modulator a skos:Concept ;
+  skos:inScheme mdvsv:functional-role ;
+  skos:prefLabel "sound modulator"@en ;
+  skos:definition "Varies one or more parameters of an existing sound-producing process or signal."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+role:selector a skos:Concept ;
+  skos:inScheme mdvsv:functional-role ;
+  skos:prefLabel "selector"@en ;
+  skos:definition "Selects a resource, pathway, voice, component group, or configuration for use."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+role:playing-interface a skos:Concept ;
+  skos:inScheme mdvsv:functional-role ;
+  skos:prefLabel "playing-interface functional role"@en ;
+  skos:definition "Mediates a performer's intentional control of a musical instrument."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+role:action-mechanism a skos:Concept ;
+  skos:inScheme mdvsv:functional-role ;
+  skos:prefLabel "action mechanism"@en ;
+  skos:definition "Transmits, transforms, or coordinates control actions between instrument components."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:component-membership-type a skos:ConceptScheme ;
+  dcterms:title "MODAVIS component-membership types"@en ;
+  skos:prefLabel "Component-membership types"@en ;
+  skos:definition "Kinds of qualified structural or functional relation between an instrument, a parent component, and a child component."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+membership:structural-part a skos:Concept ;
+  skos:inScheme mdvsv:component-membership-type ;
+  skos:prefLabel "structural part"@en ;
+  skos:definition "The child is a structural part of the instrument or parent component in the stated scope."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+membership:member-of-collection a skos:Concept ;
+  skos:inScheme mdvsv:component-membership-type ;
+  skos:prefLabel "member of collection"@en ;
+  skos:definition "The child is an organized member of the parent component collection in the stated scope."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+membership:controlled-by a skos:Concept ;
+  skos:inScheme mdvsv:component-membership-type ;
+  skos:prefLabel "controlled by"@en ;
+  skos:definition "The child component's activation or behavior is controlled by the parent component in the stated scope."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+membership:connected-to a skos:Concept ;
+  skos:inScheme mdvsv:component-membership-type ;
+  skos:prefLabel "connected to"@en ;
+  skos:definition "The components participate in a documented connection whose more specific nature is not asserted by this concept."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:assertion-status a skos:ConceptScheme ;
+  dcterms:title "MODAVIS assertion statuses"@en ;
+  skos:prefLabel "Assertion statuses"@en ;
+  skos:definition "Review and lifecycle states for explicit MODAVIS assertions."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+assertionstatus:draft a skos:Concept ;
+  skos:inScheme mdvsv:assertion-status ;
+  skos:prefLabel "draft"@en ;
+  skos:definition "The assertion has been recorded but has not been accepted through the applicable review process."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+assertionstatus:accepted a skos:Concept ;
+  skos:inScheme mdvsv:assertion-status ;
+  skos:prefLabel "accepted"@en ;
+  skos:definition "The assertion has been accepted under a recorded review or decision policy."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+assertionstatus:rejected a skos:Concept ;
+  skos:inScheme mdvsv:assertion-status ;
+  skos:prefLabel "rejected"@en ;
+  skos:definition "The assertion has been reviewed and not accepted under the recorded policy."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+assertionstatus:superseded a skos:Concept ;
+  skos:inScheme mdvsv:assertion-status ;
+  skos:prefLabel "superseded"@en ;
+  skos:definition "The assertion remains part of the record but a later assertion or decision has replaced its active role."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:assertion-predicate a skos:ConceptScheme ;
+  dcterms:title "MODAVIS assertion predicates"@en ;
+  skos:prefLabel "Assertion predicates"@en ;
+  skos:definition "Governed predicate concepts used inside reified assertions before any reviewed projection to native OWL properties."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+assertionpredicate:has-builder a skos:Concept ;
+  skos:inScheme mdvsv:assertion-predicate ;
+  skos:prefLabel "has-builder assertion predicate"@en ;
+  skos:definition "Claims that the subject instrument has the identified builder."@en ;
+  modassert:projectedPropertyIri "https://w3id.org/modavis/ontology/instrument#hasBuilder"^^xsd:anyURI ;
+  rdfs:seeAlso <https://w3id.org/modavis/ontology/instrument#hasBuilder> ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:evidence-role a skos:ConceptScheme ;
+  dcterms:title "MODAVIS evidence roles"@en ;
+  skos:prefLabel "Evidence roles"@en ;
+  skos:definition "Ways in which a cited source fragment bears on the resource evaluated by a qualified evidence relation."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+evidencerole:supporting a skos:Concept ;
+  skos:inScheme mdvsv:evidence-role ;
+  skos:prefLabel "supporting evidence"@en ;
+  skos:definition "Evidence presented as increasing support for the evaluated resource."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+evidencerole:opposing a skos:Concept ;
+  skos:inScheme mdvsv:evidence-role ;
+  skos:prefLabel "opposing evidence"@en ;
+  skos:definition "Evidence presented as contradicting or decreasing support for the evaluated resource."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+evidencerole:contextual a skos:Concept ;
+  skos:inScheme mdvsv:evidence-role ;
+  skos:prefLabel "contextual evidence"@en ;
+  skos:definition "Evidence that supplies relevant context without being classified as directly supporting or opposing."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:event-type a skos:ConceptScheme ;
+  dcterms:title "MODAVIS event types"@en ;
+  skos:prefLabel "Event types"@en ;
+  skos:definition "Broad types for occurrences and activities in the documented history of instruments and related entities."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+eventtype:construction a skos:Concept ;
+  skos:inScheme mdvsv:event-type ;
+  skos:prefLabel "construction"@en ;
+  skos:definition "An event in which an instrument or substantial part of it is built or assembled."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+eventtype:restoration a skos:Concept ;
+  skos:inScheme mdvsv:event-type ;
+  skos:prefLabel "restoration"@en ;
+  skos:definition "An intervention intended to recover, reveal, or stabilize a documented earlier condition or significance."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+eventtype:relocation a skos:Concept ;
+  skos:inScheme mdvsv:event-type ;
+  skos:prefLabel "relocation"@en ;
+  skos:definition "An event in which an instrument or other entity is moved between places or spatial contexts."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+eventtype:recording a skos:Concept ;
+  skos:inScheme mdvsv:event-type ;
+  skos:prefLabel "recording"@en ;
+  skos:definition "An event in which sound, image, performance, measurement, or related signals are intentionally recorded."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+eventtype:digitization a skos:Concept ;
+  skos:inScheme mdvsv:event-type ;
+  skos:prefLabel "digitization"@en ;
+  skos:definition "An event in the documented world involving the creation of a digital representation from physical or analogue material."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+eventtype:measurement a skos:Concept ;
+  skos:inScheme mdvsv:event-type ;
+  skos:prefLabel "measurement"@en ;
+  skos:definition "An event in which a property is observed under a stated method, unit, and context."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:representation-status a skos:ConceptScheme ;
+  dcterms:title "MODAVIS representation statuses"@en ;
+  skos:prefLabel "Representation statuses"@en ;
+  skos:definition "Epistemic and production statuses that distinguish capture, documentation, processing, reconstruction, simulation, inference, learning, and creative transformation."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:captured a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "directly captured"@en ;
+  skos:definition "Created by direct sensing or recording of the represented object, event, environment, or signal under documented conditions."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:authored a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "authored documentary content"@en ;
+  skos:definition "Created intentionally as documentation rather than obtained by direct capture."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:processed a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "processed derivative"@en ;
+  skos:definition "Derived through a documented transformation from one or more prior representations."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:reconstructed a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "evidence-based reconstruction"@en ;
+  skos:definition "Created by reconstructing a missing, past, incomplete, or inaccessible state from identified evidence and documented decisions."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:simulated a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "simulation result"@en ;
+  skos:definition "Generated by a declared computational or physical simulation rather than directly measured at every represented state."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:inferred a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "analytically inferred"@en ;
+  skos:definition "Produced by analytical inference from evidence and method rather than directly observed as represented."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:measured a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "measured representation"@en ;
+  skos:definition "Represents quantities obtained through a documented measurement procedure, including its calibration and uncertainty where applicable."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:learned a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "machine-learned representation"@en ;
+  skos:definition "Generated by a learned model whose training inputs, model artifact, validation, and inference activity are separately identified."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:hybrid a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "hybrid representation"@en ;
+  skos:definition "Combines two or more representation statuses in a way that cannot be faithfully reduced to one status."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+repstatus:creative a skos:Concept ;
+  skos:inScheme mdvsv:representation-status ;
+  skos:prefLabel "creative transformation"@en ;
+  skos:definition "Intentionally transforms source material for expressive or speculative purposes and is not presented as documentary capture."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:virtual-instrument-production-method a skos:ConceptScheme ;
+  dcterms:title "MODAVIS virtual-instrument production methods"@en ;
+  skos:prefLabel "Virtual-instrument production methods"@en ;
+  skos:definition "Primary methods by which a virtual musical instrument produces or transforms sound."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmiproduction:sampled a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-production-method ;
+  skos:prefLabel "sampled"@en ;
+  skos:definition "Produces sound primarily by selecting and rendering recorded audio samples."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmiproduction:physical-modeling a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-production-method ;
+  skos:prefLabel "physical modeling"@en ;
+  skos:definition "Produces sound primarily through a computational model of physical sound-generation behavior."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmiproduction:algorithmic-synthesis a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-production-method ;
+  skos:prefLabel "algorithmic synthesis"@en ;
+  skos:definition "Produces sound primarily through a signal-generation algorithm not limited to playback of captured samples."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmiproduction:convolution-based a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-production-method ;
+  skos:prefLabel "convolution based"@en ;
+  skos:definition "Depends substantially on convolution with identified response data or filters."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmiproduction:hybrid a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-production-method ;
+  skos:prefLabel "hybrid"@en ;
+  skos:definition "Combines sampling, physical modeling, algorithmic synthesis, convolution, or other production methods."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:virtual-instrument-source-relation a skos:ConceptScheme ;
+  dcterms:title "MODAVIS virtual-instrument source relations"@en ;
+  skos:prefLabel "Virtual-instrument source relations"@en ;
+  skos:definition "Evidence-qualified ways in which a virtual instrument or product relates to a specific source musical instrument or instrument state."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmisource:sampled-from a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-source-relation ;
+  skos:prefLabel "sampled from"@en ;
+  skos:definition "The virtual instrument uses recordings captured from the identified source instrument or state."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmisource:modeled-after a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-source-relation ;
+  skos:prefLabel "modeled after"@en ;
+  skos:definition "The virtual instrument's structure or behavior was modeled after the identified source instrument or state."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmisource:historical-reconstruction a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-source-relation ;
+  skos:prefLabel "historical reconstruction of"@en ;
+  skos:definition "The virtual instrument reconstructs an identified historical instrument or state from documented evidence and decisions."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmisource:composite-source a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-source-relation ;
+  skos:prefLabel "composite source"@en ;
+  skos:definition "The virtual instrument combines recorded, modeled, or reconstructed material from more than one identified source instrument or state."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+vmisource:inspired-by a skos:Concept ;
+  skos:inScheme mdvsv:virtual-instrument-source-relation ;
+  skos:prefLabel "inspired by"@en ;
+  skos:definition "The virtual instrument draws documented conceptual or aesthetic inspiration from the source without claiming capture, modeling, or reconstruction."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:compatibility-status a skos:ConceptScheme ;
+  dcterms:title "MODAVIS compatibility statuses"@en ;
+  skos:prefLabel "Compatibility statuses"@en ;
+  skos:definition "Evidence-backed outcomes for evaluating a versioned resource against a specified host, platform, protocol, format, or operating environment."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+compatstatus:compatible a skos:Concept ;
+  skos:inScheme mdvsv:compatibility-status ;
+  skos:prefLabel "compatible"@en ;
+  skos:definition "The evaluated version satisfies the documented compatibility criteria for the specified target without a known material limitation."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+compatstatus:compatible-with-limitations a skos:Concept ;
+  skos:inScheme mdvsv:compatibility-status ;
+  skos:prefLabel "compatible with limitations"@en ;
+  skos:definition "The evaluated version satisfies the documented compatibility criteria only under stated restrictions, workarounds, or loss of capability."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+compatstatus:incompatible a skos:Concept ;
+  skos:inScheme mdvsv:compatibility-status ;
+  skos:prefLabel "incompatible"@en ;
+  skos:definition "The evaluated version fails one or more documented compatibility criteria for the specified target."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+compatstatus:indeterminate a skos:Concept ;
+  skos:inScheme mdvsv:compatibility-status ;
+  skos:prefLabel "indeterminate compatibility"@en ;
+  skos:definition "Available evidence is insufficient or conflicting, so compatibility with the specified target cannot be determined."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:checksum-algorithm a skos:ConceptScheme ;
+  dcterms:title "MODAVIS checksum algorithms"@en ;
+  skos:prefLabel "Checksum algorithms"@en ;
+  skos:definition "Digest algorithms permitted by MODAVIS fixity profiles."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+checksum:sha-256 a skos:Concept ;
+  skos:inScheme mdvsv:checksum-algorithm ;
+  skos:prefLabel "SHA-256"@en ;
+  skos:notation "sha256" ;
+  skos:definition "The SHA-256 cryptographic hash function standardized by NIST FIPS 180-4."@en ;
+  rdfs:seeAlso <https://doi.org/10.6028/NIST.FIPS.180-4> ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+mdvsv:heritage-recognition-status a skos:ConceptScheme ;
+  dcterms:title "MODAVIS heritage-recognition statuses"@en ;
+  skos:prefLabel "Heritage-recognition statuses"@en ;
+  skos:definition "Outcomes and lifecycle states assigned by a qualified heritage-recognition record without treating heritage significance as an intrinsic class of the recognized resource."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+recognitionstatus:proposed a skos:Concept ;
+  skos:inScheme mdvsv:heritage-recognition-status ;
+  skos:prefLabel "proposed recognition"@en ;
+  skos:definition "Recognition has been formally proposed under the identified criteria but no positive or negative determination has been recorded."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+recognitionstatus:recognized a skos:Concept ;
+  skos:inScheme mdvsv:heritage-recognition-status ;
+  skos:prefLabel "recognized"@en ;
+  skos:definition "The assigning agent has made a positive heritage-recognition determination under the identified criteria and temporal scope."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+recognitionstatus:declined a skos:Concept ;
+  skos:inScheme mdvsv:heritage-recognition-status ;
+  skos:prefLabel "recognition declined"@en ;
+  skos:definition "The assigning agent reviewed the proposal and did not assign a positive heritage status under the identified criteria."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .
+
+recognitionstatus:withdrawn a skos:Concept ;
+  skos:inScheme mdvsv:heritage-recognition-status ;
+  skos:prefLabel "recognition withdrawn"@en ;
+  skos:definition "A previously applicable recognition has been withdrawn for the stated temporal scope without erasing the earlier recognition record."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/vocab> ;
+  vs:term_status "testing" .

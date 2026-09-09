@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="http://purl.org/dc/terms/conformsTo">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/creator">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/description">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/issued">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/license">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/modified">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/publisher">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/title">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/vocab/vann/preferredNamespacePrefix">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/vocab/vann/preferredNamespaceUri">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2003/06/sw-vocab-status/ns#term_status">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#Concept">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#ConceptScheme">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#definition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#inScheme">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#notation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#scopeNote">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AnnotationProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/oa#Selector">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/oa#hasSelector">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/prov#Activity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/prov#Agent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/prov#Entity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/prov#SoftwareAgent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/prov#generatedAtTime">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/prov#used">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/prov#wasAssociatedWith">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/prov#wasDerivedFrom">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/ns/prov#wasGeneratedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">Stable identity, naming, typing, spatial, and temporal concepts shared by the MODAVIS Ontology Network.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Core Ontology</ns1:title>
+    <ns2:preferredNamespacePrefix>modavis</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology/core#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#Agent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">agent</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Agent" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Continuant" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A person, organization, group, or other entity capable of bearing responsibility or participating agentively in an activity.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#Continuant">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">continuant</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An entity that persists through time while being capable of changing state, location, configuration, or composition.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#Entity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">entity</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A physical, digital, conceptual, or informational thing represented with stable MODAVIS identity.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#IdentifiedResource">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">identified resource</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Anything represented by a stable IRI, including entities, events, assertions, qualified relations, and provenance activities.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Being an identified resource does not imply that MODAVIS has allocated an MDVS identifier. Exchange profiles may use repository IRIs or UUID URNs; the MODAVIS publication profile applies the narrower managed-resource rules.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#Identifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">identifier</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A reified identifier value together with its assigning scheme and, where available, provenance.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#MODAVISManagedResource">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">MODAVIS-managed resource</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An identified resource admitted to a MODAVIS-governed public record with a stable HTTP IRI and documented lifecycle.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The class does not require an MDVS identifier. Stable HTTP IRIs are normative identity in MODAVIS 0.1.0.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#Name">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">name</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A citable appellation associated with an identified resource.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#Organization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">organization</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Agent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An agent constituted by people or other agents acting under a shared identity or purpose.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#Person">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">person</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Agent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A human agent.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#Place">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">place</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A spatially identifiable location or region.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#TimeSpan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">time span</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A temporal extent whose boundaries, expression, precision, or certainty may be known incompletely.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#canonicalLabel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">canonical label</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A preferred language-tagged human-readable label selected for an identified resource in a stated publication context.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The exchange SHACL profile enforces rdf:langString because rdf:langString is outside the OWL 2 RL datatype map.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#endDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#TimeSpan" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">end date</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The inclusive calendar date at which a time span ends, when known at day precision.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The exchange SHACL profile enforces xsd:date because xsd:date is outside the OWL 2 RL datatype map.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#endDateTime">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#TimeSpan" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">end date and time</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The timezone-qualified date-time at which a time span ends.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#hasIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">has identifier</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Identifier" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an identified resource to a reified identifier record.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">No global domain is asserted so externally defined resources can carry qualified MODAVIS identifier records without receiving an unintended class inference.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#hasName">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">has name</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Name" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an identified resource to a reified name that can carry language, type, provenance, and validity information.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">No global domain is asserted so externally defined identified resources can use the naming pattern without being inferred into a narrower MODAVIS class.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#hasStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">has status</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies a resource with a governed lifecycle, review, or publication-status concept.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This generic status property is intentionally domain-neutral. The applicable profile must identify the status concept scheme and the resources to which it applies.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#hasType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">has type</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies a resource with a governed concept without promoting the concept to an OWL class.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This generic classification property is intentionally domain-neutral. Prefer a module-specific subproperty when one exists.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#identifierScheme">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#Identifier" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">identifier scheme</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the governed scheme under which an identifier value was assigned.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#identifierValue">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#Identifier" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">identifier value</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The lexical value assigned by an identifier scheme.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#locatedAt">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">located at</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Place" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an entity to a place at which it is located in the described context.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Location may be time- or context-dependent. Qualify it with an assertion, context binding, state, or event when an unscoped direct triple would overstate the claim.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#mdvsIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">MDVS identifier</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An optional legacy MODAVIS v1 identifier string retained for compatibility with existing Release 1.3 data.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">MDVS v1 is not a persistent-identifier standard: its historical check character is ineffective, the payload has limited entropy, and no public global allocation ledger exists. Do not mint new independent identifiers with this property; see the MDVS v1 compatibility note.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#nameValue">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#Name" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">name value</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The language-tagged lexical form of a reified name.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The exchange SHACL profile enforces rdf:langString because rdf:langString is outside the OWL 2 RL datatype map.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#rawTemporalExpression">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#TimeSpan" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">raw temporal expression</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A source-preserving temporal expression retained when normalized boundaries are incomplete, uncertain, or inappropriate.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#startDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#TimeSpan" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">start date</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The inclusive calendar date at which a time span begins, when known at day precision.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The exchange SHACL profile enforces xsd:date because xsd:date is outside the OWL 2 RL datatype map.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#startDateTime">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#TimeSpan" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">start date and time</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The timezone-qualified date-time at which a time span begins.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#temporalCertainty">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#TimeSpan" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">temporal certainty</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies the evidential certainty of a time span or boundary.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#temporalPrecision">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/core#TimeSpan" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">temporal precision</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies the granularity at which a time span or boundary is expressed.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/core#validDuring">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/core" />
+    <ns4:label xml:lang="en">valid during</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#TimeSpan" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a resource or qualified relation to the time span during which it applies.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The subject may be a domain resource or a qualified relation. A module or application profile determines whether the interval expresses existence, validity, applicability, or another named temporal role.</ns6:scopeNote>
+  </rdf:Description>
+</rdf:RDF>

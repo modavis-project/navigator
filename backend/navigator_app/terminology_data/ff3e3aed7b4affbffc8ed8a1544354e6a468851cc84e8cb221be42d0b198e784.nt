@@ -1,0 +1,76 @@
+<https://w3id.org/modavis/ontology/context#ContextBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/context#ContextBinding> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/context> .
+<https://w3id.org/modavis/ontology/context#ContextBinding> <http://www.w3.org/2000/01/rdf-schema#label> "assertion context binding"@en .
+<https://w3id.org/modavis/ontology/context#ContextBinding> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/context#ContextBinding> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/context#ContextBinding> <http://www.w3.org/2004/02/skos/core#definition> "An explicit relation qualifying one assertion with one dimension, one contextual relation, and one identified context value."@en .
+<https://w3id.org/modavis/ontology/context#ContextBinding> <http://www.w3.org/2004/02/skos/core#scopeNote> "Absence of a context binding means that applicability is unqualified or unknown; it never means universally valid or invalid. Multiple bindings have no implicit conjunction or disjunction semantics. An application profile must define how bindings combine, or model alternatives as distinct assertions."@en .
+<https://w3id.org/modavis/ontology/context#ContextDimension> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/context#ContextDimension> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/context> .
+<https://w3id.org/modavis/ontology/context#ContextDimension> <http://www.w3.org/2000/01/rdf-schema#label> "context dimension"@en .
+<https://w3id.org/modavis/ontology/context#ContextDimension> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/context#ContextDimension> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/context#ContextDimension> <http://www.w3.org/2004/02/skos/core#definition> "An identified axis along which an assertion's applicability may be qualified, such as time, place, institutional perspective, configuration, or performance conditions."@en .
+<https://w3id.org/modavis/ontology/context#ContextDimension> <http://www.w3.org/2004/02/skos/core#scopeNote> "Dimensions are not restricted to a fixed universal list. Application profiles should reuse established temporal, spatial, measurement, and domain value models where available."@en .
+<https://w3id.org/modavis/ontology/context#contextRelation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/context#contextRelation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/context#contextRelation> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/context#ContextBinding> .
+<https://w3id.org/modavis/ontology/context#contextRelation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/context> .
+<https://w3id.org/modavis/ontology/context#contextRelation> <http://www.w3.org/2000/01/rdf-schema#label> "context relation"@en .
+<https://w3id.org/modavis/ontology/context#contextRelation> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/context#contextRelation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/context#contextRelation> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the governed or profile-defined relation between the assertion and the supplied dimension value."@en .
+<https://w3id.org/modavis/ontology/context#contextValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/context#contextValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/context#contextValue> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/context#ContextBinding> .
+<https://w3id.org/modavis/ontology/context#contextValue> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/context> .
+<https://w3id.org/modavis/ontology/context#contextValue> <http://www.w3.org/2000/01/rdf-schema#label> "context value"@en .
+<https://w3id.org/modavis/ontology/context#contextValue> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/context#contextValue> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the value, interval, region, perspective, configuration, or other resource used to qualify applicability along the dimension."@en .
+<https://w3id.org/modavis/ontology/context#contextValue> <http://www.w3.org/2004/02/skos/core#scopeNote> "The value is an identified resource. Its type and comparison semantics come from the context dimension's valueModel or an application profile; MODAVIS does not infer them from this generic property."@en .
+<https://w3id.org/modavis/ontology/context#contextualizesAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/context#contextualizesAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/context#contextualizesAssertion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/context#ContextBinding> .
+<https://w3id.org/modavis/ontology/context#contextualizesAssertion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/context> .
+<https://w3id.org/modavis/ontology/context#contextualizesAssertion> <http://www.w3.org/2000/01/rdf-schema#label> "contextualizes assertion"@en .
+<https://w3id.org/modavis/ontology/context#contextualizesAssertion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/context#contextualizesAssertion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/context#contextualizesAssertion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one assertion whose contextual applicability is qualified by a binding."@en .
+<https://w3id.org/modavis/ontology/context#dimension> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/context#dimension> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/context#dimension> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/context#ContextBinding> .
+<https://w3id.org/modavis/ontology/context#dimension> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/context> .
+<https://w3id.org/modavis/ontology/context#dimension> <http://www.w3.org/2000/01/rdf-schema#label> "has context dimension"@en .
+<https://w3id.org/modavis/ontology/context#dimension> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/context#ContextDimension> .
+<https://w3id.org/modavis/ontology/context#dimension> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/context#dimension> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the dimension along which a context binding qualifies an assertion."@en .
+<https://w3id.org/modavis/ontology/context#hasContextBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/context#hasContextBinding> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/context#hasContextBinding> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/context> .
+<https://w3id.org/modavis/ontology/context#hasContextBinding> <http://www.w3.org/2000/01/rdf-schema#label> "has context binding"@en .
+<https://w3id.org/modavis/ontology/context#hasContextBinding> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/context#ContextBinding> .
+<https://w3id.org/modavis/ontology/context#hasContextBinding> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/context#contextualizesAssertion> .
+<https://w3id.org/modavis/ontology/context#hasContextBinding> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/context#hasContextBinding> <http://www.w3.org/2004/02/skos/core#definition> "Relates an assertion to an explicit contextual applicability binding."@en .
+<https://w3id.org/modavis/ontology/context#valueModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/context#valueModel> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/context#ContextDimension> .
+<https://w3id.org/modavis/ontology/context#valueModel> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/context> .
+<https://w3id.org/modavis/ontology/context#valueModel> <http://www.w3.org/2000/01/rdf-schema#label> "value model"@en .
+<https://w3id.org/modavis/ontology/context#valueModel> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/context#valueModel> <http://www.w3.org/2004/02/skos/core#definition> "Identifies a vocabulary, ontology, SHACL profile, or specification that defines values and comparison semantics for a context dimension."@en .
+<https://w3id.org/modavis/ontology/context#valueModel> <http://www.w3.org/2004/02/skos/core#scopeNote> "MODAVIS does not invent generic ordering, containment, or hierarchy semantics for dimension values. Profiles should reference standards such as OWL-Time or GeoSPARQL when applicable."@en .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/dc/terms/description> "RDF 1.1 semantics for explicitly qualifying the contextual applicability of identified assertions without conflating context with provenance."@en .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/dc/terms/title> "MODAVIS Assertion Context Ontology"@en .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modcontext" .
+<https://w3id.org/modavis/ontology/context> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/context#" .
+<https://w3id.org/modavis/ontology/context> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/context> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/assertion/0.1.0> .
+<https://w3id.org/modavis/ontology/context> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology/context> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/context/0.1.0> .
+<https://w3id.org/modavis/ontology/context> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

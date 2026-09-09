@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/prov-o/" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">Contextual heritage recognition, curated knowledge collections, fixed knowledge snapshots, revision lineage, and accountable historical-claim review.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Heritage Knowledge Ontology</ns1:title>
+    <ns2:preferredNamespacePrefix>modheritage</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology/heritage#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/assertion/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/evidence/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/instrument/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/media/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/provenance/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/heritage/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">curated knowledge collection</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/media#DigitalAsset" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/media#DigitalSurrogate" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A governed, evolving intellectual collection of assertions about one or more identified resources, whose publishable states are represented by fixed knowledge snapshots.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The collection is not a musical instrument, digital surrogate, software product, version, distribution package, or serialization. Those resources may be documented by or materialize parts of the collection while retaining separate identities.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#HeritageRecognition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">heritage recognition</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A citable, qualified record that an accountable community, organization, or other agent assigned a stated heritage status to a resource under identified criteria and temporal scope.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Heritage significance is represented as an attributed and revisable status, not as an intrinsic or permanent class of the recognized resource. Different agents may issue concurrent or conflicting recognitions.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">historical claim review</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/provenance#EditorialActivity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An accountable editorial activity that reviews assertions about an entity's origin, attribution, custody, ownership, location, interventions, or other documented history and produces a distinct conclusion assertion.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This class concerns scholarly object-history review. It does not replace PROV-O lineage for the computational or editorial processes that generated records.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">knowledge maintenance activity</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/provenance#EditorialActivity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An accountable editorial activity that creates one fixed knowledge snapshot and records the assertions added to or removed from the preceding snapshot.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Removal changes membership in a later snapshot; it never deletes the assertion, its evidence, or an earlier snapshot from the scholarly record.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">knowledge snapshot</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/instrument#MusicalInstrument" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/media#DigitalAsset" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/media#DigitalSurrogate" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct" />
+    <ns3:disjointWith rdf:resource="https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An immutable state of a curated knowledge collection whose assertion membership, named graph, RDFC-1.0 canonicalization contract, and exact canonical N-Quads materialization are explicitly recorded.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Snapshot identity depends on declared assertion membership and graph identity. Its canonical materialization is an exact bitstream fixed by byte size and checksum; the snapshot resource itself is not assigned a self-referential checksum.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#addedAssertion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">added assertion</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies an assertion present in the resulting snapshot but absent from the preceding snapshot, or introduced with the initial snapshot.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#canonicalMaterialization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">canonical snapshot materialization</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/media#Bitstream" />
+    <ns4:subPropertyOf rdf:resource="https://w3id.org/modavis/ontology/heritage#materializedAs" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one application/n-quads bitstream whose bytes are exactly the RDFC-1.0 canonical serialization of the snapshot dataset and whose byte size and checksum provide the snapshot's reproducible fixity anchor.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#canonicalizationProfile">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">canonicalization profile</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the immutable RDF Dataset Canonicalization profile used to produce the snapshot's canonical N-Quads materialization.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">MODAVIS 0.1.0 fixes this value to the dated RDFC-1.0 W3C Recommendation. The input dataset contains exactly one named graph identified by snapshotGraphIri; that graph contains exactly the outgoing assertion-record triples for every includesAssertion resource and no triples for assertions outside that membership. Snapshot metadata and canonical-materialization fixity statements are outside the input dataset, preventing self-reference.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#curatedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">curated by</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Agent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies an agent accountable for governing the scope and maintenance of a curated knowledge collection.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#currentSnapshot">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">current knowledge snapshot</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:subPropertyOf rdf:resource="https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one snapshot selected as current under the collection's recorded governance state while retaining earlier snapshots.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#documentsResource">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">documents resource</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies a resource that is an explicit documentary subject of a curated knowledge collection.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This relation does not assert identity, completeness, heritage status, or representation fidelity.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#hasEvidenceRelation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HeritageRecognition" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">has heritage-recognition evidence</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/evidence#EvidenceRelation" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a heritage recognition to qualified source-fragment evidence that evaluates the recognition record.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">has knowledge snapshot</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns3:inverseOf rdf:resource="https://w3id.org/modavis/ontology/heritage#snapshotOfCollection" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a curated knowledge collection to one of its retained immutable snapshot states.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#includesAssertion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">includes assertion</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Records exact membership of an assertion in a fixed knowledge snapshot.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Membership is documentary inclusion, not acceptance; an included assertion retains its own status, evidence, context, and conflict relations.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#maintainedCollection">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">maintained collection</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one curated knowledge collection revised by a knowledge maintenance activity.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#materializedAs">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">materialized as</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/media#DigitalAsset" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an abstract fixed knowledge snapshot to a digital asset that serializes, packages, or otherwise materializes that snapshot.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#previousSnapshot">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">previous snapshot</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#used" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the preceding snapshot used as the revision base; it is absent only when the activity creates the collection's initial snapshot.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#producesAssertion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">produces assertion</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the distinct conclusion assertion generated by a historical claim review.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#recognitionAssignedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HeritageRecognition" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">recognition assigned by</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Agent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies an accountable community, organization, person, or other agent that assigned the recorded heritage status.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#recognitionBasis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HeritageRecognition" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">recognition basis</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies a criterion, policy, register, legal instrument, assessment framework, or other citable basis under which the heritage status was assigned.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HeritageRecognition" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">recognition recorded by</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/provenance#ProcessingActivity" />
+    <ns4:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the processing or editorial activity that created the MODAVIS recognition record, separately from the agent that assigned the heritage status.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#recognitionStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HeritageRecognition" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">recognition status</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies the outcome or lifecycle state of a heritage recognition with a governed concept.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#recognizesResource">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HeritageRecognition" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">recognizes resource</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one resource whose heritage status is recorded by a heritage recognition.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#removedAssertion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">removed assertion</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies an assertion present in the preceding snapshot and absent from the resulting snapshot while preserving the assertion and preceding snapshot.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#resultingSnapshot">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">resulting snapshot</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one fixed snapshot produced by a knowledge maintenance activity.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#reviewRationale">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">historical review rationale</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A non-empty human-readable account of the evidence and reasoning used by a historical claim review.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#reviewSubject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">historical review subject</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one resource whose historical claims are evaluated by a historical claim review.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#reviewsAssertion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">reviews assertion</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#used" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies an existing historical assertion used as input to a historical claim review.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#snapshotCreatedAt">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">snapshot created at</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Records the timezone-qualified date and time at which the fixed knowledge snapshot was created.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">snapshot created by</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity" />
+    <ns4:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy" />
+    <ns3:inverseOf rdf:resource="https://w3id.org/modavis/ontology/heritage#resultingSnapshot" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one knowledge maintenance activity that created a fixed knowledge snapshot.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#snapshotGraphIri">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">snapshot graph IRI</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Records the absolute named-graph IRI assigned to a knowledge snapshot when it is exposed as an RDF graph.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#snapshotOfCollection">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">snapshot of knowledge collection</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one curated knowledge collection whose fixed state a knowledge snapshot records.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/heritage#supersedesRecognition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/heritage#HeritageRecognition" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/heritage" />
+    <ns4:label xml:lang="en">supersedes recognition</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/heritage#HeritageRecognition" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a later heritage recognition record to an earlier record for the same resource whose active role it replaces without erasing the earlier record.</ns6:definition>
+  </rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,74 @@
+{
+  "version": "1.6.0",
+  "recordId": "22308263",
+  "publicationStatus": "pending",
+  "doi": "10.5281/zenodo.22308263",
+  "files": [
+    {
+      "bytes": 2758162115,
+      "decodedSha256": "fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+      "encoding": "gzip",
+      "name": "modavis-pod-1.6.0-public-core.sqlite.gz",
+      "sha256": "a1977801419b4f8869e4a11f5ebc468d09243e98f57491baf0aa5115712d229d"
+    },
+    {
+      "bytes": 349025879,
+      "decodedSha256": "8be027fddeb9597141ac87b28be028afdced18b1f5423cf9f629673dd8167192",
+      "encoding": "gzip",
+      "name": "modavis-pod-1.5.5-identifier-ledger.sqlite.gz",
+      "sha256": "43f00e4a8ed5748597d29efd8126601c46948a332fc03d078b50ed8546cca584"
+    },
+    {
+      "bytes": 1902075241,
+      "decodedSha256": "b055269ed83c51a2512af04b7b8cdf26f335c93a2e50c6db02b2350f200f15c1",
+      "encoding": "identity",
+      "name": "modavis-pod-1.6.0-public-postgresql.dump",
+      "sha256": "b055269ed83c51a2512af04b7b8cdf26f335c93a2e50c6db02b2350f200f15c1"
+    },
+    {
+      "bytes": 2522470400,
+      "decodedSha256": "3dbad97f0691eb7540c848febf33f64661b5cb4e078e6f1a05a56d15738fe6a7",
+      "encoding": "identity",
+      "name": "modavis-pod-1.6.0-complete-cidoc-ntriples.tar",
+      "sha256": "3dbad97f0691eb7540c848febf33f64661b5cb4e078e6f1a05a56d15738fe6a7"
+    },
+    {
+      "bytes": 2489251840,
+      "decodedSha256": "c053d976a78392d877191656df92a1561f7d887588d51b996bcbbd5d615eb825",
+      "encoding": "identity",
+      "name": "modavis-pod-1.6.0-complete-edm-ntriples.tar",
+      "sha256": "c053d976a78392d877191656df92a1561f7d887588d51b996bcbbd5d615eb825"
+    },
+    {
+      "bytes": 7851028480,
+      "decodedSha256": "7502952344d5b0d4aa3608e75d5de5646be99de5c052c83417c23b3cfffe47ad",
+      "encoding": "identity",
+      "name": "modavis-pod-1.6.0-complete-modavis-ntriples.tar",
+      "sha256": "7502952344d5b0d4aa3608e75d5de5646be99de5c052c83417c23b3cfffe47ad"
+    },
+    {
+      "bytes": 7087861760,
+      "decodedSha256": "684f2a72f854cf37e632ccb27259e9a8cf6a09eedd42137e274d2f40f753980f",
+      "encoding": "identity",
+      "name": "modavis-pod-1.6.0-complete-pon-ntriples.tar",
+      "sha256": "684f2a72f854cf37e632ccb27259e9a8cf6a09eedd42137e274d2f40f753980f"
+    },
+    {
+      "bytes": 2542269601,
+      "decodedSha256": "cf716221741743411955c30622a3b3f95b763d909ed2216687d48b9efd9628bf",
+      "encoding": "identity",
+      "name": "modavis-pod-1.6.0-research-runtime.tar.gz",
+      "sha256": "cf716221741743411955c30622a3b3f95b763d909ed2216687d48b9efd9628bf"
+    },
+    {
+      "name": "PUBLIC_POSTGRESQL_MANIFEST.json",
+      "bytes": 6124,
+      "sha256": "375c4afc1f98d6f2d5a9a235225f3794dd75f22173e0271ed7c10b2f7699654d"
+    },
+    {
+      "name": "distribution-manifest.json",
+      "bytes": 922126,
+      "sha256": "ca271116aa40a1b18ab119f8d52fb7f69fc30416cdb7445c472c2de26f6f0f3b"
+    }
+  ]
+}

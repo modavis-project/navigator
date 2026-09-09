@@ -1,0 +1,9 @@
+.json-evidence { min-width:0; max-width:100%; margin:12px 0; border:1px solid #c9d6cb; border-radius:10px; background:#f2f5ee; }
+.json-evidence .json-evidence-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; padding:8px 12px; border-bottom:1px solid #d5ded2; color:#3f5c4e; font:600 .75rem/1.5 system-ui,sans-serif; }
+.json-evidence-toolbar > span:first-child { letter-spacing:.08em; }
+.json-evidence-toolbar > [role=status] { flex:1; font-weight:400; }
+.json-evidence .json-evidence-toolbar button { display:inline-flex; align-items:center; justify-content:center; gap:6px; margin-left:auto; min-height:36px; padding:6px 10px; border:1px solid #b7cbbd; border-radius:6px; background:#fffefa; color:#245744; font:600 .75rem/1.4 system-ui,sans-serif; cursor:pointer; }
+.json-evidence .json-evidence-toolbar button:hover { background:#e5eee1; border-color:#779985; }
+.json-evidence pre.json-evidence-code { box-sizing:border-box; display:block; min-width:0; width:100%; max-width:100%; max-height:28rem; margin:0; padding:16px; border:0; border-radius:0 0 10px 10px; background:#f2f5ee; color:#203b35; font:400 .8125rem/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; white-space:pre-wrap; overflow-wrap:anywhere; word-break:normal; overflow:auto; scrollbar-gutter:stable; text-align:left; }
+.json-evidence :is(button,pre):focus-visible { outline:3px solid #946523; outline-offset:2px; }
+.json-evidence-empty { color:#53665a; font-size:.9rem; }

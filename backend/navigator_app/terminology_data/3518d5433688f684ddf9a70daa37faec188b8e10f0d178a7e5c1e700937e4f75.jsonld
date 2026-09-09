@@ -1,0 +1,6577 @@
+[
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#privacyClassification",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#identity",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#focusEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "focus entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/building-acoustic-performance",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "building-acoustic performance"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#processedResultRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "processed result realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#manifestDigestLocation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#selectionSetId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#transformToParent",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#continuity",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#determinism",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Capability",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "VAO capability"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#eventEncoding",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#softwareEnvironment",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#SoftwareEnvironment"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/derived",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "derived"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#performedByAgent",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "performed by agent"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#validUntil",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#qualityFlags",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#seed",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#chunkSize",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/redacted",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "redacted"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#weighting",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#authored",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "authored acoustic representation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#scale",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#perNoteControllerIndex",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#modavisBinding",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/actuator-transfer",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "actuator transfer"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#selectionWeight",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/deterministic-render-trace",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "deterministic render trace"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/spatial",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "explicit spatial coordinates"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#targetEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "target entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#stream",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#simultaneousEventOrder",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#value",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#types",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#headphoneCompensationAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "headphone compensation asset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#identityScope",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "software identity scope"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#PhysicalComponent",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "physical component"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#analysis",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Analysis"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#noteOffPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#address",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/physical-system-topology",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "physical-system topology"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#jsonPointer",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "Pointer added by the annotated JSON-LD view; it does not assert preservation of JSON lexical form or array order in RDF."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#entity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ResponseSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "acoustic response set"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/undetermined",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "undetermined"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ambisonicsNormalization",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#metrics",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#standardIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "standard iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#communityAuthority",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "community authority"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#normalization",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#jsonSchema",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/time-scale/utc",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/time-scale"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "UTC"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#derivedRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "derived realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#input",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#selectorType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#subjectScheme",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/authored",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "authored"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#temperamentLabel",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#stateAssignments",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#cancellationControl",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "cancellation control"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#number",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#umpMessageType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#signalRegion",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#SignalRegion"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/linked-animation",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "linked animation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#merkleRoot",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ProtocolBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "protocol binding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/playable-interaction",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "playable interaction model"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#timingKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourcePort",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Port"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sampleFormat",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#upAxis",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#SampleMapping",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sample mapping"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#persistentIdentifier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "persistent identifier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#jrTimestamp",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#stateRole",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#resultStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/synchronized-media-animation",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "synchronized media animation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#embargoUntil",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#orientationUncertainty",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#state",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "state"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#AcousticModelSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "spatial and acoustic model set"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Timebase",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "timebase"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#responseKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ambisonicsDimensionality",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Calibration",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "calibration record"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#environmentObservation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "environment observation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/reconstructed",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "reconstructed"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#component",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#PhysicalComponent"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#configuration",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "configuration"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#metadataAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "metadata asset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#runtime",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#RuntimeContract"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#identifierScheme",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "identifier scheme"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#startFrame",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#captureState",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#CaptureState"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#packManifestSHA256",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/time-scale/posix",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/time-scale"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "POSIX time"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#interactionModel",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#InteractionModel"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#AudioScene",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "spatial audio scene"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#localFrame",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "local frame"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#CoordinateFrame"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/sample-looping",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "sample looping"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#maximumVoices",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#awardTitle",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#valueIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "value iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceSpace",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source space"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#role",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "role"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#subjectEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "subject entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/surface-placement-ar",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "surface-placement augmented reality"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#length",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#synchronizationMapping",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#SynchronizationMapping"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sequence",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#receiver",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "receiver"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#operator",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#responseEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "response entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#validDomain",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "valid domain"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#bandAxis",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#requiredCapability",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "required capability"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#discontinuityAfter",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#geometryBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#GeometryBinding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#capturedAt",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#language",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#grantedByAgent",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "granted by agent"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/visual-acoustic-scene",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "visual-acoustic scene"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/conditional-routing",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "conditional routing"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inputKeyMeaning",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#group",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "group"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#logicalAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#LogicalAsset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#frame",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "frame"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#PhysicalSystem",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "physical system"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#output",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/source-directivity",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "source directivity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#receiverPose",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "receiver pose"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#feature",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#relation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "relation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#stepCount",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#audioContainer",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#stateVariable",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#StateVariable"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#validation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "validation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#harmonicNumber",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#umpGroup",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#outputKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#TuningMap",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "tuning map"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#mappingVersion",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/offline-asset-groups",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "offline asset groups"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/multimodal-synchronization",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "multimodal synchronization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#rawResultRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "raw result realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#componentKind",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "component kind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/typed-scientific-provenance",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "typed scientific provenance"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#controlBehavior",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#cachePolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sidedness",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#eventType",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#InteractionEventType"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#residualUncertainty",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#trajectoryTrack",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "trajectory track"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#runToCompletion",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#access",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#instance",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "instance"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#decision",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#algorithm",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#outlierPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#dataResolutionBits",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#TimingConstraint",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "timing constraint"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#TakeSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "take set"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#publicationYear",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#selectionPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#InteractionModel",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "interaction model"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#transitionEvaluation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#axisUnit",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "axis unit"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#agentKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#parameterValues",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#jitter",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#gainDB",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/immutable-release",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "immutable release"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Connection",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "system connection"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#coordinateFrame",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#CoordinateFrame"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#appliesTo",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "applies to"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#resolverIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "resolver iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#byteSize",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#origin",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/semantic-building-model",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "semantic building model"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#keyTransform",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#GeometryBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "geometry binding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#transmissionLossUncertainty",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#identifierValue",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "identifier value"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#materialEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "material entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#migratedFromManifestSHA256",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#track",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Track"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#dataNumberingBase",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#pitchTuningCents",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#MaterialModel",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "acoustic material model"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#separatingElement",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "separating element"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#maximumValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#variantSetId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/community-governed-rights",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "community-governed rights"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sensorEncoding",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#confidence",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#performerAgent",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "performer agent"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#eventMappings",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#classification",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "classification"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ambisonicsChannelOrder",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#parentFrame",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "parent frame"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#observation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/ns/sosa/Observation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#transition",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#InteractionTransition"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#recordIdentifier",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#delayAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "delay asset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#coordinateType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#relationType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#outsideDomainPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ExecutionSemantics",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "execution semantics"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#supersedesRelease",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "supersedes release"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#processKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#scheme",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "scheme"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#controlKeyMeaning",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#status",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#SoftwareEnvironment",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "software environment"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#operation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#conflictPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Analysis",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "analysis record"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#encoding",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#extrapolationPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#CaptureDocumentation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "capture documentation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceTimebase",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Timebase"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#deactivationValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/capture-event-alignment",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "capture/event alignment"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#channelSelector",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#generatedBy",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "generated by"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#scope",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#environmentState",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "environment state"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#trainingInput",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "training input"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#hysteresis",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#connection",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Connection"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#executionSemantics",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#ExecutionSemantics"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#identityDescription",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "software identity description"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#reviewedAt",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#level",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#revision",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/simulated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "simulated"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/time-scale/gps",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/time-scale"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "GPS time"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#totalByteSize",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/geometry-acoustic-rendering",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "geometry-acoustic rendering"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#StateBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "state binding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#validFrom",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#kind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#strategy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#pose",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Pose"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#fileIdentifier",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#entries",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#perspectiveGroup",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#PerspectiveGroup"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#reviewedBy",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reviewed by"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#orientationXYZW",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#subject",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "subject"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sampleRootKey",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#fallbackGroup",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "fallback group"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#modelAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "model asset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#dynamicModel",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "VAO exact-realization representation status"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#RenderConfiguration",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "render configuration"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ClockSegment",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "clock-mapping segment"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#points",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#signatureEnvelopeRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "signature envelope realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ResponseMeasurement",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "acoustic response measurement"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceEndExclusive",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ScientificClaim",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "scientific claim"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#forwardAxis",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#qualityTier",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#executionGroup",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ontologyStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ScientificRecordSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "scientific record set"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/inferred",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "inferred"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceControl",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source control"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#PlayableModel",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "playable model"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#thicknessMeters",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inputPort",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "input port"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#redactionOfRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "redaction of realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sandboxPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#datatype",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "datatype"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#timeResolution",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#perspectiveType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#identifierType",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "identifier type"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#reentrancyPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#levelsOfDetail",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#initialState",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/unit/midi-tick-per-quarter-note",
+    "@type": [
+      "http://qudt.org/schema/qudt/Unit"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "The pulses-per-quarter-note resolution of a musical timebase; tempo conversion is supplied by synchronization mappings rather than this rate."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "MIDI ticks per quarter note"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#target",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "target"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#measurementMappings",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#absorptionUncertainty",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#certificateRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "certificate realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#reproducibility",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#mode",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#indexRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "index realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#repositoryBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "repository binding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#convention",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#keyRange",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#actuator",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/ns/sosa/Actuator"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#timestampOrder",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inputEvents",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#digest",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#outputUnit",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#statement",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#protocolBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#ProtocolBinding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#awardIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "award iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#outputPort",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "output port"
+      }
+    ]
+  },
+  {
+    "@id": "https://orcid.org/0000-0002-7904-3892",
+    "@type": [
+      "http://www.w3.org/ns/prov#Person"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Dominik Ukolov"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#vocabularyReleaseIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "vocabulary release iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#labels",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#crs",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "crs"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#directivityResponseSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "directivity response set"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#materializesProfile",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "materializes profile"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/recorded-release",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "recorded release"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#object",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "object"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#runtimeDescription",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "software runtime description"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#offset",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#physicalSystem",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#PhysicalSystem"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#version",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#endFrameExclusive",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#receivingSpace",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "receiving space"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#spatialFragment",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#values",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ontologyVersionIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "ontology version iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inputs",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#review",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Review"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#RandomSource",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "random source"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#resolutionPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#fitResidual",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#LogicalAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "logical asset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#MetricSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "acoustic metric set"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#measured",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "measured acoustic representation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#bidirectional",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#captureDocumentation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#CaptureDocumentation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#scientific",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#ScientificRecordSet"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#mappingIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "mapping iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/source-segmentation",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "source segmentation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#channelMap",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#hasDistribution",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "has distribution"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#domain",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "domain"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#mediaType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/composite-actuation",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "composite actuation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#channelLabels",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#lateEventPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#release",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#outputKeyMeaning",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#keyOffset",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#materializableProfile",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "materializable profile"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#predicate",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "predicate"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceFrameRange",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#softwareName",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#scene",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "scene"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#deterministic",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#RuntimeContract",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "runtime contract"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#timestamp",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#fallback",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "fallback"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#positionUncertainty",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/tracked-listener-convolution",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "tracked-listener convolution"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#availability",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ambisonicsOrder",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sceneEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "scene entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#capability",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "capability"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#PerspectiveGroup",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "perspective group"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#maximum",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#assetGroup",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#AssetGroup"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inferred",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "inferred acoustic representation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#apiProfile",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "api profile"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#allowedValues",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourcePose",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source pose"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#key",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#SampleVariant",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sample variant"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#frameRate",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#eventKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#awardNumber",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#scatteringUncertainty",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#transferFunction",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#TransferFunction"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/hybrid",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "hybrid"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#frameCount",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Consent",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "consent record"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#timingConstraint",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#TimingConstraint"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#annotation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#subjects",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/hybrid-acoustic-rendering",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "hybrid acoustic rendering"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#CaptureState",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "capture state"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#modality",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#denominator",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#setRole",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#streamingIndexRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "streaming index realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#targetTimebase",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Timebase"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/source-sampler-semantics",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "source sampler semantics"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#routingBehavior",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#actedOnProperty",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "acted on property"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#signalRole",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#semitoneOffset",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#targetFrequencyHz",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#rendererRequirement",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "renderer requirement"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#height",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#SignalRegion",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "signal region"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ror",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#playable",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#PlayableModel"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#extent",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#resourceType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/0.5.0/vocabulary",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Ontology"
+    ],
+    "http://purl.org/dc/terms/creator": [
+      {
+        "@id": "https://orcid.org/0000-0002-7904-3892"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "Core RDF terms used by the semantic projection of VAO 0.5.0 manifests."
+      }
+    ],
+    "http://purl.org/dc/terms/license": [
+      {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    ],
+    "http://purl.org/dc/terms/modified": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-08-31"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "Virtual Acoustic Object (VAO) 0.5.0 vocabulary"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#versionIRI": [
+      {
+        "@id": "https://w3id.org/modavis/vao/0.5.0/vocabulary"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#versionInfo": [
+      {
+        "@value": "0.5.0"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#properties",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#stateBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#StateBinding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#signalKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#scoreElementId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/tracked-sources",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "tracked acoustic sources"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#packRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "pack realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#hybrid",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "hybrid acoustic representation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/time-scale/tai",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/time-scale"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "International Atomic Time (TAI)"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#registrationUncertainty",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#LoopPointSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "loop-point set"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/carrier-mapping",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "carrier mapping"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#startFrameInclusive",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#representationStatus",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "representation status"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#EventAlignment",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "event alignment"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#RenderBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "render binding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/room-acoustic-metrics",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "room-acoustic metrics"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/multi-perspective-sampling",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "multi-perspective sampling"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#containerDigest",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#dependsOnGroup",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "depends on group"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inputKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#schemeUri",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "scheme URI"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/acoustical-analysis",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "acoustical analysis"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#valueDomain",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#vertexCount",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sampleMapping",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#SampleMapping"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#label",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#persistence",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#realization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/sampled-instrument-playback",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "sampled-instrument playback"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#traditionalKnowledgeLabel",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "traditional knowledge label"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#timeScale",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "time scale"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#formatVersion",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Distribution",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "distribution"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#coverageFactor",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#InteractionTransition",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "interaction transition"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#SynchronizationMapping",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "synchronization mapping"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#geometryStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#referencePitchHz",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Port",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "system port"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#property",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "property"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#hasRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "has realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#listener",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#functionBlock",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#orientationRadians",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sensor",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/ns/sosa/Sensor"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#colorSpace",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#region",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "region"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#process",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "process"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#identifier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "identifier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#typical",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceFrequencyHz",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#durationSeconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#transmissionLossDB",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#bindings",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/converted",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "converted"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#dependencies",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#variant",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "variant"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#outputKeys",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#contact",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#documentRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "document realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#repositoryType",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "repository type"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/time-scale",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "VAO time-scale identifiers"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#maximumCPUPercent",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#consent",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Consent"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#funderIdentifierType",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "funder identifier type"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#referenceMIDINote",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#attribution",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#conformanceTrace",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#ConformanceTrace"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceStart",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#startedAt",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#schemaBundleDigest",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#delayConstraint",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "delay constraint"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#softwareVersion",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#wrapPeriod",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#uncertainties",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#claim",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#ScientificClaim"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#rankEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "rank entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/unit/midi-tick",
+    "@type": [
+      "http://qudt.org/schema/qudt/Unit"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "One discrete coordinate tick in a pulses-per-quarter-note musical timebase."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "MIDI tick"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#trigger",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#simulated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "simulated acoustic representation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#epoch",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/tuning-map",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "tuning map"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#eventAlignment",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#EventAlignment"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/timed-process",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "timed process"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inputUnit",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#AssetGroup",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "asset group"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#endExclusive",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#componentEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "component entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#activityKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#priority",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#minimumValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#transportChecksums",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#timeZeroPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#authenticityEnvelopeRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "authenticity envelope realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#maximumDistanceMeters",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/spatial-audio-scene",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "spatial audio scene"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceCodeIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source code iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#velocityRange",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#validationInput",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "validation input"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#channelNumberingBase",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#processModel",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#ProcessModel"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#carrier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "carrier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#operations",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#MultimodalTimeline",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "multimodal timeline"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#renderer",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#RendererDescriptor"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#externalIdentifier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "external identifier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#contentVersion",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#procedure",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#audioScene",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#AudioScene"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#protocol",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.w3.org/ns/sosa/Procedure"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/chunked-realization",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "chunked realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#soundingKeyOffset",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#measurement",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#ResponseMeasurement"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#reviewed",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reviewed"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#literal",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#surfaceImpedanceAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "surface impedance asset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/core-graph",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "core graph"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#materialModel",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#MaterialModel"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#randomSource",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#RandomSource"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#bitDepth",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#minimum",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#start",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#absorption",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#reviewerAgent",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reviewer agent"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ontologyVersion",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#integrity",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#eventLocator",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#InteractionControl",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "interaction control"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#atomic",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#orcid",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#midiCIProfileIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "midi ciprofile iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#clockBasis",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#chunks",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/replaceable-performance-media",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "replaceable performance media"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#analysisKind",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "analysis kind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#parentComponent",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "parent component"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Track",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "multimodal track"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#eventLogRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "event log realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#mediaAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "media asset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#facilityIdentifier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "facility identifier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#method",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#endedAt",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#maximumIterations",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#scattering",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#driftPPM",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#extensions",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#carrierDescriptor",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#funderName",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#funderIdentifier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "funder identifier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#memberPath",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#qualityMetricSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "quality metric set"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#messageType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#realizesAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "realizes asset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#width",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#transitionSeconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#learned",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "learned acoustic representation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/spatial-response-field",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "spatial response field"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#lowerEdgesHz",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#createdByAgent",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "created by agent"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#chunking",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#recordedAt",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#routingRule",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#RoutingRule"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#delaySamples",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#svgSelector",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/time-scale/smpte-timecode",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/time-scale"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "SMPTE timecode"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#name",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#harmonicRelation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#route",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "route"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#discovery",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "discovery"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sampleCount",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#activationValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#personalizationAsset",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "personalization asset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#childProcess",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "child process"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inputKey",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Pose",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "pose"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/fixity",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "exact-byte fixity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sha256",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#multimodal",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#MultimodalTimeline"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#roundRobinGroup",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/representation-status/captured",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/vocab/representation-status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "captured"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#evictable",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#selector",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#loopPointSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#LoopPointSet"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#relatedIdentifiers",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#rateUnit",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "rate unit"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://qudt.org/schema/qudt/Unit"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#StateVariable",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "state variable"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#aboutEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "about entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#audioRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "audio realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#space",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "space"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#renderBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#RenderBinding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sampleRate",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#renderConfiguration",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#RenderConfiguration"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inputKinds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#interpolation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#standardEdition",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#channelTopology",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "channel topology"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#notes",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#dataIRIndex",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#distribution",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Distribution"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#latencyBudgetMilliseconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#profile",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "profile"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#technicalMetadata",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#maximumMicrosteps",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#codec",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#features",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ordering",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#metricSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#MetricSet"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#tuningMap",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#TuningMap"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#representationType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#fallbackResponseSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "fallback response set"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#censoring",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#control",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#InteractionControl"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#numerator",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/learned-acoustic-field",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "learned acoustic field"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#vocabularyManifestSHA256",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#actionExecution",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#evidenceRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "evidence realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/interaction",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "playable interaction"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sampleVariant",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#SampleVariant"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#carePrinciples",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#terminationPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#channelIndices",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#VirtualAcousticObject",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "An immutable semantic release describing an acoustic object and its exact digital realizations."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Virtual Acoustic Object"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Realization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "exact byte realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#bindingType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#defaultValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#impulseResponse",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/measured-impulse-response",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "measured impulse response"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#TransferFunction",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "transfer function"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#InteractionEventType",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "interaction event type"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/stateful-interaction",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "stateful interaction"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#emittedEvents",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#monotonic",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#acoustics",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#AcousticModelSet"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#embargoRationale",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#CoordinateFrame",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "coordinate frame"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#triangleCount",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#instrumentEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "instrument entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#probabilityDistribution",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#publisher",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#centerFrequenciesHz",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ConformanceTrace",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "conformance trace"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#transmissionPath",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "transmission path"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#dependencyRole",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#DatatypeProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "dependency role"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceEntity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source entity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#originalPitch",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#scoreFormat",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/image-target-ar",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "image-target augmented reality"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#handedness",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#code",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#correctionCents",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#modelWeightDigest",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#connectionKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#exitPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#softwareHeritageId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#port",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Port"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#selectionStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#relationTypeInformation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#expected",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#timebase",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Timebase"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#RoutingRule",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "routing rule"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#direction",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/midi-2-ump",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "MIDI 2.0 UMP"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#responseSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#ResponseSet"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#rationale",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#DerivationMap",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "derivation map"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#coordinateUnit",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "coordinate unit"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#footageLabel",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#fundingReferences",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#uncertainty",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#parameters",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#trajectoryRealization",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "exact trajectory realization"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Realization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#segments",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/position-registered-acoustic-scene",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "position-registered acoustic scene"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#conditions",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#calibration",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Calibration"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#inputRange",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#durationConstraint",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "duration constraint"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#targetPort",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#Port"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/simulated-impulse-response",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "simulated impulse response"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#derivationMap",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#DerivationMap"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#channelCount",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceLocator",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#voiceAllocation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#subSelector",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/spatial-listening-map",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "spatial listening map"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#position",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#contentDigests",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#confidenceLevel",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#rate",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#conceptIdentifier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "concept identifier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#RendererDescriptor",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "renderer descriptor"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#velocitySensitivity",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#roundRobinIndex",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#textureMaxDimension",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#contentTimebase",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "content timebase"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#purposeLimitations",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#propertyExchangeResourceIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "property exchange resource iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#takeSet",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://w3id.org/modavis/vao/ontology#TakeSet"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/vocab/capability/generic-model-viewing",
+    "@type": [
+      "https://w3id.org/modavis/vao/ontology#Capability"
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "generic model viewing"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#valueType",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#crossfadeFrames",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ProcessModel",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "process model"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#evidence",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "evidence"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#actions",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#performedAt",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#index",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#body",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#channel",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#ontologyIRI",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "ontology iri"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#dimension",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#instrumentIdentifier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "instrument identifier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#lod",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#fixedOutputKeys",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#Review",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "review record"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#sourceTransition",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source transition"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#incidence",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#upperEdgesHz",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/ontology#source",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "source"
+      }
+    ]
+  }
+]

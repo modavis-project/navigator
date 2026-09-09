@@ -1,0 +1,273 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modassert: <https://w3id.org/modavis/ontology/assertion#> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modinst: <https://w3id.org/modavis/ontology/instrument#> .
+@prefix modmedia: <https://w3id.org/modavis/ontology/media#> .
+@prefix modvmi: <https://w3id.org/modavis/ontology/virtual-instrument#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/virtual-instrument> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0>,
+              <https://w3id.org/modavis/ontology/instrument/0.1.0>,
+              <https://w3id.org/modavis/ontology/media/0.1.0>,
+              <https://w3id.org/modavis/ontology/evidence/0.1.0>,
+              <https://w3id.org/modavis/ontology/assertion/0.1.0> ;
+  dcterms:title "MODAVIS Virtual Musical Instrument Ontology"@en ;
+  dcterms:description "Semantics for playable virtual instruments, product identities, versions, packages, compatibility, and evidence-qualified relations to source instruments and states."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL>,
+                     <https://www.w3.org/TR/prov-o/> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/virtual-instrument/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modvmi" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/virtual-instrument#" .
+
+modvmi:VirtualMusicalInstrument a owl:Class ;
+  rdfs:subClassOf modinst:MusicalInstrument ;
+  rdfs:label "virtual musical instrument"@en ;
+  skos:definition "A musical instrument whose playable sound-producing or control behavior is realized substantially through software, digital computation, or a software-controlled sample or synthesis system."@en ;
+  skos:scopeNote "This class identifies the playable instrument, not merely a catalog row, download page, package, sample library component, or representation of a physical instrument."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:VirtualInstrumentProduct a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "virtual-instrument product"@en ;
+  skos:definition "A stable product, library, sample-set, plugin, or project identity under which one or more virtual-instrument versions are developed or distributed."@en ;
+  skos:scopeNote "A product may realize one playable virtual musical instrument or contain several instruments. Product identity is not automatically musical-instrument identity; generic hosts and dependencies that implement no playable instrument are outside this class."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:VirtualInstrumentVersion a owl:Class ;
+  rdfs:subClassOf modavis:Entity, prov:Entity ;
+  rdfs:label "virtual-instrument version"@en ;
+  skos:definition "A versioned edition or release state of a virtual-instrument product, distinct from both the stable product identity and its downloadable packages."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:VirtualInstrumentPackage a owl:Class ;
+  rdfs:subClassOf modmedia:DigitalAsset ;
+  rdfs:label "virtual-instrument package"@en ;
+  skos:definition "An installable, downloadable, or preservable digital asset distributing all or part of a virtual-instrument version."@en ;
+  skos:scopeNote "A package is not automatically the playable instrument; it may require a host, engine, dependency, license, configuration, or additional package."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+[] a owl:AllDisjointClasses ;
+  owl:members (
+    modvmi:VirtualMusicalInstrument
+    modvmi:VirtualInstrumentProduct
+    modvmi:VirtualInstrumentVersion
+    modvmi:VirtualInstrumentPackage
+  ) .
+
+modvmi:CompatibilityStatement a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "virtual-instrument compatibility statement"@en ;
+  skos:definition "A qualified, evidence-backed statement about the compatibility of a virtual-instrument version with a host, platform, protocol, plugin format, or operating environment."@en ;
+  skos:scopeNote "A compatibility statement applies only to the named version and target under the conditions supported by its evidence. It is not a certification or a guarantee for other versions, environments, or future states."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:InstrumentSourceRelation a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "virtual-instrument source relation"@en ;
+  skos:definition "A qualified and evidence-backed relation connecting a virtual instrument, product, or version to a specific musical instrument or instrument state used as a sample source, model, reconstruction target, composite source, or inspiration."@en ;
+  skos:scopeNote "A source relation does not assert that the virtual and source instruments are identical. Ambiguous candidates remain assertions or review proposals rather than accepted source relations."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:realizesInstrument a owl:ObjectProperty ;
+  rdfs:domain modvmi:VirtualInstrumentProduct ;
+  rdfs:range modvmi:VirtualMusicalInstrument ;
+  rdfs:label "realizes virtual instrument"@en ;
+  skos:definition "Relates a stable product identity to a playable virtual musical instrument it implements or distributes."@en ;
+  skos:scopeNote "This is a product-level association and does not imply that every version implements the same playable instrument. Use implementsInstrument for a version-specific claim."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:hasVersion a owl:ObjectProperty ;
+  owl:inverseOf modvmi:versionOfProduct ;
+  rdfs:domain modvmi:VirtualInstrumentProduct ;
+  rdfs:range modvmi:VirtualInstrumentVersion ;
+  rdfs:label "has virtual-instrument version"@en ;
+  skos:definition "Relates a stable virtual-instrument product to one of its versioned editions or releases."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:versionOfProduct a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modvmi:VirtualInstrumentVersion ;
+  rdfs:range modvmi:VirtualInstrumentProduct ;
+  rdfs:label "version of virtual-instrument product"@en ;
+  skos:definition "Identifies the one stable product identity of which a virtual-instrument version is an edition or release."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:implementsInstrument a owl:ObjectProperty ;
+  rdfs:domain modvmi:VirtualInstrumentVersion ;
+  rdfs:range modvmi:VirtualMusicalInstrument ;
+  rdfs:label "implements virtual instrument"@en ;
+  skos:definition "Relates a versioned product edition to a playable virtual musical instrument whose behavior it implements."@en ;
+  skos:scopeNote "This is the version-level implementation claim. It neither identifies the stable product nor states which package bytes distribute that version."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:hasPackage a owl:ObjectProperty ;
+  owl:inverseOf modvmi:packageOfVersion ;
+  rdfs:domain modvmi:VirtualInstrumentVersion ;
+  rdfs:range modvmi:VirtualInstrumentPackage ;
+  rdfs:label "has distribution package"@en ;
+  skos:definition "Relates a virtual-instrument version to a package through which all or part of it is distributed or preserved."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:packageOfVersion a owl:ObjectProperty ;
+  rdfs:domain modvmi:VirtualInstrumentPackage ;
+  rdfs:range modvmi:VirtualInstrumentVersion ;
+  rdfs:label "package of version"@en ;
+  skos:definition "Identifies one or more virtual-instrument versions distributed or preserved by a package."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:developedBy a owl:ObjectProperty ;
+  rdfs:range modavis:Agent ;
+  rdfs:label "developed by"@en ;
+  skos:definition "Relates a virtual-instrument product or version to an agent responsible for its development."@en ;
+  skos:scopeNote "The subject is a product or version. A global domain is omitted because multiple domain axioms would infer that every subject is both classes."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:publishedBy a owl:ObjectProperty ;
+  rdfs:range modavis:Agent ;
+  rdfs:label "published by"@en ;
+  skos:definition "Relates a virtual-instrument product, version, or package to an agent responsible for its publication or distribution."@en ;
+  skos:scopeNote "The subject is a product, version, or package; the relation does not identify the developer, rights holder, or publisher of a represented source instrument."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:productionMethod a owl:ObjectProperty ;
+  rdfs:range skos:Concept ;
+  rdfs:label "sound-production method"@en ;
+  skos:definition "Classifies the primary sound-production method of a virtual instrument or version with a governed concept."@en ;
+  skos:scopeNote "The exchange profile restricts subjects to VirtualMusicalInstrument or VirtualInstrumentVersion and values to the closed 0.1.0 production-method scheme."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:versionLabel a owl:DatatypeProperty ;
+  rdfs:domain modvmi:VirtualInstrumentVersion ;
+  rdfs:range xsd:string ;
+  rdfs:label "version label"@en ;
+  skos:definition "The source-preserving version or edition label supplied for a virtual-instrument version."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:releaseDate a owl:DatatypeProperty ;
+  rdfs:domain modvmi:VirtualInstrumentVersion ;
+  rdfs:label "release date"@en ;
+  skos:definition "The documented date on which a virtual-instrument version was released."@en ;
+  skos:scopeNote "The exchange SHACL profile enforces xsd:date because xsd:date is outside the OWL 2 RL datatype map."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:hasCompatibilityStatement a owl:ObjectProperty ;
+  owl:inverseOf modvmi:compatibilityVersion ;
+  rdfs:domain modvmi:VirtualInstrumentVersion ;
+  rdfs:range modvmi:CompatibilityStatement ;
+  rdfs:label "has compatibility statement"@en ;
+  skos:definition "Relates a virtual-instrument version to a qualified statement about a supported or unsupported environment."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:compatibilityVersion a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modvmi:CompatibilityStatement ;
+  rdfs:range modvmi:VirtualInstrumentVersion ;
+  rdfs:label "compatibility version"@en ;
+  skos:definition "Identifies the virtual-instrument version evaluated by a compatibility statement."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:compatibilityTarget a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modvmi:CompatibilityStatement ;
+  rdfs:label "compatibility target"@en ;
+  skos:definition "Identifies the governed concept, specification, platform, host, product version, protocol, plugin format, or operating environment evaluated by a compatibility statement."@en ;
+  skos:scopeNote "The target is an IRI. Profiles may require a SKOS concept for a closed classification or an identified resource for a version-specific environment."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:compatibilityStatus a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modvmi:CompatibilityStatement ;
+  rdfs:range skos:Concept ;
+  rdfs:label "compatibility status"@en ;
+  skos:definition "Classifies the result of a compatibility statement with a governed status concept."@en ;
+  skos:scopeNote "Indeterminate means that the available evidence supports neither a positive nor a negative result; it must not be interpreted as compatible-with-limitations."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:hasSourceRelation a owl:ObjectProperty ;
+  owl:inverseOf modvmi:sourceRelationSubject ;
+  rdfs:range modvmi:InstrumentSourceRelation ;
+  rdfs:label "has instrument source relation"@en ;
+  skos:definition "Relates a virtual instrument, product, or version to a qualified relation describing its connection to a source musical instrument or state."@en ;
+  skos:scopeNote "The exchange profile restricts the subject to a playable virtual instrument, stable product, or version. The qualified relation, not this discovery link alone, records source type, evidence, confidence, and source state."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:sourceRelationSubject a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modvmi:InstrumentSourceRelation ;
+  rdfs:range modavis:Entity ;
+  rdfs:label "source-relation subject"@en ;
+  skos:definition "Identifies the virtual instrument, product, or version whose source relationship is being qualified."@en ;
+  skos:scopeNote "Although the OWL range is the common Entity superclass, the exchange profile restricts this value to VirtualMusicalInstrument, VirtualInstrumentProduct, or VirtualInstrumentVersion."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:sourceInstrument a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modvmi:InstrumentSourceRelation ;
+  rdfs:range modinst:MusicalInstrument ;
+  rdfs:label "source instrument"@en ;
+  skos:definition "Identifies the musical instrument connected to a virtual instrument by a qualified source relation."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:sourceState a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modvmi:InstrumentSourceRelation ;
+  rdfs:range modinst:InstrumentState ;
+  rdfs:label "source instrument state"@en ;
+  skos:definition "Identifies the specific instrument state captured, modeled, reconstructed, or otherwise used by a virtual-instrument source relation."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:sourceRelationType a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modvmi:InstrumentSourceRelation ;
+  rdfs:range skos:Concept ;
+  rdfs:label "source-relation type"@en ;
+  skos:definition "Classifies a virtual-instrument source relation as sampled, modeled, reconstructed, composite, inspired, or another governed relation type."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:sourceConfidence a owl:DatatypeProperty ;
+  rdfs:domain modvmi:InstrumentSourceRelation ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "source-relation confidence"@en ;
+  skos:definition "A decimal from zero through one expressing confidence in the identification or classification recorded by a virtual-instrument source relation."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .
+
+modvmi:hasEvidenceRelation a owl:ObjectProperty ;
+  rdfs:range modevidence:EvidenceRelation ;
+  rdfs:label "has virtual-instrument evidence"@en ;
+  skos:definition "Relates a virtual-instrument source relation or compatibility statement to qualified source-fragment evidence evaluating it."@en ;
+  skos:scopeNote "The subject must be the same resource named by modevidence:evaluates on each linked evidence relation. The exchange profile enforces that inverse consistency."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/virtual-instrument> ;
+  vs:term_status "testing" .

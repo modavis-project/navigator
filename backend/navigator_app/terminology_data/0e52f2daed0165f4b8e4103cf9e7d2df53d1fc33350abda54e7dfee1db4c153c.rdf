@@ -1,0 +1,2555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#conflictPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ConformanceTrace">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">conformance trace</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/time-scale">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <skos:prefLabel xml:lang="en">VAO time-scale identifiers</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/time-scale/tai">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/time-scale"/>
+    <skos:prefLabel xml:lang="en">International Atomic Time (TAI)</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inputEvents">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#upperEdgesHz">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#StateVariable">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">state variable</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#standardIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">standard iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#hysteresis">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#timeResolution">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/linked-animation">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">linked animation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#persistence">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#runtimeDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">software runtime description</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#algorithm">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/unit/midi-tick">
+    <rdf:type rdf:resource="http://qudt.org/schema/qudt/Unit"/>
+    <rdfs:label xml:lang="en">MIDI tick</rdfs:label>
+    <rdfs:comment xml:lang="en">One discrete coordinate tick in a pulses-per-quarter-note musical timebase.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#scientific">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#ScientificRecordSet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#width">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#supersedesRelease">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">supersedes release</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#group">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">group</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#bindings">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#metricSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#MetricSet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#pitchTuningCents">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#perspectiveType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#materializableProfile">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">materializable profile</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/immutable-release">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">immutable release</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#connectionKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/derived">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">derived</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#packManifestSHA256">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#rendererRequirement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">renderer requirement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#fallback">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">fallback</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#validation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">validation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#authored">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">authored acoustic representation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#positionUncertainty">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#review">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Review"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/image-target-ar">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">image-target augmented reality</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#TuningMap">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">tuning map</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#publicationYear">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#dependencies">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#awardIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">award iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#receivingSpace">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">receiving space</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#RuntimeContract">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">runtime contract</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#targetFrequencyHz">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/replaceable-performance-media">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">replaceable performance media</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#instance">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">instance</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#merkleRoot">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#audioScene">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#AudioScene"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#physicalSystem">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#PhysicalSystem"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#schemeUri">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">scheme URI</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#transition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#InteractionTransition"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#AudioScene">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">spatial audio scene</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#signalRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#SignalRegion"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#dependencyRole">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">dependency role</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/time-scale/utc">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/time-scale"/>
+    <skos:prefLabel xml:lang="en">UTC</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#label">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#assetGroup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#AssetGroup"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/tuning-map">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">tuning map</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#processKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#jitter">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#LoopPointSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">loop-point set</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#state">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">state</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#svgSelector">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#outputKeyMeaning">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/multi-perspective-sampling">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">multi-perspective sampling</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceCodeIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">source code iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#number">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#hybrid">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">hybrid acoustic representation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#eventAlignment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#EventAlignment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#transmissionPath">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">transmission path</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#packRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">pack realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#evidenceRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">evidence realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#chunking">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#route">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">route</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/visual-acoustic-scene">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">visual-acoustic scene</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#InteractionEventType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">interaction event type</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#componentEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">component entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#selectionWeight">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#totalByteSize">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/room-acoustic-metrics">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">room-acoustic metrics</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#mode">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#harmonicNumber">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">source entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#funderIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">funder identifier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#renderBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#RenderBinding"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#levelsOfDetail">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/actuator-transfer">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">actuator transfer</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#acoustics">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#AcousticModelSet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Capability">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">VAO capability</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#appliesTo">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">applies to</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <skos:prefLabel xml:lang="en">VAO exact-realization representation status</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#reviewerAgent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">reviewer agent</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#carrier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">carrier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#extrapolationPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#createdByAgent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">created by agent</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#jrTimestamp">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#processModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#ProcessModel"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#maximumDistanceMeters">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/undetermined">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">undetermined</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#MultimodalTimeline">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">multimodal timeline</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#CaptureDocumentation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">capture documentation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#stateVariable">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#StateVariable"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#confidenceLevel">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#segments">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#PhysicalSystem">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">physical system</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#feature">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#representationStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">representation status</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#timestamp">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#domain">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">domain</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#InteractionModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">interaction model</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ScientificClaim">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">scientific claim</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#listener">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#modelAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">model asset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/playable-interaction">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">playable interaction model</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/fixity">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">exact-byte fixity</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">source realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#reviewedAt">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#maximumValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#connection">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Connection"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#responseSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#ResponseSet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#eventType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#InteractionEventType"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ClockSegment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">clock-mapping segment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#outputPort">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">output port</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#renderer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#RendererDescriptor"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sampleMapping">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#SampleMapping"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#outputKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceTransition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">source transition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#GeometryBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">geometry binding</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#SampleMapping">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">sample mapping</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#targetTimebase">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Timebase"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#maximumCPUPercent">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Review">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">review record</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Calibration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">calibration record</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#DerivationMap">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">derivation map</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#predicate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">predicate</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#scene">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">scene</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#vocabularyReleaseIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">vocabulary release iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#roundRobinIndex">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#responseKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#captureState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#CaptureState"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#lateEventPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#perspectiveGroup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#PerspectiveGroup"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#conditions">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/deterministic-render-trace">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">deterministic render trace</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#communityAuthority">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">community authority</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#terminationPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#resourceType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#processedResultRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">processed result realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#rateUnit">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">rate unit</rdfs:label>
+    <rdfs:range rdf:resource="http://qudt.org/schema/qudt/Unit"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/synchronized-media-animation">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">synchronized media animation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#value">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/surface-placement-ar">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">surface-placement augmented reality</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#audioRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">audio realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#aboutEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">about entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/0.5.0/vocabulary">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <dcterms:title xml:lang="en">Virtual Acoustic Object (VAO) 0.5.0 vocabulary</dcterms:title>
+    <dcterms:description xml:lang="en">Core RDF terms used by the semantic projection of VAO 0.5.0 manifests.</dcterms:description>
+    <dcterms:creator rdf:resource="https://orcid.org/0000-0002-7904-3892"/>
+    <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-31</dcterms:modified>
+    <dcterms:license rdf:resource="https://creativecommons.org/licenses/by/4.0/"/>
+    <owl:versionIRI rdf:resource="https://w3id.org/modavis/vao/0.5.0/vocabulary"/>
+    <owl:versionInfo>0.5.0</owl:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#InteractionControl">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">interaction control</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#measurementMappings">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#timeZeroPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#directivityResponseSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">directivity response set</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#synchronizationMapping">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#SynchronizationMapping"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#vertexCount">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/interaction">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">playable interaction</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#PhysicalComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">physical component</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#process">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">process</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#memberPath">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#derivationMap">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#DerivationMap"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#eventLogRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">event log realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#channelIndices">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/converted">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">converted</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#EventAlignment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">event alignment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#umpMessageType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#VirtualAcousticObject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Virtual Acoustic Object</rdfs:label>
+    <rdfs:comment xml:lang="en">An immutable semantic release describing an acoustic object and its exact digital realizations.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#randomSource">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#RandomSource"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#timingKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#code">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#transitionSeconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/unit/midi-tick-per-quarter-note">
+    <rdf:type rdf:resource="http://qudt.org/schema/qudt/Unit"/>
+    <rdfs:label xml:lang="en">MIDI ticks per quarter note</rdfs:label>
+    <rdfs:comment xml:lang="en">The pulses-per-quarter-note resolution of a musical timebase; tempo conversion is supplied by synchronization mappings rather than this rate.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/acoustical-analysis">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">acoustical analysis</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#recordedAt">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/source-sampler-semantics">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">source sampler semantics</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceTimebase">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Timebase"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/physical-system-topology">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">physical-system topology</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceEndExclusive">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#statement">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#multimodal">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#MultimodalTimeline"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ResponseSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">acoustic response set</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#materializesProfile">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">materializes profile</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#handedness">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#soundingKeyOffset">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#reentrancyPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#types">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#labels">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#StateBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">state binding</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sceneEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">scene entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#property">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">property</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#harmonicRelation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#identifierType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">identifier type</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#transferFunction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#TransferFunction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#timeScale">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">time scale</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#features">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#certificateRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">certificate realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#representationType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#captureDocumentation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#CaptureDocumentation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#centerFrequenciesHz">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#orientationXYZW">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#level">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/source-segmentation">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">source segmentation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/spatial-audio-scene">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">spatial audio scene</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#SampleVariant">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">sample variant</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#registrationUncertainty">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/inferred">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">inferred</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceControl">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">source control</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#cachePolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#component">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#PhysicalComponent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#RenderBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">render binding</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#access">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inputKeyMeaning">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/simulated-impulse-response">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">simulated impulse response</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ambisonicsNormalization">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#repositoryType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">repository type</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#persistentIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">persistent identifier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#profile">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">profile</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#frameCount">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#measured">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">measured acoustic representation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#grantedByAgent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">granted by agent</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#coordinateUnit">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">coordinate unit</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#environmentObservation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">environment observation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Distribution">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">distribution</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#agentKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#PerspectiveGroup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">perspective group</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#bidirectional">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/geometry-acoustic-rendering">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">geometry-acoustic rendering</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/time-scale/smpte-timecode">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/time-scale"/>
+    <skos:prefLabel xml:lang="en">SMPTE timecode</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#weighting">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#channelCount">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#responseEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">response entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#localFrame">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">local frame</rdfs:label>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#CoordinateFrame"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#consent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Consent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#impulseResponse">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#surfaceImpedanceAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">surface impedance asset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inputPort">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">input port</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#qualityTier">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#targetPort">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Port"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#gainDB">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#pose">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Pose"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#position">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceFrameRange">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#contentTimebase">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">content timebase</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#scale">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#reviewedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">reviewed by</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#input">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ontologyVersionIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">ontology version iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inputs">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#originalPitch">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/sampled-instrument-playback">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">sampled-instrument playback</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#crs">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">crs</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#receiverPose">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">receiver pose</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ResponseMeasurement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">acoustic response measurement</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#stream">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/simulated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">simulated</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#scattering">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inputUnit">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#purposeLimitations">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#indexRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">index realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inputKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#derivedRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">derived realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#dataIRIndex">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#identifierScheme">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">identifier scheme</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#realizesAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">realizes asset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ScientificRecordSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">scientific record set</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/conditional-routing">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">conditional routing</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#facilityIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">facility identifier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#identityDescription">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">software identity description</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#outlierPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#stateAssignments">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#propertyExchangeResourceIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">property exchange resource iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#notes">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#capability">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">capability</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#TimingConstraint">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">timing constraint</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#clockBasis">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#timebase">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Timebase"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#emittedEvents">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#validFrom">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#identifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">identifier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#uncertainties">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#annotation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#logicalAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#LogicalAsset"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#address">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#trajectoryRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">exact trajectory realization</rdfs:label>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Realization"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#transmissionLossUncertainty">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#protocol">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/ns/sosa/Procedure"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sampleVariant">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#SampleVariant"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#subSelector">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/core-graph">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">core graph</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#externalIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">external identifier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/redacted">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">redacted</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/composite-actuation">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">composite actuation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#reproducibility">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#claim">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#ScientificClaim"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#receiver">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">receiver</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#carePrinciples">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#selectionSetId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#MaterialModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">acoustic material model</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#performedByAgent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">performed by agent</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/reconstructed">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">reconstructed</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#channelTopology">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">channel topology</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/semantic-building-model">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">semantic building model</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#componentKind">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">component kind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#target">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">target</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#method">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sampleFormat">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#evidence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">evidence</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#qualityMetricSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">quality metric set</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#noteOffPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#eventKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#subject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">subject</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#classification">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">classification</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#metadataAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">metadata asset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sequence">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#mediaType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/community-governed-rights">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">community-governed rights</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#delaySamples">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#SoftwareEnvironment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">software environment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#datatype">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">datatype</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/time-scale/gps">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/time-scale"/>
+    <skos:prefLabel xml:lang="en">GPS time</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#entries">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#subjectEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">subject entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#rationale">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#cancellationControl">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">cancellation control</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ProtocolBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">protocol binding</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#generatedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">generated by</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#digest">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#runtime">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#RuntimeContract"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#selectionPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#relation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">relation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#offset">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/tracked-listener-convolution">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">tracked-listener convolution</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Realization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">exact byte realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#bindingType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sampleCount">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#traditionalKnowledgeLabel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">traditional knowledge label</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#driftPPM">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#conceptIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">concept identifier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#epoch">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/offline-asset-groups">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">offline asset groups</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ExecutionSemantics">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">execution semantics</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#procedure">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#playable">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#PlayableModel"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#funderIdentifierType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">funder identifier type</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#object">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">object</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#eventMappings">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ontologyIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">ontology iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#resultStatus">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#separatingElement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">separating element</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#TakeSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">take set</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/midi-2-ump">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">MIDI 2.0 UMP</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ProcessModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">process model</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/learned-acoustic-field">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">learned acoustic field</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#dataResolutionBits">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ambisonicsOrder">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceSpace">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">source space</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#environmentState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">environment state</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#seed">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#softwareEnvironment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#SoftwareEnvironment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#documentRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">document realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#protocolBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#ProtocolBinding"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/stateful-interaction">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">stateful interaction</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#discovery">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">discovery</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#monotonic">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#manifestDigestLocation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#transitionEvaluation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#delayConstraint">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">delay constraint</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#stateBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#StateBinding"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#integrity">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#keyOffset">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#operator">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#executionGroup">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#dynamicModel">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/captured">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">captured</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#variantSetId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#orientationRadians">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sensor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/ns/sosa/Sensor"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#correctionCents">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#trainingInput">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">training input</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#awardTitle">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#exitPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#fitResidual">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/sample-looping">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">sample looping</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/generic-model-viewing">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">generic model viewing</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#start">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Timebase">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">timebase</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#convention">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/source-directivity">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">source directivity</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#AssetGroup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">asset group</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#midiCIProfileIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">midi ciprofile iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#mappingIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">mapping iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#minimumValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#velocityRange">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ambisonicsChannelOrder">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#transportChecksums">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#deactivationValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#triangleCount">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#signatureEnvelopeRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">signature envelope realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#measurement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#ResponseMeasurement"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#minimum">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#activationValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#maximumVoices">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#rawResultRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">raw result realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#dimension">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ror">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#loopPointSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#LoopPointSet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Connection">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">system connection</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/multimodal-synchronization">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">multimodal synchronization</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#startFrameInclusive">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#instrumentEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">instrument entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#frameRate">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://orcid.org/0000-0002-7904-3892">
+    <rdf:type rdf:resource="http://www.w3.org/ns/prov#Person"/>
+    <rdfs:label>Dominik Ukolov</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#height">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#technicalMetadata">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#literal">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#referenceMIDINote">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#probabilityDistribution">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#learned">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">learned acoustic representation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/building-acoustic-performance">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">building-acoustic performance</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#region">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">region</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/spatial-listening-map">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">spatial listening map</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#CaptureState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">capture state</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceFrequencyHz">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#subjectScheme">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#vocabularyManifestSHA256">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#softwareHeritageId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#softwareVersion">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#contentVersion">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#discontinuityAfter">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#migratedFromManifestSHA256">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#determinism">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#axisUnit">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">axis unit</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#chunks">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#interactionModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="https://w3id.org/modavis/vao/ontology#VirtualAcousticObject"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#InteractionModel"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#InteractionTransition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">interaction transition</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#identity">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#direction">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/position-registered-acoustic-scene">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">position-registered acoustic scene</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#modality">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#simulated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">simulated acoustic representation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/authored">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">authored</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#key">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#materialEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">material entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#recordIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#deterministic">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ontologyVersion">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#endFrameExclusive">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#selectorType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#authenticityEnvelopeRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">authenticity envelope realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#resolverIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">resolver iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#headphoneCompensationAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">headphone compensation asset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#space">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">space</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourcePose">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">source pose</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#actuator">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/ns/sosa/Actuator"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#stepCount">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#streamingIndexRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">streaming index realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#conformanceTrace">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#ConformanceTrace"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#parentComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">parent component</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#chunkSize">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sampleRate">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/spatial-response-field">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">spatial response field</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#TransferFunction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">transfer function</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#track">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Track"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#targetEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">target entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#status">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#orcid">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#hasRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">has realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#relationType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#controlBehavior">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inferred">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:prefLabel xml:lang="en">inferred acoustic representation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#actedOnProperty">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">acted on property</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#lod">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#relationTypeInformation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#activityKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#timestampOrder">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#lowerEdgesHz">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#orientationUncertainty">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#routingRule">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#RoutingRule"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#scope">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#priority">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#mediaAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">media asset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#performerAgent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">performer agent</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#trigger">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#jsonPointer">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:comment xml:lang="en">Pointer added by the annotated JSON-LD view; it does not assert preservation of JSON lexical form or array order in RDF.</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#analysisKind">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">analysis kind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#RenderConfiguration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">render configuration</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#validationInput">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">validation input</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#decision">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Analysis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">analysis record</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#fileIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#kind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#repositoryBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">repository binding</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#variant">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">variant</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/tracked-sources">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">tracked acoustic sources</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#absorption">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#coordinateType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#scoreFormat">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceStart">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#residualUncertainty">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#evictable">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sensorEncoding">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#reviewed">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">reviewed</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#RoutingRule">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">routing rule</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#funderName">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#parentFrame">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">parent frame</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#expected">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#revision">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Port">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">system port</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#channelMap">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#RandomSource">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">random source</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#valueIRI">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">value iri</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#takeSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#TakeSet"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#relatedIdentifiers">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/capture-event-alignment">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">capture/event alignment</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#renderConfiguration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#RenderConfiguration"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#embargoRationale">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#realization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Realization"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Track">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">multimodal track</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#attribution">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#controlKeyMeaning">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#fallbackGroup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">fallback group</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sandboxPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#calibration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Calibration"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#encoding">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#LogicalAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">logical asset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#geometryBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#GeometryBinding"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#SynchronizationMapping">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">synchronization mapping</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#dataNumberingBase">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#eventEncoding">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#analysis">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Analysis"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Consent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">consent record</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#timingConstraint">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#TimingConstraint"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#focusEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">focus entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#audioContainer">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#startedAt">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sha256">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#SignalRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">signal region</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#codec">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#capturedAt">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#embargoUntil">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#hasDistribution">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">has distribution</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#identityScope">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">software identity scope</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#observation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/ns/sosa/Observation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#trajectoryTrack">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">trajectory track</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#channel">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourcePort">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Port"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#fallbackResponseSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">fallback response set</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#scoreElementId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#atomic">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ambisonicsDimensionality">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#confidence">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/spatial">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">explicit spatial coordinates</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#mappingVersion">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/carrier-mapping">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">carrier mapping</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sidedness">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#geometryStatus">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#stateRole">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#personalizationAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">personalization asset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#language">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#modelWeightDigest">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#fundingReferences">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#childProcess">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">child process</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#censoring">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#incidence">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#routingBehavior">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#properties">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#configuration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">configuration</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#frame">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">frame</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#transformToParent">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#spatialFragment">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#initialState">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#rankEntity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">rank entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#messageType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#identifierValue">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:label xml:lang="en">identifier value</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#durationSeconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/recorded-release">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">recorded release</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#materialModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#MaterialModel"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#simultaneousEventOrder">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#signalRole">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/chunked-realization">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">chunked realization</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#awardNumber">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/representation-status/hybrid">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/representation-status"/>
+    <skos:prefLabel xml:lang="en">hybrid</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#entity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">entity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/timed-process">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">timed process</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#validUntil">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#modavisBinding">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/typed-scientific-provenance">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">typed scientific provenance</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#contact">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#PlayableModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">playable model</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#velocitySensitivity">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#schemaBundleDigest">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#AcousticModelSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">spatial and acoustic model set</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#byteSize">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#extent">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#footageLabel">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#dependsOnGroup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">depends on group</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#transmissionLossDB">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#metrics">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#CoordinateFrame">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">coordinate frame</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#executionSemantics">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#ExecutionSemantics"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#setRole">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#typical">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#source">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">source</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#output">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#selector">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#length">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#maximum">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#channelLabels">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#parameters">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#extensions">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#privacyClassification">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#validDomain">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">valid domain</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#role">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">role</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#release">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#numerator">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inputKinds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#coordinateFrame">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#CoordinateFrame"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#RendererDescriptor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">renderer descriptor</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#maximumIterations">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#temperamentLabel">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#operations">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inputKey">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#distribution">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Distribution"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#strategy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ordering">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#coverageFactor">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#port">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#Port"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#inputRange">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#values">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#tuningMap">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#TuningMap"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#startFrame">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#valueType">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#semitoneOffset">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#voiceAllocation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#keyRange">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#qualityFlags">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#wrapPeriod">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#absorptionUncertainty">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#channelSelector">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#redactionOfRealization">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">redaction of realization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#normalization">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#valueDomain">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/time-scale/posix">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/vocab/time-scale"/>
+    <skos:prefLabel xml:lang="en">POSIX time</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#outsideDomainPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#crossfadeFrames">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#scatteringUncertainty">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#umpGroup">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#fixedOutputKeys">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#interpolation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#apiProfile">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">api profile</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#publisher">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#scheme">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">scheme</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#roundRobinGroup">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#functionBlock">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#ontologyStatus">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#actionExecution">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#thicknessMeters">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#bitDepth">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#continuity">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#runToCompletion">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/measured-impulse-response">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">measured impulse response</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#endedAt">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#instrumentIdentifier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">instrument identifier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#containerDigest">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#requiredCapability">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">required capability</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#channelNumberingBase">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#signalKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#denominator">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#defaultValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#availability">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#index">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#standardEdition">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#MetricSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">acoustic metric set</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#upAxis">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sampleRootKey">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#jsonSchema">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#contentDigests">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#latencyBudgetMilliseconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#resolutionPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#selectionStatus">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#operation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#body">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#bandAxis">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#actions">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#delayAsset">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">delay asset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#name">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#subjects">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#textureMaxDimension">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#points">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#colorSpace">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#uncertainty">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#formatVersion">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#parameterValues">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#maximumMicrosteps">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#carrierDescriptor">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/vocab/capability/hybrid-acoustic-rendering">
+    <rdf:type rdf:resource="https://w3id.org/modavis/vao/ontology#Capability"/>
+    <skos:prefLabel xml:lang="en">hybrid acoustic rendering</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#origin">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#forwardAxis">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#referencePitchHz">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#outputUnit">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#durationConstraint">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:label xml:lang="en">duration constraint</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#performedAt">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#control">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="https://w3id.org/modavis/vao/ontology#InteractionControl"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#allowedValues">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#endExclusive">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#perNoteControllerIndex">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#softwareName">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#keyTransform">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#eventLocator">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#rate">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#Pose">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">pose</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#version">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#outputKeys">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/ontology#sourceLocator">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+  </rdf:Description>
+</rdf:RDF>

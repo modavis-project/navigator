@@ -1,0 +1,2904 @@
+[
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Dataset"
+    ],
+    "http://purl.org/dc/terms/conformsTo": [
+      {
+        "@id": "https://www.w3.org/TR/vocab-dcat-3/"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "Immutable semantic and conformance artifacts for the initial MODAVIS Ontology Network release."
+      }
+    ],
+    "http://purl.org/dc/terms/issued": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-08-27"
+      }
+    ],
+    "http://purl.org/dc/terms/license": [
+      {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    ],
+    "http://purl.org/dc/terms/publisher": [
+      {
+        "@id": "https://orcid.org/0000-0002-7904-3892"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Ontology Network 0.1.0"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#distribution": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/jsonld-context"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/release-checksums"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/release-manifest"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-ttl"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/vocab-jsonld"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/vocab-rdf"
+      },
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/distribution/vocab-ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#version": [
+      {
+        "@value": "0.1.0"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0#catalog",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Catalog"
+    ],
+    "http://purl.org/dc/terms/conformsTo": [
+      {
+        "@id": "https://www.w3.org/TR/vocab-dcat-3/"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "Version-pinned catalog of the immutable semantic, validation, contextualization, and release artifacts in MODAVIS 0.1.0."
+      }
+    ],
+    "http://purl.org/dc/terms/issued": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-08-27"
+      }
+    ],
+    "http://purl.org/dc/terms/license": [
+      {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    ],
+    "http://purl.org/dc/terms/modified": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-08-27"
+      }
+    ],
+    "http://purl.org/dc/terms/publisher": [
+      {
+        "@id": "https://orcid.org/0000-0002-7904-3892"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Ontology Network release catalog"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#dataset": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/jsonld-context-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "c489374021a5bb4af73c065bd8ac6624e92266b44d66ed8fa561c2203ddffd12"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "d75a98edf8b8a981b95c5bd88805fb76cfd1662f18be065813780f22b135736b"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "6ee2cbd010901c1f4a9c5c8dad08f92bd06ce1aeadd13f61d6598aaa4221b2f3"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "2910a5071de24ff1f3a231c09f2de401064183cc8722daf8fe39dbd2ec4162f9"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "45a600d9333bcbb4c1e21b39b89249ae66cf648c60d4ac479e3aaf96676bd4ac"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "f0948ce454117b5448c629449a3a32d040ab44c11745ee6b8082ae89c1c14dc5"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "0599b1a0879d760fdd49e895dbdfc1e944a464c3dfc560c5f2e86777d2394657"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "d1cf34db3d9ea73ff05682943716ffe905da20b198440a5bc1cae4fa9b6bcc9a"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "50cd29eab0a4051bd56da34c80e85174ea8b67727c780a13e990ae8fd0627296"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "38b2f4e9a1cbd91d88b96cca97b6bc88d106ad7656c0995447d7ed156fd0a5cc"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "bf56f7ebe2f0648f06266727f7f2c0fe18eb8d792d5b2a4f112466a696f5c806"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "88297b5e122451a6a872365f9053cf0dad8506dc22d215d0a60e8b0e368af1eb"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "119d77fa8d16663a106137bdaf01a0f16eccb89467c5f1fe8d1327ed8006dbdb"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "2a40fb7150f1298f21912e7b988e1c101952e7f0a0df4e562dcfecc7fc14b48e"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "2218d4cfb9354939ed1eea9605fa77edd5f1c1a8e676f1da30f2ae3e4ff4128d"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "9ea00e7f9d7f9850ee560f5bfb4ebab085317bb2acb507bae0382e92255ed8c4"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "50107726167f5e101b9b56ee439b9aed4e494649b1838c949a3feede4b975ec5"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "53e94499e5d75306c57f89e80257264f1d73c8cc108e1128b86cf1564ef98e72"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "61b3133028d12fe0778c0370a8cd9214aa0e057956eff907c3903935141dbdcf"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "48415ba16211583b6f8c91745e5a9620b5543428cde03d6598c67e53d5c17cba"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "1e4d5bb13cc95af96d047204224c50ac091e3b33419185b78a0d6c754de327f8"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "f721b1ef6699cf351198742065a0307e34097d82158565c748a8475c9574c8ee"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "31cf5f1db2dbde7c6833a0d62881c2339c15b4d7aa40b76f8cb5da5f84cb57cc"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "15685b5ebd941c24dca465aeee57ba4fcd8c6f4983b8dc676cb441729ab7b2a8"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "bc52e44315ef53ab1772d0106544f1515002920940495d34b696bc363d1e0b99"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "3218d38be1f4e93db322d03fc85f5cb93b532db57a13213bc870cc96c9752978"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "3d8a58b2172cba12fad716feeeb5e4dd814990a749c9b7f6fd99020937c57978"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "a3a9ff771458019ac2649014bb845a7b95063f2d774a57d030d4a88183f5e04c"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "cad39d9383e1ef3b211fe0eca1ce43a6802c4f6ba6ae31027fcce82845bd3f59"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "f95e8f4e9b626276035a2016bd825625fbdee6daaf0153e2b58e3bd42eef46d2"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "65bcf609ea75f03e140352cfdb5fef230a85afeb736617ce0b2d88c326cc371c"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "66b999ce1856c848df71dd427e154f881d7212d45e21dcdbac9ebd08885aa4e7"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "7188269bf8e67f2a9e176221bf614bf06eb134e86ea3fd3b9c526ba42ab05d9b"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "ab0169d2572da8a586d3974db65adb4415bcff87df9b1eb36d067c6a8f166523"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "fab1fc5cf1b1019f7cc4cf8aa5f6f4df298db3b09e1d4f99be15a1aec55d3423"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "6cc2da7eff69e37db871755a6630416035981af57073fe38e1040df125d25d54"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "797df7054f397d90881aa6d24cfc6d0759037f49b437be12075f9ee53eb23d28"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "9cc70581fecc0253f6077de8f45c0dcd35a1d41495d8a8a151f199449f21a50a"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "dcbc7ce2d8fa0334e1d2b7a56b6583a66b19cbddb11c4ef393a732bceb6b3db7"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "43dd042410c99cda809d61ee752176d14a9d2e4e26ab37dc3a841ab7b3715c7b"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "0b8688a161681bd968826ef7abfcf2ef5aeeba2968d82ca4d176884be9978839"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "fb3f85970e5177324e6b889448b02b6c7e4872f8f23b14af0a685fc673792358"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "fc9f15009e9a03bc0734cc148d79c08aed2ef06db6cfb9b7d96dad03439d4eff"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "7d8601514a3e3aca086836fe5b100a0326f3c854327dd30a2b56fb06a8e78931"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "fa89b2e957df88ab45822d6ef8e91bd97234663bc2256db7e1e95aa4b9090008"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "afefa7293010ab75d833c30b48e5d6391ad3e07801ff5b49eaacf7e6e37d010c"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "7eb26ef82914f93ca3d8ba185f4bdec86b266e4bcb6a4c15b73c4357fda98fe7"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "332c420183748ed9d1a0b9e46646f1bd5f97fab2b43ab8af21ceb50ceda7dd61"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "271f462a2cd6d73813128d196378484223ee4e56ce6b7abcb31e6a5b9ffd4feb"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/vocab-jsonld-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "972505ab457faa6fc45bfea17a0b1b08e7f70df6360772cd80069c8006a81703"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/vocab-rdf-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "f0f5ee07f0581bc66272ae8719ebd41babca7931ba4468ef9b56acd1699f6d5e"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/checksum/vocab-ttl-sha256",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_sha256"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#hexBinary",
+        "@value": "e26a8166cbe445b0da72478f8bf4f6f50cd4b4a3c4fcd85facd6d1833d963c3f"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/jsonld-context",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS JSON-LD context"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/jsonld-context-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "10434"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/context/0.1.0/context.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Assertion Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "37305"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/assertion/0.1.0/assertion.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Assertion Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "25730"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/assertion/0.1.0/assertion.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Assertion Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "14502"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/assertion/0.1.0/assertion.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Audio and Sampled Playback Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "70856"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/audio/0.1.0/audio.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Audio and Sampled Playback Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "48956"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/audio/0.1.0/audio.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Audio and Sampled Playback Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "27817"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/audio/0.1.0/audio.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Assertion Context Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "11921"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/context/0.1.0/context.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Assertion Context Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "8680"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/context/0.1.0/context.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Assertion Context Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "5705"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/context/0.1.0/context.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Core Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "36054"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/core/0.1.0/core.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Core Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "26475"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/core/0.1.0/core.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Core Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "14321"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/core/0.1.0/core.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Event Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "14774"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/events/0.1.0/events.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Event Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "10151"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/events/0.1.0/events.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Event Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "6131"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/events/0.1.0/events.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Evidence Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "26187"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/evidence/0.1.0/evidence.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Evidence Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "18155"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/evidence/0.1.0/evidence.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Evidence Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "10584"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/evidence/0.1.0/evidence.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Heritage Knowledge Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "44998"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/heritage/0.1.0/heritage.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Heritage Knowledge Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "32111"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/heritage/0.1.0/heritage.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Heritage Knowledge Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "19580"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/heritage/0.1.0/heritage.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Instrument Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "33332"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/instrument/0.1.0/instrument.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Instrument Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "23835"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/instrument/0.1.0/instrument.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Instrument Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "13768"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/instrument/0.1.0/instrument.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Media and Digital Representation Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "19950"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/media/0.1.0/media.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Media and Digital Representation Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "14022"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/media/0.1.0/media.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Media and Digital Representation Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "8710"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/media/0.1.0/media.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS MIDI Binding Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "18058"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/midi/0.1.0/midi.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS MIDI Binding Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "12726"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/midi/0.1.0/midi.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS MIDI Binding Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "7321"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/midi/0.1.0/midi.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Ontology Network (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "3038"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/0.1.0/ontology.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Ontology Network (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "2640"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/0.1.0/ontology.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Ontology Network (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "1953"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/0.1.0/ontology.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Pipe Organ Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "21125"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/organ/0.1.0/organ.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Pipe Organ Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "14636"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/organ/0.1.0/organ.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Pipe Organ Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "8796"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/organ/0.1.0/organ.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Provenance Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "14276"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/provenance/0.1.0/provenance.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Provenance Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "10012"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/provenance/0.1.0/provenance.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Provenance Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "6060"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/provenance/0.1.0/provenance.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Virtual Musical Instrument Ontology (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "39210"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/virtual-instrument/0.1.0/virtual-instrument.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Virtual Musical Instrument Ontology (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "28845"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/virtual-instrument/0.1.0/virtual-instrument.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Virtual Musical Instrument Ontology (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "17283"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/ontology/virtual-instrument/0.1.0/virtual-instrument.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/release-checksums",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS release SHA-256 index"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/release/0.1.0/checksums.sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/plain"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/release-manifest",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS release manifest"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/release/0.1.0/release-manifest.json"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS exchange SHACL profile (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "474958"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/shapes/exchange/0.1.0/shapes.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS exchange SHACL profile (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "358085"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/shapes/exchange/0.1.0/shapes.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS exchange SHACL profile (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "191201"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/shapes/exchange/0.1.0/shapes.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS publication SHACL profile (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "478633"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/shapes/publication/0.1.0/shapes.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS publication SHACL profile (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "360651"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/shapes/publication/0.1.0/shapes.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS publication SHACL profile (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "192994"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/shapes/publication/0.1.0/shapes.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/vocab-jsonld",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Controlled Vocabularies (jsonld)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/vocab-jsonld-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "68316"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/vocab/0.1.0/vocab.jsonld"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/ld+json"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/vocab-rdf",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Controlled Vocabularies (rdf)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/vocab-rdf-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "46074"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/vocab/0.1.0/vocab.rdf"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/application/rdf+xml"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/release/0.1.0/distribution/vocab-ttl",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Controlled Vocabularies (ttl)"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "https://w3id.org/modavis/release/0.1.0/checksum/vocab-ttl-sha256"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#byteSize": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "27227"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#downloadURL": [
+      {
+        "@id": "https://modavis-project.github.io/modavis-ontology-network/vocab/0.1.0/vocab.ttl"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@id": "https://www.iana.org/assignments/media-types/text/turtle"
+      }
+    ]
+  }
+]

@@ -1,0 +1,283 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/core> a owl:Ontology ;
+  dcterms:title "MODAVIS Core Ontology"@en ;
+  dcterms:description "Stable identity, naming, typing, spatial, and temporal concepts shared by the MODAVIS Ontology Network."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/core/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modavis" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/core#" .
+
+modavis:IdentifiedResource a owl:Class ;
+  rdfs:label "identified resource"@en ;
+  skos:definition "Anything represented by a stable IRI, including entities, events, assertions, qualified relations, and provenance activities."@en ;
+  skos:scopeNote "Being an identified resource does not imply that MODAVIS has allocated an MDVS identifier. Exchange profiles may use repository IRIs or UUID URNs; the MODAVIS publication profile applies the narrower managed-resource rules."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:MODAVISManagedResource a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "MODAVIS-managed resource"@en ;
+  skos:definition "An identified resource admitted to a MODAVIS-governed public record with a stable HTTP IRI and documented lifecycle."@en ;
+  skos:scopeNote "The class does not require an MDVS identifier. Stable HTTP IRIs are normative identity in MODAVIS 0.1.0."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:Entity a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "entity"@en ;
+  skos:definition "A physical, digital, conceptual, or informational thing represented with stable MODAVIS identity."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:Continuant a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "continuant"@en ;
+  skos:definition "An entity that persists through time while being capable of changing state, location, configuration, or composition."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:Agent a owl:Class ;
+  rdfs:subClassOf modavis:Continuant, prov:Agent ;
+  rdfs:label "agent"@en ;
+  skos:definition "A person, organization, group, or other entity capable of bearing responsibility or participating agentively in an activity."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:Person a owl:Class ;
+  rdfs:subClassOf modavis:Agent ;
+  rdfs:label "person"@en ;
+  skos:definition "A human agent."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:Organization a owl:Class ;
+  rdfs:subClassOf modavis:Agent ;
+  rdfs:label "organization"@en ;
+  skos:definition "An agent constituted by people or other agents acting under a shared identity or purpose."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:Place a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "place"@en ;
+  skos:definition "A spatially identifiable location or region."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:TimeSpan a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "time span"@en ;
+  skos:definition "A temporal extent whose boundaries, expression, precision, or certainty may be known incompletely."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:Name a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "name"@en ;
+  skos:definition "A citable appellation associated with an identified resource."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:Identifier a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "identifier"@en ;
+  skos:definition "A reified identifier value together with its assigning scheme and, where available, provenance."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:mdvsIdentifier a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:range xsd:string ;
+  rdfs:label "MDVS identifier"@en ;
+  skos:definition "An optional legacy MODAVIS v1 identifier string retained for compatibility with existing Release 1.3 data."@en ;
+  skos:scopeNote "MDVS v1 is not a persistent-identifier standard: its historical check character is ineffective, the payload has limited entropy, and no public global allocation ledger exists. Do not mint new independent identifiers with this property; see the MDVS v1 compatibility note."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:canonicalLabel a owl:DatatypeProperty ;
+  rdfs:domain modavis:IdentifiedResource ;
+  rdfs:label "canonical label"@en ;
+  skos:definition "A preferred language-tagged human-readable label selected for an identified resource in a stated publication context."@en ;
+  skos:scopeNote "The exchange SHACL profile enforces rdf:langString because rdf:langString is outside the OWL 2 RL datatype map."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:hasName a owl:ObjectProperty ;
+  rdfs:range modavis:Name ;
+  rdfs:label "has name"@en ;
+  skos:definition "Relates an identified resource to a reified name that can carry language, type, provenance, and validity information."@en ;
+  skos:scopeNote "No global domain is asserted so externally defined identified resources can use the naming pattern without being inferred into a narrower MODAVIS class."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:nameValue a owl:DatatypeProperty ;
+  rdfs:domain modavis:Name ;
+  rdfs:label "name value"@en ;
+  skos:definition "The language-tagged lexical form of a reified name."@en ;
+  skos:scopeNote "The exchange SHACL profile enforces rdf:langString because rdf:langString is outside the OWL 2 RL datatype map."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:hasIdentifier a owl:ObjectProperty ;
+  rdfs:range modavis:Identifier ;
+  rdfs:label "has identifier"@en ;
+  skos:definition "Relates an identified resource to a reified identifier record."@en ;
+  skos:scopeNote "No global domain is asserted so externally defined resources can carry qualified MODAVIS identifier records without receiving an unintended class inference."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:identifierValue a owl:DatatypeProperty ;
+  rdfs:domain modavis:Identifier ;
+  rdfs:range xsd:string ;
+  rdfs:label "identifier value"@en ;
+  skos:definition "The lexical value assigned by an identifier scheme."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:identifierScheme a owl:ObjectProperty ;
+  rdfs:domain modavis:Identifier ;
+  rdfs:range skos:Concept ;
+  rdfs:label "identifier scheme"@en ;
+  skos:definition "Identifies the governed scheme under which an identifier value was assigned."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:hasType a owl:ObjectProperty ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has type"@en ;
+  skos:definition "Classifies a resource with a governed concept without promoting the concept to an OWL class."@en ;
+  skos:scopeNote "This generic classification property is intentionally domain-neutral. Prefer a module-specific subproperty when one exists."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:hasStatus a owl:ObjectProperty ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has status"@en ;
+  skos:definition "Classifies a resource with a governed lifecycle, review, or publication-status concept."@en ;
+  skos:scopeNote "This generic status property is intentionally domain-neutral. The applicable profile must identify the status concept scheme and the resources to which it applies."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:validDuring a owl:ObjectProperty ;
+  rdfs:range modavis:TimeSpan ;
+  rdfs:label "valid during"@en ;
+  skos:definition "Relates a resource or qualified relation to the time span during which it applies."@en ;
+  skos:scopeNote "The subject may be a domain resource or a qualified relation. A module or application profile determines whether the interval expresses existence, validity, applicability, or another named temporal role."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:locatedAt a owl:ObjectProperty ;
+  rdfs:range modavis:Place ;
+  rdfs:label "located at"@en ;
+  skos:definition "Relates an entity to a place at which it is located in the described context."@en ;
+  skos:scopeNote "Location may be time- or context-dependent. Qualify it with an assertion, context binding, state, or event when an unscoped direct triple would overstate the claim."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:startDate a owl:DatatypeProperty ;
+  rdfs:domain modavis:TimeSpan ;
+  rdfs:label "start date"@en ;
+  skos:definition "The inclusive calendar date at which a time span begins, when known at day precision."@en ;
+  skos:scopeNote "The exchange SHACL profile enforces xsd:date because xsd:date is outside the OWL 2 RL datatype map."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:endDate a owl:DatatypeProperty ;
+  rdfs:domain modavis:TimeSpan ;
+  rdfs:label "end date"@en ;
+  skos:definition "The inclusive calendar date at which a time span ends, when known at day precision."@en ;
+  skos:scopeNote "The exchange SHACL profile enforces xsd:date because xsd:date is outside the OWL 2 RL datatype map."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:startDateTime a owl:DatatypeProperty ;
+  rdfs:domain modavis:TimeSpan ;
+  rdfs:range xsd:dateTime ;
+  rdfs:label "start date and time"@en ;
+  skos:definition "The timezone-qualified date-time at which a time span begins."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:endDateTime a owl:DatatypeProperty ;
+  rdfs:domain modavis:TimeSpan ;
+  rdfs:range xsd:dateTime ;
+  rdfs:label "end date and time"@en ;
+  skos:definition "The timezone-qualified date-time at which a time span ends."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:rawTemporalExpression a owl:DatatypeProperty ;
+  rdfs:domain modavis:TimeSpan ;
+  rdfs:range xsd:string ;
+  rdfs:label "raw temporal expression"@en ;
+  skos:definition "A source-preserving temporal expression retained when normalized boundaries are incomplete, uncertain, or inappropriate."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:temporalPrecision a owl:ObjectProperty ;
+  rdfs:domain modavis:TimeSpan ;
+  rdfs:range skos:Concept ;
+  rdfs:label "temporal precision"@en ;
+  skos:definition "Classifies the granularity at which a time span or boundary is expressed."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+modavis:temporalCertainty a owl:ObjectProperty ;
+  rdfs:domain modavis:TimeSpan ;
+  rdfs:range skos:Concept ;
+  rdfs:label "temporal certainty"@en ;
+  skos:definition "Classifies the evidential certainty of a time span or boundary."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/core> ;
+  vs:term_status "testing" .
+
+# Minimal declarations for external terms used by the locally resolved MODAVIS
+# import closure. These statements neither redefine nor claim ownership of the
+# external vocabularies; they make entity typing explicit for OWL 2 DL/RL tools
+# without requiring network retrieval during validation.
+dcterms:conformsTo a owl:AnnotationProperty .
+dcterms:creator a owl:AnnotationProperty .
+dcterms:description a owl:AnnotationProperty .
+dcterms:issued a owl:AnnotationProperty .
+dcterms:license a owl:AnnotationProperty .
+dcterms:modified a owl:AnnotationProperty .
+dcterms:publisher a owl:AnnotationProperty .
+dcterms:title a owl:AnnotationProperty .
+vann:preferredNamespacePrefix a owl:AnnotationProperty .
+vann:preferredNamespaceUri a owl:AnnotationProperty .
+vs:term_status a owl:AnnotationProperty .
+skos:definition a owl:AnnotationProperty .
+skos:scopeNote a owl:AnnotationProperty .
+
+skos:Concept a owl:Class .
+skos:ConceptScheme a owl:Class .
+oa:Selector a owl:Class .
+prov:Activity a owl:Class .
+prov:Agent a owl:Class .
+prov:Entity a owl:Class .
+prov:SoftwareAgent a owl:Class .
+
+skos:inScheme a owl:ObjectProperty .
+skos:prefLabel a owl:AnnotationProperty .
+skos:notation a owl:AnnotationProperty .
+oa:hasSelector a owl:ObjectProperty .
+prov:used a owl:ObjectProperty .
+prov:wasAssociatedWith a owl:ObjectProperty .
+prov:wasDerivedFrom a owl:ObjectProperty .
+prov:wasGeneratedBy a owl:ObjectProperty .
+prov:generatedAtTime a owl:DatatypeProperty .

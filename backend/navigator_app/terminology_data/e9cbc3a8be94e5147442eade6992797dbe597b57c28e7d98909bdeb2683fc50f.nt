@@ -1,0 +1,294 @@
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2000/01/rdf-schema#label> "curated knowledge collection"@en .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/media#DigitalSurrogate> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2004/02/skos/core#definition> "A governed, evolving intellectual collection of assertions about one or more identified resources, whose publishable states are represented by fixed knowledge snapshots."@en .
+<https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> <http://www.w3.org/2004/02/skos/core#scopeNote> "The collection is not a musical instrument, digital surrogate, software product, version, distribution package, or serialization. Those resources may be documented by or materialize parts of the collection while retaining separate identities."@en .
+<https://w3id.org/modavis/ontology/heritage#HeritageRecognition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/heritage#HeritageRecognition> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#HeritageRecognition> <http://www.w3.org/2000/01/rdf-schema#label> "heritage recognition"@en .
+<https://w3id.org/modavis/ontology/heritage#HeritageRecognition> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/heritage#HeritageRecognition> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#HeritageRecognition> <http://www.w3.org/2004/02/skos/core#definition> "A citable, qualified record that an accountable community, organization, or other agent assigned a stated heritage status to a resource under identified criteria and temporal scope."@en .
+<https://w3id.org/modavis/ontology/heritage#HeritageRecognition> <http://www.w3.org/2004/02/skos/core#scopeNote> "Heritage significance is represented as an attributed and revisable status, not as an intrinsic or permanent class of the recognized resource. Different agents may issue concurrent or conflicting recognitions."@en .
+<https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> <http://www.w3.org/2000/01/rdf-schema#label> "historical claim review"@en .
+<https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/provenance#EditorialActivity> .
+<https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> <http://www.w3.org/2004/02/skos/core#definition> "An accountable editorial activity that reviews assertions about an entity's origin, attribution, custody, ownership, location, interventions, or other documented history and produces a distinct conclusion assertion."@en .
+<https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> <http://www.w3.org/2004/02/skos/core#scopeNote> "This class concerns scholarly object-history review. It does not replace PROV-O lineage for the computational or editorial processes that generated records."@en .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> <http://www.w3.org/2000/01/rdf-schema#label> "knowledge maintenance activity"@en .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/provenance#EditorialActivity> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> <http://www.w3.org/2004/02/skos/core#definition> "An accountable editorial activity that creates one fixed knowledge snapshot and records the assertions added to or removed from the preceding snapshot."@en .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> <http://www.w3.org/2004/02/skos/core#scopeNote> "Removal changes membership in a later snapshot; it never deletes the assertion, its evidence, or an earlier snapshot from the scholarly record."@en .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2000/01/rdf-schema#label> "knowledge snapshot"@en .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/media#DigitalSurrogate> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2002/07/owl#disjointWith> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2004/02/skos/core#definition> "An immutable state of a curated knowledge collection whose assertion membership, named graph, RDFC-1.0 canonicalization contract, and exact canonical N-Quads materialization are explicitly recorded."@en .
+<https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> <http://www.w3.org/2004/02/skos/core#scopeNote> "Snapshot identity depends on declared assertion membership and graph identity. Its canonical materialization is an exact bitstream fixed by byte size and checksum; the snapshot resource itself is not assigned a self-referential checksum."@en .
+<https://w3id.org/modavis/ontology/heritage#addedAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#addedAssertion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> .
+<https://w3id.org/modavis/ontology/heritage#addedAssertion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#addedAssertion> <http://www.w3.org/2000/01/rdf-schema#label> "added assertion"@en .
+<https://w3id.org/modavis/ontology/heritage#addedAssertion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/heritage#addedAssertion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#addedAssertion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies an assertion present in the resulting snapshot but absent from the preceding snapshot, or introduced with the initial snapshot."@en .
+<https://w3id.org/modavis/ontology/heritage#canonicalMaterialization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#canonicalMaterialization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#canonicalMaterialization> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#canonicalMaterialization> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#canonicalMaterialization> <http://www.w3.org/2000/01/rdf-schema#label> "canonical snapshot materialization"@en .
+<https://w3id.org/modavis/ontology/heritage#canonicalMaterialization> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/media#Bitstream> .
+<https://w3id.org/modavis/ontology/heritage#canonicalMaterialization> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <https://w3id.org/modavis/ontology/heritage#materializedAs> .
+<https://w3id.org/modavis/ontology/heritage#canonicalMaterialization> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#canonicalMaterialization> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one application/n-quads bitstream whose bytes are exactly the RDFC-1.0 canonical serialization of the snapshot dataset and whose byte size and checksum provide the snapshot's reproducible fixity anchor."@en .
+<https://w3id.org/modavis/ontology/heritage#canonicalizationProfile> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#canonicalizationProfile> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#canonicalizationProfile> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#canonicalizationProfile> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#canonicalizationProfile> <http://www.w3.org/2000/01/rdf-schema#label> "canonicalization profile"@en .
+<https://w3id.org/modavis/ontology/heritage#canonicalizationProfile> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/heritage#canonicalizationProfile> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#canonicalizationProfile> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the immutable RDF Dataset Canonicalization profile used to produce the snapshot's canonical N-Quads materialization."@en .
+<https://w3id.org/modavis/ontology/heritage#canonicalizationProfile> <http://www.w3.org/2004/02/skos/core#scopeNote> "MODAVIS 0.1.0 fixes this value to the dated RDFC-1.0 W3C Recommendation. The input dataset contains exactly one named graph identified by snapshotGraphIri; that graph contains exactly the outgoing assertion-record triples for every includesAssertion resource and no triples for assertions outside that membership. Snapshot metadata and canonical-materialization fixity statements are outside the input dataset, preventing self-reference."@en .
+<https://w3id.org/modavis/ontology/heritage#curatedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#curatedBy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> .
+<https://w3id.org/modavis/ontology/heritage#curatedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#curatedBy> <http://www.w3.org/2000/01/rdf-schema#label> "curated by"@en .
+<https://w3id.org/modavis/ontology/heritage#curatedBy> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Agent> .
+<https://w3id.org/modavis/ontology/heritage#curatedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#curatedBy> <http://www.w3.org/2004/02/skos/core#definition> "Identifies an agent accountable for governing the scope and maintenance of a curated knowledge collection."@en .
+<https://w3id.org/modavis/ontology/heritage#currentSnapshot> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#currentSnapshot> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#currentSnapshot> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> .
+<https://w3id.org/modavis/ontology/heritage#currentSnapshot> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#currentSnapshot> <http://www.w3.org/2000/01/rdf-schema#label> "current knowledge snapshot"@en .
+<https://w3id.org/modavis/ontology/heritage#currentSnapshot> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#currentSnapshot> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#currentSnapshot> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#currentSnapshot> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one snapshot selected as current under the collection's recorded governance state while retaining earlier snapshots."@en .
+<https://w3id.org/modavis/ontology/heritage#documentsResource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#documentsResource> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> .
+<https://w3id.org/modavis/ontology/heritage#documentsResource> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#documentsResource> <http://www.w3.org/2000/01/rdf-schema#label> "documents resource"@en .
+<https://w3id.org/modavis/ontology/heritage#documentsResource> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/heritage#documentsResource> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#documentsResource> <http://www.w3.org/2004/02/skos/core#definition> "Identifies a resource that is an explicit documentary subject of a curated knowledge collection."@en .
+<https://w3id.org/modavis/ontology/heritage#documentsResource> <http://www.w3.org/2004/02/skos/core#scopeNote> "This relation does not assert identity, completeness, heritage status, or representation fidelity."@en .
+<https://w3id.org/modavis/ontology/heritage#hasEvidenceRelation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HeritageRecognition> .
+<https://w3id.org/modavis/ontology/heritage#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#label> "has heritage-recognition evidence"@en .
+<https://w3id.org/modavis/ontology/heritage#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/evidence#EvidenceRelation> .
+<https://w3id.org/modavis/ontology/heritage#hasEvidenceRelation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#hasEvidenceRelation> <http://www.w3.org/2004/02/skos/core#definition> "Relates a heritage recognition to qualified source-fragment evidence that evaluates the recognition record."@en .
+<https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> .
+<https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot> <http://www.w3.org/2000/01/rdf-schema#label> "has knowledge snapshot"@en .
+<https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/heritage#snapshotOfCollection> .
+<https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#hasKnowledgeSnapshot> <http://www.w3.org/2004/02/skos/core#definition> "Relates a curated knowledge collection to one of its retained immutable snapshot states."@en .
+<https://w3id.org/modavis/ontology/heritage#includesAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#includesAssertion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#includesAssertion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#includesAssertion> <http://www.w3.org/2000/01/rdf-schema#label> "includes assertion"@en .
+<https://w3id.org/modavis/ontology/heritage#includesAssertion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/heritage#includesAssertion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#includesAssertion> <http://www.w3.org/2004/02/skos/core#definition> "Records exact membership of an assertion in a fixed knowledge snapshot."@en .
+<https://w3id.org/modavis/ontology/heritage#includesAssertion> <http://www.w3.org/2004/02/skos/core#scopeNote> "Membership is documentary inclusion, not acceptance; an included assertion retains its own status, evidence, context, and conflict relations."@en .
+<https://w3id.org/modavis/ontology/heritage#maintainedCollection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#maintainedCollection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#maintainedCollection> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> .
+<https://w3id.org/modavis/ontology/heritage#maintainedCollection> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#maintainedCollection> <http://www.w3.org/2000/01/rdf-schema#label> "maintained collection"@en .
+<https://w3id.org/modavis/ontology/heritage#maintainedCollection> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> .
+<https://w3id.org/modavis/ontology/heritage#maintainedCollection> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#maintainedCollection> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one curated knowledge collection revised by a knowledge maintenance activity."@en .
+<https://w3id.org/modavis/ontology/heritage#materializedAs> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#materializedAs> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#materializedAs> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#materializedAs> <http://www.w3.org/2000/01/rdf-schema#label> "materialized as"@en .
+<https://w3id.org/modavis/ontology/heritage#materializedAs> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/heritage#materializedAs> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#materializedAs> <http://www.w3.org/2004/02/skos/core#definition> "Relates an abstract fixed knowledge snapshot to a digital asset that serializes, packages, or otherwise materializes that snapshot."@en .
+<https://w3id.org/modavis/ontology/heritage#previousSnapshot> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#previousSnapshot> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#previousSnapshot> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> .
+<https://w3id.org/modavis/ontology/heritage#previousSnapshot> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#previousSnapshot> <http://www.w3.org/2000/01/rdf-schema#label> "previous snapshot"@en .
+<https://w3id.org/modavis/ontology/heritage#previousSnapshot> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#previousSnapshot> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#used> .
+<https://w3id.org/modavis/ontology/heritage#previousSnapshot> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#previousSnapshot> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the preceding snapshot used as the revision base; it is absent only when the activity creates the collection's initial snapshot."@en .
+<https://w3id.org/modavis/ontology/heritage#producesAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#producesAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#producesAssertion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> .
+<https://w3id.org/modavis/ontology/heritage#producesAssertion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#producesAssertion> <http://www.w3.org/2000/01/rdf-schema#label> "produces assertion"@en .
+<https://w3id.org/modavis/ontology/heritage#producesAssertion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/heritage#producesAssertion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#producesAssertion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the distinct conclusion assertion generated by a historical claim review."@en .
+<https://w3id.org/modavis/ontology/heritage#recognitionAssignedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#recognitionAssignedBy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HeritageRecognition> .
+<https://w3id.org/modavis/ontology/heritage#recognitionAssignedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#recognitionAssignedBy> <http://www.w3.org/2000/01/rdf-schema#label> "recognition assigned by"@en .
+<https://w3id.org/modavis/ontology/heritage#recognitionAssignedBy> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Agent> .
+<https://w3id.org/modavis/ontology/heritage#recognitionAssignedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#recognitionAssignedBy> <http://www.w3.org/2004/02/skos/core#definition> "Identifies an accountable community, organization, person, or other agent that assigned the recorded heritage status."@en .
+<https://w3id.org/modavis/ontology/heritage#recognitionBasis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#recognitionBasis> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HeritageRecognition> .
+<https://w3id.org/modavis/ontology/heritage#recognitionBasis> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#recognitionBasis> <http://www.w3.org/2000/01/rdf-schema#label> "recognition basis"@en .
+<https://w3id.org/modavis/ontology/heritage#recognitionBasis> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/heritage#recognitionBasis> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#recognitionBasis> <http://www.w3.org/2004/02/skos/core#definition> "Identifies a criterion, policy, register, legal instrument, assessment framework, or other citable basis under which the heritage status was assigned."@en .
+<https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HeritageRecognition> .
+<https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy> <http://www.w3.org/2000/01/rdf-schema#label> "recognition recorded by"@en .
+<https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/provenance#ProcessingActivity> .
+<https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+<https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#recognitionRecordedBy> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the processing or editorial activity that created the MODAVIS recognition record, separately from the agent that assigned the heritage status."@en .
+<https://w3id.org/modavis/ontology/heritage#recognitionStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#recognitionStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#recognitionStatus> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HeritageRecognition> .
+<https://w3id.org/modavis/ontology/heritage#recognitionStatus> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#recognitionStatus> <http://www.w3.org/2000/01/rdf-schema#label> "recognition status"@en .
+<https://w3id.org/modavis/ontology/heritage#recognitionStatus> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/heritage#recognitionStatus> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#recognitionStatus> <http://www.w3.org/2004/02/skos/core#definition> "Classifies the outcome or lifecycle state of a heritage recognition with a governed concept."@en .
+<https://w3id.org/modavis/ontology/heritage#recognizesResource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#recognizesResource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#recognizesResource> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HeritageRecognition> .
+<https://w3id.org/modavis/ontology/heritage#recognizesResource> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#recognizesResource> <http://www.w3.org/2000/01/rdf-schema#label> "recognizes resource"@en .
+<https://w3id.org/modavis/ontology/heritage#recognizesResource> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/heritage#recognizesResource> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#recognizesResource> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one resource whose heritage status is recorded by a heritage recognition."@en .
+<https://w3id.org/modavis/ontology/heritage#removedAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#removedAssertion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> .
+<https://w3id.org/modavis/ontology/heritage#removedAssertion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#removedAssertion> <http://www.w3.org/2000/01/rdf-schema#label> "removed assertion"@en .
+<https://w3id.org/modavis/ontology/heritage#removedAssertion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/heritage#removedAssertion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#removedAssertion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies an assertion present in the preceding snapshot and absent from the resulting snapshot while preserving the assertion and preceding snapshot."@en .
+<https://w3id.org/modavis/ontology/heritage#resultingSnapshot> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#resultingSnapshot> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#resultingSnapshot> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> .
+<https://w3id.org/modavis/ontology/heritage#resultingSnapshot> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#resultingSnapshot> <http://www.w3.org/2000/01/rdf-schema#label> "resulting snapshot"@en .
+<https://w3id.org/modavis/ontology/heritage#resultingSnapshot> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#resultingSnapshot> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#resultingSnapshot> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one fixed snapshot produced by a knowledge maintenance activity."@en .
+<https://w3id.org/modavis/ontology/heritage#reviewRationale> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/heritage#reviewRationale> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#reviewRationale> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> .
+<https://w3id.org/modavis/ontology/heritage#reviewRationale> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#reviewRationale> <http://www.w3.org/2000/01/rdf-schema#label> "historical review rationale"@en .
+<https://w3id.org/modavis/ontology/heritage#reviewRationale> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/heritage#reviewRationale> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#reviewRationale> <http://www.w3.org/2004/02/skos/core#definition> "A non-empty human-readable account of the evidence and reasoning used by a historical claim review."@en .
+<https://w3id.org/modavis/ontology/heritage#reviewSubject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#reviewSubject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#reviewSubject> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> .
+<https://w3id.org/modavis/ontology/heritage#reviewSubject> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#reviewSubject> <http://www.w3.org/2000/01/rdf-schema#label> "historical review subject"@en .
+<https://w3id.org/modavis/ontology/heritage#reviewSubject> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/heritage#reviewSubject> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#reviewSubject> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one resource whose historical claims are evaluated by a historical claim review."@en .
+<https://w3id.org/modavis/ontology/heritage#reviewsAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#reviewsAssertion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HistoricalClaimReview> .
+<https://w3id.org/modavis/ontology/heritage#reviewsAssertion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#reviewsAssertion> <http://www.w3.org/2000/01/rdf-schema#label> "reviews assertion"@en .
+<https://w3id.org/modavis/ontology/heritage#reviewsAssertion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/heritage#reviewsAssertion> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#used> .
+<https://w3id.org/modavis/ontology/heritage#reviewsAssertion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#reviewsAssertion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies an existing historical assertion used as input to a historical claim review."@en .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedAt> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedAt> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedAt> <http://www.w3.org/2000/01/rdf-schema#label> "snapshot created at"@en .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedAt> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#dateTime> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedAt> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedAt> <http://www.w3.org/2004/02/skos/core#definition> "Records the timezone-qualified date and time at which the fixed knowledge snapshot was created."@en .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/2000/01/rdf-schema#label> "snapshot created by"@en .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/heritage#KnowledgeMaintenanceActivity> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/heritage#resultingSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#snapshotCreatedBy> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one knowledge maintenance activity that created a fixed knowledge snapshot."@en .
+<https://w3id.org/modavis/ontology/heritage#snapshotGraphIri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/heritage#snapshotGraphIri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#snapshotGraphIri> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#snapshotGraphIri> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#snapshotGraphIri> <http://www.w3.org/2000/01/rdf-schema#label> "snapshot graph IRI"@en .
+<https://w3id.org/modavis/ontology/heritage#snapshotGraphIri> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://w3id.org/modavis/ontology/heritage#snapshotGraphIri> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#snapshotGraphIri> <http://www.w3.org/2004/02/skos/core#definition> "Records the absolute named-graph IRI assigned to a knowledge snapshot when it is exposed as an RDF graph."@en .
+<https://w3id.org/modavis/ontology/heritage#snapshotOfCollection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/heritage#snapshotOfCollection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#snapshotOfCollection> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#KnowledgeSnapshot> .
+<https://w3id.org/modavis/ontology/heritage#snapshotOfCollection> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#snapshotOfCollection> <http://www.w3.org/2000/01/rdf-schema#label> "snapshot of knowledge collection"@en .
+<https://w3id.org/modavis/ontology/heritage#snapshotOfCollection> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/heritage#CuratedKnowledgeCollection> .
+<https://w3id.org/modavis/ontology/heritage#snapshotOfCollection> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#snapshotOfCollection> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one curated knowledge collection whose fixed state a knowledge snapshot records."@en .
+<https://w3id.org/modavis/ontology/heritage#supersedesRecognition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/heritage#supersedesRecognition> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/heritage#HeritageRecognition> .
+<https://w3id.org/modavis/ontology/heritage#supersedesRecognition> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/heritage> .
+<https://w3id.org/modavis/ontology/heritage#supersedesRecognition> <http://www.w3.org/2000/01/rdf-schema#label> "supersedes recognition"@en .
+<https://w3id.org/modavis/ontology/heritage#supersedesRecognition> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/heritage#HeritageRecognition> .
+<https://w3id.org/modavis/ontology/heritage#supersedesRecognition> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/heritage#supersedesRecognition> <http://www.w3.org/2004/02/skos/core#definition> "Relates a later heritage recognition record to an earlier record for the same resource whose active role it replaces without erasing the earlier record."@en .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/prov-o/> .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/dc/terms/description> "Contextual heritage recognition, curated knowledge collections, fixed knowledge snapshots, revision lineage, and accountable historical-claim review."@en .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/dc/terms/title> "MODAVIS Heritage Knowledge Ontology"@en .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modheritage" .
+<https://w3id.org/modavis/ontology/heritage> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/heritage#" .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/assertion/0.1.0> .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/evidence/0.1.0> .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/instrument/0.1.0> .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/media/0.1.0> .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/provenance/0.1.0> .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/virtual-instrument/0.1.0> .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/heritage/0.1.0> .
+<https://w3id.org/modavis/ontology/heritage> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

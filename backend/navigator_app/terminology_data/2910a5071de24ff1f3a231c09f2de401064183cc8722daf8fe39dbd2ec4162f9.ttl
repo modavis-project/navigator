@@ -1,0 +1,281 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modassert: <https://w3id.org/modavis/ontology/assertion#> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/assertion> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0>,
+              <https://w3id.org/modavis/ontology/evidence/0.1.0>,
+              <https://w3id.org/modavis/ontology/provenance/0.1.0> ;
+  dcterms:title "MODAVIS Assertion Ontology"@en ;
+  dcterms:description "Explicit source-backed assertions, conflicts, editorial decisions, and convenience-graph projections."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/assertion/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modassert" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/assertion#" .
+
+modassert:Assertion a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "assertion"@en ;
+  skos:definition "A citable claim that relates a subject to an identified resource or literal through a governed predicate and retains status, evidence, confidence, and provenance."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:ConflictSet a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "conflict set"@en ;
+  skos:definition "A set of assertions that cannot all be accepted together under the stated conflict criterion."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:ConflictCriterion a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "conflict criterion"@en ;
+  skos:definition "An identified rule, policy, or documented condition under which the assertions in a conflict set cannot all be accepted together."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:ConflictDecision a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "conflict decision"@en ;
+  skos:definition "An accountable editorial decision that resolves or records a conflict set."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:Projection a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "assertion projection"@en ;
+  skos:definition "Lineage connecting an accepted assertion to a direct triple or operational domain representation."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:assertsSubject a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "asserts subject"@en ;
+  skos:definition "Identifies the resource about which an assertion makes its claim."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:assertsPredicate a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range skos:Concept ;
+  rdfs:label "asserts predicate"@en ;
+  skos:definition "Uses a governed assertion-predicate concept; accepted projection may map that concept to a native OWL property."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:assertsObject a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "asserts object"@en ;
+  skos:definition "Identifies the resource-valued object of an assertion; it is mutually exclusive with a literal-valued object in the MODAVIS SHACL profiles."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:assertsLiteral a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:label "asserts literal"@en ;
+  skos:definition "Provides the literal-valued object of an assertion; it is mutually exclusive with a resource-valued object in the MODAVIS SHACL profiles."@en ;
+  skos:scopeNote "No global datatype range is asserted because language-tagged strings and multiple RDF datatypes are legitimate. An application profile should require a narrower datatype when comparison or calculation depends on it."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:rawValue a owl:DatatypeProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range xsd:string ;
+  rdfs:label "raw value"@en ;
+  skos:definition "Retains the source lexical form from which an assertion value was extracted or interpreted."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:normalizedValue a owl:DatatypeProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range xsd:string ;
+  rdfs:label "normalized value"@en ;
+  skos:definition "Retains a documented comparison or canonical lexical form without replacing the raw source value."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:assertionStatus a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range skos:Concept ;
+  rdfs:label "assertion status"@en ;
+  skos:definition "Classifies the review or lifecycle status of an assertion with a governed concept."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:confidence a owl:DatatypeProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "confidence"@en ;
+  skos:definition "A decimal from zero through one expressing the recorded confidence in an assertion under its generating method or review process."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:hasEvidenceRelation a owl:ObjectProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range modevidence:EvidenceRelation ;
+  rdfs:label "has evidence relation"@en ;
+  skos:definition "Relates an assertion to qualified source-fragment evidence that supports, opposes, or contextualizes it."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:generatedBy a owl:ObjectProperty ;
+  rdfs:subPropertyOf prov:wasGeneratedBy ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range prov:Activity ;
+  rdfs:label "generated by"@en ;
+  skos:definition "Identifies the processing or editorial activity that generated an assertion."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:supersedes a owl:ObjectProperty ;
+  rdfs:domain modassert:Assertion ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "supersedes"@en ;
+  skos:definition "Relates a later assertion to an earlier assertion whose role or status it replaces without erasing the earlier record."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:hasConflictMember a owl:ObjectProperty ;
+  rdfs:domain modassert:ConflictSet ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "has conflict member"@en ;
+  skos:definition "Relates a conflict set to an assertion that participates in the stated incompatibility."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:conflictCriterion a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:ConflictSet ;
+  rdfs:range modassert:ConflictCriterion ;
+  rdfs:label "uses conflict criterion"@en ;
+  skos:definition "Identifies the rule, policy, or documented condition under which the assertions in a conflict set are incompatible."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:decisionFor a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:ConflictDecision ;
+  rdfs:range modassert:ConflictSet ;
+  rdfs:label "decision for"@en ;
+  skos:definition "Identifies the conflict set addressed by an editorial conflict decision."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:chosenAssertion a owl:ObjectProperty ;
+  rdfs:domain modassert:ConflictDecision ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "chosen assertion"@en ;
+  skos:definition "Identifies an assertion selected by an editorial conflict decision."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:decidedBy a owl:ObjectProperty ;
+  rdfs:domain modassert:ConflictDecision ;
+  rdfs:range modavis:Agent ;
+  rdfs:label "decided by"@en ;
+  skos:definition "Identifies an accountable agent responsible for an editorial conflict decision."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:decisionRationale a owl:DatatypeProperty ;
+  rdfs:domain modassert:ConflictDecision ;
+  rdfs:range xsd:string ;
+  rdfs:label "decision rationale"@en ;
+  skos:definition "A human-readable explanation of the evidence and reasoning behind an editorial conflict decision."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectsAssertion a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Projection ;
+  rdfs:range modassert:Assertion ;
+  rdfs:label "projects assertion"@en ;
+  skos:definition "Identifies the accepted assertion from which a convenience or operational projection was generated."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectionSubject a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Projection ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "projection subject"@en ;
+  skos:definition "Identifies the subject resource of the projected RDF statement."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectionObject a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Projection ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "projection object"@en ;
+  skos:definition "Identifies the resource-valued object of the projected RDF statement."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectionLiteral a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Projection ;
+  rdfs:label "projection literal"@en ;
+  skos:definition "Provides the literal-valued object of the projected RDF statement."@en ;
+  skos:scopeNote "The literal must reproduce the source assertion value. No global datatype range is asserted because the source assertion may legitimately use different RDF datatypes or a language tag."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectionPredicateIri a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Projection ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "projection predicate IRI"@en ;
+  skos:definition "Records the absolute IRI of the RDF predicate used by the projection without treating that property IRI as an OWL individual."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectionGraphIri a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Projection ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "projection graph IRI"@en ;
+  skos:definition "Optionally records the named-graph IRI in which the projected statement was materialized."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectionRule a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Projection ;
+  rdfs:label "projection rule"@en ;
+  skos:definition "Identifies the documented rule or specification used to generate the projection."@en ;
+  skos:scopeNote "The value must be an IRI identifying a citable rule or specification, not an ungoverned display string. The exchange profile enforces IRI node kind."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectionRuleVersion a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modassert:Projection ;
+  rdfs:range xsd:string ;
+  rdfs:label "projection rule version"@en ;
+  skos:definition "Records the non-empty version label of the projection rule."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectionGeneratedBy a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf prov:wasGeneratedBy ;
+  rdfs:domain modassert:Projection ;
+  rdfs:range prov:Activity ;
+  rdfs:label "projection generated by"@en ;
+  skos:definition "Identifies the processing or editorial activity that generated the projection."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .
+
+modassert:projectedPropertyIri a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain skos:Concept ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "projected property IRI"@en ;
+  skos:definition "Maps a governed assertion-predicate concept to the absolute IRI of a native RDF property used by reviewed projections."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/assertion> ;
+  vs:term_status "testing" .

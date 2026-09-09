@@ -1,0 +1,66 @@
+{
+  "contractVersion": "modavis.navigator.synthetic-movement-fixtures/v1",
+  "simulationOnly": true,
+  "movements": [
+    {
+      "fixtureId": "synthetic-relocation-alpha",
+      "displacementId": "MDVS:SIM:DSPL:ALPHA",
+      "subjectId": "MDVS:SIM:ORGN:ALPHA",
+      "subjectLabel": "Synthetic Organ Alpha",
+      "classification": "physical_relocation",
+      "origin": {
+        "placeId": "MDVS:SIM:PLAC:ALPHA-ORIGIN",
+        "label": "Simulated Church Alpha — origin",
+        "coordinates": [14.5058, 46.0569]
+      },
+      "destination": {
+        "placeId": "MDVS:SIM:PLAC:ALPHA-DESTINATION",
+        "label": "Simulated Church Alpha — destination",
+        "coordinates": [15.9819, 45.8150]
+      },
+      "temporality": {
+        "earliest": "1901-01-01",
+        "latest": "1903-12-31",
+        "rawExpression": "ca. 1902",
+        "precision": "circa-year",
+        "certainty": "uncertain-bounded"
+      },
+      "evidence": {
+        "evidenceId": "simulation:evidence:relocation-alpha",
+        "sourcePath": "$.synthetic.movements[0]",
+        "summary": "Artificial fixture states an explicit origin and destination around 1902."
+      },
+      "confidence": 0.93
+    },
+    {
+      "fixtureId": "synthetic-relocation-beta",
+      "displacementId": "MDVS:SIM:DSPL:BETA",
+      "subjectId": "MDVS:SIM:ORGN:BETA",
+      "subjectLabel": "Synthetic Organ Beta",
+      "classification": "physical_relocation",
+      "origin": {
+        "placeId": "MDVS:SIM:PLAC:BETA-ORIGIN",
+        "label": "Simulated Church Beta — origin",
+        "coordinates": [13.7768, 45.6495]
+      },
+      "destination": {
+        "placeId": "MDVS:SIM:PLAC:BETA-DESTINATION",
+        "label": "Simulated Church Beta — destination",
+        "coordinates": [14.4422, 45.3271]
+      },
+      "temporality": {
+        "earliest": "1950-06-15",
+        "latest": "1950-06-15",
+        "rawExpression": "15 June 1950",
+        "precision": "day",
+        "certainty": "exact"
+      },
+      "evidence": {
+        "evidenceId": "simulation:evidence:relocation-beta",
+        "sourcePath": "$.synthetic.movements[1]",
+        "summary": "Artificial fixture states an explicit origin, destination and exact date."
+      },
+      "confidence": 1.0
+    }
+  ]
+}

@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/prov-o/" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">Protocol-neutral semantics for fixed audio signals, source-bound half-open frame regions, sampled-playback parameters, and tuning maps.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Audio and Sampled Playback Ontology</ns1:title>
+    <ns2:preferredNamespacePrefix>modaudio</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology/audio#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/instrument/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/media/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/audio/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#AttackRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">attack region</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A signal region identified as the onset or attack portion of a sounding event.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#AudioSample">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">audio sample</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/audio#AudioSignal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An audio signal selected or derived for triggered or otherwise bounded playback as part of a digital or virtual musical instrument.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">An audio sample is the identified playback signal, not merely a region of a larger signal and not automatically a file or bitstream. Use extractedFromRegion for source selection and media terms for byte-level realizations.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#AudioSignal">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">audio signal</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/media#DigitalAsset" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An identified digital asset representing one or more channels of time-varying audio samples at a stated sample rate.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Frame coordinates apply only to a fixed signal identity or bitstream. Re-encoding, resampling, trimming, or channel changes create a distinct signal to which regions must be rebound.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#LoopPointSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">loop point set</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A versionable grouping of one or more source-bound sustain-loop regions with loop playback policy and an optional loopability assessment.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Class membership does not state whether the grouping is tentative or accepted. A governing workflow or application profile must record that lifecycle decision.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#ReleaseRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">release region</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A signal region selected for playback or analysis of the release phase following cessation of excitation or control.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#SampleExtractionRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">sample extraction region</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The exact half-open interval of a source audio signal used to create a derived audio sample.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">sample playback parameters</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A protocol-neutral record selecting an audio sample together with tuning, signal-region, gain, selection, and control-release policy.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This class describes musical playback semantics and does not prescribe a sampler file format or runtime API.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#SignalRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">sample-clock signal region</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A source-bound half-open interval of audio frames whose start is inclusive and whose end is exclusive.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">A region is meaningful only together with the fixed audio signal whose sample clock supplies its coordinate system.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#StableSustainRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">stable sustain region</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A signal region assessed as sufficiently stable for sustained analysis, resynthesis, or loop selection.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#SustainLoopRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">sustain loop region</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A signal region whose half-open boundaries define a candidate or accepted repeating interval for sustained playback.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#TuningEntry">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">tuning entry</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">One component- or logical-control-scoped target-frequency entry in a tuning map.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#TuningMap">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">tuning map</ns4:label>
+    <ns4:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity" />
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A versionable mapping from logical keys or instrument components to target frequencies, distinct from the measurements or documentary assertions supporting it.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#TuningReference">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">tuning reference</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#Entity" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An identified pitch designation and frequency used as a reference by a tuning map, without assuming a control protocol or numbering system.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#appliesToSignal">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">applies to signal</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#AudioSignal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the fixed audio signal on whose sample clock a region, loop set, or other source-scoped record is expressed.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">SignalRegion and LoopPointSet are the subjects constrained by the 0.1.0 exchange profile. No global domain is asserted because additional source-scoped record classes may reuse the property without receiving an incorrect type inference.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#assignmentConfidence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SampleExtractionRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">assignment confidence</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A decimal from zero through one expressing confidence in a source-region assignment.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#assignmentMethod">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SampleExtractionRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">assignment method</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies how a component or logical-control assignment was measured, inferred, authored, or otherwise established, using a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#boundaryCensoring">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">boundary censoring</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies whether a signal boundary was constrained by the available capture rather than observed directly, using a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#boundaryConfidence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">boundary confidence</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A decimal from zero through one expressing confidence in the selected signal-region boundaries.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#captureSequenceIndex">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SampleExtractionRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">capture sequence index</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The zero-based ordinal of a capture within a documented acquisition sequence.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#channelCount">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#AudioSignal" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">channel count</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The number of interleaved or logically associated channels in an audio signal.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#channelPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">channel policy</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies channel selection, mixing, or routing behavior with a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#confidence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#LoopPointSet" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">loop decision confidence</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A decimal from zero through one expressing confidence in a loop-point proposal or decision.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#controlReleasePolicy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">control release policy</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies playback behavior when the controlling gate or equivalent control ends, using a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#crossfadeFrames">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SustainLoopRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">crossfade length in frames</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The number of frames blended across the loop boundary; zero denotes no crossfade.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#endFrameExclusive">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">exclusive end frame</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The zero-based exclusive index immediately after the final audio frame in a half-open signal region.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#exitPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">region exit policy</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies how playback exits a signal region when its sustaining condition ends, using a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#extractedFromRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#AudioSample" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">extracted from region</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#SampleExtractionRegion" />
+    <ns4:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasDerivedFrom" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the exact source-signal region from which an audio sample was extracted.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Consumers should record bitstream-to-bitstream derivation separately with modmedia:derivedFrom when required.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#gainDB">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">playback gain in decibels</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The signed gain adjustment, in decibels, applied by sampled playback.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#hasLoopRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#LoopPointSet" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">has loop region</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#SustainLoopRegion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a loop point set to one of its sustain-loop regions.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#hasSignalRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">has signal region</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an audio signal, playback record, or analysis result to a source-bound signal region.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">This discovery relation does not change region coordinates or imply that the subject owns the source signal. The region's appliesToSignal value is authoritative for its sample-clock basis.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#hasTuningMap">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">has tuning map</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#TuningMap" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an instrument, instrument state, virtual-instrument version, or dataset to a tuning map it provides.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The open subject position avoids importing every application module. This relation says that a resource provides the map; usesTuningMap states that a playback record applies it.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#hasTuningReference">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#TuningMap" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">has tuning reference</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#TuningReference" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a tuning map to an identified reference pitch and frequency.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#latencyCompensationFrames">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">latency compensation in frames</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A signed frame offset applied to compensate for documented capture or playback latency.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#logicalControl">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#TuningEntry" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">logical control</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies a protocol-neutral logical control whose target pitch is recorded by a tuning entry.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#loopabilityAssessment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#LoopPointSet" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">loopability assessment</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies whether and under what conditions a source signal can sustain an acceptable loop with a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#normalizationGainDB">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">normalization gain in decibels</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The signed gain, in decibels, applied specifically to normalize a source sample to a documented reference.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#pitchTrackingPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">pitch tracking policy</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies how playback pitch follows a logical control or other control signal, using a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#playbackMode">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">region playback mode</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies traversal of a signal region with a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#playsSample">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">plays sample</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#AudioSample" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the audio sample governed by a sampled-playback parameter record.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#referenceChannelIndex">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">reference channel index</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The zero-based channel index used as the reference for analysis, alignment, or playback decisions.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#referenceFrequencyHz">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#TuningReference" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">reference frequency</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The positive frequency in hertz assigned to the designated reference pitch.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#referencePitchDesignation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#TuningReference" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">reference pitch designation</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A protocol-neutral source-preserving designation for the reference pitch, such as A4 or a component name.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#regionRole">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">region role</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies the analytical or playback role of a signal region with a concept governed by the applicable exchange profile.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#releaseStartFrame">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">release start frame</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An optional source-relative frame index at which release behavior begins within or after a region.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#roundRobinGroup">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">round-robin group</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A profile-local identifier grouping alternate samples selected as a round-robin set.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#roundRobinIndex">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">round-robin index</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The zero-based ordinal of a playback record within a round-robin group.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#sampleRate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#AudioSignal" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">sample rate in hertz</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The number of audio frames per second on the signal's sample clock, expressed in hertz.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#selectionPriority">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">selection priority</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An integer used by an application profile to resolve overlapping playback-selection domains.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#soundingComponent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#TuningEntry" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">sounding component</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/instrument#InstrumentComponent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the instrument component whose target pitch is recorded by a tuning entry.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#sourceFundamentalHz">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">source fundamental frequency</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The measured, inferred, or declared fundamental frequency of the untransposed source sample, in hertz.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#startFrameInclusive">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SignalRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">inclusive start frame</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The zero-based inclusive index of the first audio frame in a half-open signal region.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#takeNumber">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SampleExtractionRegion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">take number</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The positive source-preserving number assigned to a recorded take.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#targetFrequencyHz">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">target frequency</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The target sounding frequency in hertz for a playback parameter or tuning entry.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The 0.1.0 exchange profile permits this property only on SamplePlaybackParameters and TuningEntry. The global domain is omitted because OWL would otherwise infer an invalid intersection type.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#totalFrames">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#AudioSignal" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">total frame count</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The total number of audio frames in a fixed audio signal.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#tuningEntries">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#TuningMap" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">has tuning entry</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#TuningEntry" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a tuning map to one of its key- or component-scoped tuning entries.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#tuningOffsetCents">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">tuning offset in cents</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">The signed pitch adjustment in cents relative to the applicable source or target reference.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The 0.1.0 exchange profile permits this property only on SamplePlaybackParameters and TuningEntry. The relevant source or target reference must be established by that enclosing record.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#tuningSystem">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#TuningMap" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">tuning system</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the temperament or tuning-system specification used by a tuning map.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Use a stable IRI for a documented tuning system; retain a source label on that identified resource rather than embedding an opaque tuning-system string in the map.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#usesLoopPointSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">uses loop point set</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#LoopPointSet" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies a loop point set selected by a sampled-playback parameter record.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#usesPlaybackParameters">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">uses playback parameters</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a virtual instrument, version, control mapping, or package to sampled-playback parameters it uses.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The open subject position avoids a dependency from the audio module to every possible application class. Application profiles must constrain which resources may use playback parameters.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#usesReleaseRegion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">uses release region</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#ReleaseRegion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies a source-bound release region selected for sampled playback.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/audio#usesTuningMap">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/audio" />
+    <ns4:label xml:lang="en">uses tuning map</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/audio#TuningMap" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the tuning map used by a sampled-playback parameter record.</ns6:definition>
+  </rdf:Description>
+</rdf:RDF>

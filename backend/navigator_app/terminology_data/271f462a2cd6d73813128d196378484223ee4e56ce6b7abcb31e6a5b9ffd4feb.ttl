@@ -1,0 +1,3867 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/modavis/shapes/publication/0.1.0> a dcterms:Standard ;
+  dcterms:title "MODAVIS publication SHACL profile"@en ;
+  dcterms:description "Versioned publication conformance profile for MODAVIS 0.1.0 data."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/shacl/> ;
+  dcterms:requires <https://w3id.org/modavis/ontology/0.1.0> .
+
+# Source: modavis-assertion.shacl.ttl
+@prefix assertionpredicate: <https://w3id.org/modavis/vocab/assertion-predicate/> .
+@prefix assertionstatus: <https://w3id.org/modavis/vocab/assertion-status/> .
+@prefix modassert: <https://w3id.org/modavis/ontology/assertion#> .
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modinst: <https://w3id.org/modavis/ontology/instrument#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:AssertionShape a sh:NodeShape ;
+    rdfs:label "assertion shape"@en ;
+    sh:message "The focus node must satisfy the named logical, node-kind, or lexical constraint declared by this shape."@en ;
+    sh:name "assertion shape"@en ;
+    sh:property modshape:AssertionShape-assertionStatus-PropertyShape-01,
+        modshape:AssertionShape-assertsLiteral-PropertyShape-02,
+        modshape:AssertionShape-assertsObject-PropertyShape-03,
+        modshape:AssertionShape-assertsPredicate-PropertyShape-04,
+        modshape:AssertionShape-assertsSubject-PropertyShape-05,
+        modshape:AssertionShape-confidence-PropertyShape-06,
+        modshape:AssertionShape-hasEvidenceRelation-PropertyShape-07 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:AssertionShape-SPARQLConstraint-01,
+        modshape:AssertionShape-SPARQLConstraint-02 ;
+    sh:targetClass modassert:Assertion ;
+    sh:xone ( modshape:AssertionShape-xone-Alternative-NodeShape-01 modshape:AssertionShape-xone-Alternative-NodeShape-02 ) .
+
+modshape:ConflictDecisionShape a sh:NodeShape ;
+    rdfs:label "conflict decision shape"@en ;
+    sh:name "conflict decision shape"@en ;
+    sh:property modshape:ConflictDecisionShape-chosenAssertion-PropertyShape-01,
+        modshape:ConflictDecisionShape-decidedBy-PropertyShape-02,
+        modshape:ConflictDecisionShape-decisionFor-PropertyShape-03,
+        modshape:ConflictDecisionShape-decisionRationale-PropertyShape-04 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:ConflictDecisionShape-SPARQLConstraint-01 ;
+    sh:targetClass modassert:ConflictDecision .
+
+modshape:ConflictSetShape a sh:NodeShape ;
+    rdfs:label "conflict set shape"@en ;
+    sh:name "conflict set shape"@en ;
+    sh:property modshape:ConflictSetShape-conflictCriterion-PropertyShape-01,
+        modshape:ConflictSetShape-hasConflictMember-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modassert:ConflictSet .
+
+modshape:ProjectionShape a sh:NodeShape ;
+    rdfs:label "projection shape"@en ;
+    sh:message "The focus node must satisfy the named logical, node-kind, or lexical constraint declared by this shape."@en ;
+    sh:name "projection shape"@en ;
+    sh:property modshape:ProjectionShape-Path-PropertyShape-08,
+        modshape:ProjectionShape-projectionGeneratedBy-PropertyShape-01,
+        modshape:ProjectionShape-projectionGraphIri-PropertyShape-02,
+        modshape:ProjectionShape-projectionPredicateIri-PropertyShape-03,
+        modshape:ProjectionShape-projectionRule-PropertyShape-04,
+        modshape:ProjectionShape-projectionRuleVersion-PropertyShape-05,
+        modshape:ProjectionShape-projectionSubject-PropertyShape-06,
+        modshape:ProjectionShape-projectsAssertion-PropertyShape-07 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:ProjectionShape-SPARQLConstraint-01,
+        modshape:ProjectionShape-SPARQLConstraint-02,
+        modshape:ProjectionShape-SPARQLConstraint-03 ;
+    sh:targetClass modassert:Projection ;
+    sh:xone ( modshape:ProjectionShape-xone-Alternative-NodeShape-01 modshape:ProjectionShape-xone-Alternative-NodeShape-02 ) .
+
+modshape:AssertionShape-SPARQLConstraint-01 rdfs:label "assertion shape sparqlconstraint 01"@en ;
+    sh:message "An assertion-supersession chain cannot contain a cycle."@en ;
+    sh:name "assertion shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modassert: <https://w3id.org/modavis/ontology/assertion#>
+      SELECT $this WHERE { $this modassert:supersedes+ $this . }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-SPARQLConstraint-02 rdfs:label "assertion shape sparqlconstraint 02"@en ;
+    sh:message "Every evidence relation linked from an assertion must identify that assertion as the resource it evaluates."@en ;
+    sh:name "assertion shape sparqlconstraint 02"@en ;
+    sh:select """
+      PREFIX modassert: <https://w3id.org/modavis/ontology/assertion#>
+      PREFIX modevidence: <https://w3id.org/modavis/ontology/evidence#>
+      SELECT $this WHERE {
+        $this modassert:hasEvidenceRelation ?relation .
+        FILTER NOT EXISTS { ?relation modevidence:evaluates $this . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-assertionStatus-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "assertion status property constraint"@en ;
+    sh:in ( assertionstatus:draft assertionstatus:accepted assertionstatus:rejected assertionstatus:superseded ) ;
+    sh:maxCount 1 ;
+    sh:message "Assertion status constraint: exactly 1 value(s) are required; values must have node kind IRI; values must belong to the enumerated release set."@en ;
+    sh:minCount 1 ;
+    sh:name "assertion status property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:assertionStatus ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-assertsLiteral-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "asserts literal property constraint"@en ;
+    sh:maxCount 0 ;
+    sh:message "Asserts literal constraint: at most 0 value(s) are permitted."@en ;
+    sh:name "asserts literal property constraint"@en ;
+    sh:path modassert:assertsLiteral ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-assertsLiteral-PropertyShape-08 a sh:PropertyShape ;
+    rdfs:label "asserts literal property constraint"@en ;
+    sh:maxCount 0 ;
+    sh:message "Asserts literal constraint: at most 0 value(s) are permitted."@en ;
+    sh:name "asserts literal property constraint"@en ;
+    sh:path modassert:assertsLiteral ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-assertsLiteral-PropertyShape-10 a sh:PropertyShape ;
+    rdfs:label "asserts literal property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Asserts literal constraint: exactly 1 value(s) are required; values must have node kind Literal."@en ;
+    sh:minCount 1 ;
+    sh:name "asserts literal property constraint"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:path modassert:assertsLiteral ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-assertsObject-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "asserts object property constraint"@en ;
+    sh:class modavis:Agent ;
+    sh:maxCount 1 ;
+    sh:message "The MODAVIS 0.1.0 has-builder assertion predicate requires an identified agent object, not a literal."@en ;
+    sh:minCount 1 ;
+    sh:name "asserts object property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:assertsObject ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-assertsObject-PropertyShape-09 a sh:PropertyShape ;
+    rdfs:label "asserts object property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Asserts object constraint: exactly 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "asserts object property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:assertsObject ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-assertsObject-PropertyShape-11 a sh:PropertyShape ;
+    rdfs:label "asserts object property constraint"@en ;
+    sh:maxCount 0 ;
+    sh:message "Asserts object constraint: at most 0 value(s) are permitted."@en ;
+    sh:name "asserts object property constraint"@en ;
+    sh:path modassert:assertsObject ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-assertsPredicate-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "asserts predicate property constraint"@en ;
+    sh:in ( assertionpredicate:has-builder ) ;
+    sh:maxCount 1 ;
+    sh:message "Asserts predicate constraint: exactly 1 value(s) are required; values must have node kind IRI; values must belong to the enumerated release set."@en ;
+    sh:minCount 1 ;
+    sh:name "asserts predicate property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:assertsPredicate ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-assertsSubject-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "asserts subject property constraint"@en ;
+    sh:class modinst:MusicalInstrument ;
+    sh:maxCount 1 ;
+    sh:message "The MODAVIS 0.1.0 has-builder assertion predicate requires a musical-instrument subject."@en ;
+    sh:minCount 1 ;
+    sh:name "asserts subject property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:assertsSubject ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-confidence-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "confidence property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 1 ;
+    sh:message "Confidence constraint: at most 1 value(s) are permitted; values must use the decimal datatype; value must be at least 0; value must be at most 1."@en ;
+    sh:minInclusive 0 ;
+    sh:name "confidence property constraint"@en ;
+    sh:path modassert:confidence ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-hasEvidenceRelation-PropertyShape-07 a sh:PropertyShape ;
+    rdfs:label "has evidence relation property constraint"@en ;
+    sh:class modevidence:EvidenceRelation ;
+    sh:message "Has evidence relation constraint: at least 1 value(s) are required; values must be instances of EvidenceRelation."@en ;
+    sh:minCount 1 ;
+    sh:name "has evidence relation property constraint"@en ;
+    sh:path modassert:hasEvidenceRelation ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-xone-Alternative-NodeShape-01 a sh:NodeShape ;
+    rdfs:label "assertion shape xone alternative node shape 01"@en ;
+    sh:name "assertion shape xone alternative node shape 01"@en ;
+    sh:property modshape:AssertionShape-assertsLiteral-PropertyShape-08,
+        modshape:AssertionShape-assertsObject-PropertyShape-09 ;
+    sh:severity sh:Violation .
+
+modshape:AssertionShape-xone-Alternative-NodeShape-02 a sh:NodeShape ;
+    rdfs:label "assertion shape xone alternative node shape 02"@en ;
+    sh:name "assertion shape xone alternative node shape 02"@en ;
+    sh:property modshape:AssertionShape-assertsLiteral-PropertyShape-10,
+        modshape:AssertionShape-assertsObject-PropertyShape-11 ;
+    sh:severity sh:Violation .
+
+modshape:ConflictDecisionShape-SPARQLConstraint-01 rdfs:label "conflict decision shape sparqlconstraint 01"@en ;
+    sh:message "A chosen assertion must be a member of the conflict set addressed by the decision."@en ;
+    sh:name "conflict decision shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modassert: <https://w3id.org/modavis/ontology/assertion#>
+      SELECT $this WHERE {
+        $this modassert:decisionFor ?conflict ; modassert:chosenAssertion ?chosen .
+        FILTER NOT EXISTS { ?conflict modassert:hasConflictMember ?chosen . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:ConflictDecisionShape-chosenAssertion-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "chosen assertion property constraint"@en ;
+    sh:class modassert:Assertion ;
+    sh:maxCount 1 ;
+    sh:message "Chosen assertion constraint: at most 1 value(s) are permitted; values must be instances of Assertion."@en ;
+    sh:name "chosen assertion property constraint"@en ;
+    sh:path modassert:chosenAssertion ;
+    sh:severity sh:Violation .
+
+modshape:ConflictDecisionShape-decidedBy-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "decided by property constraint"@en ;
+    sh:class modavis:Agent ;
+    sh:message "Decided by constraint: at least 1 value(s) are required; values must be instances of Agent; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "decided by property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:decidedBy ;
+    sh:severity sh:Violation .
+
+modshape:ConflictDecisionShape-decisionFor-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "decision for property constraint"@en ;
+    sh:class modassert:ConflictSet ;
+    sh:maxCount 1 ;
+    sh:message "Decision for constraint: exactly 1 value(s) are required; values must be instances of ConflictSet."@en ;
+    sh:minCount 1 ;
+    sh:name "decision for property constraint"@en ;
+    sh:path modassert:decisionFor ;
+    sh:severity sh:Violation .
+
+modshape:ConflictDecisionShape-decisionRationale-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "decision rationale property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Decision rationale constraint: exactly 1 value(s) are required; lexical length must be at least 1."@en ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "decision rationale property constraint"@en ;
+    sh:path modassert:decisionRationale ;
+    sh:severity sh:Violation .
+
+modshape:ConflictSetShape-conflictCriterion-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "conflict criterion property constraint"@en ;
+    sh:class modassert:ConflictCriterion ;
+    sh:maxCount 1 ;
+    sh:message "A conflict set requires one identified criterion explaining why its member assertions cannot all be accepted."@en ;
+    sh:minCount 1 ;
+    sh:name "conflict criterion property constraint"@en ;
+    sh:path modassert:conflictCriterion ;
+    sh:severity sh:Violation .
+
+modshape:ConflictSetShape-hasConflictMember-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "has conflict member property constraint"@en ;
+    sh:class modassert:Assertion ;
+    sh:message "Has conflict member constraint: at least 2 value(s) are required; values must be instances of Assertion."@en ;
+    sh:minCount 2 ;
+    sh:name "has conflict member property constraint"@en ;
+    sh:path modassert:hasConflictMember ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-Path-PropertyShape-08 a sh:PropertyShape ;
+    rdfs:label "property path property constraint"@en ;
+    sh:hasValue assertionstatus:accepted ;
+    sh:message "Property path constraint: the value accepted is required."@en ;
+    sh:name "property path property constraint"@en ;
+    sh:path ( modassert:projectsAssertion modassert:assertionStatus ) ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-SPARQLConstraint-01 rdfs:label "projection shape sparqlconstraint 01"@en ;
+    sh:message "A projection without a named target graph must include its exact projected RDF statement in the validation graph."@en ;
+    sh:name "projection shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modassert: <https://w3id.org/modavis/ontology/assertion#>
+      SELECT $this WHERE {
+        $this modassert:projectionSubject ?subject ;
+              modassert:projectionPredicateIri ?predicateIri .
+        FILTER NOT EXISTS { $this modassert:projectionGraphIri ?graph . }
+        FILTER NOT EXISTS {
+          $this modassert:projectionObject ?object .
+          BIND (IRI(STR(?predicateIri)) AS ?predicate)
+          ?subject ?predicate ?object .
+        }
+        FILTER NOT EXISTS {
+          $this modassert:projectionLiteral ?literal .
+          BIND (IRI(STR(?predicateIri)) AS ?predicate)
+          ?subject ?predicate ?literal .
+        }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-SPARQLConstraint-02 rdfs:label "projection shape sparqlconstraint 02"@en ;
+    sh:message "Projection subject and object values must reproduce the assertion being projected."@en ;
+    sh:name "projection shape sparqlconstraint 02"@en ;
+    sh:select """
+      PREFIX modassert: <https://w3id.org/modavis/ontology/assertion#>
+      SELECT $this WHERE {
+        $this modassert:projectsAssertion ?assertion ; modassert:projectionSubject ?subject .
+        { FILTER NOT EXISTS { ?assertion modassert:assertsSubject ?subject . } }
+        UNION
+        { $this modassert:projectionObject ?object . FILTER NOT EXISTS { ?assertion modassert:assertsObject ?object . } }
+        UNION
+        { $this modassert:projectionLiteral ?literal . FILTER NOT EXISTS { ?assertion modassert:assertsLiteral ?literal . } }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-SPARQLConstraint-03 rdfs:label "projection shape sparqlconstraint 03"@en ;
+    sh:message "The projection predicate IRI must equal the projected-property mapping of the assertion predicate concept."@en ;
+    sh:name "projection shape sparqlconstraint 03"@en ;
+    sh:select """
+      PREFIX modassert: <https://w3id.org/modavis/ontology/assertion#>
+      PREFIX assertionpredicate: <https://w3id.org/modavis/vocab/assertion-predicate/>
+      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+      SELECT $this WHERE {
+        $this modassert:projectsAssertion ?assertion ; modassert:projectionPredicateIri ?projected .
+        ?assertion modassert:assertsPredicate ?predicate .
+        FILTER (
+          ?predicate != assertionpredicate:has-builder ||
+          ?projected != "https://w3id.org/modavis/ontology/instrument#hasBuilder"^^xsd:anyURI
+        )
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionGeneratedBy-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "projection generated by property constraint"@en ;
+    sh:class prov:Activity ;
+    sh:maxCount 1 ;
+    sh:message "Projection generated by constraint: exactly 1 value(s) are required; values must be instances of Activity; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "projection generated by property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:projectionGeneratedBy ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionGraphIri-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "projection graph iri property constraint"@en ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+    sh:message "Projection graph iri constraint: at most 1 value(s) are permitted; values must use the anyURI datatype; lexical form must match the declared pattern."@en ;
+    sh:name "projection graph iri property constraint"@en ;
+    sh:path modassert:projectionGraphIri ;
+    sh:pattern "^[A-Za-z][A-Za-z0-9+.-]*:" ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionLiteral-PropertyShape-09 a sh:PropertyShape ;
+    rdfs:label "projection literal property constraint"@en ;
+    sh:maxCount 0 ;
+    sh:message "Projection literal constraint: at most 0 value(s) are permitted."@en ;
+    sh:name "projection literal property constraint"@en ;
+    sh:path modassert:projectionLiteral ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionLiteral-PropertyShape-11 a sh:PropertyShape ;
+    rdfs:label "projection literal property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Projection literal constraint: exactly 1 value(s) are required; values must have node kind Literal."@en ;
+    sh:minCount 1 ;
+    sh:name "projection literal property constraint"@en ;
+    sh:nodeKind sh:Literal ;
+    sh:path modassert:projectionLiteral ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionObject-PropertyShape-10 a sh:PropertyShape ;
+    rdfs:label "projection object property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Projection object constraint: exactly 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "projection object property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:projectionObject ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionObject-PropertyShape-12 a sh:PropertyShape ;
+    rdfs:label "projection object property constraint"@en ;
+    sh:maxCount 0 ;
+    sh:message "Projection object constraint: at most 0 value(s) are permitted."@en ;
+    sh:name "projection object property constraint"@en ;
+    sh:path modassert:projectionObject ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionPredicateIri-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "projection predicate iri property constraint"@en ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+    sh:message "Projection predicate iri constraint: exactly 1 value(s) are required; values must use the anyURI datatype; lexical form must match the declared pattern."@en ;
+    sh:minCount 1 ;
+    sh:name "projection predicate iri property constraint"@en ;
+    sh:path modassert:projectionPredicateIri ;
+    sh:pattern "^[A-Za-z][A-Za-z0-9+.-]*:" ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionRule-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "projection rule property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Projection rule constraint: exactly 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "projection rule property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:projectionRule ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionRuleVersion-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "projection rule version property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "Projection rule version constraint: exactly 1 value(s) are required; values must use the string datatype; lexical length must be at least 1."@en ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "projection rule version property constraint"@en ;
+    sh:path modassert:projectionRuleVersion ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectionSubject-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "projection subject property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Projection subject constraint: exactly 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "projection subject property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modassert:projectionSubject ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-projectsAssertion-PropertyShape-07 a sh:PropertyShape ;
+    rdfs:label "projects assertion property constraint"@en ;
+    sh:class modassert:Assertion ;
+    sh:maxCount 1 ;
+    sh:message "Projects assertion constraint: exactly 1 value(s) are required; values must be instances of Assertion."@en ;
+    sh:minCount 1 ;
+    sh:name "projects assertion property constraint"@en ;
+    sh:path modassert:projectsAssertion ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-xone-Alternative-NodeShape-01 a sh:NodeShape ;
+    rdfs:label "projection shape xone alternative node shape 01"@en ;
+    sh:name "projection shape xone alternative node shape 01"@en ;
+    sh:property modshape:ProjectionShape-projectionLiteral-PropertyShape-09,
+        modshape:ProjectionShape-projectionObject-PropertyShape-10 ;
+    sh:severity sh:Violation .
+
+modshape:ProjectionShape-xone-Alternative-NodeShape-02 a sh:NodeShape ;
+    rdfs:label "projection shape xone alternative node shape 02"@en ;
+    sh:name "projection shape xone alternative node shape 02"@en ;
+    sh:property modshape:ProjectionShape-projectionLiteral-PropertyShape-11,
+        modshape:ProjectionShape-projectionObject-PropertyShape-12 ;
+    sh:severity sh:Violation .
+
+# Source: modavis-audio.shacl.ttl
+@prefix modaudio: <https://w3id.org/modavis/ontology/audio#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:AudioSignalShape a sh:NodeShape ;
+    rdfs:label "audio signal shape"@en ;
+    sh:name "audio signal shape"@en ;
+    sh:property modshape:AudioSignalShape-channelCount-PropertyShape-01,
+        modshape:AudioSignalShape-sampleRate-PropertyShape-02,
+        modshape:AudioSignalShape-totalFrames-PropertyShape-03 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modaudio:AudioSignal .
+
+modshape:LoopPointSetShape a sh:NodeShape ;
+    rdfs:label "loop point set shape"@en ;
+    sh:name "loop point set shape"@en ;
+    sh:property modshape:LoopPointSetShape-appliesToSignal-PropertyShape-01,
+        modshape:LoopPointSetShape-confidence-PropertyShape-02,
+        modshape:LoopPointSetShape-hasLoopRegion-PropertyShape-03,
+        modshape:LoopPointSetShape-loopabilityAssessment-PropertyShape-04 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:LoopPointSetShape-SPARQLConstraint-01 ;
+    sh:targetClass modaudio:LoopPointSet .
+
+modshape:SampleExtractionRegionShape a sh:NodeShape ;
+    rdfs:label "sample extraction region shape"@en ;
+    sh:name "sample extraction region shape"@en ;
+    sh:property modshape:SampleExtractionRegionShape-assignmentConfidence-PropertyShape-01,
+        modshape:SampleExtractionRegionShape-assignmentMethod-PropertyShape-02,
+        modshape:SampleExtractionRegionShape-captureSequenceIndex-PropertyShape-03,
+        modshape:SampleExtractionRegionShape-takeNumber-PropertyShape-04 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modaudio:SampleExtractionRegion .
+
+modshape:SamplePlaybackParametersShape a sh:NodeShape ;
+    rdfs:label "sample playback parameters shape"@en ;
+    sh:name "sample playback parameters shape"@en ;
+    sh:property modshape:SamplePlaybackParametersShape-channelPolicy-PropertyShape-01,
+        modshape:SamplePlaybackParametersShape-controlReleasePolicy-PropertyShape-02,
+        modshape:SamplePlaybackParametersShape-gainDB-PropertyShape-03,
+        modshape:SamplePlaybackParametersShape-latencyCompensationFrames-PropertyShape-04,
+        modshape:SamplePlaybackParametersShape-normalizationGainDB-PropertyShape-05,
+        modshape:SamplePlaybackParametersShape-pitchTrackingPolicy-PropertyShape-06,
+        modshape:SamplePlaybackParametersShape-playsSample-PropertyShape-07,
+        modshape:SamplePlaybackParametersShape-roundRobinGroup-PropertyShape-08,
+        modshape:SamplePlaybackParametersShape-roundRobinIndex-PropertyShape-09,
+        modshape:SamplePlaybackParametersShape-selectionPriority-PropertyShape-10,
+        modshape:SamplePlaybackParametersShape-sourceFundamentalHz-PropertyShape-11,
+        modshape:SamplePlaybackParametersShape-targetFrequencyHz-PropertyShape-12,
+        modshape:SamplePlaybackParametersShape-tuningOffsetCents-PropertyShape-13,
+        modshape:SamplePlaybackParametersShape-usesLoopPointSet-PropertyShape-14,
+        modshape:SamplePlaybackParametersShape-usesReleaseRegion-PropertyShape-15,
+        modshape:SamplePlaybackParametersShape-usesTuningMap-PropertyShape-16 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:SamplePlaybackParametersShape-SPARQLConstraint-01,
+        modshape:SamplePlaybackParametersShape-SPARQLConstraint-02,
+        modshape:SamplePlaybackParametersShape-SPARQLConstraint-03 ;
+    sh:targetClass modaudio:SamplePlaybackParameters .
+
+modshape:SignalRegionShape a sh:NodeShape ;
+    rdfs:label "signal region shape"@en ;
+    sh:name "signal region shape"@en ;
+    sh:property modshape:SignalRegionShape-appliesToSignal-PropertyShape-01,
+        modshape:SignalRegionShape-boundaryCensoring-PropertyShape-02,
+        modshape:SignalRegionShape-boundaryConfidence-PropertyShape-03,
+        modshape:SignalRegionShape-endFrameExclusive-PropertyShape-04,
+        modshape:SignalRegionShape-exitPolicy-PropertyShape-05,
+        modshape:SignalRegionShape-playbackMode-PropertyShape-06,
+        modshape:SignalRegionShape-referenceChannelIndex-PropertyShape-07,
+        modshape:SignalRegionShape-regionRole-PropertyShape-08,
+        modshape:SignalRegionShape-releaseStartFrame-PropertyShape-09,
+        modshape:SignalRegionShape-startFrameInclusive-PropertyShape-10 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:SignalRegionShape-SPARQLConstraint-01,
+        modshape:SignalRegionShape-SPARQLConstraint-02,
+        modshape:SignalRegionShape-SPARQLConstraint-03,
+        modshape:SignalRegionShape-SPARQLConstraint-04,
+        modshape:SignalRegionShape-SPARQLConstraint-05 ;
+    sh:targetClass modaudio:SignalRegion .
+
+modshape:SustainLoopRegionShape a sh:NodeShape ;
+    rdfs:label "sustain loop region shape"@en ;
+    sh:name "sustain loop region shape"@en ;
+    sh:property modshape:SustainLoopRegionShape-crossfadeFrames-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:SustainLoopRegionShape-SPARQLConstraint-01 ;
+    sh:targetClass modaudio:SustainLoopRegion .
+
+modshape:TuningEntryShape a sh:NodeShape ;
+    rdfs:label "tuning entry shape"@en ;
+    sh:message "The focus node must satisfy the named logical, node-kind, or lexical constraint declared by this shape."@en ;
+    sh:name "tuning entry shape"@en ;
+    sh:property modshape:TuningEntryShape-targetFrequencyHz-PropertyShape-01,
+        modshape:TuningEntryShape-tuningOffsetCents-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modaudio:TuningEntry ;
+    sh:xone ( modshape:TuningEntryShape-xone-Alternative-NodeShape-01 modshape:TuningEntryShape-xone-Alternative-NodeShape-02 ) .
+
+modshape:TuningMapShape a sh:NodeShape ;
+    rdfs:label "tuning map shape"@en ;
+    sh:name "tuning map shape"@en ;
+    sh:property modshape:TuningMapShape-hasTuningReference-PropertyShape-01,
+        modshape:TuningMapShape-tuningEntries-PropertyShape-02,
+        modshape:TuningMapShape-tuningSystem-PropertyShape-03 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modaudio:TuningMap .
+
+modshape:TuningReferenceShape a sh:NodeShape ;
+    rdfs:label "tuning reference shape"@en ;
+    sh:name "tuning reference shape"@en ;
+    sh:property modshape:TuningReferenceShape-referenceFrequencyHz-PropertyShape-01,
+        modshape:TuningReferenceShape-referencePitchDesignation-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modaudio:TuningReference .
+
+modshape:AudioSignalShape-channelCount-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "channel count property constraint"@en ;
+    sh:datatype xsd:positiveInteger ;
+    sh:maxCount 1 ;
+    sh:message "An audio signal requires one positive channel count."@en ;
+    sh:minCount 1 ;
+    sh:name "channel count property constraint"@en ;
+    sh:path modaudio:channelCount ;
+    sh:severity sh:Violation .
+
+modshape:AudioSignalShape-sampleRate-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "sample rate property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:message "An audio signal requires one positive decimal sample rate in hertz."@en ;
+    sh:minCount 1 ;
+    sh:minExclusive 0 ;
+    sh:name "sample rate property constraint"@en ;
+    sh:path modaudio:sampleRate ;
+    sh:severity sh:Violation .
+
+modshape:AudioSignalShape-totalFrames-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "total frames property constraint"@en ;
+    sh:datatype xsd:positiveInteger ;
+    sh:maxCount 1 ;
+    sh:message "An audio signal requires one positive total-frame count."@en ;
+    sh:minCount 1 ;
+    sh:name "total frames property constraint"@en ;
+    sh:path modaudio:totalFrames ;
+    sh:severity sh:Violation .
+
+modshape:LoopPointSetShape-SPARQLConstraint-01 rdfs:label "loop point set shape sparqlconstraint 01"@en ;
+    sh:message "Every loop region in a loop point set must use the same fixed audio signal as the set."@en ;
+    sh:name "loop point set shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:appliesToSignal ?signal ; modaudio:hasLoopRegion ?region .
+        FILTER NOT EXISTS { ?region modaudio:appliesToSignal ?signal . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:LoopPointSetShape-appliesToSignal-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "applies to signal property constraint"@en ;
+    sh:class modaudio:AudioSignal ;
+    sh:maxCount 1 ;
+    sh:message "Applies to signal constraint: exactly 1 value(s) are required; values must be instances of AudioSignal."@en ;
+    sh:minCount 1 ;
+    sh:name "applies to signal property constraint"@en ;
+    sh:path modaudio:appliesToSignal ;
+    sh:severity sh:Violation .
+
+modshape:LoopPointSetShape-confidence-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "confidence property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 1 ;
+    sh:message "Confidence constraint: at most 1 value(s) are permitted; values must use the decimal datatype; value must be at least 0; value must be at most 1."@en ;
+    sh:minInclusive 0 ;
+    sh:name "confidence property constraint"@en ;
+    sh:path modaudio:confidence ;
+    sh:severity sh:Violation .
+
+modshape:LoopPointSetShape-hasLoopRegion-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "has loop region property constraint"@en ;
+    sh:class modaudio:SustainLoopRegion ;
+    sh:message "Has loop region constraint: at least 1 value(s) are required; values must be instances of SustainLoopRegion."@en ;
+    sh:minCount 1 ;
+    sh:name "has loop region property constraint"@en ;
+    sh:path modaudio:hasLoopRegion ;
+    sh:severity sh:Violation .
+
+modshape:LoopPointSetShape-loopabilityAssessment-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "loopability assessment property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Loopability assessment constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "loopability assessment property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:loopabilityAssessment ;
+    sh:severity sh:Violation .
+
+modshape:SampleExtractionRegionShape-assignmentConfidence-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "assignment confidence property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 1 ;
+    sh:message "Assignment confidence constraint: at most 1 value(s) are permitted; values must use the decimal datatype; value must be at least 0; value must be at most 1."@en ;
+    sh:minInclusive 0 ;
+    sh:name "assignment confidence property constraint"@en ;
+    sh:path modaudio:assignmentConfidence ;
+    sh:severity sh:Violation .
+
+modshape:SampleExtractionRegionShape-assignmentMethod-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "assignment method property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Assignment method constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "assignment method property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:assignmentMethod ;
+    sh:severity sh:Violation .
+
+modshape:SampleExtractionRegionShape-captureSequenceIndex-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "capture sequence index property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:message "Capture sequence index constraint: at most 1 value(s) are permitted; values must use the nonNegativeInteger datatype."@en ;
+    sh:name "capture sequence index property constraint"@en ;
+    sh:path modaudio:captureSequenceIndex ;
+    sh:severity sh:Violation .
+
+modshape:SampleExtractionRegionShape-takeNumber-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "take number property constraint"@en ;
+    sh:datatype xsd:positiveInteger ;
+    sh:maxCount 1 ;
+    sh:message "Take number constraint: at most 1 value(s) are permitted; values must use the positiveInteger datatype."@en ;
+    sh:name "take number property constraint"@en ;
+    sh:path modaudio:takeNumber ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-SPARQLConstraint-01 rdfs:label "sample playback parameters shape sparqlconstraint 01"@en ;
+    sh:message "A loop point set selected for playback must apply to the sample being played."@en ;
+    sh:name "sample playback parameters shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:playsSample ?sample ; modaudio:usesLoopPointSet ?loopSet .
+        FILTER NOT EXISTS { ?loopSet modaudio:appliesToSignal ?sample . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-SPARQLConstraint-02 rdfs:label "sample playback parameters shape sparqlconstraint 02"@en ;
+    sh:message "A release region selected for playback must apply to the sample being played."@en ;
+    sh:name "sample playback parameters shape sparqlconstraint 02"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:playsSample ?sample ; modaudio:usesReleaseRegion ?region .
+        FILTER NOT EXISTS { ?region modaudio:appliesToSignal ?sample . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-SPARQLConstraint-03 rdfs:label "sample playback parameters shape sparqlconstraint 03"@en ;
+    sh:message "A round-robin index requires a non-empty round-robin group identifier."@en ;
+    sh:name "sample playback parameters shape sparqlconstraint 03"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:roundRobinIndex ?index .
+        FILTER NOT EXISTS { $this modaudio:roundRobinGroup ?group . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-channelPolicy-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "channel policy property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Channel policy constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "channel policy property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:channelPolicy ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-controlReleasePolicy-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "control release policy property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Control release policy constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "control release policy property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:controlReleasePolicy ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-gainDB-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "gain db property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:message "Gain db constraint: at most 1 value(s) are permitted; values must use the decimal datatype."@en ;
+    sh:name "gain db property constraint"@en ;
+    sh:path modaudio:gainDB ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-latencyCompensationFrames-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "latency compensation frames property constraint"@en ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:message "Latency compensation frames constraint: at most 1 value(s) are permitted; values must use the integer datatype."@en ;
+    sh:name "latency compensation frames property constraint"@en ;
+    sh:path modaudio:latencyCompensationFrames ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-normalizationGainDB-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "normalization gain db property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:message "Normalization gain db constraint: at most 1 value(s) are permitted; values must use the decimal datatype."@en ;
+    sh:name "normalization gain db property constraint"@en ;
+    sh:path modaudio:normalizationGainDB ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-pitchTrackingPolicy-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "pitch tracking policy property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Pitch tracking policy constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "pitch tracking policy property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:pitchTrackingPolicy ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-playsSample-PropertyShape-07 a sh:PropertyShape ;
+    rdfs:label "plays sample property constraint"@en ;
+    sh:class modaudio:AudioSample ;
+    sh:maxCount 1 ;
+    sh:message "Plays sample constraint: exactly 1 value(s) are required; values must be instances of AudioSample."@en ;
+    sh:minCount 1 ;
+    sh:name "plays sample property constraint"@en ;
+    sh:path modaudio:playsSample ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-roundRobinGroup-PropertyShape-08 a sh:PropertyShape ;
+    rdfs:label "round robin group property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "Round robin group constraint: at most 1 value(s) are permitted; values must use the string datatype; lexical length must be at least 1."@en ;
+    sh:minLength 1 ;
+    sh:name "round robin group property constraint"@en ;
+    sh:path modaudio:roundRobinGroup ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-roundRobinIndex-PropertyShape-09 a sh:PropertyShape ;
+    rdfs:label "round robin index property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:message "Round robin index constraint: at most 1 value(s) are permitted; values must use the nonNegativeInteger datatype."@en ;
+    sh:name "round robin index property constraint"@en ;
+    sh:path modaudio:roundRobinIndex ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-selectionPriority-PropertyShape-10 a sh:PropertyShape ;
+    rdfs:label "selection priority property constraint"@en ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:message "Selection priority constraint: at most 1 value(s) are permitted; values must use the integer datatype."@en ;
+    sh:name "selection priority property constraint"@en ;
+    sh:path modaudio:selectionPriority ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-sourceFundamentalHz-PropertyShape-11 a sh:PropertyShape ;
+    rdfs:label "source fundamental hz property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:message "Source fundamental hz constraint: at most 1 value(s) are permitted; values must use the decimal datatype; value must be greater than 0."@en ;
+    sh:minExclusive 0 ;
+    sh:name "source fundamental hz property constraint"@en ;
+    sh:path modaudio:sourceFundamentalHz ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-targetFrequencyHz-PropertyShape-12 a sh:PropertyShape ;
+    rdfs:label "target frequency hz property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:message "Target frequency hz constraint: at most 1 value(s) are permitted; values must use the decimal datatype; value must be greater than 0."@en ;
+    sh:minExclusive 0 ;
+    sh:name "target frequency hz property constraint"@en ;
+    sh:path modaudio:targetFrequencyHz ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-tuningOffsetCents-PropertyShape-13 a sh:PropertyShape ;
+    rdfs:label "tuning offset cents property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:message "Tuning offset cents constraint: at most 1 value(s) are permitted; values must use the decimal datatype."@en ;
+    sh:name "tuning offset cents property constraint"@en ;
+    sh:path modaudio:tuningOffsetCents ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-usesLoopPointSet-PropertyShape-14 a sh:PropertyShape ;
+    rdfs:label "uses loop point set property constraint"@en ;
+    sh:class modaudio:LoopPointSet ;
+    sh:maxCount 1 ;
+    sh:message "Uses loop point set constraint: at most 1 value(s) are permitted; values must be instances of LoopPointSet."@en ;
+    sh:name "uses loop point set property constraint"@en ;
+    sh:path modaudio:usesLoopPointSet ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-usesReleaseRegion-PropertyShape-15 a sh:PropertyShape ;
+    rdfs:label "uses release region property constraint"@en ;
+    sh:class modaudio:ReleaseRegion ;
+    sh:maxCount 1 ;
+    sh:message "Uses release region constraint: at most 1 value(s) are permitted; values must be instances of ReleaseRegion."@en ;
+    sh:name "uses release region property constraint"@en ;
+    sh:path modaudio:usesReleaseRegion ;
+    sh:severity sh:Violation .
+
+modshape:SamplePlaybackParametersShape-usesTuningMap-PropertyShape-16 a sh:PropertyShape ;
+    rdfs:label "uses tuning map property constraint"@en ;
+    sh:class modaudio:TuningMap ;
+    sh:maxCount 1 ;
+    sh:message "Uses tuning map constraint: at most 1 value(s) are permitted; values must be instances of TuningMap."@en ;
+    sh:name "uses tuning map property constraint"@en ;
+    sh:path modaudio:usesTuningMap ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-SPARQLConstraint-01 rdfs:label "signal region shape sparqlconstraint 01"@en ;
+    sh:message "A region reference-channel index must be smaller than the fixed signal's channel count."@en ;
+    sh:name "signal region shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:appliesToSignal ?signal ; modaudio:referenceChannelIndex ?index .
+        ?signal modaudio:channelCount ?count .
+        FILTER (?index >= ?count)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-SPARQLConstraint-02 rdfs:label "signal region shape sparqlconstraint 02"@en ;
+    sh:message "A region's release start frame cannot exceed the fixed signal's total frame count."@en ;
+    sh:name "signal region shape sparqlconstraint 02"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:appliesToSignal ?signal ; modaudio:releaseStartFrame ?release .
+        ?signal modaudio:totalFrames ?total .
+        FILTER (?release > ?total)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-SPARQLConstraint-03 rdfs:label "signal region shape sparqlconstraint 03"@en ;
+    sh:message "A region's release start frame cannot precede its inclusive start frame."@en ;
+    sh:name "signal region shape sparqlconstraint 03"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:startFrameInclusive ?start ; modaudio:releaseStartFrame ?release .
+        FILTER (?release < ?start)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-SPARQLConstraint-04 rdfs:label "signal region shape sparqlconstraint 04"@en ;
+    sh:message "A signal region's exclusive end frame cannot exceed the fixed signal's total frame count."@en ;
+    sh:name "signal region shape sparqlconstraint 04"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:appliesToSignal ?signal ; modaudio:endFrameExclusive ?end .
+        ?signal modaudio:totalFrames ?total .
+        FILTER (?end > ?total)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-SPARQLConstraint-05 rdfs:label "signal region shape sparqlconstraint 05"@en ;
+    sh:message "A signal region's exclusive end frame must be greater than its inclusive start frame."@en ;
+    sh:name "signal region shape sparqlconstraint 05"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:startFrameInclusive ?start ; modaudio:endFrameExclusive ?end .
+        FILTER (?end <= ?start)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-appliesToSignal-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "applies to signal property constraint"@en ;
+    sh:class modaudio:AudioSignal ;
+    sh:maxCount 1 ;
+    sh:message "Applies to signal constraint: exactly 1 value(s) are required; values must be instances of AudioSignal."@en ;
+    sh:minCount 1 ;
+    sh:name "applies to signal property constraint"@en ;
+    sh:path modaudio:appliesToSignal ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-boundaryCensoring-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "boundary censoring property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Boundary censoring constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "boundary censoring property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:boundaryCensoring ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-boundaryConfidence-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "boundary confidence property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 1 ;
+    sh:message "Boundary confidence constraint: at most 1 value(s) are permitted; values must use the decimal datatype; value must be at least 0; value must be at most 1."@en ;
+    sh:minInclusive 0 ;
+    sh:name "boundary confidence property constraint"@en ;
+    sh:path modaudio:boundaryConfidence ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-endFrameExclusive-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "end frame exclusive property constraint"@en ;
+    sh:datatype xsd:positiveInteger ;
+    sh:maxCount 1 ;
+    sh:message "End frame exclusive constraint: exactly 1 value(s) are required; values must use the positiveInteger datatype."@en ;
+    sh:minCount 1 ;
+    sh:name "end frame exclusive property constraint"@en ;
+    sh:path modaudio:endFrameExclusive ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-exitPolicy-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "exit policy property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Exit policy constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "exit policy property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:exitPolicy ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-playbackMode-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "playback mode property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Playback mode constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "playback mode property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:playbackMode ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-referenceChannelIndex-PropertyShape-07 a sh:PropertyShape ;
+    rdfs:label "reference channel index property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:message "Reference channel index constraint: at most 1 value(s) are permitted; values must use the nonNegativeInteger datatype."@en ;
+    sh:name "reference channel index property constraint"@en ;
+    sh:path modaudio:referenceChannelIndex ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-regionRole-PropertyShape-08 a sh:PropertyShape ;
+    rdfs:label "region role property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Region role constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "region role property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:regionRole ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-releaseStartFrame-PropertyShape-09 a sh:PropertyShape ;
+    rdfs:label "release start frame property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:message "Release start frame constraint: at most 1 value(s) are permitted; values must use the nonNegativeInteger datatype."@en ;
+    sh:name "release start frame property constraint"@en ;
+    sh:path modaudio:releaseStartFrame ;
+    sh:severity sh:Violation .
+
+modshape:SignalRegionShape-startFrameInclusive-PropertyShape-10 a sh:PropertyShape ;
+    rdfs:label "start frame inclusive property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:message "Start frame inclusive constraint: exactly 1 value(s) are required; values must use the nonNegativeInteger datatype."@en ;
+    sh:minCount 1 ;
+    sh:name "start frame inclusive property constraint"@en ;
+    sh:path modaudio:startFrameInclusive ;
+    sh:severity sh:Violation .
+
+modshape:SustainLoopRegionShape-SPARQLConstraint-01 rdfs:label "sustain loop region shape sparqlconstraint 01"@en ;
+    sh:message "A loop crossfade cannot be longer than the loop interval."@en ;
+    sh:name "sustain loop region shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modaudio: <https://w3id.org/modavis/ontology/audio#>
+      SELECT $this WHERE {
+        $this modaudio:startFrameInclusive ?start ;
+              modaudio:endFrameExclusive ?end ;
+              modaudio:crossfadeFrames ?crossfade .
+        FILTER (?crossfade > (?end - ?start))
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SustainLoopRegionShape-crossfadeFrames-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "crossfade frames property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:message "Crossfade frames constraint: at most 1 value(s) are permitted; values must use the nonNegativeInteger datatype."@en ;
+    sh:name "crossfade frames property constraint"@en ;
+    sh:path modaudio:crossfadeFrames ;
+    sh:severity sh:Violation .
+
+modshape:TuningEntryShape-logicalControl-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "logical control property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Logical control constraint: exactly 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "logical control property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:logicalControl ;
+    sh:severity sh:Violation .
+
+modshape:TuningEntryShape-soundingComponent-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "sounding component property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Sounding component constraint: exactly 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "sounding component property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:soundingComponent ;
+    sh:severity sh:Violation .
+
+modshape:TuningEntryShape-targetFrequencyHz-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "target frequency hz property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:message "A tuning entry requires one positive target frequency in hertz."@en ;
+    sh:minCount 1 ;
+    sh:minExclusive 0 ;
+    sh:name "target frequency hz property constraint"@en ;
+    sh:path modaudio:targetFrequencyHz ;
+    sh:severity sh:Violation .
+
+modshape:TuningEntryShape-tuningOffsetCents-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "tuning offset cents property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:message "Tuning offset cents constraint: at most 1 value(s) are permitted; values must use the decimal datatype."@en ;
+    sh:name "tuning offset cents property constraint"@en ;
+    sh:path modaudio:tuningOffsetCents ;
+    sh:severity sh:Violation .
+
+modshape:TuningEntryShape-xone-Alternative-NodeShape-01 a sh:NodeShape ;
+    rdfs:label "tuning entry shape xone alternative node shape 01"@en ;
+    sh:name "tuning entry shape xone alternative node shape 01"@en ;
+    sh:property modshape:TuningEntryShape-soundingComponent-PropertyShape-03 ;
+    sh:severity sh:Violation .
+
+modshape:TuningEntryShape-xone-Alternative-NodeShape-02 a sh:NodeShape ;
+    rdfs:label "tuning entry shape xone alternative node shape 02"@en ;
+    sh:name "tuning entry shape xone alternative node shape 02"@en ;
+    sh:property modshape:TuningEntryShape-logicalControl-PropertyShape-04 ;
+    sh:severity sh:Violation .
+
+modshape:TuningMapShape-hasTuningReference-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "has tuning reference property constraint"@en ;
+    sh:class modaudio:TuningReference ;
+    sh:maxCount 1 ;
+    sh:message "Has tuning reference constraint: at most 1 value(s) are permitted; values must be instances of TuningReference."@en ;
+    sh:name "has tuning reference property constraint"@en ;
+    sh:path modaudio:hasTuningReference ;
+    sh:severity sh:Violation .
+
+modshape:TuningMapShape-tuningEntries-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "tuning entries property constraint"@en ;
+    sh:class modaudio:TuningEntry ;
+    sh:message "Tuning entries constraint: at least 1 value(s) are required; values must be instances of TuningEntry."@en ;
+    sh:minCount 1 ;
+    sh:name "tuning entries property constraint"@en ;
+    sh:path modaudio:tuningEntries ;
+    sh:severity sh:Violation .
+
+modshape:TuningMapShape-tuningSystem-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "tuning system property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Tuning system constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "tuning system property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modaudio:tuningSystem ;
+    sh:severity sh:Violation .
+
+modshape:TuningReferenceShape-referenceFrequencyHz-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "reference frequency hz property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:message "A tuning reference requires one positive reference frequency in hertz."@en ;
+    sh:minCount 1 ;
+    sh:minExclusive 0 ;
+    sh:name "reference frequency hz property constraint"@en ;
+    sh:path modaudio:referenceFrequencyHz ;
+    sh:severity sh:Violation .
+
+modshape:TuningReferenceShape-referencePitchDesignation-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "reference pitch designation property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "Reference pitch designation constraint: exactly 1 value(s) are required; values must use the string datatype; lexical length must be at least 1."@en ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "reference pitch designation property constraint"@en ;
+    sh:path modaudio:referencePitchDesignation ;
+    sh:severity sh:Violation .
+
+# Source: modavis-context.shacl.ttl
+@prefix modassert: <https://w3id.org/modavis/ontology/assertion#> .
+@prefix modcontext: <https://w3id.org/modavis/ontology/context#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:ContextBindingShape a sh:NodeShape ;
+    rdfs:label "context binding shape"@en ;
+    sh:message "The focus node must satisfy the named logical, node-kind, or lexical constraint declared by this shape."@en ;
+    sh:name "context binding shape"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property modshape:ContextBindingShape-contextRelation-PropertyShape-01,
+        modshape:ContextBindingShape-contextValue-PropertyShape-02,
+        modshape:ContextBindingShape-contextualizesAssertion-PropertyShape-03,
+        modshape:ContextBindingShape-dimension-PropertyShape-04 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:ContextBindingShape-SPARQLConstraint-01 ;
+    sh:targetClass modcontext:ContextBinding .
+
+modshape:ContextDimensionShape a sh:NodeShape ;
+    rdfs:label "context dimension shape"@en ;
+    sh:message "The focus node must satisfy the named logical, node-kind, or lexical constraint declared by this shape."@en ;
+    sh:name "context dimension shape"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property modshape:ContextDimensionShape-valueModel-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modcontext:ContextDimension .
+
+modshape:ContextBindingShape-SPARQLConstraint-01 rdfs:label "context binding shape sparqlconstraint 01"@en ;
+    sh:message "Every context binding linked from an assertion must identify that same assertion."@en ;
+    sh:name "context binding shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modcontext: <https://w3id.org/modavis/ontology/context#>
+      SELECT $this WHERE {
+        ?assertion modcontext:hasContextBinding $this .
+        FILTER NOT EXISTS { $this modcontext:contextualizesAssertion ?assertion . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:ContextBindingShape-contextRelation-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "context relation property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Context relation constraint: exactly 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "context relation property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modcontext:contextRelation ;
+    sh:severity sh:Violation .
+
+modshape:ContextBindingShape-contextValue-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "context value property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Context value constraint: exactly 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "context value property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modcontext:contextValue ;
+    sh:severity sh:Violation .
+
+modshape:ContextBindingShape-contextualizesAssertion-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "contextualizes assertion property constraint"@en ;
+    sh:class modassert:Assertion ;
+    sh:maxCount 1 ;
+    sh:message "Contextualizes assertion constraint: exactly 1 value(s) are required; values must be instances of Assertion."@en ;
+    sh:minCount 1 ;
+    sh:name "contextualizes assertion property constraint"@en ;
+    sh:path modcontext:contextualizesAssertion ;
+    sh:severity sh:Violation .
+
+modshape:ContextBindingShape-dimension-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "dimension property constraint"@en ;
+    sh:class modcontext:ContextDimension ;
+    sh:maxCount 1 ;
+    sh:message "Dimension constraint: exactly 1 value(s) are required; values must be instances of ContextDimension."@en ;
+    sh:minCount 1 ;
+    sh:name "dimension property constraint"@en ;
+    sh:path modcontext:dimension ;
+    sh:severity sh:Violation .
+
+modshape:ContextDimensionShape-valueModel-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "value model property constraint"@en ;
+    sh:message "Value model constraint: values must have node kind IRI."@en ;
+    sh:name "value model property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modcontext:valueModel ;
+    sh:severity sh:Violation .
+
+# Source: modavis-core.shacl.ttl
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:IdentifiedResourceShape a sh:NodeShape ;
+    rdfs:label "identified resource shape"@en ;
+    sh:message "An identified resource must have an IRI. Stable HTTP IRIs provide normative MODAVIS identity; legacy MDVS v1 strings are optional compatibility data."@en ;
+    sh:name "identified resource shape"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:property modshape:IdentifiedResourceShape-canonicalLabel-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modavis:IdentifiedResource .
+
+modshape:IdentifierShape a sh:NodeShape ;
+    rdfs:label "identifier shape"@en ;
+    sh:name "identifier shape"@en ;
+    sh:property modshape:IdentifierShape-identifierScheme-PropertyShape-01,
+        modshape:IdentifierShape-identifierValue-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modavis:Identifier .
+
+modshape:NameShape a sh:NodeShape ;
+    rdfs:label "name shape"@en ;
+    sh:name "name shape"@en ;
+    sh:property modshape:NameShape-nameValue-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modavis:Name .
+
+modshape:TimeSpanShape a sh:NodeShape ;
+    rdfs:label "time span shape"@en ;
+    sh:message "A time span requires a start, end, or raw temporal expression."@en ;
+    sh:name "time span shape"@en ;
+    sh:or ( modshape:TimeSpanShape-or-Alternative-NodeShape-01 modshape:TimeSpanShape-or-Alternative-NodeShape-02 modshape:TimeSpanShape-or-Alternative-NodeShape-03 modshape:TimeSpanShape-or-Alternative-NodeShape-04 modshape:TimeSpanShape-or-Alternative-NodeShape-05 ) ;
+    sh:property modshape:TimeSpanShape-endDate-PropertyShape-01,
+        modshape:TimeSpanShape-endDateTime-PropertyShape-02,
+        modshape:TimeSpanShape-rawTemporalExpression-PropertyShape-03,
+        modshape:TimeSpanShape-startDate-PropertyShape-04,
+        modshape:TimeSpanShape-startDateTime-PropertyShape-05,
+        modshape:TimeSpanShape-temporalCertainty-PropertyShape-06,
+        modshape:TimeSpanShape-temporalPrecision-PropertyShape-07 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:TimeSpanShape-SPARQLConstraint-01 ;
+    sh:targetClass modavis:TimeSpan .
+
+modshape:IdentifiedResourceShape-canonicalLabel-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "canonical label property constraint"@en ;
+    sh:datatype rdf:langString ;
+    sh:message "Canonical label constraint: values must use the langString datatype; at most one value is permitted per language."@en ;
+    sh:name "canonical label property constraint"@en ;
+    sh:path modavis:canonicalLabel ;
+    sh:severity sh:Violation ;
+    sh:uniqueLang true .
+
+modshape:IdentifierShape-identifierScheme-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "identifier scheme property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "A reified identifier requires exactly one identified assigning scheme."@en ;
+    sh:minCount 1 ;
+    sh:name "identifier scheme property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modavis:identifierScheme ;
+    sh:severity sh:Violation .
+
+modshape:IdentifierShape-identifierValue-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "identifier value property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "A reified identifier requires one non-empty lexical value."@en ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "identifier value property constraint"@en ;
+    sh:path modavis:identifierValue ;
+    sh:severity sh:Violation .
+
+modshape:NameShape-nameValue-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "name value property constraint"@en ;
+    sh:datatype rdf:langString ;
+    sh:maxCount 1 ;
+    sh:message "A reified name requires exactly one language-tagged lexical value."@en ;
+    sh:minCount 1 ;
+    sh:name "name value property constraint"@en ;
+    sh:path modavis:nameValue ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-SPARQLConstraint-01 rdfs:label "time span shape sparqlconstraint 01"@en ;
+    sh:message "A time span must not mix xsd:date and xsd:dateTime boundary systems on the same node."@en ;
+    sh:name "time span shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modavis: <https://w3id.org/modavis/ontology/core#>
+      SELECT $this WHERE {
+        $this ?dateProperty ?dateValue ; ?dateTimeProperty ?dateTimeValue .
+        FILTER (?dateProperty IN (modavis:startDate, modavis:endDate))
+        FILTER (?dateTimeProperty IN (modavis:startDateTime, modavis:endDateTime))
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-endDate-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "end date property constraint"@en ;
+    sh:datatype xsd:date ;
+    sh:maxCount 1 ;
+    sh:message "End date constraint: at most 1 value(s) are permitted; values must use the date datatype."@en ;
+    sh:name "end date property constraint"@en ;
+    sh:path modavis:endDate ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-endDate-PropertyShape-09 a sh:PropertyShape ;
+    rdfs:label "end date property constraint"@en ;
+    sh:message "End date constraint: at least 1 value(s) are required."@en ;
+    sh:minCount 1 ;
+    sh:name "end date property constraint"@en ;
+    sh:path modavis:endDate ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-endDateTime-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "end date time property constraint"@en ;
+    sh:datatype xsd:dateTime ;
+    sh:maxCount 1 ;
+    sh:message "An end date-time must be a timezone-qualified xsd:dateTime and occur at most once."@en ;
+    sh:name "end date time property constraint"@en ;
+    sh:path modavis:endDateTime ;
+    sh:pattern "(Z|[+-](0[0-9]|1[0-4]):[0-5][0-9])$" ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-endDateTime-PropertyShape-11 a sh:PropertyShape ;
+    rdfs:label "end date time property constraint"@en ;
+    sh:message "End date time constraint: at least 1 value(s) are required."@en ;
+    sh:minCount 1 ;
+    sh:name "end date time property constraint"@en ;
+    sh:path modavis:endDateTime ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-or-Alternative-NodeShape-01 a sh:NodeShape ;
+    rdfs:label "time span shape or alternative node shape 01"@en ;
+    sh:name "time span shape or alternative node shape 01"@en ;
+    sh:property modshape:TimeSpanShape-startDate-PropertyShape-08 ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-or-Alternative-NodeShape-02 a sh:NodeShape ;
+    rdfs:label "time span shape or alternative node shape 02"@en ;
+    sh:name "time span shape or alternative node shape 02"@en ;
+    sh:property modshape:TimeSpanShape-endDate-PropertyShape-09 ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-or-Alternative-NodeShape-03 a sh:NodeShape ;
+    rdfs:label "time span shape or alternative node shape 03"@en ;
+    sh:name "time span shape or alternative node shape 03"@en ;
+    sh:property modshape:TimeSpanShape-startDateTime-PropertyShape-10 ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-or-Alternative-NodeShape-04 a sh:NodeShape ;
+    rdfs:label "time span shape or alternative node shape 04"@en ;
+    sh:name "time span shape or alternative node shape 04"@en ;
+    sh:property modshape:TimeSpanShape-endDateTime-PropertyShape-11 ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-or-Alternative-NodeShape-05 a sh:NodeShape ;
+    rdfs:label "time span shape or alternative node shape 05"@en ;
+    sh:name "time span shape or alternative node shape 05"@en ;
+    sh:property modshape:TimeSpanShape-rawTemporalExpression-PropertyShape-12 ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-rawTemporalExpression-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "raw temporal expression property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "A raw temporal expression, when supplied, must be a non-empty string."@en ;
+    sh:minLength 1 ;
+    sh:name "raw temporal expression property constraint"@en ;
+    sh:path modavis:rawTemporalExpression ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-rawTemporalExpression-PropertyShape-12 a sh:PropertyShape ;
+    rdfs:label "raw temporal expression property constraint"@en ;
+    sh:message "Raw temporal expression constraint: at least 1 value(s) are required."@en ;
+    sh:minCount 1 ;
+    sh:name "raw temporal expression property constraint"@en ;
+    sh:path modavis:rawTemporalExpression ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-startDate-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "start date property constraint"@en ;
+    sh:datatype xsd:date ;
+    sh:lessThanOrEquals modavis:endDate ;
+    sh:maxCount 1 ;
+    sh:message "A time span's start date cannot be later than its end date."@en ;
+    sh:name "start date property constraint"@en ;
+    sh:path modavis:startDate ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-startDate-PropertyShape-08 a sh:PropertyShape ;
+    rdfs:label "start date property constraint"@en ;
+    sh:message "Start date constraint: at least 1 value(s) are required."@en ;
+    sh:minCount 1 ;
+    sh:name "start date property constraint"@en ;
+    sh:path modavis:startDate ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-startDateTime-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "start date time property constraint"@en ;
+    sh:datatype xsd:dateTime ;
+    sh:lessThanOrEquals modavis:endDateTime ;
+    sh:maxCount 1 ;
+    sh:message "A start date-time must include a timezone and cannot be later than the end date-time."@en ;
+    sh:name "start date time property constraint"@en ;
+    sh:path modavis:startDateTime ;
+    sh:pattern "(Z|[+-](0[0-9]|1[0-4]):[0-5][0-9])$" ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-startDateTime-PropertyShape-10 a sh:PropertyShape ;
+    rdfs:label "start date time property constraint"@en ;
+    sh:message "Start date time constraint: at least 1 value(s) are required."@en ;
+    sh:minCount 1 ;
+    sh:name "start date time property constraint"@en ;
+    sh:path modavis:startDateTime ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-temporalCertainty-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "temporal certainty property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Temporal certainty constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "temporal certainty property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modavis:temporalCertainty ;
+    sh:severity sh:Violation .
+
+modshape:TimeSpanShape-temporalPrecision-PropertyShape-07 a sh:PropertyShape ;
+    rdfs:label "temporal precision property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Temporal precision constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "temporal precision property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modavis:temporalPrecision ;
+    sh:severity sh:Violation .
+
+# Source: modavis-events.shacl.ttl
+@prefix eventtype: <https://w3id.org/modavis/vocab/event-type/> .
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modevent: <https://w3id.org/modavis/ontology/events#> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modprov: <https://w3id.org/modavis/ontology/provenance#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:EventRecordShape a sh:NodeShape ;
+    rdfs:label "event record shape"@en ;
+    sh:name "event record shape"@en ;
+    sh:property modshape:EventRecordShape-describesEvent-PropertyShape-01,
+        modshape:EventRecordShape-generatedBy-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modevent:EventRecord .
+
+modshape:PublicEventShape a sh:NodeShape ;
+    rdfs:label "public event shape"@en ;
+    sh:name "public event shape"@en ;
+    sh:property modshape:PublicEventShape-affectedEntity-PropertyShape-01,
+        modshape:PublicEventShape-eventType-PropertyShape-02,
+        modshape:PublicEventShape-evidencedBy-PropertyShape-03,
+        modshape:PublicEventShape-hasParticipant-PropertyShape-04,
+        modshape:PublicEventShape-hasSource-PropertyShape-05,
+        modshape:PublicEventShape-hasTimeSpan-PropertyShape-06,
+        modshape:PublicEventShape-tookPlaceAt-PropertyShape-07 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:PublicEventShape-SPARQLConstraint-01,
+        modshape:PublicEventShape-SPARQLConstraint-02 ;
+    sh:targetClass modevent:Event .
+
+modshape:EventRecordShape-describesEvent-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "describes event property constraint"@en ;
+    sh:class modevent:Event ;
+    sh:maxCount 1 ;
+    sh:message "Describes event constraint: exactly 1 value(s) are required; values must be instances of Event."@en ;
+    sh:minCount 1 ;
+    sh:name "describes event property constraint"@en ;
+    sh:path modevent:describesEvent ;
+    sh:severity sh:Violation .
+
+modshape:EventRecordShape-generatedBy-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "generated by property constraint"@en ;
+    sh:class modprov:ProcessingActivity ;
+    sh:maxCount 1 ;
+    sh:message "Generated by constraint: exactly 1 value(s) are required; values must be instances of ProcessingActivity."@en ;
+    sh:minCount 1 ;
+    sh:name "generated by property constraint"@en ;
+    sh:path modevent:generatedBy ;
+    sh:severity sh:Violation .
+
+modshape:PublicEventShape-SPARQLConstraint-01 rdfs:label "public event shape sparqlconstraint 01"@en ;
+    sh:message "At least one event source must be the source resource reached through each linked evidence fragment."@en ;
+    sh:name "public event shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modevent: <https://w3id.org/modavis/ontology/events#>
+      PREFIX modevidence: <https://w3id.org/modavis/ontology/evidence#>
+      SELECT $this WHERE {
+        $this modevent:evidencedBy ?relation .
+        ?relation modevidence:usesFragment/modevidence:fragmentOf/modevidence:snapshotOf ?source .
+        FILTER NOT EXISTS { $this modevent:hasSource ?source . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:PublicEventShape-SPARQLConstraint-02 rdfs:label "public event shape sparqlconstraint 02"@en ;
+    sh:message "Every event evidence relation must identify that event as the resource it evaluates."@en ;
+    sh:name "public event shape sparqlconstraint 02"@en ;
+    sh:select """
+      PREFIX modevent: <https://w3id.org/modavis/ontology/events#>
+      PREFIX modevidence: <https://w3id.org/modavis/ontology/evidence#>
+      SELECT $this WHERE {
+        $this modevent:evidencedBy ?relation .
+        FILTER NOT EXISTS { ?relation modevidence:evaluates $this . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:PublicEventShape-affectedEntity-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "affected entity property constraint"@en ;
+    sh:message "Affected entity constraint: at least 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "affected entity property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevent:affectedEntity ;
+    sh:severity sh:Violation .
+
+modshape:PublicEventShape-eventType-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "event type property constraint"@en ;
+    sh:in ( eventtype:construction eventtype:restoration eventtype:relocation eventtype:recording eventtype:digitization eventtype:measurement ) ;
+    sh:message "Event type constraint: at least 1 value(s) are required; values must have node kind IRI; values must belong to the enumerated release set."@en ;
+    sh:minCount 1 ;
+    sh:name "event type property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevent:eventType ;
+    sh:severity sh:Violation .
+
+modshape:PublicEventShape-evidencedBy-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "evidenced by property constraint"@en ;
+    sh:class modevidence:EvidenceRelation ;
+    sh:message "Evidenced by constraint: at least 1 value(s) are required; values must be instances of EvidenceRelation."@en ;
+    sh:minCount 1 ;
+    sh:name "evidenced by property constraint"@en ;
+    sh:path modevent:evidencedBy ;
+    sh:severity sh:Violation .
+
+modshape:PublicEventShape-hasParticipant-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "has participant property constraint"@en ;
+    sh:message "Has participant constraint: values must have node kind IRI."@en ;
+    sh:name "has participant property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevent:hasParticipant ;
+    sh:severity sh:Violation .
+
+modshape:PublicEventShape-hasSource-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "has source property constraint"@en ;
+    sh:class modevidence:SourceResource ;
+    sh:message "Has source constraint: at least 1 value(s) are required; values must be instances of SourceResource."@en ;
+    sh:minCount 1 ;
+    sh:name "has source property constraint"@en ;
+    sh:path modevent:hasSource ;
+    sh:severity sh:Violation .
+
+modshape:PublicEventShape-hasTimeSpan-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "has time span property constraint"@en ;
+    sh:class modavis:TimeSpan ;
+    sh:maxCount 1 ;
+    sh:message "Has time span constraint: at most 1 value(s) are permitted; values must be instances of TimeSpan."@en ;
+    sh:name "has time span property constraint"@en ;
+    sh:path modevent:hasTimeSpan ;
+    sh:severity sh:Violation .
+
+modshape:PublicEventShape-tookPlaceAt-PropertyShape-07 a sh:PropertyShape ;
+    rdfs:label "took place at property constraint"@en ;
+    sh:message "Took place at constraint: values must have node kind IRI."@en ;
+    sh:name "took place at property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevent:tookPlaceAt ;
+    sh:severity sh:Violation .
+
+# Source: modavis-evidence.shacl.ttl
+@prefix checksum: <https://w3id.org/modavis/vocab/checksum-algorithm/> .
+@prefix evidencerole: <https://w3id.org/modavis/vocab/evidence-role/> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:ChecksumShape a sh:NodeShape ;
+    rdfs:label "checksum shape"@en ;
+    sh:name "checksum shape"@en ;
+    sh:property modshape:ChecksumShape-checksumAlgorithm-PropertyShape-01,
+        modshape:ChecksumShape-checksumValue-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modevidence:Checksum .
+
+modshape:EvidenceRelationShape a sh:NodeShape ;
+    rdfs:label "evidence relation shape"@en ;
+    sh:name "evidence relation shape"@en ;
+    sh:property modshape:EvidenceRelationShape-evaluates-PropertyShape-01,
+        modshape:EvidenceRelationShape-evidenceRole-PropertyShape-02,
+        modshape:EvidenceRelationShape-extractionConfidence-PropertyShape-03,
+        modshape:EvidenceRelationShape-usesFragment-PropertyShape-04 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modevidence:EvidenceRelation .
+
+modshape:SHA256ChecksumShape a sh:NodeShape ;
+    rdfs:label "sha256 checksum shape"@en ;
+    sh:name "sha256 checksum shape"@en ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:SHA256ChecksumShape-SPARQLConstraint-01 ;
+    sh:targetClass modevidence:Checksum .
+
+modshape:SelectorShape a sh:NodeShape ;
+    rdfs:label "selector shape"@en ;
+    sh:message "A selector requires a non-empty value and at least one declared selector type or conformance specification."@en ;
+    sh:name "selector shape"@en ;
+    sh:or ( modshape:SelectorShape-or-Alternative-NodeShape-01 modshape:SelectorShape-or-Alternative-NodeShape-02 ) ;
+    sh:property modshape:SelectorShape-selectorConformsTo-PropertyShape-01,
+        modshape:SelectorShape-selectorType-PropertyShape-02,
+        modshape:SelectorShape-selectorValue-PropertyShape-03 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modevidence:Selector .
+
+modshape:SourceFragmentShape a sh:NodeShape ;
+    rdfs:label "source fragment shape"@en ;
+    sh:name "source fragment shape"@en ;
+    sh:property modshape:SourceFragmentShape-fragmentOf-PropertyShape-01,
+        modshape:SourceFragmentShape-hasSelector-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modevidence:SourceFragment .
+
+modshape:SourceResourceShape a sh:NodeShape ;
+    rdfs:label "source resource shape"@en ;
+    sh:name "source resource shape"@en ;
+    sh:property modshape:SourceResourceShape-sourceUri-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modevidence:SourceResource .
+
+modshape:SourceSnapshotShape a sh:NodeShape ;
+    rdfs:label "source snapshot shape"@en ;
+    sh:name "source snapshot shape"@en ;
+    sh:property modshape:SourceSnapshotShape-hasChecksum-PropertyShape-01,
+        modshape:SourceSnapshotShape-snapshotCapturedAt-PropertyShape-03,
+        modshape:SourceSnapshotShape-snapshotCapturedBy-PropertyShape-04,
+        modshape:SourceSnapshotShape-snapshotOf-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modevidence:SourceSnapshot .
+
+modshape:ChecksumShape-checksumAlgorithm-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "checksum algorithm property constraint"@en ;
+    sh:in ( checksum:sha-256 ) ;
+    sh:maxCount 1 ;
+    sh:message "A MODAVIS 0.1.0 checksum requires exactly one digest algorithm from the closed release scheme."@en ;
+    sh:minCount 1 ;
+    sh:name "checksum algorithm property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevidence:checksumAlgorithm ;
+    sh:severity sh:Violation .
+
+modshape:ChecksumShape-checksumValue-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "checksum value property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "A checksum requires one non-empty normalized digest value."@en ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "checksum value property constraint"@en ;
+    sh:path modevidence:checksumValue ;
+    sh:severity sh:Violation .
+
+modshape:EvidenceRelationShape-evaluates-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "evaluates property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "A qualified evidence relation evaluates exactly one identified target; create separate relations for separate targets."@en ;
+    sh:minCount 1 ;
+    sh:name "evaluates property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevidence:evaluates ;
+    sh:severity sh:Violation .
+
+modshape:EvidenceRelationShape-evidenceRole-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "evidence role property constraint"@en ;
+    sh:in ( evidencerole:supporting evidencerole:opposing evidencerole:contextual ) ;
+    sh:maxCount 1 ;
+    sh:message "Evidence role constraint: exactly 1 value(s) are required; values must have node kind IRI; values must belong to the enumerated release set."@en ;
+    sh:minCount 1 ;
+    sh:name "evidence role property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevidence:evidenceRole ;
+    sh:severity sh:Violation .
+
+modshape:EvidenceRelationShape-extractionConfidence-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "extraction confidence property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 1 ;
+    sh:message "Extraction confidence constraint: at most 1 value(s) are permitted; values must use the decimal datatype; value must be at least 0; value must be at most 1."@en ;
+    sh:minInclusive 0 ;
+    sh:name "extraction confidence property constraint"@en ;
+    sh:path modevidence:extractionConfidence ;
+    sh:severity sh:Violation .
+
+modshape:EvidenceRelationShape-usesFragment-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "uses fragment property constraint"@en ;
+    sh:class modevidence:SourceFragment ;
+    sh:maxCount 1 ;
+    sh:message "Uses fragment constraint: exactly 1 value(s) are required; values must be instances of SourceFragment."@en ;
+    sh:minCount 1 ;
+    sh:name "uses fragment property constraint"@en ;
+    sh:path modevidence:usesFragment ;
+    sh:severity sh:Violation .
+
+modshape:SHA256ChecksumShape-SPARQLConstraint-01 rdfs:label "sha256 checksum shape sparqlconstraint 01"@en ;
+    sh:message "A checksum declared as SHA-256 must contain exactly 64 lowercase hexadecimal characters."@en ;
+    sh:name "sha256 checksum shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modevidence: <https://w3id.org/modavis/ontology/evidence#>
+      PREFIX checksum: <https://w3id.org/modavis/vocab/checksum-algorithm/>
+      SELECT $this WHERE {
+        $this modevidence:checksumAlgorithm checksum:sha-256 ;
+              modevidence:checksumValue ?value .
+        FILTER (!REGEX(STR(?value), "^[0-9a-f]{64}$"))
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:SelectorShape-or-Alternative-NodeShape-01 a sh:NodeShape ;
+    rdfs:label "selector shape or alternative node shape 01"@en ;
+    sh:name "selector shape or alternative node shape 01"@en ;
+    sh:property modshape:SelectorShape-selectorType-PropertyShape-04 ;
+    sh:severity sh:Violation .
+
+modshape:SelectorShape-or-Alternative-NodeShape-02 a sh:NodeShape ;
+    rdfs:label "selector shape or alternative node shape 02"@en ;
+    sh:name "selector shape or alternative node shape 02"@en ;
+    sh:property modshape:SelectorShape-selectorConformsTo-PropertyShape-05 ;
+    sh:severity sh:Violation .
+
+modshape:SelectorShape-selectorConformsTo-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "selector conforms to property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Selector conforms to constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "selector conforms to property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevidence:selectorConformsTo ;
+    sh:severity sh:Violation .
+
+modshape:SelectorShape-selectorConformsTo-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "selector conforms to property constraint"@en ;
+    sh:message "Selector conforms to constraint: at least 1 value(s) are required."@en ;
+    sh:minCount 1 ;
+    sh:name "selector conforms to property constraint"@en ;
+    sh:path modevidence:selectorConformsTo ;
+    sh:severity sh:Violation .
+
+modshape:SelectorShape-selectorType-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "selector type property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Selector type constraint: at most 1 value(s) are permitted; values must have node kind IRI."@en ;
+    sh:name "selector type property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevidence:selectorType ;
+    sh:severity sh:Violation .
+
+modshape:SelectorShape-selectorType-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "selector type property constraint"@en ;
+    sh:message "Selector type constraint: at least 1 value(s) are required."@en ;
+    sh:minCount 1 ;
+    sh:name "selector type property constraint"@en ;
+    sh:path modevidence:selectorType ;
+    sh:severity sh:Violation .
+
+modshape:SelectorShape-selectorValue-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "selector value property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "Selector value constraint: exactly 1 value(s) are required; values must use the string datatype; lexical length must be at least 1."@en ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "selector value property constraint"@en ;
+    sh:path modevidence:selectorValue ;
+    sh:severity sh:Violation .
+
+modshape:SourceFragmentShape-fragmentOf-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "fragment of property constraint"@en ;
+    sh:class modevidence:SourceSnapshot ;
+    sh:maxCount 1 ;
+    sh:message "Fragment of constraint: exactly 1 value(s) are required; values must be instances of SourceSnapshot."@en ;
+    sh:minCount 1 ;
+    sh:name "fragment of property constraint"@en ;
+    sh:path modevidence:fragmentOf ;
+    sh:severity sh:Violation .
+
+modshape:SourceFragmentShape-hasSelector-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "has selector property constraint"@en ;
+    sh:class modevidence:Selector ;
+    sh:message "Has selector constraint: at least 1 value(s) are required; values must be instances of Selector."@en ;
+    sh:minCount 1 ;
+    sh:name "has selector property constraint"@en ;
+    sh:path modevidence:hasSelector ;
+    sh:severity sh:Violation .
+
+modshape:SourceResourceShape-sourceUri-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "source uri property constraint"@en ;
+    sh:datatype xsd:anyURI ;
+    sh:message "Source uri constraint: values must use the anyURI datatype; lexical form must match the declared pattern."@en ;
+    sh:name "source uri property constraint"@en ;
+    sh:path modevidence:sourceUri ;
+    sh:pattern "^[A-Za-z][A-Za-z0-9+.-]*:" ;
+    sh:severity sh:Violation .
+
+modshape:SourceSnapshotShape-hasChecksum-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "has checksum property constraint"@en ;
+    sh:class modevidence:Checksum ;
+    sh:maxCount 1 ;
+    sh:message "A fixed source snapshot requires exactly one qualified checksum under the closed MODAVIS 0.1.0 algorithm profile."@en ;
+    sh:minCount 1 ;
+    sh:name "has checksum property constraint"@en ;
+    sh:path modevidence:hasChecksum ;
+    sh:severity sh:Violation .
+
+modshape:SourceSnapshotShape-snapshotCapturedAt-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "snapshot captured at property constraint"@en,
+        "source snapshot capture time property constraint"@en ;
+    sh:datatype xsd:dateTime ;
+    sh:maxCount 1 ;
+    sh:message "A source snapshot requires exactly one timezone-qualified xsd:dateTime capture instant."@en ;
+    sh:minCount 1 ;
+    sh:name "snapshot captured at property constraint"@en,
+        "source snapshot capture time property constraint"@en ;
+    sh:path modevidence:snapshotCapturedAt ;
+    sh:pattern "(Z|[+-](0[0-9]|1[0-4]):[0-5][0-9])$" ;
+    sh:severity sh:Violation .
+
+modshape:SourceSnapshotShape-snapshotCapturedBy-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "snapshot captured by property constraint"@en,
+        "source snapshot capture activity property constraint"@en ;
+    sh:class prov:Activity ;
+    sh:maxCount 1 ;
+    sh:message "A source snapshot requires exactly one accountable generating activity."@en ;
+    sh:minCount 1 ;
+    sh:name "snapshot captured by property constraint"@en,
+        "source snapshot capture activity property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modevidence:snapshotCapturedBy ;
+    sh:severity sh:Violation .
+
+modshape:SourceSnapshotShape-snapshotOf-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "snapshot of property constraint"@en ;
+    sh:class modevidence:SourceResource ;
+    sh:maxCount 1 ;
+    sh:message "Snapshot of constraint: exactly 1 value(s) are required; values must be instances of SourceResource."@en ;
+    sh:minCount 1 ;
+    sh:name "snapshot of property constraint"@en ;
+    sh:path modevidence:snapshotOf ;
+    sh:severity sh:Violation .
+
+# Source: modavis-heritage.shacl.ttl
+@prefix modassert: <https://w3id.org/modavis/ontology/assertion#> .
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modheritage: <https://w3id.org/modavis/ontology/heritage#> .
+@prefix modmedia: <https://w3id.org/modavis/ontology/media#> .
+@prefix modprov: <https://w3id.org/modavis/ontology/provenance#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix recognitionstatus: <https://w3id.org/modavis/vocab/heritage-recognition-status/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:CuratedKnowledgeCollectionShape a sh:NodeShape ;
+    rdfs:label "curated knowledge collection shape"@en ;
+    sh:name "curated knowledge collection shape"@en ;
+    sh:property modshape:CuratedKnowledgeCollectionShape-curatedBy-PropertyShape-02,
+        modshape:CuratedKnowledgeCollectionShape-currentSnapshot-PropertyShape-04,
+        modshape:CuratedKnowledgeCollectionShape-documentsResource-PropertyShape-01,
+        modshape:CuratedKnowledgeCollectionShape-hasKnowledgeSnapshot-PropertyShape-03 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:CuratedKnowledgeCollectionShape-SPARQLConstraint-01,
+        modshape:CuratedKnowledgeCollectionShape-SPARQLConstraint-02 ;
+    sh:targetClass modheritage:CuratedKnowledgeCollection .
+
+modshape:HeritageRecognitionShape a sh:NodeShape ;
+    rdfs:label "heritage recognition shape"@en ;
+    sh:name "heritage recognition shape"@en ;
+    sh:property modshape:HeritageRecognitionShape-hasEvidenceRelation-PropertyShape-07,
+        modshape:HeritageRecognitionShape-recognitionAssignedBy-PropertyShape-02,
+        modshape:HeritageRecognitionShape-recognitionBasis-PropertyShape-03,
+        modshape:HeritageRecognitionShape-recognitionRecordedBy-PropertyShape-06,
+        modshape:HeritageRecognitionShape-recognitionStatus-PropertyShape-04,
+        modshape:HeritageRecognitionShape-recognizesResource-PropertyShape-01,
+        modshape:HeritageRecognitionShape-supersedesRecognition-PropertyShape-08,
+        modshape:HeritageRecognitionShape-validDuring-PropertyShape-05 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:HeritageRecognitionShape-SPARQLConstraint-01,
+        modshape:HeritageRecognitionShape-SPARQLConstraint-02,
+        modshape:HeritageRecognitionShape-SPARQLConstraint-03 ;
+    sh:targetClass modheritage:HeritageRecognition .
+
+modshape:HistoricalClaimReviewShape a sh:NodeShape ;
+    rdfs:label "historical claim review shape"@en ;
+    sh:name "historical claim review shape"@en ;
+    sh:property modshape:HistoricalClaimReviewShape-producesAssertion-PropertyShape-03,
+        modshape:HistoricalClaimReviewShape-reviewRationale-PropertyShape-04,
+        modshape:HistoricalClaimReviewShape-reviewSubject-PropertyShape-01,
+        modshape:HistoricalClaimReviewShape-reviewsAssertion-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:HistoricalClaimReviewShape-SPARQLConstraint-01,
+        modshape:HistoricalClaimReviewShape-SPARQLConstraint-02 ;
+    sh:targetClass modheritage:HistoricalClaimReview .
+
+modshape:KnowledgeIdentityBoundaryShape a sh:NodeShape ;
+    rdfs:label "knowledge identity boundary shape"@en ;
+    sh:name "knowledge identity boundary shape"@en ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:KnowledgeIdentityBoundaryShape-SPARQLConstraint-01 ;
+    sh:targetClass modheritage:CuratedKnowledgeCollection,
+        modheritage:KnowledgeSnapshot .
+
+modshape:KnowledgeMaintenanceActivityShape a sh:NodeShape ;
+    rdfs:label "knowledge maintenance activity shape"@en ;
+    sh:name "knowledge maintenance activity shape"@en ;
+    sh:property modshape:KnowledgeMaintenanceActivityShape-addedAssertion-PropertyShape-04,
+        modshape:KnowledgeMaintenanceActivityShape-maintainedCollection-PropertyShape-01,
+        modshape:KnowledgeMaintenanceActivityShape-previousSnapshot-PropertyShape-02,
+        modshape:KnowledgeMaintenanceActivityShape-removedAssertion-PropertyShape-05,
+        modshape:KnowledgeMaintenanceActivityShape-resultingSnapshot-PropertyShape-03 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:KnowledgeMaintenanceActivityShape-SPARQLConstraint-01,
+        modshape:KnowledgeMaintenanceActivityShape-SPARQLConstraint-02,
+        modshape:KnowledgeMaintenanceActivityShape-SPARQLConstraint-03,
+        modshape:KnowledgeMaintenanceActivityShape-SPARQLConstraint-04 ;
+    sh:targetClass modheritage:KnowledgeMaintenanceActivity .
+
+modshape:KnowledgeSnapshotShape a sh:NodeShape ;
+    rdfs:label "knowledge snapshot shape"@en ;
+    sh:name "knowledge snapshot shape"@en ;
+    sh:property modshape:KnowledgeSnapshotShape-canonicalMaterialization-PropertyShape-09,
+        modshape:KnowledgeSnapshotShape-canonicalizationProfile-PropertyShape-04,
+        modshape:KnowledgeSnapshotShape-includesAssertion-PropertyShape-02,
+        modshape:KnowledgeSnapshotShape-materializedAs-PropertyShape-06,
+        modshape:KnowledgeSnapshotShape-snapshotCreatedAt-PropertyShape-07,
+        modshape:KnowledgeSnapshotShape-snapshotCreatedBy-PropertyShape-08,
+        modshape:KnowledgeSnapshotShape-snapshotGraphIri-PropertyShape-05,
+        modshape:KnowledgeSnapshotShape-snapshotOfCollection-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:KnowledgeSnapshotShape-SPARQLConstraint-01,
+        modshape:KnowledgeSnapshotShape-SPARQLConstraint-02 ;
+    sh:targetClass modheritage:KnowledgeSnapshot .
+
+modshape:CuratedKnowledgeCollectionShape-SPARQLConstraint-01 rdfs:label "curated knowledge collection shape sparqlconstraint 01"@en,
+        "current snapshot membership constraint"@en ;
+    sh:message "The current snapshot must also be explicitly retained by the curated knowledge collection."@en ;
+    sh:name "curated knowledge collection shape sparqlconstraint 01"@en,
+        "current snapshot membership constraint"@en ;
+    sh:select """
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      $this modheritage:currentSnapshot ?snapshot .
+      FILTER NOT EXISTS { $this modheritage:hasKnowledgeSnapshot ?snapshot . }
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:CuratedKnowledgeCollectionShape-SPARQLConstraint-02 rdfs:label "curated knowledge collection shape sparqlconstraint 02"@en,
+        "retained snapshot backlink constraint"@en ;
+    sh:message "Every retained snapshot must identify the same curated knowledge collection through snapshotOfCollection."@en ;
+    sh:name "curated knowledge collection shape sparqlconstraint 02"@en,
+        "retained snapshot backlink constraint"@en ;
+    sh:select """
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      $this modheritage:hasKnowledgeSnapshot ?snapshot .
+      FILTER NOT EXISTS { ?snapshot modheritage:snapshotOfCollection $this . }
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:CuratedKnowledgeCollectionShape-curatedBy-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "collection curator property constraint"@en,
+        "curated by property constraint"@en ;
+    sh:class modavis:Agent ;
+    sh:message "A curated knowledge collection must identify at least one accountable curator."@en ;
+    sh:minCount 1 ;
+    sh:name "collection curator property constraint"@en,
+        "curated by property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:curatedBy ;
+    sh:severity sh:Violation .
+
+modshape:CuratedKnowledgeCollectionShape-currentSnapshot-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "current knowledge snapshot property constraint"@en,
+        "current snapshot property constraint"@en ;
+    sh:class modheritage:KnowledgeSnapshot ;
+    sh:maxCount 1 ;
+    sh:message "A curated knowledge collection must identify exactly one retained snapshot as current."@en ;
+    sh:minCount 1 ;
+    sh:name "current knowledge snapshot property constraint"@en,
+        "current snapshot property constraint"@en ;
+    sh:path modheritage:currentSnapshot ;
+    sh:severity sh:Violation .
+
+modshape:CuratedKnowledgeCollectionShape-documentsResource-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "documented resource property constraint"@en,
+        "documents resource property constraint"@en ;
+    sh:class modavis:IdentifiedResource ;
+    sh:message "A curated knowledge collection must identify at least one documentary subject."@en ;
+    sh:minCount 1 ;
+    sh:name "documented resource property constraint"@en,
+        "documents resource property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:documentsResource ;
+    sh:severity sh:Violation .
+
+modshape:CuratedKnowledgeCollectionShape-hasKnowledgeSnapshot-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "has knowledge snapshot property constraint"@en,
+        "retained knowledge snapshot property constraint"@en ;
+    sh:class modheritage:KnowledgeSnapshot ;
+    sh:message "A curated knowledge collection must retain at least one fixed knowledge snapshot."@en ;
+    sh:minCount 1 ;
+    sh:name "has knowledge snapshot property constraint"@en,
+        "retained knowledge snapshot property constraint"@en ;
+    sh:path modheritage:hasKnowledgeSnapshot ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-SPARQLConstraint-01 rdfs:label "heritage recognition evidence consistency constraint"@en,
+        "heritage recognition shape sparqlconstraint 01"@en ;
+    sh:message "Every heritage-recognition evidence relation must identify that recognition as the resource it evaluates."@en ;
+    sh:name "heritage recognition evidence consistency constraint"@en,
+        "heritage recognition shape sparqlconstraint 01"@en ;
+    sh:select """
+    PREFIX modevidence: <https://w3id.org/modavis/ontology/evidence#>
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      $this modheritage:hasEvidenceRelation ?relation .
+      FILTER NOT EXISTS { ?relation modevidence:evaluates $this . }
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-SPARQLConstraint-02 rdfs:label "heritage recognition shape sparqlconstraint 02"@en,
+        "heritage recognition supersession cycle constraint"@en ;
+    sh:message "A heritage-recognition supersession chain cannot contain a cycle."@en ;
+    sh:name "heritage recognition shape sparqlconstraint 02"@en,
+        "heritage recognition supersession cycle constraint"@en ;
+    sh:select """
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE { $this modheritage:supersedesRecognition+ $this . }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-SPARQLConstraint-03 rdfs:label "heritage recognition shape sparqlconstraint 03"@en,
+        "heritage recognition supersession subject constraint"@en ;
+    sh:message "A heritage recognition may supersede only a recognition of the same resource."@en ;
+    sh:name "heritage recognition shape sparqlconstraint 03"@en,
+        "heritage recognition supersession subject constraint"@en ;
+    sh:select """
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      $this modheritage:recognizesResource ?resource ;
+            modheritage:supersedesRecognition ?earlier .
+      FILTER NOT EXISTS { ?earlier modheritage:recognizesResource ?resource . }
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-hasEvidenceRelation-PropertyShape-07 a sh:PropertyShape ;
+    rdfs:label "has evidence relation property constraint"@en,
+        "heritage recognition evidence property constraint"@en ;
+    sh:class modevidence:EvidenceRelation ;
+    sh:message "A heritage recognition must cite at least one qualified evidence relation."@en ;
+    sh:minCount 1 ;
+    sh:name "has evidence relation property constraint"@en,
+        "heritage recognition evidence property constraint"@en ;
+    sh:path modheritage:hasEvidenceRelation ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-recognitionAssignedBy-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "recognition assigned by property constraint"@en,
+        "recognition assigning agent property constraint"@en ;
+    sh:class modavis:Agent ;
+    sh:message "A heritage recognition must identify at least one accountable assigning agent."@en ;
+    sh:minCount 1 ;
+    sh:name "recognition assigned by property constraint"@en,
+        "recognition assigning agent property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:recognitionAssignedBy ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-recognitionBasis-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "recognition basis property constraint"@en ;
+    sh:class modavis:IdentifiedResource ;
+    sh:message "A heritage recognition must identify at least one citable criterion, policy, register, or other basis."@en ;
+    sh:minCount 1 ;
+    sh:name "recognition basis property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:recognitionBasis ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-recognitionRecordedBy-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "recognition recorded by property constraint"@en,
+        "recognition recording activity property constraint"@en ;
+    sh:class modprov:ProcessingActivity ;
+    sh:maxCount 1 ;
+    sh:message "A heritage recognition must identify exactly one activity that created the MODAVIS record."@en ;
+    sh:minCount 1 ;
+    sh:name "recognition recorded by property constraint"@en,
+        "recognition recording activity property constraint"@en ;
+    sh:path modheritage:recognitionRecordedBy ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-recognitionStatus-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "recognition status property constraint"@en ;
+    sh:in ( recognitionstatus:proposed recognitionstatus:recognized recognitionstatus:declined recognitionstatus:withdrawn ) ;
+    sh:maxCount 1 ;
+    sh:message "A heritage recognition must use exactly one status from the governed MODAVIS recognition-status scheme."@en ;
+    sh:minCount 1 ;
+    sh:name "recognition status property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:recognitionStatus ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-recognizesResource-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "recognized resource property constraint"@en,
+        "recognizes resource property constraint"@en ;
+    sh:class modavis:IdentifiedResource ;
+    sh:maxCount 1 ;
+    sh:message "A heritage recognition must identify exactly one recognized resource IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "recognized resource property constraint"@en,
+        "recognizes resource property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:recognizesResource ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-supersedesRecognition-PropertyShape-08 a sh:PropertyShape ;
+    rdfs:label "superseded recognition property constraint"@en,
+        "supersedes recognition property constraint"@en ;
+    sh:class modheritage:HeritageRecognition ;
+    sh:message "A superseded recognition must be another heritage recognition."@en ;
+    sh:name "superseded recognition property constraint"@en,
+        "supersedes recognition property constraint"@en ;
+    sh:path modheritage:supersedesRecognition ;
+    sh:severity sh:Violation .
+
+modshape:HeritageRecognitionShape-validDuring-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "recognition validity property constraint"@en,
+        "valid during property constraint"@en ;
+    sh:class modavis:TimeSpan ;
+    sh:maxCount 1 ;
+    sh:message "A heritage recognition must carry exactly one explicit validity time span."@en ;
+    sh:minCount 1 ;
+    sh:name "recognition validity property constraint"@en,
+        "valid during property constraint"@en ;
+    sh:path modavis:validDuring ;
+    sh:severity sh:Violation .
+
+modshape:HistoricalClaimReviewShape-SPARQLConstraint-01 rdfs:label "historical claim review shape sparqlconstraint 01"@en,
+        "historical claim review subject consistency constraint"@en ;
+    sh:message "Every input and conclusion assertion in a historical claim review must assert about the review subject."@en ;
+    sh:name "historical claim review shape sparqlconstraint 01"@en,
+        "historical claim review subject consistency constraint"@en ;
+    sh:select """
+    PREFIX modassert: <https://w3id.org/modavis/ontology/assertion#>
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      $this modheritage:reviewSubject ?subject .
+      $this (modheritage:reviewsAssertion|modheritage:producesAssertion) ?assertion .
+      FILTER NOT EXISTS { ?assertion modassert:assertsSubject ?subject . }
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:HistoricalClaimReviewShape-SPARQLConstraint-02 rdfs:label "historical claim review conclusion lineage constraint"@en,
+        "historical claim review shape sparqlconstraint 02"@en ;
+    sh:message "The conclusion must be distinct from every input assertion and must identify the historical claim review as its generating activity."@en ;
+    sh:name "historical claim review conclusion lineage constraint"@en,
+        "historical claim review shape sparqlconstraint 02"@en ;
+    sh:select """
+    PREFIX modassert: <https://w3id.org/modavis/ontology/assertion#>
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      $this modheritage:producesAssertion ?conclusion .
+      FILTER (
+        EXISTS { $this modheritage:reviewsAssertion ?conclusion } ||
+        NOT EXISTS { ?conclusion modassert:generatedBy $this }
+      )
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:HistoricalClaimReviewShape-producesAssertion-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "historical review conclusion property constraint"@en,
+        "produces assertion property constraint"@en ;
+    sh:class modassert:Assertion ;
+    sh:maxCount 1 ;
+    sh:message "A historical claim review must identify exactly one distinct conclusion assertion."@en ;
+    sh:minCount 1 ;
+    sh:name "historical review conclusion property constraint"@en,
+        "produces assertion property constraint"@en ;
+    sh:path modheritage:producesAssertion ;
+    sh:severity sh:Violation .
+
+modshape:HistoricalClaimReviewShape-reviewRationale-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "historical review rationale property constraint"@en,
+        "review rationale property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "A historical claim review must record exactly one non-empty xsd:string rationale."@en ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "historical review rationale property constraint"@en,
+        "review rationale property constraint"@en ;
+    sh:path modheritage:reviewRationale ;
+    sh:severity sh:Violation .
+
+modshape:HistoricalClaimReviewShape-reviewSubject-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "historical claim review subject property constraint"@en,
+        "review subject property constraint"@en ;
+    sh:class modavis:IdentifiedResource ;
+    sh:maxCount 1 ;
+    sh:message "A historical claim review must identify exactly one reviewed subject."@en ;
+    sh:minCount 1 ;
+    sh:name "historical claim review subject property constraint"@en,
+        "review subject property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:reviewSubject ;
+    sh:severity sh:Violation .
+
+modshape:HistoricalClaimReviewShape-reviewsAssertion-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "reviewed historical assertion property constraint"@en,
+        "reviews assertion property constraint"@en ;
+    sh:class modassert:Assertion ;
+    sh:message "A historical claim review must identify at least one input assertion."@en ;
+    sh:minCount 1 ;
+    sh:name "reviewed historical assertion property constraint"@en,
+        "reviews assertion property constraint"@en ;
+    sh:path modheritage:reviewsAssertion ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeIdentityBoundaryShape-SPARQLConstraint-01 rdfs:label "knowledge identity boundary constraint"@en,
+        "knowledge identity boundary shape sparqlconstraint 01"@en ;
+    sh:message "A curated knowledge collection or fixed knowledge snapshot cannot also be a musical instrument, digital asset, digital surrogate, virtual-instrument product, version, or package."@en ;
+    sh:name "knowledge identity boundary constraint"@en,
+        "knowledge identity boundary shape sparqlconstraint 01"@en ;
+    sh:select """
+    PREFIX modinst: <https://w3id.org/modavis/ontology/instrument#>
+    PREFIX modmedia: <https://w3id.org/modavis/ontology/media#>
+    PREFIX modvmi: <https://w3id.org/modavis/ontology/virtual-instrument#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT DISTINCT $this WHERE {
+      $this a ?type .
+      ?type rdfs:subClassOf* ?forbiddenLayer .
+      FILTER (?forbiddenLayer IN (
+        modinst:MusicalInstrument,
+        modmedia:DigitalAsset,
+        modmedia:DigitalSurrogate,
+        modvmi:VirtualInstrumentProduct,
+        modvmi:VirtualInstrumentVersion,
+        modvmi:VirtualInstrumentPackage
+      ))
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeMaintenanceActivityShape-SPARQLConstraint-01 rdfs:label "knowledge maintenance activity shape sparqlconstraint 01"@en,
+        "knowledge snapshot lineage consistency constraint"@en ;
+    sh:message "Previous and resulting snapshots must be distinct states of the maintained collection, and the resulting snapshot must identify this generating activity."@en ;
+    sh:name "knowledge maintenance activity shape sparqlconstraint 01"@en,
+        "knowledge snapshot lineage consistency constraint"@en ;
+    sh:select """
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      $this modheritage:maintainedCollection ?collection ;
+            modheritage:resultingSnapshot ?result .
+      FILTER (
+        NOT EXISTS { ?result modheritage:snapshotOfCollection ?collection } ||
+        NOT EXISTS { ?result modheritage:snapshotCreatedBy $this } ||
+        EXISTS { $this modheritage:previousSnapshot ?result } ||
+        EXISTS {
+          $this modheritage:previousSnapshot ?previous .
+          FILTER NOT EXISTS { ?previous modheritage:snapshotOfCollection ?collection }
+        }
+      )
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeMaintenanceActivityShape-SPARQLConstraint-02 rdfs:label "knowledge maintenance activity shape sparqlconstraint 02"@en,
+        "knowledge snapshot delta consistency constraint"@en ;
+    sh:message "The added and removed assertion lists must be non-empty as a combined delta and must exactly match the difference between the previous and resulting snapshots."@en ;
+    sh:name "knowledge maintenance activity shape sparqlconstraint 02"@en,
+        "knowledge snapshot delta consistency constraint"@en ;
+    sh:select """
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      { FILTER NOT EXISTS { $this (modheritage:addedAssertion|modheritage:removedAssertion) ?change . } }
+      UNION {
+        $this modheritage:addedAssertion ?assertion ;
+              modheritage:resultingSnapshot ?result .
+        FILTER NOT EXISTS { ?result modheritage:includesAssertion ?assertion . }
+      }
+      UNION {
+        $this modheritage:addedAssertion ?assertion ;
+              modheritage:previousSnapshot ?previous .
+        ?previous modheritage:includesAssertion ?assertion .
+      }
+      UNION {
+        $this modheritage:removedAssertion ?assertion .
+        FILTER NOT EXISTS {
+          $this modheritage:previousSnapshot ?previous .
+          ?previous modheritage:includesAssertion ?assertion .
+        }
+      }
+      UNION {
+        $this modheritage:removedAssertion ?assertion ;
+              modheritage:resultingSnapshot ?result .
+        ?result modheritage:includesAssertion ?assertion .
+      }
+      UNION {
+        $this modheritage:resultingSnapshot ?result .
+        ?result modheritage:includesAssertion ?assertion .
+        FILTER NOT EXISTS {
+          $this modheritage:previousSnapshot ?previous .
+          ?previous modheritage:includesAssertion ?assertion .
+        }
+        FILTER NOT EXISTS { $this modheritage:addedAssertion ?assertion . }
+      }
+      UNION {
+        $this modheritage:previousSnapshot ?previous ;
+              modheritage:resultingSnapshot ?result .
+        ?previous modheritage:includesAssertion ?assertion .
+        FILTER NOT EXISTS { ?result modheritage:includesAssertion ?assertion . }
+        FILTER NOT EXISTS { $this modheritage:removedAssertion ?assertion . }
+      }
+      UNION {
+        $this modheritage:addedAssertion ?assertion ;
+              modheritage:removedAssertion ?assertion .
+      }
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeMaintenanceActivityShape-SPARQLConstraint-03 rdfs:label "knowledge maintenance activity shape sparqlconstraint 03"@en,
+        "knowledge snapshot revision cycle constraint"@en ;
+    sh:message "A knowledge-snapshot revision chain cannot contain a cycle."@en ;
+    sh:name "knowledge maintenance activity shape sparqlconstraint 03"@en,
+        "knowledge snapshot revision cycle constraint"@en ;
+    sh:select """
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      $this modheritage:previousSnapshot ?previous ;
+            modheritage:resultingSnapshot ?result .
+      ?result (^modheritage:previousSnapshot/modheritage:resultingSnapshot)+ ?previous .
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeMaintenanceActivityShape-SPARQLConstraint-04 rdfs:label "knowledge maintenance activity shape sparqlconstraint 04"@en,
+        "knowledge snapshot revision chronology constraint"@en ;
+    sh:message "A resulting knowledge snapshot must have a creation time later than its previous snapshot."@en ;
+    sh:name "knowledge maintenance activity shape sparqlconstraint 04"@en,
+        "knowledge snapshot revision chronology constraint"@en ;
+    sh:select """
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    SELECT $this WHERE {
+      $this modheritage:previousSnapshot ?previous ;
+            modheritage:resultingSnapshot ?result .
+      ?previous modheritage:snapshotCreatedAt ?previousTime .
+      ?result modheritage:snapshotCreatedAt ?resultTime .
+      FILTER (?resultTime <= ?previousTime)
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeMaintenanceActivityShape-addedAssertion-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "added assertion property constraint"@en ;
+    sh:class modassert:Assertion ;
+    sh:message "Every added resource must be typed as a MODAVIS assertion."@en ;
+    sh:name "added assertion property constraint"@en ;
+    sh:path modheritage:addedAssertion ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeMaintenanceActivityShape-maintainedCollection-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "maintained collection property constraint"@en ;
+    sh:class modheritage:CuratedKnowledgeCollection ;
+    sh:maxCount 1 ;
+    sh:message "A knowledge maintenance activity must identify exactly one maintained collection."@en ;
+    sh:minCount 1 ;
+    sh:name "maintained collection property constraint"@en ;
+    sh:path modheritage:maintainedCollection ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeMaintenanceActivityShape-previousSnapshot-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "previous snapshot property constraint"@en ;
+    sh:class modheritage:KnowledgeSnapshot ;
+    sh:maxCount 1 ;
+    sh:message "A knowledge maintenance activity may identify at most one preceding snapshot."@en ;
+    sh:name "previous snapshot property constraint"@en ;
+    sh:path modheritage:previousSnapshot ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeMaintenanceActivityShape-removedAssertion-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "removed assertion property constraint"@en ;
+    sh:class modassert:Assertion ;
+    sh:message "Every removed resource must be typed as a MODAVIS assertion."@en ;
+    sh:name "removed assertion property constraint"@en ;
+    sh:path modheritage:removedAssertion ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeMaintenanceActivityShape-resultingSnapshot-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "resulting snapshot property constraint"@en ;
+    sh:class modheritage:KnowledgeSnapshot ;
+    sh:maxCount 1 ;
+    sh:message "A knowledge maintenance activity must identify exactly one resulting snapshot."@en ;
+    sh:minCount 1 ;
+    sh:name "resulting snapshot property constraint"@en ;
+    sh:path modheritage:resultingSnapshot ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-SPARQLConstraint-01 rdfs:label "canonical snapshot materialization media type constraint"@en,
+        "knowledge snapshot shape sparqlconstraint 01"@en ;
+    sh:message "The canonical snapshot materialization must declare media type application/n-quads."@en ;
+    sh:name "canonical snapshot materialization media type constraint"@en,
+        "knowledge snapshot shape sparqlconstraint 01"@en ;
+    sh:select """
+    PREFIX modheritage: <https://w3id.org/modavis/ontology/heritage#>
+    PREFIX modmedia: <https://w3id.org/modavis/ontology/media#>
+    SELECT $this WHERE {
+      $this modheritage:canonicalMaterialization ?bitstream .
+      FILTER NOT EXISTS { ?bitstream modmedia:mediaType "application/n-quads" . }
+    }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-SPARQLConstraint-02 rdfs:label "knowledge snapshot self-checksum exclusion constraint"@en,
+        "knowledge snapshot shape sparqlconstraint 02"@en ;
+    sh:message "A knowledge snapshot must not carry a direct checksum; fix the exact canonical materialization bitstream to avoid an ambiguous or self-referential digest."@en ;
+    sh:name "knowledge snapshot self-checksum exclusion constraint"@en,
+        "knowledge snapshot shape sparqlconstraint 02"@en ;
+    sh:select """
+    PREFIX modevidence: <https://w3id.org/modavis/ontology/evidence#>
+    SELECT $this WHERE { $this modevidence:hasChecksum ?checksum . }
+  """ ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-canonicalMaterialization-PropertyShape-09 a sh:PropertyShape ;
+    rdfs:label "canonical materialization property constraint"@en,
+        "canonical snapshot materialization property constraint"@en ;
+    sh:class modmedia:Bitstream ;
+    sh:maxCount 1 ;
+    sh:message "A knowledge snapshot must identify exactly one checksum-fixed canonical N-Quads bitstream."@en ;
+    sh:minCount 1 ;
+    sh:name "canonical materialization property constraint"@en,
+        "canonical snapshot materialization property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:canonicalMaterialization ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-canonicalizationProfile-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "canonicalization profile property constraint"@en,
+        "snapshot canonicalization profile property constraint"@en ;
+    sh:hasValue <https://www.w3.org/TR/2024/REC-rdf-canon-20240521/> ;
+    sh:maxCount 1 ;
+    sh:message "A knowledge snapshot must identify exactly the immutable RDFC-1.0 W3C Recommendation as its canonicalization profile."@en ;
+    sh:minCount 1 ;
+    sh:name "canonicalization profile property constraint"@en,
+        "snapshot canonicalization profile property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:canonicalizationProfile ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-includesAssertion-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "includes assertion property constraint"@en,
+        "snapshot assertion membership property constraint"@en ;
+    sh:class modassert:Assertion ;
+    sh:message "A knowledge snapshot must explicitly include at least one assertion."@en ;
+    sh:minCount 1 ;
+    sh:name "includes assertion property constraint"@en,
+        "snapshot assertion membership property constraint"@en ;
+    sh:path modheritage:includesAssertion ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-materializedAs-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "materialized as property constraint"@en,
+        "snapshot materialization property constraint"@en ;
+    sh:class modmedia:DigitalAsset ;
+    sh:message "Every snapshot materialization must be an identified digital asset."@en ;
+    sh:name "materialized as property constraint"@en,
+        "snapshot materialization property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modheritage:materializedAs ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-snapshotCreatedAt-PropertyShape-07 a sh:PropertyShape ;
+    rdfs:label "snapshot created at property constraint"@en,
+        "snapshot creation time property constraint"@en ;
+    sh:datatype xsd:dateTime ;
+    sh:maxCount 1 ;
+    sh:message "A knowledge snapshot must record exactly one timezone-qualified xsd:dateTime creation timestamp."@en ;
+    sh:minCount 1 ;
+    sh:name "snapshot created at property constraint"@en,
+        "snapshot creation time property constraint"@en ;
+    sh:path modheritage:snapshotCreatedAt ;
+    sh:pattern "(Z|[+-](0[0-9]|1[0-4]):[0-5][0-9])$" ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-snapshotCreatedBy-PropertyShape-08 a sh:PropertyShape ;
+    rdfs:label "snapshot created by property constraint"@en,
+        "snapshot generation activity property constraint"@en ;
+    sh:class modheritage:KnowledgeMaintenanceActivity ;
+    sh:maxCount 1 ;
+    sh:message "A knowledge snapshot must identify exactly one knowledge maintenance activity that created it."@en ;
+    sh:minCount 1 ;
+    sh:name "snapshot created by property constraint"@en,
+        "snapshot generation activity property constraint"@en ;
+    sh:path modheritage:snapshotCreatedBy ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-snapshotGraphIri-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "snapshot graph IRI property constraint"@en,
+        "snapshot graph iri property constraint"@en ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+    sh:message "A knowledge snapshot must record exactly one absolute named-graph IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "snapshot graph IRI property constraint"@en,
+        "snapshot graph iri property constraint"@en ;
+    sh:path modheritage:snapshotGraphIri ;
+    sh:pattern "^[A-Za-z][A-Za-z0-9+.-]*:" ;
+    sh:severity sh:Violation .
+
+modshape:KnowledgeSnapshotShape-snapshotOfCollection-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "snapshot collection property constraint"@en,
+        "snapshot of collection property constraint"@en ;
+    sh:class modheritage:CuratedKnowledgeCollection ;
+    sh:maxCount 1 ;
+    sh:message "A knowledge snapshot must identify exactly one curated knowledge collection."@en ;
+    sh:minCount 1 ;
+    sh:name "snapshot collection property constraint"@en,
+        "snapshot of collection property constraint"@en ;
+    sh:path modheritage:snapshotOfCollection ;
+    sh:severity sh:Violation .
+
+# Source: modavis-instrument.shacl.ttl
+@prefix membership: <https://w3id.org/modavis/vocab/component-membership-type/> .
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modinst: <https://w3id.org/modavis/ontology/instrument#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix role: <https://w3id.org/modavis/vocab/functional-role/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:ComponentMembershipShape a sh:NodeShape ;
+    rdfs:label "component membership shape"@en ;
+    sh:name "component membership shape"@en ;
+    sh:property modshape:ComponentMembershipShape-appliesInConfiguration-PropertyShape-01,
+        modshape:ComponentMembershipShape-appliesInState-PropertyShape-02,
+        modshape:ComponentMembershipShape-childComponent-PropertyShape-03,
+        modshape:ComponentMembershipShape-membershipInstrument-PropertyShape-04,
+        modshape:ComponentMembershipShape-membershipType-PropertyShape-05,
+        modshape:ComponentMembershipShape-parentComponent-PropertyShape-06 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:ComponentMembershipShape-SPARQLConstraint-01,
+        modshape:ComponentMembershipShape-SPARQLConstraint-02,
+        modshape:ComponentMembershipShape-SPARQLConstraint-03,
+        modshape:ComponentMembershipShape-SPARQLConstraint-04 ;
+    sh:targetClass modinst:ComponentMembership .
+
+modshape:FunctionalRoleAssignmentShape a sh:NodeShape ;
+    rdfs:label "functional role assignment shape"@en ;
+    sh:name "functional role assignment shape"@en ;
+    sh:property modshape:FunctionalRoleAssignmentShape-appliesInConfiguration-PropertyShape-02,
+        modshape:FunctionalRoleAssignmentShape-appliesInState-PropertyShape-03,
+        modshape:FunctionalRoleAssignmentShape-assignedRole-PropertyShape-04,
+        modshape:FunctionalRoleAssignmentShape-roleOfComponent-PropertyShape-05,
+        modshape:FunctionalRoleAssignmentShape-validDuring-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:FunctionalRoleAssignmentShape-SPARQLConstraint-01 ;
+    sh:targetClass modinst:FunctionalRoleAssignment .
+
+modshape:InstrumentComponentShape a sh:NodeShape ;
+    rdfs:label "instrument component shape"@en ;
+    sh:name "instrument component shape"@en ;
+    sh:severity sh:Violation ;
+    sh:targetClass modinst:InstrumentComponent .
+
+modshape:InstrumentConfigurationShape a sh:NodeShape ;
+    rdfs:label "instrument configuration shape"@en ;
+    sh:name "instrument configuration shape"@en ;
+    sh:property modshape:InstrumentConfigurationShape-configurationOf-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:InstrumentConfigurationShape-SPARQLConstraint-01 ;
+    sh:targetClass modinst:InstrumentConfiguration .
+
+modshape:InstrumentIdentityLayerShape a sh:NodeShape ;
+    rdfs:label "instrument identity layer shape"@en ;
+    sh:name "instrument identity layer shape"@en ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:InstrumentIdentityLayerShape-SPARQLConstraint-01 ;
+    sh:targetClass modinst:InstrumentConfiguration,
+        modinst:InstrumentState,
+        modinst:MusicalInstrument .
+
+modshape:InstrumentStateShape a sh:NodeShape ;
+    rdfs:label "instrument state shape"@en ;
+    sh:name "instrument state shape"@en ;
+    sh:property modshape:InstrumentStateShape-stateOf-PropertyShape-02,
+        modshape:InstrumentStateShape-validDuring-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modinst:InstrumentState .
+
+modshape:MusicalInstrumentShape a sh:NodeShape ;
+    rdfs:label "musical instrument shape"@en ;
+    sh:name "musical instrument shape"@en ;
+    sh:property modshape:MusicalInstrumentShape-instrumentType-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modinst:MusicalInstrument .
+
+modshape:ComponentMembershipShape-SPARQLConstraint-01 rdfs:label "component membership shape sparqlconstraint 01"@en ;
+    sh:message "A component membership cannot relate a component to itself."@en ;
+    sh:name "component membership shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modinst: <https://w3id.org/modavis/ontology/instrument#>
+      SELECT $this WHERE {
+        $this modinst:parentComponent ?component ;
+              modinst:childComponent ?component .
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:ComponentMembershipShape-SPARQLConstraint-02 rdfs:label "component membership shape sparqlconstraint 02"@en ;
+    sh:message "A membership configuration must belong to the membership instrument."@en ;
+    sh:name "component membership shape sparqlconstraint 02"@en ;
+    sh:select """
+      PREFIX modinst: <https://w3id.org/modavis/ontology/instrument#>
+      SELECT $this WHERE {
+        $this modinst:membershipInstrument ?instrument ;
+              modinst:appliesInConfiguration ?configuration .
+        FILTER NOT EXISTS { ?configuration modinst:configurationOf ?instrument . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:ComponentMembershipShape-SPARQLConstraint-03 rdfs:label "component membership shape sparqlconstraint 03"@en ;
+    sh:message "A membership state must describe the membership instrument."@en ;
+    sh:name "component membership shape sparqlconstraint 03"@en ;
+    sh:select """
+      PREFIX modinst: <https://w3id.org/modavis/ontology/instrument#>
+      SELECT $this WHERE {
+        $this modinst:membershipInstrument ?instrument ;
+              modinst:appliesInState ?state .
+        FILTER NOT EXISTS { ?state modinst:stateOf ?instrument . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:ComponentMembershipShape-SPARQLConstraint-04 rdfs:label "component membership shape sparqlconstraint 04"@en ;
+    sh:message "A hasMembership discovery link must originate from the membership instrument or recorded parent component."@en ;
+    sh:name "component membership shape sparqlconstraint 04"@en ;
+    sh:select """
+      PREFIX modinst: <https://w3id.org/modavis/ontology/instrument#>
+      SELECT $this WHERE {
+        ?owner modinst:hasMembership $this .
+        FILTER NOT EXISTS { $this modinst:membershipInstrument ?owner . }
+        FILTER NOT EXISTS { $this modinst:parentComponent ?owner . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:FunctionalRoleAssignmentShape-SPARQLConstraint-01 rdfs:label "functional role assignment shape sparqlconstraint 01"@en ;
+    sh:message "A role assignment's state and configuration qualifiers must concern the same musical instrument."@en ;
+    sh:name "functional role assignment shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modinst: <https://w3id.org/modavis/ontology/instrument#>
+      SELECT $this WHERE {
+        $this modinst:appliesInConfiguration ?configuration ;
+              modinst:appliesInState ?state .
+        ?configuration modinst:configurationOf ?configurationInstrument .
+        ?state modinst:stateOf ?stateInstrument .
+        FILTER (?configurationInstrument != ?stateInstrument)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentConfigurationShape-SPARQLConstraint-01 rdfs:label "instrument configuration shape sparqlconstraint 01"@en ;
+    sh:message "A hasConfiguration link must originate from the configuration's instrument or from a state of that instrument."@en ;
+    sh:name "instrument configuration shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modinst: <https://w3id.org/modavis/ontology/instrument#>
+      SELECT $this WHERE {
+        $this modinst:configurationOf ?instrument .
+        ?owner modinst:hasConfiguration $this .
+        FILTER (?owner != ?instrument)
+        FILTER NOT EXISTS { ?owner modinst:stateOf ?instrument . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:ComponentMembershipShape-appliesInConfiguration-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "applies in configuration property constraint"@en ;
+    sh:class modinst:InstrumentConfiguration ;
+    sh:maxCount 1 ;
+    sh:message "Applies in configuration constraint: at most 1 value(s) are permitted; values must be instances of InstrumentConfiguration."@en ;
+    sh:name "applies in configuration property constraint"@en ;
+    sh:path modinst:appliesInConfiguration ;
+    sh:severity sh:Violation .
+
+modshape:ComponentMembershipShape-appliesInState-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "applies in state property constraint"@en ;
+    sh:class modinst:InstrumentState ;
+    sh:maxCount 1 ;
+    sh:message "Applies in state constraint: at most 1 value(s) are permitted; values must be instances of InstrumentState."@en ;
+    sh:name "applies in state property constraint"@en ;
+    sh:path modinst:appliesInState ;
+    sh:severity sh:Violation .
+
+modshape:ComponentMembershipShape-childComponent-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "child component property constraint"@en ;
+    sh:class modinst:InstrumentComponent ;
+    sh:maxCount 1 ;
+    sh:message "Child component constraint: exactly 1 value(s) are required; values must be instances of InstrumentComponent."@en ;
+    sh:minCount 1 ;
+    sh:name "child component property constraint"@en ;
+    sh:path modinst:childComponent ;
+    sh:severity sh:Violation .
+
+modshape:ComponentMembershipShape-membershipInstrument-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "membership instrument property constraint"@en ;
+    sh:class modinst:MusicalInstrument ;
+    sh:maxCount 1 ;
+    sh:message "Membership instrument constraint: exactly 1 value(s) are required; values must be instances of MusicalInstrument."@en ;
+    sh:minCount 1 ;
+    sh:name "membership instrument property constraint"@en ;
+    sh:path modinst:membershipInstrument ;
+    sh:severity sh:Violation .
+
+modshape:ComponentMembershipShape-membershipType-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "membership type property constraint"@en ;
+    sh:in ( membership:structural-part membership:member-of-collection membership:controlled-by membership:connected-to ) ;
+    sh:maxCount 1 ;
+    sh:message "Membership type constraint: exactly 1 value(s) are required; values must have node kind IRI; values must belong to the enumerated release set."@en ;
+    sh:minCount 1 ;
+    sh:name "membership type property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modinst:membershipType ;
+    sh:severity sh:Violation .
+
+modshape:ComponentMembershipShape-parentComponent-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "parent component property constraint"@en ;
+    sh:class modinst:InstrumentComponent ;
+    sh:maxCount 1 ;
+    sh:message "Parent component constraint: at most 1 value(s) are permitted; values must be instances of InstrumentComponent."@en ;
+    sh:name "parent component property constraint"@en ;
+    sh:path modinst:parentComponent ;
+    sh:severity sh:Violation .
+
+modshape:FunctionalRoleAssignmentShape-appliesInConfiguration-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "applies in configuration property constraint"@en ;
+    sh:class modinst:InstrumentConfiguration ;
+    sh:maxCount 1 ;
+    sh:message "Applies in configuration constraint: at most 1 value(s) are permitted; values must be instances of InstrumentConfiguration."@en ;
+    sh:name "applies in configuration property constraint"@en ;
+    sh:path modinst:appliesInConfiguration ;
+    sh:severity sh:Violation .
+
+modshape:FunctionalRoleAssignmentShape-appliesInState-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "applies in state property constraint"@en ;
+    sh:class modinst:InstrumentState ;
+    sh:maxCount 1 ;
+    sh:message "Applies in state constraint: at most 1 value(s) are permitted; values must be instances of InstrumentState."@en ;
+    sh:name "applies in state property constraint"@en ;
+    sh:path modinst:appliesInState ;
+    sh:severity sh:Violation .
+
+modshape:FunctionalRoleAssignmentShape-assignedRole-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "assigned role property constraint"@en ;
+    sh:in ( role:sound-generator role:resonator role:sound-initiator role:sound-modulator role:selector role:playing-interface role:action-mechanism ) ;
+    sh:maxCount 1 ;
+    sh:message "Assigned role constraint: exactly 1 value(s) are required; values must have node kind IRI; values must belong to the enumerated release set."@en ;
+    sh:minCount 1 ;
+    sh:name "assigned role property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modinst:assignedRole ;
+    sh:severity sh:Violation .
+
+modshape:FunctionalRoleAssignmentShape-roleOfComponent-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "role of component property constraint"@en ;
+    sh:class modinst:InstrumentComponent ;
+    sh:maxCount 1 ;
+    sh:message "Role of component constraint: exactly 1 value(s) are required; values must be instances of InstrumentComponent."@en ;
+    sh:minCount 1 ;
+    sh:name "role of component property constraint"@en ;
+    sh:path modinst:roleOfComponent ;
+    sh:severity sh:Violation .
+
+modshape:FunctionalRoleAssignmentShape-validDuring-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "valid during property constraint"@en ;
+    sh:class modavis:TimeSpan ;
+    sh:maxCount 1 ;
+    sh:message "Valid during constraint: at most 1 value(s) are permitted; values must be instances of TimeSpan."@en ;
+    sh:name "valid during property constraint"@en ;
+    sh:path modavis:validDuring ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentConfigurationShape-configurationOf-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "configuration of property constraint"@en ;
+    sh:class modinst:MusicalInstrument ;
+    sh:maxCount 1 ;
+    sh:message "An instrument configuration requires exactly one instrument for which it is defined."@en ;
+    sh:minCount 1 ;
+    sh:name "configuration of property constraint"@en ;
+    sh:path modinst:configurationOf ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentIdentityLayerShape-SPARQLConstraint-01 rdfs:label "instrument identity layer shape sparqlconstraint 01"@en ;
+    sh:message "A resource cannot occupy more than one of the distinct musical-instrument, instrument-state, and instrument-configuration identity layers."@en ;
+    sh:name "instrument identity layer shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modinst: <https://w3id.org/modavis/ontology/instrument#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      SELECT DISTINCT $this WHERE {
+        $this a ?leftType, ?rightType .
+        ?leftType rdfs:subClassOf* ?leftLayer .
+        ?rightType rdfs:subClassOf* ?rightLayer .
+        FILTER (?leftLayer IN (
+          modinst:MusicalInstrument,
+          modinst:InstrumentState,
+          modinst:InstrumentConfiguration
+        ))
+        FILTER (?rightLayer IN (
+          modinst:MusicalInstrument,
+          modinst:InstrumentState,
+          modinst:InstrumentConfiguration
+        ))
+        FILTER (?leftLayer != ?rightLayer)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentStateShape-stateOf-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "state of property constraint"@en ;
+    sh:class modinst:MusicalInstrument ;
+    sh:maxCount 1 ;
+    sh:message "State of constraint: exactly 1 value(s) are required; values must be instances of MusicalInstrument."@en ;
+    sh:minCount 1 ;
+    sh:name "state of property constraint"@en ;
+    sh:path modinst:stateOf ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentStateShape-validDuring-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "valid during property constraint"@en ;
+    sh:class modavis:TimeSpan ;
+    sh:maxCount 1 ;
+    sh:message "An instrument state requires exactly one temporal extent; use distinct state resources for distinct extents."@en ;
+    sh:minCount 1 ;
+    sh:name "valid during property constraint"@en ;
+    sh:path modavis:validDuring ;
+    sh:severity sh:Violation .
+
+modshape:MusicalInstrumentShape-instrumentType-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "instrument type property constraint"@en ;
+    sh:message "A released instrument requires at least one governed instrument type."@en ;
+    sh:minCount 1 ;
+    sh:name "instrument type property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modinst:instrumentType ;
+    sh:severity sh:Violation .
+
+# Source: modavis-media.shacl.ttl
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modmedia: <https://w3id.org/modavis/ontology/media#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix repstatus: <https://w3id.org/modavis/vocab/representation-status/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:BitstreamShape a sh:NodeShape ;
+    rdfs:label "bitstream shape"@en ;
+    sh:name "bitstream shape"@en ;
+    sh:property modshape:BitstreamShape-byteSize-PropertyShape-01,
+        modshape:BitstreamShape-hasChecksum-PropertyShape-02,
+        modshape:BitstreamShape-mediaType-PropertyShape-03 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modmedia:Bitstream .
+
+modshape:DigitalAssetShape a sh:NodeShape ;
+    rdfs:label "digital asset shape"@en ;
+    sh:name "digital asset shape"@en ;
+    sh:property modshape:DigitalAssetShape-contentUrl-PropertyShape-01,
+        modshape:DigitalAssetShape-derivedFrom-PropertyShape-02,
+        modshape:DigitalAssetShape-generatedBy-PropertyShape-03,
+        modshape:DigitalAssetShape-mediaType-PropertyShape-04 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:DigitalAssetShape-SPARQLConstraint-01 ;
+    sh:targetClass modmedia:DigitalAsset .
+
+modshape:DigitalRepresentationShape a sh:NodeShape ;
+    rdfs:label "digital representation shape"@en ;
+    sh:name "digital representation shape"@en ;
+    sh:property modshape:DigitalRepresentationShape-representationStatus-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modmedia:DigitalRepresentation .
+
+modshape:RepresentationShape a sh:NodeShape ;
+    rdfs:label "representation shape"@en ;
+    sh:name "representation shape"@en ;
+    sh:property modshape:RepresentationShape-representationOf-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:RepresentationShape-SPARQLConstraint-01 ;
+    sh:targetClass modmedia:Representation .
+
+modshape:BitstreamShape-byteSize-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "byte size property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:message "A fixed bitstream requires one non-negative byte size."@en ;
+    sh:minCount 1 ;
+    sh:name "byte size property constraint"@en ;
+    sh:path modmedia:byteSize ;
+    sh:severity sh:Violation .
+
+modshape:BitstreamShape-hasChecksum-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "has checksum property constraint"@en ;
+    sh:class modevidence:Checksum ;
+    sh:maxCount 1 ;
+    sh:message "A fixed bitstream requires exactly one qualified checksum under the closed MODAVIS 0.1.0 algorithm profile."@en ;
+    sh:minCount 1 ;
+    sh:name "has checksum property constraint"@en ;
+    sh:path modmedia:hasChecksum ;
+    sh:severity sh:Violation .
+
+modshape:BitstreamShape-mediaType-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "media type property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "A fixed bitstream requires one IANA media type string."@en ;
+    sh:minCount 1 ;
+    sh:name "media type property constraint"@en ;
+    sh:path modmedia:mediaType ;
+    sh:severity sh:Violation .
+
+modshape:DigitalAssetShape-SPARQLConstraint-01 rdfs:label "digital asset shape sparqlconstraint 01"@en ;
+    sh:message "A digital-asset derivation chain cannot contain a cycle."@en ;
+    sh:name "digital asset shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modmedia: <https://w3id.org/modavis/ontology/media#>
+      SELECT $this WHERE { $this modmedia:derivedFrom+ $this . }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:DigitalAssetShape-contentUrl-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "content url property constraint"@en ;
+    sh:datatype xsd:anyURI ;
+    sh:message "A content URL must be an absolute xsd:anyURI value."@en ;
+    sh:name "content url property constraint"@en ;
+    sh:path modmedia:contentUrl ;
+    sh:pattern "^[A-Za-z][A-Za-z0-9+.-]*:" ;
+    sh:severity sh:Violation .
+
+modshape:DigitalAssetShape-derivedFrom-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "derived from property constraint"@en ;
+    sh:class modmedia:DigitalAsset ;
+    sh:message "Derived from constraint: values must be instances of DigitalAsset."@en ;
+    sh:name "derived from property constraint"@en ;
+    sh:path modmedia:derivedFrom ;
+    sh:severity sh:Violation .
+
+modshape:DigitalAssetShape-generatedBy-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "generated by property constraint"@en ;
+    sh:class prov:Activity ;
+    sh:message "Generated by constraint: values must be instances of Activity."@en ;
+    sh:name "generated by property constraint"@en ;
+    sh:path modmedia:generatedBy ;
+    sh:severity sh:Violation .
+
+modshape:DigitalAssetShape-mediaType-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "media type property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "A media type must be a lowercase type/subtype token, with optional parameters."@en ;
+    sh:name "media type property constraint"@en ;
+    sh:path modmedia:mediaType ;
+    sh:pattern "^[a-z0-9!#$&^_.+-]+/[a-z0-9!#$&^_.+-]+(?:\\s*;.*)?$" ;
+    sh:severity sh:Violation .
+
+modshape:DigitalRepresentationShape-representationStatus-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "representation status property constraint"@en ;
+    sh:in ( repstatus:captured repstatus:authored repstatus:processed repstatus:reconstructed repstatus:simulated repstatus:inferred repstatus:measured repstatus:learned repstatus:hybrid repstatus:creative ) ;
+    sh:maxCount 1 ;
+    sh:message "A digital representation requires exactly one governed representation-status concept IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "representation status property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modmedia:representationStatus ;
+    sh:severity sh:Violation .
+
+modshape:RepresentationShape-SPARQLConstraint-01 rdfs:label "representation shape sparqlconstraint 01"@en ;
+    sh:message "A representation chain cannot contain a cycle; retain distinct identities for representations and represented resources."@en ;
+    sh:name "representation shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modmedia: <https://w3id.org/modavis/ontology/media#>
+      SELECT $this WHERE { $this modmedia:representationOf+ $this . }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:RepresentationShape-representationOf-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "representation of property constraint"@en ;
+    sh:message "A representation requires at least one represented resource IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "representation of property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modmedia:representationOf ;
+    sh:severity sh:Violation .
+
+# Source: modavis-midi.shacl.ttl
+@prefix modaudio: <https://w3id.org/modavis/ontology/audio#> .
+@prefix modmidi: <https://w3id.org/modavis/ontology/midi#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:MidiExtractionBindingShape a sh:NodeShape ;
+    rdfs:label "midi extraction binding shape"@en ;
+    sh:name "midi extraction binding shape"@en ;
+    sh:property modshape:MidiExtractionBindingShape-assignedNoteNumber-PropertyShape-01,
+        modshape:MidiExtractionBindingShape-extractionRegion-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modmidi:MidiExtractionBinding .
+
+modshape:MidiPlaybackBindingShape a sh:NodeShape ;
+    rdfs:label "midi playback binding shape"@en ;
+    sh:name "midi playback binding shape"@en ;
+    sh:property modshape:MidiPlaybackBindingShape-maximumNoteNumber-PropertyShape-01,
+        modshape:MidiPlaybackBindingShape-maximumNoteOnVelocity-PropertyShape-02,
+        modshape:MidiPlaybackBindingShape-minimumNoteNumber-PropertyShape-03,
+        modshape:MidiPlaybackBindingShape-minimumNoteOnVelocity-PropertyShape-04,
+        modshape:MidiPlaybackBindingShape-playbackParameters-PropertyShape-05,
+        modshape:MidiPlaybackBindingShape-rootNoteNumber-PropertyShape-06 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:MidiPlaybackBindingShape-SPARQLConstraint-01,
+        modshape:MidiPlaybackBindingShape-SPARQLConstraint-02,
+        modshape:MidiPlaybackBindingShape-SPARQLConstraint-03 ;
+    sh:targetClass modmidi:MidiPlaybackBinding .
+
+modshape:MidiReferencePitchBindingShape a sh:NodeShape ;
+    rdfs:label "midi reference pitch binding shape"@en ;
+    sh:name "midi reference pitch binding shape"@en ;
+    sh:property modshape:MidiReferencePitchBindingShape-noteNumber-PropertyShape-01,
+        modshape:MidiReferencePitchBindingShape-tuningReference-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modmidi:MidiReferencePitchBinding .
+
+modshape:MidiTuningEntryBindingShape a sh:NodeShape ;
+    rdfs:label "midi tuning entry binding shape"@en ;
+    sh:name "midi tuning entry binding shape"@en ;
+    sh:property modshape:MidiTuningEntryBindingShape-noteNumber-PropertyShape-01,
+        modshape:MidiTuningEntryBindingShape-tuningEntry-PropertyShape-02 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modmidi:MidiTuningEntryBinding .
+
+modshape:MidiExtractionBindingShape-assignedNoteNumber-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "assigned note number property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 127 ;
+    sh:message "Assigned note number constraint: exactly 1 value(s) are required; values must use the nonNegativeInteger datatype; value must be at most 127."@en ;
+    sh:minCount 1 ;
+    sh:name "assigned note number property constraint"@en ;
+    sh:path modmidi:assignedNoteNumber ;
+    sh:severity sh:Violation .
+
+modshape:MidiExtractionBindingShape-extractionRegion-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "extraction region property constraint"@en ;
+    sh:class modaudio:SampleExtractionRegion ;
+    sh:maxCount 1 ;
+    sh:message "Extraction region constraint: exactly 1 value(s) are required; values must be instances of SampleExtractionRegion."@en ;
+    sh:minCount 1 ;
+    sh:name "extraction region property constraint"@en ;
+    sh:path modmidi:extractionRegion ;
+    sh:severity sh:Violation .
+
+modshape:MidiPlaybackBindingShape-SPARQLConstraint-01 rdfs:label "midi playback binding shape sparqlconstraint 01"@en ;
+    sh:message "A MIDI note-number range cannot have a minimum greater than its maximum."@en ;
+    sh:name "midi playback binding shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modmidi: <https://w3id.org/modavis/ontology/midi#>
+      SELECT $this WHERE {
+        $this modmidi:minimumNoteNumber ?minimum ; modmidi:maximumNoteNumber ?maximum .
+        FILTER (?minimum > ?maximum)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:MidiPlaybackBindingShape-SPARQLConstraint-02 rdfs:label "midi playback binding shape sparqlconstraint 02"@en ;
+    sh:message "A MIDI note-on velocity range cannot have a minimum greater than its maximum."@en ;
+    sh:name "midi playback binding shape sparqlconstraint 02"@en ;
+    sh:select """
+      PREFIX modmidi: <https://w3id.org/modavis/ontology/midi#>
+      SELECT $this WHERE {
+        $this modmidi:minimumNoteOnVelocity ?minimum ; modmidi:maximumNoteOnVelocity ?maximum .
+        FILTER (?minimum > ?maximum)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:MidiPlaybackBindingShape-SPARQLConstraint-03 rdfs:label "midi playback binding shape sparqlconstraint 03"@en ;
+    sh:message "The root MIDI note number must fall within any declared note-number range."@en ;
+    sh:name "midi playback binding shape sparqlconstraint 03"@en ;
+    sh:select """
+      PREFIX modmidi: <https://w3id.org/modavis/ontology/midi#>
+      SELECT $this WHERE {
+        { $this modmidi:rootNoteNumber ?root ; modmidi:minimumNoteNumber ?minimum . FILTER (?root < ?minimum) }
+        UNION
+        { $this modmidi:rootNoteNumber ?root ; modmidi:maximumNoteNumber ?maximum . FILTER (?root > ?maximum) }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:MidiPlaybackBindingShape-maximumNoteNumber-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "maximum note number property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 127 ;
+    sh:message "Maximum note number constraint: at most 1 value(s) are permitted; values must use the nonNegativeInteger datatype; value must be at most 127."@en ;
+    sh:name "maximum note number property constraint"@en ;
+    sh:path modmidi:maximumNoteNumber ;
+    sh:severity sh:Violation .
+
+modshape:MidiPlaybackBindingShape-maximumNoteOnVelocity-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "maximum note on velocity property constraint"@en ;
+    sh:datatype xsd:positiveInteger ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 127 ;
+    sh:message "A MIDI 1.0 note-on velocity selection bound must be from 1 through 127; velocity zero denotes note-off."@en ;
+    sh:name "maximum note on velocity property constraint"@en ;
+    sh:path modmidi:maximumNoteOnVelocity ;
+    sh:severity sh:Violation .
+
+modshape:MidiPlaybackBindingShape-minimumNoteNumber-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "minimum note number property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 127 ;
+    sh:message "Minimum note number constraint: at most 1 value(s) are permitted; values must use the nonNegativeInteger datatype; value must be at most 127."@en ;
+    sh:name "minimum note number property constraint"@en ;
+    sh:path modmidi:minimumNoteNumber ;
+    sh:severity sh:Violation .
+
+modshape:MidiPlaybackBindingShape-minimumNoteOnVelocity-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "minimum note on velocity property constraint"@en ;
+    sh:datatype xsd:positiveInteger ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 127 ;
+    sh:message "A MIDI 1.0 note-on velocity selection bound must be from 1 through 127; velocity zero denotes note-off."@en ;
+    sh:name "minimum note on velocity property constraint"@en ;
+    sh:path modmidi:minimumNoteOnVelocity ;
+    sh:severity sh:Violation .
+
+modshape:MidiPlaybackBindingShape-playbackParameters-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "playback parameters property constraint"@en ;
+    sh:class modaudio:SamplePlaybackParameters ;
+    sh:maxCount 1 ;
+    sh:message "Playback parameters constraint: exactly 1 value(s) are required; values must be instances of SamplePlaybackParameters."@en ;
+    sh:minCount 1 ;
+    sh:name "playback parameters property constraint"@en ;
+    sh:path modmidi:playbackParameters ;
+    sh:severity sh:Violation .
+
+modshape:MidiPlaybackBindingShape-rootNoteNumber-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "root note number property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 127 ;
+    sh:message "Root note number constraint: exactly 1 value(s) are required; values must use the nonNegativeInteger datatype; value must be at most 127."@en ;
+    sh:minCount 1 ;
+    sh:name "root note number property constraint"@en ;
+    sh:path modmidi:rootNoteNumber ;
+    sh:severity sh:Violation .
+
+modshape:MidiReferencePitchBindingShape-noteNumber-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "note number property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 127 ;
+    sh:message "Note number constraint: exactly 1 value(s) are required; values must use the nonNegativeInteger datatype; value must be at most 127."@en ;
+    sh:minCount 1 ;
+    sh:name "note number property constraint"@en ;
+    sh:path modmidi:noteNumber ;
+    sh:severity sh:Violation .
+
+modshape:MidiReferencePitchBindingShape-tuningReference-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "tuning reference property constraint"@en ;
+    sh:class modaudio:TuningReference ;
+    sh:maxCount 1 ;
+    sh:message "Tuning reference constraint: exactly 1 value(s) are required; values must be instances of TuningReference."@en ;
+    sh:minCount 1 ;
+    sh:name "tuning reference property constraint"@en ;
+    sh:path modmidi:tuningReference ;
+    sh:severity sh:Violation .
+
+modshape:MidiTuningEntryBindingShape-noteNumber-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "note number property constraint"@en ;
+    sh:datatype xsd:nonNegativeInteger ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 127 ;
+    sh:message "Note number constraint: exactly 1 value(s) are required; values must use the nonNegativeInteger datatype; value must be at most 127."@en ;
+    sh:minCount 1 ;
+    sh:name "note number property constraint"@en ;
+    sh:path modmidi:noteNumber ;
+    sh:severity sh:Violation .
+
+modshape:MidiTuningEntryBindingShape-tuningEntry-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "tuning entry property constraint"@en ;
+    sh:class modaudio:TuningEntry ;
+    sh:maxCount 1 ;
+    sh:message "Tuning entry constraint: exactly 1 value(s) are required; values must be instances of TuningEntry."@en ;
+    sh:minCount 1 ;
+    sh:name "tuning entry property constraint"@en ;
+    sh:path modmidi:tuningEntry ;
+    sh:severity sh:Violation .
+
+# Source: modavis-organ.shacl.ttl
+@prefix modinst: <https://w3id.org/modavis/ontology/instrument#> .
+@prefix modorgan: <https://w3id.org/modavis/ontology/organ#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:OrganCouplerShape a sh:NodeShape ;
+    rdfs:label "organ coupler shape"@en ;
+    sh:name "organ coupler shape"@en ;
+    sh:property modshape:OrganCouplerShape-couplesFrom-PropertyShape-01,
+        modshape:OrganCouplerShape-couplesTo-PropertyShape-02,
+        modshape:OrganCouplerShape-intervalSemitones-PropertyShape-03 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:OrganCouplerShape-SPARQLConstraint-01 ;
+    sh:targetClass modorgan:OrganCoupler .
+
+modshape:OrganPitchDesignationShape a sh:NodeShape ;
+    rdfs:label "organ pitch designation shape"@en ;
+    sh:name "organ pitch designation shape"@en ;
+    sh:property modshape:OrganPitchDesignationShape-hasNominalPitchDesignation-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetSubjectsOf modorgan:hasNominalPitchDesignation .
+
+modshape:OrganStopShape a sh:NodeShape ;
+    rdfs:label "organ stop shape"@en ;
+    sh:name "organ stop shape"@en ;
+    sh:property modshape:OrganStopShape-rankCount-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modorgan:OrganStop .
+
+modshape:PipeOrganShape a sh:NodeShape ;
+    rdfs:label "pipe organ shape"@en ;
+    sh:message "A pipe organ requires a direct component projection or at least one qualified component membership."@en ;
+    sh:name "pipe organ shape"@en ;
+    sh:or ( modshape:PipeOrganShape-or-Alternative-NodeShape-01 modshape:PipeOrganShape-or-Alternative-NodeShape-02 ) ;
+    sh:severity sh:Violation ;
+    sh:targetClass modorgan:PipeOrgan .
+
+modshape:OrganCouplerShape-SPARQLConstraint-01 rdfs:label "organ coupler shape sparqlconstraint 01"@en ;
+    sh:message "An organ coupler must connect distinct components; model same-component effects separately."@en ;
+    sh:name "organ coupler shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modorgan: <https://w3id.org/modavis/ontology/organ#>
+      SELECT $this WHERE {
+        $this modorgan:couplesFrom ?component ;
+              modorgan:couplesTo ?component .
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:OrganCouplerShape-couplesFrom-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "couples from property constraint"@en ;
+    sh:class modorgan:OrganComponent ;
+    sh:maxCount 1 ;
+    sh:message "Couples from constraint: exactly 1 value(s) are required; values must be instances of OrganComponent."@en ;
+    sh:minCount 1 ;
+    sh:name "couples from property constraint"@en ;
+    sh:path modorgan:couplesFrom ;
+    sh:severity sh:Violation .
+
+modshape:OrganCouplerShape-couplesTo-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "couples to property constraint"@en ;
+    sh:class modorgan:OrganComponent ;
+    sh:maxCount 1 ;
+    sh:message "Couples to constraint: exactly 1 value(s) are required; values must be instances of OrganComponent."@en ;
+    sh:minCount 1 ;
+    sh:name "couples to property constraint"@en ;
+    sh:path modorgan:couplesTo ;
+    sh:severity sh:Violation .
+
+modshape:OrganCouplerShape-intervalSemitones-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "interval semitones property constraint"@en ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+    sh:message "Interval semitones constraint: at most 1 value(s) are permitted; values must use the integer datatype."@en ;
+    sh:name "interval semitones property constraint"@en ;
+    sh:path modorgan:intervalSemitones ;
+    sh:severity sh:Violation .
+
+modshape:OrganPitchDesignationShape-hasNominalPitchDesignation-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "has nominal pitch designation property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:message "An organ nominal-pitch designation must be a non-empty source-preserving string."@en ;
+    sh:minLength 1 ;
+    sh:name "has nominal pitch designation property constraint"@en ;
+    sh:path modorgan:hasNominalPitchDesignation ;
+    sh:severity sh:Violation .
+
+modshape:OrganStopShape-rankCount-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "rank count property constraint"@en ;
+    sh:datatype xsd:positiveInteger ;
+    sh:maxCount 1 ;
+    sh:message "Rank count constraint: at most 1 value(s) are permitted; values must use the positiveInteger datatype."@en ;
+    sh:name "rank count property constraint"@en ;
+    sh:path modorgan:rankCount ;
+    sh:severity sh:Violation .
+
+modshape:PipeOrganShape-hasComponent-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "has component property constraint"@en ;
+    sh:class modinst:InstrumentComponent ;
+    sh:message "Has component constraint: at least 1 value(s) are required; values must be instances of InstrumentComponent."@en ;
+    sh:minCount 1 ;
+    sh:name "has component property constraint"@en ;
+    sh:path modinst:hasComponent ;
+    sh:severity sh:Violation .
+
+modshape:PipeOrganShape-hasMembership-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "has membership property constraint"@en ;
+    sh:class modinst:ComponentMembership ;
+    sh:message "Has membership constraint: at least 1 value(s) are required; values must be instances of ComponentMembership."@en ;
+    sh:minCount 1 ;
+    sh:name "has membership property constraint"@en ;
+    sh:path modinst:hasMembership ;
+    sh:severity sh:Violation .
+
+modshape:PipeOrganShape-or-Alternative-NodeShape-01 a sh:NodeShape ;
+    rdfs:label "pipe organ shape or alternative node shape 01"@en ;
+    sh:name "pipe organ shape or alternative node shape 01"@en ;
+    sh:property modshape:PipeOrganShape-hasComponent-PropertyShape-01 ;
+    sh:severity sh:Violation .
+
+modshape:PipeOrganShape-or-Alternative-NodeShape-02 a sh:NodeShape ;
+    rdfs:label "pipe organ shape or alternative node shape 02"@en ;
+    sh:name "pipe organ shape or alternative node shape 02"@en ;
+    sh:property modshape:PipeOrganShape-hasMembership-PropertyShape-02 ;
+    sh:severity sh:Violation .
+
+# Source: modavis-provenance.shacl.ttl
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modprov: <https://w3id.org/modavis/ontology/provenance#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:ParameterSetShape a sh:NodeShape ;
+    rdfs:label "parameter set shape"@en ;
+    sh:name "parameter set shape"@en ;
+    sh:property modshape:ParameterSetShape-hasChecksum-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modprov:ParameterSet .
+
+modshape:ProcessingActivityShape a sh:NodeShape ;
+    rdfs:label "processing activity shape"@en ;
+    sh:name "processing activity shape"@en ;
+    sh:property modshape:ProcessingActivityShape-Path-PropertyShape-04,
+        modshape:ProcessingActivityShape-activityType-PropertyShape-01,
+        modshape:ProcessingActivityShape-usedParameterSet-PropertyShape-02,
+        modshape:ProcessingActivityShape-usedSoftware-PropertyShape-03 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modprov:ProcessingActivity .
+
+modshape:ParameterSetShape-hasChecksum-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "has checksum property constraint"@en ;
+    sh:class modevidence:Checksum ;
+    sh:maxCount 1 ;
+    sh:message "An immutable parameter set requires exactly one qualified checksum under the closed MODAVIS 0.1.0 algorithm profile."@en ;
+    sh:minCount 1 ;
+    sh:name "has checksum property constraint"@en ;
+    sh:path modevidence:hasChecksum ;
+    sh:severity sh:Violation .
+
+modshape:ProcessingActivityShape-Path-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "property path property constraint"@en ;
+    sh:message "A processing activity requires an accountable associated agent or identified software agent."@en ;
+    sh:minCount 1 ;
+    sh:name "property path property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path [ sh:alternativePath ( prov:wasAssociatedWith modprov:usedSoftware ) ] ;
+    sh:severity sh:Violation .
+
+modshape:ProcessingActivityShape-activityType-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "activity type property constraint"@en ;
+    sh:message "Activity type constraint: values must have node kind IRI."@en ;
+    sh:name "activity type property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modprov:activityType ;
+    sh:severity sh:Violation .
+
+modshape:ProcessingActivityShape-usedParameterSet-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "used parameter set property constraint"@en ;
+    sh:class modprov:ParameterSet ;
+    sh:message "Used parameter set constraint: values must be instances of ParameterSet."@en ;
+    sh:name "used parameter set property constraint"@en ;
+    sh:path modprov:usedParameterSet ;
+    sh:severity sh:Violation .
+
+modshape:ProcessingActivityShape-usedSoftware-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "used software property constraint"@en ;
+    sh:class prov:SoftwareAgent ;
+    sh:message "Used software constraint: values must be instances of SoftwareAgent."@en ;
+    sh:name "used software property constraint"@en ;
+    sh:path modprov:usedSoftware ;
+    sh:severity sh:Violation .
+
+# Source: modavis-publication.shacl.ttl
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modpubshape: <https://w3id.org/modavis/shapes/publication/0.1.0#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modpubshape:LegacyMDVSCompatibilityShape a sh:NodeShape ;
+    rdfs:label "legacy mdvscompatibility shape"@en ;
+    sh:name "legacy mdvscompatibility shape"@en ;
+    sh:property modpubshape:LegacyMDVSCompatibilityShape-mdvsIdentifier-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetSubjectsOf modavis:mdvsIdentifier .
+
+modpubshape:ManagedResourceHttpsIdentityShape a sh:NodeShape ;
+    rdfs:label "managed resource https identity shape"@en ;
+    sh:message "A MODAVIS-managed public record requires a stable HTTPS identity IRI. Legacy MDVS strings are optional compatibility data, not identity."@en ;
+    sh:name "managed resource https identity shape"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^https://" ;
+    sh:severity sh:Violation ;
+    sh:targetClass modavis:MODAVISManagedResource .
+
+modpubshape:LegacyMDVSCompatibilityShape-mdvsIdentifier-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "mdvs identifier property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "When a legacy MDVS v1 identifier is retained, it must use the historical lexical form MDVS:TYPE:XXXX-XXXX-C. This does not establish uniqueness, allocation authority, or persistent-identifier status."@en ;
+    sh:name "mdvs identifier property constraint"@en ;
+    sh:path modavis:mdvsIdentifier ;
+    sh:pattern "^MDVS:[A-Z]{4}:[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]$" ;
+    sh:severity sh:Violation .
+
+# Source: modavis-virtual-instrument.shacl.ttl
+@prefix compatstatus: <https://w3id.org/modavis/vocab/compatibility-status/> .
+@prefix modevidence: <https://w3id.org/modavis/ontology/evidence#> .
+@prefix modinst: <https://w3id.org/modavis/ontology/instrument#> .
+@prefix modshape: <https://w3id.org/modavis/shapes/exchange/0.1.0#> .
+@prefix modvmi: <https://w3id.org/modavis/ontology/virtual-instrument#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix vmiproduction: <https://w3id.org/modavis/vocab/virtual-instrument-production-method/> .
+@prefix vmisource: <https://w3id.org/modavis/vocab/virtual-instrument-source-relation/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+modshape:CompatibilityStatementShape a sh:NodeShape ;
+    rdfs:label "compatibility statement shape"@en ;
+    sh:name "compatibility statement shape"@en ;
+    sh:property modshape:CompatibilityStatementShape-compatibilityStatus-PropertyShape-01,
+        modshape:CompatibilityStatementShape-compatibilityTarget-PropertyShape-02,
+        modshape:CompatibilityStatementShape-compatibilityVersion-PropertyShape-03,
+        modshape:CompatibilityStatementShape-hasEvidenceRelation-PropertyShape-04 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:CompatibilityStatementShape-SPARQLConstraint-01 ;
+    sh:targetClass modvmi:CompatibilityStatement .
+
+modshape:InstrumentSourceRelationShape a sh:NodeShape ;
+    rdfs:label "instrument source relation shape"@en ;
+    sh:name "instrument source relation shape"@en ;
+    sh:property modshape:InstrumentSourceRelationShape-hasEvidenceRelation-PropertyShape-01,
+        modshape:InstrumentSourceRelationShape-sourceConfidence-PropertyShape-02,
+        modshape:InstrumentSourceRelationShape-sourceInstrument-PropertyShape-03,
+        modshape:InstrumentSourceRelationShape-sourceRelationSubject-PropertyShape-04,
+        modshape:InstrumentSourceRelationShape-sourceRelationType-PropertyShape-05,
+        modshape:InstrumentSourceRelationShape-sourceState-PropertyShape-06 ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:InstrumentSourceRelationShape-SPARQLConstraint-01,
+        modshape:InstrumentSourceRelationShape-SPARQLConstraint-02 ;
+    sh:targetClass modvmi:InstrumentSourceRelation .
+
+modshape:VirtualInstrumentIdentityLayerShape a sh:NodeShape ;
+    rdfs:label "virtual instrument identity layer shape"@en ;
+    sh:name "virtual instrument identity layer shape"@en ;
+    sh:severity sh:Violation ;
+    sh:sparql modshape:VirtualInstrumentIdentityLayerShape-SPARQLConstraint-01 ;
+    sh:targetClass modvmi:VirtualInstrumentPackage,
+        modvmi:VirtualInstrumentProduct,
+        modvmi:VirtualInstrumentVersion,
+        modvmi:VirtualMusicalInstrument .
+
+modshape:VirtualInstrumentPackageShape a sh:NodeShape ;
+    rdfs:label "virtual instrument package shape"@en ;
+    sh:name "virtual instrument package shape"@en ;
+    sh:property modshape:VirtualInstrumentPackageShape-packageOfVersion-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modvmi:VirtualInstrumentPackage .
+
+modshape:VirtualInstrumentProductionMethodShape a sh:NodeShape ;
+    rdfs:label "virtual instrument production method shape"@en ;
+    sh:name "virtual instrument production method shape"@en ;
+    sh:property modshape:VirtualInstrumentProductionMethodShape-productionMethod-PropertyShape-01 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modvmi:VirtualInstrumentVersion,
+        modvmi:VirtualMusicalInstrument .
+
+modshape:VirtualInstrumentVersionShape a sh:NodeShape ;
+    rdfs:label "virtual instrument version shape"@en ;
+    sh:name "virtual instrument version shape"@en ;
+    sh:property modshape:VirtualInstrumentVersionShape-implementsInstrument-PropertyShape-01,
+        modshape:VirtualInstrumentVersionShape-releaseDate-PropertyShape-02,
+        modshape:VirtualInstrumentVersionShape-versionLabel-PropertyShape-03,
+        modshape:VirtualInstrumentVersionShape-versionOfProduct-PropertyShape-04 ;
+    sh:severity sh:Violation ;
+    sh:targetClass modvmi:VirtualInstrumentVersion .
+
+modshape:CompatibilityStatementShape-SPARQLConstraint-01 rdfs:label "compatibility statement shape sparqlconstraint 01"@en ;
+    sh:message "Every compatibility evidence relation must identify the compatibility statement it evaluates."@en ;
+    sh:name "compatibility statement shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modevidence: <https://w3id.org/modavis/ontology/evidence#>
+      PREFIX modvmi: <https://w3id.org/modavis/ontology/virtual-instrument#>
+      SELECT $this WHERE {
+        $this modvmi:hasEvidenceRelation ?relation .
+        FILTER NOT EXISTS { ?relation modevidence:evaluates $this . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:CompatibilityStatementShape-compatibilityStatus-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "compatibility status property constraint"@en ;
+    sh:in ( compatstatus:compatible compatstatus:compatible-with-limitations compatstatus:incompatible compatstatus:indeterminate ) ;
+    sh:maxCount 1 ;
+    sh:message "Compatibility status constraint: exactly 1 value(s) are required; values must have node kind IRI; values must belong to the enumerated release set."@en ;
+    sh:minCount 1 ;
+    sh:name "compatibility status property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modvmi:compatibilityStatus ;
+    sh:severity sh:Violation .
+
+modshape:CompatibilityStatementShape-compatibilityTarget-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "compatibility target property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "Compatibility target constraint: exactly 1 value(s) are required; values must have node kind IRI."@en ;
+    sh:minCount 1 ;
+    sh:name "compatibility target property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modvmi:compatibilityTarget ;
+    sh:severity sh:Violation .
+
+modshape:CompatibilityStatementShape-compatibilityVersion-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "compatibility version property constraint"@en ;
+    sh:class modvmi:VirtualInstrumentVersion ;
+    sh:maxCount 1 ;
+    sh:message "Compatibility version constraint: exactly 1 value(s) are required; values must be instances of VirtualInstrumentVersion."@en ;
+    sh:minCount 1 ;
+    sh:name "compatibility version property constraint"@en ;
+    sh:path modvmi:compatibilityVersion ;
+    sh:severity sh:Violation .
+
+modshape:CompatibilityStatementShape-hasEvidenceRelation-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "has evidence relation property constraint"@en ;
+    sh:class modevidence:EvidenceRelation ;
+    sh:message "A compatibility statement requires evidence identifying the test, documentation, or review basis."@en ;
+    sh:minCount 1 ;
+    sh:name "has evidence relation property constraint"@en ;
+    sh:path modvmi:hasEvidenceRelation ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-SPARQLConstraint-01 rdfs:label "instrument source relation shape sparqlconstraint 01"@en ;
+    sh:message "A source state must be a state of the source instrument named by the same relation."@en ;
+    sh:name "instrument source relation shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modinst: <https://w3id.org/modavis/ontology/instrument#>
+      PREFIX modvmi: <https://w3id.org/modavis/ontology/virtual-instrument#>
+      SELECT $this WHERE {
+        $this modvmi:sourceInstrument ?instrument ; modvmi:sourceState ?state .
+        FILTER NOT EXISTS { ?state modinst:stateOf ?instrument . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-SPARQLConstraint-02 rdfs:label "instrument source relation shape sparqlconstraint 02"@en ;
+    sh:message "Every source-relation evidence relation must identify the source relation it evaluates."@en ;
+    sh:name "instrument source relation shape sparqlconstraint 02"@en ;
+    sh:select """
+      PREFIX modevidence: <https://w3id.org/modavis/ontology/evidence#>
+      PREFIX modvmi: <https://w3id.org/modavis/ontology/virtual-instrument#>
+      SELECT $this WHERE {
+        $this modvmi:hasEvidenceRelation ?relation .
+        FILTER NOT EXISTS { ?relation modevidence:evaluates $this . }
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-hasEvidenceRelation-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "has evidence relation property constraint"@en ;
+    sh:class modevidence:EvidenceRelation ;
+    sh:message "An accepted source relation requires at least one qualified evidence relation."@en ;
+    sh:minCount 1 ;
+    sh:name "has evidence relation property constraint"@en ;
+    sh:path modvmi:hasEvidenceRelation ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-or-Alternative-NodeShape-01 a sh:NodeShape ;
+    rdfs:label "instrument source relation shape or alternative node shape 01"@en ;
+    sh:class modvmi:VirtualMusicalInstrument ;
+    sh:name "instrument source relation shape or alternative node shape 01"@en ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-or-Alternative-NodeShape-02 a sh:NodeShape ;
+    rdfs:label "instrument source relation shape or alternative node shape 02"@en ;
+    sh:class modvmi:VirtualInstrumentProduct ;
+    sh:name "instrument source relation shape or alternative node shape 02"@en ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-or-Alternative-NodeShape-03 a sh:NodeShape ;
+    rdfs:label "instrument source relation shape or alternative node shape 03"@en ;
+    sh:class modvmi:VirtualInstrumentVersion ;
+    sh:name "instrument source relation shape or alternative node shape 03"@en ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-sourceConfidence-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "source confidence property constraint"@en ;
+    sh:datatype xsd:decimal ;
+    sh:maxCount 1 ;
+    sh:maxInclusive 1 ;
+    sh:message "Source-relation confidence must be a decimal from zero through one."@en ;
+    sh:minInclusive 0 ;
+    sh:name "source confidence property constraint"@en ;
+    sh:path modvmi:sourceConfidence ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-sourceInstrument-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "source instrument property constraint"@en ;
+    sh:class modinst:MusicalInstrument ;
+    sh:maxCount 1 ;
+    sh:message "A source relation must identify exactly one resource typed as a musical instrument."@en ;
+    sh:minCount 1 ;
+    sh:name "source instrument property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modvmi:sourceInstrument ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-sourceRelationSubject-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "source relation subject property constraint"@en ;
+    sh:maxCount 1 ;
+    sh:message "A source relation subject must be a playable virtual instrument, stable product, or version."@en ;
+    sh:minCount 1 ;
+    sh:name "source relation subject property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:or ( modshape:InstrumentSourceRelationShape-or-Alternative-NodeShape-01 modshape:InstrumentSourceRelationShape-or-Alternative-NodeShape-02 modshape:InstrumentSourceRelationShape-or-Alternative-NodeShape-03 ) ;
+    sh:path modvmi:sourceRelationSubject ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-sourceRelationType-PropertyShape-05 a sh:PropertyShape ;
+    rdfs:label "source relation type property constraint"@en ;
+    sh:in ( vmisource:sampled-from vmisource:modeled-after vmisource:historical-reconstruction vmisource:composite-source vmisource:inspired-by ) ;
+    sh:maxCount 1 ;
+    sh:message "Source relation type constraint: exactly 1 value(s) are required; values must have node kind IRI; values must belong to the enumerated release set."@en ;
+    sh:minCount 1 ;
+    sh:name "source relation type property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modvmi:sourceRelationType ;
+    sh:severity sh:Violation .
+
+modshape:InstrumentSourceRelationShape-sourceState-PropertyShape-06 a sh:PropertyShape ;
+    rdfs:label "source state property constraint"@en ;
+    sh:class modinst:InstrumentState ;
+    sh:maxCount 1 ;
+    sh:message "A source state, when supplied, must be typed as an instrument state."@en ;
+    sh:name "source state property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modvmi:sourceState ;
+    sh:severity sh:Violation .
+
+modshape:VirtualInstrumentIdentityLayerShape-SPARQLConstraint-01 rdfs:label "virtual instrument identity layer shape sparqlconstraint 01"@en ;
+    sh:message "A resource cannot occupy more than one of the distinct virtual-instrument, product, version, and package identity layers."@en ;
+    sh:name "virtual instrument identity layer shape sparqlconstraint 01"@en ;
+    sh:select """
+      PREFIX modvmi: <https://w3id.org/modavis/ontology/virtual-instrument#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      SELECT DISTINCT $this WHERE {
+        $this a ?leftType, ?rightType .
+        ?leftType rdfs:subClassOf* ?leftLayer .
+        ?rightType rdfs:subClassOf* ?rightLayer .
+        FILTER (?leftLayer IN (
+          modvmi:VirtualMusicalInstrument,
+          modvmi:VirtualInstrumentProduct,
+          modvmi:VirtualInstrumentVersion,
+          modvmi:VirtualInstrumentPackage
+        ))
+        FILTER (?rightLayer IN (
+          modvmi:VirtualMusicalInstrument,
+          modvmi:VirtualInstrumentProduct,
+          modvmi:VirtualInstrumentVersion,
+          modvmi:VirtualInstrumentPackage
+        ))
+        FILTER (?leftLayer != ?rightLayer)
+      }
+    """ ;
+    sh:severity sh:Violation .
+
+modshape:VirtualInstrumentPackageShape-packageOfVersion-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "package of version property constraint"@en ;
+    sh:class modvmi:VirtualInstrumentVersion ;
+    sh:message "A virtual-instrument package requires at least one distributed version."@en ;
+    sh:minCount 1 ;
+    sh:name "package of version property constraint"@en ;
+    sh:path modvmi:packageOfVersion ;
+    sh:severity sh:Violation .
+
+modshape:VirtualInstrumentProductionMethodShape-productionMethod-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "production method property constraint"@en ;
+    sh:in ( vmiproduction:sampled vmiproduction:physical-modeling vmiproduction:algorithmic-synthesis vmiproduction:convolution-based vmiproduction:hybrid ) ;
+    sh:maxCount 1 ;
+    sh:message "A production method must use one concept from the closed MODAVIS 0.1.0 production-method scheme."@en ;
+    sh:name "production method property constraint"@en ;
+    sh:nodeKind sh:IRI ;
+    sh:path modvmi:productionMethod ;
+    sh:severity sh:Violation .
+
+modshape:VirtualInstrumentVersionShape-implementsInstrument-PropertyShape-01 a sh:PropertyShape ;
+    rdfs:label "implements instrument property constraint"@en ;
+    sh:class modvmi:VirtualMusicalInstrument ;
+    sh:message "A virtual-instrument version must identify at least one playable virtual instrument it implements."@en ;
+    sh:minCount 1 ;
+    sh:name "implements instrument property constraint"@en ;
+    sh:path modvmi:implementsInstrument ;
+    sh:severity sh:Violation .
+
+modshape:VirtualInstrumentVersionShape-releaseDate-PropertyShape-02 a sh:PropertyShape ;
+    rdfs:label "release date property constraint"@en ;
+    sh:datatype xsd:date ;
+    sh:maxCount 1 ;
+    sh:message "Release date constraint: at most 1 value(s) are permitted; values must use the date datatype."@en ;
+    sh:name "release date property constraint"@en ;
+    sh:path modvmi:releaseDate ;
+    sh:severity sh:Violation .
+
+modshape:VirtualInstrumentVersionShape-versionLabel-PropertyShape-03 a sh:PropertyShape ;
+    rdfs:label "version label property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:message "A virtual-instrument version requires one non-empty source-preserving version label."@en ;
+    sh:minCount 1 ;
+    sh:minLength 1 ;
+    sh:name "version label property constraint"@en ;
+    sh:path modvmi:versionLabel ;
+    sh:severity sh:Violation .
+
+modshape:VirtualInstrumentVersionShape-versionOfProduct-PropertyShape-04 a sh:PropertyShape ;
+    rdfs:label "version of product property constraint"@en ;
+    sh:class modvmi:VirtualInstrumentProduct ;
+    sh:maxCount 1 ;
+    sh:message "A virtual-instrument version requires exactly one stable product identity."@en ;
+    sh:minCount 1 ;
+    sh:name "version of product property constraint"@en ;
+    sh:path modvmi:versionOfProduct ;
+    sh:severity sh:Violation .

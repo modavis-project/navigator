@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/context">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">RDF 1.1 semantics for explicitly qualifying the contextual applicability of identified assertions without conflating context with provenance.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Assertion Context Ontology</ns1:title>
+    <ns2:preferredNamespacePrefix>modcontext</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology/context#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/assertion/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/context/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/context#ContextBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/context" />
+    <ns4:label xml:lang="en">assertion context binding</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An explicit relation qualifying one assertion with one dimension, one contextual relation, and one identified context value.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Absence of a context binding means that applicability is unqualified or unknown; it never means universally valid or invalid. Multiple bindings have no implicit conjunction or disjunction semantics. An application profile must define how bindings combine, or model alternatives as distinct assertions.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/context#ContextDimension">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/context" />
+    <ns4:label xml:lang="en">context dimension</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An identified axis along which an assertion's applicability may be qualified, such as time, place, institutional perspective, configuration, or performance conditions.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">Dimensions are not restricted to a fixed universal list. Application profiles should reuse established temporal, spatial, measurement, and domain value models where available.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/context#contextRelation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/context#ContextBinding" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/context" />
+    <ns4:label xml:lang="en">context relation</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the governed or profile-defined relation between the assertion and the supplied dimension value.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/context#contextValue">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/context#ContextBinding" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/context" />
+    <ns4:label xml:lang="en">context value</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the value, interval, region, perspective, configuration, or other resource used to qualify applicability along the dimension.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The value is an identified resource. Its type and comparison semantics come from the context dimension's valueModel or an application profile; MODAVIS does not infer them from this generic property.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/context#contextualizesAssertion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/context#ContextBinding" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/context" />
+    <ns4:label xml:lang="en">contextualizes assertion</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the one assertion whose contextual applicability is qualified by a binding.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/context#dimension">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/context#ContextBinding" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/context" />
+    <ns4:label xml:lang="en">has context dimension</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/context#ContextDimension" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the dimension along which a context binding qualifies an assertion.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/context#hasContextBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/context" />
+    <ns4:label xml:lang="en">has context binding</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/context#ContextBinding" />
+    <ns3:inverseOf rdf:resource="https://w3id.org/modavis/ontology/context#contextualizesAssertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an assertion to an explicit contextual applicability binding.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/context#valueModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/context#ContextDimension" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/context" />
+    <ns4:label xml:lang="en">value model</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies a vocabulary, ontology, SHACL profile, or specification that defines values and comparison semantics for a context dimension.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">MODAVIS does not invent generic ordering, containment, or hierarchy semantics for dimension values. Profiles should reference standards such as OWL-Time or GeoSPARQL when applicable.</ns6:scopeNote>
+  </rdf:Description>
+</rdf:RDF>

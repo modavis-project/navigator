@@ -1,0 +1,659 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/modavis/release/0.1.0#catalog> a dcat:Catalog ;
+  dcterms:title "MODAVIS Ontology Network release catalog"@en ;
+  dcterms:description "Version-pinned catalog of the immutable semantic, validation, contextualization, and release artifacts in MODAVIS 0.1.0."@en ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:conformsTo <https://www.w3.org/TR/vocab-dcat-3/> ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcat:dataset <https://w3id.org/modavis/release/0.1.0> .
+
+<https://w3id.org/modavis/release/0.1.0> a dcat:Dataset ;
+  dcterms:title "MODAVIS Ontology Network 0.1.0"@en ;
+  dcterms:description "Immutable semantic and conformance artifacts for the initial MODAVIS Ontology Network release."@en ;
+  dcat:version "0.1.0" ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:conformsTo <https://www.w3.org/TR/vocab-dcat-3/> ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/vocab-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/vocab-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/vocab-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-ttl> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-jsonld> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-rdf> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/jsonld-context> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/release-manifest> ;
+  dcat:distribution <https://w3id.org/modavis/release/0.1.0/distribution/release-checksums> .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Assertion Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/assertion/0.1.0/assertion.ttl> ;
+  dcat:byteSize "14502"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "2910a5071de24ff1f3a231c09f2de401064183cc8722daf8fe39dbd2ec4162f9"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Assertion Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/assertion/0.1.0/assertion.jsonld> ;
+  dcat:byteSize "37305"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "d75a98edf8b8a981b95c5bd88805fb76cfd1662f18be065813780f22b135736b"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Assertion Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/assertion/0.1.0/assertion.rdf> ;
+  dcat:byteSize "25730"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "6ee2cbd010901c1f4a9c5c8dad08f92bd06ce1aeadd13f61d6598aaa4221b2f3"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Audio and Sampled Playback Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/audio/0.1.0/audio.ttl> ;
+  dcat:byteSize "27817"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "0599b1a0879d760fdd49e895dbdfc1e944a464c3dfc560c5f2e86777d2394657"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Audio and Sampled Playback Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/audio/0.1.0/audio.jsonld> ;
+  dcat:byteSize "70856"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "45a600d9333bcbb4c1e21b39b89249ae66cf648c60d4ac479e3aaf96676bd4ac"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Audio and Sampled Playback Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/audio/0.1.0/audio.rdf> ;
+  dcat:byteSize "48956"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "f0948ce454117b5448c629449a3a32d040ab44c11745ee6b8082ae89c1c14dc5"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Assertion Context Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/context/0.1.0/context.ttl> ;
+  dcat:byteSize "5705"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "38b2f4e9a1cbd91d88b96cca97b6bc88d106ad7656c0995447d7ed156fd0a5cc"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Assertion Context Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/context/0.1.0/context.jsonld> ;
+  dcat:byteSize "11921"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "d1cf34db3d9ea73ff05682943716ffe905da20b198440a5bc1cae4fa9b6bcc9a"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Assertion Context Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/context/0.1.0/context.rdf> ;
+  dcat:byteSize "8680"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "50cd29eab0a4051bd56da34c80e85174ea8b67727c780a13e990ae8fd0627296"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Core Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/core/0.1.0/core.ttl> ;
+  dcat:byteSize "14321"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "119d77fa8d16663a106137bdaf01a0f16eccb89467c5f1fe8d1327ed8006dbdb"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Core Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/core/0.1.0/core.jsonld> ;
+  dcat:byteSize "36054"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "bf56f7ebe2f0648f06266727f7f2c0fe18eb8d792d5b2a4f112466a696f5c806"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Core Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/core/0.1.0/core.rdf> ;
+  dcat:byteSize "26475"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "88297b5e122451a6a872365f9053cf0dad8506dc22d215d0a60e8b0e368af1eb"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Event Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/events/0.1.0/events.ttl> ;
+  dcat:byteSize "6131"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "9ea00e7f9d7f9850ee560f5bfb4ebab085317bb2acb507bae0382e92255ed8c4"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Event Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/events/0.1.0/events.jsonld> ;
+  dcat:byteSize "14774"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "2a40fb7150f1298f21912e7b988e1c101952e7f0a0df4e562dcfecc7fc14b48e"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Event Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/events/0.1.0/events.rdf> ;
+  dcat:byteSize "10151"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "2218d4cfb9354939ed1eea9605fa77edd5f1c1a8e676f1da30f2ae3e4ff4128d"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Evidence Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/evidence/0.1.0/evidence.ttl> ;
+  dcat:byteSize "10584"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "61b3133028d12fe0778c0370a8cd9214aa0e057956eff907c3903935141dbdcf"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Evidence Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/evidence/0.1.0/evidence.jsonld> ;
+  dcat:byteSize "26187"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "50107726167f5e101b9b56ee439b9aed4e494649b1838c949a3feede4b975ec5"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Evidence Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/evidence/0.1.0/evidence.rdf> ;
+  dcat:byteSize "18155"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "53e94499e5d75306c57f89e80257264f1d73c8cc108e1128b86cf1564ef98e72"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Heritage Knowledge Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/heritage/0.1.0/heritage.ttl> ;
+  dcat:byteSize "19580"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "f721b1ef6699cf351198742065a0307e34097d82158565c748a8475c9574c8ee"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Heritage Knowledge Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/heritage/0.1.0/heritage.jsonld> ;
+  dcat:byteSize "44998"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "48415ba16211583b6f8c91745e5a9620b5543428cde03d6598c67e53d5c17cba"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Heritage Knowledge Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/heritage/0.1.0/heritage.rdf> ;
+  dcat:byteSize "32111"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "1e4d5bb13cc95af96d047204224c50ac091e3b33419185b78a0d6c754de327f8"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Instrument Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/instrument/0.1.0/instrument.ttl> ;
+  dcat:byteSize "13768"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "bc52e44315ef53ab1772d0106544f1515002920940495d34b696bc363d1e0b99"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Instrument Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/instrument/0.1.0/instrument.jsonld> ;
+  dcat:byteSize "33332"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "31cf5f1db2dbde7c6833a0d62881c2339c15b4d7aa40b76f8cb5da5f84cb57cc"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Instrument Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/instrument/0.1.0/instrument.rdf> ;
+  dcat:byteSize "23835"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "15685b5ebd941c24dca465aeee57ba4fcd8c6f4983b8dc676cb441729ab7b2a8"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Media and Digital Representation Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/media/0.1.0/media.ttl> ;
+  dcat:byteSize "8710"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "a3a9ff771458019ac2649014bb845a7b95063f2d774a57d030d4a88183f5e04c"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Media and Digital Representation Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/media/0.1.0/media.jsonld> ;
+  dcat:byteSize "19950"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "3218d38be1f4e93db322d03fc85f5cb93b532db57a13213bc870cc96c9752978"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Media and Digital Representation Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/media/0.1.0/media.rdf> ;
+  dcat:byteSize "14022"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "3d8a58b2172cba12fad716feeeb5e4dd814990a749c9b7f6fd99020937c57978"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS MIDI Binding Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/midi/0.1.0/midi.ttl> ;
+  dcat:byteSize "7321"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "65bcf609ea75f03e140352cfdb5fef230a85afeb736617ce0b2d88c326cc371c"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS MIDI Binding Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/midi/0.1.0/midi.jsonld> ;
+  dcat:byteSize "18058"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "cad39d9383e1ef3b211fe0eca1ce43a6802c4f6ba6ae31027fcce82845bd3f59"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS MIDI Binding Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/midi/0.1.0/midi.rdf> ;
+  dcat:byteSize "12726"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "f95e8f4e9b626276035a2016bd825625fbdee6daaf0153e2b58e3bd42eef46d2"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Ontology Network (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/0.1.0/ontology.ttl> ;
+  dcat:byteSize "1953"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "ab0169d2572da8a586d3974db65adb4415bcff87df9b1eb36d067c6a8f166523"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Ontology Network (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/0.1.0/ontology.jsonld> ;
+  dcat:byteSize "3038"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "66b999ce1856c848df71dd427e154f881d7212d45e21dcdbac9ebd08885aa4e7"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Ontology Network (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/0.1.0/ontology.rdf> ;
+  dcat:byteSize "2640"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "7188269bf8e67f2a9e176221bf614bf06eb134e86ea3fd3b9c526ba42ab05d9b"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Pipe Organ Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/organ/0.1.0/organ.ttl> ;
+  dcat:byteSize "8796"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "797df7054f397d90881aa6d24cfc6d0759037f49b437be12075f9ee53eb23d28"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Pipe Organ Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/organ/0.1.0/organ.jsonld> ;
+  dcat:byteSize "21125"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "fab1fc5cf1b1019f7cc4cf8aa5f6f4df298db3b09e1d4f99be15a1aec55d3423"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Pipe Organ Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/organ/0.1.0/organ.rdf> ;
+  dcat:byteSize "14636"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "6cc2da7eff69e37db871755a6630416035981af57073fe38e1040df125d25d54"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Provenance Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/provenance/0.1.0/provenance.ttl> ;
+  dcat:byteSize "6060"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "43dd042410c99cda809d61ee752176d14a9d2e4e26ab37dc3a841ab7b3715c7b"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Provenance Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/provenance/0.1.0/provenance.jsonld> ;
+  dcat:byteSize "14276"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "9cc70581fecc0253f6077de8f45c0dcd35a1d41495d8a8a151f199449f21a50a"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Provenance Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/provenance/0.1.0/provenance.rdf> ;
+  dcat:byteSize "10012"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "dcbc7ce2d8fa0334e1d2b7a56b6583a66b19cbddb11c4ef393a732bceb6b3db7"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Virtual Musical Instrument Ontology (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/virtual-instrument/0.1.0/virtual-instrument.ttl> ;
+  dcat:byteSize "17283"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "fc9f15009e9a03bc0734cc148d79c08aed2ef06db6cfb9b7d96dad03439d4eff"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Virtual Musical Instrument Ontology (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/virtual-instrument/0.1.0/virtual-instrument.jsonld> ;
+  dcat:byteSize "39210"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "0b8688a161681bd968826ef7abfcf2ef5aeeba2968d82ca4d176884be9978839"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Virtual Musical Instrument Ontology (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/ontology/virtual-instrument/0.1.0/virtual-instrument.rdf> ;
+  dcat:byteSize "28845"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "fb3f85970e5177324e6b889448b02b6c7e4872f8f23b14af0a685fc673792358"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/vocab-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS Controlled Vocabularies (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/vocab/0.1.0/vocab.ttl> ;
+  dcat:byteSize "27227"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/vocab-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/vocab-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "e26a8166cbe445b0da72478f8bf4f6f50cd4b4a3c4fcd85facd6d1833d963c3f"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/vocab-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS Controlled Vocabularies (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/vocab/0.1.0/vocab.jsonld> ;
+  dcat:byteSize "68316"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/vocab-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/vocab-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "972505ab457faa6fc45bfea17a0b1b08e7f70df6360772cd80069c8006a81703"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/vocab-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS Controlled Vocabularies (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/vocab/0.1.0/vocab.rdf> ;
+  dcat:byteSize "46074"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/vocab-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/vocab-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "f0f5ee07f0581bc66272ae8719ebd41babca7931ba4468ef9b56acd1699f6d5e"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS exchange SHACL profile (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/shapes/exchange/0.1.0/shapes.ttl> ;
+  dcat:byteSize "191201"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "afefa7293010ab75d833c30b48e5d6391ad3e07801ff5b49eaacf7e6e37d010c"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS exchange SHACL profile (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/shapes/exchange/0.1.0/shapes.jsonld> ;
+  dcat:byteSize "474958"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "7d8601514a3e3aca086836fe5b100a0326f3c854327dd30a2b56fb06a8e78931"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS exchange SHACL profile (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/shapes/exchange/0.1.0/shapes.rdf> ;
+  dcat:byteSize "358085"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "fa89b2e957df88ab45822d6ef8e91bd97234663bc2256db7e1e95aa4b9090008"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-ttl> a dcat:Distribution ;
+  dcterms:title "MODAVIS publication SHACL profile (ttl)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/shapes/publication/0.1.0/shapes.ttl> ;
+  dcat:byteSize "192994"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-ttl-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-ttl-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "271f462a2cd6d73813128d196378484223ee4e56ce6b7abcb31e6a5b9ffd4feb"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-jsonld> a dcat:Distribution ;
+  dcterms:title "MODAVIS publication SHACL profile (jsonld)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/shapes/publication/0.1.0/shapes.jsonld> ;
+  dcat:byteSize "478633"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-jsonld-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-jsonld-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "7eb26ef82914f93ca3d8ba185f4bdec86b266e4bcb6a4c15b73c4357fda98fe7"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-rdf> a dcat:Distribution ;
+  dcterms:title "MODAVIS publication SHACL profile (rdf)"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/shapes/publication/0.1.0/shapes.rdf> ;
+  dcat:byteSize "360651"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-rdf-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-rdf-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "332c420183748ed9d1a0b9e46646f1bd5f97fab2b43ab8af21ceb50ceda7dd61"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/jsonld-context> a dcat:Distribution ;
+  dcterms:title "MODAVIS JSON-LD context"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/context/0.1.0/context.jsonld> ;
+  dcat:byteSize "10434"^^xsd:nonNegativeInteger ;
+  spdx:checksum <https://w3id.org/modavis/release/0.1.0/checksum/jsonld-context-sha256> .
+
+<https://w3id.org/modavis/release/0.1.0/checksum/jsonld-context-sha256> a spdx:Checksum ;
+  spdx:algorithm spdx:checksumAlgorithm_sha256 ;
+  spdx:checksumValue "c489374021a5bb4af73c065bd8ac6624e92266b44d66ed8fa561c2203ddffd12"^^xsd:hexBinary .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/release-manifest> a dcat:Distribution ;
+  dcterms:title "MODAVIS release manifest"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/application/json> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/release/0.1.0/release-manifest.json> .
+
+<https://w3id.org/modavis/release/0.1.0/distribution/release-checksums> a dcat:Distribution ;
+  dcterms:title "MODAVIS release SHA-256 index"@en ;
+  dcat:mediaType <https://www.iana.org/assignments/media-types/text/plain> ;
+  dcat:downloadURL <https://modavis-project.github.io/modavis-ontology-network/release/0.1.0/checksums.sha256> .

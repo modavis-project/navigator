@@ -1,0 +1,479 @@
+<https://w3id.org/modavis/ontology/audio#AttackRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#AttackRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#AttackRegion> <http://www.w3.org/2000/01/rdf-schema#label> "attack region"@en .
+<https://w3id.org/modavis/ontology/audio#AttackRegion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#AttackRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#AttackRegion> <http://www.w3.org/2004/02/skos/core#definition> "A signal region identified as the onset or attack portion of a sounding event."@en .
+<https://w3id.org/modavis/ontology/audio#AudioSample> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#AudioSample> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#AudioSample> <http://www.w3.org/2000/01/rdf-schema#label> "audio sample"@en .
+<https://w3id.org/modavis/ontology/audio#AudioSample> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/audio#AudioSignal> .
+<https://w3id.org/modavis/ontology/audio#AudioSample> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#AudioSample> <http://www.w3.org/2004/02/skos/core#definition> "An audio signal selected or derived for triggered or otherwise bounded playback as part of a digital or virtual musical instrument."@en .
+<https://w3id.org/modavis/ontology/audio#AudioSample> <http://www.w3.org/2004/02/skos/core#scopeNote> "An audio sample is the identified playback signal, not merely a region of a larger signal and not automatically a file or bitstream. Use extractedFromRegion for source selection and media terms for byte-level realizations."@en .
+<https://w3id.org/modavis/ontology/audio#AudioSignal> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#AudioSignal> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#AudioSignal> <http://www.w3.org/2000/01/rdf-schema#label> "audio signal"@en .
+<https://w3id.org/modavis/ontology/audio#AudioSignal> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/audio#AudioSignal> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#AudioSignal> <http://www.w3.org/2004/02/skos/core#definition> "An identified digital asset representing one or more channels of time-varying audio samples at a stated sample rate."@en .
+<https://w3id.org/modavis/ontology/audio#AudioSignal> <http://www.w3.org/2004/02/skos/core#scopeNote> "Frame coordinates apply only to a fixed signal identity or bitstream. Re-encoding, resampling, trimming, or channel changes create a distinct signal to which regions must be rebound."@en .
+<https://w3id.org/modavis/ontology/audio#LoopPointSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#LoopPointSet> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#LoopPointSet> <http://www.w3.org/2000/01/rdf-schema#label> "loop point set"@en .
+<https://w3id.org/modavis/ontology/audio#LoopPointSet> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<https://w3id.org/modavis/ontology/audio#LoopPointSet> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/audio#LoopPointSet> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#LoopPointSet> <http://www.w3.org/2004/02/skos/core#definition> "A versionable grouping of one or more source-bound sustain-loop regions with loop playback policy and an optional loopability assessment."@en .
+<https://w3id.org/modavis/ontology/audio#LoopPointSet> <http://www.w3.org/2004/02/skos/core#scopeNote> "Class membership does not state whether the grouping is tentative or accepted. A governing workflow or application profile must record that lifecycle decision."@en .
+<https://w3id.org/modavis/ontology/audio#ReleaseRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#ReleaseRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#ReleaseRegion> <http://www.w3.org/2000/01/rdf-schema#label> "release region"@en .
+<https://w3id.org/modavis/ontology/audio#ReleaseRegion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#ReleaseRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#ReleaseRegion> <http://www.w3.org/2004/02/skos/core#definition> "A signal region selected for playback or analysis of the release phase following cessation of excitation or control."@en .
+<https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> <http://www.w3.org/2000/01/rdf-schema#label> "sample extraction region"@en .
+<https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> <http://www.w3.org/2004/02/skos/core#definition> "The exact half-open interval of a source audio signal used to create a derived audio sample."@en .
+<https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> <http://www.w3.org/2000/01/rdf-schema#label> "sample playback parameters"@en .
+<https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> <http://www.w3.org/2004/02/skos/core#definition> "A protocol-neutral record selecting an audio sample together with tuning, signal-region, gain, selection, and control-release policy."@en .
+<https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> <http://www.w3.org/2004/02/skos/core#scopeNote> "This class describes musical playback semantics and does not prescribe a sampler file format or runtime API."@en .
+<https://w3id.org/modavis/ontology/audio#SignalRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#SignalRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#SignalRegion> <http://www.w3.org/2000/01/rdf-schema#label> "sample-clock signal region"@en .
+<https://w3id.org/modavis/ontology/audio#SignalRegion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<https://w3id.org/modavis/ontology/audio#SignalRegion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/audio#SignalRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#SignalRegion> <http://www.w3.org/2004/02/skos/core#definition> "A source-bound half-open interval of audio frames whose start is inclusive and whose end is exclusive."@en .
+<https://w3id.org/modavis/ontology/audio#SignalRegion> <http://www.w3.org/2004/02/skos/core#scopeNote> "A region is meaningful only together with the fixed audio signal whose sample clock supplies its coordinate system."@en .
+<https://w3id.org/modavis/ontology/audio#StableSustainRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#StableSustainRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#StableSustainRegion> <http://www.w3.org/2000/01/rdf-schema#label> "stable sustain region"@en .
+<https://w3id.org/modavis/ontology/audio#StableSustainRegion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#StableSustainRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#StableSustainRegion> <http://www.w3.org/2004/02/skos/core#definition> "A signal region assessed as sufficiently stable for sustained analysis, resynthesis, or loop selection."@en .
+<https://w3id.org/modavis/ontology/audio#SustainLoopRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#SustainLoopRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#SustainLoopRegion> <http://www.w3.org/2000/01/rdf-schema#label> "sustain loop region"@en .
+<https://w3id.org/modavis/ontology/audio#SustainLoopRegion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#SustainLoopRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#SustainLoopRegion> <http://www.w3.org/2004/02/skos/core#definition> "A signal region whose half-open boundaries define a candidate or accepted repeating interval for sustained playback."@en .
+<https://w3id.org/modavis/ontology/audio#TuningEntry> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#TuningEntry> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#TuningEntry> <http://www.w3.org/2000/01/rdf-schema#label> "tuning entry"@en .
+<https://w3id.org/modavis/ontology/audio#TuningEntry> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/audio#TuningEntry> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#TuningEntry> <http://www.w3.org/2004/02/skos/core#definition> "One component- or logical-control-scoped target-frequency entry in a tuning map."@en .
+<https://w3id.org/modavis/ontology/audio#TuningMap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#TuningMap> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#TuningMap> <http://www.w3.org/2000/01/rdf-schema#label> "tuning map"@en .
+<https://w3id.org/modavis/ontology/audio#TuningMap> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<https://w3id.org/modavis/ontology/audio#TuningMap> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/audio#TuningMap> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#TuningMap> <http://www.w3.org/2004/02/skos/core#definition> "A versionable mapping from logical keys or instrument components to target frequencies, distinct from the measurements or documentary assertions supporting it."@en .
+<https://w3id.org/modavis/ontology/audio#TuningReference> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/audio#TuningReference> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#TuningReference> <http://www.w3.org/2000/01/rdf-schema#label> "tuning reference"@en .
+<https://w3id.org/modavis/ontology/audio#TuningReference> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/audio#TuningReference> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#TuningReference> <http://www.w3.org/2004/02/skos/core#definition> "An identified pitch designation and frequency used as a reference by a tuning map, without assuming a control protocol or numbering system."@en .
+<https://w3id.org/modavis/ontology/audio#appliesToSignal> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#appliesToSignal> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#appliesToSignal> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#appliesToSignal> <http://www.w3.org/2000/01/rdf-schema#label> "applies to signal"@en .
+<https://w3id.org/modavis/ontology/audio#appliesToSignal> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#AudioSignal> .
+<https://w3id.org/modavis/ontology/audio#appliesToSignal> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#appliesToSignal> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the fixed audio signal on whose sample clock a region, loop set, or other source-scoped record is expressed."@en .
+<https://w3id.org/modavis/ontology/audio#appliesToSignal> <http://www.w3.org/2004/02/skos/core#scopeNote> "SignalRegion and LoopPointSet are the subjects constrained by the 0.1.0 exchange profile. No global domain is asserted because additional source-scoped record classes may reuse the property without receiving an incorrect type inference."@en .
+<https://w3id.org/modavis/ontology/audio#assignmentConfidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#assignmentConfidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#assignmentConfidence> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> .
+<https://w3id.org/modavis/ontology/audio#assignmentConfidence> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#assignmentConfidence> <http://www.w3.org/2000/01/rdf-schema#label> "assignment confidence"@en .
+<https://w3id.org/modavis/ontology/audio#assignmentConfidence> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#assignmentConfidence> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#assignmentConfidence> <http://www.w3.org/2004/02/skos/core#definition> "A decimal from zero through one expressing confidence in a source-region assignment."@en .
+<https://w3id.org/modavis/ontology/audio#assignmentMethod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#assignmentMethod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#assignmentMethod> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> .
+<https://w3id.org/modavis/ontology/audio#assignmentMethod> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#assignmentMethod> <http://www.w3.org/2000/01/rdf-schema#label> "assignment method"@en .
+<https://w3id.org/modavis/ontology/audio#assignmentMethod> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/audio#assignmentMethod> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#assignmentMethod> <http://www.w3.org/2004/02/skos/core#definition> "Classifies how a component or logical-control assignment was measured, inferred, authored, or otherwise established, using a concept governed by the applicable exchange profile."@en .
+<https://w3id.org/modavis/ontology/audio#boundaryCensoring> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#boundaryCensoring> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#boundaryCensoring> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#boundaryCensoring> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#boundaryCensoring> <http://www.w3.org/2000/01/rdf-schema#label> "boundary censoring"@en .
+<https://w3id.org/modavis/ontology/audio#boundaryCensoring> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/audio#boundaryCensoring> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#boundaryCensoring> <http://www.w3.org/2004/02/skos/core#definition> "Classifies whether a signal boundary was constrained by the available capture rather than observed directly, using a concept governed by the applicable exchange profile."@en .
+<https://w3id.org/modavis/ontology/audio#boundaryConfidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#boundaryConfidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#boundaryConfidence> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#boundaryConfidence> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#boundaryConfidence> <http://www.w3.org/2000/01/rdf-schema#label> "boundary confidence"@en .
+<https://w3id.org/modavis/ontology/audio#boundaryConfidence> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#boundaryConfidence> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#boundaryConfidence> <http://www.w3.org/2004/02/skos/core#definition> "A decimal from zero through one expressing confidence in the selected signal-region boundaries."@en .
+<https://w3id.org/modavis/ontology/audio#captureSequenceIndex> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#captureSequenceIndex> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#captureSequenceIndex> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> .
+<https://w3id.org/modavis/ontology/audio#captureSequenceIndex> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#captureSequenceIndex> <http://www.w3.org/2000/01/rdf-schema#label> "capture sequence index"@en .
+<https://w3id.org/modavis/ontology/audio#captureSequenceIndex> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/audio#captureSequenceIndex> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#captureSequenceIndex> <http://www.w3.org/2004/02/skos/core#definition> "The zero-based ordinal of a capture within a documented acquisition sequence."@en .
+<https://w3id.org/modavis/ontology/audio#channelCount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#channelCount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#channelCount> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#AudioSignal> .
+<https://w3id.org/modavis/ontology/audio#channelCount> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#channelCount> <http://www.w3.org/2000/01/rdf-schema#label> "channel count"@en .
+<https://w3id.org/modavis/ontology/audio#channelCount> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#positiveInteger> .
+<https://w3id.org/modavis/ontology/audio#channelCount> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#channelCount> <http://www.w3.org/2004/02/skos/core#definition> "The number of interleaved or logically associated channels in an audio signal."@en .
+<https://w3id.org/modavis/ontology/audio#channelPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#channelPolicy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#channelPolicy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#channelPolicy> <http://www.w3.org/2000/01/rdf-schema#label> "channel policy"@en .
+<https://w3id.org/modavis/ontology/audio#channelPolicy> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/audio#channelPolicy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#channelPolicy> <http://www.w3.org/2004/02/skos/core#definition> "Classifies channel selection, mixing, or routing behavior with a concept governed by the applicable exchange profile."@en .
+<https://w3id.org/modavis/ontology/audio#confidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#confidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#confidence> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#LoopPointSet> .
+<https://w3id.org/modavis/ontology/audio#confidence> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#confidence> <http://www.w3.org/2000/01/rdf-schema#label> "loop decision confidence"@en .
+<https://w3id.org/modavis/ontology/audio#confidence> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#confidence> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#confidence> <http://www.w3.org/2004/02/skos/core#definition> "A decimal from zero through one expressing confidence in a loop-point proposal or decision."@en .
+<https://w3id.org/modavis/ontology/audio#controlReleasePolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#controlReleasePolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#controlReleasePolicy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#controlReleasePolicy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#controlReleasePolicy> <http://www.w3.org/2000/01/rdf-schema#label> "control release policy"@en .
+<https://w3id.org/modavis/ontology/audio#controlReleasePolicy> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/audio#controlReleasePolicy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#controlReleasePolicy> <http://www.w3.org/2004/02/skos/core#definition> "Classifies playback behavior when the controlling gate or equivalent control ends, using a concept governed by the applicable exchange profile."@en .
+<https://w3id.org/modavis/ontology/audio#crossfadeFrames> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#crossfadeFrames> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#crossfadeFrames> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SustainLoopRegion> .
+<https://w3id.org/modavis/ontology/audio#crossfadeFrames> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#crossfadeFrames> <http://www.w3.org/2000/01/rdf-schema#label> "crossfade length in frames"@en .
+<https://w3id.org/modavis/ontology/audio#crossfadeFrames> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/audio#crossfadeFrames> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#crossfadeFrames> <http://www.w3.org/2004/02/skos/core#definition> "The number of frames blended across the loop boundary; zero denotes no crossfade."@en .
+<https://w3id.org/modavis/ontology/audio#endFrameExclusive> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#endFrameExclusive> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#endFrameExclusive> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#endFrameExclusive> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#endFrameExclusive> <http://www.w3.org/2000/01/rdf-schema#label> "exclusive end frame"@en .
+<https://w3id.org/modavis/ontology/audio#endFrameExclusive> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#positiveInteger> .
+<https://w3id.org/modavis/ontology/audio#endFrameExclusive> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#endFrameExclusive> <http://www.w3.org/2004/02/skos/core#definition> "The zero-based exclusive index immediately after the final audio frame in a half-open signal region."@en .
+<https://w3id.org/modavis/ontology/audio#exitPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#exitPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#exitPolicy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#exitPolicy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#exitPolicy> <http://www.w3.org/2000/01/rdf-schema#label> "region exit policy"@en .
+<https://w3id.org/modavis/ontology/audio#exitPolicy> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/audio#exitPolicy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#exitPolicy> <http://www.w3.org/2004/02/skos/core#definition> "Classifies how playback exits a signal region when its sustaining condition ends, using a concept governed by the applicable exchange profile."@en .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#AudioSample> .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/2000/01/rdf-schema#label> "extracted from region"@en .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#wasDerivedFrom> .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the exact source-signal region from which an audio sample was extracted."@en .
+<https://w3id.org/modavis/ontology/audio#extractedFromRegion> <http://www.w3.org/2004/02/skos/core#scopeNote> "Consumers should record bitstream-to-bitstream derivation separately with modmedia:derivedFrom when required."@en .
+<https://w3id.org/modavis/ontology/audio#gainDB> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#gainDB> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#gainDB> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#gainDB> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#gainDB> <http://www.w3.org/2000/01/rdf-schema#label> "playback gain in decibels"@en .
+<https://w3id.org/modavis/ontology/audio#gainDB> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#gainDB> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#gainDB> <http://www.w3.org/2004/02/skos/core#definition> "The signed gain adjustment, in decibels, applied by sampled playback."@en .
+<https://w3id.org/modavis/ontology/audio#hasLoopRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#hasLoopRegion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#LoopPointSet> .
+<https://w3id.org/modavis/ontology/audio#hasLoopRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#hasLoopRegion> <http://www.w3.org/2000/01/rdf-schema#label> "has loop region"@en .
+<https://w3id.org/modavis/ontology/audio#hasLoopRegion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#SustainLoopRegion> .
+<https://w3id.org/modavis/ontology/audio#hasLoopRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#hasLoopRegion> <http://www.w3.org/2004/02/skos/core#definition> "Relates a loop point set to one of its sustain-loop regions."@en .
+<https://w3id.org/modavis/ontology/audio#hasSignalRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#hasSignalRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#hasSignalRegion> <http://www.w3.org/2000/01/rdf-schema#label> "has signal region"@en .
+<https://w3id.org/modavis/ontology/audio#hasSignalRegion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#hasSignalRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#hasSignalRegion> <http://www.w3.org/2004/02/skos/core#definition> "Relates an audio signal, playback record, or analysis result to a source-bound signal region."@en .
+<https://w3id.org/modavis/ontology/audio#hasSignalRegion> <http://www.w3.org/2004/02/skos/core#scopeNote> "This discovery relation does not change region coordinates or imply that the subject owns the source signal. The region's appliesToSignal value is authoritative for its sample-clock basis."@en .
+<https://w3id.org/modavis/ontology/audio#hasTuningMap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#hasTuningMap> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#hasTuningMap> <http://www.w3.org/2000/01/rdf-schema#label> "has tuning map"@en .
+<https://w3id.org/modavis/ontology/audio#hasTuningMap> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#TuningMap> .
+<https://w3id.org/modavis/ontology/audio#hasTuningMap> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#hasTuningMap> <http://www.w3.org/2004/02/skos/core#definition> "Relates an instrument, instrument state, virtual-instrument version, or dataset to a tuning map it provides."@en .
+<https://w3id.org/modavis/ontology/audio#hasTuningMap> <http://www.w3.org/2004/02/skos/core#scopeNote> "The open subject position avoids importing every application module. This relation says that a resource provides the map; usesTuningMap states that a playback record applies it."@en .
+<https://w3id.org/modavis/ontology/audio#hasTuningReference> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#hasTuningReference> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#TuningMap> .
+<https://w3id.org/modavis/ontology/audio#hasTuningReference> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#hasTuningReference> <http://www.w3.org/2000/01/rdf-schema#label> "has tuning reference"@en .
+<https://w3id.org/modavis/ontology/audio#hasTuningReference> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#TuningReference> .
+<https://w3id.org/modavis/ontology/audio#hasTuningReference> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#hasTuningReference> <http://www.w3.org/2004/02/skos/core#definition> "Relates a tuning map to an identified reference pitch and frequency."@en .
+<https://w3id.org/modavis/ontology/audio#latencyCompensationFrames> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#latencyCompensationFrames> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#latencyCompensationFrames> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#latencyCompensationFrames> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#latencyCompensationFrames> <http://www.w3.org/2000/01/rdf-schema#label> "latency compensation in frames"@en .
+<https://w3id.org/modavis/ontology/audio#latencyCompensationFrames> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/modavis/ontology/audio#latencyCompensationFrames> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#latencyCompensationFrames> <http://www.w3.org/2004/02/skos/core#definition> "A signed frame offset applied to compensate for documented capture or playback latency."@en .
+<https://w3id.org/modavis/ontology/audio#logicalControl> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#logicalControl> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#TuningEntry> .
+<https://w3id.org/modavis/ontology/audio#logicalControl> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#logicalControl> <http://www.w3.org/2000/01/rdf-schema#label> "logical control"@en .
+<https://w3id.org/modavis/ontology/audio#logicalControl> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/audio#logicalControl> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#logicalControl> <http://www.w3.org/2004/02/skos/core#definition> "Identifies a protocol-neutral logical control whose target pitch is recorded by a tuning entry."@en .
+<https://w3id.org/modavis/ontology/audio#loopabilityAssessment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#loopabilityAssessment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#loopabilityAssessment> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#LoopPointSet> .
+<https://w3id.org/modavis/ontology/audio#loopabilityAssessment> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#loopabilityAssessment> <http://www.w3.org/2000/01/rdf-schema#label> "loopability assessment"@en .
+<https://w3id.org/modavis/ontology/audio#loopabilityAssessment> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/audio#loopabilityAssessment> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#loopabilityAssessment> <http://www.w3.org/2004/02/skos/core#definition> "Classifies whether and under what conditions a source signal can sustain an acceptable loop with a concept governed by the applicable exchange profile."@en .
+<https://w3id.org/modavis/ontology/audio#normalizationGainDB> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#normalizationGainDB> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#normalizationGainDB> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#normalizationGainDB> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#normalizationGainDB> <http://www.w3.org/2000/01/rdf-schema#label> "normalization gain in decibels"@en .
+<https://w3id.org/modavis/ontology/audio#normalizationGainDB> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#normalizationGainDB> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#normalizationGainDB> <http://www.w3.org/2004/02/skos/core#definition> "The signed gain, in decibels, applied specifically to normalize a source sample to a documented reference."@en .
+<https://w3id.org/modavis/ontology/audio#pitchTrackingPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#pitchTrackingPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#pitchTrackingPolicy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#pitchTrackingPolicy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#pitchTrackingPolicy> <http://www.w3.org/2000/01/rdf-schema#label> "pitch tracking policy"@en .
+<https://w3id.org/modavis/ontology/audio#pitchTrackingPolicy> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/audio#pitchTrackingPolicy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#pitchTrackingPolicy> <http://www.w3.org/2004/02/skos/core#definition> "Classifies how playback pitch follows a logical control or other control signal, using a concept governed by the applicable exchange profile."@en .
+<https://w3id.org/modavis/ontology/audio#playbackMode> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#playbackMode> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#playbackMode> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#playbackMode> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#playbackMode> <http://www.w3.org/2000/01/rdf-schema#label> "region playback mode"@en .
+<https://w3id.org/modavis/ontology/audio#playbackMode> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/audio#playbackMode> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#playbackMode> <http://www.w3.org/2004/02/skos/core#definition> "Classifies traversal of a signal region with a concept governed by the applicable exchange profile."@en .
+<https://w3id.org/modavis/ontology/audio#playsSample> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#playsSample> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#playsSample> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#playsSample> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#playsSample> <http://www.w3.org/2000/01/rdf-schema#label> "plays sample"@en .
+<https://w3id.org/modavis/ontology/audio#playsSample> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#AudioSample> .
+<https://w3id.org/modavis/ontology/audio#playsSample> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#playsSample> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the audio sample governed by a sampled-playback parameter record."@en .
+<https://w3id.org/modavis/ontology/audio#referenceChannelIndex> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#referenceChannelIndex> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#referenceChannelIndex> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#referenceChannelIndex> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#referenceChannelIndex> <http://www.w3.org/2000/01/rdf-schema#label> "reference channel index"@en .
+<https://w3id.org/modavis/ontology/audio#referenceChannelIndex> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/audio#referenceChannelIndex> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#referenceChannelIndex> <http://www.w3.org/2004/02/skos/core#definition> "The zero-based channel index used as the reference for analysis, alignment, or playback decisions."@en .
+<https://w3id.org/modavis/ontology/audio#referenceFrequencyHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#referenceFrequencyHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#referenceFrequencyHz> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#TuningReference> .
+<https://w3id.org/modavis/ontology/audio#referenceFrequencyHz> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#referenceFrequencyHz> <http://www.w3.org/2000/01/rdf-schema#label> "reference frequency"@en .
+<https://w3id.org/modavis/ontology/audio#referenceFrequencyHz> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#referenceFrequencyHz> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#referenceFrequencyHz> <http://www.w3.org/2004/02/skos/core#definition> "The positive frequency in hertz assigned to the designated reference pitch."@en .
+<https://w3id.org/modavis/ontology/audio#referencePitchDesignation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#referencePitchDesignation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#referencePitchDesignation> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#TuningReference> .
+<https://w3id.org/modavis/ontology/audio#referencePitchDesignation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#referencePitchDesignation> <http://www.w3.org/2000/01/rdf-schema#label> "reference pitch designation"@en .
+<https://w3id.org/modavis/ontology/audio#referencePitchDesignation> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/audio#referencePitchDesignation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#referencePitchDesignation> <http://www.w3.org/2004/02/skos/core#definition> "A protocol-neutral source-preserving designation for the reference pitch, such as A4 or a component name."@en .
+<https://w3id.org/modavis/ontology/audio#regionRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#regionRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#regionRole> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#regionRole> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#regionRole> <http://www.w3.org/2000/01/rdf-schema#label> "region role"@en .
+<https://w3id.org/modavis/ontology/audio#regionRole> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/audio#regionRole> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#regionRole> <http://www.w3.org/2004/02/skos/core#definition> "Classifies the analytical or playback role of a signal region with a concept governed by the applicable exchange profile."@en .
+<https://w3id.org/modavis/ontology/audio#releaseStartFrame> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#releaseStartFrame> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#releaseStartFrame> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#releaseStartFrame> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#releaseStartFrame> <http://www.w3.org/2000/01/rdf-schema#label> "release start frame"@en .
+<https://w3id.org/modavis/ontology/audio#releaseStartFrame> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/audio#releaseStartFrame> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#releaseStartFrame> <http://www.w3.org/2004/02/skos/core#definition> "An optional source-relative frame index at which release behavior begins within or after a region."@en .
+<https://w3id.org/modavis/ontology/audio#roundRobinGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#roundRobinGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#roundRobinGroup> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#roundRobinGroup> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#roundRobinGroup> <http://www.w3.org/2000/01/rdf-schema#label> "round-robin group"@en .
+<https://w3id.org/modavis/ontology/audio#roundRobinGroup> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/audio#roundRobinGroup> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#roundRobinGroup> <http://www.w3.org/2004/02/skos/core#definition> "A profile-local identifier grouping alternate samples selected as a round-robin set."@en .
+<https://w3id.org/modavis/ontology/audio#roundRobinIndex> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#roundRobinIndex> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#roundRobinIndex> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#roundRobinIndex> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#roundRobinIndex> <http://www.w3.org/2000/01/rdf-schema#label> "round-robin index"@en .
+<https://w3id.org/modavis/ontology/audio#roundRobinIndex> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/audio#roundRobinIndex> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#roundRobinIndex> <http://www.w3.org/2004/02/skos/core#definition> "The zero-based ordinal of a playback record within a round-robin group."@en .
+<https://w3id.org/modavis/ontology/audio#sampleRate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#sampleRate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#sampleRate> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#AudioSignal> .
+<https://w3id.org/modavis/ontology/audio#sampleRate> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#sampleRate> <http://www.w3.org/2000/01/rdf-schema#label> "sample rate in hertz"@en .
+<https://w3id.org/modavis/ontology/audio#sampleRate> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#sampleRate> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#sampleRate> <http://www.w3.org/2004/02/skos/core#definition> "The number of audio frames per second on the signal's sample clock, expressed in hertz."@en .
+<https://w3id.org/modavis/ontology/audio#selectionPriority> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#selectionPriority> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#selectionPriority> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#selectionPriority> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#selectionPriority> <http://www.w3.org/2000/01/rdf-schema#label> "selection priority"@en .
+<https://w3id.org/modavis/ontology/audio#selectionPriority> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/modavis/ontology/audio#selectionPriority> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#selectionPriority> <http://www.w3.org/2004/02/skos/core#definition> "An integer used by an application profile to resolve overlapping playback-selection domains."@en .
+<https://w3id.org/modavis/ontology/audio#soundingComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#soundingComponent> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#TuningEntry> .
+<https://w3id.org/modavis/ontology/audio#soundingComponent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#soundingComponent> <http://www.w3.org/2000/01/rdf-schema#label> "sounding component"@en .
+<https://w3id.org/modavis/ontology/audio#soundingComponent> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/audio#soundingComponent> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#soundingComponent> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the instrument component whose target pitch is recorded by a tuning entry."@en .
+<https://w3id.org/modavis/ontology/audio#sourceFundamentalHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#sourceFundamentalHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#sourceFundamentalHz> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#sourceFundamentalHz> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#sourceFundamentalHz> <http://www.w3.org/2000/01/rdf-schema#label> "source fundamental frequency"@en .
+<https://w3id.org/modavis/ontology/audio#sourceFundamentalHz> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#sourceFundamentalHz> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#sourceFundamentalHz> <http://www.w3.org/2004/02/skos/core#definition> "The measured, inferred, or declared fundamental frequency of the untransposed source sample, in hertz."@en .
+<https://w3id.org/modavis/ontology/audio#startFrameInclusive> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#startFrameInclusive> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#startFrameInclusive> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SignalRegion> .
+<https://w3id.org/modavis/ontology/audio#startFrameInclusive> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#startFrameInclusive> <http://www.w3.org/2000/01/rdf-schema#label> "inclusive start frame"@en .
+<https://w3id.org/modavis/ontology/audio#startFrameInclusive> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#nonNegativeInteger> .
+<https://w3id.org/modavis/ontology/audio#startFrameInclusive> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#startFrameInclusive> <http://www.w3.org/2004/02/skos/core#definition> "The zero-based inclusive index of the first audio frame in a half-open signal region."@en .
+<https://w3id.org/modavis/ontology/audio#takeNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#takeNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#takeNumber> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SampleExtractionRegion> .
+<https://w3id.org/modavis/ontology/audio#takeNumber> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#takeNumber> <http://www.w3.org/2000/01/rdf-schema#label> "take number"@en .
+<https://w3id.org/modavis/ontology/audio#takeNumber> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#positiveInteger> .
+<https://w3id.org/modavis/ontology/audio#takeNumber> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#takeNumber> <http://www.w3.org/2004/02/skos/core#definition> "The positive source-preserving number assigned to a recorded take."@en .
+<https://w3id.org/modavis/ontology/audio#targetFrequencyHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#targetFrequencyHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#targetFrequencyHz> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#targetFrequencyHz> <http://www.w3.org/2000/01/rdf-schema#label> "target frequency"@en .
+<https://w3id.org/modavis/ontology/audio#targetFrequencyHz> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#targetFrequencyHz> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#targetFrequencyHz> <http://www.w3.org/2004/02/skos/core#definition> "The target sounding frequency in hertz for a playback parameter or tuning entry."@en .
+<https://w3id.org/modavis/ontology/audio#targetFrequencyHz> <http://www.w3.org/2004/02/skos/core#scopeNote> "The 0.1.0 exchange profile permits this property only on SamplePlaybackParameters and TuningEntry. The global domain is omitted because OWL would otherwise infer an invalid intersection type."@en .
+<https://w3id.org/modavis/ontology/audio#totalFrames> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#totalFrames> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#totalFrames> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#AudioSignal> .
+<https://w3id.org/modavis/ontology/audio#totalFrames> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#totalFrames> <http://www.w3.org/2000/01/rdf-schema#label> "total frame count"@en .
+<https://w3id.org/modavis/ontology/audio#totalFrames> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#positiveInteger> .
+<https://w3id.org/modavis/ontology/audio#totalFrames> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#totalFrames> <http://www.w3.org/2004/02/skos/core#definition> "The total number of audio frames in a fixed audio signal."@en .
+<https://w3id.org/modavis/ontology/audio#tuningEntries> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#tuningEntries> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#TuningMap> .
+<https://w3id.org/modavis/ontology/audio#tuningEntries> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#tuningEntries> <http://www.w3.org/2000/01/rdf-schema#label> "has tuning entry"@en .
+<https://w3id.org/modavis/ontology/audio#tuningEntries> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#TuningEntry> .
+<https://w3id.org/modavis/ontology/audio#tuningEntries> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#tuningEntries> <http://www.w3.org/2004/02/skos/core#definition> "Relates a tuning map to one of its key- or component-scoped tuning entries."@en .
+<https://w3id.org/modavis/ontology/audio#tuningOffsetCents> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/audio#tuningOffsetCents> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#tuningOffsetCents> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#tuningOffsetCents> <http://www.w3.org/2000/01/rdf-schema#label> "tuning offset in cents"@en .
+<https://w3id.org/modavis/ontology/audio#tuningOffsetCents> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/audio#tuningOffsetCents> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#tuningOffsetCents> <http://www.w3.org/2004/02/skos/core#definition> "The signed pitch adjustment in cents relative to the applicable source or target reference."@en .
+<https://w3id.org/modavis/ontology/audio#tuningOffsetCents> <http://www.w3.org/2004/02/skos/core#scopeNote> "The 0.1.0 exchange profile permits this property only on SamplePlaybackParameters and TuningEntry. The relevant source or target reference must be established by that enclosing record."@en .
+<https://w3id.org/modavis/ontology/audio#tuningSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/audio#tuningSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#tuningSystem> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#TuningMap> .
+<https://w3id.org/modavis/ontology/audio#tuningSystem> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#tuningSystem> <http://www.w3.org/2000/01/rdf-schema#label> "tuning system"@en .
+<https://w3id.org/modavis/ontology/audio#tuningSystem> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/audio#tuningSystem> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#tuningSystem> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the temperament or tuning-system specification used by a tuning map."@en .
+<https://w3id.org/modavis/ontology/audio#tuningSystem> <http://www.w3.org/2004/02/skos/core#scopeNote> "Use a stable IRI for a documented tuning system; retain a source label on that identified resource rather than embedding an opaque tuning-system string in the map."@en .
+<https://w3id.org/modavis/ontology/audio#usesLoopPointSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#usesLoopPointSet> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#usesLoopPointSet> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#usesLoopPointSet> <http://www.w3.org/2000/01/rdf-schema#label> "uses loop point set"@en .
+<https://w3id.org/modavis/ontology/audio#usesLoopPointSet> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#LoopPointSet> .
+<https://w3id.org/modavis/ontology/audio#usesLoopPointSet> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#usesLoopPointSet> <http://www.w3.org/2004/02/skos/core#definition> "Identifies a loop point set selected by a sampled-playback parameter record."@en .
+<https://w3id.org/modavis/ontology/audio#usesPlaybackParameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#usesPlaybackParameters> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#usesPlaybackParameters> <http://www.w3.org/2000/01/rdf-schema#label> "uses playback parameters"@en .
+<https://w3id.org/modavis/ontology/audio#usesPlaybackParameters> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#usesPlaybackParameters> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#usesPlaybackParameters> <http://www.w3.org/2004/02/skos/core#definition> "Relates a virtual instrument, version, control mapping, or package to sampled-playback parameters it uses."@en .
+<https://w3id.org/modavis/ontology/audio#usesPlaybackParameters> <http://www.w3.org/2004/02/skos/core#scopeNote> "The open subject position avoids a dependency from the audio module to every possible application class. Application profiles must constrain which resources may use playback parameters."@en .
+<https://w3id.org/modavis/ontology/audio#usesReleaseRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#usesReleaseRegion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#usesReleaseRegion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#usesReleaseRegion> <http://www.w3.org/2000/01/rdf-schema#label> "uses release region"@en .
+<https://w3id.org/modavis/ontology/audio#usesReleaseRegion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#ReleaseRegion> .
+<https://w3id.org/modavis/ontology/audio#usesReleaseRegion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#usesReleaseRegion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies a source-bound release region selected for sampled playback."@en .
+<https://w3id.org/modavis/ontology/audio#usesTuningMap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/audio#usesTuningMap> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/audio#SamplePlaybackParameters> .
+<https://w3id.org/modavis/ontology/audio#usesTuningMap> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/audio> .
+<https://w3id.org/modavis/ontology/audio#usesTuningMap> <http://www.w3.org/2000/01/rdf-schema#label> "uses tuning map"@en .
+<https://w3id.org/modavis/ontology/audio#usesTuningMap> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/audio#TuningMap> .
+<https://w3id.org/modavis/ontology/audio#usesTuningMap> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/audio#usesTuningMap> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the tuning map used by a sampled-playback parameter record."@en .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/prov-o/> .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/dc/terms/description> "Protocol-neutral semantics for fixed audio signals, source-bound half-open frame regions, sampled-playback parameters, and tuning maps."@en .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/dc/terms/title> "MODAVIS Audio and Sampled Playback Ontology"@en .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modaudio" .
+<https://w3id.org/modavis/ontology/audio> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/audio#" .
+<https://w3id.org/modavis/ontology/audio> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/audio> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology/audio> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/instrument/0.1.0> .
+<https://w3id.org/modavis/ontology/audio> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/media/0.1.0> .
+<https://w3id.org/modavis/ontology/audio> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/audio/0.1.0> .
+<https://w3id.org/modavis/ontology/audio> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

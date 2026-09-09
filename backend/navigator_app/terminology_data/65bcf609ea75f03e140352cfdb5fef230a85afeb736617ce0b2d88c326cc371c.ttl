@@ -1,0 +1,131 @@
+@prefix modmidi: <https://w3id.org/modavis/ontology/midi#> .
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modaudio: <https://w3id.org/modavis/ontology/audio#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/midi> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/audio/0.1.0> ;
+  dcterms:title "MODAVIS MIDI Binding Ontology"@en ;
+  dcterms:description "MIDI-specific bindings for protocol-neutral MODAVIS audio regions, sampled-playback parameters, and tuning records."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/midi/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modmidi" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/midi#" .
+
+modmidi:MidiPlaybackBinding a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "MIDI playback binding"@en ;
+  skos:definition "A MIDI 1.0 note-number and note-on-velocity selection domain bound to protocol-neutral sampled-playback parameters."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:MidiExtractionBinding a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "MIDI extraction binding"@en ;
+  skos:definition "A MIDI note-number assignment bound to a protocol-neutral sample extraction region."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:MidiTuningEntryBinding a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "MIDI tuning-entry binding"@en ;
+  skos:definition "A MIDI note number bound to a protocol-neutral tuning entry."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:MidiReferencePitchBinding a owl:Class ;
+  rdfs:subClassOf modavis:IdentifiedResource ;
+  rdfs:label "MIDI reference-pitch binding"@en ;
+  skos:definition "A MIDI note number bound to a protocol-neutral tuning reference."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:playbackParameters a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiPlaybackBinding ; rdfs:range modaudio:SamplePlaybackParameters ;
+  rdfs:label "playback parameters"@en ;
+  skos:definition "Identifies the protocol-neutral sampled-playback parameters to which the MIDI selection domain applies."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:extractionRegion a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiExtractionBinding ; rdfs:range modaudio:SampleExtractionRegion ;
+  rdfs:label "extraction region"@en ;
+  skos:definition "Identifies the sample extraction region assigned to a MIDI note number."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:tuningEntry a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiTuningEntryBinding ; rdfs:range modaudio:TuningEntry ;
+  rdfs:label "binds tuning entry"@en ;
+  skos:definition "Identifies the protocol-neutral tuning entry bound to a MIDI note number."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:tuningReference a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiReferencePitchBinding ; rdfs:range modaudio:TuningReference ;
+  rdfs:label "binds tuning reference"@en ;
+  skos:definition "Identifies the protocol-neutral tuning reference bound to a MIDI note number."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:rootNoteNumber a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiPlaybackBinding ; rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "root MIDI note number"@en ;
+  skos:definition "The MIDI note number at which the sample plays at its untransposed reference pitch."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:minimumNoteNumber a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiPlaybackBinding ; rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "minimum MIDI note number"@en ;
+  skos:definition "The inclusive lowest MIDI note number selecting the bound playback parameters."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:maximumNoteNumber a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiPlaybackBinding ; rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "maximum MIDI note number"@en ;
+  skos:definition "The inclusive highest MIDI note number selecting the bound playback parameters."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:minimumNoteOnVelocity a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiPlaybackBinding ; rdfs:range xsd:positiveInteger ;
+  rdfs:label "minimum MIDI note-on velocity"@en ;
+  skos:definition "The inclusive lowest MIDI note-on velocity selecting the bound playback parameters."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:maximumNoteOnVelocity a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiPlaybackBinding ; rdfs:range xsd:positiveInteger ;
+  rdfs:label "maximum MIDI note-on velocity"@en ;
+  skos:definition "The inclusive highest MIDI note-on velocity selecting the bound playback parameters."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:assignedNoteNumber a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modmidi:MidiExtractionBinding ; rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "assigned MIDI note number"@en ;
+  skos:definition "The MIDI note number assigned to the bound sample extraction region."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .
+
+modmidi:noteNumber a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "MIDI note number"@en ;
+  skos:definition "The MIDI note number bound to a tuning entry or tuning reference."@en ;
+  skos:scopeNote "The exchange profile permits this property on TuningEntry and TuningReference and restricts it to the MIDI range 0–127. A global domain is omitted because asserting both domains would infer an invalid intersection."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/midi> ;
+  vs:term_status "testing" .

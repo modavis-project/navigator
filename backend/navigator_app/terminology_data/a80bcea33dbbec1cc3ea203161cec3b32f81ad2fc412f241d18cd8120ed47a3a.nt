@@ -1,0 +1,254 @@
+<https://w3id.org/modavis/ontology/assertion#Assertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/assertion#Assertion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#Assertion> <http://www.w3.org/2000/01/rdf-schema#label> "assertion"@en .
+<https://w3id.org/modavis/ontology/assertion#Assertion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/assertion#Assertion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#Assertion> <http://www.w3.org/2004/02/skos/core#definition> "A citable claim that relates a subject to an identified resource or literal through a governed predicate and retains status, evidence, confidence, and provenance."@en .
+<https://w3id.org/modavis/ontology/assertion#ConflictCriterion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/assertion#ConflictCriterion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#ConflictCriterion> <http://www.w3.org/2000/01/rdf-schema#label> "conflict criterion"@en .
+<https://w3id.org/modavis/ontology/assertion#ConflictCriterion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/assertion#ConflictCriterion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#ConflictCriterion> <http://www.w3.org/2004/02/skos/core#definition> "An identified rule, policy, or documented condition under which the assertions in a conflict set cannot all be accepted together."@en .
+<https://w3id.org/modavis/ontology/assertion#ConflictDecision> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/assertion#ConflictDecision> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#ConflictDecision> <http://www.w3.org/2000/01/rdf-schema#label> "conflict decision"@en .
+<https://w3id.org/modavis/ontology/assertion#ConflictDecision> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/assertion#ConflictDecision> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#ConflictDecision> <http://www.w3.org/2004/02/skos/core#definition> "An accountable editorial decision that resolves or records a conflict set."@en .
+<https://w3id.org/modavis/ontology/assertion#ConflictSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/assertion#ConflictSet> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#ConflictSet> <http://www.w3.org/2000/01/rdf-schema#label> "conflict set"@en .
+<https://w3id.org/modavis/ontology/assertion#ConflictSet> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/assertion#ConflictSet> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#ConflictSet> <http://www.w3.org/2004/02/skos/core#definition> "A set of assertions that cannot all be accepted together under the stated conflict criterion."@en .
+<https://w3id.org/modavis/ontology/assertion#Projection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/assertion#Projection> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#Projection> <http://www.w3.org/2000/01/rdf-schema#label> "assertion projection"@en .
+<https://w3id.org/modavis/ontology/assertion#Projection> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/assertion#Projection> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#Projection> <http://www.w3.org/2004/02/skos/core#definition> "Lineage connecting an accepted assertion to a direct triple or operational domain representation."@en .
+<https://w3id.org/modavis/ontology/assertion#assertionStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertionStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertionStatus> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertionStatus> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertionStatus> <http://www.w3.org/2000/01/rdf-schema#label> "assertion status"@en .
+<https://w3id.org/modavis/ontology/assertion#assertionStatus> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/assertion#assertionStatus> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#assertionStatus> <http://www.w3.org/2004/02/skos/core#definition> "Classifies the review or lifecycle status of an assertion with a governed concept."@en .
+<https://w3id.org/modavis/ontology/assertion#assertsLiteral> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertsLiteral> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertsLiteral> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertsLiteral> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertsLiteral> <http://www.w3.org/2000/01/rdf-schema#label> "asserts literal"@en .
+<https://w3id.org/modavis/ontology/assertion#assertsLiteral> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#assertsLiteral> <http://www.w3.org/2004/02/skos/core#definition> "Provides the literal-valued object of an assertion; it is mutually exclusive with a resource-valued object in the MODAVIS SHACL profiles."@en .
+<https://w3id.org/modavis/ontology/assertion#assertsLiteral> <http://www.w3.org/2004/02/skos/core#scopeNote> "No global datatype range is asserted because language-tagged strings and multiple RDF datatypes are legitimate. An application profile should require a narrower datatype when comparison or calculation depends on it."@en .
+<https://w3id.org/modavis/ontology/assertion#assertsObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertsObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertsObject> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertsObject> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertsObject> <http://www.w3.org/2000/01/rdf-schema#label> "asserts object"@en .
+<https://w3id.org/modavis/ontology/assertion#assertsObject> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/assertion#assertsObject> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#assertsObject> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the resource-valued object of an assertion; it is mutually exclusive with a literal-valued object in the MODAVIS SHACL profiles."@en .
+<https://w3id.org/modavis/ontology/assertion#assertsPredicate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertsPredicate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertsPredicate> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertsPredicate> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertsPredicate> <http://www.w3.org/2000/01/rdf-schema#label> "asserts predicate"@en .
+<https://w3id.org/modavis/ontology/assertion#assertsPredicate> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/assertion#assertsPredicate> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#assertsPredicate> <http://www.w3.org/2004/02/skos/core#definition> "Uses a governed assertion-predicate concept; accepted projection may map that concept to a native OWL property."@en .
+<https://w3id.org/modavis/ontology/assertion#assertsSubject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertsSubject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#assertsSubject> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertsSubject> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#assertsSubject> <http://www.w3.org/2000/01/rdf-schema#label> "asserts subject"@en .
+<https://w3id.org/modavis/ontology/assertion#assertsSubject> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/assertion#assertsSubject> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#assertsSubject> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the resource about which an assertion makes its claim."@en .
+<https://w3id.org/modavis/ontology/assertion#chosenAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#chosenAssertion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#ConflictDecision> .
+<https://w3id.org/modavis/ontology/assertion#chosenAssertion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#chosenAssertion> <http://www.w3.org/2000/01/rdf-schema#label> "chosen assertion"@en .
+<https://w3id.org/modavis/ontology/assertion#chosenAssertion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#chosenAssertion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#chosenAssertion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies an assertion selected by an editorial conflict decision."@en .
+<https://w3id.org/modavis/ontology/assertion#confidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#confidence> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#confidence> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#confidence> <http://www.w3.org/2000/01/rdf-schema#label> "confidence"@en .
+<https://w3id.org/modavis/ontology/assertion#confidence> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/assertion#confidence> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#confidence> <http://www.w3.org/2004/02/skos/core#definition> "A decimal from zero through one expressing the recorded confidence in an assertion under its generating method or review process."@en .
+<https://w3id.org/modavis/ontology/assertion#conflictCriterion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#conflictCriterion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#conflictCriterion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#ConflictSet> .
+<https://w3id.org/modavis/ontology/assertion#conflictCriterion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#conflictCriterion> <http://www.w3.org/2000/01/rdf-schema#label> "uses conflict criterion"@en .
+<https://w3id.org/modavis/ontology/assertion#conflictCriterion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#ConflictCriterion> .
+<https://w3id.org/modavis/ontology/assertion#conflictCriterion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#conflictCriterion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the rule, policy, or documented condition under which the assertions in a conflict set are incompatible."@en .
+<https://w3id.org/modavis/ontology/assertion#decidedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#decidedBy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#ConflictDecision> .
+<https://w3id.org/modavis/ontology/assertion#decidedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#decidedBy> <http://www.w3.org/2000/01/rdf-schema#label> "decided by"@en .
+<https://w3id.org/modavis/ontology/assertion#decidedBy> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Agent> .
+<https://w3id.org/modavis/ontology/assertion#decidedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#decidedBy> <http://www.w3.org/2004/02/skos/core#definition> "Identifies an accountable agent responsible for an editorial conflict decision."@en .
+<https://w3id.org/modavis/ontology/assertion#decisionFor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#decisionFor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#decisionFor> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#ConflictDecision> .
+<https://w3id.org/modavis/ontology/assertion#decisionFor> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#decisionFor> <http://www.w3.org/2000/01/rdf-schema#label> "decision for"@en .
+<https://w3id.org/modavis/ontology/assertion#decisionFor> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#ConflictSet> .
+<https://w3id.org/modavis/ontology/assertion#decisionFor> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#decisionFor> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the conflict set addressed by an editorial conflict decision."@en .
+<https://w3id.org/modavis/ontology/assertion#decisionRationale> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#decisionRationale> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#ConflictDecision> .
+<https://w3id.org/modavis/ontology/assertion#decisionRationale> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#decisionRationale> <http://www.w3.org/2000/01/rdf-schema#label> "decision rationale"@en .
+<https://w3id.org/modavis/ontology/assertion#decisionRationale> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/assertion#decisionRationale> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#decisionRationale> <http://www.w3.org/2004/02/skos/core#definition> "A human-readable explanation of the evidence and reasoning behind an editorial conflict decision."@en .
+<https://w3id.org/modavis/ontology/assertion#generatedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#generatedBy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#generatedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#generatedBy> <http://www.w3.org/2000/01/rdf-schema#label> "generated by"@en .
+<https://w3id.org/modavis/ontology/assertion#generatedBy> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/prov#Activity> .
+<https://w3id.org/modavis/ontology/assertion#generatedBy> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+<https://w3id.org/modavis/ontology/assertion#generatedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#generatedBy> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the processing or editorial activity that generated an assertion."@en .
+<https://w3id.org/modavis/ontology/assertion#hasConflictMember> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#hasConflictMember> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#ConflictSet> .
+<https://w3id.org/modavis/ontology/assertion#hasConflictMember> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#hasConflictMember> <http://www.w3.org/2000/01/rdf-schema#label> "has conflict member"@en .
+<https://w3id.org/modavis/ontology/assertion#hasConflictMember> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#hasConflictMember> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#hasConflictMember> <http://www.w3.org/2004/02/skos/core#definition> "Relates a conflict set to an assertion that participates in the stated incompatibility."@en .
+<https://w3id.org/modavis/ontology/assertion#hasEvidenceRelation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#label> "has evidence relation"@en .
+<https://w3id.org/modavis/ontology/assertion#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/evidence#EvidenceRelation> .
+<https://w3id.org/modavis/ontology/assertion#hasEvidenceRelation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#hasEvidenceRelation> <http://www.w3.org/2004/02/skos/core#definition> "Relates an assertion to qualified source-fragment evidence that supports, opposes, or contextualizes it."@en .
+<https://w3id.org/modavis/ontology/assertion#normalizedValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#normalizedValue> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#normalizedValue> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#normalizedValue> <http://www.w3.org/2000/01/rdf-schema#label> "normalized value"@en .
+<https://w3id.org/modavis/ontology/assertion#normalizedValue> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/assertion#normalizedValue> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#normalizedValue> <http://www.w3.org/2004/02/skos/core#definition> "Retains a documented comparison or canonical lexical form without replacing the raw source value."@en .
+<https://w3id.org/modavis/ontology/assertion#projectedPropertyIri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectedPropertyIri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectedPropertyIri> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/assertion#projectedPropertyIri> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectedPropertyIri> <http://www.w3.org/2000/01/rdf-schema#label> "projected property IRI"@en .
+<https://w3id.org/modavis/ontology/assertion#projectedPropertyIri> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://w3id.org/modavis/ontology/assertion#projectedPropertyIri> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectedPropertyIri> <http://www.w3.org/2004/02/skos/core#definition> "Maps a governed assertion-predicate concept to the absolute IRI of a native RDF property used by reviewed projections."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Projection> .
+<https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy> <http://www.w3.org/2000/01/rdf-schema#label> "projection generated by"@en .
+<https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/prov#Activity> .
+<https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.w3.org/ns/prov#wasGeneratedBy> .
+<https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the processing or editorial activity that generated the projection."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionGraphIri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionGraphIri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionGraphIri> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Projection> .
+<https://w3id.org/modavis/ontology/assertion#projectionGraphIri> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectionGraphIri> <http://www.w3.org/2000/01/rdf-schema#label> "projection graph IRI"@en .
+<https://w3id.org/modavis/ontology/assertion#projectionGraphIri> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://w3id.org/modavis/ontology/assertion#projectionGraphIri> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectionGraphIri> <http://www.w3.org/2004/02/skos/core#definition> "Optionally records the named-graph IRI in which the projected statement was materialized."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionLiteral> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionLiteral> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionLiteral> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Projection> .
+<https://w3id.org/modavis/ontology/assertion#projectionLiteral> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectionLiteral> <http://www.w3.org/2000/01/rdf-schema#label> "projection literal"@en .
+<https://w3id.org/modavis/ontology/assertion#projectionLiteral> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectionLiteral> <http://www.w3.org/2004/02/skos/core#definition> "Provides the literal-valued object of the projected RDF statement."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionLiteral> <http://www.w3.org/2004/02/skos/core#scopeNote> "The literal must reproduce the source assertion value. No global datatype range is asserted because the source assertion may legitimately use different RDF datatypes or a language tag."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionObject> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Projection> .
+<https://w3id.org/modavis/ontology/assertion#projectionObject> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectionObject> <http://www.w3.org/2000/01/rdf-schema#label> "projection object"@en .
+<https://w3id.org/modavis/ontology/assertion#projectionObject> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/assertion#projectionObject> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectionObject> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the resource-valued object of the projected RDF statement."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionPredicateIri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionPredicateIri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionPredicateIri> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Projection> .
+<https://w3id.org/modavis/ontology/assertion#projectionPredicateIri> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectionPredicateIri> <http://www.w3.org/2000/01/rdf-schema#label> "projection predicate IRI"@en .
+<https://w3id.org/modavis/ontology/assertion#projectionPredicateIri> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://w3id.org/modavis/ontology/assertion#projectionPredicateIri> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectionPredicateIri> <http://www.w3.org/2004/02/skos/core#definition> "Records the absolute IRI of the RDF predicate used by the projection without treating that property IRI as an OWL individual."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionRule> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionRule> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionRule> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Projection> .
+<https://w3id.org/modavis/ontology/assertion#projectionRule> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectionRule> <http://www.w3.org/2000/01/rdf-schema#label> "projection rule"@en .
+<https://w3id.org/modavis/ontology/assertion#projectionRule> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectionRule> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the documented rule or specification used to generate the projection."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionRule> <http://www.w3.org/2004/02/skos/core#scopeNote> "The value must be an IRI identifying a citable rule or specification, not an ungoverned display string. The exchange profile enforces IRI node kind."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionRuleVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionRuleVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionRuleVersion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Projection> .
+<https://w3id.org/modavis/ontology/assertion#projectionRuleVersion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectionRuleVersion> <http://www.w3.org/2000/01/rdf-schema#label> "projection rule version"@en .
+<https://w3id.org/modavis/ontology/assertion#projectionRuleVersion> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/assertion#projectionRuleVersion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectionRuleVersion> <http://www.w3.org/2004/02/skos/core#definition> "Records the non-empty version label of the projection rule."@en .
+<https://w3id.org/modavis/ontology/assertion#projectionSubject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionSubject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectionSubject> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Projection> .
+<https://w3id.org/modavis/ontology/assertion#projectionSubject> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectionSubject> <http://www.w3.org/2000/01/rdf-schema#label> "projection subject"@en .
+<https://w3id.org/modavis/ontology/assertion#projectionSubject> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/assertion#projectionSubject> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectionSubject> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the subject resource of the projected RDF statement."@en .
+<https://w3id.org/modavis/ontology/assertion#projectsAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectsAssertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#projectsAssertion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Projection> .
+<https://w3id.org/modavis/ontology/assertion#projectsAssertion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectsAssertion> <http://www.w3.org/2000/01/rdf-schema#label> "projects assertion"@en .
+<https://w3id.org/modavis/ontology/assertion#projectsAssertion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#projectsAssertion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#projectsAssertion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the accepted assertion from which a convenience or operational projection was generated."@en .
+<https://w3id.org/modavis/ontology/assertion#rawValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/assertion#rawValue> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#rawValue> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#rawValue> <http://www.w3.org/2000/01/rdf-schema#label> "raw value"@en .
+<https://w3id.org/modavis/ontology/assertion#rawValue> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/assertion#rawValue> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#rawValue> <http://www.w3.org/2004/02/skos/core#definition> "Retains the source lexical form from which an assertion value was extracted or interpreted."@en .
+<https://w3id.org/modavis/ontology/assertion#supersedes> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/assertion#supersedes> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#supersedes> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/assertion> .
+<https://w3id.org/modavis/ontology/assertion#supersedes> <http://www.w3.org/2000/01/rdf-schema#label> "supersedes"@en .
+<https://w3id.org/modavis/ontology/assertion#supersedes> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/assertion#Assertion> .
+<https://w3id.org/modavis/ontology/assertion#supersedes> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/assertion#supersedes> <http://www.w3.org/2004/02/skos/core#definition> "Relates a later assertion to an earlier assertion whose role or status it replaces without erasing the earlier record."@en .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/dc/terms/description> "Explicit source-backed assertions, conflicts, editorial decisions, and convenience-graph projections."@en .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/dc/terms/title> "MODAVIS Assertion Ontology"@en .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modassert" .
+<https://w3id.org/modavis/ontology/assertion> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/assertion#" .
+<https://w3id.org/modavis/ontology/assertion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/assertion> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology/assertion> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/evidence/0.1.0> .
+<https://w3id.org/modavis/ontology/assertion> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/provenance/0.1.0> .
+<https://w3id.org/modavis/ontology/assertion> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/assertion/0.1.0> .
+<https://w3id.org/modavis/ontology/assertion> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

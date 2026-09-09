@@ -1,0 +1,138 @@
+<https://w3id.org/modavis/ontology/organ#Console> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#Console> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#Console> <http://www.w3.org/2000/01/rdf-schema#label> "organ console"@en .
+<https://w3id.org/modavis/ontology/organ#Console> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#ComponentCollection> .
+<https://w3id.org/modavis/ontology/organ#Console> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#Console> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#Console> <http://www.w3.org/2004/02/skos/core#definition> "An organized pipe-organ component containing playing interfaces, stop controls, indicators, and related control mechanisms."@en .
+<https://w3id.org/modavis/ontology/organ#OrganAccessory> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#OrganAccessory> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#OrganAccessory> <http://www.w3.org/2000/01/rdf-schema#label> "organ accessory"@en .
+<https://w3id.org/modavis/ontology/organ#OrganAccessory> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#OrganAccessory> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#OrganAccessory> <http://www.w3.org/2004/02/skos/core#definition> "A pipe-organ component providing an auxiliary control, effect, indication, or convenience not adequately described by the more specific component classes."@en .
+<https://w3id.org/modavis/ontology/organ#OrganComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#OrganComponent> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#OrganComponent> <http://www.w3.org/2000/01/rdf-schema#label> "pipe-organ component"@en .
+<https://w3id.org/modavis/ontology/organ#OrganComponent> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#InstrumentComponent> .
+<https://w3id.org/modavis/ontology/organ#OrganComponent> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#OrganComponent> <http://www.w3.org/2004/02/skos/core#definition> "An instrument component described specifically within the structural or functional context of a pipe organ."@en .
+<https://w3id.org/modavis/ontology/organ#OrganCoupler> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#OrganCoupler> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#OrganCoupler> <http://www.w3.org/2000/01/rdf-schema#label> "organ coupler"@en .
+<https://w3id.org/modavis/ontology/organ#OrganCoupler> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#OrganCoupler> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#OrganCoupler> <http://www.w3.org/2004/02/skos/core#definition> "A pipe-organ component or logical mechanism that causes controls associated with one component or division to act on another."@en .
+<https://w3id.org/modavis/ontology/organ#OrganDivision> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#OrganDivision> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#OrganDivision> <http://www.w3.org/2000/01/rdf-schema#label> "organ division"@en .
+<https://w3id.org/modavis/ontology/organ#OrganDivision> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#ComponentCollection> .
+<https://w3id.org/modavis/ontology/organ#OrganDivision> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#OrganDivision> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#OrganDivision> <http://www.w3.org/2004/02/skos/core#definition> "A named or functionally coherent collection of pipe-organ components, commonly associated with a manual, pedal division, windchest, spatial location, or tonal purpose."@en .
+<https://w3id.org/modavis/ontology/organ#OrganKeyboard> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#OrganKeyboard> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#OrganKeyboard> <http://www.w3.org/2000/01/rdf-schema#label> "organ keyboard"@en .
+<https://w3id.org/modavis/ontology/organ#OrganKeyboard> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#PlayingInterface> .
+<https://w3id.org/modavis/ontology/organ#OrganKeyboard> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#OrganKeyboard> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#OrganKeyboard> <http://www.w3.org/2004/02/skos/core#definition> "A manual or pedal playing interface consisting of ordered keys used to control a pipe organ."@en .
+<https://w3id.org/modavis/ontology/organ#OrganPipe> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#OrganPipe> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#OrganPipe> <http://www.w3.org/2000/01/rdf-schema#label> "organ pipe"@en .
+<https://w3id.org/modavis/ontology/organ#OrganPipe> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#OrganPipe> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#OrganPipe> <http://www.w3.org/2004/02/skos/core#definition> "An individual pipe-organ component designed to produce or influence sound through an air column or associated resonant mechanism."@en .
+<https://w3id.org/modavis/ontology/organ#OrganPipe> <http://www.w3.org/2004/02/skos/core#scopeNote> "Sound-generator or resonator function is represented through contextual role assignment."@en .
+<https://w3id.org/modavis/ontology/organ#OrganRank> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#OrganRank> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#OrganRank> <http://www.w3.org/2000/01/rdf-schema#label> "organ rank"@en .
+<https://w3id.org/modavis/ontology/organ#OrganRank> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#ComponentCollection> .
+<https://w3id.org/modavis/ontology/organ#OrganRank> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#OrganRank> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#OrganRank> <http://www.w3.org/2004/02/skos/core#definition> "An organized collection of organ pipes intended to provide a related sequence of pitches or another coherent tonal function."@en .
+<https://w3id.org/modavis/ontology/organ#OrganStop> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#OrganStop> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#OrganStop> <http://www.w3.org/2000/01/rdf-schema#label> "organ stop"@en .
+<https://w3id.org/modavis/ontology/organ#OrganStop> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#OrganStop> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#OrganStop> <http://www.w3.org/2004/02/skos/core#definition> "A pipe-organ component representing a selectable tonal resource or control, which may govern one or more ranks or another sound-producing arrangement."@en .
+<https://w3id.org/modavis/ontology/organ#OrganStop> <http://www.w3.org/2004/02/skos/core#scopeNote> "Selection/control behavior is expressed through a contextual functional-role assignment rather than asserted as permanent identity."@en .
+<https://w3id.org/modavis/ontology/organ#PipeOrgan> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#PipeOrgan> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#PipeOrgan> <http://www.w3.org/2000/01/rdf-schema#label> "pipe organ"@en .
+<https://w3id.org/modavis/ontology/organ#PipeOrgan> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/organ#PipeOrgan> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#PipeOrgan> <http://www.w3.org/2004/02/skos/core#definition> "A musical instrument in which pressurized air sounds one or more sets of pipes selected and controlled through stops, keys, or analogous mechanisms."@en .
+<https://w3id.org/modavis/ontology/organ#WindSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/organ#WindSystem> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#WindSystem> <http://www.w3.org/2000/01/rdf-schema#label> "organ wind system"@en .
+<https://w3id.org/modavis/ontology/organ#WindSystem> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#ComponentCollection> .
+<https://w3id.org/modavis/ontology/organ#WindSystem> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#WindSystem> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#WindSystem> <http://www.w3.org/2004/02/skos/core#definition> "A pipe-organ component collection that generates, stores, regulates, or distributes pressurized air."@en .
+<https://w3id.org/modavis/ontology/organ#couplesFrom> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/organ#couplesFrom> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/organ#OrganCoupler> .
+<https://w3id.org/modavis/ontology/organ#couplesFrom> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#couplesFrom> <http://www.w3.org/2000/01/rdf-schema#label> "couples from"@en .
+<https://w3id.org/modavis/ontology/organ#couplesFrom> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#couplesFrom> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#couplesFrom> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the source component, interface, or division from which an organ coupler propagates control."@en .
+<https://w3id.org/modavis/ontology/organ#couplesTo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/organ#couplesTo> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/organ#OrganCoupler> .
+<https://w3id.org/modavis/ontology/organ#couplesTo> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#couplesTo> <http://www.w3.org/2000/01/rdf-schema#label> "couples to"@en .
+<https://w3id.org/modavis/ontology/organ#couplesTo> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/organ#OrganComponent> .
+<https://w3id.org/modavis/ontology/organ#couplesTo> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#couplesTo> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the target component, interface, or division to which an organ coupler propagates control."@en .
+<https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation> <http://www.w3.org/2000/01/rdf-schema#label> "has nominal pitch designation"@en .
+<https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation> <http://www.w3.org/2004/02/skos/core#definition> "Records a source-preserving nominal organ pitch designation such as 8′ or 2 2/3′ without treating it as an exact measured frequency."@en .
+<https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation> <http://www.w3.org/2004/02/skos/core#scopeNote> "The exchange profile permits this source designation on organ stops and ranks. It is documentary notation, not a numeric acoustical measurement or tuning assertion."@en .
+<https://w3id.org/modavis/ontology/organ#hasRank> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/organ#hasRank> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/organ#OrganStop> .
+<https://w3id.org/modavis/ontology/organ#hasRank> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#hasRank> <http://www.w3.org/2000/01/rdf-schema#label> "has rank"@en .
+<https://w3id.org/modavis/ontology/organ#hasRank> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/organ#OrganRank> .
+<https://w3id.org/modavis/ontology/organ#hasRank> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#hasRank> <http://www.w3.org/2004/02/skos/core#definition> "Relates an organ stop to a rank used by that stop in a discovery-oriented convenience graph."@en .
+<https://w3id.org/modavis/ontology/organ#hasRank> <http://www.w3.org/2004/02/skos/core#scopeNote> "Convenience relation; use ComponentMembership when time, configuration, or evidence must be retained."@en .
+<https://w3id.org/modavis/ontology/organ#intervalSemitones> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/organ#intervalSemitones> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/organ#OrganCoupler> .
+<https://w3id.org/modavis/ontology/organ#intervalSemitones> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#intervalSemitones> <http://www.w3.org/2000/01/rdf-schema#label> "interval in semitones"@en .
+<https://w3id.org/modavis/ontology/organ#intervalSemitones> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#integer> .
+<https://w3id.org/modavis/ontology/organ#intervalSemitones> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#intervalSemitones> <http://www.w3.org/2004/02/skos/core#definition> "The signed nominal transposition interval of a coupler expressed in equal-tempered semitone units."@en .
+<https://w3id.org/modavis/ontology/organ#rankCount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/organ#rankCount> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/organ#OrganStop> .
+<https://w3id.org/modavis/ontology/organ#rankCount> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#rankCount> <http://www.w3.org/2000/01/rdf-schema#label> "rank count"@en .
+<https://w3id.org/modavis/ontology/organ#rankCount> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#positiveInteger> .
+<https://w3id.org/modavis/ontology/organ#rankCount> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#rankCount> <http://www.w3.org/2004/02/skos/core#definition> "The reported number of ranks associated with an organ stop in the described configuration."@en .
+<https://w3id.org/modavis/ontology/organ#rankMember> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/organ#rankMember> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/organ#OrganRank> .
+<https://w3id.org/modavis/ontology/organ#rankMember> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/organ> .
+<https://w3id.org/modavis/ontology/organ#rankMember> <http://www.w3.org/2000/01/rdf-schema#label> "rank member"@en .
+<https://w3id.org/modavis/ontology/organ#rankMember> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/organ#OrganPipe> .
+<https://w3id.org/modavis/ontology/organ#rankMember> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/organ#rankMember> <http://www.w3.org/2004/02/skos/core#definition> "Relates an organ rank to an organ pipe that is a member of the rank in a discovery-oriented convenience graph."@en .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/dc/terms/description> "Pipe-organ specialization of the generic MODAVIS instrument, component, membership, configuration, and role model."@en .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/dc/terms/title> "MODAVIS Pipe Organ Ontology"@en .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modorgan" .
+<https://w3id.org/modavis/ontology/organ> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/organ#" .
+<https://w3id.org/modavis/ontology/organ> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/organ> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology/organ> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/instrument/0.1.0> .
+<https://w3id.org/modavis/ontology/organ> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/organ/0.1.0> .
+<https://w3id.org/modavis/ontology/organ> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .

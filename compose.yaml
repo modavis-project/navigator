@@ -1,0 +1,79 @@
+name: modavis-navigator
+services:
+  navigator-db:
+    image: postgres:15-bookworm@sha256:5d1d70e254e3c5d7d76847a9deebb18478cd518df37abf6b278d4bdb1fe5d96c
+    environment:
+      POSTGRES_DB: navigator_pod
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run scripts/prepare.py first}
+      NAVIGATOR_READ_PASSWORD: ${NAVIGATOR_READ_PASSWORD:?Run scripts/prepare.py first}
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ${NAVIGATOR_RUNTIME:?Run scripts/prepare.py first}/artifacts:/artifacts:ro
+      - ./deploy/restore.sh:/docker-entrypoint-initdb.d/10-restore.sh:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -d navigator_pod && psql -U postgres -d navigator_pod -Atc \"select 1 from pg_roles where rolname='navigator_read'\" | grep -q 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 120
+    shm_size: 1gb
+    mem_limit: 3g
+  navigator-backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      DB_HOST: navigator-db
+      DB_PORT: '5432'
+      DB_NAME: navigator_pod
+      DB_USER: navigator_read
+      DB_PASSWORD: ${NAVIGATOR_READ_PASSWORD:?Run scripts/prepare.py first}
+      NAVIGATOR_DATA_PROFILE: pod-1.5-public
+      NAVIGATOR_PUBLIC_DATABASE_MANIFEST: /artifacts/PUBLIC_POSTGRESQL_MANIFEST.json
+      NAVIGATOR_PUBLIC_SOURCE_RELEASE_VERSION: 1.6.0
+      NAVIGATOR_URI_RELEASE_VERSION: 1.6.0
+      NAVIGATOR_URI_POLICY_VERSION: '2'
+      NAVIGATOR_URI_PUBLICATION_STATE: active
+      NAVIGATOR_IDENTIFIER_LEDGER_PATH: /artifacts/modavis-pod-1.5.5-identifier-ledger.sqlite
+      NAVIGATOR_IDENTIFIER_LEDGER_SHA256: 8be027fddeb9597141ac87b28be028afdced18b1f5423cf9f629673dd8167192
+      NAVIGATOR_DATASET_DISTRIBUTION_MANIFEST: /artifacts/distribution-manifest.json
+      NAVIGATOR_DATASET_DISTRIBUTION_ORGAN_ROOT: /artifacts/organs
+      NAVIGATOR_DATASET_DISTRIBUTION_ENTITY_ROOT: /artifacts/entities
+      NAVIGATOR_RESEARCH_INDEX: /artifacts/runtime-models/research
+      NAVIGATOR_WORKBENCH_MANIFEST: /artifacts/runtime-models/workbench/manifest.json
+      NAVIGATOR_EXPLORATION_MANIFEST: /resources/exploration/analysis/manifest.json
+      NAVIGATOR_OMARO_MANIFEST: /resources/omaro/manifest.json
+      NAVIGATOR_PUBLIC_BASE_URL: ${NAVIGATOR_PUBLIC_URL:-http://localhost:8080}
+      NAVIGATOR_RESOLVER_BASE_URL: ${NAVIGATOR_PUBLIC_URL:-http://localhost:8080}
+      NAVIGATOR_LINKED_DATA_BASE_URL: ${NAVIGATOR_PUBLIC_URL:-http://localhost:8080}
+      NAVIGATOR_CANONICAL_ID_BASE: https://w3id.org/modavis
+    volumes:
+      - ${NAVIGATOR_RUNTIME:?Run scripts/prepare.py first}/artifacts:/artifacts:ro
+      - ${NAVIGATOR_RUNTIME:?Run scripts/prepare.py first}/resources:/resources:ro
+    depends_on:
+      navigator-db:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8506/api/health/ready',timeout=10)"]
+      interval: 15s
+      timeout: 12s
+      retries: 60
+      start_period: 180s
+    mem_limit: 2g
+    security_opt: [no-new-privileges:true]
+  navigator-web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports: ['127.0.0.1:${NAVIGATOR_PORT:-8080}:80']
+    volumes:
+      - ${NAVIGATOR_RUNTIME:?Run scripts/prepare.py first}/resources/web/geolibre:/usr/share/nginx/html/geolibre:ro
+      - ${NAVIGATOR_RUNTIME:?Run scripts/prepare.py first}/resources/web/data:/usr/share/nginx/html/data:ro
+    depends_on:
+      navigator-backend:
+        condition: service_healthy
+    mem_limit: 256m
+    security_opt: [no-new-privileges:true]
+volumes:
+  database:

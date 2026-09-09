@@ -1,0 +1,1112 @@
+<https://orcid.org/0000-0002-7904-3892> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Person> .
+<https://orcid.org/0000-0002-7904-3892> <http://www.w3.org/2000/01/rdf-schema#label> "Dominik Ukolov" .
+<https://w3id.org/modavis/vao/0.5.0/vocabulary> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/vao/0.5.0/vocabulary> <http://purl.org/dc/terms/description> "Core RDF terms used by the semantic projection of VAO 0.5.0 manifests."@en .
+<https://w3id.org/modavis/vao/0.5.0/vocabulary> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/vao/0.5.0/vocabulary> <http://purl.org/dc/terms/modified> "2026-08-31"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/vao/0.5.0/vocabulary> <http://purl.org/dc/terms/title> "Virtual Acoustic Object (VAO) 0.5.0 vocabulary"@en .
+<https://w3id.org/modavis/vao/0.5.0/vocabulary> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/vao/0.5.0/vocabulary> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/vao/0.5.0/vocabulary> .
+<https://w3id.org/modavis/vao/0.5.0/vocabulary> <http://www.w3.org/2002/07/owl#versionInfo> "0.5.0" .
+<https://w3id.org/modavis/vao/ontology#AcousticModelSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#AcousticModelSet> <http://www.w3.org/2000/01/rdf-schema#label> "spatial and acoustic model set"@en .
+<https://w3id.org/modavis/vao/ontology#Analysis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Analysis> <http://www.w3.org/2000/01/rdf-schema#label> "analysis record"@en .
+<https://w3id.org/modavis/vao/ontology#AssetGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#AssetGroup> <http://www.w3.org/2000/01/rdf-schema#label> "asset group"@en .
+<https://w3id.org/modavis/vao/ontology#AudioScene> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#AudioScene> <http://www.w3.org/2000/01/rdf-schema#label> "spatial audio scene"@en .
+<https://w3id.org/modavis/vao/ontology#Calibration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Calibration> <http://www.w3.org/2000/01/rdf-schema#label> "calibration record"@en .
+<https://w3id.org/modavis/vao/ontology#Capability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Capability> <http://www.w3.org/2000/01/rdf-schema#label> "VAO capability"@en .
+<https://w3id.org/modavis/vao/ontology#CaptureDocumentation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#CaptureDocumentation> <http://www.w3.org/2000/01/rdf-schema#label> "capture documentation"@en .
+<https://w3id.org/modavis/vao/ontology#CaptureState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#CaptureState> <http://www.w3.org/2000/01/rdf-schema#label> "capture state"@en .
+<https://w3id.org/modavis/vao/ontology#ClockSegment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#ClockSegment> <http://www.w3.org/2000/01/rdf-schema#label> "clock-mapping segment"@en .
+<https://w3id.org/modavis/vao/ontology#ConformanceTrace> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#ConformanceTrace> <http://www.w3.org/2000/01/rdf-schema#label> "conformance trace"@en .
+<https://w3id.org/modavis/vao/ontology#Connection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Connection> <http://www.w3.org/2000/01/rdf-schema#label> "system connection"@en .
+<https://w3id.org/modavis/vao/ontology#Consent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Consent> <http://www.w3.org/2000/01/rdf-schema#label> "consent record"@en .
+<https://w3id.org/modavis/vao/ontology#CoordinateFrame> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#CoordinateFrame> <http://www.w3.org/2000/01/rdf-schema#label> "coordinate frame"@en .
+<https://w3id.org/modavis/vao/ontology#DerivationMap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#DerivationMap> <http://www.w3.org/2000/01/rdf-schema#label> "derivation map"@en .
+<https://w3id.org/modavis/vao/ontology#Distribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Distribution> <http://www.w3.org/2000/01/rdf-schema#label> "distribution"@en .
+<https://w3id.org/modavis/vao/ontology#EventAlignment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#EventAlignment> <http://www.w3.org/2000/01/rdf-schema#label> "event alignment"@en .
+<https://w3id.org/modavis/vao/ontology#ExecutionSemantics> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#ExecutionSemantics> <http://www.w3.org/2000/01/rdf-schema#label> "execution semantics"@en .
+<https://w3id.org/modavis/vao/ontology#GeometryBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#GeometryBinding> <http://www.w3.org/2000/01/rdf-schema#label> "geometry binding"@en .
+<https://w3id.org/modavis/vao/ontology#InteractionControl> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#InteractionControl> <http://www.w3.org/2000/01/rdf-schema#label> "interaction control"@en .
+<https://w3id.org/modavis/vao/ontology#InteractionEventType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#InteractionEventType> <http://www.w3.org/2000/01/rdf-schema#label> "interaction event type"@en .
+<https://w3id.org/modavis/vao/ontology#InteractionModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#InteractionModel> <http://www.w3.org/2000/01/rdf-schema#label> "interaction model"@en .
+<https://w3id.org/modavis/vao/ontology#InteractionTransition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#InteractionTransition> <http://www.w3.org/2000/01/rdf-schema#label> "interaction transition"@en .
+<https://w3id.org/modavis/vao/ontology#LogicalAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#LogicalAsset> <http://www.w3.org/2000/01/rdf-schema#label> "logical asset"@en .
+<https://w3id.org/modavis/vao/ontology#LoopPointSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#LoopPointSet> <http://www.w3.org/2000/01/rdf-schema#label> "loop-point set"@en .
+<https://w3id.org/modavis/vao/ontology#MaterialModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#MaterialModel> <http://www.w3.org/2000/01/rdf-schema#label> "acoustic material model"@en .
+<https://w3id.org/modavis/vao/ontology#MetricSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#MetricSet> <http://www.w3.org/2000/01/rdf-schema#label> "acoustic metric set"@en .
+<https://w3id.org/modavis/vao/ontology#MultimodalTimeline> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#MultimodalTimeline> <http://www.w3.org/2000/01/rdf-schema#label> "multimodal timeline"@en .
+<https://w3id.org/modavis/vao/ontology#PerspectiveGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#PerspectiveGroup> <http://www.w3.org/2000/01/rdf-schema#label> "perspective group"@en .
+<https://w3id.org/modavis/vao/ontology#PhysicalComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#PhysicalComponent> <http://www.w3.org/2000/01/rdf-schema#label> "physical component"@en .
+<https://w3id.org/modavis/vao/ontology#PhysicalSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#PhysicalSystem> <http://www.w3.org/2000/01/rdf-schema#label> "physical system"@en .
+<https://w3id.org/modavis/vao/ontology#PlayableModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#PlayableModel> <http://www.w3.org/2000/01/rdf-schema#label> "playable model"@en .
+<https://w3id.org/modavis/vao/ontology#Port> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Port> <http://www.w3.org/2000/01/rdf-schema#label> "system port"@en .
+<https://w3id.org/modavis/vao/ontology#Pose> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Pose> <http://www.w3.org/2000/01/rdf-schema#label> "pose"@en .
+<https://w3id.org/modavis/vao/ontology#ProcessModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#ProcessModel> <http://www.w3.org/2000/01/rdf-schema#label> "process model"@en .
+<https://w3id.org/modavis/vao/ontology#ProtocolBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#ProtocolBinding> <http://www.w3.org/2000/01/rdf-schema#label> "protocol binding"@en .
+<https://w3id.org/modavis/vao/ontology#RandomSource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#RandomSource> <http://www.w3.org/2000/01/rdf-schema#label> "random source"@en .
+<https://w3id.org/modavis/vao/ontology#Realization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Realization> <http://www.w3.org/2000/01/rdf-schema#label> "exact byte realization"@en .
+<https://w3id.org/modavis/vao/ontology#RenderBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#RenderBinding> <http://www.w3.org/2000/01/rdf-schema#label> "render binding"@en .
+<https://w3id.org/modavis/vao/ontology#RenderConfiguration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#RenderConfiguration> <http://www.w3.org/2000/01/rdf-schema#label> "render configuration"@en .
+<https://w3id.org/modavis/vao/ontology#RendererDescriptor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#RendererDescriptor> <http://www.w3.org/2000/01/rdf-schema#label> "renderer descriptor"@en .
+<https://w3id.org/modavis/vao/ontology#ResponseMeasurement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#ResponseMeasurement> <http://www.w3.org/2000/01/rdf-schema#label> "acoustic response measurement"@en .
+<https://w3id.org/modavis/vao/ontology#ResponseSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#ResponseSet> <http://www.w3.org/2000/01/rdf-schema#label> "acoustic response set"@en .
+<https://w3id.org/modavis/vao/ontology#Review> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Review> <http://www.w3.org/2000/01/rdf-schema#label> "review record"@en .
+<https://w3id.org/modavis/vao/ontology#RoutingRule> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#RoutingRule> <http://www.w3.org/2000/01/rdf-schema#label> "routing rule"@en .
+<https://w3id.org/modavis/vao/ontology#RuntimeContract> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#RuntimeContract> <http://www.w3.org/2000/01/rdf-schema#label> "runtime contract"@en .
+<https://w3id.org/modavis/vao/ontology#SampleMapping> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#SampleMapping> <http://www.w3.org/2000/01/rdf-schema#label> "sample mapping"@en .
+<https://w3id.org/modavis/vao/ontology#SampleVariant> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#SampleVariant> <http://www.w3.org/2000/01/rdf-schema#label> "sample variant"@en .
+<https://w3id.org/modavis/vao/ontology#ScientificClaim> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#ScientificClaim> <http://www.w3.org/2000/01/rdf-schema#label> "scientific claim"@en .
+<https://w3id.org/modavis/vao/ontology#ScientificRecordSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#ScientificRecordSet> <http://www.w3.org/2000/01/rdf-schema#label> "scientific record set"@en .
+<https://w3id.org/modavis/vao/ontology#SignalRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#SignalRegion> <http://www.w3.org/2000/01/rdf-schema#label> "signal region"@en .
+<https://w3id.org/modavis/vao/ontology#SoftwareEnvironment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#SoftwareEnvironment> <http://www.w3.org/2000/01/rdf-schema#label> "software environment"@en .
+<https://w3id.org/modavis/vao/ontology#StateBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#StateBinding> <http://www.w3.org/2000/01/rdf-schema#label> "state binding"@en .
+<https://w3id.org/modavis/vao/ontology#StateVariable> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#StateVariable> <http://www.w3.org/2000/01/rdf-schema#label> "state variable"@en .
+<https://w3id.org/modavis/vao/ontology#SynchronizationMapping> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#SynchronizationMapping> <http://www.w3.org/2000/01/rdf-schema#label> "synchronization mapping"@en .
+<https://w3id.org/modavis/vao/ontology#TakeSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#TakeSet> <http://www.w3.org/2000/01/rdf-schema#label> "take set"@en .
+<https://w3id.org/modavis/vao/ontology#Timebase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Timebase> <http://www.w3.org/2000/01/rdf-schema#label> "timebase"@en .
+<https://w3id.org/modavis/vao/ontology#TimingConstraint> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#TimingConstraint> <http://www.w3.org/2000/01/rdf-schema#label> "timing constraint"@en .
+<https://w3id.org/modavis/vao/ontology#Track> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#Track> <http://www.w3.org/2000/01/rdf-schema#label> "multimodal track"@en .
+<https://w3id.org/modavis/vao/ontology#TransferFunction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#TransferFunction> <http://www.w3.org/2000/01/rdf-schema#label> "transfer function"@en .
+<https://w3id.org/modavis/vao/ontology#TuningMap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#TuningMap> <http://www.w3.org/2000/01/rdf-schema#label> "tuning map"@en .
+<https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> <http://www.w3.org/2000/01/rdf-schema#comment> "An immutable semantic release describing an acoustic object and its exact digital realizations."@en .
+<https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> <http://www.w3.org/2000/01/rdf-schema#label> "Virtual Acoustic Object"@en .
+<https://w3id.org/modavis/vao/ontology#aboutEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#aboutEntity> <http://www.w3.org/2000/01/rdf-schema#label> "about entity"@en .
+<https://w3id.org/modavis/vao/ontology#absorption> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#absorptionUncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#access> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#acoustics> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#acoustics> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> .
+<https://w3id.org/modavis/vao/ontology#acoustics> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#AcousticModelSet> .
+<https://w3id.org/modavis/vao/ontology#actedOnProperty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#actedOnProperty> <http://www.w3.org/2000/01/rdf-schema#label> "acted on property"@en .
+<https://w3id.org/modavis/vao/ontology#actionExecution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#actions> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#activationValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#activityKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#actuator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#actuator> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/sosa/Actuator> .
+<https://w3id.org/modavis/vao/ontology#address> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#agentKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#algorithm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#allowedValues> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#ambisonicsChannelOrder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#ambisonicsDimensionality> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#ambisonicsNormalization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#ambisonicsOrder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#analysis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#analysis> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Analysis> .
+<https://w3id.org/modavis/vao/ontology#analysisKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#analysisKind> <http://www.w3.org/2000/01/rdf-schema#label> "analysis kind"@en .
+<https://w3id.org/modavis/vao/ontology#annotation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#apiProfile> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#apiProfile> <http://www.w3.org/2000/01/rdf-schema#label> "api profile"@en .
+<https://w3id.org/modavis/vao/ontology#appliesTo> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#appliesTo> <http://www.w3.org/2000/01/rdf-schema#label> "applies to"@en .
+<https://w3id.org/modavis/vao/ontology#assetGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#assetGroup> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#AssetGroup> .
+<https://w3id.org/modavis/vao/ontology#atomic> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#attribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#audioContainer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#audioRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#audioRealization> <http://www.w3.org/2000/01/rdf-schema#label> "audio realization"@en .
+<https://w3id.org/modavis/vao/ontology#audioScene> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#audioScene> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#AudioScene> .
+<https://w3id.org/modavis/vao/ontology#authenticityEnvelopeRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#authenticityEnvelopeRealization> <http://www.w3.org/2000/01/rdf-schema#label> "authenticity envelope realization"@en .
+<https://w3id.org/modavis/vao/ontology#authored> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/ontology#authored> <http://www.w3.org/2004/02/skos/core#prefLabel> "authored acoustic representation"@en .
+<https://w3id.org/modavis/vao/ontology#availability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#awardIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#awardIRI> <http://www.w3.org/2000/01/rdf-schema#label> "award iri"@en .
+<https://w3id.org/modavis/vao/ontology#awardNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#awardTitle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#axisUnit> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#axisUnit> <http://www.w3.org/2000/01/rdf-schema#label> "axis unit"@en .
+<https://w3id.org/modavis/vao/ontology#bandAxis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#bidirectional> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#bindingType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#bindings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#bitDepth> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#body> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#byteSize> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#cachePolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#calibration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#calibration> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Calibration> .
+<https://w3id.org/modavis/vao/ontology#cancellationControl> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#cancellationControl> <http://www.w3.org/2000/01/rdf-schema#label> "cancellation control"@en .
+<https://w3id.org/modavis/vao/ontology#capability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#capability> <http://www.w3.org/2000/01/rdf-schema#label> "capability"@en .
+<https://w3id.org/modavis/vao/ontology#captureDocumentation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#captureDocumentation> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> .
+<https://w3id.org/modavis/vao/ontology#captureDocumentation> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#CaptureDocumentation> .
+<https://w3id.org/modavis/vao/ontology#captureState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#captureState> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#CaptureState> .
+<https://w3id.org/modavis/vao/ontology#capturedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#carePrinciples> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#carrier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#carrier> <http://www.w3.org/2000/01/rdf-schema#label> "carrier"@en .
+<https://w3id.org/modavis/vao/ontology#carrierDescriptor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#censoring> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#centerFrequenciesHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#certificateRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#certificateRealization> <http://www.w3.org/2000/01/rdf-schema#label> "certificate realization"@en .
+<https://w3id.org/modavis/vao/ontology#channel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#channelCount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#channelIndices> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#channelLabels> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#channelMap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#channelNumberingBase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#channelSelector> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#channelTopology> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#channelTopology> <http://www.w3.org/2000/01/rdf-schema#label> "channel topology"@en .
+<https://w3id.org/modavis/vao/ontology#childProcess> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#childProcess> <http://www.w3.org/2000/01/rdf-schema#label> "child process"@en .
+<https://w3id.org/modavis/vao/ontology#chunkSize> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#chunking> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#chunks> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#claim> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#claim> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#ScientificClaim> .
+<https://w3id.org/modavis/vao/ontology#classification> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#classification> <http://www.w3.org/2000/01/rdf-schema#label> "classification"@en .
+<https://w3id.org/modavis/vao/ontology#clockBasis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#code> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#codec> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#colorSpace> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#communityAuthority> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#communityAuthority> <http://www.w3.org/2000/01/rdf-schema#label> "community authority"@en .
+<https://w3id.org/modavis/vao/ontology#component> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#component> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#PhysicalComponent> .
+<https://w3id.org/modavis/vao/ontology#componentEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#componentEntity> <http://www.w3.org/2000/01/rdf-schema#label> "component entity"@en .
+<https://w3id.org/modavis/vao/ontology#componentKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#componentKind> <http://www.w3.org/2000/01/rdf-schema#label> "component kind"@en .
+<https://w3id.org/modavis/vao/ontology#conceptIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#conceptIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "concept identifier"@en .
+<https://w3id.org/modavis/vao/ontology#conditions> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#confidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#confidenceLevel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#configuration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#configuration> <http://www.w3.org/2000/01/rdf-schema#label> "configuration"@en .
+<https://w3id.org/modavis/vao/ontology#conflictPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#conformanceTrace> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#conformanceTrace> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#ConformanceTrace> .
+<https://w3id.org/modavis/vao/ontology#connection> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#connection> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Connection> .
+<https://w3id.org/modavis/vao/ontology#connectionKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#consent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#consent> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Consent> .
+<https://w3id.org/modavis/vao/ontology#contact> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#containerDigest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#contentDigests> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#contentTimebase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#contentTimebase> <http://www.w3.org/2000/01/rdf-schema#label> "content timebase"@en .
+<https://w3id.org/modavis/vao/ontology#contentVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#continuity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#control> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#control> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#InteractionControl> .
+<https://w3id.org/modavis/vao/ontology#controlBehavior> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#controlKeyMeaning> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#convention> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#coordinateFrame> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#coordinateFrame> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#CoordinateFrame> .
+<https://w3id.org/modavis/vao/ontology#coordinateType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#coordinateUnit> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#coordinateUnit> <http://www.w3.org/2000/01/rdf-schema#label> "coordinate unit"@en .
+<https://w3id.org/modavis/vao/ontology#correctionCents> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#coverageFactor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#createdByAgent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#createdByAgent> <http://www.w3.org/2000/01/rdf-schema#label> "created by agent"@en .
+<https://w3id.org/modavis/vao/ontology#crossfadeFrames> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#crs> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#crs> <http://www.w3.org/2000/01/rdf-schema#label> "crs"@en .
+<https://w3id.org/modavis/vao/ontology#dataIRIndex> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#dataNumberingBase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#dataResolutionBits> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#datatype> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#datatype> <http://www.w3.org/2000/01/rdf-schema#label> "datatype"@en .
+<https://w3id.org/modavis/vao/ontology#deactivationValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#decision> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#defaultValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#delayAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#delayAsset> <http://www.w3.org/2000/01/rdf-schema#label> "delay asset"@en .
+<https://w3id.org/modavis/vao/ontology#delayConstraint> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#delayConstraint> <http://www.w3.org/2000/01/rdf-schema#label> "delay constraint"@en .
+<https://w3id.org/modavis/vao/ontology#delaySamples> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#denominator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#dependencies> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#dependencyRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#dependencyRole> <http://www.w3.org/2000/01/rdf-schema#label> "dependency role"@en .
+<https://w3id.org/modavis/vao/ontology#dependsOnGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#dependsOnGroup> <http://www.w3.org/2000/01/rdf-schema#label> "depends on group"@en .
+<https://w3id.org/modavis/vao/ontology#derivationMap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#derivationMap> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#DerivationMap> .
+<https://w3id.org/modavis/vao/ontology#derivedRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#derivedRealization> <http://www.w3.org/2000/01/rdf-schema#label> "derived realization"@en .
+<https://w3id.org/modavis/vao/ontology#determinism> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#deterministic> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#digest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#dimension> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#direction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#directivityResponseSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#directivityResponseSet> <http://www.w3.org/2000/01/rdf-schema#label> "directivity response set"@en .
+<https://w3id.org/modavis/vao/ontology#discontinuityAfter> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#discovery> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#discovery> <http://www.w3.org/2000/01/rdf-schema#label> "discovery"@en .
+<https://w3id.org/modavis/vao/ontology#distribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#distribution> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Distribution> .
+<https://w3id.org/modavis/vao/ontology#documentRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#documentRealization> <http://www.w3.org/2000/01/rdf-schema#label> "document realization"@en .
+<https://w3id.org/modavis/vao/ontology#domain> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#domain> <http://www.w3.org/2000/01/rdf-schema#label> "domain"@en .
+<https://w3id.org/modavis/vao/ontology#driftPPM> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#durationConstraint> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#durationConstraint> <http://www.w3.org/2000/01/rdf-schema#label> "duration constraint"@en .
+<https://w3id.org/modavis/vao/ontology#durationSeconds> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#dynamicModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#embargoRationale> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#embargoUntil> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#emittedEvents> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#encoding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#endExclusive> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#endFrameExclusive> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#endedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#entity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#entity> <http://www.w3.org/2000/01/rdf-schema#label> "entity"@en .
+<https://w3id.org/modavis/vao/ontology#entries> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#environmentObservation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#environmentObservation> <http://www.w3.org/2000/01/rdf-schema#label> "environment observation"@en .
+<https://w3id.org/modavis/vao/ontology#environmentState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#environmentState> <http://www.w3.org/2000/01/rdf-schema#label> "environment state"@en .
+<https://w3id.org/modavis/vao/ontology#epoch> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#eventAlignment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#eventAlignment> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#EventAlignment> .
+<https://w3id.org/modavis/vao/ontology#eventEncoding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#eventKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#eventLocator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#eventLogRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#eventLogRealization> <http://www.w3.org/2000/01/rdf-schema#label> "event log realization"@en .
+<https://w3id.org/modavis/vao/ontology#eventMappings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#eventType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#eventType> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#InteractionEventType> .
+<https://w3id.org/modavis/vao/ontology#evictable> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#evidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#evidence> <http://www.w3.org/2000/01/rdf-schema#label> "evidence"@en .
+<https://w3id.org/modavis/vao/ontology#evidenceRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#evidenceRealization> <http://www.w3.org/2000/01/rdf-schema#label> "evidence realization"@en .
+<https://w3id.org/modavis/vao/ontology#executionGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#executionSemantics> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#executionSemantics> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#ExecutionSemantics> .
+<https://w3id.org/modavis/vao/ontology#exitPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#expected> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#extensions> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#extent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#externalIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#externalIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "external identifier"@en .
+<https://w3id.org/modavis/vao/ontology#extrapolationPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#facilityIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#facilityIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "facility identifier"@en .
+<https://w3id.org/modavis/vao/ontology#fallback> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#fallback> <http://www.w3.org/2000/01/rdf-schema#label> "fallback"@en .
+<https://w3id.org/modavis/vao/ontology#fallbackGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#fallbackGroup> <http://www.w3.org/2000/01/rdf-schema#label> "fallback group"@en .
+<https://w3id.org/modavis/vao/ontology#fallbackResponseSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#fallbackResponseSet> <http://www.w3.org/2000/01/rdf-schema#label> "fallback response set"@en .
+<https://w3id.org/modavis/vao/ontology#feature> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#features> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#fileIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#fitResidual> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#fixedOutputKeys> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#focusEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#focusEntity> <http://www.w3.org/2000/01/rdf-schema#label> "focus entity"@en .
+<https://w3id.org/modavis/vao/ontology#footageLabel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#formatVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#forwardAxis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#frame> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#frame> <http://www.w3.org/2000/01/rdf-schema#label> "frame"@en .
+<https://w3id.org/modavis/vao/ontology#frameCount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#frameRate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#functionBlock> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#funderIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#funderIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "funder identifier"@en .
+<https://w3id.org/modavis/vao/ontology#funderIdentifierType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#funderIdentifierType> <http://www.w3.org/2000/01/rdf-schema#label> "funder identifier type"@en .
+<https://w3id.org/modavis/vao/ontology#funderName> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#fundingReferences> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#gainDB> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#generatedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#generatedBy> <http://www.w3.org/2000/01/rdf-schema#label> "generated by"@en .
+<https://w3id.org/modavis/vao/ontology#geometryBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#geometryBinding> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#GeometryBinding> .
+<https://w3id.org/modavis/vao/ontology#geometryStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#grantedByAgent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#grantedByAgent> <http://www.w3.org/2000/01/rdf-schema#label> "granted by agent"@en .
+<https://w3id.org/modavis/vao/ontology#group> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#group> <http://www.w3.org/2000/01/rdf-schema#label> "group"@en .
+<https://w3id.org/modavis/vao/ontology#handedness> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#harmonicNumber> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#harmonicRelation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#hasDistribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#hasDistribution> <http://www.w3.org/2000/01/rdf-schema#label> "has distribution"@en .
+<https://w3id.org/modavis/vao/ontology#hasRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#hasRealization> <http://www.w3.org/2000/01/rdf-schema#label> "has realization"@en .
+<https://w3id.org/modavis/vao/ontology#headphoneCompensationAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#headphoneCompensationAsset> <http://www.w3.org/2000/01/rdf-schema#label> "headphone compensation asset"@en .
+<https://w3id.org/modavis/vao/ontology#height> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#hybrid> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/ontology#hybrid> <http://www.w3.org/2004/02/skos/core#prefLabel> "hybrid acoustic representation"@en .
+<https://w3id.org/modavis/vao/ontology#hysteresis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#identifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#identifier> <http://www.w3.org/2000/01/rdf-schema#label> "identifier"@en .
+<https://w3id.org/modavis/vao/ontology#identifierScheme> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#identifierScheme> <http://www.w3.org/2000/01/rdf-schema#label> "identifier scheme"@en .
+<https://w3id.org/modavis/vao/ontology#identifierType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#identifierType> <http://www.w3.org/2000/01/rdf-schema#label> "identifier type"@en .
+<https://w3id.org/modavis/vao/ontology#identifierValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#identifierValue> <http://www.w3.org/2000/01/rdf-schema#label> "identifier value"@en .
+<https://w3id.org/modavis/vao/ontology#identity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#identityDescription> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#identityDescription> <http://www.w3.org/2000/01/rdf-schema#label> "software identity description"@en .
+<https://w3id.org/modavis/vao/ontology#identityScope> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#identityScope> <http://www.w3.org/2000/01/rdf-schema#label> "software identity scope"@en .
+<https://w3id.org/modavis/vao/ontology#impulseResponse> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#incidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#index> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#indexRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#indexRealization> <http://www.w3.org/2000/01/rdf-schema#label> "index realization"@en .
+<https://w3id.org/modavis/vao/ontology#inferred> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/ontology#inferred> <http://www.w3.org/2004/02/skos/core#prefLabel> "inferred acoustic representation"@en .
+<https://w3id.org/modavis/vao/ontology#initialState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#input> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#inputEvents> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#inputKey> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#inputKeyMeaning> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#inputKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#inputKinds> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#inputPort> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#inputPort> <http://www.w3.org/2000/01/rdf-schema#label> "input port"@en .
+<https://w3id.org/modavis/vao/ontology#inputRange> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#inputUnit> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#inputs> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#instance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#instance> <http://www.w3.org/2000/01/rdf-schema#label> "instance"@en .
+<https://w3id.org/modavis/vao/ontology#instrumentEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#instrumentEntity> <http://www.w3.org/2000/01/rdf-schema#label> "instrument entity"@en .
+<https://w3id.org/modavis/vao/ontology#instrumentIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#instrumentIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "instrument identifier"@en .
+<https://w3id.org/modavis/vao/ontology#integrity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#interactionModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#interactionModel> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> .
+<https://w3id.org/modavis/vao/ontology#interactionModel> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#InteractionModel> .
+<https://w3id.org/modavis/vao/ontology#interpolation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#jitter> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#jrTimestamp> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#jsonPointer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#jsonPointer> <http://www.w3.org/2000/01/rdf-schema#comment> "Pointer added by the annotated JSON-LD view; it does not assert preservation of JSON lexical form or array order in RDF."@en .
+<https://w3id.org/modavis/vao/ontology#jsonSchema> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#key> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#keyOffset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#keyRange> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#keyTransform> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#kind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#label> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#labels> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#language> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#lateEventPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#latencyBudgetMilliseconds> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#learned> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/ontology#learned> <http://www.w3.org/2004/02/skos/core#prefLabel> "learned acoustic representation"@en .
+<https://w3id.org/modavis/vao/ontology#length> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#level> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#levelsOfDetail> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#listener> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#literal> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#localFrame> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#localFrame> <http://www.w3.org/2000/01/rdf-schema#label> "local frame"@en .
+<https://w3id.org/modavis/vao/ontology#localFrame> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#CoordinateFrame> .
+<https://w3id.org/modavis/vao/ontology#lod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#logicalAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#logicalAsset> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#LogicalAsset> .
+<https://w3id.org/modavis/vao/ontology#loopPointSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#loopPointSet> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#LoopPointSet> .
+<https://w3id.org/modavis/vao/ontology#lowerEdgesHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#manifestDigestLocation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#mappingIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#mappingIRI> <http://www.w3.org/2000/01/rdf-schema#label> "mapping iri"@en .
+<https://w3id.org/modavis/vao/ontology#mappingVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#materialEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#materialEntity> <http://www.w3.org/2000/01/rdf-schema#label> "material entity"@en .
+<https://w3id.org/modavis/vao/ontology#materialModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#materialModel> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#MaterialModel> .
+<https://w3id.org/modavis/vao/ontology#materializableProfile> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#materializableProfile> <http://www.w3.org/2000/01/rdf-schema#label> "materializable profile"@en .
+<https://w3id.org/modavis/vao/ontology#materializesProfile> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#materializesProfile> <http://www.w3.org/2000/01/rdf-schema#label> "materializes profile"@en .
+<https://w3id.org/modavis/vao/ontology#maximum> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#maximumCPUPercent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#maximumDistanceMeters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#maximumIterations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#maximumMicrosteps> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#maximumValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#maximumVoices> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#measured> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/ontology#measured> <http://www.w3.org/2004/02/skos/core#prefLabel> "measured acoustic representation"@en .
+<https://w3id.org/modavis/vao/ontology#measurement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#measurement> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#ResponseMeasurement> .
+<https://w3id.org/modavis/vao/ontology#measurementMappings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#mediaAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#mediaAsset> <http://www.w3.org/2000/01/rdf-schema#label> "media asset"@en .
+<https://w3id.org/modavis/vao/ontology#mediaType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#memberPath> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#merkleRoot> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#messageType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#metadataAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#metadataAsset> <http://www.w3.org/2000/01/rdf-schema#label> "metadata asset"@en .
+<https://w3id.org/modavis/vao/ontology#method> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#metricSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#metricSet> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#MetricSet> .
+<https://w3id.org/modavis/vao/ontology#metrics> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#midiCIProfileIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#midiCIProfileIRI> <http://www.w3.org/2000/01/rdf-schema#label> "midi ciprofile iri"@en .
+<https://w3id.org/modavis/vao/ontology#migratedFromManifestSHA256> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#minimum> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#minimumValue> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#modality> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#modavisBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#mode> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#modelAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#modelAsset> <http://www.w3.org/2000/01/rdf-schema#label> "model asset"@en .
+<https://w3id.org/modavis/vao/ontology#modelWeightDigest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#monotonic> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#multimodal> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#multimodal> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> .
+<https://w3id.org/modavis/vao/ontology#multimodal> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#MultimodalTimeline> .
+<https://w3id.org/modavis/vao/ontology#name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#normalization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#noteOffPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#notes> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#number> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#numerator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#object> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#object> <http://www.w3.org/2000/01/rdf-schema#label> "object"@en .
+<https://w3id.org/modavis/vao/ontology#observation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#observation> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/sosa/Observation> .
+<https://w3id.org/modavis/vao/ontology#offset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#ontologyIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#ontologyIRI> <http://www.w3.org/2000/01/rdf-schema#label> "ontology iri"@en .
+<https://w3id.org/modavis/vao/ontology#ontologyStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#ontologyVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#ontologyVersionIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#ontologyVersionIRI> <http://www.w3.org/2000/01/rdf-schema#label> "ontology version iri"@en .
+<https://w3id.org/modavis/vao/ontology#operation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#operations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#operator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#orcid> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#ordering> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#orientationRadians> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#orientationUncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#orientationXYZW> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#origin> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#originalPitch> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#outlierPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#output> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#outputKeyMeaning> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#outputKeys> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#outputKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#outputPort> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#outputPort> <http://www.w3.org/2000/01/rdf-schema#label> "output port"@en .
+<https://w3id.org/modavis/vao/ontology#outputUnit> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#outsideDomainPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#packManifestSHA256> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#packRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#packRealization> <http://www.w3.org/2000/01/rdf-schema#label> "pack realization"@en .
+<https://w3id.org/modavis/vao/ontology#parameterValues> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#parameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#parentComponent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#parentComponent> <http://www.w3.org/2000/01/rdf-schema#label> "parent component"@en .
+<https://w3id.org/modavis/vao/ontology#parentFrame> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#parentFrame> <http://www.w3.org/2000/01/rdf-schema#label> "parent frame"@en .
+<https://w3id.org/modavis/vao/ontology#perNoteControllerIndex> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#performedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#performedByAgent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#performedByAgent> <http://www.w3.org/2000/01/rdf-schema#label> "performed by agent"@en .
+<https://w3id.org/modavis/vao/ontology#performerAgent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#performerAgent> <http://www.w3.org/2000/01/rdf-schema#label> "performer agent"@en .
+<https://w3id.org/modavis/vao/ontology#persistence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#persistentIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#persistentIdentifier> <http://www.w3.org/2000/01/rdf-schema#label> "persistent identifier"@en .
+<https://w3id.org/modavis/vao/ontology#personalizationAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#personalizationAsset> <http://www.w3.org/2000/01/rdf-schema#label> "personalization asset"@en .
+<https://w3id.org/modavis/vao/ontology#perspectiveGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#perspectiveGroup> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#PerspectiveGroup> .
+<https://w3id.org/modavis/vao/ontology#perspectiveType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#physicalSystem> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#physicalSystem> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> .
+<https://w3id.org/modavis/vao/ontology#physicalSystem> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#PhysicalSystem> .
+<https://w3id.org/modavis/vao/ontology#pitchTuningCents> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#playable> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#playable> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> .
+<https://w3id.org/modavis/vao/ontology#playable> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#PlayableModel> .
+<https://w3id.org/modavis/vao/ontology#points> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#port> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#port> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Port> .
+<https://w3id.org/modavis/vao/ontology#pose> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#pose> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Pose> .
+<https://w3id.org/modavis/vao/ontology#position> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#positionUncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#predicate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#predicate> <http://www.w3.org/2000/01/rdf-schema#label> "predicate"@en .
+<https://w3id.org/modavis/vao/ontology#priority> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#privacyClassification> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#probabilityDistribution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#procedure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#process> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#process> <http://www.w3.org/2000/01/rdf-schema#label> "process"@en .
+<https://w3id.org/modavis/vao/ontology#processKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#processModel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#processModel> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#ProcessModel> .
+<https://w3id.org/modavis/vao/ontology#processedResultRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#processedResultRealization> <http://www.w3.org/2000/01/rdf-schema#label> "processed result realization"@en .
+<https://w3id.org/modavis/vao/ontology#profile> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#profile> <http://www.w3.org/2000/01/rdf-schema#label> "profile"@en .
+<https://w3id.org/modavis/vao/ontology#properties> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#property> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#property> <http://www.w3.org/2000/01/rdf-schema#label> "property"@en .
+<https://w3id.org/modavis/vao/ontology#propertyExchangeResourceIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#propertyExchangeResourceIRI> <http://www.w3.org/2000/01/rdf-schema#label> "property exchange resource iri"@en .
+<https://w3id.org/modavis/vao/ontology#protocol> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#protocol> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/sosa/Procedure> .
+<https://w3id.org/modavis/vao/ontology#protocolBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#protocolBinding> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#ProtocolBinding> .
+<https://w3id.org/modavis/vao/ontology#publicationYear> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#publisher> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#purposeLimitations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#qualityFlags> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#qualityMetricSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#qualityMetricSet> <http://www.w3.org/2000/01/rdf-schema#label> "quality metric set"@en .
+<https://w3id.org/modavis/vao/ontology#qualityTier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#randomSource> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#randomSource> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#RandomSource> .
+<https://w3id.org/modavis/vao/ontology#rankEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#rankEntity> <http://www.w3.org/2000/01/rdf-schema#label> "rank entity"@en .
+<https://w3id.org/modavis/vao/ontology#rate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#rateUnit> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#rateUnit> <http://www.w3.org/2000/01/rdf-schema#label> "rate unit"@en .
+<https://w3id.org/modavis/vao/ontology#rateUnit> <http://www.w3.org/2000/01/rdf-schema#range> <http://qudt.org/schema/qudt/Unit> .
+<https://w3id.org/modavis/vao/ontology#rationale> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#rawResultRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#rawResultRealization> <http://www.w3.org/2000/01/rdf-schema#label> "raw result realization"@en .
+<https://w3id.org/modavis/vao/ontology#realization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#realization> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Realization> .
+<https://w3id.org/modavis/vao/ontology#realizesAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#realizesAsset> <http://www.w3.org/2000/01/rdf-schema#label> "realizes asset"@en .
+<https://w3id.org/modavis/vao/ontology#receiver> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#receiver> <http://www.w3.org/2000/01/rdf-schema#label> "receiver"@en .
+<https://w3id.org/modavis/vao/ontology#receiverPose> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#receiverPose> <http://www.w3.org/2000/01/rdf-schema#label> "receiver pose"@en .
+<https://w3id.org/modavis/vao/ontology#receivingSpace> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#receivingSpace> <http://www.w3.org/2000/01/rdf-schema#label> "receiving space"@en .
+<https://w3id.org/modavis/vao/ontology#recordIdentifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#recordedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#redactionOfRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#redactionOfRealization> <http://www.w3.org/2000/01/rdf-schema#label> "redaction of realization"@en .
+<https://w3id.org/modavis/vao/ontology#reentrancyPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#referenceMIDINote> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#referencePitchHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#region> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#region> <http://www.w3.org/2000/01/rdf-schema#label> "region"@en .
+<https://w3id.org/modavis/vao/ontology#registrationUncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#relatedIdentifiers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#relation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#relation> <http://www.w3.org/2000/01/rdf-schema#label> "relation"@en .
+<https://w3id.org/modavis/vao/ontology#relationType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#relationTypeInformation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#release> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#renderBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#renderBinding> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#RenderBinding> .
+<https://w3id.org/modavis/vao/ontology#renderConfiguration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#renderConfiguration> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#RenderConfiguration> .
+<https://w3id.org/modavis/vao/ontology#renderer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#renderer> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#RendererDescriptor> .
+<https://w3id.org/modavis/vao/ontology#rendererRequirement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#rendererRequirement> <http://www.w3.org/2000/01/rdf-schema#label> "renderer requirement"@en .
+<https://w3id.org/modavis/vao/ontology#repositoryBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#repositoryBinding> <http://www.w3.org/2000/01/rdf-schema#label> "repository binding"@en .
+<https://w3id.org/modavis/vao/ontology#repositoryType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#repositoryType> <http://www.w3.org/2000/01/rdf-schema#label> "repository type"@en .
+<https://w3id.org/modavis/vao/ontology#representationStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#representationStatus> <http://www.w3.org/2000/01/rdf-schema#label> "representation status"@en .
+<https://w3id.org/modavis/vao/ontology#representationType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#reproducibility> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#requiredCapability> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#requiredCapability> <http://www.w3.org/2000/01/rdf-schema#label> "required capability"@en .
+<https://w3id.org/modavis/vao/ontology#residualUncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#resolutionPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#resolverIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#resolverIRI> <http://www.w3.org/2000/01/rdf-schema#label> "resolver iri"@en .
+<https://w3id.org/modavis/vao/ontology#resourceType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#responseEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#responseEntity> <http://www.w3.org/2000/01/rdf-schema#label> "response entity"@en .
+<https://w3id.org/modavis/vao/ontology#responseKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#responseSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#responseSet> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#ResponseSet> .
+<https://w3id.org/modavis/vao/ontology#resultStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#review> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#review> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Review> .
+<https://w3id.org/modavis/vao/ontology#reviewed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#reviewed> <http://www.w3.org/2000/01/rdf-schema#label> "reviewed"@en .
+<https://w3id.org/modavis/vao/ontology#reviewedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#reviewedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#reviewedBy> <http://www.w3.org/2000/01/rdf-schema#label> "reviewed by"@en .
+<https://w3id.org/modavis/vao/ontology#reviewerAgent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#reviewerAgent> <http://www.w3.org/2000/01/rdf-schema#label> "reviewer agent"@en .
+<https://w3id.org/modavis/vao/ontology#revision> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#role> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#role> <http://www.w3.org/2000/01/rdf-schema#label> "role"@en .
+<https://w3id.org/modavis/vao/ontology#ror> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#roundRobinGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#roundRobinIndex> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#route> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#route> <http://www.w3.org/2000/01/rdf-schema#label> "route"@en .
+<https://w3id.org/modavis/vao/ontology#routingBehavior> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#routingRule> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#routingRule> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#RoutingRule> .
+<https://w3id.org/modavis/vao/ontology#runToCompletion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#runtime> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#runtime> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> .
+<https://w3id.org/modavis/vao/ontology#runtime> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#RuntimeContract> .
+<https://w3id.org/modavis/vao/ontology#runtimeDescription> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/vao/ontology#runtimeDescription> <http://www.w3.org/2000/01/rdf-schema#label> "software runtime description"@en .
+<https://w3id.org/modavis/vao/ontology#sampleCount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sampleFormat> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sampleMapping> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sampleMapping> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#SampleMapping> .
+<https://w3id.org/modavis/vao/ontology#sampleRate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sampleRootKey> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sampleVariant> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sampleVariant> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#SampleVariant> .
+<https://w3id.org/modavis/vao/ontology#sandboxPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#scale> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#scattering> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#scatteringUncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#scene> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#scene> <http://www.w3.org/2000/01/rdf-schema#label> "scene"@en .
+<https://w3id.org/modavis/vao/ontology#sceneEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sceneEntity> <http://www.w3.org/2000/01/rdf-schema#label> "scene entity"@en .
+<https://w3id.org/modavis/vao/ontology#schemaBundleDigest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#scheme> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#scheme> <http://www.w3.org/2000/01/rdf-schema#label> "scheme"@en .
+<https://w3id.org/modavis/vao/ontology#schemeUri> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#schemeUri> <http://www.w3.org/2000/01/rdf-schema#label> "scheme URI"@en .
+<https://w3id.org/modavis/vao/ontology#scientific> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#scientific> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/vao/ontology#VirtualAcousticObject> .
+<https://w3id.org/modavis/vao/ontology#scientific> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#ScientificRecordSet> .
+<https://w3id.org/modavis/vao/ontology#scope> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#scoreElementId> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#scoreFormat> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#seed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#segments> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#selectionPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#selectionSetId> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#selectionStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#selectionWeight> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#selector> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#selectorType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#semitoneOffset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sensor> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sensor> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/ns/sosa/Sensor> .
+<https://w3id.org/modavis/vao/ontology#sensorEncoding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#separatingElement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#separatingElement> <http://www.w3.org/2000/01/rdf-schema#label> "separating element"@en .
+<https://w3id.org/modavis/vao/ontology#sequence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#setRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sha256> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sidedness> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#signalKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#signalRegion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#signalRegion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#SignalRegion> .
+<https://w3id.org/modavis/vao/ontology#signalRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#signatureEnvelopeRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#signatureEnvelopeRealization> <http://www.w3.org/2000/01/rdf-schema#label> "signature envelope realization"@en .
+<https://w3id.org/modavis/vao/ontology#simulated> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/ontology#simulated> <http://www.w3.org/2004/02/skos/core#prefLabel> "simulated acoustic representation"@en .
+<https://w3id.org/modavis/vao/ontology#simultaneousEventOrder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#softwareEnvironment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#softwareEnvironment> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#SoftwareEnvironment> .
+<https://w3id.org/modavis/vao/ontology#softwareHeritageId> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#softwareName> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#softwareVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#soundingKeyOffset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#source> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#source> <http://www.w3.org/2000/01/rdf-schema#label> "source"@en .
+<https://w3id.org/modavis/vao/ontology#sourceCodeIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sourceCodeIRI> <http://www.w3.org/2000/01/rdf-schema#label> "source code iri"@en .
+<https://w3id.org/modavis/vao/ontology#sourceControl> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sourceControl> <http://www.w3.org/2000/01/rdf-schema#label> "source control"@en .
+<https://w3id.org/modavis/vao/ontology#sourceEndExclusive> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sourceEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sourceEntity> <http://www.w3.org/2000/01/rdf-schema#label> "source entity"@en .
+<https://w3id.org/modavis/vao/ontology#sourceFrameRange> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sourceFrequencyHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sourceLocator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sourcePort> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sourcePort> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Port> .
+<https://w3id.org/modavis/vao/ontology#sourcePose> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sourcePose> <http://www.w3.org/2000/01/rdf-schema#label> "source pose"@en .
+<https://w3id.org/modavis/vao/ontology#sourceRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sourceRealization> <http://www.w3.org/2000/01/rdf-schema#label> "source realization"@en .
+<https://w3id.org/modavis/vao/ontology#sourceSpace> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sourceSpace> <http://www.w3.org/2000/01/rdf-schema#label> "source space"@en .
+<https://w3id.org/modavis/vao/ontology#sourceStart> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#sourceTimebase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sourceTimebase> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Timebase> .
+<https://w3id.org/modavis/vao/ontology#sourceTransition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#sourceTransition> <http://www.w3.org/2000/01/rdf-schema#label> "source transition"@en .
+<https://w3id.org/modavis/vao/ontology#space> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#space> <http://www.w3.org/2000/01/rdf-schema#label> "space"@en .
+<https://w3id.org/modavis/vao/ontology#spatialFragment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#standardEdition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#standardIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#standardIRI> <http://www.w3.org/2000/01/rdf-schema#label> "standard iri"@en .
+<https://w3id.org/modavis/vao/ontology#start> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#startFrame> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#startFrameInclusive> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#startedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#state> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#state> <http://www.w3.org/2000/01/rdf-schema#label> "state"@en .
+<https://w3id.org/modavis/vao/ontology#stateAssignments> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#stateBinding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#stateBinding> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#StateBinding> .
+<https://w3id.org/modavis/vao/ontology#stateRole> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#stateVariable> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#stateVariable> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#StateVariable> .
+<https://w3id.org/modavis/vao/ontology#statement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#stepCount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#strategy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#stream> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#streamingIndexRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#streamingIndexRealization> <http://www.w3.org/2000/01/rdf-schema#label> "streaming index realization"@en .
+<https://w3id.org/modavis/vao/ontology#subSelector> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#subject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#subject> <http://www.w3.org/2000/01/rdf-schema#label> "subject"@en .
+<https://w3id.org/modavis/vao/ontology#subjectEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#subjectEntity> <http://www.w3.org/2000/01/rdf-schema#label> "subject entity"@en .
+<https://w3id.org/modavis/vao/ontology#subjectScheme> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#subjects> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#supersedesRelease> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#supersedesRelease> <http://www.w3.org/2000/01/rdf-schema#label> "supersedes release"@en .
+<https://w3id.org/modavis/vao/ontology#surfaceImpedanceAsset> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#surfaceImpedanceAsset> <http://www.w3.org/2000/01/rdf-schema#label> "surface impedance asset"@en .
+<https://w3id.org/modavis/vao/ontology#svgSelector> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#synchronizationMapping> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#synchronizationMapping> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#SynchronizationMapping> .
+<https://w3id.org/modavis/vao/ontology#takeSet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#takeSet> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#TakeSet> .
+<https://w3id.org/modavis/vao/ontology#target> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#target> <http://www.w3.org/2000/01/rdf-schema#label> "target"@en .
+<https://w3id.org/modavis/vao/ontology#targetEntity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#targetEntity> <http://www.w3.org/2000/01/rdf-schema#label> "target entity"@en .
+<https://w3id.org/modavis/vao/ontology#targetFrequencyHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#targetPort> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#targetPort> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Port> .
+<https://w3id.org/modavis/vao/ontology#targetTimebase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#targetTimebase> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Timebase> .
+<https://w3id.org/modavis/vao/ontology#technicalMetadata> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#temperamentLabel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#terminationPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#textureMaxDimension> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#thicknessMeters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#timeResolution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#timeScale> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#timeScale> <http://www.w3.org/2000/01/rdf-schema#label> "time scale"@en .
+<https://w3id.org/modavis/vao/ontology#timeZeroPolicy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#timebase> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#timebase> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Timebase> .
+<https://w3id.org/modavis/vao/ontology#timestamp> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#timestampOrder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#timingConstraint> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#timingConstraint> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#TimingConstraint> .
+<https://w3id.org/modavis/vao/ontology#timingKind> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#totalByteSize> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#track> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#track> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Track> .
+<https://w3id.org/modavis/vao/ontology#traditionalKnowledgeLabel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#traditionalKnowledgeLabel> <http://www.w3.org/2000/01/rdf-schema#label> "traditional knowledge label"@en .
+<https://w3id.org/modavis/vao/ontology#trainingInput> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#trainingInput> <http://www.w3.org/2000/01/rdf-schema#label> "training input"@en .
+<https://w3id.org/modavis/vao/ontology#trajectoryRealization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#trajectoryRealization> <http://www.w3.org/2000/01/rdf-schema#label> "exact trajectory realization"@en .
+<https://w3id.org/modavis/vao/ontology#trajectoryRealization> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#Realization> .
+<https://w3id.org/modavis/vao/ontology#trajectoryTrack> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#trajectoryTrack> <http://www.w3.org/2000/01/rdf-schema#label> "trajectory track"@en .
+<https://w3id.org/modavis/vao/ontology#transferFunction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#transferFunction> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#TransferFunction> .
+<https://w3id.org/modavis/vao/ontology#transformToParent> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#transition> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#transition> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#InteractionTransition> .
+<https://w3id.org/modavis/vao/ontology#transitionEvaluation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#transitionSeconds> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#transmissionLossDB> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#transmissionLossUncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#transmissionPath> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#transmissionPath> <http://www.w3.org/2000/01/rdf-schema#label> "transmission path"@en .
+<https://w3id.org/modavis/vao/ontology#transportChecksums> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#triangleCount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#trigger> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#tuningMap> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#tuningMap> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/vao/ontology#TuningMap> .
+<https://w3id.org/modavis/vao/ontology#types> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#typical> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#umpGroup> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#umpMessageType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#uncertainties> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#uncertainty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#upAxis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#upperEdgesHz> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#validDomain> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#validDomain> <http://www.w3.org/2000/01/rdf-schema#label> "valid domain"@en .
+<https://w3id.org/modavis/vao/ontology#validFrom> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#validUntil> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#validation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#validation> <http://www.w3.org/2000/01/rdf-schema#label> "validation"@en .
+<https://w3id.org/modavis/vao/ontology#validationInput> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#validationInput> <http://www.w3.org/2000/01/rdf-schema#label> "validation input"@en .
+<https://w3id.org/modavis/vao/ontology#value> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#valueDomain> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#valueIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#valueIRI> <http://www.w3.org/2000/01/rdf-schema#label> "value iri"@en .
+<https://w3id.org/modavis/vao/ontology#valueType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#values> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#variant> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#variant> <http://www.w3.org/2000/01/rdf-schema#label> "variant"@en .
+<https://w3id.org/modavis/vao/ontology#variantSetId> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#velocityRange> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#velocitySensitivity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#version> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#vertexCount> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#vocabularyManifestSHA256> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#vocabularyReleaseIRI> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/vao/ontology#vocabularyReleaseIRI> <http://www.w3.org/2000/01/rdf-schema#label> "vocabulary release iri"@en .
+<https://w3id.org/modavis/vao/ontology#voiceAllocation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#weighting> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#width> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/ontology#wrapPeriod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://w3id.org/modavis/vao/vocab/capability/acoustical-analysis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/acoustical-analysis> <http://www.w3.org/2004/02/skos/core#prefLabel> "acoustical analysis"@en .
+<https://w3id.org/modavis/vao/vocab/capability/actuator-transfer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/actuator-transfer> <http://www.w3.org/2004/02/skos/core#prefLabel> "actuator transfer"@en .
+<https://w3id.org/modavis/vao/vocab/capability/building-acoustic-performance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/building-acoustic-performance> <http://www.w3.org/2004/02/skos/core#prefLabel> "building-acoustic performance"@en .
+<https://w3id.org/modavis/vao/vocab/capability/capture-event-alignment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/capture-event-alignment> <http://www.w3.org/2004/02/skos/core#prefLabel> "capture/event alignment"@en .
+<https://w3id.org/modavis/vao/vocab/capability/carrier-mapping> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/carrier-mapping> <http://www.w3.org/2004/02/skos/core#prefLabel> "carrier mapping"@en .
+<https://w3id.org/modavis/vao/vocab/capability/chunked-realization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/chunked-realization> <http://www.w3.org/2004/02/skos/core#prefLabel> "chunked realization"@en .
+<https://w3id.org/modavis/vao/vocab/capability/community-governed-rights> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/community-governed-rights> <http://www.w3.org/2004/02/skos/core#prefLabel> "community-governed rights"@en .
+<https://w3id.org/modavis/vao/vocab/capability/composite-actuation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/composite-actuation> <http://www.w3.org/2004/02/skos/core#prefLabel> "composite actuation"@en .
+<https://w3id.org/modavis/vao/vocab/capability/conditional-routing> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/conditional-routing> <http://www.w3.org/2004/02/skos/core#prefLabel> "conditional routing"@en .
+<https://w3id.org/modavis/vao/vocab/capability/core-graph> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/core-graph> <http://www.w3.org/2004/02/skos/core#prefLabel> "core graph"@en .
+<https://w3id.org/modavis/vao/vocab/capability/deterministic-render-trace> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/deterministic-render-trace> <http://www.w3.org/2004/02/skos/core#prefLabel> "deterministic render trace"@en .
+<https://w3id.org/modavis/vao/vocab/capability/fixity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/fixity> <http://www.w3.org/2004/02/skos/core#prefLabel> "exact-byte fixity"@en .
+<https://w3id.org/modavis/vao/vocab/capability/generic-model-viewing> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/generic-model-viewing> <http://www.w3.org/2004/02/skos/core#prefLabel> "generic model viewing"@en .
+<https://w3id.org/modavis/vao/vocab/capability/geometry-acoustic-rendering> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/geometry-acoustic-rendering> <http://www.w3.org/2004/02/skos/core#prefLabel> "geometry-acoustic rendering"@en .
+<https://w3id.org/modavis/vao/vocab/capability/hybrid-acoustic-rendering> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/hybrid-acoustic-rendering> <http://www.w3.org/2004/02/skos/core#prefLabel> "hybrid acoustic rendering"@en .
+<https://w3id.org/modavis/vao/vocab/capability/image-target-ar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/image-target-ar> <http://www.w3.org/2004/02/skos/core#prefLabel> "image-target augmented reality"@en .
+<https://w3id.org/modavis/vao/vocab/capability/immutable-release> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/immutable-release> <http://www.w3.org/2004/02/skos/core#prefLabel> "immutable release"@en .
+<https://w3id.org/modavis/vao/vocab/capability/interaction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/interaction> <http://www.w3.org/2004/02/skos/core#prefLabel> "playable interaction"@en .
+<https://w3id.org/modavis/vao/vocab/capability/learned-acoustic-field> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/learned-acoustic-field> <http://www.w3.org/2004/02/skos/core#prefLabel> "learned acoustic field"@en .
+<https://w3id.org/modavis/vao/vocab/capability/linked-animation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/linked-animation> <http://www.w3.org/2004/02/skos/core#prefLabel> "linked animation"@en .
+<https://w3id.org/modavis/vao/vocab/capability/measured-impulse-response> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/measured-impulse-response> <http://www.w3.org/2004/02/skos/core#prefLabel> "measured impulse response"@en .
+<https://w3id.org/modavis/vao/vocab/capability/midi-2-ump> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/midi-2-ump> <http://www.w3.org/2004/02/skos/core#prefLabel> "MIDI 2.0 UMP"@en .
+<https://w3id.org/modavis/vao/vocab/capability/multi-perspective-sampling> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/multi-perspective-sampling> <http://www.w3.org/2004/02/skos/core#prefLabel> "multi-perspective sampling"@en .
+<https://w3id.org/modavis/vao/vocab/capability/multimodal-synchronization> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/multimodal-synchronization> <http://www.w3.org/2004/02/skos/core#prefLabel> "multimodal synchronization"@en .
+<https://w3id.org/modavis/vao/vocab/capability/offline-asset-groups> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/offline-asset-groups> <http://www.w3.org/2004/02/skos/core#prefLabel> "offline asset groups"@en .
+<https://w3id.org/modavis/vao/vocab/capability/physical-system-topology> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/physical-system-topology> <http://www.w3.org/2004/02/skos/core#prefLabel> "physical-system topology"@en .
+<https://w3id.org/modavis/vao/vocab/capability/playable-interaction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/playable-interaction> <http://www.w3.org/2004/02/skos/core#prefLabel> "playable interaction model"@en .
+<https://w3id.org/modavis/vao/vocab/capability/position-registered-acoustic-scene> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/position-registered-acoustic-scene> <http://www.w3.org/2004/02/skos/core#prefLabel> "position-registered acoustic scene"@en .
+<https://w3id.org/modavis/vao/vocab/capability/recorded-release> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/recorded-release> <http://www.w3.org/2004/02/skos/core#prefLabel> "recorded release"@en .
+<https://w3id.org/modavis/vao/vocab/capability/replaceable-performance-media> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/replaceable-performance-media> <http://www.w3.org/2004/02/skos/core#prefLabel> "replaceable performance media"@en .
+<https://w3id.org/modavis/vao/vocab/capability/room-acoustic-metrics> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/room-acoustic-metrics> <http://www.w3.org/2004/02/skos/core#prefLabel> "room-acoustic metrics"@en .
+<https://w3id.org/modavis/vao/vocab/capability/sample-looping> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/sample-looping> <http://www.w3.org/2004/02/skos/core#prefLabel> "sample looping"@en .
+<https://w3id.org/modavis/vao/vocab/capability/sampled-instrument-playback> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/sampled-instrument-playback> <http://www.w3.org/2004/02/skos/core#prefLabel> "sampled-instrument playback"@en .
+<https://w3id.org/modavis/vao/vocab/capability/semantic-building-model> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/semantic-building-model> <http://www.w3.org/2004/02/skos/core#prefLabel> "semantic building model"@en .
+<https://w3id.org/modavis/vao/vocab/capability/simulated-impulse-response> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/simulated-impulse-response> <http://www.w3.org/2004/02/skos/core#prefLabel> "simulated impulse response"@en .
+<https://w3id.org/modavis/vao/vocab/capability/source-directivity> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/source-directivity> <http://www.w3.org/2004/02/skos/core#prefLabel> "source directivity"@en .
+<https://w3id.org/modavis/vao/vocab/capability/source-sampler-semantics> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/source-sampler-semantics> <http://www.w3.org/2004/02/skos/core#prefLabel> "source sampler semantics"@en .
+<https://w3id.org/modavis/vao/vocab/capability/source-segmentation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/source-segmentation> <http://www.w3.org/2004/02/skos/core#prefLabel> "source segmentation"@en .
+<https://w3id.org/modavis/vao/vocab/capability/spatial-audio-scene> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/spatial-audio-scene> <http://www.w3.org/2004/02/skos/core#prefLabel> "spatial audio scene"@en .
+<https://w3id.org/modavis/vao/vocab/capability/spatial-listening-map> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/spatial-listening-map> <http://www.w3.org/2004/02/skos/core#prefLabel> "spatial listening map"@en .
+<https://w3id.org/modavis/vao/vocab/capability/spatial-response-field> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/spatial-response-field> <http://www.w3.org/2004/02/skos/core#prefLabel> "spatial response field"@en .
+<https://w3id.org/modavis/vao/vocab/capability/spatial> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/spatial> <http://www.w3.org/2004/02/skos/core#prefLabel> "explicit spatial coordinates"@en .
+<https://w3id.org/modavis/vao/vocab/capability/stateful-interaction> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/stateful-interaction> <http://www.w3.org/2004/02/skos/core#prefLabel> "stateful interaction"@en .
+<https://w3id.org/modavis/vao/vocab/capability/surface-placement-ar> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/surface-placement-ar> <http://www.w3.org/2004/02/skos/core#prefLabel> "surface-placement augmented reality"@en .
+<https://w3id.org/modavis/vao/vocab/capability/synchronized-media-animation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/synchronized-media-animation> <http://www.w3.org/2004/02/skos/core#prefLabel> "synchronized media animation"@en .
+<https://w3id.org/modavis/vao/vocab/capability/timed-process> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/timed-process> <http://www.w3.org/2004/02/skos/core#prefLabel> "timed process"@en .
+<https://w3id.org/modavis/vao/vocab/capability/tracked-listener-convolution> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/tracked-listener-convolution> <http://www.w3.org/2004/02/skos/core#prefLabel> "tracked-listener convolution"@en .
+<https://w3id.org/modavis/vao/vocab/capability/tracked-sources> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/tracked-sources> <http://www.w3.org/2004/02/skos/core#prefLabel> "tracked acoustic sources"@en .
+<https://w3id.org/modavis/vao/vocab/capability/tuning-map> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/tuning-map> <http://www.w3.org/2004/02/skos/core#prefLabel> "tuning map"@en .
+<https://w3id.org/modavis/vao/vocab/capability/typed-scientific-provenance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/typed-scientific-provenance> <http://www.w3.org/2004/02/skos/core#prefLabel> "typed scientific provenance"@en .
+<https://w3id.org/modavis/vao/vocab/capability/visual-acoustic-scene> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://w3id.org/modavis/vao/ontology#Capability> .
+<https://w3id.org/modavis/vao/vocab/capability/visual-acoustic-scene> <http://www.w3.org/2004/02/skos/core#prefLabel> "visual-acoustic scene"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/authored> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/authored> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/authored> <http://www.w3.org/2004/02/skos/core#prefLabel> "authored"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/captured> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/captured> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/captured> <http://www.w3.org/2004/02/skos/core#prefLabel> "captured"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/converted> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/converted> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/converted> <http://www.w3.org/2004/02/skos/core#prefLabel> "converted"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/derived> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/derived> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/derived> <http://www.w3.org/2004/02/skos/core#prefLabel> "derived"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/hybrid> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/hybrid> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/hybrid> <http://www.w3.org/2004/02/skos/core#prefLabel> "hybrid"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/inferred> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/inferred> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/inferred> <http://www.w3.org/2004/02/skos/core#prefLabel> "inferred"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/reconstructed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/reconstructed> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/reconstructed> <http://www.w3.org/2004/02/skos/core#prefLabel> "reconstructed"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/redacted> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/redacted> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/redacted> <http://www.w3.org/2004/02/skos/core#prefLabel> "redacted"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/simulated> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/simulated> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/simulated> <http://www.w3.org/2004/02/skos/core#prefLabel> "simulated"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status/undetermined> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/representation-status/undetermined> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/representation-status> .
+<https://w3id.org/modavis/vao/vocab/representation-status/undetermined> <http://www.w3.org/2004/02/skos/core#prefLabel> "undetermined"@en .
+<https://w3id.org/modavis/vao/vocab/representation-status> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vao/vocab/representation-status> <http://www.w3.org/2004/02/skos/core#prefLabel> "VAO exact-realization representation status"@en .
+<https://w3id.org/modavis/vao/vocab/time-scale/gps> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/time-scale/gps> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/time-scale> .
+<https://w3id.org/modavis/vao/vocab/time-scale/gps> <http://www.w3.org/2004/02/skos/core#prefLabel> "GPS time"@en .
+<https://w3id.org/modavis/vao/vocab/time-scale/posix> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/time-scale/posix> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/time-scale> .
+<https://w3id.org/modavis/vao/vocab/time-scale/posix> <http://www.w3.org/2004/02/skos/core#prefLabel> "POSIX time"@en .
+<https://w3id.org/modavis/vao/vocab/time-scale/smpte-timecode> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/time-scale/smpte-timecode> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/time-scale> .
+<https://w3id.org/modavis/vao/vocab/time-scale/smpte-timecode> <http://www.w3.org/2004/02/skos/core#prefLabel> "SMPTE timecode"@en .
+<https://w3id.org/modavis/vao/vocab/time-scale/tai> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/time-scale/tai> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/time-scale> .
+<https://w3id.org/modavis/vao/vocab/time-scale/tai> <http://www.w3.org/2004/02/skos/core#prefLabel> "International Atomic Time (TAI)"@en .
+<https://w3id.org/modavis/vao/vocab/time-scale/utc> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/vao/vocab/time-scale/utc> <http://www.w3.org/2004/02/skos/core#inScheme> <https://w3id.org/modavis/vao/vocab/time-scale> .
+<https://w3id.org/modavis/vao/vocab/time-scale/utc> <http://www.w3.org/2004/02/skos/core#prefLabel> "UTC"@en .
+<https://w3id.org/modavis/vao/vocab/time-scale> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2004/02/skos/core#ConceptScheme> .
+<https://w3id.org/modavis/vao/vocab/time-scale> <http://www.w3.org/2004/02/skos/core#prefLabel> "VAO time-scale identifiers"@en .
+<https://w3id.org/modavis/vao/vocab/unit/midi-tick-per-quarter-note> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://qudt.org/schema/qudt/Unit> .
+<https://w3id.org/modavis/vao/vocab/unit/midi-tick-per-quarter-note> <http://www.w3.org/2000/01/rdf-schema#comment> "The pulses-per-quarter-note resolution of a musical timebase; tempo conversion is supplied by synchronization mappings rather than this rate."@en .
+<https://w3id.org/modavis/vao/vocab/unit/midi-tick-per-quarter-note> <http://www.w3.org/2000/01/rdf-schema#label> "MIDI ticks per quarter note"@en .
+<https://w3id.org/modavis/vao/vocab/unit/midi-tick> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://qudt.org/schema/qudt/Unit> .
+<https://w3id.org/modavis/vao/vocab/unit/midi-tick> <http://www.w3.org/2000/01/rdf-schema#comment> "One discrete coordinate tick in a pulses-per-quarter-note musical timebase."@en .
+<https://w3id.org/modavis/vao/vocab/unit/midi-tick> <http://www.w3.org/2000/01/rdf-schema#label> "MIDI tick"@en .

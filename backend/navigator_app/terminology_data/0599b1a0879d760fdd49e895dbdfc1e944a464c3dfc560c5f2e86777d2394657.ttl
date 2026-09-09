@@ -1,0 +1,513 @@
+@prefix modavis: <https://w3id.org/modavis/ontology/core#> .
+@prefix modaudio: <https://w3id.org/modavis/ontology/audio#> .
+@prefix modinst: <https://w3id.org/modavis/ontology/instrument#> .
+@prefix modmedia: <https://w3id.org/modavis/ontology/media#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+
+<https://w3id.org/modavis/ontology/audio> a owl:Ontology ;
+  owl:imports <https://w3id.org/modavis/ontology/core/0.1.0>,
+              <https://w3id.org/modavis/ontology/instrument/0.1.0>,
+              <https://w3id.org/modavis/ontology/media/0.1.0> ;
+  dcterms:title "MODAVIS Audio and Sampled Playback Ontology"@en ;
+  dcterms:description "Protocol-neutral semantics for fixed audio signals, source-bound half-open frame regions, sampled-playback parameters, and tuning maps."@en ;
+  dcterms:creator <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:publisher <https://orcid.org/0000-0002-7904-3892> ;
+  dcterms:issued "2026-08-27"^^xsd:date ;
+  dcterms:modified "2026-08-27"^^xsd:date ;
+  dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
+  dcterms:conformsTo <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL>,
+                     <https://www.w3.org/TR/prov-o/> ;
+  owl:versionIRI <https://w3id.org/modavis/ontology/audio/0.1.0> ;
+  owl:versionInfo "0.1.0" ;
+  vann:preferredNamespacePrefix "modaudio" ;
+  vann:preferredNamespaceUri "https://w3id.org/modavis/ontology/audio#" .
+
+modaudio:AudioSignal a owl:Class ;
+  rdfs:subClassOf modmedia:DigitalAsset ;
+  rdfs:label "audio signal"@en ;
+  skos:definition "An identified digital asset representing one or more channels of time-varying audio samples at a stated sample rate."@en ;
+  skos:scopeNote "Frame coordinates apply only to a fixed signal identity or bitstream. Re-encoding, resampling, trimming, or channel changes create a distinct signal to which regions must be rebound."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:AudioSample a owl:Class ;
+  rdfs:subClassOf modaudio:AudioSignal ;
+  rdfs:label "audio sample"@en ;
+  skos:definition "An audio signal selected or derived for triggered or otherwise bounded playback as part of a digital or virtual musical instrument."@en ;
+  skos:scopeNote "An audio sample is the identified playback signal, not merely a region of a larger signal and not automatically a file or bitstream. Use extractedFromRegion for source selection and media terms for byte-level realizations."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:SignalRegion a owl:Class ;
+  rdfs:subClassOf modavis:Entity, prov:Entity ;
+  rdfs:label "sample-clock signal region"@en ;
+  skos:definition "A source-bound half-open interval of audio frames whose start is inclusive and whose end is exclusive."@en ;
+  skos:scopeNote "A region is meaningful only together with the fixed audio signal whose sample clock supplies its coordinate system."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:SampleExtractionRegion a owl:Class ;
+  rdfs:subClassOf modaudio:SignalRegion ;
+  rdfs:label "sample extraction region"@en ;
+  skos:definition "The exact half-open interval of a source audio signal used to create a derived audio sample."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:AttackRegion a owl:Class ;
+  rdfs:subClassOf modaudio:SignalRegion ;
+  rdfs:label "attack region"@en ;
+  skos:definition "A signal region identified as the onset or attack portion of a sounding event."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:StableSustainRegion a owl:Class ;
+  rdfs:subClassOf modaudio:SignalRegion ;
+  rdfs:label "stable sustain region"@en ;
+  skos:definition "A signal region assessed as sufficiently stable for sustained analysis, resynthesis, or loop selection."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:SustainLoopRegion a owl:Class ;
+  rdfs:subClassOf modaudio:SignalRegion ;
+  rdfs:label "sustain loop region"@en ;
+  skos:definition "A signal region whose half-open boundaries define a candidate or accepted repeating interval for sustained playback."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:ReleaseRegion a owl:Class ;
+  rdfs:subClassOf modaudio:SignalRegion ;
+  rdfs:label "release region"@en ;
+  skos:definition "A signal region selected for playback or analysis of the release phase following cessation of excitation or control."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:LoopPointSet a owl:Class ;
+  rdfs:subClassOf modavis:Entity, prov:Entity ;
+  rdfs:label "loop point set"@en ;
+  skos:definition "A versionable grouping of one or more source-bound sustain-loop regions with loop playback policy and an optional loopability assessment."@en ;
+  skos:scopeNote "Class membership does not state whether the grouping is tentative or accepted. A governing workflow or application profile must record that lifecycle decision."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:SamplePlaybackParameters a owl:Class ;
+  rdfs:subClassOf modavis:Entity, prov:Entity ;
+  rdfs:label "sample playback parameters"@en ;
+  skos:definition "A protocol-neutral record selecting an audio sample together with tuning, signal-region, gain, selection, and control-release policy."@en ;
+  skos:scopeNote "This class describes musical playback semantics and does not prescribe a sampler file format or runtime API."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:TuningMap a owl:Class ;
+  rdfs:subClassOf modavis:Entity, prov:Entity ;
+  rdfs:label "tuning map"@en ;
+  skos:definition "A versionable mapping from logical keys or instrument components to target frequencies, distinct from the measurements or documentary assertions supporting it."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:TuningEntry a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "tuning entry"@en ;
+  skos:definition "One component- or logical-control-scoped target-frequency entry in a tuning map."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:TuningReference a owl:Class ;
+  rdfs:subClassOf modavis:Entity ;
+  rdfs:label "tuning reference"@en ;
+  skos:definition "An identified pitch designation and frequency used as a reference by a tuning map, without assuming a control protocol or numbering system."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:appliesToSignal a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:range modaudio:AudioSignal ;
+  rdfs:label "applies to signal"@en ;
+  skos:definition "Identifies the fixed audio signal on whose sample clock a region, loop set, or other source-scoped record is expressed."@en ;
+  skos:scopeNote "SignalRegion and LoopPointSet are the subjects constrained by the 0.1.0 exchange profile. No global domain is asserted because additional source-scoped record classes may reuse the property without receiving an incorrect type inference."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:hasSignalRegion a owl:ObjectProperty ;
+  rdfs:range modaudio:SignalRegion ;
+  rdfs:label "has signal region"@en ;
+  skos:definition "Relates an audio signal, playback record, or analysis result to a source-bound signal region."@en ;
+  skos:scopeNote "This discovery relation does not change region coordinates or imply that the subject owns the source signal. The region's appliesToSignal value is authoritative for its sample-clock basis."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:hasLoopRegion a owl:ObjectProperty ;
+  rdfs:domain modaudio:LoopPointSet ;
+  rdfs:range modaudio:SustainLoopRegion ;
+  rdfs:label "has loop region"@en ;
+  skos:definition "Relates a loop point set to one of its sustain-loop regions."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:usesLoopPointSet a owl:ObjectProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range modaudio:LoopPointSet ;
+  rdfs:label "uses loop point set"@en ;
+  skos:definition "Identifies a loop point set selected by a sampled-playback parameter record."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:extractedFromRegion a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf prov:wasDerivedFrom ;
+  rdfs:domain modaudio:AudioSample ;
+  rdfs:range modaudio:SampleExtractionRegion ;
+  rdfs:label "extracted from region"@en ;
+  skos:definition "Identifies the exact source-signal region from which an audio sample was extracted."@en ;
+  skos:scopeNote "Consumers should record bitstream-to-bitstream derivation separately with modmedia:derivedFrom when required."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:usesPlaybackParameters a owl:ObjectProperty ;
+  rdfs:range modaudio:SamplePlaybackParameters ;
+  rdfs:label "uses playback parameters"@en ;
+  skos:definition "Relates a virtual instrument, version, control mapping, or package to sampled-playback parameters it uses."@en ;
+  skos:scopeNote "The open subject position avoids a dependency from the audio module to every possible application class. Application profiles must constrain which resources may use playback parameters."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:hasTuningMap a owl:ObjectProperty ;
+  rdfs:range modaudio:TuningMap ;
+  rdfs:label "has tuning map"@en ;
+  skos:definition "Relates an instrument, instrument state, virtual-instrument version, or dataset to a tuning map it provides."@en ;
+  skos:scopeNote "The open subject position avoids importing every application module. This relation says that a resource provides the map; usesTuningMap states that a playback record applies it."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:usesTuningMap a owl:ObjectProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range modaudio:TuningMap ;
+  rdfs:label "uses tuning map"@en ;
+  skos:definition "Identifies the tuning map used by a sampled-playback parameter record."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:usesReleaseRegion a owl:ObjectProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range modaudio:ReleaseRegion ;
+  rdfs:label "uses release region"@en ;
+  skos:definition "Identifies a source-bound release region selected for sampled playback."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:playsSample a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range modaudio:AudioSample ;
+  rdfs:label "plays sample"@en ;
+  skos:definition "Identifies the audio sample governed by a sampled-playback parameter record."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:channelPolicy a owl:ObjectProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range skos:Concept ;
+  rdfs:label "channel policy"@en ;
+  skos:definition "Classifies channel selection, mixing, or routing behavior with a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:loopabilityAssessment a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:LoopPointSet ;
+  rdfs:range skos:Concept ;
+  rdfs:label "loopability assessment"@en ;
+  skos:definition "Classifies whether and under what conditions a source signal can sustain an acceptable loop with a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:playbackMode a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SignalRegion ;
+  rdfs:range skos:Concept ;
+  rdfs:label "region playback mode"@en ;
+  skos:definition "Classifies traversal of a signal region with a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:exitPolicy a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SignalRegion ;
+  rdfs:range skos:Concept ;
+  rdfs:label "region exit policy"@en ;
+  skos:definition "Classifies how playback exits a signal region when its sustaining condition ends, using a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:regionRole a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SignalRegion ;
+  rdfs:range skos:Concept ;
+  rdfs:label "region role"@en ;
+  skos:definition "Classifies the analytical or playback role of a signal region with a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:boundaryCensoring a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SignalRegion ;
+  rdfs:range skos:Concept ;
+  rdfs:label "boundary censoring"@en ;
+  skos:definition "Classifies whether a signal boundary was constrained by the available capture rather than observed directly, using a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:assignmentMethod a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SampleExtractionRegion ;
+  rdfs:range skos:Concept ;
+  rdfs:label "assignment method"@en ;
+  skos:definition "Classifies how a component or logical-control assignment was measured, inferred, authored, or otherwise established, using a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:pitchTrackingPolicy a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range skos:Concept ;
+  rdfs:label "pitch tracking policy"@en ;
+  skos:definition "Classifies how playback pitch follows a logical control or other control signal, using a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:controlReleasePolicy a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range skos:Concept ;
+  rdfs:label "control release policy"@en ;
+  skos:definition "Classifies playback behavior when the controlling gate or equivalent control ends, using a concept governed by the applicable exchange profile."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:tuningEntries a owl:ObjectProperty ;
+  rdfs:domain modaudio:TuningMap ;
+  rdfs:range modaudio:TuningEntry ;
+  rdfs:label "has tuning entry"@en ;
+  skos:definition "Relates a tuning map to one of its key- or component-scoped tuning entries."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:hasTuningReference a owl:ObjectProperty ;
+  rdfs:domain modaudio:TuningMap ;
+  rdfs:range modaudio:TuningReference ;
+  rdfs:label "has tuning reference"@en ;
+  skos:definition "Relates a tuning map to an identified reference pitch and frequency."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:soundingComponent a owl:ObjectProperty ;
+  rdfs:domain modaudio:TuningEntry ;
+  rdfs:range modinst:InstrumentComponent ;
+  rdfs:label "sounding component"@en ;
+  skos:definition "Identifies the instrument component whose target pitch is recorded by a tuning entry."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:logicalControl a owl:ObjectProperty ;
+  rdfs:domain modaudio:TuningEntry ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "logical control"@en ;
+  skos:definition "Identifies a protocol-neutral logical control whose target pitch is recorded by a tuning entry."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:startFrameInclusive a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SignalRegion ;
+  rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "inclusive start frame"@en ;
+  skos:definition "The zero-based inclusive index of the first audio frame in a half-open signal region."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:endFrameExclusive a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SignalRegion ;
+  rdfs:range xsd:positiveInteger ;
+  rdfs:label "exclusive end frame"@en ;
+  skos:definition "The zero-based exclusive index immediately after the final audio frame in a half-open signal region."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:crossfadeFrames a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SustainLoopRegion ;
+  rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "crossfade length in frames"@en ;
+  skos:definition "The number of frames blended across the loop boundary; zero denotes no crossfade."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:sampleRate a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:AudioSignal ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "sample rate in hertz"@en ;
+  skos:definition "The number of audio frames per second on the signal's sample clock, expressed in hertz."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:channelCount a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:AudioSignal ;
+  rdfs:range xsd:positiveInteger ;
+  rdfs:label "channel count"@en ;
+  skos:definition "The number of interleaved or logically associated channels in an audio signal."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:totalFrames a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:AudioSignal ;
+  rdfs:range xsd:positiveInteger ;
+  rdfs:label "total frame count"@en ;
+  skos:definition "The total number of audio frames in a fixed audio signal."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:confidence a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:LoopPointSet ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "loop decision confidence"@en ;
+  skos:definition "A decimal from zero through one expressing confidence in a loop-point proposal or decision."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:releaseStartFrame a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SignalRegion ;
+  rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "release start frame"@en ;
+  skos:definition "An optional source-relative frame index at which release behavior begins within or after a region."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:boundaryConfidence a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SignalRegion ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "boundary confidence"@en ;
+  skos:definition "A decimal from zero through one expressing confidence in the selected signal-region boundaries."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:referenceChannelIndex a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SignalRegion ;
+  rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "reference channel index"@en ;
+  skos:definition "The zero-based channel index used as the reference for analysis, alignment, or playback decisions."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:captureSequenceIndex a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SampleExtractionRegion ;
+  rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "capture sequence index"@en ;
+  skos:definition "The zero-based ordinal of a capture within a documented acquisition sequence."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:takeNumber a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SampleExtractionRegion ;
+  rdfs:range xsd:positiveInteger ;
+  rdfs:label "take number"@en ;
+  skos:definition "The positive source-preserving number assigned to a recorded take."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:assignmentConfidence a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SampleExtractionRegion ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "assignment confidence"@en ;
+  skos:definition "A decimal from zero through one expressing confidence in a source-region assignment."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:sourceFundamentalHz a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "source fundamental frequency"@en ;
+  skos:definition "The measured, inferred, or declared fundamental frequency of the untransposed source sample, in hertz."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:targetFrequencyHz a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "target frequency"@en ;
+  skos:definition "The target sounding frequency in hertz for a playback parameter or tuning entry."@en ;
+  skos:scopeNote "The 0.1.0 exchange profile permits this property only on SamplePlaybackParameters and TuningEntry. The global domain is omitted because OWL would otherwise infer an invalid intersection type."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:tuningOffsetCents a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "tuning offset in cents"@en ;
+  skos:definition "The signed pitch adjustment in cents relative to the applicable source or target reference."@en ;
+  skos:scopeNote "The 0.1.0 exchange profile permits this property only on SamplePlaybackParameters and TuningEntry. The relevant source or target reference must be established by that enclosing record."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:gainDB a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "playback gain in decibels"@en ;
+  skos:definition "The signed gain adjustment, in decibels, applied by sampled playback."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:normalizationGainDB a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "normalization gain in decibels"@en ;
+  skos:definition "The signed gain, in decibels, applied specifically to normalize a source sample to a documented reference."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:roundRobinGroup a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range xsd:string ;
+  rdfs:label "round-robin group"@en ;
+  skos:definition "A profile-local identifier grouping alternate samples selected as a round-robin set."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:roundRobinIndex a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range xsd:nonNegativeInteger ;
+  rdfs:label "round-robin index"@en ;
+  skos:definition "The zero-based ordinal of a playback record within a round-robin group."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:selectionPriority a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range xsd:integer ;
+  rdfs:label "selection priority"@en ;
+  skos:definition "An integer used by an application profile to resolve overlapping playback-selection domains."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:latencyCompensationFrames a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:SamplePlaybackParameters ;
+  rdfs:range xsd:integer ;
+  rdfs:label "latency compensation in frames"@en ;
+  skos:definition "A signed frame offset applied to compensate for documented capture or playback latency."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:tuningSystem a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:TuningMap ;
+  rdfs:range modavis:IdentifiedResource ;
+  rdfs:label "tuning system"@en ;
+  skos:definition "Identifies the temperament or tuning-system specification used by a tuning map."@en ;
+  skos:scopeNote "Use a stable IRI for a documented tuning system; retain a source label on that identified resource rather than embedding an opaque tuning-system string in the map."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:referencePitchDesignation a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:TuningReference ;
+  rdfs:range xsd:string ;
+  rdfs:label "reference pitch designation"@en ;
+  skos:definition "A protocol-neutral source-preserving designation for the reference pitch, such as A4 or a component name."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .
+
+modaudio:referenceFrequencyHz a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:domain modaudio:TuningReference ;
+  rdfs:range xsd:decimal ;
+  rdfs:label "reference frequency"@en ;
+  skos:definition "The positive frequency in hertz assigned to the designated reference pitch."@en ;
+  rdfs:isDefinedBy <https://w3id.org/modavis/ontology/audio> ;
+  vs:term_status "testing" .

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/vocab/vann/" xmlns:ns3="http://www.w3.org/2002/07/owl#" xmlns:ns4="http://www.w3.org/2000/01/rdf-schema#" xmlns:ns5="http://www.w3.org/2003/06/sw-vocab-status/ns#" xmlns:ns6="http://www.w3.org/2004/02/skos/core#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/owl2-profiles/#OWL_2_RL" />
+    <ns1:creator rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:description xml:lang="en">Explicit source-backed assertions, conflicts, editorial decisions, and convenience-graph projections.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Assertion Ontology</ns1:title>
+    <ns2:preferredNamespacePrefix>modassert</ns2:preferredNamespacePrefix>
+    <ns2:preferredNamespaceUri>https://w3id.org/modavis/ontology/assertion#</ns2:preferredNamespaceUri>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/core/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/evidence/0.1.0" />
+    <ns3:imports rdf:resource="https://w3id.org/modavis/ontology/provenance/0.1.0" />
+    <ns3:versionIRI rdf:resource="https://w3id.org/modavis/ontology/assertion/0.1.0" />
+    <ns3:versionInfo>0.1.0</ns3:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#Assertion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">assertion</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A citable claim that relates a subject to an identified resource or literal through a governed predicate and retains status, evidence, confidence, and provenance.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#ConflictCriterion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">conflict criterion</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An identified rule, policy, or documented condition under which the assertions in a conflict set cannot all be accepted together.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#ConflictDecision">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">conflict decision</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">An accountable editorial decision that resolves or records a conflict set.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#ConflictSet">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">conflict set</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A set of assertions that cannot all be accepted together under the stated conflict criterion.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#Projection">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">assertion projection</ns4:label>
+    <ns4:subClassOf rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Lineage connecting an accepted assertion to a direct triple or operational domain representation.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#assertionStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">assertion status</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Classifies the review or lifecycle status of an assertion with a governed concept.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#assertsLiteral">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">asserts literal</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Provides the literal-valued object of an assertion; it is mutually exclusive with a resource-valued object in the MODAVIS SHACL profiles.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">No global datatype range is asserted because language-tagged strings and multiple RDF datatypes are legitimate. An application profile should require a narrower datatype when comparison or calculation depends on it.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#assertsObject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">asserts object</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the resource-valued object of an assertion; it is mutually exclusive with a literal-valued object in the MODAVIS SHACL profiles.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#assertsPredicate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">asserts predicate</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Uses a governed assertion-predicate concept; accepted projection may map that concept to a native OWL property.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#assertsSubject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">asserts subject</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the resource about which an assertion makes its claim.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#chosenAssertion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#ConflictDecision" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">chosen assertion</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies an assertion selected by an editorial conflict decision.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#confidence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">confidence</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A decimal from zero through one expressing the recorded confidence in an assertion under its generating method or review process.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#conflictCriterion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#ConflictSet" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">uses conflict criterion</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#ConflictCriterion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the rule, policy, or documented condition under which the assertions in a conflict set are incompatible.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#decidedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#ConflictDecision" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">decided by</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#Agent" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies an accountable agent responsible for an editorial conflict decision.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#decisionFor">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#ConflictDecision" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">decision for</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#ConflictSet" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the conflict set addressed by an editorial conflict decision.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#decisionRationale">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#ConflictDecision" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">decision rationale</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">A human-readable explanation of the evidence and reasoning behind an editorial conflict decision.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#generatedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">generated by</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/ns/prov#Activity" />
+    <ns4:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the processing or editorial activity that generated an assertion.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#hasConflictMember">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#ConflictSet" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">has conflict member</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a conflict set to an assertion that participates in the stated incompatibility.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#hasEvidenceRelation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">has evidence relation</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/evidence#EvidenceRelation" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates an assertion to qualified source-fragment evidence that supports, opposes, or contextualizes it.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#normalizedValue">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">normalized value</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Retains a documented comparison or canonical lexical form without replacing the raw source value.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectedPropertyIri">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="http://www.w3.org/2004/02/skos/core#Concept" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projected property IRI</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Maps a governed assertion-predicate concept to the absolute IRI of a native RDF property used by reviewed projections.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectionGeneratedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Projection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projection generated by</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/ns/prov#Activity" />
+    <ns4:subPropertyOf rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the processing or editorial activity that generated the projection.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectionGraphIri">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Projection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projection graph IRI</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Optionally records the named-graph IRI in which the projected statement was materialized.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectionLiteral">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Projection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projection literal</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Provides the literal-valued object of the projected RDF statement.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The literal must reproduce the source assertion value. No global datatype range is asserted because the source assertion may legitimately use different RDF datatypes or a language tag.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectionObject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Projection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projection object</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the resource-valued object of the projected RDF statement.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectionPredicateIri">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Projection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projection predicate IRI</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Records the absolute IRI of the RDF predicate used by the projection without treating that property IRI as an OWL individual.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectionRule">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Projection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projection rule</ns4:label>
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the documented rule or specification used to generate the projection.</ns6:definition>
+    <ns6:scopeNote xml:lang="en">The value must be an IRI identifying a citable rule or specification, not an ungoverned display string. The exchange profile enforces IRI node kind.</ns6:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectionRuleVersion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Projection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projection rule version</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Records the non-empty version label of the projection rule.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectionSubject">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Projection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projection subject</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/core#IdentifiedResource" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the subject resource of the projected RDF statement.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#projectsAssertion">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty" />
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Projection" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">projects assertion</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Identifies the accepted assertion from which a convenience or operational projection was generated.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#rawValue">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">raw value</ns4:label>
+    <ns4:range rdf:resource="http://www.w3.org/2001/XMLSchema#string" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Retains the source lexical form from which an assertion value was extracted or interpreted.</ns6:definition>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/ontology/assertion#supersedes">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty" />
+    <ns4:domain rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns4:isDefinedBy rdf:resource="https://w3id.org/modavis/ontology/assertion" />
+    <ns4:label xml:lang="en">supersedes</ns4:label>
+    <ns4:range rdf:resource="https://w3id.org/modavis/ontology/assertion#Assertion" />
+    <ns5:term_status>testing</ns5:term_status>
+    <ns6:definition xml:lang="en">Relates a later assertion to an earlier assertion whose role or status it replaces without erasing the earlier record.</ns6:definition>
+  </rdf:Description>
+</rdf:RDF>

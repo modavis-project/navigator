@@ -1,0 +1,241 @@
+<https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> <http://www.w3.org/2000/01/rdf-schema#label> "virtual-instrument compatibility statement"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> <http://www.w3.org/2004/02/skos/core#definition> "A qualified, evidence-backed statement about the compatibility of a virtual-instrument version with a host, platform, protocol, plugin format, or operating environment."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> <http://www.w3.org/2004/02/skos/core#scopeNote> "A compatibility statement applies only to the named version and target under the conditions supported by its evidence. It is not a certification or a guarantee for other versions, environments, or future states."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> <http://www.w3.org/2000/01/rdf-schema#label> "virtual-instrument source relation"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#IdentifiedResource> .
+<https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> <http://www.w3.org/2004/02/skos/core#definition> "A qualified and evidence-backed relation connecting a virtual instrument, product, or version to a specific musical instrument or instrument state used as a sample source, model, reconstruction target, composite source, or inspiration."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> <http://www.w3.org/2004/02/skos/core#scopeNote> "A source relation does not assert that the virtual and source instruments are identical. Ambiguous candidates remain assertions or review proposals rather than accepted source relations."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> <http://www.w3.org/2000/01/rdf-schema#label> "virtual-instrument package"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/media#DigitalAsset> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> <http://www.w3.org/2004/02/skos/core#definition> "An installable, downloadable, or preservable digital asset distributing all or part of a virtual-instrument version."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> <http://www.w3.org/2004/02/skos/core#scopeNote> "A package is not automatically the playable instrument; it may require a host, engine, dependency, license, configuration, or additional package."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> <http://www.w3.org/2000/01/rdf-schema#label> "virtual-instrument product"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> <http://www.w3.org/2004/02/skos/core#definition> "A stable product, library, sample-set, plugin, or project identity under which one or more virtual-instrument versions are developed or distributed."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> <http://www.w3.org/2004/02/skos/core#scopeNote> "A product may realize one playable virtual musical instrument or contain several instruments. Product identity is not automatically musical-instrument identity; generic hosts and dependencies that implement no playable instrument are outside this class."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> <http://www.w3.org/2000/01/rdf-schema#label> "virtual-instrument version"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/ns/prov#Entity> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> <http://www.w3.org/2004/02/skos/core#definition> "A versioned edition or release state of a virtual-instrument product, distinct from both the stable product identity and its downloadable packages."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> <http://www.w3.org/2000/01/rdf-schema#label> "virtual musical instrument"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> <http://www.w3.org/2004/02/skos/core#definition> "A musical instrument whose playable sound-producing or control behavior is realized substantially through software, digital computation, or a software-controlled sample or synthesis system."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> <http://www.w3.org/2004/02/skos/core#scopeNote> "This class identifies the playable instrument, not merely a catalog row, download page, package, sample library component, or representation of a physical instrument."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus> <http://www.w3.org/2000/01/rdf-schema#label> "compatibility status"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus> <http://www.w3.org/2004/02/skos/core#definition> "Classifies the result of a compatibility statement with a governed status concept."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityStatus> <http://www.w3.org/2004/02/skos/core#scopeNote> "Indeterminate means that the available evidence supports neither a positive nor a negative result; it must not be interpreted as compatible-with-limitations."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityTarget> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityTarget> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityTarget> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityTarget> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityTarget> <http://www.w3.org/2000/01/rdf-schema#label> "compatibility target"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityTarget> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityTarget> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the governed concept, specification, platform, host, product version, protocol, plugin format, or operating environment evaluated by a compatibility statement."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityTarget> <http://www.w3.org/2004/02/skos/core#scopeNote> "The target is an IRI. Profiles may require a SKOS concept for a closed classification or an identified resource for a version-specific environment."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion> <http://www.w3.org/2000/01/rdf-schema#label> "compatibility version"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the virtual-instrument version evaluated by a compatibility statement."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#developedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#developedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#developedBy> <http://www.w3.org/2000/01/rdf-schema#label> "developed by"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#developedBy> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Agent> .
+<https://w3id.org/modavis/ontology/virtual-instrument#developedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#developedBy> <http://www.w3.org/2004/02/skos/core#definition> "Relates a virtual-instrument product or version to an agent responsible for its development."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#developedBy> <http://www.w3.org/2004/02/skos/core#scopeNote> "The subject is a product or version. A global domain is omitted because multiple domain axioms would infer that every subject is both classes."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasCompatibilityStatement> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasCompatibilityStatement> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasCompatibilityStatement> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasCompatibilityStatement> <http://www.w3.org/2000/01/rdf-schema#label> "has compatibility statement"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasCompatibilityStatement> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/virtual-instrument#CompatibilityStatement> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasCompatibilityStatement> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/virtual-instrument#compatibilityVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasCompatibilityStatement> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasCompatibilityStatement> <http://www.w3.org/2004/02/skos/core#definition> "Relates a virtual-instrument version to a qualified statement about a supported or unsupported environment."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasEvidenceRelation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#label> "has virtual-instrument evidence"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasEvidenceRelation> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/evidence#EvidenceRelation> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasEvidenceRelation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasEvidenceRelation> <http://www.w3.org/2004/02/skos/core#definition> "Relates a virtual-instrument source relation or compatibility statement to qualified source-fragment evidence evaluating it."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasEvidenceRelation> <http://www.w3.org/2004/02/skos/core#scopeNote> "The subject must be the same resource named by modevidence:evaluates on each linked evidence relation. The exchange profile enforces that inverse consistency."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasPackage> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasPackage> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasPackage> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasPackage> <http://www.w3.org/2000/01/rdf-schema#label> "has distribution package"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasPackage> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasPackage> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasPackage> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasPackage> <http://www.w3.org/2004/02/skos/core#definition> "Relates a virtual-instrument version to a package through which all or part of it is distributed or preserved."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasSourceRelation> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasSourceRelation> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasSourceRelation> <http://www.w3.org/2000/01/rdf-schema#label> "has instrument source relation"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasSourceRelation> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasSourceRelation> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasSourceRelation> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasSourceRelation> <http://www.w3.org/2004/02/skos/core#definition> "Relates a virtual instrument, product, or version to a qualified relation describing its connection to a source musical instrument or state."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasSourceRelation> <http://www.w3.org/2004/02/skos/core#scopeNote> "The exchange profile restricts the subject to a playable virtual instrument, stable product, or version. The qualified relation, not this discovery link alone, records source type, evidence, confidence, and source state."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasVersion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasVersion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasVersion> <http://www.w3.org/2000/01/rdf-schema#label> "has virtual-instrument version"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasVersion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasVersion> <http://www.w3.org/2002/07/owl#inverseOf> <https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct> .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasVersion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#hasVersion> <http://www.w3.org/2004/02/skos/core#definition> "Relates a stable virtual-instrument product to one of its versioned editions or releases."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#implementsInstrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#implementsInstrument> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#implementsInstrument> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#implementsInstrument> <http://www.w3.org/2000/01/rdf-schema#label> "implements virtual instrument"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#implementsInstrument> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#implementsInstrument> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#implementsInstrument> <http://www.w3.org/2004/02/skos/core#definition> "Relates a versioned product edition to a playable virtual musical instrument whose behavior it implements."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#implementsInstrument> <http://www.w3.org/2004/02/skos/core#scopeNote> "This is the version-level implementation claim. It neither identifies the stable product nor states which package bytes distribute that version."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> .
+<https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion> <http://www.w3.org/2000/01/rdf-schema#label> "package of version"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#packageOfVersion> <http://www.w3.org/2004/02/skos/core#definition> "Identifies one or more virtual-instrument versions distributed or preserved by a package."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#productionMethod> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#productionMethod> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#productionMethod> <http://www.w3.org/2000/01/rdf-schema#label> "sound-production method"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#productionMethod> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/virtual-instrument#productionMethod> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#productionMethod> <http://www.w3.org/2004/02/skos/core#definition> "Classifies the primary sound-production method of a virtual instrument or version with a governed concept."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#productionMethod> <http://www.w3.org/2004/02/skos/core#scopeNote> "The exchange profile restricts subjects to VirtualMusicalInstrument or VirtualInstrumentVersion and values to the closed 0.1.0 production-method scheme."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#publishedBy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#publishedBy> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#publishedBy> <http://www.w3.org/2000/01/rdf-schema#label> "published by"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#publishedBy> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Agent> .
+<https://w3id.org/modavis/ontology/virtual-instrument#publishedBy> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#publishedBy> <http://www.w3.org/2004/02/skos/core#definition> "Relates a virtual-instrument product, version, or package to an agent responsible for its publication or distribution."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#publishedBy> <http://www.w3.org/2004/02/skos/core#scopeNote> "The subject is a product, version, or package; the relation does not identify the developer, rights holder, or publisher of a represented source instrument."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#realizesInstrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#realizesInstrument> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> .
+<https://w3id.org/modavis/ontology/virtual-instrument#realizesInstrument> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#realizesInstrument> <http://www.w3.org/2000/01/rdf-schema#label> "realizes virtual instrument"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#realizesInstrument> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#realizesInstrument> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#realizesInstrument> <http://www.w3.org/2004/02/skos/core#definition> "Relates a stable product identity to a playable virtual musical instrument it implements or distributes."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#realizesInstrument> <http://www.w3.org/2004/02/skos/core#scopeNote> "This is a product-level association and does not imply that every version implements the same playable instrument. Use implementsInstrument for a version-specific claim."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#releaseDate> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#releaseDate> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#releaseDate> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#releaseDate> <http://www.w3.org/2000/01/rdf-schema#label> "release date"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#releaseDate> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#releaseDate> <http://www.w3.org/2004/02/skos/core#definition> "The documented date on which a virtual-instrument version was released."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#releaseDate> <http://www.w3.org/2004/02/skos/core#scopeNote> "The exchange SHACL profile enforces xsd:date because xsd:date is outside the OWL 2 RL datatype map."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceConfidence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceConfidence> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceConfidence> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceConfidence> <http://www.w3.org/2000/01/rdf-schema#label> "source-relation confidence"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceConfidence> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#decimal> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceConfidence> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceConfidence> <http://www.w3.org/2004/02/skos/core#definition> "A decimal from zero through one expressing confidence in the identification or classification recorded by a virtual-instrument source relation."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceInstrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceInstrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceInstrument> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceInstrument> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceInstrument> <http://www.w3.org/2000/01/rdf-schema#label> "source instrument"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceInstrument> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#MusicalInstrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceInstrument> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceInstrument> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the musical instrument connected to a virtual instrument by a qualified source relation."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> <http://www.w3.org/2000/01/rdf-schema#label> "source-relation subject"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/core#Entity> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the virtual instrument, product, or version whose source relationship is being qualified."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationSubject> <http://www.w3.org/2004/02/skos/core#scopeNote> "Although the OWL range is the common Entity superclass, the exchange profile restricts this value to VirtualMusicalInstrument, VirtualInstrumentProduct, or VirtualInstrumentVersion."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationType> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationType> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationType> <http://www.w3.org/2000/01/rdf-schema#label> "source-relation type"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationType> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2004/02/skos/core#Concept> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationType> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceRelationType> <http://www.w3.org/2004/02/skos/core#definition> "Classifies a virtual-instrument source relation as sampled, modeled, reconstructed, composite, inspired, or another governed relation type."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceState> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceState> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#InstrumentSourceRelation> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceState> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceState> <http://www.w3.org/2000/01/rdf-schema#label> "source instrument state"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceState> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/instrument#InstrumentState> .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceState> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#sourceState> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the specific instrument state captured, modeled, reconstructed, or otherwise used by a virtual-instrument source relation."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionLabel> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionLabel> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionLabel> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionLabel> <http://www.w3.org/2000/01/rdf-schema#label> "version label"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionLabel> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionLabel> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionLabel> <http://www.w3.org/2004/02/skos/core#definition> "The source-preserving version or edition label supplied for a virtual-instrument version."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct> <http://www.w3.org/2000/01/rdf-schema#domain> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct> <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> <https://w3id.org/modavis/ontology/virtual-instrument> .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct> <http://www.w3.org/2000/01/rdf-schema#label> "version of virtual-instrument product"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct> <http://www.w3.org/2000/01/rdf-schema#range> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct> <http://www.w3.org/2003/06/sw-vocab-status/ns#term_status> "testing" .
+<https://w3id.org/modavis/ontology/virtual-instrument#versionOfProduct> <http://www.w3.org/2004/02/skos/core#definition> "Identifies the one stable product identity of which a virtual-instrument version is an edition or release."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/owl2-profiles/#OWL_2_RL> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/dc/terms/conformsTo> <https://www.w3.org/TR/prov-o/> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/dc/terms/creator> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/dc/terms/description> "Semantics for playable virtual instruments, product identities, versions, packages, compatibility, and evidence-qualified relations to source instruments and states."@en .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/dc/terms/issued> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/dc/terms/license> <https://creativecommons.org/licenses/by/4.0/> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/dc/terms/modified> "2026-08-27"^^<http://www.w3.org/2001/XMLSchema#date> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/dc/terms/publisher> <https://orcid.org/0000-0002-7904-3892> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/dc/terms/title> "MODAVIS Virtual Musical Instrument Ontology"@en .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/vocab/vann/preferredNamespacePrefix> "modvmi" .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://purl.org/vocab/vann/preferredNamespaceUri> "https://w3id.org/modavis/ontology/virtual-instrument#" .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/assertion/0.1.0> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/core/0.1.0> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/evidence/0.1.0> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/instrument/0.1.0> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://www.w3.org/2002/07/owl#imports> <https://w3id.org/modavis/ontology/media/0.1.0> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://www.w3.org/2002/07/owl#versionIRI> <https://w3id.org/modavis/ontology/virtual-instrument/0.1.0> .
+<https://w3id.org/modavis/ontology/virtual-instrument> <http://www.w3.org/2002/07/owl#versionInfo> "0.1.0" .
+_:cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualMusicalInstrument> .
+_:cb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:cb7196b6c5169478ef0c9655ec850bf04287143eeae3ad2d22ecda66617635ba0f .
+_:cb14a386eca46cf4a6adaf6308658287b55265a57c7ede854f71621249d44522769 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentPackage> .
+_:cb14a386eca46cf4a6adaf6308658287b55265a57c7ede854f71621249d44522769 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:cb1b90fda862f476d6dad150960cc205a0099cbe63cd06a56f5a1db721adb26fe <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentVersion> .
+_:cb1b90fda862f476d6dad150960cc205a0099cbe63cd06a56f5a1db721adb26fe <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:cb14a386eca46cf4a6adaf6308658287b55265a57c7ede854f71621249d44522769 .
+_:cb7196b6c5169478ef0c9655ec850bf04287143eeae3ad2d22ecda66617635ba0f <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://w3id.org/modavis/ontology/virtual-instrument#VirtualInstrumentProduct> .
+_:cb7196b6c5169478ef0c9655ec850bf04287143eeae3ad2d22ecda66617635ba0f <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:cb1b90fda862f476d6dad150960cc205a0099cbe63cd06a56f5a1db721adb26fe .
+_:cbb56c7c9b0751963ca43928a539dec044fa3caa55bb3ec2d9c3943b52cc4ce3a3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#AllDisjointClasses> .
+_:cbb56c7c9b0751963ca43928a539dec044fa3caa55bb3ec2d9c3943b52cc4ce3a3 <http://www.w3.org/2002/07/owl#members> _:cb0 .

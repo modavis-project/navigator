@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://www.w3.org/ns/dcat#" xmlns:ns3="http://spdx.org/rdf/terms#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/vocab-dcat-3/" />
+    <ns1:description xml:lang="en">Immutable semantic and conformance artifacts for the initial MODAVIS Ontology Network release.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Ontology Network 0.1.0</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Dataset" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/jsonld-context" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/release-checksums" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/release-manifest" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-ttl" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/vocab-jsonld" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/vocab-rdf" />
+    <ns2:distribution rdf:resource="https://w3id.org/modavis/release/0.1.0/distribution/vocab-ttl" />
+    <ns2:version>0.1.0</ns2:version>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0#catalog">
+    <ns1:conformsTo rdf:resource="https://www.w3.org/TR/vocab-dcat-3/" />
+    <ns1:description xml:lang="en">Version-pinned catalog of the immutable semantic, validation, contextualization, and release artifacts in MODAVIS 0.1.0.</ns1:description>
+    <ns1:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:issued>
+    <ns1:license rdf:resource="https://creativecommons.org/licenses/by/4.0/" />
+    <ns1:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-08-27</ns1:modified>
+    <ns1:publisher rdf:resource="https://orcid.org/0000-0002-7904-3892" />
+    <ns1:title xml:lang="en">MODAVIS Ontology Network release catalog</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Catalog" />
+    <ns2:dataset rdf:resource="https://w3id.org/modavis/release/0.1.0" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/jsonld-context-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">c489374021a5bb4af73c065bd8ac6624e92266b44d66ed8fa561c2203ddffd12</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">d75a98edf8b8a981b95c5bd88805fb76cfd1662f18be065813780f22b135736b</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">6ee2cbd010901c1f4a9c5c8dad08f92bd06ce1aeadd13f61d6598aaa4221b2f3</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">2910a5071de24ff1f3a231c09f2de401064183cc8722daf8fe39dbd2ec4162f9</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">45a600d9333bcbb4c1e21b39b89249ae66cf648c60d4ac479e3aaf96676bd4ac</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">f0948ce454117b5448c629449a3a32d040ab44c11745ee6b8082ae89c1c14dc5</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">0599b1a0879d760fdd49e895dbdfc1e944a464c3dfc560c5f2e86777d2394657</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">d1cf34db3d9ea73ff05682943716ffe905da20b198440a5bc1cae4fa9b6bcc9a</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">50cd29eab0a4051bd56da34c80e85174ea8b67727c780a13e990ae8fd0627296</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">38b2f4e9a1cbd91d88b96cca97b6bc88d106ad7656c0995447d7ed156fd0a5cc</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">bf56f7ebe2f0648f06266727f7f2c0fe18eb8d792d5b2a4f112466a696f5c806</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">88297b5e122451a6a872365f9053cf0dad8506dc22d215d0a60e8b0e368af1eb</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">119d77fa8d16663a106137bdaf01a0f16eccb89467c5f1fe8d1327ed8006dbdb</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">2a40fb7150f1298f21912e7b988e1c101952e7f0a0df4e562dcfecc7fc14b48e</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">2218d4cfb9354939ed1eea9605fa77edd5f1c1a8e676f1da30f2ae3e4ff4128d</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">9ea00e7f9d7f9850ee560f5bfb4ebab085317bb2acb507bae0382e92255ed8c4</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">50107726167f5e101b9b56ee439b9aed4e494649b1838c949a3feede4b975ec5</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">53e94499e5d75306c57f89e80257264f1d73c8cc108e1128b86cf1564ef98e72</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">61b3133028d12fe0778c0370a8cd9214aa0e057956eff907c3903935141dbdcf</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">48415ba16211583b6f8c91745e5a9620b5543428cde03d6598c67e53d5c17cba</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">1e4d5bb13cc95af96d047204224c50ac091e3b33419185b78a0d6c754de327f8</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">f721b1ef6699cf351198742065a0307e34097d82158565c748a8475c9574c8ee</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">31cf5f1db2dbde7c6833a0d62881c2339c15b4d7aa40b76f8cb5da5f84cb57cc</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">15685b5ebd941c24dca465aeee57ba4fcd8c6f4983b8dc676cb441729ab7b2a8</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">bc52e44315ef53ab1772d0106544f1515002920940495d34b696bc363d1e0b99</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">3218d38be1f4e93db322d03fc85f5cb93b532db57a13213bc870cc96c9752978</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">3d8a58b2172cba12fad716feeeb5e4dd814990a749c9b7f6fd99020937c57978</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">a3a9ff771458019ac2649014bb845a7b95063f2d774a57d030d4a88183f5e04c</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">cad39d9383e1ef3b211fe0eca1ce43a6802c4f6ba6ae31027fcce82845bd3f59</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">f95e8f4e9b626276035a2016bd825625fbdee6daaf0153e2b58e3bd42eef46d2</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">65bcf609ea75f03e140352cfdb5fef230a85afeb736617ce0b2d88c326cc371c</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">66b999ce1856c848df71dd427e154f881d7212d45e21dcdbac9ebd08885aa4e7</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">7188269bf8e67f2a9e176221bf614bf06eb134e86ea3fd3b9c526ba42ab05d9b</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">ab0169d2572da8a586d3974db65adb4415bcff87df9b1eb36d067c6a8f166523</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">fab1fc5cf1b1019f7cc4cf8aa5f6f4df298db3b09e1d4f99be15a1aec55d3423</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">6cc2da7eff69e37db871755a6630416035981af57073fe38e1040df125d25d54</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">797df7054f397d90881aa6d24cfc6d0759037f49b437be12075f9ee53eb23d28</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">9cc70581fecc0253f6077de8f45c0dcd35a1d41495d8a8a151f199449f21a50a</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">dcbc7ce2d8fa0334e1d2b7a56b6583a66b19cbddb11c4ef393a732bceb6b3db7</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">43dd042410c99cda809d61ee752176d14a9d2e4e26ab37dc3a841ab7b3715c7b</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">0b8688a161681bd968826ef7abfcf2ef5aeeba2968d82ca4d176884be9978839</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">fb3f85970e5177324e6b889448b02b6c7e4872f8f23b14af0a685fc673792358</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">fc9f15009e9a03bc0734cc148d79c08aed2ef06db6cfb9b7d96dad03439d4eff</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">7d8601514a3e3aca086836fe5b100a0326f3c854327dd30a2b56fb06a8e78931</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">fa89b2e957df88ab45822d6ef8e91bd97234663bc2256db7e1e95aa4b9090008</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">afefa7293010ab75d833c30b48e5d6391ad3e07801ff5b49eaacf7e6e37d010c</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">7eb26ef82914f93ca3d8ba185f4bdec86b266e4bcb6a4c15b73c4357fda98fe7</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">332c420183748ed9d1a0b9e46646f1bd5f97fab2b43ab8af21ceb50ceda7dd61</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">271f462a2cd6d73813128d196378484223ee4e56ce6b7abcb31e6a5b9ffd4feb</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/vocab-jsonld-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">972505ab457faa6fc45bfea17a0b1b08e7f70df6360772cd80069c8006a81703</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/vocab-rdf-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">f0f5ee07f0581bc66272ae8719ebd41babca7931ba4468ef9b56acd1699f6d5e</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/checksum/vocab-ttl-sha256">
+    <ns3:algorithm rdf:resource="http://spdx.org/rdf/terms#checksumAlgorithm_sha256" />
+    <ns3:checksumValue rdf:datatype="http://www.w3.org/2001/XMLSchema#hexBinary">e26a8166cbe445b0da72478f8bf4f6f50cd4b4a3c4fcd85facd6d1833d963c3f</ns3:checksumValue>
+    <rdf:type rdf:resource="http://spdx.org/rdf/terms#Checksum" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/jsonld-context">
+    <ns1:title xml:lang="en">MODAVIS JSON-LD context</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/jsonld-context-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10434</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/context/0.1.0/context.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Assertion Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">37305</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/assertion/0.1.0/assertion.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-rdf">
+    <ns1:title xml:lang="en">MODAVIS Assertion Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">25730</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/assertion/0.1.0/assertion.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-assertion-ttl">
+    <ns1:title xml:lang="en">MODAVIS Assertion Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-assertion-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">14502</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/assertion/0.1.0/assertion.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Audio and Sampled Playback Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">70856</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/audio/0.1.0/audio.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-rdf">
+    <ns1:title xml:lang="en">MODAVIS Audio and Sampled Playback Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">48956</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/audio/0.1.0/audio.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-audio-ttl">
+    <ns1:title xml:lang="en">MODAVIS Audio and Sampled Playback Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-audio-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">27817</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/audio/0.1.0/audio.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Assertion Context Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">11921</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/context/0.1.0/context.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-rdf">
+    <ns1:title xml:lang="en">MODAVIS Assertion Context Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8680</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/context/0.1.0/context.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-context-ttl">
+    <ns1:title xml:lang="en">MODAVIS Assertion Context Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-context-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">5705</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/context/0.1.0/context.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Core Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">36054</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/core/0.1.0/core.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-rdf">
+    <ns1:title xml:lang="en">MODAVIS Core Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">26475</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/core/0.1.0/core.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-core-ttl">
+    <ns1:title xml:lang="en">MODAVIS Core Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-core-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">14321</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/core/0.1.0/core.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Event Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">14774</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/events/0.1.0/events.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-rdf">
+    <ns1:title xml:lang="en">MODAVIS Event Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10151</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/events/0.1.0/events.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-events-ttl">
+    <ns1:title xml:lang="en">MODAVIS Event Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-events-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6131</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/events/0.1.0/events.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Evidence Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">26187</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/evidence/0.1.0/evidence.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-rdf">
+    <ns1:title xml:lang="en">MODAVIS Evidence Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">18155</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/evidence/0.1.0/evidence.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-evidence-ttl">
+    <ns1:title xml:lang="en">MODAVIS Evidence Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-evidence-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10584</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/evidence/0.1.0/evidence.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Heritage Knowledge Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">44998</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/heritage/0.1.0/heritage.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-rdf">
+    <ns1:title xml:lang="en">MODAVIS Heritage Knowledge Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">32111</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/heritage/0.1.0/heritage.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-heritage-ttl">
+    <ns1:title xml:lang="en">MODAVIS Heritage Knowledge Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-heritage-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">19580</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/heritage/0.1.0/heritage.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Instrument Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">33332</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/instrument/0.1.0/instrument.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-rdf">
+    <ns1:title xml:lang="en">MODAVIS Instrument Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">23835</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/instrument/0.1.0/instrument.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-instrument-ttl">
+    <ns1:title xml:lang="en">MODAVIS Instrument Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-instrument-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">13768</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/instrument/0.1.0/instrument.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Media and Digital Representation Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">19950</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/media/0.1.0/media.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-rdf">
+    <ns1:title xml:lang="en">MODAVIS Media and Digital Representation Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">14022</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/media/0.1.0/media.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-media-ttl">
+    <ns1:title xml:lang="en">MODAVIS Media and Digital Representation Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-media-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8710</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/media/0.1.0/media.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-jsonld">
+    <ns1:title xml:lang="en">MODAVIS MIDI Binding Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">18058</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/midi/0.1.0/midi.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-rdf">
+    <ns1:title xml:lang="en">MODAVIS MIDI Binding Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">12726</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/midi/0.1.0/midi.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-midi-ttl">
+    <ns1:title xml:lang="en">MODAVIS MIDI Binding Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-midi-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">7321</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/midi/0.1.0/midi.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Ontology Network (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3038</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/0.1.0/ontology.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-rdf">
+    <ns1:title xml:lang="en">MODAVIS Ontology Network (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2640</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/0.1.0/ontology.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-network-ttl">
+    <ns1:title xml:lang="en">MODAVIS Ontology Network (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-network-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1953</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/0.1.0/ontology.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Pipe Organ Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">21125</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/organ/0.1.0/organ.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-rdf">
+    <ns1:title xml:lang="en">MODAVIS Pipe Organ Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">14636</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/organ/0.1.0/organ.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-organ-ttl">
+    <ns1:title xml:lang="en">MODAVIS Pipe Organ Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-organ-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">8796</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/organ/0.1.0/organ.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Provenance Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">14276</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/provenance/0.1.0/provenance.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-rdf">
+    <ns1:title xml:lang="en">MODAVIS Provenance Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">10012</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/provenance/0.1.0/provenance.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-provenance-ttl">
+    <ns1:title xml:lang="en">MODAVIS Provenance Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-provenance-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">6060</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/provenance/0.1.0/provenance.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Virtual Musical Instrument Ontology (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">39210</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/virtual-instrument/0.1.0/virtual-instrument.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-rdf">
+    <ns1:title xml:lang="en">MODAVIS Virtual Musical Instrument Ontology (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">28845</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/virtual-instrument/0.1.0/virtual-instrument.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/ontology-virtual-instrument-ttl">
+    <ns1:title xml:lang="en">MODAVIS Virtual Musical Instrument Ontology (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/ontology-virtual-instrument-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">17283</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/ontology/virtual-instrument/0.1.0/virtual-instrument.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/release-checksums">
+    <ns1:title xml:lang="en">MODAVIS release SHA-256 index</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/release/0.1.0/checksums.sha256" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/plain" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/release-manifest">
+    <ns1:title xml:lang="en">MODAVIS release manifest</ns1:title>
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/release/0.1.0/release-manifest.json" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-jsonld">
+    <ns1:title xml:lang="en">MODAVIS exchange SHACL profile (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">474958</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/shapes/exchange/0.1.0/shapes.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-rdf">
+    <ns1:title xml:lang="en">MODAVIS exchange SHACL profile (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">358085</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/shapes/exchange/0.1.0/shapes.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/shapes-exchange-ttl">
+    <ns1:title xml:lang="en">MODAVIS exchange SHACL profile (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/shapes-exchange-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">191201</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/shapes/exchange/0.1.0/shapes.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-jsonld">
+    <ns1:title xml:lang="en">MODAVIS publication SHACL profile (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">478633</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/shapes/publication/0.1.0/shapes.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-rdf">
+    <ns1:title xml:lang="en">MODAVIS publication SHACL profile (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">360651</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/shapes/publication/0.1.0/shapes.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/shapes-publication-ttl">
+    <ns1:title xml:lang="en">MODAVIS publication SHACL profile (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/shapes-publication-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">192994</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/shapes/publication/0.1.0/shapes.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/vocab-jsonld">
+    <ns1:title xml:lang="en">MODAVIS Controlled Vocabularies (jsonld)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/vocab-jsonld-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">68316</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/vocab/0.1.0/vocab.jsonld" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/ld+json" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/vocab-rdf">
+    <ns1:title xml:lang="en">MODAVIS Controlled Vocabularies (rdf)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/vocab-rdf-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">46074</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/vocab/0.1.0/vocab.rdf" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/application/rdf+xml" />
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/release/0.1.0/distribution/vocab-ttl">
+    <ns1:title xml:lang="en">MODAVIS Controlled Vocabularies (ttl)</ns1:title>
+    <ns3:checksum rdf:resource="https://w3id.org/modavis/release/0.1.0/checksum/vocab-ttl-sha256" />
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Distribution" />
+    <ns2:byteSize rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">27227</ns2:byteSize>
+    <ns2:downloadURL rdf:resource="https://modavis-project.github.io/modavis-ontology-network/vocab/0.1.0/vocab.ttl" />
+    <ns2:mediaType rdf:resource="https://www.iana.org/assignments/media-types/text/turtle" />
+  </rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,116 @@
+[
+  {
+    "@id": "https://w3id.org/modavis/ontology",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Ontology"
+    ],
+    "http://purl.org/dc/terms/conformsTo": [
+      {
+        "@id": "https://www.w3.org/TR/owl2-profiles/#OWL_2_RL"
+      }
+    ],
+    "http://purl.org/dc/terms/creator": [
+      {
+        "@id": "https://orcid.org/0000-0002-7904-3892"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@language": "en",
+        "@value": "A modular semantic standard for evidence-backed, time-aware, provenance-aware knowledge about musical instruments, their digital representations, and virtual realizations."
+      }
+    ],
+    "http://purl.org/dc/terms/issued": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-08-27"
+      }
+    ],
+    "http://purl.org/dc/terms/license": [
+      {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    ],
+    "http://purl.org/dc/terms/modified": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-08-27"
+      }
+    ],
+    "http://purl.org/dc/terms/publisher": [
+      {
+        "@id": "https://orcid.org/0000-0002-7904-3892"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@language": "en",
+        "@value": "MODAVIS Ontology Network"
+      }
+    ],
+    "http://purl.org/vocab/vann/preferredNamespacePrefix": [
+      {
+        "@value": "modavisnet"
+      }
+    ],
+    "http://purl.org/vocab/vann/preferredNamespaceUri": [
+      {
+        "@value": "https://w3id.org/modavis/ontology#"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#imports": [
+      {
+        "@id": "https://w3id.org/modavis/ontology/assertion/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/audio/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/context/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/core/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/events/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/evidence/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/heritage/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/instrument/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/media/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/midi/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/organ/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/provenance/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/ontology/virtual-instrument/0.1.0"
+      },
+      {
+        "@id": "https://w3id.org/modavis/vocab/0.1.0"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#versionIRI": [
+      {
+        "@id": "https://w3id.org/modavis/ontology/0.1.0"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#versionInfo": [
+      {
+        "@value": "0.1.0"
+      }
+    ]
+  }
+]

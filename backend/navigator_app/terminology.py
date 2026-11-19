@@ -94,7 +94,7 @@ def register_terminology_routes(app, catalog=None):
             response.headers['Vary'] = 'Accept'
             return response
         canonical = catalog.authority + '/' + identity
-        data_document = catalog.data_base + '/' + target
+        data_document = ('/resolve' if doc.get('navigatorHosted') else catalog.data_base) + '/' + target
         if chosen == 'html':
             # A selected term needs a real description, not an unchecked anchor
             # in the publication site's aggregate HTML document.
@@ -120,8 +120,11 @@ def register_terminology_routes(app, catalog=None):
         response.headers['Vary'] = 'Accept'
         response.headers['Cache-Control'] = ('public, max-age=86400, immutable' if identity in catalog.documents else 'public, max-age=300')
         response.headers['X-Content-Type-Options'] = 'nosniff'
-        profile = (catalog.authority+'/vao/'+target.split('/')[1] if target.startswith('vao/')
-                   else catalog.authority+'/ontology/'+target.rsplit('/',1)[1])
+        profile_path = doc.get('profilePath') or (
+            'vao/'+target.split('/')[1] if target.startswith('vao/')
+            else 'ontology/'+target.rsplit('/',1)[1]
+        )
+        profile = catalog.authority+'/'+profile_path
         response.headers['Content-Profile'] = '<'+profile+'>'
         response.headers.add('Link', '<'+canonical+'>; rel="canonical"')
         response.headers.add('Link', '<'+profile+'>; rel="profile"')
@@ -137,7 +140,10 @@ def register_terminology_routes(app, catalog=None):
                     return resolve(family+('/'+tail if tail else ''))
                 app.add_url_rule(prefix+family+suffix, endpoint='terminology_'+str(len(app.url_map._rules)), view_func=dispatch, methods=['GET','HEAD'])
     for prefix in ('/', '/resolve/'):
-        for suffix in ('ontology','ontology/','vocab','vocab/','vocab/<path:tail>','<version>/vocabulary','<version>/vocabulary.<extension>'):
+        for suffix in ('ontology','ontology/','vocab','vocab/','vocab/<path:tail>',
+                       '<version>/vocabulary','<version>/vocabulary.<extension>',
+                       'mmic', 'mmic/', 'profile/mmic/1.0.0/ontology',
+                       'profile/mmic/1.0.0/ontology/', 'profile/mmic/1.0.0/ontology.<extension>'):
             def vao(tail='',version=None,extension=None):
                 path = request.path.removeprefix('/resolve/').lstrip('/')
                 return resolve(path)

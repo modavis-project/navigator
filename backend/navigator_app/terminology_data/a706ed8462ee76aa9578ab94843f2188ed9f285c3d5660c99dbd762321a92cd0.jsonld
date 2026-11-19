@@ -1,0 +1,4598 @@
+[
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/resetPolicy",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "resetPolicy"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#initialState",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "initialState"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/signalKind/latch",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/signalKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "latch"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#onValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "onValue"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#losses",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "losses"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/referenceStatus",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "referenceStatus"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#leftEventId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "leftEventId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/sourceKind/audio-derived",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/sourceKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "audio-derived"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/encoding/pinned-barrel",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/encoding"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "pinned-barrel"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#targetId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "targetId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/reviewStatus/reviewed",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/reviewStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "reviewed"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#stateId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "stateId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#Null",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#NamedIndividual"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#status",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "status"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#samples",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "samples"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/role/unknown",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/role"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "unknown"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/interpolation/undetermined",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/interpolation"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "undetermined"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#modelId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "modelId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#geometry",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "geometry"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#controller",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "controller"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#playbackId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "playbackId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/recordingKind/unknown",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/recordingKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "unknown"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/origin/historical",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/origin"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "historical"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#recordingRealizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "recordingRealizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#reader",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reader"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#metrics",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "metrics"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#carrierId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "carrierId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#Interpretation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Interpretation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/basis/estimated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/basis"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "estimated"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#execution",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "execution"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#MidiExportBinding",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "MidiExportBinding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#externalIdentifiers",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "externalIdentifiers"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/direction/reverse",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/direction"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "reverse"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#location",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "location"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#evidence",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "evidence"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#schemaVersion",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "schemaVersion"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#inspectionRealizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "inspectionRealizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/rejected",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "rejected"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#durationPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "durationPolicy"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#predecessorId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "predecessorId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/measured",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "measured"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#designs",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "designs"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#replacementInterpretationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "replacementInterpretationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#toleranceSeconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "toleranceSeconds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/undetermined",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "undetermined"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#models",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "models"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#unmatchedLeftEventIds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "unmatchedLeftEventIds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/gapPolicy/explicit-unmatched",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/gapPolicy"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "explicit-unmatched"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/fabricationStatus/fabricated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/fabricationStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "fabricated"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/referenceStatus/situated-evidence",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/referenceStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "situated-evidence"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#exports",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "exports"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/print",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "print"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#sourceKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sourceKind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/message/note",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/message"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "note"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#environmentRealizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "environmentRealizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#synthetic",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "synthetic"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/status",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "status"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/calibrationStatus/uncalibrated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "uncalibrated"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/reproducibility/deterministic",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/reproducibility"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "deterministic"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/accepted",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "accepted"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#reportRealizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reportRealizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#fragmentBounds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "fragmentBounds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#codeRealizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "codeRealizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#fabricationStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "fabricationStatus"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#velocity",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "velocity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#Observation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Observation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/role/auxiliary",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/role"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "auxiliary"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#unsupportedPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "unsupportedPolicy"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#coverage",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "coverage"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#delaySeconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "delaySeconds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#GeometryLocation",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "GeometryLocation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#sourceFeatureIds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sourceFeatureIds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#alignmentRealizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "alignmentRealizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/reviewStatus",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reviewStatus"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#CarrierDesign",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "CarrierDesign"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/interval",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "interval"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#domain",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "domain"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#programmeId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "programmeId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#conditions",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "conditions"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#uncertaintySeconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "uncertaintySeconds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#Object",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Object"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#reviewStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reviewStatus"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/signalKind/unresolved",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/signalKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "unresolved"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/encoding/projection-disc",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/encoding"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "projection-disc"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#constraints",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "constraints"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#fabrications",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "fabrications"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#end",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "end"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/recordingKind/simulated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/recordingKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "simulated"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#durationSeconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "durationSeconds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#calibrationStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "calibrationStatus"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#bounds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "bounds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#roleAssignmentId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "roleAssignmentId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#interventionActivityId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "interventionActivityId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#rounding",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "rounding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/point",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "point"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#sourceBounds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sourceBounds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#modelSHA256",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "modelSHA256"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#basis",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "basis"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#changeKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "changeKind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#artifactPins",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "artifactPins"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#origin",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "origin"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/direction",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "direction"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#version",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "version"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/envelope",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "envelope"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#reproducibility",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reproducibility"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#nativeRealizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "nativeRealizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scope",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "scope"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "calibrationStatus"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#replacementTargetId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "replacementTargetId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#ObservedFeature",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "ObservedFeature"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#kind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "kind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#reason",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reason"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#PhysicalCarrier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "PhysicalCarrier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#id",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "id"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#evidenceIds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "evidenceIds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/partial",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "partial"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#joins",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "joins"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#Sustain",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#ControlFunction"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Sustain"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#scopeNote": [
+      {
+        "@language": "en",
+        "@value": "Use CC64 when the selected export is MIDI 1.0 control change; native mechanical meaning remains model-qualified."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#responseAssumption",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "responseAssumption"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#purpose",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "purpose"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#Array",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Array"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#segmented",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "segmented"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#carriers",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "carriers"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#levels",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "levels"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/unknown",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "unknown"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/recordingKind/physical",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/recordingKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "physical"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/impulse",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "impulse"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#roleId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "roleId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/reproducibility",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "reproducibility"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#material",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "material"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/calibrationStatus/estimated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "estimated"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#corrections",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "corrections"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#trackId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "trackId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#locator",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "locator"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#NativeSignal",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "NativeSignal"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#layoutRealizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "layoutRealizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/recordingKind",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "recordingKind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#gapPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "gapPolicy"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/unknown",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "unknown"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/sourceKind/simulated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/sourceKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "simulated"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#canonicalization",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "canonicalization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#keys",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "keys"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/direction/undetermined",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/direction"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "undetermined"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#interpretations",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "interpretations"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/reviewStatus/unreviewed",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/reviewStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "unreviewed"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#minimumClearance",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "minimumClearance"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#trackIndex",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "trackIndex"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#modelRoleId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "modelRoleId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#partIds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "partIds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/cyclic",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "cyclic"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/encoding/perforated-roll",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/encoding"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "perforated-roll"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#roles",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "roles"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#axialStart",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "axialStart"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/signalKind/envelope",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/signalKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "envelope"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/referenceStatus/synthetic-test",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/referenceStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "synthetic-test"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#Track",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Track"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#redactions",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "redactions"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#measuredGeometry",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "measuredGeometry"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#axialEnd",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "axialEnd"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/role/note",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/role"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "note"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#encoding",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "encoding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#CarrierPart",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "CarrierPart"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#period",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "period"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/resetPolicy/explicit-final-reset",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/resetPolicy"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "explicit-final-reset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#designId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "designId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/fabricationStatus/design-only",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/fabricationStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "design-only"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#sourceRealizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sourceRealizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/reproducibility/documented",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/reproducibility"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "documented"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#anchors",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "anchors"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#axial",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "axial"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/message/control-change",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/message"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "control-change"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#minimumRepeatSeconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "minimumRepeatSeconds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#sourceRealizationIds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sourceRealizationIds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#historicalApplicability",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "historicalApplicability"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/bridge",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "bridge"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#extent",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "extent"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/signalKind/gate",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/signalKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "gate"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#playbacks",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "playbacks"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#index",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "index"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/perforation",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "perforation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "kind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/changeKind",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "changeKind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#operatorAgentId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "operatorAgentId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/signalKind",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "signalKind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#unit",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "unit"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#interpolation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "interpolation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#CarrierState",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "CarrierState"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#alignment",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "alignment"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#features",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "features"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#message",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "message"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/unresolved",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "unresolved"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#length",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "length"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#pairs",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "pairs"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/role/guidance",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/role"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "guidance"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/role/performance-control",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/role"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "performance-control"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#assignments",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "assignments"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#previousInterpretationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "previousInterpretationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#FabricationActivity",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "FabricationActivity"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#rightEventId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "rightEventId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#timing",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "timing"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/direction/forward",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/direction"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "forward"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#rightInterpretationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "rightInterpretationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#bindingIds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "bindingIds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#initialValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "initialValue"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/basis/unknown",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/basis"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "unknown"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#instrumentId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "instrumentId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/encoding/undetermined",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/encoding"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "undetermined"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/signalKind/impulse",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/signalKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "impulse"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/assumed",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "assumed"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/hypothesis",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "hypothesis"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#EncodedProgramme",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "EncodedProgramme"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#states",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "states"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#sourceIRI",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sourceIRI"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#ObservedPlayback",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "ObservedPlayback"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#role",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "role"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#trajectory",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "trajectory"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#referenceStatus",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "referenceStatus"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#pitch",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "pitch"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#selection",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "selection"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#selector",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "selector"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#label",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "label"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#right",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "right"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#quantityUnit",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "quantityUnit"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#timeUnit",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "timeUnit"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#digitalEntityId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "digitalEntityId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#selected",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "selected"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#roleAssignments",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "roleAssignments"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#observations",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "observations"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#events",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "events"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#ModelAssignment",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "ModelAssignment"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#comparisons",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "comparisons"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#Comparison",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Comparison"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#issuer",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "issuer"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#tool",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "tool"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#runtime",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "runtime"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/role/registration",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/role"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "registration"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "scheme"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#assignmentId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "assignmentId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#Correction",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Correction"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/resetPolicy/event-release",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/resetPolicy"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "event-release"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/gapPolicy",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "gapPolicy"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/unsupportedPolicy/explicit-exclusions",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/unsupportedPolicy"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "explicit-exclusions"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#face",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "face"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#ReadingModel",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "ReadingModel"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#maxResidualSeconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "maxResidualSeconds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/gate",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "gate"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#excludedFeatureIds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "excludedFeatureIds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#algorithm",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "algorithm"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#agentId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "agentId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/interpolation",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "interpolation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#startTurn",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "startTurn"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#observationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "observationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/origin/synthetic",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/origin"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "synthetic"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Ontology"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "Standalone mechanical-music module governed by VAO maintainers; not an accepted MODAVIS Network module."
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#versionIRI": [
+      {
+        "@id": "https://w3id.org/modavis/vao/profile/mmic/1.0.0/ontology"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#versionInfo": [
+      {
+        "@value": "1.0.0"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#exportBindings",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "exportBindings"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/pin",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "pin"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#readerOffset",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "readerOffset"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#matchedCoverage",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "matchedCoverage"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#endTurn",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "endTurn"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/undetermined",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "undetermined"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/basis/assumed",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/basis"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "assumed"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/calibrationStatus/assumed",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "assumed"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#recordingKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "recordingKind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#wrapsSeam",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "wrapsSeam"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/encoding/other",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/encoding"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "other"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#realizationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "realizationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/interpolation/linear",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/interpolation"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "linear"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/message",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "message"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#ticksPerBeat",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "ticksPerBeat"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#offValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "offValue"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#tempoMicroseconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "tempoMicroseconds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#extensions",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "extensions"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#method",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "method"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/estimated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "estimated"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#tracks",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "tracks"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#unmatchedRightEventIds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "unmatchedRightEventIds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#channel",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "channel"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/interpolation/none",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/interpolation"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "none"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/encoding/perforated-disc",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/encoding"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "perforated-disc"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/basis/synthetic",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/basis"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "synthetic"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#RoleAssignment",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "RoleAssignment"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/slot",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "slot"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#EvidenceClaim",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "EvidenceClaim"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#maximumTarget",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "maximumTarget"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/fabricationStatus",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "fabricationStatus"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/changeKind/description",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/changeKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "description"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/calibrationStatus/measured",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "measured"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/unsupportedPolicy",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "unsupportedPolicy"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/unsupportedPolicy/reject",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/unsupportedPolicy"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "reject"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/role",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "role"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#protocol",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "protocol"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#readerOffsetUnit",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "readerOffsetUnit"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/changeKind/physical-intervention",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/changeKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "physical-intervention"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#previousValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "previousValue"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/status/complete",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/status"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "complete"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#extrapolation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "extrapolation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/origin/unknown",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/origin"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "unknown"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#seconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "seconds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#spec",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "spec"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#value",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "value"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#resetPolicy",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "resetPolicy"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#orientation",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "orientation"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/gapPolicy/none",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/gapPolicy"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "none"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#DomainDocument",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "DomainDocument"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#ControlFunction",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#deterministic",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "deterministic"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#SoftPedal",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#ControlFunction"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Soft pedal"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#scopeNote": [
+      {
+        "@language": "en",
+        "@value": "Use CC67 when the selected export is MIDI 1.0 control change; native mechanical meaning remains model-qualified."
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/basis/measured",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/basis"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "measured"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#missingRegions",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "missingRegions"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/origin/generated",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/origin"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "generated"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/role/transport",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/role"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "transport"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#specSHA256",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "specSHA256"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#direction",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "direction"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/sourceKind",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sourceKind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/linear",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "linear"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#leftInterpretationId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "leftInterpretationId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/damage",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "damage"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#signalKind",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "signalKind"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/encoding",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "encoding"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/cylindrical",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "cylindrical"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#sequence",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sequence"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#parts",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "parts"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/role/synchronization",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/role"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "synchronization"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#start",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "start"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#sha256",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "sha256"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#left",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "left"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#position",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "position"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/latch",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "latch"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/sourceKind/carrier-derived",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/sourceKind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "carrier-derived"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/origin",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "origin"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/reviewStatus/provisional",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/reviewStatus"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "provisional"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#replacementValue",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "replacementValue"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#response",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "response"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#minimumTarget",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "minimumTarget"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#programmes",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "programmes"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#scheme/basis",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#ConceptScheme"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "basis"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#axialBounds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "axialBounds"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#DigitalCarrier",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "DigitalCarrier"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#axialUnit",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "axialUnit"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#target",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "target"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#activityId",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "activityId"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#concept/kind/projection",
+    "@type": [
+      "http://www.w3.org/2004/02/skos/core#Concept"
+    ],
+    "http://www.w3.org/2004/02/skos/core#inScheme": [
+      {
+        "@id": "https://w3id.org/modavis/vao/mmic#scheme/kind"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "projection"
+      }
+    ]
+  },
+  {
+    "@id": "https://w3id.org/modavis/vao/mmic#onsetSeconds",
+    "@type": [
+      "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "onsetSeconds"
+      }
+    ]
+  }
+]

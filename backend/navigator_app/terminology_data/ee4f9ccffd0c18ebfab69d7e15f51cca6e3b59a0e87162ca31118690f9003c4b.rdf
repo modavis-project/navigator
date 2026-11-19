@@ -1,0 +1,1476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#rounding">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">rounding</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/linear">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">linear</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#end">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">end</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#Object">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Object</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#alignment">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">alignment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#sourceKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">sourceKind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/encoding/perforated-roll">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/encoding"/>
+    <skos:prefLabel xml:lang="en">perforated-roll</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/calibrationStatus/assumed">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus"/>
+    <skos:prefLabel xml:lang="en">assumed</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#excludedFeatureIds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">excludedFeatureIds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/referenceStatus/synthetic-test">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/referenceStatus"/>
+    <skos:prefLabel xml:lang="en">synthetic-test</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/recordingKind/physical">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/recordingKind"/>
+    <skos:prefLabel xml:lang="en">physical</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#inspectionRealizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">inspectionRealizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/origin">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">origin</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#toleranceSeconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">toleranceSeconds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/undetermined">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">undetermined</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/partial">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">partial</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/reproducibility/documented">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/reproducibility"/>
+    <skos:prefLabel xml:lang="en">documented</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/reviewStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">reviewStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#predecessorId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">predecessorId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#maxResidualSeconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">maxResidualSeconds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/basis">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">basis</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#startTurn">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">startTurn</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/reviewStatus/provisional">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/reviewStatus"/>
+    <skos:prefLabel xml:lang="en">provisional</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#tool">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">tool</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#purpose">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">purpose</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#DigitalCarrier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">DigitalCarrier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#Null">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#fragmentBounds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">fragmentBounds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/recordingKind/simulated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/recordingKind"/>
+    <skos:prefLabel xml:lang="en">simulated</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#minimumRepeatSeconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">minimumRepeatSeconds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#replacementInterpretationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">replacementInterpretationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#extent">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">extent</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#Comparison">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Comparison</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/status">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">status</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/message/control-change">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/message"/>
+    <skos:prefLabel xml:lang="en">control-change</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/cylindrical">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">cylindrical</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#initialState">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">initialState</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#length">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">length</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/signalKind/latch">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/signalKind"/>
+    <skos:prefLabel xml:lang="en">latch</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#timing">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">timing</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#activityId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">activityId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/unknown">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">unknown</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/measured">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">measured</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/pin">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">pin</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#leftEventId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">leftEventId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#durationPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">durationPolicy</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#Sustain">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#ControlFunction"/>
+    <skos:prefLabel xml:lang="en">Sustain</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Use CC64 when the selected export is MIDI 1.0 control change; native mechanical meaning remains model-qualified.</skos:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/origin/unknown">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/origin"/>
+    <skos:prefLabel xml:lang="en">unknown</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#direction">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">direction</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#modelSHA256">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">modelSHA256</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#readerOffsetUnit">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">readerOffsetUnit</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/signalKind/unresolved">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/signalKind"/>
+    <skos:prefLabel xml:lang="en">unresolved</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/envelope">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">envelope</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#programmeId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">programmeId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#replacementValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">replacementValue</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/signalKind">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">signalKind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/resetPolicy/explicit-final-reset">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/resetPolicy"/>
+    <skos:prefLabel xml:lang="en">explicit-final-reset</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/changeKind/description">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/changeKind"/>
+    <skos:prefLabel xml:lang="en">description</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#left">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">left</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#operatorAgentId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">operatorAgentId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#start">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">start</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/resetPolicy/event-release">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/resetPolicy"/>
+    <skos:prefLabel xml:lang="en">event-release</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/perforation">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">perforation</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/accepted">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">accepted</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#environmentRealizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">environmentRealizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#anchors">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">anchors</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#fabrications">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">fabrications</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#nativeRealizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">nativeRealizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/encoding/undetermined">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/encoding"/>
+    <skos:prefLabel xml:lang="en">undetermined</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#schemaVersion">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">schemaVersion</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/direction/forward">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/direction"/>
+    <skos:prefLabel xml:lang="en">forward</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#RoleAssignment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">RoleAssignment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <rdfs:comment xml:lang="en">Standalone mechanical-music module governed by VAO maintainers; not an accepted MODAVIS Network module.</rdfs:comment>
+    <owl:versionIRI rdf:resource="https://w3id.org/modavis/vao/profile/mmic/1.0.0/ontology"/>
+    <owl:versionInfo>1.0.0</owl:versionInfo>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#rightInterpretationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">rightInterpretationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/unknown">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">unknown</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#exports">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">exports</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#features">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">features</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#interventionActivityId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">interventionActivityId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#modelRoleId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">modelRoleId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#reader">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">reader</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#referenceStatus">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">referenceStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#reportRealizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">reportRealizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#roles">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">roles</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/fabricationStatus/design-only">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/fabricationStatus"/>
+    <skos:prefLabel xml:lang="en">design-only</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#instrumentId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">instrumentId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/direction">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">direction</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#EncodedProgramme">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">EncodedProgramme</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/role/registration">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/role"/>
+    <skos:prefLabel xml:lang="en">registration</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#label">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">label</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#roleAssignmentId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">roleAssignmentId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#ticksPerBeat">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">ticksPerBeat</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#responseAssumption">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">responseAssumption</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#value">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">value</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#protocol">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">protocol</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/latch">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">latch</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/direction/undetermined">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/direction"/>
+    <skos:prefLabel xml:lang="en">undetermined</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#onsetSeconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">onsetSeconds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#uncertaintySeconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">uncertaintySeconds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#axialEnd">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">axialEnd</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/calibrationStatus/uncalibrated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus"/>
+    <skos:prefLabel xml:lang="en">uncalibrated</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#position">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">position</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/rejected">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">rejected</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#NativeSignal">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">NativeSignal</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#pitch">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">pitch</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#observationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">observationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/role/synchronization">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/role"/>
+    <skos:prefLabel xml:lang="en">synchronization</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#selection">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">selection</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#basis">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">basis</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/slot">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">slot</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#sourceIRI">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">sourceIRI</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/unresolved">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">unresolved</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#Interpretation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Interpretation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#DomainDocument">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">DomainDocument</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/gapPolicy/none">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/gapPolicy"/>
+    <skos:prefLabel xml:lang="en">none</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#axialUnit">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">axialUnit</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#recordingRealizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">recordingRealizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#changeKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">changeKind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/role/note">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/role"/>
+    <skos:prefLabel xml:lang="en">note</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#segmented">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">segmented</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#previousInterpretationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">previousInterpretationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/interpolation/undetermined">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/interpolation"/>
+    <skos:prefLabel xml:lang="en">undetermined</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/basis/unknown">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/basis"/>
+    <skos:prefLabel xml:lang="en">unknown</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#wrapsSeam">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">wrapsSeam</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#orientation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">orientation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#ObservedPlayback">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ObservedPlayback</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/origin/synthetic">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/origin"/>
+    <skos:prefLabel xml:lang="en">synthetic</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/impulse">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">impulse</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/basis/synthetic">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/basis"/>
+    <skos:prefLabel xml:lang="en">synthetic</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/point">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">point</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/reviewStatus/unreviewed">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/reviewStatus"/>
+    <skos:prefLabel xml:lang="en">unreviewed</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#evidence">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">evidence</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#Track">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Track</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#execution">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">execution</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/interpolation">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">interpolation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/basis/assumed">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/basis"/>
+    <skos:prefLabel xml:lang="en">assumed</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#seconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">seconds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/gapPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">gapPolicy</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#algorithm">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">algorithm</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#ObservedFeature">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ObservedFeature</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/interval">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">interval</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/reproducibility">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">reproducibility</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#canonicalization">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">canonicalization</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#offValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">offValue</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#geometry">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">geometry</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#specSHA256">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">specSHA256</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#programmes">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">programmes</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#CarrierDesign">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">CarrierDesign</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/signalKind/envelope">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/signalKind"/>
+    <skos:prefLabel xml:lang="en">envelope</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#selector">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">selector</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#designs">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">designs</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/bridge">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">bridge</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#delaySeconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">delaySeconds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#models">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">models</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#kind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">kind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#issuer">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">issuer</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/unsupportedPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">unsupportedPolicy</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/role/guidance">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/role"/>
+    <skos:prefLabel xml:lang="en">guidance</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#observations">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">observations</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#evidenceIds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">evidenceIds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/calibrationStatus/estimated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus"/>
+    <skos:prefLabel xml:lang="en">estimated</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#ModelAssignment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ModelAssignment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#reason">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">reason</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#constraints">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">constraints</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">calibrationStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#FabricationActivity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">FabricationActivity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#matchedCoverage">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">matchedCoverage</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/encoding/other">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/encoding"/>
+    <skos:prefLabel xml:lang="en">other</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#locator">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">locator</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#axialStart">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">axialStart</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/message/note">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/message"/>
+    <skos:prefLabel xml:lang="en">note</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/basis/measured">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/basis"/>
+    <skos:prefLabel xml:lang="en">measured</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/basis/estimated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/basis"/>
+    <skos:prefLabel xml:lang="en">estimated</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#unmatchedLeftEventIds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">unmatchedLeftEventIds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#designId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">designId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#origin">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">origin</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#playbacks">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">playbacks</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#onValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">onValue</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#externalIdentifiers">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">externalIdentifiers</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#bounds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">bounds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/encoding/pinned-barrel">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/encoding"/>
+    <skos:prefLabel xml:lang="en">pinned-barrel</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#axialBounds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">axialBounds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/calibrationStatus/measured">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/calibrationStatus"/>
+    <skos:prefLabel xml:lang="en">measured</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#MidiExportBinding">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">MidiExportBinding</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#CarrierState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">CarrierState</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#velocity">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">velocity</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/print">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">print</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#unsupportedPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">unsupportedPolicy</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#GeometryLocation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">GeometryLocation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#SoftPedal">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#ControlFunction"/>
+    <skos:prefLabel xml:lang="en">Soft pedal</skos:prefLabel>
+    <skos:scopeNote xml:lang="en">Use CC67 when the selected export is MIDI 1.0 control change; native mechanical meaning remains model-qualified.</skos:scopeNote>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#rightEventId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">rightEventId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#initialValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">initialValue</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/role/unknown">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/role"/>
+    <skos:prefLabel xml:lang="en">unknown</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/recordingKind/unknown">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/recordingKind"/>
+    <skos:prefLabel xml:lang="en">unknown</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#playbackId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">playbackId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/gate">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">gate</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#axial">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">axial</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/undetermined">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">undetermined</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#partIds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">partIds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#sha256">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">sha256</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/sourceKind/audio-derived">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/sourceKind"/>
+    <skos:prefLabel xml:lang="en">audio-derived</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#maximumTarget">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">maximumTarget</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#modelId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">modelId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/interpolation/linear">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/interpolation"/>
+    <skos:prefLabel xml:lang="en">linear</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#digitalEntityId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">digitalEntityId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#states">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">states</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#location">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">location</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#sourceBounds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">sourceBounds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#artifactPins">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">artifactPins</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#ReadingModel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">ReadingModel</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#parts">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">parts</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#CarrierPart">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">CarrierPart</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#codeRealizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">codeRealizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#minimumClearance">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">minimumClearance</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#controller">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">controller</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/encoding/perforated-disc">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/encoding"/>
+    <skos:prefLabel xml:lang="en">perforated-disc</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#response">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">response</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#measuredGeometry">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">measuredGeometry</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#samples">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">samples</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/message">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">message</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#assignments">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">assignments</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/origin/historical">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/origin"/>
+    <skos:prefLabel xml:lang="en">historical</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/unsupportedPolicy/explicit-exclusions">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/unsupportedPolicy"/>
+    <skos:prefLabel xml:lang="en">explicit-exclusions</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#events">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">events</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/gapPolicy/explicit-unmatched">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/gapPolicy"/>
+    <skos:prefLabel xml:lang="en">explicit-unmatched</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#roleId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">roleId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/role/auxiliary">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/role"/>
+    <skos:prefLabel xml:lang="en">auxiliary</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#carrierId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">carrierId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#previousValue">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">previousValue</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#joins">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">joins</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/fabricationStatus/fabricated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/fabricationStatus"/>
+    <skos:prefLabel xml:lang="en">fabricated</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#period">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">period</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#index">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">index</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#spec">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">spec</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/recordingKind">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">recordingKind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/damage">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">damage</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/sourceKind/simulated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/sourceKind"/>
+    <skos:prefLabel xml:lang="en">simulated</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/role/performance-control">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/role"/>
+    <skos:prefLabel xml:lang="en">performance-control</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#signalKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">signalKind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#durationSeconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">durationSeconds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#EvidenceClaim">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">EvidenceClaim</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/direction/reverse">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/direction"/>
+    <skos:prefLabel xml:lang="en">reverse</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#leftInterpretationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">leftInterpretationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/reproducibility/deterministic">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/reproducibility"/>
+    <skos:prefLabel xml:lang="en">deterministic</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#domain">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">domain</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#trackId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">trackId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#keys">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">keys</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/unsupportedPolicy/reject">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/unsupportedPolicy"/>
+    <skos:prefLabel xml:lang="en">reject</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#roleAssignments">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">roleAssignments</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#sourceRealizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">sourceRealizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#extensions">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">extensions</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/kind">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">kind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#id">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">id</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/sourceKind/carrier-derived">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/sourceKind"/>
+    <skos:prefLabel xml:lang="en">carrier-derived</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#missingRegions">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">missingRegions</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#redactions">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">redactions</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#unit">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">unit</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#sequence">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">sequence</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#right">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">right</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#reproducibility">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">reproducibility</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/projection">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">projection</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#reviewStatus">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">reviewStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#message">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">message</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/interpolation/none">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/interpolation"/>
+    <skos:prefLabel xml:lang="en">none</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#metrics">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">metrics</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">scheme</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#target">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">target</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/signalKind/impulse">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/signalKind"/>
+    <skos:prefLabel xml:lang="en">impulse</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#levels">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">levels</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#targetId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">targetId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scope">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">scope</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#status">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">status</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/encoding/projection-disc">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/encoding"/>
+    <skos:prefLabel xml:lang="en">projection-disc</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#sourceFeatureIds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">sourceFeatureIds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/fabricationStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">fabricationStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#calibrationStatus">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">calibrationStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/referenceStatus/situated-evidence">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/referenceStatus"/>
+    <skos:prefLabel xml:lang="en">situated-evidence</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#stateId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">stateId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#gapPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">gapPolicy</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/sourceKind">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">sourceKind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/changeKind">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">changeKind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#version">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">version</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#sourceRealizationIds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">sourceRealizationIds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#role">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">role</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#trackIndex">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">trackIndex</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/signalKind/gate">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/signalKind"/>
+    <skos:prefLabel xml:lang="en">gate</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/reviewStatus/reviewed">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/reviewStatus"/>
+    <skos:prefLabel xml:lang="en">reviewed</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#readerOffset">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">readerOffset</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/changeKind/physical-intervention">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/changeKind"/>
+    <skos:prefLabel xml:lang="en">physical-intervention</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#resetPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">resetPolicy</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/kind/cyclic">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/kind"/>
+    <skos:prefLabel xml:lang="en">cyclic</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/hypothesis">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">hypothesis</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/assumed">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">assumed</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#PhysicalCarrier">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">PhysicalCarrier</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#exportBindings">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">exportBindings</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#minimumTarget">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">minimumTarget</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/encoding">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">encoding</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#replacementTargetId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">replacementTargetId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/role/transport">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/role"/>
+    <skos:prefLabel xml:lang="en">transport</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#comparisons">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">comparisons</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#conditions">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">conditions</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#interpolation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">interpolation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#endTurn">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">endTurn</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#material">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">material</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#agentId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">agentId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#assignmentId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">assignmentId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#realizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">realizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#carriers">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">carriers</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#corrections">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">corrections</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#synthetic">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">synthetic</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#tracks">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">tracks</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/role">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">role</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#runtime">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">runtime</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/resetPolicy">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">resetPolicy</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#channel">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">channel</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#trajectory">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">trajectory</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/complete">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">complete</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#selected">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">selected</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#ControlFunction">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#interpretations">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">interpretations</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#extrapolation">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">extrapolation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#tempoMicroseconds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">tempoMicroseconds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#Correction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Correction</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#pairs">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">pairs</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/origin/generated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/origin"/>
+    <skos:prefLabel xml:lang="en">generated</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#losses">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">losses</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#historicalApplicability">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">historicalApplicability</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#Array">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Array</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#layoutRealizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">layoutRealizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#concept/status/estimated">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:inScheme rdf:resource="https://w3id.org/modavis/vao/mmic#scheme/status"/>
+    <skos:prefLabel xml:lang="en">estimated</skos:prefLabel>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#face">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">face</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#quantityUnit">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">quantityUnit</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#timeUnit">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">timeUnit</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#alignmentRealizationId">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">alignmentRealizationId</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#method">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">method</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#recordingKind">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">recordingKind</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#scheme/referenceStatus">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"/>
+    <rdfs:label xml:lang="en">referenceStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#bindingIds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">bindingIds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#deterministic">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">deterministic</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#Observation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:label xml:lang="en">Observation</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#fabricationStatus">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">fabricationStatus</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#unmatchedRightEventIds">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">unmatchedRightEventIds</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#encoding">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">encoding</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://w3id.org/modavis/vao/mmic#coverage">
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+    <rdfs:label xml:lang="en">coverage</rdfs:label>
+  </rdf:Description>
+</rdf:RDF>

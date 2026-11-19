@@ -1,7 +1,7 @@
 # Verified terminology representations
 
 These files retain published MODAVIS Ontology Network 0.1.0 representations and
-VAO Standard 0.5.0 vocabulary data. `manifest.json` records the original public
+VAO 0.5.0 and 0.6.0 vocabularies, including the VAO-owned MMIC 1.0.0 ontology. `manifest.json` records the original public
 URLs, byte sizes, SHA-256 values, source release commits, current aliases, and
 subject membership. Original downloaded bytes are retained. Additional VAO
 serializations and N-Triples files represent the same RDF graphs.

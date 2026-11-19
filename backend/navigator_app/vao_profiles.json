@@ -25,6 +25,18 @@
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_ACOUSTICS_PROFILE_0.5.0.md",
       "version": "0.5.0"
     },
+    "vao/profile/acoustics/0.6.0": {
+      "bytes": 5398,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/acoustics/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "bbbea2db25cf77d7702fb4a502ca4cf93d445e8c4e72010536737b49f8ef0fed",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_ACOUSTICS_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_ACOUSTICS_PROFILE_0.6.0.md",
+      "version": "0.6.0"
+    },
     "vao/profile/core/0.4.0": {
       "bytes": 1611,
       "documentFormat": "Markdown",
@@ -48,6 +60,18 @@
       "sourceTag": "v0.5.0",
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_CORE_PROFILE_0.5.0.md",
       "version": "0.5.0"
+    },
+    "vao/profile/core/0.6.0": {
+      "bytes": 1611,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/core/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "214fe74aa92bfd10588e6048c900941186e2e6d30cd61b7b51998f1503913b67",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_CORE_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_CORE_PROFILE_0.6.0.md",
+      "version": "0.6.0"
     },
     "vao/profile/deterministic-runtime/0.4.0": {
       "bytes": 3518,
@@ -73,6 +97,18 @@
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_DETERMINISTIC_RUNTIME_PROFILE_0.5.0.md",
       "version": "0.5.0"
     },
+    "vao/profile/deterministic-runtime/0.6.0": {
+      "bytes": 3518,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/deterministic-runtime/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "a6dbd2f33c2e090f7abd9443876ff2462012d2f523df83c5c3c628819159e1da",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_DETERMINISTIC_RUNTIME_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_DETERMINISTIC_RUNTIME_PROFILE_0.6.0.md",
+      "version": "0.6.0"
+    },
     "vao/profile/dynamic-delivery/0.4.0": {
       "bytes": 2298,
       "documentFormat": "Markdown",
@@ -96,6 +132,31 @@
       "sourceTag": "v0.5.0",
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_DYNAMIC_DELIVERY_PROFILE_0.5.0.md",
       "version": "0.5.0"
+    },
+    "vao/profile/dynamic-delivery/0.6.0": {
+      "bytes": 4011,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/dynamic-delivery/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "99abaa8f9f35fbb43f80e51aa81bbe54cda8e844bdd4aeaeb143e0882f081618",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_DYNAMIC_DELIVERY_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_DYNAMIC_DELIVERY_PROFILE_0.6.0.md",
+      "version": "0.6.0"
+    },
+    "vao/profile/mmic/1.0.0": {
+      "bytes": 16712,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/mmic/1.0.0",
+      "mediaType": "text/plain",
+      "sha256": "9626f213584e59837d60bfdb3b2b4846af65a7a356ed8eec2fcb7c5c533ebffd",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_MMIC_PROFILE_1.0.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_MMIC_PROFILE_1.0.0.md",
+      "vaoVersion": "0.6.0",
+      "version": "1.0.0"
     },
     "vao/profile/multimodal/0.4.0": {
       "bytes": 3016,
@@ -121,6 +182,18 @@
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_MULTIMODAL_PROFILE_0.5.0.md",
       "version": "0.5.0"
     },
+    "vao/profile/multimodal/0.6.0": {
+      "bytes": 3016,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/multimodal/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "29385901dd07468e56c19e255b7064d726150b5f69ae5c8a14ddd1ff6bd6642c",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_MULTIMODAL_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_MULTIMODAL_PROFILE_0.6.0.md",
+      "version": "0.6.0"
+    },
     "vao/profile/physical-instrument/0.4.0": {
       "bytes": 1512,
       "documentFormat": "Markdown",
@@ -144,6 +217,18 @@
       "sourceTag": "v0.5.0",
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_PHYSICAL_INSTRUMENT_PROFILE_0.5.0.md",
       "version": "0.5.0"
+    },
+    "vao/profile/physical-instrument/0.6.0": {
+      "bytes": 1512,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/physical-instrument/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "b97f11013013156e7d81925b2a5b0ca12ee6b8fa629f5a0c05793c4052c86181",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_PHYSICAL_INSTRUMENT_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_PHYSICAL_INSTRUMENT_PROFILE_0.6.0.md",
+      "version": "0.6.0"
     },
     "vao/profile/playable/0.4.0": {
       "bytes": 2560,
@@ -169,6 +254,18 @@
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_PLAYABLE_PROFILE_0.5.0.md",
       "version": "0.5.0"
     },
+    "vao/profile/playable/0.6.0": {
+      "bytes": 2560,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/playable/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "4f12e126fb965f642a5f7645ebfff1cb2c185246f81942cd87f08bab212674a4",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_PLAYABLE_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_PLAYABLE_PROFILE_0.6.0.md",
+      "version": "0.6.0"
+    },
     "vao/profile/repository/zenodo/0.4.0": {
       "bytes": 2275,
       "documentFormat": "Markdown",
@@ -192,6 +289,18 @@
       "sourceTag": "v0.5.0",
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_ZENODO_PROFILE_0.5.0.md",
       "version": "0.5.0"
+    },
+    "vao/profile/repository/zenodo/0.6.0": {
+      "bytes": 5368,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/repository/zenodo/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "36eaaa5dd0eb79e1b887c7e1e82e6293647b1658d369cbb46542be7deb74dbd1",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_ZENODO_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_ZENODO_PROFILE_0.6.0.md",
+      "version": "0.6.0"
     },
     "vao/profile/scientific/0.4.0": {
       "bytes": 6027,
@@ -217,6 +326,18 @@
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_SCIENTIFIC_PROFILE_0.5.0.md",
       "version": "0.5.0"
     },
+    "vao/profile/scientific/0.6.0": {
+      "bytes": 6027,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/scientific/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "ef0c2323cf47d9a29f32cb0c374efb0164d7ff8cb4ba085a471cd36fca7fec0b",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_SCIENTIFIC_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_SCIENTIFIC_PROFILE_0.6.0.md",
+      "version": "0.6.0"
+    },
     "vao/profile/spatial/0.4.0": {
       "bytes": 5346,
       "documentFormat": "Markdown",
@@ -240,6 +361,18 @@
       "sourceTag": "v0.5.0",
       "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.5.0/Docs/VAO_SPATIAL_PROFILE_0.5.0.md",
       "version": "0.5.0"
+    },
+    "vao/profile/spatial/0.6.0": {
+      "bytes": 5346,
+      "documentFormat": "Markdown",
+      "identifier": "https://w3id.org/modavis/vao/profile/spatial/0.6.0",
+      "mediaType": "text/plain",
+      "sha256": "cdfa3368f8622a436f01aef0d50ec24f4a37edda276390601781954595c1e0ab",
+      "sourceCommit": "9d477213eab90defa75bef0f44e0d292a83e68d9",
+      "sourcePath": "Docs/VAO_SPATIAL_PROFILE_0.6.0.md",
+      "sourceTag": "v0.6.0",
+      "target": "https://raw.githubusercontent.com/modavis-project/vao-standard/v0.6.0/Docs/VAO_SPATIAL_PROFILE_0.6.0.md",
+      "version": "0.6.0"
     }
   }
 }

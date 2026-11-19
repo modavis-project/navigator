@@ -11,6 +11,7 @@ from flask import Response, jsonify, request
 AUTHORITY = 'https://w3id.org/modavis/'
 SOURCE_BASE = 'https://raw.githubusercontent.com/modavis-project/vao-standard/'
 DEFAULT_REGISTRY = Path(__file__).with_name('vao_profiles.json')
+RELEASE_VERSION = re.compile(r'[0-9]+\.[0-9]+\.[0-9]+')
 PROFILE_PATH = re.compile(r'vao/profile/[a-z0-9-]+(?:/[a-z0-9-]+)*/([0-9]+\.[0-9]+\.[0-9]+)')
 
 
@@ -36,7 +37,10 @@ class ProfileCatalog:
             if not match or entry['version'] != match[1] or entry['identifier'] != AUTHORITY + path:
                 raise ValueError('invalid profile identifier/version binding')
             source = entry['sourcePath']
-            if (entry['sourceTag'] != 'v' + entry['version']
+            vao_version = entry.get('vaoVersion', entry['version'])
+            if (not RELEASE_VERSION.fullmatch(vao_version)
+                    or ('vaoVersion' in entry and not path.startswith('vao/profile/mmic/'))
+                    or entry['sourceTag'] != 'v' + vao_version
                     or not re.fullmatch(r'[a-f0-9]{40}', entry['sourceCommit'])
                     or not re.fullmatch(r'Docs/(?:[A-Za-z0-9_-]+/)*[A-Za-z0-9_][A-Za-z0-9_.-]*\.md', source)
                     or entry['target'] != SOURCE_BASE + entry['sourceTag'] + '/' + source):

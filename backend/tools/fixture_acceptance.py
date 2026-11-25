@@ -32,8 +32,16 @@ def verify_application(app, fixture):
         response = client.get(route)
         require(response.status_code == 200, f"{route} returned {response.status_code}")
         require(response.headers.get("X-Content-Type-Options") == "nosniff", "Missing MIME protection")
-        if route in ("/api/health/live", "/api/health/ready", "/api/status", "/api/release-context"):
-            require(response.headers.get("Cache-Control") == "no-store", "Instance discovery must not reuse stale browser metadata")
+        if route in ("/api/health/live", "/api/health/ready", "/api/status"):
+            require(response.headers.get("Cache-Control") == "no-store", f"{route} must report live status")
+        elif route == "/api/release-context":
+            require(response.cache_control.private and response.cache_control.no_cache,
+                    "The release context must be revalidated before reuse")
+            etag = response.headers.get("ETag")
+            require(etag, "The release context must provide a cache validator")
+            unchanged = client.get(route, headers={"If-None-Match": etag})
+            require(unchanged.status_code == 304 and not unchanged.data,
+                    "The release context validator must avoid sending an unchanged document")
         responses[route] = response.get_json()
         for forbidden in (fixture.private_canary, fixture.reader_password, fixture.admin_password):
             require(forbidden.encode() not in response.data, "Response contains a private canary or credential")
@@ -60,6 +68,7 @@ def verify_application(app, fixture):
     require(history["activities"][0]["sourceOnly"] and history["activities"][0]["mappingKind"] == "source_only",
             "Source-only event wording was promoted to a controlled type")
     context = responses["/api/release-context"]
+    require(bool(context.get("readSnapshot")), "The release context must identify the current cache snapshot")
     require(context["fixture"]["synthetic"] and context["readOnly"] and not context["publicationAuthorized"], "Fixture identity was lost")
     publication = responses["/api/id/MDVS:ENTY:TEST-0001-A/publication-status"]
     require(publication["status"] == "synthetic_fixture" and not publication["publicationAuthorized"],

@@ -6,7 +6,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-14]
+        os: [ubuntu-latest, macos-15]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -42,7 +42,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Exercise real frontend DNS changes and readiness
         run: |
+          image=$(awk '$1 == "FROM" && $2 ~ /^nginx:/ { print $2 }' frontend/Dockerfile)
+          [[ "$image" =~ ^nginx:[a-zA-Z0-9.-]+@sha256:[a-f0-9]{64}$ ]]
           docker run --rm --volume "$PWD:/source:ro" --workdir /source \
             --env PYTHONDONTWRITEBYTECODE=1 --env NGINX_BINARY=/usr/sbin/nginx \
-            nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236 \
+            "$image" \
             sh -c 'apk add --no-cache python3 py3-pytest && python3 -m pytest -p no:cacheprovider tests/test_nginx_proxy.py -q'

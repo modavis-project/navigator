@@ -1,7 +1,7 @@
 """Real Nginx regression: DNS recovery, address changes and public route forwarding.
 
-Set NGINX_BINARY for an explicit binary, or install nginx on PATH. The CI proxy
-job runs this against the pinned frontend image, including its BusyBox wget.
+Set NGINX_BINARY for an explicit Nginx 1.29.3 or newer, or install a compatible
+nginx on PATH. The CI proxy job uses the frontend image pin and its BusyBox wget.
 Only temporary files and unprivileged loopback listeners are used.
 """
 
@@ -9,6 +9,7 @@ import contextlib
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import socket
 import socketserver
@@ -24,6 +25,27 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+MIN_NGINX_VERSION = (1, 29, 3)
+
+
+def compatible_nginx():
+    explicit = os.environ.get("NGINX_BINARY")
+    nginx = explicit or shutil.which("nginx")
+    if not nginx:
+        pytest.skip("real Nginx required; CI runs the pinned frontend image")
+    try:
+        version = subprocess.run([nginx, "-v"], capture_output=True, text=True, check=True, timeout=5)
+        match = re.search(r"nginx/(\d+)\.(\d+)\.(\d+)", version.stderr + version.stdout)
+        observed = tuple(map(int, match.groups())) if match else ()
+    except (OSError, subprocess.SubprocessError):
+        observed = ()
+    if observed >= MIN_NGINX_VERSION:
+        return nginx
+    found = ".".join(map(str, observed)) if observed else "unknown version"
+    message = f"Nginx 1.29.3 or newer is required for add_header_inherit; {nginx} reports {found}"
+    if explicit:
+        pytest.fail(message, pytrace=False)
+    pytest.skip(message)
 
 
 class DNS(socketserver.ThreadingUDPServer):
@@ -100,9 +122,7 @@ def eventually(check, timeout=20):
 
 
 def test_frontend_recovers_without_reload_and_preserves_public_routes(tmp_path):
-    nginx = os.environ.get("NGINX_BINARY") or shutil.which("nginx")
-    if not nginx:
-        pytest.skip("real Nginx required; CI runs the pinned frontend image")
+    nginx = compatible_nginx()
     frontend_port = unused_port()
     html = tmp_path / "html"
     html.mkdir()
@@ -146,10 +166,17 @@ def test_frontend_recovers_without_reload_and_preserves_public_routes(tmp_path):
                           "proxy_connect_timeout 250ms;\n" + source + "\n}\n")
         log = (tmp_path / "nginx.log").open("w+")
         process = subprocess.Popen([nginx, "-p", str(tmp_path) + "/", "-c", str(config)], stdout=log, stderr=log)
+
+        def frontend_ready():
+            code = process.poll()
+            if code is not None:
+                raise AssertionError(f"Nginx exited during startup with status {code}")
+            return request("/")[0] == 200
+
         try:
             # Starting without a backend DNS record must still serve the app,
             # while readiness must detect the broken proxy path.
-            eventually(lambda: request("/")[0] == 200)
+            eventually(frontend_ready)
             assert request("/api/health/ready")[0] == 502
             healthy(False)
             dns.address = "127.0.0.1"

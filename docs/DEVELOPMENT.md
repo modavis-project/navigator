@@ -75,12 +75,15 @@ The standalone commands use the dependencies pinned in this repository.
 The frontend proxy regression runs real Nginx with a temporary DNS server and
 synthetic HTTP backend. It checks unresolved startup, DNS address changes and
 recovery without reload, backend readiness failure, and paths/query strings for
-all five proxied route families. With Nginx 1.27.3 or newer available locally, run:
+all five proxied route families. Nginx 1.29.3 or newer supports the frontend's
+response-header configuration. To choose a local binary explicitly, run:
 
 ```bash
 NGINX_BINARY=/path/to/nginx .venv/bin/python -m pytest tests/test_nginx_proxy.py -q
 ```
 
-The `frontend-proxy` CI job runs it inside the pinned Nginx image and also executes
-the image's BusyBox health command against healthy and failed backend responses.
-The ordinary Python suite skips this integration check if Nginx is unavailable.
+The `frontend-proxy` CI job takes the Nginx image pin from `frontend/Dockerfile`
+and executes its BusyBox health command against healthy and failed backend
+responses. The ordinary Python suite skips the integration check when it cannot
+find a compatible Nginx on `PATH`. An incompatible explicit `NGINX_BINARY`
+makes the check fail with the detected version.

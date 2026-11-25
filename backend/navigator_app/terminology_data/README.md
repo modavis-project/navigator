@@ -13,7 +13,7 @@ https://github.com/modavis-project/modavis-ontology-network and
 https://github.com/modavis-project/vao-standard.
 
 The bundle is verified at application startup and never fetched from a
-caller-supplied URL. Build a new output directory with
-`backend/tools/prepare_terminology_bundle.py`. For a future release, preserve
-all existing versioned entries and files and advance only explicitly accepted
-current aliases. The JSON-LD context is a context document, not an entity graph.
+caller-supplied URL. The source-project release manifests own regeneration; this standalone repository
+ships the frozen reader bundle. For a future release, preserve all existing versioned
+entries and files, verify each replacement against the source project, and advance
+only explicitly accepted current aliases. The JSON-LD context is a context document, not an entity graph.

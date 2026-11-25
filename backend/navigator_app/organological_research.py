@@ -44,9 +44,10 @@ class ResearchIndex:
     def connect(self):
         c=sqlite3.connect((self.root/'research.sqlite').resolve().as_uri()+'?mode=ro&immutable=1',uri=True)
         c.row_factory=sqlite3.Row;c.execute('pragma query_only=on')
-        deadline=time.monotonic()+5
-        c.set_progress_handler(lambda: int(time.monotonic()>deadline),10000)
-        try: yield c
+        from .db import constrain_sqlite_reads
+        try:
+            constrain_sqlite_reads(c, 5)
+            yield c
         finally: c.close()
 
     def context(self):
@@ -157,8 +158,9 @@ def register_research(app,settings,repository=None):
                     if other and not other.startswith('MDVS:ENTY:'):other='MDVS:ENTY:'+other
                     return jsonify(index.collection(c,actor['id'],parts[2],offset,q,other))
                 return jsonify({'error':'Research route not found'}),404
-        except sqlite3.OperationalError:
-            return jsonify({'error':'Research query exceeded its execution budget; narrow the selection.'}),503
+        except sqlite3.OperationalError as error:
+            if 'interrupted' in str(error).lower():raise TimeoutError('Research query budget exhausted') from error
+            return jsonify({'error':'The selected research resource is unavailable.'}),503
         except ValueError as exc:
             if 'snapshot' in str(exc):return jsonify({'error':'Research snapshot does not match the selected data'}),503
             return jsonify({'error':str(exc)}),400

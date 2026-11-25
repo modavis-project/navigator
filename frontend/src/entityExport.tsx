@@ -1,9 +1,9 @@
-import { ResourceView } from "./resourceView";
 import { Braces, ExternalLink } from "lucide-react";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { lazy, ReactNode, Suspense, useCallback, useEffect, useState } from "react";
 import type { EntityExportManifest } from "./api";
 
 export type EntityPageTab = "overview" | "export";
+const ResourceView = lazy(() => import("./resourceView").then(module => ({ default: module.ResourceView })));
 
 function requestedEntityTab(): EntityPageTab {
   return new URLSearchParams(window.location.search).get("tab") === "export" ? "export" : "overview";
@@ -78,8 +78,19 @@ export function EntityPageTabs({
             role="tab"
             aria-controls={tabIdentifier(scope, tab, "panel")}
             aria-selected={activeTab === tab}
+            tabIndex={activeTab === tab ? 0 : -1}
             className={activeTab === tab ? "selected" : ""}
             onClick={() => onChange(tab)}
+            onKeyDown={event => {
+              const index = tabs.indexOf(tab);
+              const next = event.key === "ArrowRight" ? tabs[(index + 1) % tabs.length]
+                : event.key === "ArrowLeft" ? tabs[(index + tabs.length - 1) % tabs.length]
+                : event.key === "Home" ? tabs[0] : event.key === "End" ? tabs[tabs.length - 1] : null;
+              if (!next) return;
+              event.preventDefault();
+              onChange(next);
+              document.getElementById(tabIdentifier(scope, next, "tab"))?.focus();
+            }}
           >
             {tab === "overview" ? "Overview" : "Export"}
           </button>
@@ -129,7 +140,7 @@ export function EntityExportPanel({ manifest }: { manifest?: EntityExportManifes
   }
   return (
     <div className="entity-export-panel">
-      <ResourceView owner={manifest.mdvsId} />
+      <Suspense fallback={<p className="notice" role="status">Loading retained resources…</p>}><ResourceView owner={manifest.mdvsId} /></Suspense>
       <section className="panel-block export-introduction">
         <p className="eyebrow">MODAVIS Ontology Network datasheet</p>
         <h2 id="entity-export-heading" tabIndex={-1}>Linked data for this entity</h2>
@@ -152,6 +163,7 @@ export function EntityExportPanel({ manifest }: { manifest?: EntityExportManifes
         <h2>Source-dependent structured data</h2>
         <p>View the publication-safe structured projections supporting this entity. Original source prose and media bytes remain governed by their source records.</p>
         <a className="public-action-link" href={manifest.sourceDataUrl}>Open source data index <ExternalLink size={15} /></a>
+        {manifest.sourceDataUrl.endsWith("/sources") && <p className="export-evidence-coverage"><a className="public-action-link" href={manifest.sourceDataUrl.replace(/\/sources$/, "/evidence")}>Inspect evidence coverage <ExternalLink size={15} /></a><small>Distinguishes available evidence context, source context, and missing field provenance.</small></p>}
       </section>
     </div>
   );

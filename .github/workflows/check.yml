@@ -4,7 +4,10 @@ permissions:
   contents: read
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-14]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -15,7 +18,31 @@ jobs:
           node-version: '24'
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      - run: pip install -r backend/requirements.txt
+      - run: pip install -r backend/requirements-test.txt
+      - run: pip check
       - run: PYTHONPATH=backend python -m pytest backend/tests tests -q
       - run: npm ci && npm test && npm run build
         working-directory: frontend
+      - run: python scripts/measure_frontend.py --report .runtime/frontend-budget.json
+      - run: npm run build && python ../scripts/measure_frontend.py --compare ../.runtime/frontend-budget.json
+        working-directory: frontend
+  fixture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - run: pip install -r backend/requirements.txt
+      - run: docker pull postgres:15-bookworm@sha256:5d1d70e254e3c5d7d76847a9deebb18478cd518df37abf6b278d4bdb1fe5d96c
+      - run: python scripts/fixture.py check --report .runtime/fixture-check.json
+  frontend-proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exercise real frontend DNS changes and readiness
+        run: |
+          docker run --rm --volume "$PWD:/source:ro" --workdir /source \
+            --env PYTHONDONTWRITEBYTECODE=1 --env NGINX_BINARY=/usr/sbin/nginx \
+            nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236 \
+            sh -c 'apk add --no-cache python3 py3-pytest && python3 -m pytest -p no:cacheprovider tests/test_nginx_proxy.py -q'

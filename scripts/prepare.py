@@ -76,7 +76,7 @@ def prepare(package, resources, output):
         for family in ['organs','entities']:
             os.link(src, artifacts/family/name)
     configure(output)
-    (output/'prepared.json').write_text(json.dumps({'navigator':'1.0.0','pod':'1.6.0','verifiedFiles':len(manifest['files']),'resourceArchiveSha256':digest(resources)},indent=2)+'\n')
+    (output/'prepared.json').write_text(json.dumps({'navigator':(ROOT/'VERSION').read_text().strip(),'pod':'1.6.0','verifiedFiles':len(manifest['files']),'resourceArchiveSha256':digest(resources)},indent=2)+'\n')
     print('Prepared', output)
 
 

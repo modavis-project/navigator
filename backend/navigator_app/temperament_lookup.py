@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from typing import Any
 
 
-_SPELLINGS = {"valotti": "vallotti", "weckmeister": "werckmeister"}
+_SPELLINGS = {"valotti": "vallotti", "weckmeister": "werckmeister", "neidhard": "neidhardt"}
 _GENERIC_PREFIXES = {
     "temperament", "temperatur", "stimmung", "genauer", "nach", "eine",
     "einen", "fuer", "the", "with", "modified", "modifiziert",
@@ -20,6 +20,12 @@ _ROMAN = {
     for u, units in enumerate(("", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"))
     if tens or units
 }
+_FAMILY_ALIASES = {
+    ("equal", "temperament"): "gleichstufig",
+    ("meantone",): "mitteltonig",
+    ("mean", "tone"): "mitteltonig",
+    ("middentoonstemming",): "mitteltonig",
+}
 
 
 def _fold(value: Any) -> str:
@@ -27,7 +33,7 @@ def _fold(value: Any) -> str:
     return "".join(c for c in text if not unicodedata.combining(c))
 
 
-def _tokens(value: Any, *, normalize: bool = True) -> list[tuple[str, int]]:
+def temperament_wording_tokens(value: Any, *, normalize: bool = True) -> list[tuple[str, int]]:
     depth = 0
     result = []
     for match in re.finditer(r"[a-z0-9]+|[()\[\]{}]", _fold(value)):
@@ -48,8 +54,29 @@ def _tokens(value: Any, *, normalize: bool = True) -> list[tuple[str, int]]:
     return result
 
 
+def temperament_family_wording(tokens: list[tuple[str, int]]) -> list[tuple[str, int]]:
+    """Normalize attested class names for discovery and related matches."""
+    normalized: list[tuple[str, int]] = []
+    index = 0
+    while index < len(tokens):
+        word, depth = tokens[index]
+        for names, target in _FAMILY_ALIASES.items():
+            # The unqualified name for 12-tone equal temperament may also
+            # appear within a different or explicitly negated tuning.
+            if target == "gleichstufig" and index:
+                continue
+            if tokens[index:index + len(names)] == [(name, depth) for name in names]:
+                normalized.append((target, depth))
+                index += len(names)
+                break
+        else:
+            normalized.append((word, depth))
+            index += 1
+    return normalized
+
+
 def _key(value: Any, *, normalize: bool = True) -> str:
-    return " ".join(token for token, _ in _tokens(value, normalize=normalize))
+    return " ".join(token for token, _ in temperament_wording_tokens(value, normalize=normalize))
 
 
 def _contains(text: str, query: str) -> bool:
@@ -74,7 +101,7 @@ def search_temperaments(
     identity_only: bool = False,
 ) -> TemperamentSearch:
     original = str(query or "").strip()
-    tokens = _tokens(original)
+    tokens = temperament_wording_tokens(original)
     query_key = " ".join(token for token, _ in tokens)
     if not query_key:
         return TemperamentSearch(frozenset(str(item["id"]) for item in items) if not original else frozenset())
@@ -102,6 +129,14 @@ def search_temperaments(
     if literal:
         return TemperamentSearch(literal)
 
+    family_query = " ".join(token for token, _ in temperament_family_wording(tokens))
+    if family_query != query_key:
+        family = search_temperaments(family_query, items, identity_only=identity_only)
+        if family.ids:
+            return TemperamentSearch(family.ids, {
+                "originalQuery": original, "queries": [family_query], "kind": "related",
+            })
+
     # Match the longest catalogue-name fragments in the source. Keep known
     # parenthetical variants; a name appearing only inside a comment is not
     # a second proposed temperament.
@@ -109,7 +144,7 @@ def search_temperaments(
     source_words = [token for token, _ in tokens]
     for item in items:
         title = str(item.get("title") or "")
-        title_words = [token for token, _ in _tokens(title)]
+        title_words = [token for token, _ in temperament_wording_tokens(title)]
         if not title_words or not re.fullmatch(r"[a-z]{4,}", title_words[0]):
             continue
         if title_words[0] in _GENERIC_PREFIXES:

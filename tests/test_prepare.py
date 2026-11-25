@@ -39,3 +39,38 @@ def test_database_readiness_waits_for_final_tcp_server():
     text=(Path(__file__).parents[1]/'compose.yaml').read_text()
     assert 'pg_isready -h 127.0.0.1' in text
     assert 'psql -h 127.0.0.1' in text
+
+
+def test_preparation_records_current_software_version_without_changing_dataset(tmp_path, monkeypatch):
+    import json
+    from types import SimpleNamespace
+    root = tmp_path / "source"
+    (root / "releases").mkdir(parents=True)
+    (root / "resources").mkdir()
+    (root / "VERSION").write_text("1.1.0\n")
+    package = tmp_path / "package"
+    package.mkdir()
+    archive = package / "fixture-ntriples.tar"
+    with tarfile.open(archive, "w") as stream:
+        member = tarfile.TarInfo("part.nt")
+        member.size = 3
+        stream.addfile(member, io.BytesIO(b"abc"))
+    (root / "releases/pod-1.6.0.json").write_text(json.dumps({"files": [{
+        "name": archive.name, "bytes": archive.stat().st_size, "sha256": prepare.digest(archive)}]}))
+    resources = tmp_path / "resources.tar"
+    with tarfile.open(resources, "w"):
+        pass
+    (root / "resources/archive.json").write_text(json.dumps({
+        "bytes": resources.stat().st_size, "sha256": prepare.digest(resources)}))
+    (root / "resources/manifest.json").write_text('{"files": {}}')
+    monkeypatch.setattr(prepare, "ROOT", root)
+    monkeypatch.setattr(prepare.shutil, "disk_usage", lambda _: SimpleNamespace(free=100 * 2**30))
+    output = tmp_path / "runtime"
+    prepare.prepare(package, resources, output)
+    receipt = json.loads((output / "prepared.json").read_text())
+    assert receipt["navigator"] == "1.1.0"
+    assert receipt["pod"] == "1.6.0"
+    assert (output / "artifacts/organs/part.nt").read_bytes() == b"abc"
+    assert archive.exists()
+    with pytest.raises(ValueError, match="already exists"):
+        prepare.prepare(package, resources, output)

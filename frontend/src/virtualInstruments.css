@@ -45,7 +45,7 @@
 }
 
 .vpi-catalog-hero > *, .vpi-detail-hero > * { position: relative; z-index: 1; }
-.vpi-catalog-hero h2, .vpi-detail-hero h2 { color: white; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -.04em; margin: .2rem 0 .7rem; }
+.vpi-catalog-hero :is(h1, h2), .vpi-detail-hero :is(h1, h2) { color: white; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -.04em; margin: .2rem 0 .7rem; }
 .vpi-catalog-hero p, .vpi-detail-hero p { color: rgba(255,255,255,.78); margin: 0; max-width: 46rem; }
 .vpi-catalog-hero .eyebrow, .vpi-detail-hero .eyebrow { color: #d6eadf; }
 .vpi-hero-count { border-left: 1px solid rgba(255,255,255,.34); display: grid; min-width: 10rem; padding-left: 1.5rem; }
@@ -131,6 +131,10 @@
 .vpi-detail { display: grid; gap: 1rem; }
 .vpi-back { align-items: center; display: inline-flex; gap: .35rem; justify-self: start; padding: .2rem 0; }
 .vpi-detail-hero { align-items: center; min-height: 10rem; }
+.vpi-detail-hero .vpi-hero-producer { margin-top: .65rem; }
+.vpi-detail-hero .vpi-hero-platforms { display: flex; flex-wrap: wrap; gap: .4rem .85rem; margin-top: .45rem; }
+.vpi-detail-hero :is(.vpi-hero-producer, .vpi-hero-platforms) a { color: #fff; text-decoration: underline; text-underline-offset: .15em; overflow-wrap: anywhere; }
+.vpi-detail-hero :is(.vpi-hero-producer, .vpi-hero-platforms) a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .vpi-detail-hero aside { align-items: flex-start; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); border-radius: .9rem; display: grid; gap: .15rem; min-width: 13rem; padding: 1rem; }
 .vpi-detail-hero aside.verified svg, .vpi-detail-hero aside.available svg { color: #d6efa3; }.vpi-detail-hero aside.catalog-only svg { color: #e4cfaa; }
 .vpi-detail-hero aside span { color: rgba(255,255,255,.7); font-size: .74rem; }

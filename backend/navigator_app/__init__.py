@@ -2,7 +2,7 @@
 from .config import load_settings
 from .public_app import create_public_app
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 def create_app():
     settings = load_settings()

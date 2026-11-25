@@ -1,0 +1,36 @@
+.organ-component-workflow .specification-reading-context { display: grid; gap: 14px; }
+.organ-component-workflow .specification-reading-context > h3 { margin: 0; }
+.specification-source-picker { display: grid; gap: 12px; }
+.specification-source-picker > label { display: grid; gap: 6px; color: #4c6255; font-size: .8rem; font-weight: 600; max-width: 42rem; }
+.specification-source-picker select { width: 100%; min-width: 0; min-height: 44px; border: 1px solid #bdcbb8; border-radius: 7px; background: #fffefa; color: #243c30; padding: 10px 12px; font: inherit; }
+.specification-source-picker .specification-source-provenance { margin: 0; padding: 0; border: 0; gap: 12px; }
+.specification-source-picker .specification-source-provenance > div { gap: 3px; }
+.specification-source-picker .specification-source-provenance span { font-size: .75rem; color: #617367; }
+.organ-component-workflow .specification-coverage-line { margin: 0; font-size: .8rem; color: #536a5a; line-height: 1.65; }
+.organ-component-workflow .specification-coverage-line strong { color: #294432; font-weight: 600; }
+.specification-context-details,.specification-structure-summary { border-top: 1px solid #dde4d6; padding-top: 7px; }
+.organ-component-workflow :is(.specification-context-details,.specification-structure-summary,.specification-all-source-evidence) > summary { cursor: pointer; min-height: 40px; padding-block: 10px; font-weight: 600; font-size: .82rem; line-height: 1.5; color: #365742; }
+.specification-context-details p,.specification-all-source-evidence > p { font-size: .8rem; line-height: 1.65; color: #5b6f60; }
+.specification-context-details code { overflow-wrap: anywhere; }
+.specification-structure-summary { margin-bottom: 16px; }
+.specification-structure-summary .component-summary-strip { margin-top: 10px; }
+.organ-component-workflow .component-selection-hint { position: static; align-self: start; background: #f5f7f0; border-style: dashed; }
+.organ-component-workflow .component-selection-hint p { font-size: .82rem; line-height: 1.65; color: #5d6f60; }
+.organ-component-workflow .specification-all-source-evidence { display: block; padding-block: 8px; }
+.organ-component-workflow .specification-all-source-evidence > summary { font-size: .9rem; }
+.organ-component-workflow .specification-all-source-evidence[open] > summary { border-bottom: 1px solid #dde4d6; margin-bottom: 14px; }
+.organ-component-workflow .component-detail-panel { scroll-margin-top: 146px; }
+.organ-record-summary { margin-top: 12px; }
+.organ-record-summary > summary { cursor: pointer; padding-block: 10px; font-size: .78rem; font-weight: 600; color: #43604a; }
+.organ-record-summary .organ-hero-facts { margin-top: 8px; }
+.public-shell .organ-page.public-mode .organ-hero-compact { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 18px; padding-block: 20px; align-items: start; }
+.public-shell .organ-page.public-mode .organ-hero-compact h1 { font-size: clamp(1.6rem,2.4vw,2.1rem); }
+.public-shell .organ-hero-compact .organ-hero-aside { align-self: start; min-width: 0; }
+.public-shell .organ-hero-compact .organ-record-actions { margin-top: 0; }
+@media(max-width:760px) {
+  .specification-source-picker .specification-source-provenance { align-items: flex-start; flex-direction: column; }
+  .organ-component-workflow .specification-reading-context { padding: 18px 15px; }
+  .public-shell .organ-page.public-mode .organ-hero-compact { grid-template-columns: minmax(0,1fr); gap: 8px; padding: 18px 15px 14px; }
+  .public-shell .organ-hero-compact .organ-record-actions { justify-content: flex-start; }
+  .public-shell .organ-hero-compact .organ-hero-aside { justify-items: start; }
+}

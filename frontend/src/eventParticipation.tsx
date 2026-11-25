@@ -1,4 +1,5 @@
 import { JsonEvidence } from "./JsonEvidence";
+import { useUiLocale } from "./uiLocale";
 type ParticipationEvidence = {
   resolutionState?: unknown;
   pageUrl?: unknown;
@@ -25,13 +26,16 @@ export function ContextualEventSummary() {
 }
 
 export function ParticipantIdentityNote({ participant }: { participant: ParticipationEvidence }) {
+  const { t } = useUiLocale();
   const state = participant.resolutionState;
-  if (state === "unresolved_person_lifetime_conflict") return <> · identity unresolved: event date conflicts with the person’s recorded lifetime</>;
-  if (state === "unresolved_native_actor_identifier") return <> · source builder identifier retained; canonical identity unresolved</>;
-  if (state === "explicit_unknown") return <> · unidentified by source</>;
-  if (state === "unknown_builder") return <> · builder unidentified by source</>;
+  if (state === "unresolved_person_lifetime_conflict") return <> · {t("organ.participant.lifetime", "identity unresolved: event date conflicts with the person’s recorded lifetime", "Identität ungeklärt. Das Ereignisdatum steht im Widerspruch zu den erfassten Lebensdaten.")}</>;
+  if (state === "unresolved_native_actor_identifier") return <> · {t("organ.participant.native", "source builder identifier retained; canonical identity unresolved", "Kennung des Orgelbauers laut Quelle erfasst. Kanonische Identität ungeklärt.")}</>;
+  if (state === "explicit_unknown") return <> · {t("organ.participant.unknown", "unidentified by source", "laut Quelle nicht identifiziert")}</>;
+  if (state === "unknown_builder") return <> · {t("organ.participant.unknownBuilder", "builder unidentified by source", "Orgelbauer laut Quelle nicht identifiziert")}</>;
   if (state === "unresolved_source_mention" || state === "ambiguous_accepted_actor_targets") {
-    return <> · identity unresolved{participant.pageUrl && !participant.mdvsId ? " (link opens source evidence)" : ""}</>;
+    return <> · {participant.pageUrl && !participant.mdvsId
+      ? t("organ.participant.unresolvedLink", "identity unresolved (link opens source evidence)", "Identität ungeklärt (der Link öffnet den Quellenbeleg)")
+      : t("organ.participant.unresolved", "identity unresolved", "Identität ungeklärt")}</>;
   }
   return null;
 }
@@ -133,7 +137,7 @@ export function SourceOccurrenceEvidence({ representations }: { representations?
             <blockquote style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{occurrence.contextWording}</blockquote>
             <details><summary>Exact fragment and source location</summary>
               <blockquote style={{ whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{occurrence.wording}</blockquote>
-              {typeof proof.sourcePath === "string" && <p>Source field: <code>{proof.sourcePath}</code></p>}
+              {typeof proof.sourcePath === "string" && proof.sourcePath.trim().length > 0 && <p>Source field: <code>{proof.sourcePath}</code></p>}
               <p>Fragment characters {occurrence.start}–{occurrence.end}; context characters {occurrence.contextStart}–{occurrence.contextEnd}. Positions start at zero and exclude the ending position.</p>
             </details>
           </li>)}

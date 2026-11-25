@@ -1,11 +1,13 @@
 import { useEffect, useId, useRef } from 'react';
 import { Plus } from 'lucide-react';
-import { pageFaq } from './pageFaqContent';
+import { localizePageFaq, pageFaq } from './pageFaqContent';
+import { useUiLocale } from './uiLocale';
 import './pageFaq.css';
 
 /** One lightweight, local FAQ per public page; no requests or persistent user state. */
 export function PageFaq({ pathname, organTab }: { pathname: string; organTab: string }) {
- const content = pageFaq(pathname, organTab);
+ const { t } = useUiLocale();
+ const content = localizePageFaq(pageFaq(pathname, organTab), t);
  const root = useRef<HTMLElement>(null);
  const heading = useId();
  useEffect(() => {
@@ -49,7 +51,7 @@ export function PageFaq({ pathname, organTab }: { pathname: string; organTab: st
  }, [pathname, content?.id]);
  if (!content) return null;
  return <section className="page-faq" ref={root} aria-labelledby={heading} data-faq-context={content.id} key={pathname+content.id}>
-  <header><h2 id={heading}>Questions about this page</h2><span>FAQ · {content.label}</span></header>
+  <header><h2 id={heading}>{t('faq.heading', 'Questions about this page', 'Fragen zu dieser Seite')}</h2><span>{t('faq.contextLabel', 'FAQ · {context}', 'FAQ · {context}', { context: content.label })}</span></header>
   <div className="page-faq-items">{content.items.map(entry => <details key={entry.id} id={'faq-'+entry.id} name={'page-faq-'+heading}>
    <summary><span>{entry.question}</span><Plus size={16} aria-hidden="true"/></summary>
    <div className="page-faq-answer"><p>{entry.answer}</p>{entry.link && <a href={entry.link.href}>{entry.link.label} →</a>}</div>

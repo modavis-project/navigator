@@ -1,7 +1,261 @@
 /** Public interpretation guidance. Keep record-specific qualifications beside the evidence. */
-export type FaqItem = { id: string; question: string; answer: string; link?: { href: string; label: string } };
-export type FaqSet = { id: string; label: string; items: FaqItem[] };
-const item = (id: string, question: string, answer: string, href?: string, label?: string): FaqItem => ({ id, question, answer, ...(href && label ? { link: { href, label } } : {}) });
+import type { UiText } from './uiLocale';
+
+type GermanFaqItem = readonly [question: string, answer: string, linkLabel?: string];
+
+const germanItems = {
+ sources: [
+  'Bestätigen mehrere Quellen eine Angabe unabhängig voneinander?',
+  'Die Zahlen beziehen sich auf die erfassten Quelldatensätze oder Quellensammlungen. Sammlungen können Angaben übernehmen, und ihre Beschreibungen können voneinander abweichen. Prüfen Sie die Quellenverweise und vergleichen Sie die konkrete Angabe, ihre Datierung und das gemeinte Instrument, bevor Sie von einer unabhängigen Bestätigung ausgehen.',
+ ],
+ missing: [
+  'Bedeutet eine fehlende Angabe, dass ein Merkmal nicht vorhanden war?',
+  'Ein Detail kann in der Quelle fehlen, die Beschreibung kann unvollständig sein oder das Detail ist in dieser Datenversion noch nicht strukturiert erfasst. Ziehen Sie weitere Quellenbeschreibungen und die Originalquellen heran, bevor Sie aus einem leeren Feld Schlüsse ziehen.',
+ ],
+ dates: [
+  'Beschreibt die „Erfasste Disposition“ den heutigen Zustand der Orgel?',
+  'Die Bezeichnung verweist auf die Hauptbeschreibung der jeweiligen Quelle. Das Erfassungs- oder Revisionsdatum der Quelle allein reicht nicht aus, um den beschriebenen Instrumentenzustand zu datieren. Prüfen Sie die Angaben zur Datierung, historische Beschreibungen und verknüpfte Ereignisse, bevor Sie daraus auf den heutigen Zustand schließen.',
+ ],
+ identity: [
+  'Warum sind manche Beteiligte oder Orgelbauer nicht verknüpft?',
+  'Der Wortlaut der Quelle kann auch bei ungeklärter Identität erhalten bleiben. Ähnliche Namen, gemeinsam genannte Orgeln oder derselbe Familienname reichen für die Zuordnung zur selben Person oder Werkstatt nicht aus. Prüfen Sie die Quelle und gegebenenfalls die Hinweise zur Zuordnung. Auch ohne Warnhinweis kann eine Zuordnung noch unabhängig zu prüfen sein.',
+ ],
+ citation: [
+  'Welchen Link sollte ich zitieren?',
+  'Verwenden Sie, soweit vorhanden, den Zitiervorschlag oder den Identifikator des Datensatzes und geben Sie die Datensatzversion an. Bewahren Sie für ein gefiltertes Rechercheergebnis den an den Datenstand gebundenen Link und den zugehörigen Belegexport auf. Seitenadresse, kanonischer Identifikator und Link zur Quelle erfüllen unterschiedliche Zwecke.',
+  'Datensatzversionen und Zitierhinweise',
+ ],
+ export: [
+  'Enthält ein Belegexport nur die angezeigte Seite?',
+  'Der vollständige Belegexport auf den Seiten zum Quellenwortlaut und in den Recherchewerkzeugen umfasst alle Treffer der gewählten Filter. Die Seiteneinteilung der Anzeige spielt dabei keine Rolle. Die Exportgrenzen stehen am jeweiligen Bedienelement. Überschreitet die Auswahl eine Grenze, wird der Export abgelehnt und nicht stillschweigend gekürzt. Gruppierte Diagrammexporte enthalten zusammengefasste Werte, Vorkommensexporte die zugrunde liegenden Zeilen.',
+ ],
+ 'stop-matching': [
+  'Warum kann ein bekanntes Register bei der exakten Suche fehlen?',
+  'Auf der Vorkommensseite eines Ausdrucks berücksichtigt die exakte Suche Zahlen und Zusätze. Groß- und Kleinschreibung sowie mehrfache Leerzeichen spielen keine Rolle. Manche Quellen erfassen „Vox Humana 8“ als Namen, obwohl die Tonhöhe separat angegeben ist. Das ergibt keinen exakten Treffer für „Vox Humana“. Wählen Sie „Wortlaut mit dieser Zeichenfolge“, um weitere Treffer zu finden. Prüfen Sie die Treffer, denn darunter kann auch „Vox Humana Echo“ sein. Die Orgelsuche grenzt die aktuelle Treffermenge ein und erweitert den gesuchten Registerwortlaut nicht.',
+  'Erfasste Benennungen mit „Vox Humana“ durchsuchen',
+ ],
+ 'term-identity': [
+  'Bezeichnen übereinstimmende Namen gleichartige Register oder Instrumente?',
+  'Texttreffer bündeln den erfassten Wortlaut für die Suche. Sie belegen keine Übereinstimmung in Bauweise, Klang oder historischer Bedeutung und keine Identität des Bauteils. Berücksichtigen Sie Tonhöhe, Werk, Quellenbeschreibung und Zusätze wie „Echo“. Quellenwortlaut und vorgeschlagene Zuordnungen haben einen anderen Status als Begriffe eines kontrollierten Vokabulars.',
+ ],
+ 'term-counts': [
+  'Warum unterscheiden sich die Zahlen für Vorkommen, Quellenbeschreibungen und Orgeln?',
+  'Ein Vorkommen ist ein einzelner erfasster Eintrag oder eine Ereignisangabe aus einer Quelle. Zu einer Orgel kann es mehrere Einträge und Quellenbeschreibungen geben. Bei Registern und Werken zeigen die Prozentwerte den Anteil passender Quellenbeschreibungen an allen Beschreibungen derselben Gruppe und Quellenauswahl, die Einträge des betreffenden Typs enthalten. Bei Tätigkeiten bilden dokumentierte Ereigniseinträge die Bezugsgröße. Die Bezugsgröße wird vor der Suche nach dem Ausdruck bestimmt. Quellenbeschreibungen und Orgeln können in mehreren Gruppen vorkommen. Gruppensummen lassen sich daher nicht immer addieren.',
+ ],
+ snapshots: [
+  'Warum sind Recherchelinks so lang, und wie kann ich ein Ergebnis wiederholen?',
+  'Der im Link festgehaltene Datenstand bestimmt die verwendeten öffentlichen Daten eindeutig. Bewahren Sie ihn zusammen mit Suchwort, Suchregel und Filtern sowie dem Beleg- oder Summenexport der verwendeten Ansicht auf. Ist der angegebene Datenstand nicht verfügbar, lässt sich die Auswahl mit den verfügbaren Daten nicht reproduzieren. Ohne die Angabe des Datenstands ändert sich die Datengrundlage der Abfrage.',
+ ],
+ events: [
+  'Handelt es sich bei ähnlich formulierten Ereignisangaben um dasselbe Ereignis?',
+  'Ein kontrollierter Tätigkeitstyp und der Originalwortlaut beschreiben ein Ereignis auf unterschiedlichen Ebenen. Eine Zuordnung erfordert Angaben zu Datum, Quelle, Beteiligten und Zusammenhang. Ähnliche oder undatierte Einträge können getrennt bleiben, wenn die Belege für eine Zusammenführung nicht ausreichen.',
+ ],
+ network: [
+  'Belegt eine Verbindungslinie zwischen Orgelbauern eine Zusammenarbeit?',
+  'Prüfen Sie den gewählten Beziehungstyp. Er kann dieselben Orgeln, eine gemeinsame Beteiligung an einem dokumentierten Ereignis oder frühere und spätere Arbeiten bezeichnen. Angaben zur selben Orgel belegen weder Zusammenarbeit, Anstellung oder Ausbildung noch eine Werkstattnachfolge. Prüfen Sie die zugrunde liegenden Ereignisse und Hinweise zur Zuordnung, bevor Sie eine historische Aussage treffen.',
+ ],
+ 'network-counts': [
+  'Warum zeigt das Diagramm weniger Verbindungen als die Gesamtzahl?',
+  'Das Diagramm zeigt jeweils eine Seite der Verbindungen zur ausgewählten Person oder Organisation. Die zugehörige Tabelle mit Seitennavigation und der vollständige Netzwerkexport erschließen die gesamte Auswahl. Die Linienstärke gibt die angezeigte Anzahl wieder. Sie sagt nichts über die historische Bedeutung oder mögliche Beziehungen zwischen anderen Knoten aus.',
+ ],
+ comparison: [
+  'Belegt eine Abweichung zwischen Quellenbeschreibungen eine Veränderung der Orgel?',
+  'Ein fehlender Eintrag kann auf eine lückenhafte Dokumentation, eine andere Beschreibung oder eine ungeklärte Entsprechung zurückgehen. Vergleichen Sie zunächst Erfassungsumfang, Datierung, Quellenversionen, Werke und Tonhöhen. Ähnliche Registernamen allein belegen weder den Fortbestand noch den Einbau oder Ausbau eines Registers.',
+ ],
+ precision: [
+  'Zeigt eine Kartenmarkierung den genauen Standort der Orgel?',
+  'Prüfen Sie die Genauigkeit und Herkunft der Koordinaten. Ein ungefährer Ortspunkt kann bei der regionalen Suche helfen, ohne das Gebäude zu bestimmen. Die Ortsangabe der Quelle, die mit zusätzlichen Angaben erschlossene Ortsidentität und die Koordinatenangabe sind getrennte Belege.',
+ ],
+ media: [
+  'Warum müssen manche Bilder bei der Quelle geöffnet werden?',
+  'Viele Medieneinträge verweisen mit einem Herkunftsnachweis auf Dateien bei anderen Anbietern. Die Verfügbarkeit der Datei kann sich ändern. Verwenden Sie den Link zur Quelle und den Herkunftsnachweis am Bild. Ob ein Bild abrufbar ist und ob Sie es nachnutzen dürfen, sind getrennte Fragen.',
+ ],
+ vocabulary: [
+  'Warum enthalten die Vokabularsammlungen unterschiedliche Arten von Einträgen?',
+  'Kontrollierte Begriffe behalten ihre Definitionen und Identifikatoren aus dem POD. Terminologievorschläge haben eigene Bearbeitungsstände und Zuordnungsregeln. Der erfasste Quellenwortlaut gibt die Angaben der Anbieter wieder. Schemakategorien beschreiben das Datenmodell. Veröffentlichte Referenzen von MODAVIS, VAO und OMARO haben eigene Versionen und Rechte. Die Zahlen und Bedeutungen der Sammlungen sind getrennt zu betrachten.',
+  'Vokabularübersicht öffnen',
+ ],
+ 'vocab-links': [
+  'Wie finde ich Datensätze zu einem bestimmten Begriff oder Ausdruck?',
+  'Folgen Sie den Beleglinks des Begriffs oder wählen Sie ein Feld für den Quellenwortlaut, etwa Ereignisse, Register, Werke, Trakturen oder Windladen. Bei exakter und weiter gefasster Wortlautsuche gilt jeweils der angezeigte Suchumfang. Eine ähnliche Benennung in der Quelle kann ohne bestätigte Begriffszuordnung vorliegen. Null Treffer besagen, dass die Suche im gewählten Umfang keinen Treffer ergeben hat. Daraus lässt sich kein historisches Fehlen ableiten.',
+ ],
+ omaro: [
+  'Klassifiziert OMARO die Orgeln im POD?',
+  'OMARO ist ein eigenständiges Referenzvokabular mit Instrumentennamen, Klassifikationen und Aussagen. Seine Anzeige im Navigator weist den Orgeln im POD keine Klassifikationen zu. Zitieren Sie die angezeigte Begriffs-URI, die Sammlung und den Stand der Referenz.',
+ ],
+ 'omaro-unresolved': [
+  'Was bedeutet ein nicht aufgelöster Quellenverweis?',
+  'Eine Quelle verweist auf eine Ressource, deren Definition oder Identität in diesem Stand der Referenz nicht geklärt ist. Der Verweis bleibt einsehbar. Eine Definition oder Gleichsetzung wird daraus nicht abgeleitet. Über die Auswahl des Anzeigeumfangs können Sie solche Verweise bei der Untersuchung der Abdeckung einbeziehen.',
+ ],
+ 'wording-match': [
+  'Was berücksichtigt die exakte Wortlautsuche?',
+  'Die exakte Suche ignoriert Groß- und Kleinschreibung sowie mehrfache Leerzeichen. Zusätzliche Wörter, Zahlen und Satzzeichen bleiben relevant. Nutzen Sie die Suche nach enthaltenem Text für Varianten und prüfen Sie deren Originalwortlaut und Zusammenhang. Ähnlich formulierte Einträge können unterschiedliche Ereignisse oder Begriffe bezeichnen.',
+ ],
+ 'reference-kinds': [
+  'Sind Klassen und Eigenschaften eines Datenmodells Vokabularbegriffe?',
+  'SKOS-Begriffe, Begriffsschemata, Modellklassen und Eigenschaften werden getrennt gezählt. Beziehungen wie Definitionsbereich, Wertebereich und Zugehörigkeit zu einem Begriffsschema bleiben als Aussagen der Quelle erhalten. Beim Durchsuchen dieser Aussagen werden den Orgeln im POD keine Klassen zugewiesen.',
+ ],
+ 'reference-source': [
+  'Warum fehlt eine Definition oder ein Begriffsschema?',
+  'Die Ansicht gibt den veröffentlichten Graphen wieder. Fehlende Definitionen, Benennungen und Zuordnungen zu Begriffsschemata bleiben offen. Wird der lokale Teil einer URI als Überschrift verwendet, ist das ausdrücklich gekennzeichnet. Die Dokumentation der Quelle und die unveränderten RDF-Quelldaten bieten weiteren Kontext.',
+ ],
+ 'reference-citation': [
+  'Welche Version und welchen Download sollte ich zitieren?',
+  'Halten Sie die Sammlungsversion, die Original-URI, die Angaben zur Urheberschaft, die Lizenz und die Prüfsumme der Turtle-Quelldatei fest. Diese Angaben finden Sie in den Details zur Abdeckung. Die Originaldistributionen bewahren die Quelldateien bytegenau. Die JSON-Ansicht stellt die vorhandenen Daten in aufbereiteter Form dar und veröffentlicht keine neue Vokabularversion.',
+ ],
+ 'omaro-evidence': [
+  'Belegen Aussagen der Quelle die Gleichwertigkeit von Begriffen?',
+  'Prüfen Sie die Beziehung, ihre Quelle und den Stand der Referenz. Ein Name, die Zugehörigkeit zu einer Klassifikation und eine Aussage aus einer Quelle haben jeweils eine eigene Bedeutung. Daraus lässt sich keine weitergehende Identität oder Gleichwertigkeit ableiten. Definitionen werden angezeigt, soweit die Referenz sie enthält.',
+ ],
+ 'regional-country': [
+  'Stehen länderspezifische Muster für historische Traditionen?',
+  'Die Ländergruppen beruhen auf den Ortsangaben der Quellen in diesem Datenstand. Daraus ergeben sich weder der historische Werkstattstandort noch der Bestimmungsort eines Auftrags oder eine repräsentative Stichprobe einer regionalen Tradition. Prüfen Sie die Abdeckung nach Quellen und die Belege für Ihre historische Deutung.',
+ ],
+ 'coverage-sums': [
+  'Kann ich die Gesamtzahlen der Sammlungen addieren?',
+  'Sammlungen überschneiden sich, wenn mehrere Quellen dieselbe kanonisch erfasste Orgel beschreiben. Auch Merkmale überschneiden sich. Zu einer Orgel können Ereignisse, Dispositionen und Medien erfasst sein. Verwenden Sie die ausgewiesene Zahl eindeutig gezählter Orgeln. Addierte Quellen- oder Merkmalszahlen können dieselbe Orgel mehrfach enthalten.',
+ ],
+ 'fire-current': [
+  'Handelt es sich um eine aktuelle Bewertung der Brandlage oder der Schäden?',
+  'Die Auswertung bezieht sich auf einen datierten Stand. Beachten Sie den Beobachtungsstichtag und die Version der Orgeldaten. Die Nähe zur erfassten Grenze eines Brandgebiets belegt weder Schäden oder Zerstörung noch eine aktuelle Gefährdung der Orgel.',
+ ],
+ 'fire-missing': [
+  'Liegen nicht angezeigte Orgeln zwangsläufig außerhalb des betroffenen Gebiets?',
+  'Die Auswertung hängt von der angegebenen räumlichen Abdeckung und den dafür geeigneten Datensätzen mit Koordinaten ab. Fehlende oder ungenaue Ortsangaben können zum Ausschluss einer Orgel führen. Prüfen Sie die Ausschlüsse, bevor Sie das Fehlen einer Kartenmarkierung deuten.',
+ ],
+ 'pipe-position': [
+  'Entspricht eine funktionale Pfeifenposition einer erhaltenen Pfeife?',
+  'Eine Position beschreibt eine Funktion innerhalb der dokumentierten Disposition. Sie belegt für sich genommen weder eine beobachtete noch eine erhaltene Pfeife. Prüfen Sie das Bauteil, den Quellenbeleg und einen gegebenenfalls angegebenen Bezug zu einem physischen Objekt.',
+ ],
+ 'stop-totals': [
+  'Warum kann die Gesamtzahl von den angezeigten Registerzeilen abweichen?',
+  'Eine Gesamtzahl laut Quelle, eine detaillierte Disposition und die Anzahl erfasster Zeilen sind unterschiedliche Angaben. Abweichungen können auch durch alternative Dispositionen, zusammengesetzte oder wiederholte Einträge und unvollständige Registerlisten entstehen. Prüfen Sie die Bezeichnungen und die Quellenzuordnung. Aus einer leeren Registerliste lässt sich die Registerzahl nicht ableiten.',
+ ],
+ 'media-subject': [
+  'Zeigt ein Bild zwangsläufig die ausgewählte Disposition?',
+  'Prüfen Sie Bildunterschrift, Quelle und eine gegebenenfalls angegebene Datierung. Ein mit einer Orgel oder einem Standort verknüpftes Bild kann einen früheren Zustand, eine andere Perspektive oder Material zum Umfeld zeigen. Die Verknüpfung allein datiert die sichtbaren technischen Details nicht.',
+ ],
+ rdf: [
+  'Belegt gültiges RDF, dass jede Aussage historisch zutrifft?',
+  'Die RDF-Validierung prüft Struktur und Identifikatoren. RDF kann auch unsichere, widersprüchliche oder unvollständig extrahierte Quellenaussagen wiedergeben. Prüfen Sie Herkunft, Einschränkungen der Quellenbeschreibung und Originalbelege, um die historische Richtigkeit zu beurteilen.',
+ ],
+ formats: [
+  'Warum unterscheiden sich die Exportprofile?',
+  'Die Profile stellen die Daten nach unterschiedlichen Schemata und Konventionen dar. Halten Sie die verwendete Datensatzversion und das gewählte Profil in Ihrer Auswertung fest. Eine andere Darstellung liefert für sich genommen keine zusätzlichen unabhängigen Belege.',
+ ],
+ 'catalog-search': [
+  'Warum fehlt eine Orgel in meinen Suchergebnissen?',
+  'Prüfen Sie die aktiven Filter und den Suchumfang. Versuchen Sie anschließend eine andere Schreibweise aus den Quellen oder den MODAVIS-Identifikator. Quellenabdeckung und strukturierte Erfassung sind je nach Orgel unterschiedlich. Wenn Sie Orgeln anhand eines Registernamens suchen, nutzen Sie die Registerterminologie und prüfen Sie bei Bedarf auch weiter gefasste Wortlauttreffer.',
+  'Erfasste Registernamen durchsuchen',
+ ],
+ 'map-history': [
+  'Zeigt eine Verbindungslinie den tatsächlich zurückgelegten historischen Weg?',
+  'Die Linie verbindet die dokumentierten Ausgangs- und Zielorte einer Verlegung. Sie ist schematisch und rekonstruiert den zurückgelegten Weg nicht. Datierung, Quelle und Koordinatengenauigkeit sind für jeden Endpunkt gesondert zu beachten.',
+ ],
+ 'actor-scope': [
+  'Steht ein Namensdatensatz für eine Person?',
+  'Eine Namensform, die Nennung eines Akteurs in einer Quelle und eine kanonisch erfasste Person oder Organisation sind unterschiedliche Datensätze. Die gekennzeichneten Beziehungen zeigen, welche Identität belegt ist. Ein Werkstattname kann einen anderen Tätigkeitsbereich oder Zeitraum abdecken als der Name eines einzelnen Orgelbauers.',
+ ],
+ 'virtual-link': [
+  'Belegt ein übereinstimmender Produkt- oder Domname die Zuordnung zu einer Orgel?',
+  'Eine bestätigte Zuordnung setzt Belege voraus, die das wiedergegebene Instrument identifizieren. Produktname und Ort können insbesondere nach Umbauten oder bei mehreren Orgeln am selben Standort unzureichend sein. Ungeklärte Beziehungen bleiben ausdrücklich als solche gekennzeichnet.',
+ ],
+ 'virtual-state': [
+  'Belegt eine verknüpfte Orgel den Zustand zum Zeitpunkt der Aufnahmen?',
+  'Die Beziehung identifiziert das wiedergegebene Instrument, soweit die Zuordnung belegt ist. Prüfen Sie die Beschreibung des Anbieters und die Angaben zur Konfiguration, um den aufgenommenen Zustand, das Aufnahmedatum und die Vollständigkeit zu beurteilen. Aus der Identität der Orgel allein ergeben sich diese Angaben nicht.',
+ ],
+ 'virtual-filters': [
+  'Warum ändern die Beziehungsfilter die Trefferliste?',
+  'Der Filter für die Verknüpfung mit einem Orgeldatensatz wählt bestätigte Beziehungen zu Orgeln aus. Filter zur Bereitstellung beziehen sich auf das virtuelle Produkt und schränken die Suche unabhängig davon ein. Prüfen Sie alle aktiven Filter, bevor Sie eine leere Trefferliste deuten.',
+ ],
+ 'literature-access': [
+  'Enthält ein Literaturdatensatz ein lesbares Dokument?',
+  'Ein bibliografischer Nachweis kann auch ohne zugängliches Digitalisat vorliegen. Folgen Sie den gekennzeichneten öffentlichen Leselinks, sofern vorhanden. Sie können eine externe Leseansicht oder ein Dokument öffnen. Der Zugriff beim Anbieter kann sich ändern. Aus der Zugänglichkeit ergeben sich keine Nachnutzungsrechte.',
+ ],
+ 'literature-subject': [
+  'Bestätigt eine verknüpfte Publikation alle Angaben zu dieser Orgel?',
+  'Die Verknüpfung liefert Kontext für die Recherche. Prüfen Sie die einschlägige Passage, Ausgabe, Seitenzahl und Datierung, um zu bestimmen, welche Aussage die Publikation stützt. Der Literaturverweis allein belegt nicht alle Felder auf der Orgelseite.',
+ ],
+ 'score-assets': [
+  'Garantiert ein Notendatensatz, dass eine Ausgabe oder ein Digitalisat verfügbar ist?',
+  'Der Datensatz beschreibt die im Katalog erfassten Belege. Folgen Sie den gekennzeichneten Links zum Lesen oder zu Dateien und prüfen Sie Quelle, Ausgabe und Zugangsbedingungen. Aus einem Metadatensatz allein ergibt sich kein Zugriff auf die vollständigen Noten.',
+ ],
+ 'score-relation': [
+  'Belegt die Verknüpfung mit einer Orgel den Aufführungsort eines Werks?',
+  'Prüfen Sie die angegebene Beziehung und ihre Quelle. Besetzung, Widmung, Bezug zu einem Veranstaltungsort und eine dokumentierte Aufführung sind unterschiedliche Aussagen. Die Verknüpfung allein belegt weder eine bestimmte Aufführung noch eine bestimmte Orgelkonfiguration.',
+ ],
+ 'tuning-name': [
+  'Bezeichnen ähnliche Namen dasselbe Stimmungssystem?',
+  'Namen und Schreibvarianten erleichtern die Suche. Prüfen Sie den erfassten Wortlaut und die Quellenangaben auf Abwandlungen oder Hinweise zur konkreten Ausführung. Eine übereinstimmende Benennung allein belegt weder identische Intervalle noch eine gemessene Stimmung.',
+ ],
+ 'tuning-current': [
+  'Belegt ein erfasstes Stimmungssystem die heutige Stimmung der Orgel?',
+  'Die Angabe stammt aus einer Quelle und hat ihren eigenen Zusammenhang. Prüfen Sie die Datierung der Quelle sowie Belege zum Instrumentenzustand oder Messdaten, bevor Sie die Angabe als heutige Beobachtung behandeln.',
+ ],
+ 'resource-scope': [
+  'Warum hat diese Ressource einen eigenen Identifikator?',
+  'Eine Orgel, eine Quellenbeschreibung und ein Bauteil können unterschiedliche Identifikatoren haben, weil sie unterschiedliche Gegenstände beschreiben. Prüfen Sie die Zuordnung, den Ressourcentyp und die Herkunft. Über die angebotenen Links gelangen Sie zur Orgel oder zur Quellenbeschreibung zurück. Aus der Ressourcenadresse allein folgt kein eigenständiges physisches Objekt.',
+ ],
+ 'resource-validity': [
+  'Bestätigt eine gültige semantische Darstellung die Aussage der Quelle?',
+  'Die Validierung prüft die Struktur der Darstellung. Historische Richtigkeit, Unsicherheit und widersprüchliche Quellenbelege lassen sich nur anhand der zugrunde liegenden Aussage und ihrer Herkunft beurteilen. Wählen Sie beim Vergleich von Exporten die angegebene Datensatzversion und das entsprechende Profil.',
+ ],
+} as const satisfies Record<string, GermanFaqItem>;
+
+const germanSets = {
+ stops: 'Registerterminologie',
+ 'source-terms': 'Terminologie der Quellen',
+ 'published-vocabulary': 'Veröffentlichte Vokabularreferenzen',
+ omaro: 'OMARO-Referenz',
+ vocabulary: 'Vokabular und Quellenwortlaut',
+ networks: 'Netzwerke von Orgelbauern und Werkstätten',
+ workbench: 'Recherchewerkzeuge',
+ 'regional-stops': 'Forschung zu regionalen Registernamen',
+ coverage: 'Abdeckung des Orgelkorpus',
+ lifecycles: 'Dokumentierte Orgelgeschichte',
+ fire: 'Historische Raumanalyse',
+ research: 'Einstieg in die Recherche',
+ 'pipe-position': 'Belege zum Pfeifenwerk',
+ specification: 'Dispositionen und Quellenbeschreibungen',
+ 'organ-history': 'Geschichte und Beteiligte',
+ 'organ-media': 'Medien und Quellenzugang',
+ 'organ-export': 'Identifikatoren und Exporte',
+ organ: 'Orgeldatensätze',
+ catalog: 'Orgelsuche',
+ events: 'Ereignisse und Beteiligte',
+ places: 'Orte und Karten',
+ actors: 'Personen, Organisationen und Namen',
+ 'virtual-instruments': 'Virtuelle Instrumente',
+ literature: 'Literatur und Leselinks',
+ scores: 'Noten und zugehörige Dateien',
+ temperaments: 'Stimmungssysteme',
+ source: 'Quellenbelege',
+ resources: 'Semantische Ressourcen und Belege',
+ release: 'Datensatzumfang und Zitierhinweise',
+} as const;
+
+export type FaqItem = { id: keyof typeof germanItems; question: string; answer: string; link?: { href: string; label: string } };
+export type FaqSet = { id: keyof typeof germanSets; label: string; items: FaqItem[] };
+const item = (id: FaqItem['id'], question: string, answer: string, href?: string, label?: string): FaqItem => ({ id, question, answer, ...(href && label ? { link: { href, label } } : {}) });
+
+export function localizePageFaq(content: FaqSet | null, t: UiText): FaqSet | null {
+ if (!content) return null;
+ return {
+  ...content,
+  label: t(`faq.context.${content.id}`, content.label, germanSets[content.id]),
+  items: content.items.map(entry => {
+   const german: GermanFaqItem = germanItems[entry.id];
+   return {
+    ...entry,
+    question: t(`faq.${entry.id}.question`, entry.question, german[0]),
+    answer: t(`faq.${entry.id}.answer`, entry.answer, german[1]),
+    ...(entry.link && german[2] ? {
+     link: { ...entry.link, label: t(`faq.${entry.id}.link`, entry.link.label, german[2]) },
+    } : {}),
+   };
+  }),
+ };
+}
 const source = item('sources', 'Do several sources mean independent confirmation?', 'Source counts describe retained source records or collections. Collections may reuse information, and their accounts can disagree. Open the source references and compare the particular claim, date and instrument before treating them as independent confirmation.');
 const missing = item('missing', 'Does missing information mean a feature did not exist?', 'No. A source may omit a detail, the available account may be partial, or the detail may not yet be structured in this release. Check other source accounts and their original references before drawing a conclusion from an empty field.');
 const dates = item('dates', 'Does “Current source listing” describe the organ today?', 'It identifies the source’s main account. A source capture or revision date does not establish the date of the instrument’s configuration. Check the account’s date qualification, historical descriptions and event links before treating it as a present-day state.');
@@ -18,16 +272,17 @@ const networkCount = item('network-counts', 'Why does the diagram show fewer con
 const compare = item('comparison', 'Does a difference between accounts establish a change to the organ?', 'A missing entry in one account may reflect incomplete documentation, a different description or an unresolved correspondence. Compare coverage, dates, source revisions, divisions and pitches first. Similar stop names do not by themselves prove physical continuity, addition or removal.');
 const precision = item('precision', 'Does a map marker identify the exact organ location?', 'Check the coordinate precision and provenance. An approximate locality point can support regional discovery without identifying a venue. The source-listed place, an enriched place identity and a coordinate assertion are separate pieces of evidence.');
 const media = item('media', 'Why must some images be loaded from their source?', 'Many media records are credited references hosted by another provider. A retained reference does not guarantee that the file is still available. Use the source link and credit shown with the image; image availability and permission to reuse it are separate questions.');
-const vocab = item('vocabulary', 'Why do the vocabulary collections contain different kinds of terms?', 'Controlled concepts have established vocabulary identifiers and any available definitions. Source terminology records wording actually used in the corpus; candidate concepts retain their stated status. The hub brings these collections together while keeping their meanings and identifier status distinct.', '/vocab', 'Open the vocabulary hub');
-const vocabLinks = item('vocab-links', 'How do I find records using a particular term?', 'Follow the concept’s related evidence links or browse the recorded event, stop and division wording. Search variants when needed: a controlled concept and a similar source label need not have an established mapping. A zero result means no match under the chosen scope, not that the term never occurred historically.');
+const vocab = item('vocabulary', 'Why do the vocabulary collections contain different kinds of terms?', 'Controlled concepts retain their POD definitions and identifiers. Candidate proposals keep their own lifecycle and matching rules. Source wording records what providers actually wrote, while schema categories describe the data model. Published MODAVIS, VAO and OMARO references keep their independent versions and rights. Their counts and meanings remain separate.', '/vocab', 'Open the vocabulary hub');
+const vocabLinks = item('vocab-links', 'How do I find records using a particular term?', 'Follow the concept’s evidence links or choose a source-wording field, including events, stops, divisions, actions and windchests. Exact and broader wording searches retain their stated scope. A similar source label need not have an established concept mapping. A zero result means no match under the chosen scope, not that the term never occurred historically.');
 const omaro = item('omaro', 'Does OMARO classify the organs in POD?', 'OMARO is a separate reference vocabulary of instrument names, classifications and assertions. Showing it in Navigator does not assign its classifications to POD organs. Use the concept URI, collection and reference snapshot shown on the page when citing it.');
 const omaroUnresolved = item('omaro-unresolved', 'What does an unresolved source reference mean?', 'A source refers to a resource whose definition or identity is not established in this reference snapshot. The reference remains inspectable without an inferred definition or an invented equivalence. Use the record-scope control to include these references when investigating coverage.');
-const set = (id: string, label: string, ...items: FaqItem[]): FaqSet => ({ id, label, items });
+const set = (id: FaqSet['id'], label: string, ...items: FaqItem[]): FaqSet => ({ id, label, items });
 
 export function pageFaq(pathname: string, organTab = 'overview'): FaqSet | null {
  const path = pathname.replace(/\/+$/, '') || '/';
  if (path === '/vocab/usage/stops') return set('stops', 'Stop terminology', stopMatch, termIdentity, counts, exportEvidence);
- if (/^\/vocab\/usage\/(activities|divisions)$/.test(path)) return set('source-terms', 'Source terminology', item('wording-match', 'What does exact wording match?', 'Exact lookup ignores case and repeated spaces. Additional words, numbers and punctuation remain significant. Use the broader containing-text option to find variants, then inspect their original wording and context; similar wording is not automatically the same event or concept.'), counts, vocabLinks, snapshots);
+ if (/^\/vocab\/usage\/[a-z][a-z0-9_]*$/.test(path)) return set('source-terms', 'Source terminology', item('wording-match', 'What does exact wording match?', 'Exact lookup ignores case and repeated spaces. Additional words, numbers and punctuation remain significant. Use the broader containing-text option to find variants, then inspect their original wording and context; similar wording is not automatically the same event or concept.'), counts, vocabLinks, snapshots);
+ if (path === '/vocab/reference') return set('published-vocabulary', 'Published vocabulary references', item('reference-kinds', 'Are model classes and properties vocabulary concepts?', 'SKOS concepts, schemes, model classes and properties are counted separately. Relationships such as domain, range or scheme membership are retained source statements; browsing them does not classify a POD organ.'), item('reference-source', 'Why is a definition or scheme missing?', 'The reader preserves the published graph. Missing definitions, labels and scheme membership remain unrecorded; a URI local name is explicitly marked when used as a heading. Source documentation and exact RDF evidence are available for further context.'), item('reference-citation', 'Which version and download should I cite?', 'Keep the collection version, original source URI, attribution, license and source Turtle checksum shown in the coverage disclosure. Original distributions retain their source bytes; the JSON reading view is a projection, not a new vocabulary release.'));
  if (path === '/vocab/omaro') return set('omaro', 'OMARO reference', omaro, omaroUnresolved, item('omaro-evidence', 'Do source assertions establish equivalence between concepts?', 'Inspect the relation, source and reference snapshot. A name, classification membership or source assertion has its own meaning and should not be treated as a stronger identity or equivalence claim. Definitions are available only where supplied in the reference evidence.'));
  if (path === '/vocab' || /^\/vocab\/[^/]+(?:\/[^/]+(?:\/[^/]+)?)?$/.test(path)) return set('vocabulary', 'Vocabulary and source wording', vocab, vocabLinks, citation);
  if (path === '/use-cases/builder-workshop-networks') return set('networks', 'Builder and workshop networks', network, networkCount, identity, source);

@@ -3,3 +3,42 @@
 .om-page .om-search>button:hover:not(:disabled),.om-page .om-tabs button[aria-pressed=true]:hover{background:#173d31;color:#fff}.om-search input{font-weight:400}.om-table td small{display:block;color:#687759;font-size:.72rem}
 
 .om-scope-note{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:.85rem;line-height:1.6;color:#46604f;margin:12px 0}.om-scope-note button{font-size:.8rem}
+
+/* Compact reference navigation; the original evidence remains fully accessible. */
+.om-hero { padding: 22px 26px; border-radius: 10px; }
+.om-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+.om-hero p { font-size: 14px; }
+.om-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.om-tabs button { min-width: 0; }
+.om-boundary { font-size: 12px; padding: 12px 14px; }
+.om-search { padding: 16px; border-radius: 8px; }
+.om-results article { padding: 18px; border-radius: 8px; overflow-wrap: anywhere; }
+.om-results small { display: block; margin-top: 12px; color: #61725a; }
+.om-detail { border-radius: 9px; }
+.om-detail-section { margin: 22px 0; padding: 0 15px; border: 1px solid #d4dfce; border-radius: 7px; }
+.om-detail-section > summary { padding: 14px 0; min-height: 48px; }
+.om-detail-section > summary span { margin-left: 8px; color: #61725a; font-size: 11px; font-weight: 400; }
+.om-table table { min-width: 460px; }
+.om-table th { position: sticky; top: 0; }
+.om-table { max-height: 480px; margin-bottom: 12px; }
+.om-distributions { border-radius: 8px; background: #fafbf6; }
+.om-distributions > summary { min-height: 44px; padding: 12px 0; }
+.om-downloads { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0; }
+.om-downloads > div { min-width: 0; padding: 12px; background: #fffefa; border: 1px solid #d4dfce; border-radius: 7px; }
+.om-downloads > div > small { display: block; color: #61725a; font-size: 11px; line-height: 1.5; }
+.om-downloads > div code { display: block; font-size: 11px; overflow-wrap: anywhere; }
+.om-downloads a { align-items: flex-start; font-size: 13px; }
+.om-downloads svg { flex-shrink: 0; margin-top: 2px; }
+.om-downloads details summary { min-height: 40px; font-size: 11px; font-weight: 400; }
+.om-identity { align-items: flex-start; }
+.om-identity code { flex: 1 1 260px; }
+.om-page [role=alert] p { font-size: 13px; line-height: 1.6; margin-top: 0; }
+.om-entry-links a:focus-visible { outline: 3px solid #99732d; outline-offset: 3px; }
+@media (max-width: 650px) {
+  .om-hero { padding: 10px 0 18px; border: 0; border-bottom: 1px solid #d4dfce; border-radius: 0; background: none; }
+  .om-tabs { gap: 6px; }
+  .om-tabs button { padding: 9px 7px; font-size: 12px; }
+  .om-downloads { grid-template-columns: minmax(0, 1fr); }
+  .om-detail-section { padding: 0 10px; }
+  .om-pagination { gap: 10px; }
+}

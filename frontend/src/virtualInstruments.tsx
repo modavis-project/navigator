@@ -469,20 +469,29 @@ function Fact({ label, value }: { label: string; value?: string | number | null 
 function PublicVirtualInstrumentDetail({ instrument, releaseVersion, onBack }: { instrument: VirtualInstrumentDetail; releaseVersion?: string; onBack: () => void }) {
   const relations = instrument.relationships.canonicalOrganRelations ?? [];
   const modeled = /modeled|modelled/i.test(instrument.kind.recordingBasis || "");
+  const audioIncluded = instrument.technical?.audioIncluded;
   const { activeTab, selectTab } = useEntityPageTab(Boolean(instrument.export), instrument.id);
   const tabScope = `virtual-instrument-${instrument.id}`;
   return (
     <article className="vpi-detail">
       <button type="button" className="vpi-back" onClick={onBack}><ArrowLeft size={16} /> Back to virtual instruments</button>
       <header className="vpi-detail-hero">
-        <div><p className="eyebrow">Virtual instrument · POD {releaseVersion}</p><h2>{instrument.title}</h2><IdentifierCopy id={instrument.id} url={instrument.identifierUri} />{instrument.producer && <p>By <a href={`/virtual-instruments?producer=${encodeURIComponent(instrument.producer)}`}>{instrument.producer}</a></p>}<div className="vpi-badges">{instrument.platforms.all.map(platform => <a key={platform} href={`/virtual-instruments?platform=${encodeURIComponent(platform)}`}>{platform}</a>)}</div></div>
+        <div>
+          <p className="eyebrow">Virtual instrument · POD {releaseVersion}</p>
+          <h1>{instrument.title}</h1>
+          <IdentifierCopy id={instrument.id} url={instrument.identifierUri} />
+          {instrument.producer && <p className="vpi-hero-producer">By <a href={`/virtual-instruments?producer=${encodeURIComponent(instrument.producer)}`}>{instrument.producer}</a></p>}
+          {instrument.platforms.all.length > 0 && <nav className="vpi-hero-platforms" aria-label="Browse instruments by software">
+            {instrument.platforms.all.map(platform => <a key={platform} href={`/virtual-instruments?platform=${encodeURIComponent(platform)}`}>{platform}</a>)}
+          </nav>}
+        </div>
       </header>
       <EntityPageTabs scope={tabScope} label={instrument.title} activeTab={activeTab} exportAvailable={Boolean(instrument.export)} onChange={selectTab} />
       <EntityTabPanel scope={tabScope} tab="overview" activeTab={activeTab} className="vpi-detail-overview">
         <div className="vpi-detail-columns">
           <section className="vpi-detail-section"><h3>The virtual instrument</h3><dl className="vpi-facts">
-            <Fact label="Instrument" value={instrument.sampledInstrumentName} /><Fact label="Recording basis" value={instrument.kind.recordingBasis} /><Fact label="Edition / variant" value={instrument.technical?.editionOrVariant} /><Fact label="Software" value={instrument.platforms.all.join(", ")} /><Fact label="Distribution" value={instrument.kind.distributionUnit} />
-            <Fact label="Audio included" value={instrument.technical?.audioIncluded} /><Fact label="Sample resolution" value={instrument.technical?.sampleFormatResolution} /><Fact label="Perspectives / channels" value={instrument.technical?.perspectivesOrChannels} /><Fact label="Wet / dry" value={instrument.technical?.wetDry} /><Fact label="Size / memory" value={instrument.technical?.sizeOrMemory} />
+            <Fact label="Instrument" value={instrument.sampledInstrumentName} /><Fact label="Recording basis" value={instrument.kind.recordingBasis} /><Fact label="Edition / variant" value={instrument.technical?.editionOrVariant} /><Fact label="Software" value={instrument.platforms.all.join(", ")} /><Fact label="Distribution" value={instrument.kind.distributionUnit && formatLabel(instrument.kind.distributionUnit)} />
+            <Fact label="Audio included" value={audioIncluded === "no_requires_external_samples" ? "No, requires external samples" : audioIncluded && formatLabel(audioIncluded)} /><Fact label="Sample resolution" value={instrument.technical?.sampleFormatResolution} /><Fact label="Perspectives / channels" value={instrument.technical?.perspectivesOrChannels} /><Fact label="Wet / dry" value={instrument.technical?.wetDry} /><Fact label="Size / memory" value={instrument.technical?.sizeOrMemory} />
           </dl></section>
           <section className="vpi-detail-section"><h3>Access and licence</h3><dl className="vpi-facts"><Fact label="Access" value={instrument.availability.accessModel} /><Fact label="Licence" value={instrument.availability.licenseClass} /><Fact label="Catalogue status" value={instrument.availability.catalogStatus} /><Fact label="Listed price" value={[instrument.availability.listedPrice, instrument.availability.currency].filter(Boolean).join(" ")} /><Fact label="Recorded on" value={instrument.evidence.researchDate} /></dl><div className="vpi-source-links">{(instrument.evidence.sourceUrls || []).map((url, index) => <a key={url} href={url} target="_blank" rel="noreferrer">{index === 0 ? "Open publisher / source" : "Additional source"} <ExternalLink size={14} /></a>)}</div></section>
         </div>
@@ -869,7 +878,7 @@ export function VirtualInstrumentsArea({ activeReleaseVersion, baselineReleaseVe
   return (
     <section className="vpi-shell" id="vmi" tabIndex={-1}>
       <header className="vpi-catalog-hero">
-        <div><p className="eyebrow">{publicProjection ? `Public collection · Release ${activeReleaseVersion}` : <>{catalog?.releaseBoundary?.targetRelease ? `Release ${String(catalog.releaseBoundary.targetRelease)} canonical candidate` : activeReleaseVersion ? `Release ${activeReleaseVersion} successor candidate` : "Successor preview"}{baselineReleaseVersion ? ` · Release ${baselineReleaseVersion} baseline` : ""} · read-only</>}</p><h2>Virtual instruments</h2><p>{publicProjection ? "Explore virtual instrument records and their documented connections to pipe organs." : "Browse canonical independent VMI packages first, then inspect their exact component evidence, versions, physical-organ relations and withheld candidates. Confidence and matching method remain visible—not hidden certainty."}</p></div>
+        <div><p className="eyebrow">{publicProjection ? `Public collection · Release ${activeReleaseVersion}` : <>{catalog?.releaseBoundary?.targetRelease ? `Release ${String(catalog.releaseBoundary.targetRelease)} canonical candidate` : activeReleaseVersion ? `Release ${activeReleaseVersion} successor candidate` : "Successor preview"}{baselineReleaseVersion ? ` · Release ${baselineReleaseVersion} baseline` : ""} · read-only</>}</p>{publicProjection ? <h1>Virtual instruments</h1> : <h2>Virtual instruments</h2>}<p>{publicProjection ? "Explore virtual instrument records and their documented connections to pipe organs." : "Browse canonical independent VMI packages first, then inspect their exact component evidence, versions, physical-organ relations and withheld candidates. Confidence and matching method remain visible—not hidden certainty."}</p></div>
         <div className="vpi-hero-count"><strong>{catalog ? formatInteger(catalog.counts.distinctCanonicalOrganEntities ?? catalog.counts.distinctOrganEntitiesLinked) : "…"}</strong><span>{publicProjection ? "distinct related organs in these results" : catalog?.counts.canonicalVmiInstruments ? "distinct MODAVIS organs in canonical VMI relations" : "distinct MODAVIS organ entities linked or suggested"}</span></div>
       </header>
 

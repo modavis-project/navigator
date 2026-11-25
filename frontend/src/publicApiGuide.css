@@ -1,0 +1,115 @@
+.api-guide .release-guide-hero nav {
+  align-self: end;
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.api-guide .release-guide-hero nav a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.api-guide .release-guide-section {
+  min-width: 0;
+  scroll-margin-top: 16px;
+}
+
+.api-guide .release-guide-section h2 {
+  margin: 0;
+}
+
+.api-guide pre {
+  background: #f2f6f3;
+  border: 1px solid #d9e4df;
+  border-radius: 8px;
+  color: #183936;
+  margin: 14px 0;
+  overflow-x: auto;
+  padding: 14px;
+  white-space: pre;
+}
+
+.api-guide-endpoints {
+  display: grid;
+  margin: 16px 0;
+}
+
+.api-guide-endpoints div {
+  border-top: 1px solid #e2e3df;
+  padding: 10px 0;
+}
+
+.api-guide-endpoints dt {
+  font-weight: 700;
+}
+
+.api-guide-endpoints dd {
+  margin: 3px 0 0;
+}
+
+.api-guide-endpoints code {
+  display: block;
+}
+
+.api-guide :not(pre) > code {
+  overflow-wrap: anywhere;
+}
+
+.api-guide details summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+@media (max-width: 1120px) {
+  .api-guide .release-guide-section {
+    scroll-margin-top: 84px;
+  }
+}
+
+.api-reference-document :is(h2, h3)[id] {
+  margin-top: 2rem;
+  scroll-margin-top: 1rem;
+}
+
+.api-reference-document :not(pre) > code {
+  overflow-wrap: anywhere;
+}
+
+.api-reference-contents {
+  border-bottom: 1px solid #d9e4df;
+  margin-bottom: 1.4rem;
+}
+
+.api-reference-contents ul {
+  columns: 2 15rem;
+  padding-left: 1.2rem;
+}
+
+.api-reference-contents li {
+  break-inside: avoid;
+  margin-bottom: .3rem;
+}
+
+.api-reference-table {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.api-reference-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.api-reference-table :is(th, td) {
+  border: 1px solid #d9e4df;
+  padding: .55rem .7rem;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.api-reference-table th {
+  background: #f2f6f3;
+}

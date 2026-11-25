@@ -106,7 +106,7 @@ function DocumentationHubPage({ isAdmin }: { isAdmin: boolean }) {
       <header className="documentation-hero">
         <div>
           <p className="eyebrow">MODAVIS Documentation <span className="documentation-published-state">{published ? "Approved corpus" : "No approved release"}</span></p>
-          <h2>{published ? "Evidence, methods, and decisions—ready to cite." : "Citable documentation begins with an approved release."}</h2>
+          <h1>{published ? "Evidence, methods, and decisions—ready to cite." : "Citable documentation begins with an approved release."}</h1>
           <p>{published ? "Move from an accessible overview to immutable versions, stable identifiers, repository provenance, and technical fixity." : "The active local software and database preview is private and unpublished. Its reviewer-facing scope and limitations are available separately and must not be cited as a published documentation release."}</p>
           {!published && <a className="documentation-release-guide-link" href="/about/release">Open active preview scope and limitations</a>}
         </div>

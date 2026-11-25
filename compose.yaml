@@ -41,6 +41,7 @@ services:
       NAVIGATOR_DATASET_DISTRIBUTION_ORGAN_ROOT: /artifacts/organs
       NAVIGATOR_DATASET_DISTRIBUTION_ENTITY_ROOT: /artifacts/entities
       NAVIGATOR_RESEARCH_INDEX: /artifacts/runtime-models/research
+      NAVIGATOR_RESEARCH_PACKAGE_LICENSE: ${NAVIGATOR_RESEARCH_PACKAGE_LICENSE:-}
       NAVIGATOR_WORKBENCH_MANIFEST: /artifacts/runtime-models/workbench/manifest.json
       NAVIGATOR_EXPLORATION_MANIFEST: /resources/exploration/analysis/manifest.json
       NAVIGATOR_OMARO_MANIFEST: /resources/omaro/manifest.json

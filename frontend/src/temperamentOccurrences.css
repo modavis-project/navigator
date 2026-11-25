@@ -1,0 +1,126 @@
+.temperament-tab-panel:not([hidden]) {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.tuning-occurrence-controls {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0;
+  padding: 16px;
+  border: 1px solid var(--border, #d5dfda);
+  border-radius: 10px;
+  background: var(--surface-soft, #f3f6f1);
+}
+
+.tuning-occurrence-controls h2,
+.tuning-occurrence-controls p {
+  margin: 0;
+}
+
+.tuning-occurrence-controls h2 {
+  font-size: 1.05rem;
+}
+
+.tuning-occurrence-controls p {
+  margin-top: 5px;
+  color: var(--muted, #53635d);
+}
+
+.tuning-occurrence-controls [role="alert"] {
+  color: #842f30;
+}
+
+.tuning-occurrence-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 165px), 1fr));
+  gap: 10px;
+}
+
+.tuning-occurrence-inputs label {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+.tuning-occurrence-inputs select,
+.tuning-occurrence-inputs input {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 7px 9px;
+  border: 1px solid #bacac2;
+  border-radius: 6px;
+  background: #fff;
+  color: #253b34;
+  font: inherit;
+  font-weight: 500;
+}
+
+.tuning-occurrence-links,
+.tuning-organ-scopes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.tuning-occurrence-links a,
+.tuning-organ-scopes button {
+  padding: 6px 9px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #c2d2c9;
+  border-radius: 6px;
+  color: #24564b;
+  background: #f6f9f5;
+  font-size: .84rem;
+}
+
+.tuning-organ-scopes button[aria-pressed="true"] {
+  background: #e1eee6;
+  border-color: #618475;
+}
+
+.tuning-occurrence-links a:focus-visible,
+.tuning-organ-scopes button:focus-visible {
+  outline: 2px solid #24564b;
+  outline-offset: 3px;
+}
+
+.temperament-compare-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.temperament-compare-selection li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid #c2d2c9;
+  border-radius: 6px;
+}
+
+.temperament-compare-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.temperament-compare-feedback:empty {
+  margin: 0;
+}
+
+.temperament-comparison-table th small {
+  display: block;
+  font-weight: normal;
+}

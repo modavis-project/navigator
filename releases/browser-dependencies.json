@@ -1,0 +1,154 @@
+{
+  "scope": "Runtime code bundled into the browser; build tools remain in their installed packages",
+  "packages": [
+    {
+      "package": "react",
+      "version": "19.2.7",
+      "license": "MIT",
+      "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "upstream": {
+        "type": "git",
+        "url": "https://github.com/facebook/react.git",
+        "directory": "packages/react"
+      }
+    },
+    {
+      "package": "react-dom",
+      "version": "19.2.7",
+      "license": "MIT",
+      "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "upstream": {
+        "type": "git",
+        "url": "https://github.com/facebook/react.git",
+        "directory": "packages/react-dom"
+      }
+    },
+    {
+      "package": "scheduler",
+      "version": "0.27.0",
+      "license": "MIT",
+      "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "upstream": {
+        "type": "git",
+        "url": "https://github.com/facebook/react.git",
+        "directory": "packages/scheduler"
+      }
+    },
+    {
+      "package": "lucide-react",
+      "version": "0.468.0",
+      "license": "ISC",
+      "licenseSha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
+      "upstream": {
+        "type": "git",
+        "url": "https://github.com/lucide-icons/lucide.git",
+        "directory": "packages/lucide-react"
+      }
+    },
+    {
+      "package": "vite",
+      "version": "8.1.6",
+      "license": "MIT",
+      "licenseFile": "LICENSE.md",
+      "licenseSha256": "b1d741c26b53de1bbc0d4d7d3365b79888f9fe511527544a8a7b8e24dec43147",
+      "upstream": {
+        "type": "git",
+        "url": "git+https://github.com/vitejs/vite.git",
+        "directory": "packages/vite"
+      },
+      "scope": "Generated browser runtime/preload helpers; build tool implementation is not vendored"
+    },
+    {
+      "package": "rolldown",
+      "version": "1.1.5",
+      "license": "MIT",
+      "licenseFile": "LICENSE",
+      "licenseSha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "upstream": {
+        "type": "git",
+        "url": "git+https://github.com/rolldown/rolldown.git",
+        "directory": "packages/rolldown"
+      },
+      "scope": "Generated browser runtime/preload helpers; build tool implementation is not vendored"
+    },
+    {
+      "package": "react-intl",
+      "version": "12.1.6",
+      "license": "BSD-3-Clause",
+      "licenseFile": "LICENSE.md",
+      "licenseSha256": "ef3171f69fb1c12e0f61968b478e6640b786dd2fdf7868cf2052d084b71aa92a",
+      "upstream": {
+        "type": "git",
+        "url": "git@github.com:formatjs/formatjs.git"
+      }
+    },
+    {
+      "package": "intl-messageformat",
+      "version": "12.1.4",
+      "license": "BSD-3-Clause",
+      "licenseFile": "LICENSE.md",
+      "licenseSha256": "cc4143615b27c66eafbe913f132a9e41ac14c1e2ec6b2df24dafeaa97f028850",
+      "upstream": {
+        "type": "git",
+        "url": "git@github.com:formatjs/formatjs.git"
+      }
+    },
+    {
+      "package": "@formatjs/intl",
+      "version": "6.1.4",
+      "license": "MIT",
+      "licenseFile": "LICENSE.md",
+      "licenseSha256": "b1cc980e28e9e48f377db191578a9361494ca7117185b69dd66cabaf5b460fb7",
+      "upstream": {
+        "type": "git",
+        "url": "git@github.com:formatjs/formatjs.git"
+      }
+    },
+    {
+      "package": "@formatjs/fast-memoize",
+      "version": "3.1.7",
+      "license": "MIT",
+      "licenseFile": "LICENSE.md",
+      "licenseSha256": "b1cc980e28e9e48f377db191578a9361494ca7117185b69dd66cabaf5b460fb7",
+      "upstream": {
+        "type": "git",
+        "url": "formatjs/formatjs.git"
+      }
+    },
+    {
+      "package": "@formatjs/icu-messageformat-parser",
+      "version": "3.5.22",
+      "license": "MIT",
+      "licenseFile": "LICENSE.md",
+      "licenseSha256": "b1cc980e28e9e48f377db191578a9361494ca7117185b69dd66cabaf5b460fb7",
+      "upstream": {
+        "type": "git",
+        "url": "https://github.com/formatjs/formatjs.git",
+        "directory": "packages/icu-messageformat-parser"
+      }
+    },
+    {
+      "package": "@formatjs/icu-skeleton-parser",
+      "version": "2.1.12",
+      "license": "MIT",
+      "licenseFile": "LICENSE.md",
+      "licenseSha256": "b1cc980e28e9e48f377db191578a9361494ca7117185b69dd66cabaf5b460fb7",
+      "upstream": {
+        "type": "git",
+        "url": "https://github.com/formatjs/formatjs.git",
+        "directory": "packages/icu-skeleton-parser"
+      }
+    }
+  ],
+  "additionalNotices": [
+    {
+      "package": "rolldown",
+      "version": "1.1.5",
+      "source": "https://raw.githubusercontent.com/rolldown/rolldown/v1.1.5/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "license": "MIT",
+      "rights": "Retains upstream Rollup contributors and Evan Wallace/esbuild notices"
+    }
+  ],
+  "bundledTextNormalization": "Only trailing horizontal whitespace is removed from the concatenated notice file; all wording, attribution and complete license sections are retained. licenseSha256 binds the original upstream file bytes before this formatting step."
+}

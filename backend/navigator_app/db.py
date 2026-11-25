@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import atexit
+from contextvars import ContextVar
+import time
 from collections.abc import Iterator
 from contextlib import contextmanager
 from threading import Lock
@@ -10,6 +12,18 @@ from psycopg_pool import ConnectionPool
 from psycopg.rows import dict_row
 
 from .config import Settings
+
+
+query_deadline = ContextVar("navigator_query_deadline", default=None)
+
+
+def constrain_sqlite_reads(connection, seconds=10):
+    """Apply the same remaining request budget to an immutable SQLite reader."""
+    deadline = min(time.monotonic() + seconds, query_deadline.get() or float("inf"))
+    connection.set_progress_handler(lambda: int(time.monotonic() >= deadline), 1000)
+    if time.monotonic() >= deadline:
+        raise TimeoutError("Read query budget exhausted")
+    return deadline
 
 
 _pools: dict[str, ConnectionPool] = {}
@@ -43,13 +57,53 @@ def _pool(settings: Settings) -> ConnectionPool:
                 max_idle=30,
                 timeout=10,
                 open=True,
-                kwargs={"row_factory": dict_row},
+                kwargs={"row_factory": dict_row, "autocommit": False, "connect_timeout": 5},
             )
             _pools[dsn] = pool
     return pool
 
 
+class _DeadlineConnection:
+    def __init__(self, connection, deadline):
+        self._connection = connection
+        self._deadline = deadline
+
+    def execute(self, query, *args, **kwargs):
+        remaining = self._deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("Read query budget exhausted")
+        self._connection.execute(
+            "SELECT set_config('statement_timeout', %s, true)",
+            (str(max(1, int(remaining * 1000))),),
+        )
+        return self._connection.execute(query, *args, **kwargs)
+
+    def transaction(self, *args, **kwargs):
+        return self._connection.transaction(*args, **kwargs)
+
+    def __getattr__(self, name):
+        # Preserve safe connection metadata used by existing read adapters.
+        return getattr(self._connection, name)
+
+
 @contextmanager
 def connect(settings: Settings) -> Iterator[psycopg.Connection]:
-    with _pool(settings).connection() as conn:
-        yield conn
+    deadline = query_deadline.get()
+    remaining = deadline - time.monotonic() if deadline is not None else None
+    if remaining is not None and remaining <= 0:
+        raise TimeoutError("Read query budget exhausted")
+    with _pool(settings).connection(timeout=remaining if remaining is not None else 10) as conn:
+        with conn.transaction():
+            # Enforce the public application's contract even if an operator
+            # accidentally supplies a writer role. Deployment grants remain
+            # an independent boundary and must also deny writes.
+            conn.execute("SET TRANSACTION READ ONLY")
+            if deadline is not None:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise TimeoutError("Read query budget exhausted")
+                conn.execute(
+                    "SELECT set_config('statement_timeout', %s, true)",
+                    (str(max(1, int(remaining * 1000))),),
+                )
+            yield _DeadlineConnection(conn, deadline) if deadline is not None else conn

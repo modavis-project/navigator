@@ -1,0 +1,16 @@
+MODAVIS semantic artifacts and documentation
+
+Copyright 2026 Dominik Ukolov and MODAVIS contributors
+
+Except where an individual file states otherwise, the ontology, vocabulary,
+SHACL, alignment, context, documentation, and example artifacts in this
+repository are licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0).
+
+SPDX-License-Identifier: CC-BY-4.0
+License deed: https://creativecommons.org/licenses/by/4.0/
+Legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Attribution should identify the MODAVIS Ontology Network, the exact released
+version, and its contributors. This notice does not imply endorsement by a
+contributor's affiliated institution.

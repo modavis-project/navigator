@@ -5,6 +5,7 @@ from collections import OrderedDict
 import json
 import re
 from typing import Any
+from .public_specification_comparisons import compare_technical_facts, coverage_summary
 
 SCHEMA = 'release_1_5_public'
 CONTRACT = 'modavis.specification-description/v1'
@@ -28,8 +29,57 @@ def summary(row: dict[str, Any]) -> dict[str, Any]:
         'sourcePaths': parsed(row['source_paths_json'], []),
         'normalizationProfile': row['normalization_profile'],
         'stopCount': row['stop_count'], 'componentCount': row['component_count'],
+        'stopListAvailability': 'captured_stop_rows' if row['stop_count'] > 0 else 'no_captured_stop_rows',
+        'coverageSummary': coverage_summary(row['stop_count'], row['component_count']),
         'source': {'id': row['source_record_id'], 'source': row['source_key'], 'url': row['source_url']},
     }
+
+
+def technical_facts(conn, organ_id, *, quality=False):
+    """Bounded organ read shared by summary matrices and account details."""
+    rows = conn.execute(f'''select f.*,m.source_key,m.source_url
+        from {SCHEMA}.technical_fact f
+        left join {SCHEMA}.source_membership m using(source_record_id)
+        where f.organ_mdvs_id=%(organ)s order by f.family,f.fact_id''', {'organ':organ_id}).fetchall()
+    evidence = {}
+    if quality:
+        evidence = {r['fact_id']:parsed(r['evidence_json'],{}) for r in conn.execute(
+            f'''select e.* from {SCHEMA}.technical_fact_evidence e
+                join {SCHEMA}.technical_fact f using(fact_id) where f.organ_mdvs_id=%(organ)s''',
+            {'organ':organ_id}).fetchall()}
+    facts = [{
+        'id': f['fact_id'], 'family': f['family'], 'label': f['label'],
+        'value': f['display_value'] if f['display_value'] not in (None, '') else str(f['normalized_number'] if f['normalized_number'] is not None else ''),
+        'normalizedNumber': f['normalized_number'], 'sourcePath': f['source_path'], 'revision': f['evidence_sha256'],
+        'sourceWording': '\n'.join(e['wording'] for e in evidence.get(f['fact_id'], {}).get('evidence', [])) or f['display_value'] or f['label'],
+        'sourceRecordId': f['source_record_id'], 'source': f.get('source_key'), 'sourceUrl': f.get('source_url'),
+        'conflictState': f.get('conflict_state'), 'sourceConflictState': f.get('conflict_state'), 'summaryEvidence': evidence.get(f['fact_id']),
+    } for f in rows]
+    if quality:
+        from .public_aggregate_quality import qualify_public_fact
+        facts = [qualify_public_fact(f) for f in facts]
+    return compare_technical_facts(facts)[0]
+
+
+def attach_facts(descriptions, facts):
+    by_source = {}
+    for fact in facts:
+        by_source.setdefault(fact['sourceRecordId'], []).append(fact)
+    for description in descriptions:
+        # Main source-record assertions are never inherited by dated alternative
+        # accounts just because their publisher/source record is the same.
+        account_facts = by_source.get(description['source']['id'], []) if description['kind'] == 'main' else []
+        account_facts = [{**f} for f in account_facts]
+        for fact in account_facts:
+            captured = description['stopCount'] if fact['family'] == 'stop_total' else None
+            reported = fact.get('normalizedNumber')
+            # Zero captured rows describes an unavailable capture, not a
+            # contradictory source assertion of zero stops.
+            if captured and reported is not None and reported != captured:
+                fact.update(comparisonKind='source_summary_vs_captured_rows', capturedComponentCount=captured)
+        description['technicalFacts'] = account_facts
+        description['coverageSummary'] = coverage_summary(description['stopCount'], description['componentCount'], account_facts)
+    return descriptions
 
 
 def chronology(conn, descriptions):
@@ -39,7 +89,7 @@ def chronology(conn, descriptions):
     return [{**d, "chronology":evidence.get(d["id"])} for d in descriptions]
 
 
-def index(conn, organ_id: str, *, history=False):
+def index(conn, organ_id: str, *, history=False, quality=False):
     rows = conn.execute(f'''select d.*,m.source_key,m.source_url
         from {SCHEMA}.specification_description d
         join {SCHEMA}.source_membership m using(source_record_id)
@@ -50,7 +100,7 @@ def index(conn, organ_id: str, *, history=False):
                       when d.stop_count>0 then 2 else 3 end,
                  case when d.source_record_id like 'sr:orgbase:%%' then 0 else 1 end,
                  d.sort_year desc nulls last,d.description_id''', {'id':organ_id}).fetchall()
-    result = [summary(row) for row in rows]
+    result = attach_facts([summary(row) for row in rows], technical_facts(conn, organ_id, quality=quality)) if rows else []
     return chronology(conn, result) if history else result
 
 
@@ -91,14 +141,7 @@ def detail(conn, organ_id: str, description_id: str, *, history=False, quality=F
                 'wording':value.get('raw_str') or c['label'], 'detail':value,
                 'wordingKind':'structured_component_label','sourcePaths':[c['source_path']],
                 'dates':value.get('dates',[]),'recoveredFromHeading':False})
-        fact_rows = conn.execute(f'''select fact_id,family,label,display_value,normalized_number,source_path,evidence_sha256
-            from {SCHEMA}.technical_fact where organ_mdvs_id=%(organ)s and source_record_id=%(source)s
-            order by family,fact_id''',{'organ':organ_id,'source':row['source_record_id']}).fetchall()
-        facts = [{'id':f['fact_id'],'family':f['family'],'label':f['label'],'value':f['display_value'] or str(f['normalized_number'] if f['normalized_number'] is not None else ''),'sourcePath':f['source_path'],'revision':f['evidence_sha256']} for f in fact_rows]
-        if quality:
-            from .public_aggregate_quality import qualify_public_fact
-            evidence={x['fact_id']:parsed(x['evidence_json'],{}) for x in conn.execute(f"select e.* from {SCHEMA}.technical_fact_evidence e join {SCHEMA}.technical_fact f using(fact_id) where f.organ_mdvs_id=%(organ)s and f.source_record_id=%(source)s",{'organ':organ_id,'source':row['source_record_id']}).fetchall()}
-            facts=[qualify_public_fact({**f,'summaryEvidence':evidence.get(f['id'])}) for f in facts]
+        facts = [f for f in technical_facts(conn, organ_id, quality=quality) if f['sourceRecordId'] == row['source_record_id']]
     else:
         components = conn.execute(f'''select * from {SCHEMA}.specification_description_component
             where description_id=%(id)s order by division_position,position,component_id''',{'id':description_id}).fetchall()
@@ -112,5 +155,7 @@ def detail(conn, organ_id: str, description_id: str, *, history=False, quality=F
     def group_order(g):
         name=g['label'].casefold()
         return (0 if re.match(r'^(hoofdwerk|hauptwerk|manual|manuaal|grand)',name) else 2 if re.match(r'^(pedal|pedaal|pédale)',name) else 1,name)
-    result.update(groups=sorted(groups.values(),key=group_order),technicalFacts=facts,otherComponents=other)
+    result.update(groups=sorted(groups.values(),key=group_order),otherComponents=other)
+    # Reuse index scoping and capture semantics in the selected account.
+    attach_facts([result], facts)
     return result

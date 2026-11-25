@@ -1,0 +1,302 @@
+{
+  "organ": [
+    {
+      "organ_pk": 1,
+      "mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "canonical_uri": "https://example.invalid/modavis-fixture/entity/TEST-0001-A",
+      "label": "Example Chapel Organ",
+      "source_count": 2,
+      "media_available": 0,
+      "period_buckets_json": "[\"19th century\"]",
+      "sources_json": "[\"fixture-a\",\"fixture-b\"]"
+    },
+    {
+      "organ_pk": 2,
+      "mdvs_id": "MDVS:ENTY:TEST-0002-B",
+      "canonical_uri": "https://example.invalid/modavis-fixture/entity/TEST-0002-B",
+      "label": "Example Study Organ",
+      "source_count": 0,
+      "media_available": 0,
+      "period_buckets_json": "[]",
+      "sources_json": "[]"
+    }
+  ],
+  "organ_search_document": [
+    {
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "search_text": "example chapel organ example builder example village",
+      "builder_text": "example builder",
+      "place_text": "example village",
+      "source_text": "fixture-a fixture-b"
+    },
+    {
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0002-B",
+      "search_text": "example study organ",
+      "builder_text": "",
+      "place_text": "",
+      "source_text": ""
+    }
+  ],
+  "actor": [
+    {
+      "actor_pk": 1,
+      "mdvs_id": "MDVS:ENTY:TEST-0003-C",
+      "canonical_uri": "https://example.invalid/modavis-fixture/entity/TEST-0003-C",
+      "label": "Example Builder",
+      "actor_type": "person",
+      "structured_name_count": 0
+    }
+  ],
+  "actor_search_document": [
+    {
+      "actor_mdvs_id": "MDVS:ENTY:TEST-0003-C",
+      "search_text": "example builder"
+    }
+  ],
+  "organ_builder": [
+    {
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "actor_mdvs_id": "MDVS:ENTY:TEST-0003-C",
+      "actor_uri": "https://example.invalid/modavis-fixture/entity/TEST-0003-C",
+      "assertion_count": 1,
+      "relation_count": 1
+    }
+  ],
+  "actor_directory_entry": [
+    {
+      "entry_id": "MDVS:ENTY:TEST-0003-C",
+      "entry_kind": "canonical_actor",
+      "publication_state": "canonical",
+      "actor_type": "person",
+      "canonical_actor_id": "MDVS:ENTY:TEST-0003-C",
+      "label": "Example Builder",
+      "search_text": "example builder",
+      "source_keys": [
+        "fixture-a"
+      ],
+      "role_keys": [
+        "builder"
+      ],
+      "source_record_count": 1,
+      "assertion_count": 1,
+      "organ_count": 1,
+      "detail_url": "/people/TEST-0003-C",
+      "evidence_reference_json": "{}"
+    }
+  ],
+  "source_collection": [
+    {
+      "source_key": "fixture-a",
+      "source_record_count": 1,
+      "canonical_organ_count": 1,
+      "sample_host": "example.invalid",
+      "included_data": "Invented structured test facts",
+      "excluded_data": "No external source data or media"
+    },
+    {
+      "source_key": "fixture-b",
+      "source_record_count": 1,
+      "canonical_organ_count": 1,
+      "sample_host": "example.invalid",
+      "included_data": "Invented structured test facts",
+      "excluded_data": "No external source data or media"
+    }
+  ],
+  "source_membership": [
+    {
+      "source_record_id": "fixture:a",
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "source_key": "fixture-a",
+      "native_identifier": "a",
+      "source_url": "https://example.invalid/fixture/a",
+      "source_revision_sha256": "06ada57c26aa5cf429e9f2c0a99e3e4a42daecd45fc4c955d7c1399ab4227ae8",
+      "source_record_row_hash": "2c5ad12e4f757b80a5b1c7c8c5a585ee6fd664daaf1a4f7caf819fb8bae75980",
+      "membership_basis": "synthetic_fixture",
+      "row_sha256": "94b1b1e6bd9413dc8645a8a6d57f48610e3fc97210caea19b978d1f6a45f3811"
+    },
+    {
+      "source_record_id": "fixture:b",
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "source_key": "fixture-b",
+      "native_identifier": "b",
+      "source_url": "https://example.invalid/fixture/b",
+      "source_revision_sha256": "e0ef56d6eb603d9ffe87e74c28b8210b0ea93839e2ea4fb64f1fc2c66e95e391",
+      "source_record_row_hash": "86d43962b95bd456e6d522e8406425cf7deb0f52637c2ef2b66fb9ca9230de67",
+      "membership_basis": "synthetic_fixture",
+      "row_sha256": "ddd499e02723e3a5e233923aad85d938a7abce9df9d061c92834f10b3c7ccc58"
+    }
+  ],
+  "public_source_record_metadata": [
+    {
+      "source_record_id": "fixture:a",
+      "source_key": "fixture-a",
+      "native_identifier": "a",
+      "source_url": "https://example.invalid/fixture/a",
+      "record_type": "synthetic_organ",
+      "schema_key": "modavis.navigator.synthetic-fixture/v1",
+      "schema_version": "1",
+      "schema_hash": "4e78d0d1b273da1a724e4dfb51da69975606c2910038622aeccabd69f1e2a271",
+      "payload_sha256": "2c5ad12e4f757b80a5b1c7c8c5a585ee6fd664daaf1a4f7caf819fb8bae75980",
+      "section_manifest_json": "{}",
+      "row_sha256": "94b1b1e6bd9413dc8645a8a6d57f48610e3fc97210caea19b978d1f6a45f3811"
+    },
+    {
+      "source_record_id": "fixture:b",
+      "source_key": "fixture-b",
+      "native_identifier": "b",
+      "source_url": "https://example.invalid/fixture/b",
+      "record_type": "synthetic_organ",
+      "schema_key": "modavis.navigator.synthetic-fixture/v1",
+      "schema_version": "1",
+      "schema_hash": "4e78d0d1b273da1a724e4dfb51da69975606c2910038622aeccabd69f1e2a271",
+      "payload_sha256": "86d43962b95bd456e6d522e8406425cf7deb0f52637c2ef2b66fb9ca9230de67",
+      "section_manifest_json": "{}",
+      "row_sha256": "ddd499e02723e3a5e233923aad85d938a7abce9df9d061c92834f10b3c7ccc58"
+    }
+  ],
+  "technical_fact": [
+    {
+      "fact_id": "fixture:fact:a",
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "family": "stop_count",
+      "label": "Reported stop count",
+      "display_value": "10",
+      "normalized_number": 10,
+      "support_state": "source_reported",
+      "conflict_state": "conflicting_sources",
+      "captured_component_count": 0,
+      "source_record_id": "fixture:a",
+      "source_url": "https://example.invalid/fixture/a",
+      "evidence_sha256": "06ada57c26aa5cf429e9f2c0a99e3e4a42daecd45fc4c955d7c1399ab4227ae8",
+      "row_sha256": "5518915c653599285aefdf1b770ca516006c533afbf36a934636e48a7dd5b9cf"
+    },
+    {
+      "fact_id": "fixture:fact:b",
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "family": "stop_count",
+      "label": "Reported stop count",
+      "display_value": "12",
+      "normalized_number": 12,
+      "support_state": "source_reported",
+      "conflict_state": "conflicting_sources",
+      "captured_component_count": 0,
+      "source_record_id": "fixture:b",
+      "source_url": "https://example.invalid/fixture/b",
+      "evidence_sha256": "e0ef56d6eb603d9ffe87e74c28b8210b0ea93839e2ea4fb64f1fc2c66e95e391",
+      "row_sha256": "1c82030fd5d94e402ccd390140af725afd10b293d4fcd748797650d0a21b09a3"
+    }
+  ],
+  "organ_builder_assertion": [
+    {
+      "assertion_id": "fixture:builder",
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "actor_mdvs_id": "MDVS:ENTY:TEST-0003-C",
+      "actor_uri": "https://example.invalid/modavis-fixture/entity/TEST-0003-C",
+      "actor_route_id": "TEST-0003-C",
+      "source_label": "Example Builder",
+      "preferred_label": "Example Builder",
+      "actor_type": "person",
+      "relation_role": "builder",
+      "resolution_state": "stored_or_accepted_canonical_identity",
+      "source_record_id": "fixture:a",
+      "source_key": "fixture-a",
+      "row_sha256": "df6b07176a9b17cc4c9afc257bd404732e7d09b76436c7890f7b7be14e579794"
+    }
+  ],
+  "organ_builder_relation": [
+    {
+      "relation_id": 1,
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "actor_mdvs_id": "MDVS:ENTY:TEST-0003-C",
+      "actor_uri": "https://example.invalid/modavis-fixture/entity/TEST-0003-C",
+      "source_record_id": "fixture:a",
+      "confidence": 0.75,
+      "row_hash": "22894d62a3265abbfa3752a251c0efa7e71ab0fada044f7b1411f2bc4df28cd8"
+    }
+  ],
+  "place": [
+    {
+      "mdvs_id": "MDVS:LOCN:TEST-0004-D",
+      "canonical_uri": "https://example.invalid/modavis-fixture/location/TEST-0004-D",
+      "label": "Example Village",
+      "place_kind": "settlement",
+      "assertion_count": 1,
+      "organ_count": 1,
+      "coordinate_count": 0
+    }
+  ],
+  "place_assertion": [
+    {
+      "assertion_id": "fixture:place",
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "place_mdvs_id": "MDVS:LOCN:TEST-0004-D",
+      "place_uri": "https://example.invalid/modavis-fixture/location/TEST-0004-D",
+      "preferred_label": "Example Village",
+      "normalized_label": "example village",
+      "place_kind": "settlement",
+      "temporal_scope": "current",
+      "relation_role": "location",
+      "coordinate_state": "unresolved",
+      "source_record_id": "fixture:a",
+      "source_key": "fixture-a",
+      "row_sha256": "81df63580cc9ff1550c90d918ec234f1834013b800b5321201e88d96e785277c"
+    }
+  ],
+  "place_route": [
+    {
+      "assertion_id": "fixture:place",
+      "route_id": "TEST-0004-D",
+      "route_kind": "place",
+      "source_location_mdvs_id": "MDVS:LOCN:TEST-0004-D",
+      "canonical_target_mdvs_id": "MDVS:LOCN:TEST-0004-D",
+      "canonical_status": "synthetic",
+      "row_sha256": "002e470dde68d26c5793b467421b140fad12f4b513a45df35f6a366467e07a9b"
+    }
+  ],
+  "place_detail": [
+    {
+      "mdvs_id": "MDVS:LOCN:TEST-0004-D",
+      "canonical_uri": "https://example.invalid/modavis-fixture/location/TEST-0004-D",
+      "preferred_name": "Example Village",
+      "place_kind": "settlement",
+      "coordinate_state": "unresolved",
+      "enrichment_outcome": "not_attempted",
+      "name_variants_json": "[]",
+      "source_hierarchy_json": "[]",
+      "provider_hierarchy_json": "[]",
+      "provider_bindings_json": "[]",
+      "administrative_nodes_json": "[]",
+      "containment_relations_json": "[]",
+      "evidence_sha256": "81df63580cc9ff1550c90d918ec234f1834013b800b5321201e88d96e785277c",
+      "row_sha256": "03b39912e9aa2d2fd08cbf135784775d19d8927d31def38d2e644810a3bb4c81"
+    }
+  ],
+  "documented_event": [
+    {
+      "event_id": "fixture:event:construction",
+      "organ_mdvs_id": "MDVS:ENTY:TEST-0001-A",
+      "source_event_type": "construction",
+      "controlled_event_type": null,
+      "concept_code": null,
+      "mapping_kind": "source_only",
+      "source_only": 1,
+      "date_values_json": "[{\"certainty\":\"approximate\",\"endYear\":1892,\"startYear\":1888,\"value\":\"circa 1890\"}]",
+      "source_record_id": "fixture:a",
+      "source_key": "fixture-a",
+      "source_url": "https://example.invalid/fixture/a",
+      "evidence_sha256": "b8e1f80bd70ae0784c7855a451731b745fddb67749d23f637be9082b75e9575b",
+      "row_sha256": "074673be8b033cb8f0a7d5289f755c25c5ab1d0881a98e322cb26a589d99ccf0",
+      "interpretation_scope": "synthetic_source_assertion"
+    }
+  ],
+  "documented_event_context": [
+    {
+      "event_id": "fixture:event:construction",
+      "participants_json": "[{\"preferredLabel\":\"Example Builder\",\"resolutionState\":\"stored_or_accepted_canonical_identity\",\"targetId\":\"MDVS:ENTY:TEST-0003-C\",\"wording\":\"Example Builder\"}]",
+      "places_json": "[]",
+      "evidence_path": "fixture.records.documented_event[0]",
+      "source_evidence_sha256": "b8e1f80bd70ae0784c7855a451731b745fddb67749d23f637be9082b75e9575b",
+      "row_sha256": "609bd7647cf3564800ec913b35700f067859395bb4927107b91a7090c88460b0"
+    }
+  ]
+}

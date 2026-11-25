@@ -1,0 +1,168 @@
+{
+  "query": "Chapel",
+  "limit": 2,
+  "fixtureScope": "Authored SQL rows: three organs and two canonical actors; empty places/events. Shared Python producer and React consumer contract.",
+  "response": {
+    "query": "Chapel",
+    "items": [
+      {
+        "kind": "canonical_organ",
+        "entityType": "organ",
+        "searchGroup": "organs",
+        "searchGroupLabel": "Pipe organs",
+        "searchRank": 3,
+        "targetId": "MDVS:ENTY:TEST-0001-A",
+        "mdvsId": "MDVS:ENTY:TEST-0001-A",
+        "title": "Example Chapel Organ",
+        "url": "/organs/TEST-0001-A",
+        "match": {
+          "field": "title",
+          "value": "Chapel",
+          "label": "Name contains this text"
+        },
+        "badges": [
+          "Organ"
+        ],
+        "summary": "Public organ record with retained source evidence.",
+        "globalSearchRank": 1
+      },
+      {
+        "kind": "canonical_actor",
+        "entityType": "person",
+        "searchGroup": "people",
+        "searchGroupLabel": "People and builders",
+        "searchRank": 3,
+        "targetId": "MDVS:ENTY:TEST-0003-C",
+        "mdvsId": "MDVS:ENTY:TEST-0003-C",
+        "title": "Example Chapel Builder",
+        "url": "/people/TEST-0003-C",
+        "match": {
+          "field": "title",
+          "value": "Chapel",
+          "label": "Name contains this text"
+        },
+        "badges": [
+          "Person"
+        ],
+        "summary": "Canonical identity with retained source evidence.",
+        "globalSearchRank": 2
+      }
+    ],
+    "groups": [
+      {
+        "id": "organs",
+        "label": "Pipe organs",
+        "count": 1,
+        "total": 3,
+        "items": [
+          {
+            "kind": "canonical_organ",
+            "entityType": "organ",
+            "searchGroup": "organs",
+            "searchGroupLabel": "Pipe organs",
+            "searchRank": 3,
+            "targetId": "MDVS:ENTY:TEST-0001-A",
+            "mdvsId": "MDVS:ENTY:TEST-0001-A",
+            "title": "Example Chapel Organ",
+            "url": "/organs/TEST-0001-A",
+            "match": {
+              "field": "title",
+              "value": "Chapel",
+              "label": "Name contains this text"
+            },
+            "badges": [
+              "Organ"
+            ],
+            "summary": "Public organ record with retained source evidence.",
+            "globalSearchRank": 1
+          }
+        ]
+      },
+      {
+        "id": "people",
+        "label": "People and builders",
+        "count": 1,
+        "total": 2,
+        "items": [
+          {
+            "kind": "canonical_actor",
+            "entityType": "person",
+            "searchGroup": "people",
+            "searchGroupLabel": "People and builders",
+            "searchRank": 3,
+            "targetId": "MDVS:ENTY:TEST-0003-C",
+            "mdvsId": "MDVS:ENTY:TEST-0003-C",
+            "title": "Example Chapel Builder",
+            "url": "/people/TEST-0003-C",
+            "match": {
+              "field": "title",
+              "value": "Chapel",
+              "label": "Name contains this text"
+            },
+            "badges": [
+              "Person"
+            ],
+            "summary": "Canonical identity with retained source evidence.",
+            "globalSearchRank": 2
+          }
+        ]
+      }
+    ],
+    "total": 5,
+    "totalScope": "matching_records",
+    "returned": 2,
+    "hasMore": true,
+    "limit": 2,
+    "queryRequired": false,
+    "searchedKinds": [
+      "organs",
+      "people",
+      "places",
+      "events"
+    ],
+    "excludedScopes": [
+      {
+        "scope": "source_mentions_and_vmi_candidates",
+        "reason": "Separate evidence records, not canonical identity matches.",
+        "url": "/pod-explorer"
+      },
+      {
+        "scope": "private_records",
+        "reason": "Only publication-safe projections are searched."
+      }
+    ],
+    "counts": {
+      "organs": 3,
+      "canonicalActors": 2,
+      "places": 0,
+      "events": 0,
+      "candidateEntities": 0,
+      "vmiCandidates": 0
+    },
+    "countScopes": {
+      "organs": "canonical_organ_records",
+      "canonicalActors": "canonical_actor_identities",
+      "places": "place_and_source_location_records",
+      "events": "source_event_assertions"
+    },
+    "queryIdentity": {
+      "contract": "modavis.semantic-query/v2",
+      "route": "/api/entities/search",
+      "parameters": {
+        "q": "Chapel",
+        "kinds": [
+          "organs",
+          "people",
+          "places",
+          "events"
+        ]
+      },
+      "bindings": {
+        "publicCoreSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "method": "modavis.literal-ranked-discovery/v3",
+      "sha256": "a1b80ea2ae0ff402c68c21d51c7843ecb85ce2120fa7d92576c2918af67efbd3",
+      "id": "sha256:a1b80ea2ae0ff402c68c21d51c7843ecb85ce2120fa7d92576c2918af67efbd3"
+    }
+  }
+}

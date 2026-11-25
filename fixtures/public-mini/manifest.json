@@ -1,0 +1,161 @@
+{
+  "contract": "modavis.navigator.synthetic-fixture/v1",
+  "synthetic": true,
+  "releaseVersion": "0.0.0-fixture",
+  "schemaContract": "modavis.release-1.5-public-postgresql/v8",
+  "identityLedgerContract": "modavis.identity.ledger/v1",
+  "canonicalAuthority": "https://example.invalid/modavis-fixture",
+  "attribution": {
+    "creator": "Dominik Ukolov",
+    "license": "Apache-2.0",
+    "note": "Entirely invented test records; no accepted POD records or source extracts."
+  },
+  "files": [
+    {
+      "path": "schema/001_public_navigator_projection.sql",
+      "sha256": "9752e1c3c9d15ee77ffe062fddcbdd4be3b4a505e105dc4bab50b980c6c2c85a",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/001_public_navigator_projection.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/002_public_literature_temperaments.sql",
+      "sha256": "b28a0f31e6588bd7be075fe2f7d06acfa3697bc71ade6f29511c7f606ab388fc",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/002_public_literature_temperaments.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/003_public_digital_scores.sql",
+      "sha256": "bafd43f43dd346a8218c02280b32c60f821b38b005bad28138c99ce0f41a1497",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/003_public_digital_scores.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/004_public_orgbase_specifications.sql",
+      "sha256": "626c35e9b0552c46a33e327fec3a85488e0e42f00f2abc057e030e302f099c00",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/004_public_orgbase_specifications.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/005_specification_descriptions.sql",
+      "sha256": "643204bdbb629d56cac2d0afa67863aef464ecedf9b12bc0b7f60e5d5aa43219",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/005_specification_descriptions.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/006_public_catalog_context.sql",
+      "sha256": "35bf597f025608b20cb77dfde825e38ed064c62d13c01a2d9390d783204b172d",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/006_public_catalog_context.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/007_public_place_media_export.sql",
+      "sha256": "ed1e4a61e3f805783403a807b1f9119edd2f0ebb95483b247257e3ff81d873f9",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/007_public_place_media_export.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/010_event_interpretation.sql",
+      "sha256": "661ecd9c964e9b031e013fdc2df7822ce888740a4e1fe626cfb23b6ceb8f66ad",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/010_event_interpretation.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/011_coordinate_interpretation.sql",
+      "sha256": "bcbfc359d614b9f290fff08ab86275b69a37eabda23656d4f5c86e5f0c0de8e9",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/011_coordinate_interpretation.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/012_technical_fact_evidence.sql",
+      "sha256": "46c18a9fc018aa5604157dc2d7814634253706f5c43422d5a8cb31d7abe27512",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/012_technical_fact_evidence.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/013_history_configuration.sql",
+      "sha256": "b75ca79c9d93942c6da600c13b07e0798ea592742577eafa5c76d19cbe2e8643",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/013_history_configuration.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/014_coverage_restoration.sql",
+      "sha256": "feacf44ac17718682bada3b027d789511ef2c3eee5dba89687ff4eea76389ff3",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/014_coverage_restoration.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/015_contextual_actor_evidence.sql",
+      "sha256": "44ca1ffb6907e4474e06bed39cb563d271656c46f2d17ecf426df722425449b5",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/015_contextual_actor_evidence.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/016_actor_directory.sql",
+      "sha256": "edea0afcd7e70727a90ea87e6a17f2912e0cd04cf0d786697bb1f7b15a8ceea8",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/016_actor_directory.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/017_actor_label_interpretation.sql",
+      "sha256": "50fd292969a66e491238dc1cf6891236554166782f4dc19aba3215862926821f",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/017_actor_label_interpretation.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "schema/018_actor_event_participant_lookup.sql",
+      "sha256": "1ead64c5a20288faaf15294667cbbae984854d155181ad8e793000b2d03b75cb",
+      "owner": "Initiator",
+      "sourcePath": "database/migrations/release_1_5_public/018_actor_event_participant_lookup.sql",
+      "sourceCommit": "046cf52df97afff71e7aed7abfff9c7e5b2255e5"
+    },
+    {
+      "path": "identity-ledger.sql",
+      "sha256": "21eb36a5bfd32e72d1d95fae7754aa70fc76a4d9c45a0b7f729af6714bbab8a7",
+      "owner": "Navigator retained ledger exporter",
+      "sourcePath": "backend/tools/build_release_1_5_identifier_ledger.py:SQLITE_SCHEMA",
+      "sourceCommit": "ad7a5605f82164fbed6ec80ab457bf59d010f30d"
+    },
+    {
+      "path": "records.json",
+      "sha256": "dd9bef17bfae479f21085c6a5d03508a37c207c978e3bc93d5f78b33b28f922a",
+      "owner": "Navigator synthetic fixture"
+    }
+  ],
+  "dataProfile": "pod-1.5-public",
+  "inputSha256": "1a025e807c5c1e55ada5f499b7a64ec82a4e4014f28eb3183fa0dd6f69e7f624",
+  "expectedCounts": {
+    "organ": 2,
+    "organ_search_document": 2,
+    "actor": 1,
+    "actor_search_document": 1,
+    "organ_builder": 1,
+    "actor_directory_entry": 1,
+    "source_collection": 2,
+    "source_membership": 2,
+    "public_source_record_metadata": 2,
+    "technical_fact": 2,
+    "organ_builder_assertion": 1,
+    "organ_builder_relation": 1,
+    "place": 1,
+    "place_assertion": 1,
+    "place_route": 1,
+    "place_detail": 1,
+    "documented_event": 1,
+    "documented_event_context": 1
+  }
+}

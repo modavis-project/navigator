@@ -1,9 +1,5 @@
 import type { TemperamentSearchInterpretation } from "./api";
 
-export function temperamentSearchUrl(wording: string): string {
-  return `/temperaments?q=${encodeURIComponent(wording)}&scope=identity`;
-}
-
 export function TemperamentSearchNotice({
   interpretation,
   compact = false,

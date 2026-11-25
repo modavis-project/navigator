@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+from psycopg.conninfo import make_conninfo
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -10,30 +11,15 @@ from .active_baseline import DEFAULT_ACTIVE_BASELINE_PATH
 
 DEFAULT_RELEASE_ARTIFACT_STORAGE_DIR = str(Path(__file__).resolve().parents[1] / "generated" / "release-artifacts")
 DEFAULT_DOCUMENTATION_STAGING_DIR = str(Path(__file__).resolve().parents[1] / "generated" / "documentation-staging")
-DEFAULT_RELEASE_02_CANDIDATE_CHECKPOINT = str(
-    Path(__file__).resolve().parents[2]
-    / "instance/future-release/release-0.2-orgelseite-candidate-private-v1/checkpoint.json"
-)
-DEFAULT_RELEASE_02_SPECIFICATION_CHECKPOINT = str(
-    Path(__file__).resolve().parents[2]
-    / "instance/future-release/release-0.2-orgelseite-specification-evidence-v4/checkpoint.json"
-)
-DEFAULT_RELEASE_03_CANDIDATE_CHECKPOINT = str(
-    Path(__file__).resolve().parents[2]
-    / "instance/future-release/release-0.3-npor-candidate-v2/checkpoint.json"
-)
+DEFAULT_RELEASE_02_CANDIDATE_CHECKPOINT: str | None = None
+DEFAULT_RELEASE_02_SPECIFICATION_CHECKPOINT: str | None = None
+DEFAULT_RELEASE_03_CANDIDATE_CHECKPOINT: str | None = None
 DEFAULT_PUBLIC_MAP_SNAPSHOT_PATH: str | None = None
-DEFAULT_VIRTUAL_INSTRUMENT_CATALOG_PATH = str(
-    Path(__file__).resolve().parents[2]
-    / "instance/successor-candidates/virtual-instruments-release-1.5-v1/virtual-instruments.json.gz"
-)
+DEFAULT_VIRTUAL_INSTRUMENT_CATALOG_PATH: str | None = None
 DEFAULT_RELEASE_1_5_IDENTIFIER_LEDGER_SHA256 = (
     "3203d885ff9148e875b3bc42d5a9be35aeed38b4ad46c6dfabddbe28a4878dd5"
 )
-DEFAULT_DATASET_DISTRIBUTION_MANIFEST_PATH = str(
-    Path(__file__).resolve().parents[1]
-    / "config/release_1_5_5_dataset_distributions.json"
-)
+DEFAULT_DATASET_DISTRIBUTION_MANIFEST_PATH: str | None = None
 
 
 @dataclass(frozen=True)
@@ -41,11 +27,11 @@ class Settings:
     data_profile: str = "pod-1.5-public"
     public_database_manifest_path: str | None = None
     public_release_history_path: str | None = None
-    db_host: str = "localhost"
-    db_port: int = 8444
-    db_name: str = "modavis-data"
-    db_user: str = "postgres"
-    db_password: str = "postgres"
+    db_host: str = ""
+    db_port: int = 5432
+    db_name: str = ""
+    db_user: str = ""
+    db_password: str = ""
     initiator_url: str = "http://localhost:8501"
     aggregator_url: str = "http://localhost:8504/aggregator"
     processor_url: str = "http://127.0.0.1:8510"
@@ -88,13 +74,13 @@ class Settings:
     active_successor_baseline_path: str | None = str(DEFAULT_ACTIVE_BASELINE_PATH)
     release_1_5_acceptance_path: str | None = None
     historical_release_mode: bool = False
-    release_02_candidate_checkpoint_path: str = (
+    release_02_candidate_checkpoint_path: str | None = (
         DEFAULT_RELEASE_02_CANDIDATE_CHECKPOINT
     )
-    release_02_specification_checkpoint_path: str = (
+    release_02_specification_checkpoint_path: str | None = (
         DEFAULT_RELEASE_02_SPECIFICATION_CHECKPOINT
     )
-    release_03_candidate_checkpoint_path: str = (
+    release_03_candidate_checkpoint_path: str | None = (
         DEFAULT_RELEASE_03_CANDIDATE_CHECKPOINT
     )
     public_map_snapshot_path: str | None = DEFAULT_PUBLIC_MAP_SNAPSHOT_PATH
@@ -132,10 +118,10 @@ class Settings:
 
     @property
     def db_dsn(self) -> str:
-        return (
-            f"host={self.db_host} port={self.db_port} dbname={self.db_name} "
-            f"user={self.db_user} password={self.db_password}"
-        )
+        if not all((self.db_host, self.db_name, self.db_user, self.db_password)):
+            raise ValueError("Set DB_HOST, DB_NAME, DB_USER and DB_PASSWORD explicitly for the public read-only database")
+        return make_conninfo(host=self.db_host, port=self.db_port, dbname=self.db_name,
+                             user=self.db_user, password=self.db_password, connect_timeout=5)
 
 
 def load_settings() -> Settings:
@@ -150,11 +136,11 @@ def load_settings() -> Settings:
             os.getenv("NAVIGATOR_PUBLIC_DATABASE_MANIFEST") or None
         ),
         public_release_history_path=os.getenv("NAVIGATOR_PUBLIC_RELEASE_HISTORY") or None,
-        db_host=os.getenv("DB_HOST", "localhost"),
-        db_port=_int_env("DB_PORT", 8444),
-        db_name=os.getenv("DB_NAME", "modavis-data"),
-        db_user=os.getenv("DB_USER", "postgres"),
-        db_password=os.getenv("DB_PASSWORD", "postgres"),
+        db_host=os.getenv("DB_HOST", ""),
+        db_port=_int_env("DB_PORT", 5432),
+        db_name=os.getenv("DB_NAME", ""),
+        db_user=os.getenv("DB_USER", ""),
+        db_password=os.getenv("DB_PASSWORD", ""),
         initiator_url=os.getenv("MODAVIS_INITIATOR_URL", "http://localhost:8501"),
         aggregator_url=os.getenv("MODAVIS_AGGREGATOR_URL", "http://localhost:8504/aggregator"),
         processor_url=os.getenv("MODAVIS_PROCESSOR_URL", "http://127.0.0.1:8510"),

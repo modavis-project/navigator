@@ -3,18 +3,165 @@
 No relationship, identity, synonym or physical-state promotion happens here.
 """
 from __future__ import annotations
-import csv, hashlib, io, json, os, sqlite3, time
+import csv, hashlib, io, json, os, re, sqlite3, time
 from collections import defaultdict
 from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import quote
 from flask import jsonify, request, Response
 from .organological_research import digest, organ_url
-from .identity_occurrences import load_assessments, filter_selection, occurrences, event_assessments, METHOD as IDENTITY_METHOD
+from .identity_occurrences import load_assessments, filter_selection, occurrences, event_assessments, METHOD as IDENTITY_METHOD, STATES as OCCURRENCE_STATES
+from .public_query_identity import semantic_query_identity
+from .db import query_deadline
+from .research_dispositions import find_dispositions, validate_disposition_stops
+from .research_package import encoded as bounded_research_json
+from .request_reliability import DISPOSITION_REQUEST_BUDGETS
 
 CONTRACT='modavis.research-workbench/v1'
 LIMIT=50
 EXPORT_LIMIT=50000
+
+BINDING_PARAMETERS = {'snapshot', 'assessment'}
+NAVIGATION_PARAMETERS = {'page', 'view'}
+COMPARISON_PARAMETERS = {'left', 'leftRevision', 'right', 'rightRevision'}
+SELECTION_PARAMETERS = {
+    'events': {'section', 'actor', 'other', 'organ', 'q', 'source', 'from', 'to', 'date', 'activity', 'role', 'identity'},
+    'sequences': {'section', 'actor', 'other', 'organ', 'q', 'source', 'from', 'to', 'date', 'activity', 'role', 'identity'},
+    'configurations': {'section', 'actor', 'organ', 'q', 'source', 'from', 'to', 'date', 'coverage'},
+    'organs': {'section', 'actor', 'other', 'organ', 'q', 'source'},
+}
+TERM_PARAMETERS = {'mode', 'q', 'concept', 'pitch', 'country', 'source', 'from', 'to'}
+OCCURRENCE_PARAMETERS = {'event', 'actor', 'native', 'organ', 'source', 'status', 'kind'}
+VIEWS = {'selection', 'compare', 'timeline', 'terms', 'claims', 'identities', 'occurrences', 'organs', 'dispositions'}
+
+
+def query_parameters(path, values):
+    """Names with meaning on this route, separate from retained UI state."""
+    if path in {'selection', 'selection/export'}:
+        section = values.get('section', 'events')
+        if section not in SELECTION_PARAMETERS:
+            raise ValueError('Unknown research section')
+        return SELECTION_PARAMETERS[section], COMPARISON_PARAMETERS
+    if path in {'terms', 'terms/export'}:
+        return TERM_PARAMETERS, set()
+    if path in {'dispositions', 'dispositions/export'}:
+        return {'stop', 'scope'}, set()
+    if path in {'occurrences', 'occurrences/export'}:
+        return OCCURRENCE_PARAMETERS, set()
+    if path == 'compare':
+        return COMPARISON_PARAMETERS, set()
+    if path == 'organ-comparison':
+        return {'organs'}, set()
+    if path.startswith('account/'):
+        return {'revision'}, set()
+    if path.startswith(('timeline/', 'claims/')):
+        return {'organ'}, set()
+    if path in {'context', 'identities'}:
+        return set(), set()
+    raise LookupError('Unknown workbench route')
+
+
+def validate_query(path, args, work):
+    # Inspect the MultiDict before converting it: even equal repeated values
+    # would otherwise silently select only the first operand.
+    disposition = path in {'dispositions', 'dispositions/export'}
+    duplicates = sorted(key for key, values in args.lists() if len(values) != 1 and not (disposition and key == 'stop'))
+    if duplicates:
+        raise ValueError('Repeated research parameter: ' + ', '.join(duplicates))
+    empty_pins = sorted(key for key in BINDING_PARAMETERS | {'revision', 'leftRevision', 'rightRevision'}
+                        if key in args and not args[key])
+    if empty_pins:
+        raise ValueError('Research binding must not be empty: ' + ', '.join(empty_pins))
+    values = {key: value for key, value in args.items() if value}
+    if any(len(value) > 500 for value in values.values()):
+        raise ValueError('Research parameter too long')
+    semantic, retained = query_parameters(path, values)
+    allowed = semantic | retained | BINDING_PARAMETERS | NAVIGATION_PARAMETERS | {'format'}
+    unsupported = sorted(set(args) - allowed)
+    if unsupported:
+        raise ValueError('Unsupported research parameter for this route: ' + ', '.join(unsupported))
+    if values.get('view') and values['view'] not in VIEWS:
+        raise ValueError('Unknown research view')
+    if values.get('page') and (not re.fullmatch(r'[0-9]+', values['page']) or int(values['page']) > 200000):
+        raise ValueError('Invalid page')
+    for key in ('from', 'to'):
+        if values.get(key) and (not re.fullmatch(r'[0-9]+', values[key]) or not 1 <= int(values[key]) <= 2100):
+            raise ValueError('Year must be between 1 and 2100')
+    if values.get('from') and values.get('to') and int(values['from']) > int(values['to']):
+        raise ValueError('Start year exceeds end year')
+    facets = getattr(work, 'facets', {})
+    enums = {
+        'mode': facets.get('termKinds', ['stops', 'divisions', 'activities']),
+        'identity': {'exclude_conflicts', 'conflicts_only', 'temporally_compatible'},
+        'status': OCCURRENCE_STATES,
+        'kind': {'builder', 'participant'},
+        'date': facets.get('dateKinds', ['approximate', 'century', 'conflicting_or_undated', 'document_date', 'exact', 'expression', 'qualified_period', 'range', 'relative', 'source_listing', 'undated', 'year']),
+        'coverage': facets.get('coverage', ['partial', 'partial_structured_stops', 'retained_source_transfer', 'structured_components', 'structured_stops', 'technical_facts_only', 'unspecified']),
+    }
+    for key, options in enums.items():
+        if values.get(key) and values[key] not in options:
+            raise ValueError('Unknown research ' + key)
+    formats = {'json'}
+    if path == 'selection/export':
+        formats.add('csv')
+    if (path.endswith('/export') and not disposition) or path in {'compare', 'identities', 'organ-comparison'} or path.startswith(('account/', 'timeline/', 'claims/')):
+        formats.add('ro-crate')
+    if values.get('format', 'json') not in formats:
+        raise ValueError('Unsupported format for this research route')
+    if path.startswith(('timeline/', 'claims/')) and values.get('organ'):
+        if full_id(values['organ']) != full_id(path.split('/', 1)[1]):
+            raise ValueError('Organ parameter does not match the requested route')
+    if disposition:
+        if not values.get('snapshot'):
+            raise ValueError('A disposition search requires a public snapshot')
+        scope = args.get('scope', 'account')
+        if scope not in {'account', 'division'}:
+            raise ValueError('Use account or division scope for the disposition search')
+        values['scope'] = scope
+        values['stop'] = validate_disposition_stops(args.getlist('stop'))
+    return values
+
+
+def describe_query(result, path, values, binding=None):
+    # Preserve the v1 filters envelope and selection digest. Make its retained
+    # navigation operands explicit without claiming they narrowed membership.
+    semantic, retained = query_parameters(path, values)
+    result['appliedFilters'] = {key: value for key, value in result.get('filters', values).items() if key in semantic}
+    result['navigationState'] = {key: value for key, value in values.items() if key in retained | NAVIGATION_PARAMETERS}
+    parameters = dict(result['appliedFilters'])
+    if path.startswith('selection'):
+        parameters.setdefault('section', 'events')
+        result['unit'] = {'events': 'event assertions', 'configurations': 'configuration accounts', 'organs': 'organ records', 'sequences': 'ordered event pairs'}[parameters['section']]
+    if path.startswith('terms'):
+        parameters.setdefault('mode', 'stops')
+        result['unit'] = 'source occurrences'
+        if parameters.get('q'):
+            parameters['q'] = norm(parameters['q'])
+    for key in ['from', 'to']:
+        if key in parameters:
+            parameters[key] = int(parameters[key])
+    for key in ['organ', 'actor', 'other']:
+        if parameters.get(key):
+            parameters[key] = full_id(parameters[key])
+    route = path.removesuffix('/export')
+    if path.startswith('occurrences'):
+        result['unit'] = 'attribution occurrences'
+    if path.startswith(('timeline/', 'claims/')):
+        route = path.split('/', 1)[0]
+        parameters['organ'] = result['organId']
+    if path.startswith('account/'):
+        route = 'account'
+        parameters = {'account': result['metadata']['description_id'], 'revision': result['metadata']['description_revision']}
+    if path == 'compare':
+        parameters = {side: result[side]['metadata']['description_id'] for side in ['left', 'right']}
+        parameters.update({side + 'Revision': result[side]['metadata']['description_revision'] for side in ['left', 'right']})
+    source_binding = binding or result
+    result['semanticQuery'] = semantic_query_identity(
+        route, parameters,
+        bindings={key: source_binding[key] for key in ['publicCoreSha256', 'policySha256', 'generatorSha256', 'querySha256', 'identityEvidenceSha256', 'occurrenceQuerySha256', 'occurrenceAssessmentSha256', 'occurrencePolicySha256', 'occurrenceProcessorSha256'] if key in source_binding},
+        method=CONTRACT,
+    )
+    return result
 
 def canonical(x):return json.dumps(x,ensure_ascii=False,sort_keys=True,separators=(',',':'))
 def norm(x):return ' '.join(str(x or '').casefold().split())
@@ -46,6 +193,7 @@ class Workbench:
         def artifact(value):
             path=Path(value)
             return (path if path.is_absolute() else self.manifest_path.parent/path).resolve()
+        self.source_release_version=getattr(settings, "public_source_release_version", None)
         self.core=artifact(self.manifest['core']['path']);self.index=artifact(self.manifest['index']['path'])
         for field in ['core','index','identities']:
             p=artifact(self.manifest[field]['path'])
@@ -64,14 +212,20 @@ class Workbench:
         expected=self.manifest['core']['sha256']
         if json.loads(self.public.read_text()).get('sourcePublicCore',{}).get('sha256')!=expected or not self.research or self.research.manifest['publicCoreSha256']!=expected:raise ValueError('Workbench snapshot mismatch')
         self.research.assert_binding()
-    def binding(self):return {'contract':CONTRACT,'publicCoreSha256':self.manifest['core']['sha256'],'generatedAt':self.manifest['generatedAt'],'policySha256':self.manifest['policySha256'],'generatorSha256':self.manifest['generatorSha256'],'querySha256':getattr(self,'query_sha256','test'),'identityEvidenceSha256':self.manifest.get('identities',{}).get('sha256'),'occurrenceQuerySha256':getattr(self,'occurrence_query_sha256',None),'occurrenceAssessmentSha256':getattr(self,'assessments',None)['assessmentContentSha256'] if getattr(self,'assessments',None) else None,'occurrencePolicySha256':getattr(self,'assessments',{}).get('policySha256') if getattr(self,'assessments',None) else None,'occurrenceProcessorSha256':getattr(self,'assessments',{}).get('generatorSha256') if getattr(self,'assessments',None) else None}
+    def binding(self):return {'contract':CONTRACT,'sourceReleaseVersion':getattr(self,'source_release_version',None),'publicCoreSha256':self.manifest['core']['sha256'],'generatedAt':self.manifest['generatedAt'],'policySha256':self.manifest['policySha256'],'generatorSha256':self.manifest['generatorSha256'],'querySha256':getattr(self,'query_sha256','test'),'identityEvidenceSha256':self.manifest.get('identities',{}).get('sha256'),'occurrenceQuerySha256':getattr(self,'occurrence_query_sha256',None),'occurrenceAssessmentSha256':getattr(self,'assessments',None)['assessmentContentSha256'] if getattr(self,'assessments',None) else None,'occurrencePolicySha256':getattr(self,'assessments',{}).get('policySha256') if getattr(self,'assessments',None) else None,'occurrenceProcessorSha256':getattr(self,'assessments',{}).get('generatorSha256') if getattr(self,'assessments',None) else None}
     @contextmanager
     def connect(self,budget=10):
+        deadline = time.monotonic() + budget
+        outer_deadline = query_deadline.get()
+        if outer_deadline is not None:
+            deadline = min(deadline, outer_deadline)
+        if deadline <= time.monotonic():
+            raise TimeoutError('Research query budget exhausted')
         c=sqlite3.connect(self.index.as_uri()+'?mode=ro&immutable=1',uri=True);c.row_factory=sqlite3.Row
         c.execute('attach database ? as core',(self.core.as_uri()+'?mode=ro&immutable=1',))
         c.execute('attach database ? as research',((self.research.root/'research.sqlite').resolve().as_uri()+'?mode=ro&immutable=1',))
         if getattr(self,'assessments',None):c.execute('attach database ? as assessment',(Path(self.assessments['index']['path']).as_uri()+'?mode=ro&immutable=1',))
-        c.execute('pragma query_only=on');deadline=time.monotonic()+budget;c.set_progress_handler(lambda:int(time.monotonic()>deadline),10000)
+        c.execute('pragma query_only=on');c.set_progress_handler(lambda:int(time.monotonic()>deadline),10000)
         try:yield c
         finally:c.close()
     def account(self,c,id,revision=None):
@@ -242,25 +396,37 @@ def register_workbench(app,settings,repository):
         try:work=Workbench(path,settings,repository,app.extensions.get('organological_research'))
         except (ValueError,OSError,KeyError) as e:app.logger.error('Workbench rejected: %s',e)
     app.extensions['research_workbench']=work
+    from .research_workspace import register_research_workspace
+    register_research_workspace(app)
     @app.get('/api/workbench/<path:path>')
     def workbench(path):
         if work is None:return jsonify({'error':'Research workbench unavailable or mismatched'}),503
         try:
-            work.assert_binding();f={k:v for k,v in request.args.items() if v}
-            if any(len(v)>500 for v in f.values()):raise ValueError('Research parameter too long')
+            work.assert_binding();f=validate_query(path,request.args,work)
             if f.get('snapshot') and f['snapshot']!=work.manifest['core']['sha256']:return jsonify({'error':'Requested research snapshot unavailable'}),409
             expected_assessment=work.binding().get('occurrenceAssessmentSha256')
             if f.get('assessment') and f['assessment']!=expected_assessment:return jsonify({'error':'Requested identity assessment snapshot unavailable'}),409
-            if path=='context':return jsonify({**work.binding(),'facets':work.facets,'exportLimit':EXPORT_LIMIT})
-            if path=='identities':return jsonify(work.identities)
-            with work.connect(20 if path.endswith('/export') else 10) as c:
+            if path=='context':return jsonify({**work.binding(),'facets':work.facets,'exportLimit':EXPORT_LIMIT,'researchPackageAvailable':bool(app.config.get('RESEARCH_PACKAGE_LICENSE') or os.getenv('NAVIGATOR_RESEARCH_PACKAGE_LICENSE'))})
+            if path=='identities':return jsonify(describe_query(dict(work.identities),path,f,work.binding()))
+            budget = DISPOSITION_REQUEST_BUDGETS.get(request.path, 20 if path.endswith('/export') else 10)
+            with work.connect(budget) as c:
+                if path in {'dispositions', 'dispositions/export'}:
+                    export = path.endswith('/export')
+                    binding = {**work.binding(), 'workbenchIndexSha256': work.manifest['index']['sha256']}
+                    result = find_dispositions(c, f, binding, export=export)
+                    data = bounded_research_json(result)
+                    work.assert_binding()
+                    headers = {'X-Selection-SHA256': result['selectionSha256']}
+                    if export:
+                        headers['Content-Disposition'] = 'attachment; filename=modavis-disposition-selection.json'
+                    return Response(data, mimetype='application/json', headers=headers)
                 if path in ['occurrences','occurrences/export']:
                     if not work.assessments:return jsonify({'error':'Identity occurrence assessments unavailable'}),503
-                    result=occurrences(c,f,work.binding(),work.assessments,path.endswith('/export'))
+                    result=describe_query(occurrences(c,f,work.binding(),work.assessments,path.endswith('/export')),path,f)
                     if path.endswith('/export'):return Response(canonical(result)+'\n',mimetype='application/json',headers={'Content-Disposition':'attachment; filename=modavis-identity-occurrences.json'})
                     return jsonify(result)
                 if path in ['selection','selection/export']:
-                    result=work.selection(c,f,path.endswith('/export'))
+                    result=describe_query(work.selection(c,f,path.endswith('/export')),path,f)
                     if path.endswith('/export'):
                         if f.get('format','json')=='csv':
                             out=io.StringIO();writer=csv.writer(out);writer.writerow(['selection_sha256','core_sha256','filters_json','id','organ_id','label','evidence_json'])
@@ -270,15 +436,15 @@ def register_workbench(app,settings,repository):
                             return Response(out.getvalue(),mimetype='text/csv',headers={'Content-Disposition':'attachment; filename=modavis-research.csv','X-Selection-SHA256':result['selectionSha256']})
                         return Response(canonical(result)+'\n',mimetype='application/json',headers={'Content-Disposition':'attachment; filename=modavis-research.json'})
                     return jsonify(result)
-                if path.startswith('account/'):return jsonify(work.account(c,path[8:],f.get('revision')))
+                if path.startswith('account/'):return jsonify(describe_query(work.account(c,path[8:],f.get('revision')),path,f,work.binding()))
                 if path=='compare':
                     if not f.get('left') or not f.get('right') or f['left']==f['right']:raise ValueError('Select two distinct accounts')
                     left=work.account(c,f['left'],f.get('leftRevision'));right=work.account(c,f['right'],f.get('rightRevision'))
-                    return jsonify({**work.binding(),'left':left,'right':right,'comparison':compare_entries(left['description'],right['description'])})
-                if path.startswith('timeline/'):return jsonify(work.timeline(c,path[9:]))
-                if path.startswith('claims/'):return jsonify(work.claims(c,path[7:]))
+                    return jsonify(describe_query({**work.binding(),'left':left,'right':right,'comparison':compare_entries(left['description'],right['description'])},path,f,work.binding()))
+                if path.startswith('timeline/'):return jsonify(describe_query(work.timeline(c,path[9:]),path,f,work.binding()))
+                if path.startswith('claims/'):return jsonify(describe_query(work.claims(c,path[7:]),path,f,work.binding()))
                 if path in ['terms','terms/export']:
-                    result=work.terms(c,f,path.endswith('/export'))
+                    result=describe_query(work.terms(c,f,path.endswith('/export')),path,f)
                     if path.endswith('/export'):
                         return Response(canonical(result)+'\n',mimetype='application/json',headers={'Content-Disposition':'attachment; filename=modavis-terminology-selection.json'})
                     return jsonify(result)
@@ -287,4 +453,6 @@ def register_workbench(app,settings,repository):
         except RuntimeError as e:return jsonify({'error':str(e)}),409
         except OverflowError as e:return jsonify({'error':str(e)}),422
         except (ValueError,TypeError) as e:return jsonify({'error':str(e)}),400
-        except sqlite3.OperationalError:return jsonify({'error':'Research query exceeded its budget. Narrow the filters; no partial export was produced.'}),503
+        except sqlite3.OperationalError as error:
+            if 'interrupted' in str(error).lower():raise TimeoutError('Research query budget exhausted') from error
+            return jsonify({'error':'The selected research resource is unavailable.'}),503

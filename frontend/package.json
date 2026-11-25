@@ -7,18 +7,22 @@
     "dev": "vite --host 127.0.0.1 --port 5173",
     "build": "tsc && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
-    "test": "node --test scripts/entity-route-contract.test.mjs scripts/entity-export-interface-contract.test.mjs scripts/json-evidence.test.mjs scripts/public-data-profile-contract.test.mjs"
+    "test": "node --test scripts/entity-route-contract.test.mjs scripts/entity-export-interface-contract.test.mjs scripts/entity-search-contract.test.mjs scripts/json-evidence.test.mjs scripts/public-data-profile-contract.test.mjs scripts/research-filter-hydration.test.mjs scripts/research-workbench-query.test.mjs scripts/source-evidence.test.mjs scripts/research-workspace.test.mjs scripts/request-cache.test.mjs scripts/public-summary-context.test.mjs scripts/pod-explorer.test.mjs scripts/geolibre-runtime.test.mjs scripts/research-presentation.test.mjs scripts/public-record-recovery.test.mjs scripts/discovery-ui.test.mjs scripts/public-route-headings.test.mjs scripts/organ-overview.test.mjs scripts/organ-page-header.test.mjs scripts/organ-specification-workflow.test.mjs scripts/organ-component-presentation.test.mjs scripts/specification-disclosure.test.mjs scripts/reference-vocabulary.test.mjs scripts/vocabulary-hub.test.mjs scripts/vocabulary-records.test.mjs scripts/omaro-presentation.test.mjs scripts/workspace-panel.test.mjs scripts/vocabulary-workspace.test.mjs scripts/save-vocabulary-term.test.mjs scripts/source-comparison-presentation.test.mjs scripts/specification-account-comparison.test.mjs scripts/ui-locale-messages.test.mjs scripts/page-faq-locale.test.mjs scripts/german-preview-copy.test.mjs"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^5.0.0",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-intl": "12.1.6"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.2.0",
     "typescript": "^5.7.0",
-    "vite": "^8.0.16"
+    "vite": "^8.1.6"
+  },
+  "engines": {
+    "node": ">=24 <25"
   }
 }

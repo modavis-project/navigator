@@ -1,29 +1,25 @@
-import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig, type Plugin, type ViteDevServer, type PreviewServer } from "vite";
 import react from "@vitejs/plugin-react";
+import { geoLibreMiddleware } from "./geolibreRuntime.mjs";
+import { germanPreviewCopyPlugin } from "./germanPreviewCopy.mjs";
 
 const navigatorBackendUrl = process.env.NAVIGATOR_BACKEND_URL || "http://127.0.0.1:8506";
 const geolibreRuntimeIndex = fileURLToPath(
   new URL("./public/geolibre/index.html", import.meta.url),
 );
+const frontendRoot = fileURLToPath(new URL(".", import.meta.url));
+const geolibreRuntimeRoot = resolve(frontendRoot, process.env.NAVIGATOR_GEOLIBRE_RUNTIME || ".runtime/geolibre");
 
 function guardMissingGeoLibreRuntime(): Plugin {
   const install = (server: ViteDevServer | PreviewServer) => {
-    server.middlewares.use((request, response, next) => {
-      const pathname = new URL(request.url || "/", "http://127.0.0.1").pathname;
-      const runtimeIndex = "httpServer" in server && "watcher" in server
+    server.middlewares.use(geoLibreMiddleware({
+      runtimeRoot: geolibreRuntimeRoot,
+      publicIndex: "httpServer" in server && "watcher" in server
         ? geolibreRuntimeIndex
-        : fileURLToPath(new URL("./dist/geolibre/index.html", import.meta.url));
-      if (!pathname.startsWith("/geolibre/") || existsSync(runtimeIndex)) {
-        next();
-        return;
-      }
-      response.statusCode = 503;
-      response.setHeader("Content-Type", "text/html; charset=utf-8");
-      response.setHeader("Cache-Control", "no-store");
-      response.end("<!doctype html><title>Map temporarily unavailable</title><p>The map could not be loaded. Please try again after the application has restarted.</p>");
-    });
+        : resolve(frontendRoot, server.config.build.outDir, "geolibre/index.html"),
+    }));
   };
   return {
     name: "modavis-geolibre-runtime-guard",
@@ -33,7 +29,7 @@ function guardMissingGeoLibreRuntime(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [guardMissingGeoLibreRuntime(), react()],
+  plugins: [guardMissingGeoLibreRuntime(), germanPreviewCopyPlugin(frontendRoot), react()],
   build: {
     rolldownOptions: {
       output: {

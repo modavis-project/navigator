@@ -776,13 +776,20 @@ class PublicCatalogContext:
         groups["modavis_entity_types"] = {"code": "modavis_entity_types", "name": "Public entity types", "version": self.policy.release_version, "conceptCount": 0, "categoryCount": 2, "mappingCount": None, "recordKind": "schema_categories", "description": "Person and organisation categories in the public schema; these are not governed vocabulary concepts."}
         return {"items": list(groups.values()), "total": len(groups)}
 
-    def public_vocabulary_concepts(self, *, scheme=None, query="", limit=200, offset=0):
+    def public_vocabulary_concepts(self, *, scheme=None, query="", language=None, limit=200, offset=0):
         values = self._public_vocabulary() + [self.public_vocabulary_concept(code) for code in ("person", "organization")]
         if scheme:
             values = [v for v in values if v["scheme"]["code"] == scheme]
+        languages = sorted({label['languageCode'] for value in values for label in value.get('labels', []) if label.get('languageCode')})
+        if language is not None:
+            if language not in languages:
+                raise ValueError('Recorded label language is unavailable')
+            values = [value for value in values if any(label.get('languageCode') == language for label in value.get('labels', []))]
         if query:
             values = [v for v in values if query.casefold() in " ".join([*(str(v.get(key) or "") for key in ("preferredLabel", "code", "definition")), *(str(label.get(key) or "") for label in v.get("labels", []) for key in ("label", "languageCode", "languageName", "languageEndonym"))]).casefold()]
-        return {"items": values[offset:offset+limit], "total": len(values), "limit": limit, "offset": offset}
+        return {"items": values[offset:offset+limit], "total": len(values), "limit": limit, "offset": offset,
+                "hasMore": offset+limit < len(values), "languages": languages, "selectedLanguage": language,
+                "languageFilterScope": "Concepts with a retained label in the selected language; display labels are not new translations."}
 
     def public_vocabulary_concept(self, identifier, *, scheme=None):
         if identifier in {"person", "organization"} and scheme in {None, "modavis_entity_types"}:

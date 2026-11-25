@@ -1,0 +1,27 @@
+.technical-source-comparisons { display: grid; gap: 12px; min-width: 0; }
+.technical-source-comparisons > h4, .technical-source-comparisons > p { margin: 0; }
+.technical-source-comparisons > p { color: var(--muted, #626b74); line-height: 1.6; }
+.technical-field-comparison { min-width: 0; border: 1px solid var(--line, #d9dfe3); border-radius: 10px; padding: 0 14px 14px; }
+.technical-field-comparison.has-differences { border-left: 4px solid #ad7833; }
+.technical-field-comparison > summary { min-height: 48px; padding: 12px 0; cursor: pointer; }
+.technical-field-comparison > summary span { display: inline-grid; gap: 5px; vertical-align: top; max-width: calc(100% - 25px); }
+.technical-field-comparison small, .technical-field-comparison code { display: block; overflow-wrap: anywhere; }
+.technical-field-comparison small { color: var(--muted, #626b74); }
+.technical-comparison-values { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.technical-comparison-values > div { display: grid; gap: 6px; padding: 12px; background: var(--surface-soft, #f4f6f7); border-radius: 7px; flex: 1 1 160px; overflow-wrap: anywhere; }
+.technical-comparison-scroll { max-width: 100%; overflow-x: auto; }
+.technical-comparison-scroll table { border-collapse: collapse; width: 100%; text-align: left; }
+.technical-comparison-scroll th, .technical-comparison-scroll td { padding: 12px 10px; border-bottom: 1px solid var(--line, #d9dfe3); vertical-align: top; min-width: 140px; overflow-wrap: anywhere; }
+.technical-comparison-scroll th:first-child { min-width: 180px; }
+.technical-comparison-scroll caption { text-align: left; font-weight: 600; padding: 8px 0; }
+.technical-comparison-scroll code { font-size: .76rem; font-weight: 400; margin: 6px 0; }
+.technical-comparison-scroll p { margin: 6px 0; }
+.technical-missing-sources { margin-top: 12px; }
+.technical-missing-sources summary { cursor: pointer; padding: 10px 0; }
+.field-comparison-link { border: 1px solid #bd934f; border-radius: 6px; padding: 7px 10px; min-height: 44px; background: #fff8e9; color: #724b16; cursor: pointer; font: inherit; text-align: left; }
+.field-comparison-link:focus-visible, .technical-field-comparison summary:focus-visible { outline: 3px solid var(--accent, #126674); outline-offset: 3px; }
+.component-field-difference { display: grid; gap: 6px; margin-top: 6px; }
+.component-comparison-field { scroll-margin-top: 20px; }
+.related-action-comparison section { padding: 10px 0; border-top: 1px solid var(--line, #d9dfe3); }
+.related-action-comparison article { display: grid; gap: 6px; padding: 10px; background: var(--surface-soft, #f4f6f7); border-radius: 6px; }
+.related-action-comparison h5, .related-action-comparison p { margin: 8px 0; }

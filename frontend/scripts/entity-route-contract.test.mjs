@@ -1,22 +1,228 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import test from "node:test";
+import vm from "node:vm";
+import ts from "typescript";
+import { testUiLocale } from "./ui-locale-test-support.mjs";
 
 const appUrl = new URL("../src/App.tsx", import.meta.url);
+const temperamentRoutesUrl = new URL("../src/temperamentOccurrences.ts", import.meta.url);
 
-test("canonical identifier redirects preserve valid organ detail tabs", async () => {
+async function temperamentRoutes() {
+  const source = await readFile(temperamentRoutesUrl, "utf8");
+  const context = { exports: {}, URLSearchParams };
+  vm.runInNewContext(ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS } }).outputText, context);
+  return context.exports;
+}
+
+test("temperament catalogue detail links round trip the supported filter and page context", async () => {
+  const { temperamentCatalogueHref, temperamentDetailHref, temperamentOrganHref } = await temperamentRoutes();
+  const filters = new URLSearchParams({
+    q: "Werckmeister III (modified)", scope: "evidence", group_key: "gruppe_5", precise_variant: "false",
+    commentary_available: "true", commentary_q: "Example", sort: "occurrences_desc", occurrence_scope: "family",
+    min_occurrences: "0", max_occurrences: "100", offset: "6",
+  });
+  const catalogue = `/temperaments?${filters}`;
+  const detail = new URL(temperamentOrganHref("example/record", "family", `${catalogue}&unknown=discard`), "https://navigator.test");
+  assert.equal(detail.pathname, "/temperaments/example%2Frecord");
+  assert.equal(detail.searchParams.get("tab"), "organs");
+  assert.equal(detail.searchParams.get("match"), "family");
+  assert.equal(temperamentCatalogueHref(detail.searchParams.get("return_to")), catalogue);
+  assert.equal(temperamentDetailHref("example"), "/temperaments/example");
+  assert.equal(temperamentOrganHref("example"), "/temperaments/example?tab=organs");
+  for (const value of [null, "//example.invalid/temperaments?q=wrong", "https://navigator.test/temperaments?q=wrong", "/temperaments/example?q=wrong", "/temperaments/../organs"]) {
+    assert.equal(temperamentCatalogueHref(value), "/temperaments");
+  }
+});
+
+test("a shared temperament comparison retains up to four distinct catalogue IDs through a detail return", async () => {
+  const { readTemperamentComparison, temperamentCatalogueHref, temperamentDetailHref } = await temperamentRoutes();
+  const query = new URLSearchParams({q: "Werckmeister", offset: "6", compare: "5hWe3,5hWe3,5hWe6Du,bad/path,7hRm,7hgl,other"});
+  const catalogue = temperamentCatalogueHref(`/temperaments?${query}`);
+  const detail = new URL(temperamentDetailHref("5hWe3", catalogue), "https://navigator.test");
+  const returned = new URL(detail.searchParams.get("return_to"), "https://navigator.test");
+  assert.equal(returned.searchParams.get("q"), "Werckmeister");
+  assert.equal(returned.searchParams.get("offset"), "6");
+  assert.deepEqual(Array.from(readTemperamentComparison(returned.searchParams)), ["5hWe3", "5hWe6Du", "7hRm", "7hgl"]);
+  assert.deepEqual(Array.from(readTemperamentComparison(new URLSearchParams("compare=5hWe3&compare=5hWe6Du"))), []);
+});
+
+test("temperament detail provides a labelled panel and keyboard focus for each tab", async () => {
+  const [source, routes] = await Promise.all([readFile(appUrl, "utf8"), temperamentRoutes()]);
+  const start = source.indexOf("const TEMPERAMENT_DETAIL_TABS =");
+  const end = source.indexOf("function TemperamentOrgansPanel(", start);
+  const url = new URL("https://navigator.test/temperaments/example?tab=organs&match=family");
+  let focused, destination, prevented;
+  const context = {
+    exports: {}, require: createRequire(import.meta.url), URL, URLSearchParams, ...routes,
+    useUiLocale: testUiLocale,
+    useState: initial => [typeof initial === "function" ? initial() : initial, () => {}],
+    useRef: () => ({ current: null }), useEffect: () => {}, positiveRouteInt: () => 0,
+    window: { location: url, history: { pushState: (_state, _title, next) => { destination = next; } } },
+    document: { getElementById: id => ({ focus: () => { focused = id; } }) },
+  };
+  vm.runInNewContext(ts.transpileModule(source.slice(start, end), { compilerOptions: {
+    module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX,
+  } }).outputText, context);
+  const nodes = [];
+  function collect(node) {
+    if (Array.isArray(node)) return node.forEach(collect);
+    if (!node?.props) return;
+    nodes.push(node.props);
+    collect(node.props.children);
+  }
+  collect(context.TemperamentDetailPage({ tuningId: "example" }));
+  const tabs = nodes.filter(node => node.role === "tab");
+  const panels = nodes.filter(node => node.role === "tabpanel");
+  assert.equal(tabs.length, 3);
+  assert.equal(panels.length, 3);
+  for (const tab of tabs) {
+    const panel = panels.find(panel => panel.id === tab["aria-controls"]);
+    assert.equal(panel["aria-labelledby"], tab.id);
+    assert.equal(panel.hidden, !tab["aria-selected"]);
+    assert.equal(tab.tabIndex, tab["aria-selected"] ? 0 : -1);
+  }
+  const active = tabs.find(tab => tab["aria-selected"]);
+  assert.equal(active.id, "temperament-tab-organs");
+  active.onKeyDown({ key: "ArrowRight", preventDefault: () => { prevented = true; } });
+  assert.equal(prevented, true);
+  assert.equal(focused, "temperament-tab-overview");
+  assert.equal(destination.searchParams.get("tab"), "overview");
+  assert.equal(destination.searchParams.get("match"), "family");
+});
+
+test("event detail URLs retain the events section", async () => {
   const app = await readFile(appUrl, "utf8");
+  const start = app.indexOf("function sectionFromPath(");
+  const end = app.indexOf("function initialQuery(", start);
+  const context = { SECTION_PATHS: { events: "/events", organs: "/organs" } };
+  vm.runInNewContext(ts.transpileModule(app.slice(start, end), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
+  assert.equal(context.sectionFromPath("/events/fixture%3Aevent%3Aconstruction"), "events");
+  assert.equal(context.sectionFromPath("/events/MDVS%3AACTI%3ATEST-0001-A/"), "events");
+  assert.equal(context.sectionFromPath("/events"), "events");
+});
 
-  assert.match(
-    app,
-    /function identifierResolutionDestination[\s\S]*?destination\.pathname === SECTION_PATHS\.organs[\s\S]*?ORGAN_TABS\.includes\(requestedTab as OrganTab\)[\s\S]*?destination\.searchParams\.set\("tab", requestedTab\)/,
-    "canonical organ resolution must carry an explicitly requested valid detail tab into the resolved organ route",
-  );
+test("person and organization record URLs retain the public people section", async () => {
+  const app = await readFile(appUrl, "utf8");
+  const start = app.indexOf("function sectionFromPath(");
+  const end = app.indexOf("function initialQuery(", start);
+  const context = { SECTION_PATHS: { persons: "/persons", places: "/moderation/places" } };
+  vm.runInNewContext(ts.transpileModule(app.slice(start, end), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
+  for (const url of ["/people/TEST-0001-A", "/organizations/TEST-0002-B/", "/entity/people/TEST-0001-A", "/actors/actor%3Ar13%3Aexample", "/entity/source-actors/actor%3Ar13%3Aexample"]) {
+    assert.equal(context.sectionFromPath(url), "persons");
+  }
+  assert.equal(context.sectionFromPath("/places/TEST-0003-C"), "pod-explorer");
+  assert.equal(context.sectionFromPath("/source/sr%3Aorgbase%3Aexample"), "pod-explorer");
+});
+
+test("primary organ navigation leaves an open specification and returns to the catalogue", async () => {
+  const app = await readFile(appUrl, "utf8");
+  const start = app.indexOf("  function navigate(");
+  const end = app.indexOf("  function openResearchRoute(", start);
+  assert(start > 0 && end > start);
+  const state = { selectedOrgan: { id: "TEST-0001-A" }, activeTab: "specification", activeSection: "organs", mobileNavOpen: true };
+  const context = { ...state, route: null, focused: null, organNavigationGeneration: { current: 0 } };
+  for (const name of ["MobileNavOpen", "ActiveSection", "EvidenceRoute", "ResearchRoute", "PublicVocabRoute", "ShowMapQueue", "Query", "SelectedOrgan", "OrganSectionLoads", "ActiveTab", "DiscoveryOrganFailure"]) {
+    const key = name[0].toLowerCase() + name.slice(1);
+    context[`set${name}`] = (value) => { state[key] = value; };
+  }
+  context.updateRoute = (...values) => { context.route = values; };
+  context.focusSection = (value) => { context.focused = value; };
+  vm.runInNewContext(ts.transpileModule(app.slice(start, end), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
+  context.navigate("organs");
+  assert.equal(state.selectedOrgan, null);
+  assert.equal(state.activeTab, "overview");
+  assert.equal(state.mobileNavOpen, false);
+  assert.deepEqual(context.route, ["organs", null]);
+  assert.equal(context.focused, "organs");
+});
+
+test("a delayed organ response cannot reopen a record after primary navigation", async () => {
+  const app = await readFile(appUrl, "utf8");
+  const openStart = app.indexOf("  async function openOrgan(");
+  const openEnd = app.indexOf("  async function openContributionOrgan(", openStart);
+  const navStart = app.indexOf("  function navigate(");
+  const navEnd = app.indexOf("  function openResearchRoute(", navStart);
+  let resolveOrgan;
+  let selected = null;
+  const context = {
+    activeSection: "organs", organNavigationGeneration: { current: 0 },
+    currentCatalogReturnPath: () => null,
+    fetchOrgan: () => new Promise((resolve) => { resolveOrgan = resolve; }),
+    setSelectedOrgan: (value) => { selected = value; },
+    updateRoute: () => {}, focusSection: () => {},
+  };
+  for (const name of ["MobileNavOpen", "ActiveSection", "EvidenceRoute", "ResearchRoute", "PublicVocabRoute", "ShowMapQueue", "Query", "OrganSectionLoads", "ActiveTab", "Error", "Research", "DiscoveryOrganFailure"]) {
+    context[`set${name}`] = () => {};
+  }
+  vm.runInNewContext(ts.transpileModule(app.slice(openStart, openEnd) + app.slice(navStart, navEnd), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
+  const pending = context.openOrgan("MDVS:ENTY:TEST-0001-A");
+  context.navigate("organs");
+  resolveOrgan({ id: "TEST-0001-A" });
+  await pending;
+  assert.equal(selected, null);
+});
+
+test("canonical identifier redirects preserve account and component context on canonical and legacy organ routes", async () => {
+  const app = await readFile(appUrl, "utf8");
+  const start = app.indexOf("function identifierResolutionDestination(");
+  const end = app.indexOf("function routeOrganSort(", start);
+  const parameters = new URLSearchParams({ tab: "specification", description: "specdesc:account-a",
+    descriptionRevision: "a".repeat(64), compare: "specdesc:account-b", compareRevision: "b".repeat(64),
+    specificationSource: "sr:example:record/17", specificationView: "components", component: "MDVS:COMP:EXAMPLE", pipe: "position:1", q: "unrelated search", token: "do-not-forward" });
+  const context = { URL, URLSearchParams, SECTION_PATHS: { organs: "/organs" }, ORGAN_TABS: ["overview", "specification"],
+    window: { location: { origin: "https://navigator.test", search: `?${parameters}` } } };
+  vm.runInNewContext(ts.transpileModule(app.slice(start, end), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
+  for (const path of ["/organs/7PDZ-MDM0-0", "/organs/MDVS%3AENTY%3A7PDZ-MDM0-0", "/organs?organ=MDVS%3AENTY%3A7PDZ-MDM0-0"]) {
+    const result = new URL(context.identifierResolutionDestination(path), context.window.location.origin);
+    for (const key of ["tab", "description", "descriptionRevision", "compare", "compareRevision", "specificationSource", "specificationView", "component", "pipe"]) {
+      assert.equal(result.searchParams.get(key), parameters.get(key), `${path}: ${key}`);
+    }
+    assert.equal(result.searchParams.has("q"), false);
+    assert.equal(result.searchParams.has("token"), false);
+    assert.equal(result.origin, context.window.location.origin);
+  }
   assert.match(
     app,
     /const destination = identifierResolutionDestination\(data\.pageUrl\)[\s\S]*?window\.location\.replace\(destination\)/,
     "identifier resolution must redirect through the tab-preserving destination helper",
   );
+});
+
+test("identifier view context refuses malformed or duplicate pins instead of downgrading the linked account", async () => {
+  const app = await readFile(appUrl, "utf8");
+  const start = app.indexOf("function identifierResolutionDestination(");
+  const end = app.indexOf("function routeOrganSort(", start);
+  const context = { URL, URLSearchParams, SECTION_PATHS: { organs: "/organs" }, ORGAN_TABS: ["overview", "specification"],
+    window: { location: { origin: "https://navigator.test", search: "" } } };
+  vm.runInNewContext(ts.transpileModule(app.slice(start, end), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText, context);
+  for (const search of [
+    "?description=a&descriptionRevision=invalid",
+    "?compare=b&compareRevision=invalid",
+    "?descriptionRevision=" + "a".repeat(64),
+    "?compareRevision=" + "b".repeat(64),
+    "?description=a&description=b&descriptionRevision=" + "a".repeat(64),
+    "?description=a&descriptionRevision=" + "a".repeat(64) + "&descriptionRevision=" + "a".repeat(64),
+    "?compare=", "?component=%0Ainvalid", "?tab=unsupported", "?specificationView=unsupported",
+    "?specificationSource=one&specificationSource=two", "?component=one&component=two", "?pipe=" + "x".repeat(2049),
+  ]) {
+    context.window.location.search = search;
+    assert.throws(() => context.identifierResolutionDestination("/organs/EXAMPLE"), /organ link/, search.slice(0, 100));
+  }
+  context.window.location.search = "?tab=specification&description=a&descriptionRevision=" + "a".repeat(64);
+  for (const path of ["https://other.test/organs/EXAMPLE", "https://user:pass@navigator.test/organs/EXAMPLE", "/persons/EXAMPLE", "/organs", "/organs/EXAMPLE/extra", "/organs/EXAMPLE%2Fextra"]) {
+    const destination = new URL(context.identifierResolutionDestination(path), context.window.location.origin);
+    assert.equal(destination.searchParams.has("tab"), false, path);
+    assert.equal(destination.searchParams.has("description"), false, path);
+    assert.equal(destination.origin, context.window.location.origin);
+  }
+  assert.throws(() => context.identifierResolutionDestination("/organs/EXAMPLE?description=server-account"), /conflicts with the resolved destination/);
+  assert.throws(() => context.identifierResolutionDestination("/organs/EXAMPLE?description=a&descriptionRevision=" + "b".repeat(64)), /conflicts with the resolved destination/);
+  const pinned = new URL(context.identifierResolutionDestination("/organs/EXAMPLE?description=a&tab=overview"), context.window.location.origin);
+  assert.equal(pinned.searchParams.get("description"), "a");
+  assert.equal(pinned.searchParams.get("tab"), "overview");
+  assert.equal(pinned.searchParams.get("descriptionRevision"), "a".repeat(64));
 });
 
 test("browser history closes an organ detail when it returns to the catalog route", async () => {
@@ -99,7 +305,7 @@ test("canonical relationships use bounded progressive groups", async () => {
   );
   assert.match(
     app,
-    /setMentionsOpen\(true\)[\s\S]*?Inspect \$\{actor\.sourceRecordCount\} documented mentions[\s\S]*?actor\.collectionDelivery\?\.scope \? "Builder source records" : "Mentions"/,
+    /setMentionsOpen\(true\)[\s\S]*?Inspect \$\{formatNumber\(actor\.sourceRecordCount\)\} documented mentions[\s\S]*?actor\.collectionDelivery\?\.scope \? "Builder source records" : "Mentions"/,
     "actor support counts must retain inspection and qualify the bounded builder collection",
   );
   assert.match(

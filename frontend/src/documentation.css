@@ -26,7 +26,7 @@
   position: relative;
 }
 
-.documentation-hero h2 {
+.documentation-hero :is(h1, h2) {
   color: inherit;
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(2rem, 3.2vw, 3.25rem);
@@ -343,7 +343,7 @@
 
 @media (max-width: 520px) {
   .documentation-hero { border-radius: 14px; padding: 25px 20px 38px; }
-  .documentation-hero h2 { font-size: 2rem; }
+  .documentation-hero :is(h1, h2) { font-size: 2rem; }
   .documentation-release-badge { min-width: 0; }
   .documentation-search-shell { gap: 8px; grid-template-columns: minmax(0, 1fr) auto; padding: 13px; }
   .documentation-search { grid-column: 1; }

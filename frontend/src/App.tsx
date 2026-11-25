@@ -1,22 +1,28 @@
+import { ResearchWorkspace } from "./ResearchWorkspacePanel";
+import { RouteBoundary } from "./RouteBoundary";
+import { jsonRequestCache } from "./requestCache";
+import { fetchDiscoveryContext } from "./api";
 import { PageFaq } from "./PageFaq";
-import {VocabularyHub, VocabularyUsage} from "./vocabularyHub";
-import {OmaroCard,OmaroExplorer} from "./omaro";
-import { ActorResearchPanel } from "./organologicalResearch";
 import { ActorRelationshipPages, useActorCollection } from "./actorCollections";
 import { ContextualEventSummary, eventSourcePresentation, ParticipantIdentityNote, ParticipantSourceEvidence, SourceOccurrenceEvidence } from "./eventParticipation";
-import { TemperamentSearchNotice, temperamentSearchUrl } from "./temperamentSearch";
-import { ResourcePage } from "./resourceView";
-import { PublicPlacePage, PublicSourcePage } from "./publicRecords";
+import { TemperamentSearchNotice } from "./temperamentSearch";
+import { MAX_OCCURRENCE_FILTER, MAX_TEMPERAMENT_COMPARISON, occurrenceRangeIssue, occurrenceScope, occurrenceSort, readTemperamentComparison, temperamentCatalogueHref, temperamentDetailHref, temperamentOrganHref } from "./temperamentOccurrences";
+import { TemperamentComparison } from "./temperamentComparison";
+import { UiLanguagePreviewNotice, UiLanguageSelector, useUiLocale } from "./uiLocale";
+import { publicOrganTabLabel, publicPageLabel, publicSectionLabel } from "./uiLabels";
+import "./temperamentOccurrences.css";
 import { EntityExportPanel, EntityPageTabs, EntityTabPanel, useEntityPageTab } from "./entityExport";
 import { preloadMapRuntime } from "./mapPreload";
 import { ApplicationsPreview, RelatedApplications } from "./relatedApplications";
-import { ActivityDiagrams, HistoryTimeline, IdentifierCopy, NavigatorMark, OrganLanding, PublicModal, SearchValueLink, stableRecordUrl } from "./publicExperience";
+import { BuilderAttribution, ActivityDiagrams, HistoryTimeline, IdentifierCopy, NavigatorMark, OrganLanding, PublicModal, SearchValueLink, stableRecordUrl } from "./publicExperience";
 import { specificationSource, updateSpecificationView } from "./specificationNavigation";
-import { OrganSpecificationDescriptions, DescriptionHistory, SourceReportedTotals, ConfigurationChronology } from "./organSpecificationDescriptions";
-import { CSSProperties, FormEvent, lazy, MouseEvent, PointerEvent, ReactNode, Suspense, WheelEvent as ReactWheelEvent, useEffect, useMemo, useRef, useState } from "react";
-import { PipeworkEvidencePanel } from "./PipeworkEvidencePanel";
-import { PipePositionBrowser } from "./PipePositionBrowser";
-import { PipePositionDetailPage } from "./PipePositionDetailPage";
+import { hasSpecificationDescriptions, selectedSpecificationFacts } from "./organSpecificationWorkflow";
+import { OrganOverview } from "./organOverview";
+import { TechnicalSourceComparisons, revealTechnicalComparison } from "./technicalSourceComparisons";
+import { comparisonValue, comparisonsForComponentField, componentVariantKind, relatedActionGroups, technicalComparisonHasDifference } from "./sourceComparisonPresentation";
+import { specificationFieldLabel, technicalCaptureRowsLabel, technicalFactDifferenceText } from "./specificationLabels";
+import type { UiText } from "./uiLocale";
+import { CSSProperties, FormEvent, lazy, MouseEvent, PointerEvent, ReactNode, Suspense, WheelEvent as ReactWheelEvent, useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   AlertCircle,
   ArrowDownWideNarrow,
@@ -60,22 +66,10 @@ import {
   ZoomOut
 } from "lucide-react";
 
-const sharedMapSummaryRequests = new Map<string, Promise<unknown>>();
-
-function readSharedMapSummary(url: string): Promise<unknown> {
-  const existing = sharedMapSummaryRequests.get(url);
-  if (existing) return existing;
-  const request = fetch(url, {
-    credentials: "same-origin",
-    headers: { Accept: "application/geo+json, application/json" },
-  }).then(async (response) => {
-    if (!response.ok) throw new Error(`place endpoint returned ${response.status}`);
-    return response.json() as Promise<unknown>;
-  });
-  sharedMapSummaryRequests.set(url, request);
-  request.finally(() => window.setTimeout(() => sharedMapSummaryRequests.delete(url), 1_000));
-  return request;
+function readSharedMapSummary(url: string, signal?: AbortSignal): Promise<unknown> {
+  return jsonRequestCache.get(url, { credentials: "same-origin", headers: { Accept: "application/geo+json, application/json" }, signal });
 }
+
 import {
   CandidateEntityGroup,
   CandidateEntityDetail,
@@ -128,6 +122,7 @@ import {
   IconographySummary,
   TuningSystemDetail,
   TuningSystemList,
+  TuningOccurrenceScope,
   TuningSystemOrganLinks,
   TuningSystemSummary,
   MidiAssetDetail,
@@ -376,8 +371,30 @@ import {
   componentMetricValue,
   reportedManualCount,
 } from "./reviewerPresentation";
+import { vocabularyUsageFamily } from "./vocabularyRoutes";
+const PodRelatedResources = lazy(() => import("./PodExplorerRelated").then(module => ({ default: module.PodRelatedResources })));
+const VocabularyHub = lazy(() => import("./vocabularyHub").then(module => ({ default: module.VocabularyHub })));
+const VocabularyUsage = lazy(() => import("./vocabularyHub").then(module => ({ default: module.VocabularyUsage })));
+const CandidateVocabularyPage = lazy(() => import("./vocabularyHub").then(module => ({ default: module.CandidateVocabularyPage })));
+const ReferenceVocabulary = lazy(() => import("./referenceVocabulary").then(module => ({ default: module.ReferenceVocabulary })));
+const PublicVocabularyRecords = lazy(() => import("./vocabularyRecords").then(module => ({ default: module.PublicVocabularyRecords })));
+const OmaroCard = lazy(() => import("./omaro").then(module => ({ default: module.OmaroCard })));
+const OmaroExplorer = lazy(() => import("./omaro").then(module => ({ default: module.OmaroExplorer })));
+const ActorResearchPanel = lazy(() => import("./organologicalResearch").then(module => ({ default: module.ActorResearchPanel })));
+const ResourcePage = lazy(() => import("./resourceView").then(module => ({ default: module.ResourcePage })));
+const PublicPlacePage = lazy(() => import("./publicRecords").then(module => ({ default: module.PublicPlacePage })));
+const PublicSourcePage = lazy(() => import("./publicRecords").then(module => ({ default: module.PublicSourcePage })));
+const OrganSpecificationDescriptions = lazy(() => import("./organSpecificationDescriptions").then(module => ({ default: module.OrganSpecificationDescriptions })));
+const DescriptionHistory = lazy(() => import("./organSpecificationDescriptions").then(module => ({ default: module.DescriptionHistory })));
+const SourceReportedTotals = lazy(() => import("./organSpecificationDescriptions").then(module => ({ default: module.SourceReportedTotals })));
+const ConfigurationChronology = lazy(() => import("./organSpecificationDescriptions").then(module => ({ default: module.ConfigurationChronology })));
+const PipeworkEvidencePanel = lazy(() => import("./PipeworkEvidencePanel").then(module => ({ default: module.PipeworkEvidencePanel })));
+const PipePositionBrowser = lazy(() => import("./PipePositionBrowser").then(module => ({ default: module.PipePositionBrowser })));
+const PipePositionDetailPage = lazy(() => import("./PipePositionDetailPage").then(module => ({ default: module.PipePositionDetailPage })));
+const PodExplorer = lazy(() => import("./PodExplorer").then(module => ({ default: module.PodExplorer })));
 const DocumentationArea = lazy(() => import("./documentation").then((module) => ({ default: module.DocumentationArea })));
 const ReleaseGuideArea = lazy(() => import("./releaseGuide").then((module) => ({ default: module.ReleaseGuideArea })));
+const ApiGuideArea = lazy(() => import("./publicApiGuide").then((module) => ({ default: module.PublicApiGuide })));
 const InternalDocumentationArea = lazy(() => import("./internalDocumentation").then((module) => ({ default: module.InternalDocumentationArea })));
 const UseCasesArea = lazy(() => import("./useCases").then((module) => ({ default: module.UseCasesArea })));
 const VirtualInstrumentsArea = lazy(() => import("./virtualInstruments").then((module) => ({ default: module.VirtualInstrumentsArea })));
@@ -405,11 +422,13 @@ const CONTRIBUTION_TARGET_STORAGE_KEY = "modavis-navigator:contribution-target";
 const CORPUS_BUILD_TARGET = 100000;
 const SURFACE_ICONS: Record<MainSection, typeof Search> = {
   explore: Search,
+  "pod-explorer": Layers3,
   "use-cases": BarChart3,
   organs: Library,
   events: ListChecks,
   docs: BookOpen,
   "release-guide": ShieldCheck,
+  "api-guide": BookOpen,
   "internal-docs": FileArchive,
   persons: UserRound,
   literature: FileText,
@@ -715,7 +734,7 @@ function useDialogAccessibility() {
 }
 
 function navigatorPageTitle(activeSection: MainSection, selectedOrgan: OrganDetail | null, activeTab: OrganTab): string {
-  if (selectedOrgan) return `${selectedOrgan.title} — ${tabLabel(activeTab)} | MODAVIS Navigator`;
+  if (activeSection === "organs" && selectedOrgan) return `${selectedOrgan.title} — ${tabLabel(activeTab)} | MODAVIS Navigator`;
   const path = window.location.pathname.replace(/\/$/, "") || "/";
   const exactTitles: Record<string, string> = {
     "/": "Explore",
@@ -741,7 +760,8 @@ function navigatorPageTitle(activeSection: MainSection, selectedOrgan: OrganDeta
     "/research/files": "Research Files",
     "/research/vocabulary": "Research Vocabulary",
     "/vocab": "Vocabularies",
-    "/use-cases": "Use Cases",
+    "/use-cases": "Data stories",
+    "/use-cases/research-workbench": "Research workbench",
     "/applications": "Related applications",
     "/applications/orgrec": "OrgRec",
     "/applications/orgmap": "OrgMap",
@@ -758,6 +778,11 @@ function navigatorPageTitle(activeSection: MainSection, selectedOrgan: OrganDeta
     "/about/release": "About the data",
   };
   let label = exactTitles[path] || SURFACES.find((surface) => surface.path === path)?.label;
+  if (!label && path.startsWith("/people/")) label = "Person record";
+  if (!label && path.startsWith("/organizations/")) label = "Organization record";
+  if (!label && path.startsWith("/places/")) label = "Place record";
+  if (!label && path.startsWith("/names/")) label = "Name record";
+  if (!label && path.startsWith("/sources/")) label = "Source record";
   if (!label && path.startsWith("/literature/")) label = "Literature Record";
   if (!label && path.startsWith("/scores/")) label = "Digital Score";
   if (!label && path.startsWith("/iconography/")) label = "Iconography Record";
@@ -780,9 +805,9 @@ function navigatorPageTitle(activeSection: MainSection, selectedOrgan: OrganDeta
 
 function focusSection(id: string, behavior: ScrollBehavior = "smooth") {
   window.requestAnimationFrame(() => {
-    const target = document.getElementById(id);
+    const target = document.getElementById(id) || document.getElementById("main-content");
     target?.focus({ preventScroll: true });
-    target?.scrollIntoView({ block: "start", behavior });
+    target?.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : behavior });
   });
 }
 
@@ -839,6 +864,12 @@ function sectionFromPath(pathname: string): MainSection | null {
   if (normalized === "/moderation/vmi") return "vmi";
   if (normalized === "/virtual-instruments" || normalized.startsWith("/virtual-instruments/")) return "vmi";
   if (normalized.startsWith("/organs/")) return "organs";
+  if (normalized.startsWith("/events/")) return "events";
+  if (normalized.startsWith("/literature/")) return "literature";
+  if (normalized.startsWith("/scores/")) return "scores";
+  if (normalized.startsWith("/temperaments/")) return "temperaments";
+  if (/^\/(?:places|source)\/[^/]+$/.test(normalized)) return "pod-explorer";
+  if (/^\/(?:people|organizations|actors|entity\/(?:people|organizations|source-actors))\/[^/]+$/.test(normalized)) return "persons";
   const match = (Object.entries(SECTION_PATHS) as Array<[MainSection, string]>).find(([, path]) => path === normalized);
   return match?.[0] ?? null;
 }
@@ -1117,8 +1148,8 @@ function routeResearchRoute(): ResearchRoute | null {
 
 function routePublicVocabRoute(): PublicVocabRoute | null {
   if (window.location.pathname.match(/^\/vocab\/?$/)) return { kind: "catalog" };
-  const usageMatch = window.location.pathname.match(/^\/vocab\/usage\/(activities|stops|divisions)\/?$/);
-  if (usageMatch) return {kind: "usage", id: usageMatch[1]};
+  const usageFamily = vocabularyUsageFamily(window.location.pathname);
+  if (usageFamily) return {kind: "usage", id: usageFamily};
   const releaseMatch = window.location.pathname.match(/^\/vocab\/releases\/([^/]+)\/?$/);
   const conceptMatch = window.location.pathname.match(/^\/vocab\/concepts\/([^/]+)\/?$/);
   const sourceTermMatch = window.location.pathname.match(/^\/vocab\/source-terms\/([^/]+)\/?$/);
@@ -1175,18 +1206,64 @@ function routeTab(): OrganTab {
 
 function identifierResolutionDestination(pageUrl: string): string {
   const destination = new URL(pageUrl, window.location.origin);
-  const requestedTab = new URLSearchParams(window.location.search).get("tab");
-  if (
-    destination.pathname === SECTION_PATHS.organs
-    && requestedTab
-    && ORGAN_TABS.includes(requestedTab as OrganTab)
-  ) {
-    destination.searchParams.set("tab", requestedTab);
+  const requested = new URLSearchParams(window.location.search);
+  const singleValue = (key: string) => {
+    const values = requested.getAll(key);
+    if (values.length === 0) return null;
+    const value = values[0];
+    if (values.length !== 1 || !value || value.length > 2048
+      || value.trim() !== value || /[\u0000-\u001f\u007f]/.test(value)) {
+      throw new Error(`This organ link has an empty, repeated or malformed ${key} parameter. Reopen the account or component from the organ record to create a complete link.`);
+    }
+    return value;
+  };
+  const validOrganId = (value: string | null) => Boolean(value && /^[A-Za-z0-9][A-Za-z0-9:_-]{0,511}$/.test(value));
+  let organRecordPath = false;
+  if (destination.pathname.startsWith(`${SECTION_PATHS.organs}/`)) {
+    const suffix = destination.pathname.slice(SECTION_PATHS.organs.length + 1).replace(/\/$/, "");
+    try { organRecordPath = validOrganId(decodeURIComponent(suffix)); } catch { /* Malformed paths receive no view context. */ }
+  }
+  const legacyOrganRecord = destination.pathname === SECTION_PATHS.organs
+    && validOrganId(destination.searchParams.get("organ") || destination.searchParams.get("id"));
+  if (destination.origin === window.location.origin && !destination.username && !destination.password
+    && (organRecordPath || legacyOrganRecord)) {
+    const requestedTab = singleValue("tab");
+    if (requestedTab && !ORGAN_TABS.includes(requestedTab as OrganTab)) {
+      throw new Error("This organ link requests an unavailable section. Open the organ record and choose a section to create a new link.");
+    }
+    if (requestedTab && ORGAN_TABS.includes(requestedTab as OrganTab) && !destination.searchParams.has("tab")) {
+      destination.searchParams.set("tab", requestedTab);
+    }
+    for (const key of ["description", "compare", "specificationSource", "component", "pipe"]) {
+      const value = singleValue(key);
+      if (value && !destination.searchParams.has(key)) destination.searchParams.set(key, value);
+    }
+    const requestedView = singleValue("specificationView");
+    if (requestedView && requestedView !== "components" && requestedView !== "descriptions") {
+      throw new Error("This organ link requests an unknown specification view. Open the organ record and choose an account or component view.");
+    }
+    if ((requestedView === "components" || requestedView === "descriptions") && !destination.searchParams.has("specificationView")) {
+      destination.searchParams.set("specificationView", requestedView);
+    }
+    for (const [key, accountKey] of [["descriptionRevision", "description"], ["compareRevision", "compare"]]) {
+      const value = singleValue(key);
+      const account = singleValue(accountKey);
+      if (value && (!/^[a-f0-9]{64}$/i.test(value) || !account)) {
+        throw new Error(`This organ link has an invalid ${key} or no matching ${accountKey}. Reopen the source account to create a complete revision-bound link.`);
+      }
+      if (value && (destination.searchParams.get(accountKey) !== account
+        || (destination.searchParams.has(key) && destination.searchParams.get(key) !== value))) {
+        throw new Error("The linked account revision conflicts with the resolved destination. Open the source account to create a new link.");
+      }
+      if (value && !destination.searchParams.has(key)) {
+        destination.searchParams.set(key, value);
+      }
+    }
   }
   return `${destination.pathname}${destination.search}${destination.hash}`;
 }
 
-function routeOrganSort(): OrganSort {
+function routeOrganSort(): OrganSort | undefined {
   return organSortFromParams(new URLSearchParams(window.location.search));
 }
 
@@ -1194,18 +1271,25 @@ function routeOrganOffset(): number {
   return positiveRouteInt(new URLSearchParams(window.location.search).get("offset"), 0, 100_000);
 }
 
-function organSortFromParams(params: URLSearchParams, defaultSort: OrganSort = "label"): OrganSort {
+function organSortFromParams(params: URLSearchParams): OrganSort | undefined {
   const sort = params.get("sort");
-  return ORGAN_SORTS.includes(sort as OrganSort) ? (sort as OrganSort) : defaultSort;
+  return ORGAN_SORTS.includes(sort as OrganSort) ? (sort as OrganSort) : undefined;
+}
+
+function normalizeOrganCatalogSort(sort: OrganSort | undefined, publicProjection: boolean, mediaAvailable: boolean): OrganSort {
+  if (publicProjection) return sort === "label" ? "label" : "stops";
+  if (!sort || (sort === "media" && !mediaAvailable)) return "label";
+  return sort;
 }
 
 function organFiltersFromParams(params: URLSearchParams): OrganFilterValues {
+  const hasMedia = params.get("has_media");
   return {
     country: params.get("country") || undefined,
     source: params.get("source") || undefined,
     status: params.get("status") || undefined,
     locationState: params.get("location_state") || undefined,
-    mediaState: params.get("media_state") || undefined,
+    mediaState: params.get("media_state") || (hasMedia === "1" || hasMedia === "true" ? "available" : undefined),
     reviewState: params.get("review_state") || undefined,
     builder: params.get("builder") || undefined,
     institution: params.get("institution") || undefined,
@@ -1226,6 +1310,27 @@ function organFiltersFromParams(params: URLSearchParams): OrganFilterValues {
 
 function routeOrganFilters(): OrganFilterValues {
   return organFiltersFromParams(new URLSearchParams(window.location.search));
+}
+
+function normalizeOrganCatalogFilters(filters: OrganFilterValues, publicProjection: boolean, mediaAvailable: boolean): OrganFilterValues {
+  if (!publicProjection) {
+    return mediaAvailable ? filters : { ...filters, mediaState: undefined, mediaKind: undefined };
+  }
+  const withMedia = filters.mediaState === "with_media" || filters.mediaState === "available";
+  return {
+    ...filters,
+    country: undefined,
+    evidenceState: undefined,
+    historyState: undefined,
+    institution: undefined,
+    mediaKind: undefined,
+    mediaState: mediaAvailable && withMedia ? "with_media" : undefined,
+    minSources: undefined,
+    periodBucket: undefined,
+    stopCountBucket: undefined,
+    yearFrom: undefined,
+    yearTo: undefined,
+  };
 }
 
 function personFiltersFromParams(params: URLSearchParams): PersonFilterValues {
@@ -1289,7 +1394,9 @@ function updateRoute(section: MainSection, organId?: string | null, tab?: OrganT
     url.search = publicUrl.search;
     url.hash = publicUrl.hash;
   } else {
-    if (!organId && sectionFromPath(url.pathname) !== section) url.search = "";
+    const previousSection = sectionFromPath(url.pathname);
+    const leavingPersonRecord = previousSection === "persons" && url.pathname.replace(/\/+$/, "") !== SECTION_PATHS.persons;
+    if (!organId && (previousSection !== section || leavingPersonRecord)) url.search = "";
     if (url.pathname.match(/^\/(?:id|source|file|entity)\/[^/]+(?:\/[^/]+)?\/?$/) && !organId) url.pathname = "/";
     if (url.pathname.match(/^\/organs\/[^/]+\/components\/[^/]+\/pipe-positions\/[^/]+\/?$/) && !organId) url.pathname = "/";
     if (url.pathname.match(/^\/imageseg\/annotation\/?$/) && !organId) url.pathname = "/";
@@ -1308,6 +1415,7 @@ function updateRoute(section: MainSection, organId?: string | null, tab?: OrganT
 }
 
 function setCatalogSearchParams(url: URL, filters: OrganFilterValues, sort: OrganSort, offset = 0) {
+  url.searchParams.delete("has_media");
   setOptionalSearchParam(url, "country", filters.country);
   setOptionalSearchParam(url, "source", filters.source);
   setOptionalSearchParam(url, "status", filters.status);
@@ -1520,11 +1628,12 @@ function mapSearchHref(query: string): string {
   const trimmed = query.trim();
   if (trimmed) search.set("q", trimmed);
   const suffix = search.toString() ? `?${search.toString()}` : "";
-  return `/${suffix}#map`;
+  return `/map${suffix}`;
 }
 
 function searchResultTarget(item: EntitySearchItem): { organId: string; tab: OrganTab } | null {
   if (item.url && (item.kind === "canonical_actor" || item.canonicalResolution?.canonicalUrl)) return null;
+  if (item.url && !["organ", "candidate_entity", "vmi_candidate"].includes(item.kind)) return null;
   const organId = item.targetOrganId || (item.kind === "organ" ? item.targetId : "");
   if (!organId) return null;
   return {
@@ -1535,9 +1644,7 @@ function searchResultTarget(item: EntitySearchItem): { organId: string; tab: Org
 
 function buildEntitySearchSuggestions(search: EntitySearchResponse | null): Array<{ id: string; label: string; group: string; item: EntitySearchItem }> {
   const seen = new Set<string>();
-  const groups = search?.groups && search.groups.length > 0
-    ? search.groups
-    : groupEntitySearchResults(search?.items ?? []).map((group) => ({ ...group, rank: null }));
+  const groups = entitySearchGroups(search);
   return groups.flatMap((group) => group.items.slice(0, 4).map((item) => {
     const label = item.title || item.mdvsId || item.targetId;
     const id = `${group.id}:${item.kind}:${item.targetId}:${label}`;
@@ -1550,9 +1657,9 @@ function buildEntitySearchSuggestions(search: EntitySearchResponse | null): Arra
 function exactSearchAffordance(query: string, search: EntitySearchResponse | null): { label: string; detail: string; href?: string; item?: EntitySearchItem } | null {
   const value = query.trim();
   if (!value) return null;
-  const exactItem = search?.items.find((item) => [item.mdvsId, item.targetId, item.sourceRecordId, item.sessionId, item.match?.value]
+  const exactItem = search?.items.find((item) => [item.mdvsId, item.targetId, item.sourceRecordId, item.sessionId]
     .filter(Boolean)
-    .some((candidate) => String(candidate).toLowerCase() === value.toLowerCase()));
+    .some((candidate) => String(candidate).toLowerCase() === value.toLowerCase()) || item.title.toLowerCase() === value.toLowerCase());
   if (/^sr:/i.test(value)) {
     return { label: "Source record", detail: value, href: `/source/${encodeURIComponent(value)}`, item: exactItem };
   }
@@ -3122,8 +3229,18 @@ function AdminSectionPage({ kind, onBack }: { kind: ResearchRoute["kind"]; onBac
   );
 }
 
+function readSidebarPreference(): boolean {
+  try { return window.localStorage.getItem("modavis.navigator.sidebarCollapsed") === "true"; }
+  catch { return false; }
+}
+function rememberSidebarPreference(collapsed: boolean): void {
+  try { window.localStorage.setItem("modavis.navigator.sidebarCollapsed", String(collapsed)); }
+  catch { /* Navigation remains usable when this browser disables local storage. */ }
+}
+
 export function App() {
   useDialogAccessibility();
+  const { t, formatNumber } = useUiLocale();
   const initialStoredActorId = initialActorId();
   const [auth, setAuth] = useState<AuthSession>({ authenticated: false, account: null });
   const [authLoading, setAuthLoading] = useState(true);
@@ -3133,8 +3250,9 @@ export function App() {
   const [releaseContextError, setReleaseContextError] = useState(false);
   const [releaseContextAttempt, setReleaseContextAttempt] = useState(0);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileWorkspaceAnchor, setMobileWorkspaceAnchor] = useState<HTMLSpanElement | null>(null);
   const [compactNavigation, setCompactNavigation] = useState(() => window.matchMedia("(max-width: 1120px)").matches);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => window.localStorage.getItem("modavis.navigator.sidebarCollapsed") === "true");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(readSidebarPreference);
   useEffect(() => {
     const media = window.matchMedia("(max-width: 1120px)");
     const update = () => {
@@ -3153,16 +3271,37 @@ export function App() {
   const [activeSection, setActiveSection] = useState<MainSection>(initialSection);
   const publicCapabilities = releaseContext?.capabilities ?? null;
   const publicDatasetProfile = releaseContext?.dataProfile === "pod-1.5-public";
+  const publicSavedPage = publicDatasetProfile && activeSection === "me-saved";
   const mediaCapabilityAvailable = !publicCapabilities || publicCapabilities.includes("media");
   const [activeTab, setActiveTab] = useState<OrganTab>(routeTab);
   const [query, setQuery] = useState(initialQuery);
-  const [organFilters, setOrganFilters] = useState<OrganFilterValues>(routeOrganFilters);
+  const [pendingDiscoveryQuery, setPendingDiscoveryQuery] = useState<string | null>(null);
+  const [discoveryPreviewQuery, setDiscoveryPreviewQuery] = useState<string | null>(null);
+  const [discoveryOrganFailure, setDiscoveryOrganFailure] = useState<{
+    query: string;
+    id: string;
+    tab: OrganTab;
+    message: string;
+  } | null>(null);
+  useEffect(() => {
+    if (pendingDiscoveryQuery === null) return;
+    const timer = window.setTimeout(() => setPendingDiscoveryQuery(null), 250);
+    return () => window.clearTimeout(timer);
+  }, [pendingDiscoveryQuery]);
+  const [requestedOrganFilters, setRequestedOrganFilters] = useState<OrganFilterValues>(routeOrganFilters);
+  const [requestedOrganSort, setRequestedOrganSort] = useState(routeOrganSort);
+  // The URL supplies the requested selection. Derive the catalogue's supported
+  // selection without writing back to the state used for route synchronization.
+  const organFilters = useMemo(
+    () => normalizeOrganCatalogFilters(requestedOrganFilters, publicDatasetProfile, mediaCapabilityAvailable),
+    [requestedOrganFilters, publicDatasetProfile, mediaCapabilityAvailable],
+  );
+  const organSort = normalizeOrganCatalogSort(requestedOrganSort, publicDatasetProfile, mediaCapabilityAvailable);
   const [personFilters, setPersonFilters] = useState<PersonFilterValues>(routePersonFilters);
   const [placeFilters, setPlaceFilters] = useState<CandidateDirectoryFilterValues>({});
   const [peopleFilters, setPeopleFilters] = useState<CandidateDirectoryFilterValues>({});
   const [institutionFilters, setInstitutionFilters] = useState<CandidateDirectoryFilterValues>({});
   const [organFacets, setOrganFacets] = useState<OrganFacets | null>(null);
-  const [organSort, setOrganSort] = useState<OrganSort>(routeOrganSort);
   useEffect(() => {
     let active = true;
     setReleaseContextError(false);
@@ -3171,10 +3310,6 @@ export function App() {
       .then((value) => {
         if (!active) return;
         setReleaseContext(value);
-        if (
-          value.dataProfile === "pod-1.5-public"
-          && !new URLSearchParams(window.location.search).get("sort")
-        ) setOrganSort("stops");
         setReleaseContextResolved(true);
       })
       .catch(() => {
@@ -3184,12 +3319,28 @@ export function App() {
       });
     return () => { active = false; };
   }, [releaseContextAttempt]);
-  const [entitySearch, setEntitySearch] = useState<EntitySearchResponse | null>(null);
+  const [entitySearchResult, setEntitySearchResult] = useState<{
+    key: string;
+    data: EntitySearchResponse | null;
+    error: string | null;
+  } | null>(null);
+  const [entitySearchAttempt, setEntitySearchAttempt] = useState(0);
+  const [catalogReadAttempt, setCatalogReadAttempt] = useState(0);
   const [persons, setPersons] = useState<PersonListResponse | null>(null);
   const [candidatePlaces, setCandidatePlaces] = useState<CandidateEntityGroupResponse | null>(null);
   const [candidatePeople, setCandidatePeople] = useState<CandidateEntityGroupResponse | null>(null);
   const [candidateInstitutions, setCandidateInstitutions] = useState<CandidateEntityGroupResponse | null>(null);
   const [explore, setExplore] = useState<ExploreResponse | null>(null);
+  const [datasetCounts, setDatasetCounts] = useState<ExploreResponse["globalCounts"] | null>(null);
+  useEffect(() => {
+    if (!publicDatasetProfile) return;
+    const controller = new AbortController();
+    setDatasetCounts(null);
+    fetchDiscoveryContext(controller.signal)
+      .then(result => { if (!controller.signal.aborted) setDatasetCounts(result.globalCounts ?? null); })
+      .catch(() => { /* Missing global statistics must not block access to records. */ });
+    return () => controller.abort();
+  }, [publicDatasetProfile, releaseContext?.releaseVersion]);
   const [catalogReadModel, setCatalogReadModel] = useState<CatalogReadModelStatus | null>(null);
   const [catalogReadModelRefresh, setCatalogReadModelRefresh] = useState<CatalogReadModelRefreshState>({ loading: false });
   const [adminOperationsState, setAdminOperationsState] = useState<AdminOperationsState>({ loading: false });
@@ -3218,6 +3369,7 @@ export function App() {
   const [organTotal, setOrganTotal] = useState(0);
   const [organOffset, setOrganOffset] = useState(routeOrganOffset);
   const [selectedOrgan, setSelectedOrgan] = useState<OrganDetail | null>(null);
+  const organNavigationGeneration = useRef(0);
   const [catalogReturnPath, setCatalogReturnPath] = useState<string | null>(() => currentCatalogReturnPath());
   const [organSectionLoads, setOrganSectionLoads] = useState<OrganSectionLoadMap>({});
   const [research, setResearch] = useState<ResearchResponse | null>(null);
@@ -3225,73 +3377,15 @@ export function App() {
   const [researchRoute, setResearchRoute] = useState<ResearchRoute | null>(() => routeResearchRoute());
   const [publicVocabRoute, setPublicVocabRoute] = useState<PublicVocabRoute | null>(() => routePublicVocabRoute());
   useEffect(() => {
-    if (!publicCapabilities || surfaceAvailableForCapabilities(activeSection, publicCapabilities)) return;
+    if (publicSavedPage || !publicCapabilities || surfaceAvailableForCapabilities(activeSection, publicCapabilities)) return;
     window.history.replaceState(null, "", SECTION_PATHS.explore);
     setActiveSection("explore");
     setResearchRoute(null);
     setPublicVocabRoute(null);
-  }, [activeSection, publicCapabilities]);
-  useEffect(() => {
-    if (!publicDatasetProfile && mediaCapabilityAvailable) return;
-    const unsupportedFilterActive = Boolean(
-      organFilters.mediaState
-      || organFilters.mediaKind
-      || (publicDatasetProfile && (
-        organFilters.country
-        || organFilters.institution
-        || organFilters.periodBucket
-        || organFilters.yearFrom
-        || organFilters.yearTo
-        || organFilters.minSources
-        || organFilters.evidenceState
-        || organFilters.stopCountBucket
-        || organFilters.historyState
-      ))
-    );
-    if (unsupportedFilterActive) {
-      setOrganFilters((current) => ({
-        ...current,
-        country: publicDatasetProfile ? undefined : current.country,
-        evidenceState: publicDatasetProfile ? undefined : current.evidenceState,
-        historyState: publicDatasetProfile ? undefined : current.historyState,
-        institution: publicDatasetProfile ? undefined : current.institution,
-        mediaKind: undefined,
-        mediaState: undefined,
-        minSources: publicDatasetProfile ? undefined : current.minSources,
-        periodBucket: publicDatasetProfile ? undefined : current.periodBucket,
-        stopCountBucket: publicDatasetProfile ? undefined : current.stopCountBucket,
-        yearFrom: publicDatasetProfile ? undefined : current.yearFrom,
-        yearTo: publicDatasetProfile ? undefined : current.yearTo,
-      }));
-    }
-    const requestedSort = new URLSearchParams(window.location.search).get("sort");
-    const publicSortSupported = organSort === "stops" || organSort === "label";
-    if (
-      publicDatasetProfile
-      && (
-        !publicSortSupported
-        || (!requestedSort && organSort === "label")
-      )
-    ) setOrganSort("stops");
-    else if (!mediaCapabilityAvailable && organSort === "media") setOrganSort("label");
-  }, [
-    mediaCapabilityAvailable,
-    organFilters.country,
-    organFilters.evidenceState,
-    organFilters.historyState,
-    organFilters.institution,
-    organFilters.mediaKind,
-    organFilters.mediaState,
-    organFilters.minSources,
-    organFilters.periodBucket,
-    organFilters.stopCountBucket,
-    organFilters.yearFrom,
-    organFilters.yearTo,
-    organSort,
-    publicDatasetProfile,
-  ]);
+  }, [activeSection, publicCapabilities, publicSavedPage]);
   const [actorId, setActorId] = useState(initialStoredActorId);
   const [exploreLoading, setExploreLoading] = useState(initialSection() === "explore");
+  const [exploreFailure, setExploreFailure] = useState<{ key: string; message: string } | null>(null);
   const [organLoading, setOrganLoading] = useState(true);
   const [personLoading, setPersonLoading] = useState(initialSection() === "persons");
   const [error, setError] = useState<string | null>(null);
@@ -3304,14 +3398,27 @@ export function App() {
   const evidenceRouteFocusKey = evidenceRoute ? JSON.stringify(evidenceRoute) : "";
 
   useEffect(() => {
-    document.title = navigatorPageTitle(activeSection, selectedOrgan, activeTab);
-  }, [activeSection, activeTab, evidenceRoute, publicVocabRoute, researchRoute, selectedOrgan]);
+    const original = navigatorPageTitle(activeSection, selectedOrgan, activeTab);
+    if (activeSection === "organs" && selectedOrgan) {
+      document.title = `${selectedOrgan.title} — ${publicOrganTabLabel(t, activeTab, tabLabel(activeTab))} | MODAVIS Navigator`;
+    } else {
+      const label = original.replace(" | MODAVIS Navigator", "");
+      document.title = `${publicPageLabel(t, window.location.pathname, activeSection, label)} | MODAVIS Navigator`;
+    }
+  }, [activeSection, activeTab, evidenceRoute, publicVocabRoute, researchRoute, selectedOrgan, t]);
 
   useEffect(() => {
     if (evidenceRouteFocusKey) focusSection("main-content", "auto");
   }, [evidenceRouteFocusKey]);
 
   useEffect(() => {
+    if (!releaseContextResolved) return;
+    if (publicCapabilities && !publicCapabilities.includes("authentication")) {
+      setAuth({ authenticated: false, account: null });
+      setAuthLoading(false);
+      setAuthError(null);
+      return;
+    }
     let cancelled = false;
     setAuthLoading(true);
     fetchAuthMe()
@@ -3333,14 +3440,14 @@ export function App() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [releaseContextResolved, publicCapabilities]);
 
   useEffect(() => {
     setActorId(authenticatedActorId);
   }, [authenticatedActorId]);
 
   useEffect(() => {
-    const syncRoute = () => {
+    const syncRoute = (event?: Event) => {
       const nextSection = initialSection();
       setActiveSection(nextSection);
       setEvidenceRoute(routeEvidenceRoute());
@@ -3351,7 +3458,15 @@ export function App() {
         setShowMapQueue(true);
       }
       const nextQuery = initialQuery();
-      if (nextQuery !== query) setQuery(nextQuery);
+      const queryChanged = event || nextSection !== "explore"
+        ? nextQuery !== query
+        : nextQuery.trim() !== query.trim();
+      if (event || queryChanged) setDiscoveryOrganFailure(null);
+      if (queryChanged) {
+        setQuery(nextQuery);
+        setPendingDiscoveryQuery(null);
+        setDiscoveryPreviewQuery(null);
+      }
       const nextQueue = routeGeoreferencingQueueState();
       if (nextQueue.limit !== georeferencingQueueLimit) setGeoreferencingQueueLimit(nextQueue.limit);
       if (nextQueue.offset !== georeferencingQueueOffset) setGeoreferencingQueueOffset(nextQueue.offset);
@@ -3359,17 +3474,15 @@ export function App() {
         setGeoreferencingQueueFilters(nextQueue.filters);
       }
       const nextOrganFilters = routeOrganFilters();
-      if (!sameOrganFilters(nextOrganFilters, organFilters)) setOrganFilters(nextOrganFilters);
+      if (!sameOrganFilters(nextOrganFilters, requestedOrganFilters)) setRequestedOrganFilters(nextOrganFilters);
       const nextPersonFilters = routePersonFilters();
       if (!samePersonFilters(nextPersonFilters, personFilters)) setPersonFilters(nextPersonFilters);
-      const nextOrganSort = organSortFromParams(
-        new URLSearchParams(window.location.search),
-        publicDatasetProfile ? "stops" : "label",
-      );
-      if (nextOrganSort !== organSort) setOrganSort(nextOrganSort);
+      const nextOrganSort = routeOrganSort();
+      if (nextOrganSort !== requestedOrganSort) setRequestedOrganSort(nextOrganSort);
       const nextOrganOffset = routeOrganOffset();
       if (nextOrganOffset !== organOffset) setOrganOffset(nextOrganOffset);
       const nextOrganId = routeOrganId();
+      if (!nextOrganId) organNavigationGeneration.current += 1;
       if (nextOrganId && nextOrganId !== selectedOrgan?.id && nextOrganId !== selectedOrgan?.mdvsId) {
         if (nextSection === "contribute") void openContributionOrgan(nextOrganId);
         else openOrgan(nextOrganId, routeTab(), false);
@@ -3387,7 +3500,7 @@ export function App() {
       window.removeEventListener("popstate", syncRoute);
       window.removeEventListener("hashchange", syncRoute);
     };
-  }, [authenticatedActorId, georeferencingQueueFilters, georeferencingQueueLimit, georeferencingQueueOffset, organFilters, organOffset, organSort, personFilters, publicDatasetProfile, query, selectedOrgan?.id, selectedOrgan?.mdvsId]);
+  }, [authenticatedActorId, georeferencingQueueFilters, georeferencingQueueLimit, georeferencingQueueOffset, organOffset, personFilters, query, requestedOrganFilters, requestedOrganSort, selectedOrgan?.id, selectedOrgan?.mdvsId]);
 
   const reviewerWorkspaceReady = Boolean(auth.account?.roles.includes("reviewer"));
   const staffWorkspaceReady = Boolean(auth.account && (reviewerWorkspaceReady || roleCanRead(navigatorRole, "moderator")));
@@ -3401,19 +3514,44 @@ export function App() {
   const includeGeoreferencing = staffWorkspaceReady && (
     (activeSection === "map" && showMapQueue) || researchRoute?.kind === "operations" || researchRoute?.kind === "locations"
   );
-  const shouldFetchExplore = releaseContextResolved && (activeSection === "explore" || activeSection === "map" || includeGeoreferencing);
+  const showCatalogSection = !evidenceRoute && !researchRoute && !publicVocabRoute;
+  const discoveryLanding = showCatalogSection && activeSection === "explore" && !/^\/applications(?:\/|$)/.test(window.location.pathname);
+  const discoveryQuery = query.trim();
+  const scopedDiscoveryOrganFailure = discoveryOrganFailure?.query === discoveryQuery ? discoveryOrganFailure : null;
+  const discoveryQueryPending = discoveryLanding && pendingDiscoveryQuery === discoveryQuery;
+  const hasDiscoverySearch = discoveryLanding && Boolean(discoveryQuery);
+  const exploreQuery = discoveryLanding ? discoveryQuery : query;
+  const publicDiscoverySearch = publicDatasetProfile && hasDiscoverySearch;
+  const discoveryPreviewOpen = publicDiscoverySearch && discoveryPreviewQuery === discoveryQuery;
+  const shouldFetchExplore = releaseContextResolved && (
+    activeSection === "map" || includeGeoreferencing
+    || (discoveryLanding && !discoveryQueryPending && (!publicDiscoverySearch || discoveryPreviewOpen))
+  );
+  const entitySearchRequestKey = releaseContextResolved && hasDiscoverySearch && !discoveryQueryPending
+    ? stableRequestKey({ query: discoveryQuery, release: releaseContext?.releaseVersion, attempt: entitySearchAttempt })
+    : "";
+  const scopedEntitySearch = entitySearchResult?.key === entitySearchRequestKey ? entitySearchResult : null;
+  const entitySearchLoading = hasDiscoverySearch && !scopedEntitySearch;
   const focusedOrganRoute = activeSection === "organs" && Boolean(routeOrganId());
   const shouldFetchOrgans = activeSection === "organs" && !focusedOrganRoute;
-  const shouldFetchOrganFacets = releaseContextResolved && (activeSection === "explore" || (activeSection === "organs" && !focusedOrganRoute) || activeSection === "map");
+  const shouldFetchPersons = activeSection === "persons" && !evidenceRoute;
+  const shouldFetchOrganFacets = releaseContextResolved && (
+    (discoveryLanding && (publicDatasetProfile || !discoveryQueryPending))
+    || (activeSection === "organs" && !focusedOrganRoute) || activeSection === "map"
+  );
+  // Public facets describe the whole dataset. Reuse them across queries and pages.
+  const facetQuery = publicDatasetProfile ? "" : query;
+  const facetFilters = publicDatasetProfile || discoveryLanding ? undefined : organFilters;
   const exploreRequestKey = useMemo(() => shouldFetchExplore ? stableRequestKey({
-    query,
+    query: exploreQuery,
     includeGeoreferencing,
     georeferencingLimit: includeGeoreferencing ? georeferencingQueueLimit : undefined,
     georeferencingOffset: includeGeoreferencing ? georeferencingQueueOffset : undefined,
     georeferencingPriority: includeGeoreferencing ? georeferencingQueueFilters.priorityLabel : undefined,
     georeferencingStatus: includeGeoreferencing ? georeferencingQueueFilters.status : undefined,
     georeferencingCountry: includeGeoreferencing ? georeferencingQueueFilters.country : undefined,
-  }) : "", [georeferencingQueueFilters, georeferencingQueueLimit, georeferencingQueueOffset, includeGeoreferencing, query, shouldFetchExplore]);
+  }) : "", [exploreQuery, georeferencingQueueFilters, georeferencingQueueLimit, georeferencingQueueOffset, includeGeoreferencing, shouldFetchExplore]);
+  const exploreError = exploreFailure?.key === exploreRequestKey ? exploreFailure.message : null;
   const organRequestKey = useMemo(() => stableRequestKey({
     query,
     sort: organSort,
@@ -3425,9 +3563,23 @@ export function App() {
     ...personFilters,
   }), [personFilters, query]);
   const facetRequestKey = useMemo(() => shouldFetchOrganFacets ? stableRequestKey({
-    query,
-    ...organFilters,
-  }) : "", [organFilters, query, shouldFetchOrganFacets]);
+    query: facetQuery,
+    release: releaseContext?.releaseVersion,
+    ...facetFilters,
+  }) : "", [facetFilters, facetQuery, releaseContext?.releaseVersion, shouldFetchOrganFacets]);
+
+  useEffect(() => {
+    if (!entitySearchRequestKey) return;
+    const controller = new AbortController();
+    fetchEntitySearch({ query: discoveryQuery, limit: 10 }, controller.signal)
+      .then((data) => {
+        if (!controller.signal.aborted) setEntitySearchResult({ key: entitySearchRequestKey, data, error: null });
+      })
+      .catch((err: Error) => {
+        if (!controller.signal.aborted) setEntitySearchResult({ key: entitySearchRequestKey, data: null, error: err.message });
+      });
+    return () => controller.abort();
+  }, [discoveryQuery, entitySearchRequestKey]);
 
   useEffect(() => {
     let cancelled = false;
@@ -3443,38 +3595,37 @@ export function App() {
         cancelled = true;
       };
     }
-    lastExploreRequestKey.current = exploreRequestKey;
+    const controller = new AbortController();
     setExploreLoading(true);
-    Promise.all([
-      fetchExplore({
-        query,
-        limit: 8,
-        includeGeoreferencing,
-        georeferencingLimit: includeGeoreferencing ? georeferencingQueueLimit : undefined,
-        georeferencingOffset: includeGeoreferencing ? georeferencingQueueOffset : undefined,
-        georeferencingPriority: includeGeoreferencing ? georeferencingQueueFilters.priorityLabel : undefined,
-        georeferencingStatus: includeGeoreferencing ? georeferencingQueueFilters.status : undefined,
-        georeferencingCountry: includeGeoreferencing ? georeferencingQueueFilters.country : undefined
-      }),
-      query.trim() ? fetchEntitySearch({ query, limit: 10 }) : Promise.resolve(null),
-    ])
-      .then(([exploreData, entitySearchData]) => {
+    setExploreFailure(null);
+    fetchExplore({
+      query: exploreQuery,
+      limit: 8,
+      includeGeoreferencing,
+      georeferencingLimit: includeGeoreferencing ? georeferencingQueueLimit : undefined,
+      georeferencingOffset: includeGeoreferencing ? georeferencingQueueOffset : undefined,
+      georeferencingPriority: includeGeoreferencing ? georeferencingQueueFilters.priorityLabel : undefined,
+      georeferencingStatus: includeGeoreferencing ? georeferencingQueueFilters.status : undefined,
+      georeferencingCountry: includeGeoreferencing ? georeferencingQueueFilters.country : undefined
+    }, controller.signal)
+      .then((exploreData) => {
         if (cancelled) return;
+        lastExploreRequestKey.current = exploreRequestKey;
         setExplore(exploreData);
-        setEntitySearch(entitySearchData);
+        if (exploreData.globalCounts) setDatasetCounts(exploreData.globalCounts);
         setOrganTotal(exploreData.counts.organs);
-        setError(null);
       })
       .catch((err: Error) => {
-        if (!cancelled) setError(err.message);
+        if (!cancelled) setExploreFailure({ key: exploreRequestKey, message: err.message });
       })
       .finally(() => {
         if (!cancelled) setExploreLoading(false);
       });
     return () => {
       cancelled = true;
+      controller.abort();
     };
-  }, [explore, exploreRequestKey, includeGeoreferencing, shouldFetchExplore, georeferencingQueueFilters, georeferencingQueueLimit, georeferencingQueueOffset, query]);
+  }, [explore, exploreQuery, exploreRequestKey, includeGeoreferencing, shouldFetchExplore, georeferencingQueueFilters, georeferencingQueueLimit, georeferencingQueueOffset, catalogReadAttempt]);
 
   useEffect(() => {
     let cancelled = false;
@@ -3490,11 +3641,13 @@ export function App() {
         cancelled = true;
       };
     }
-    lastOrganRequestKey.current = organRequestKey;
+    const controller = new AbortController();
     setOrganLoading(true);
-    fetchOrgans({ query, limit: ORGAN_PAGE_SIZE, offset: organOffset, includeFacets: false, sort: organSort, ...organFilters })
+    setError(null);
+    fetchOrgans({ query, limit: ORGAN_PAGE_SIZE, offset: organOffset, includeFacets: false, sort: organSort, ...organFilters }, controller.signal)
       .then((organData) => {
         if (cancelled) return;
+        lastOrganRequestKey.current = organRequestKey;
         setOrgans(organData.items);
         setOrganTotal(organData.total);
         setError(null);
@@ -3509,12 +3662,13 @@ export function App() {
       });
     return () => {
       cancelled = true;
+      controller.abort();
     };
-  }, [organFilters, organOffset, organRequestKey, organSort, organs.length, query, releaseContextResolved, shouldFetchOrgans]);
+  }, [organFilters, organOffset, organRequestKey, organSort, organs.length, query, releaseContextResolved, shouldFetchOrgans, catalogReadAttempt]);
 
   useEffect(() => {
     let cancelled = false;
-    if (activeSection !== "persons") {
+    if (!shouldFetchPersons) {
       setPersonLoading(false);
       return () => {
         cancelled = true;
@@ -3526,11 +3680,13 @@ export function App() {
         cancelled = true;
       };
     }
-    lastPersonRequestKey.current = personRequestKey;
+    const controller = new AbortController();
     setPersonLoading(true);
-    fetchPersons({ query, limit: PERSON_PAGE_SIZE, offset: personFilters.offset || 0, ...personFilters })
+    setError(null);
+    fetchPersons({ query, limit: PERSON_PAGE_SIZE, offset: personFilters.offset || 0, ...personFilters }, controller.signal)
       .then((data) => {
         if (cancelled) return;
+        lastPersonRequestKey.current = personRequestKey;
         setPersons(data);
         setError(null);
       })
@@ -3542,8 +3698,9 @@ export function App() {
       });
     return () => {
       cancelled = true;
+      controller.abort();
     };
-  }, [activeSection, personFilters, personRequestKey, persons, query]);
+  }, [shouldFetchPersons, personFilters, personRequestKey, persons, query, catalogReadAttempt]);
 
   useEffect(() => {
     if (!shouldFetchOrganFacets) return;
@@ -3553,18 +3710,22 @@ export function App() {
         cancelled = true;
       };
     }
-    lastFacetRequestKey.current = facetRequestKey;
-    fetchOrganFacets({ query, ...organFilters })
+    const controller = new AbortController();
+    fetchOrganFacets({ query: facetQuery, ...facetFilters }, controller.signal)
       .then((facets) => {
-        if (!cancelled) setOrganFacets(facets);
+        if (!cancelled) {
+          lastFacetRequestKey.current = facetRequestKey;
+          setOrganFacets(facets);
+        }
       })
       .catch(() => {
         if (!cancelled) setOrganFacets(null);
       });
     return () => {
       cancelled = true;
+      controller.abort();
     };
-  }, [facetRequestKey, organFacets, organFilters, query, shouldFetchOrganFacets]);
+  }, [facetFilters, facetQuery, facetRequestKey, organFacets, shouldFetchOrganFacets, catalogReadAttempt]);
 
   useEffect(() => {
     if (researchRoute?.kind !== "operations" || !staffWorkspaceReady) {
@@ -3633,16 +3794,18 @@ export function App() {
   }, [activeSection, institutionFilters, query, staffWorkspaceReady]);
 
   const liveStatus = useMemo(() => {
-    if (error) return `Navigator error: ${error}`;
+    if (error && !discoveryLanding) return `Navigator error: ${error}`;
+    if (hasDiscoverySearch) return "";
+    if (shouldFetchExplore && exploreError) return `Navigator error: ${exploreError}`;
     if (focusedOrganRoute) return selectedOrgan ? "Organ detail loaded." : "Loading organ detail.";
     if (activeSection === "organs") {
       if (organLoading) return "Loading MODAVIS organ data.";
       return `${organTotal} organ entries available.`;
     }
-    if (activeSection === "persons") return personLoading ? "Loading people." : "People directory loaded.";
+    if (shouldFetchPersons) return personLoading ? "Loading people." : "People directory loaded.";
     if (shouldFetchExplore) return exploreLoading ? "Loading MODAVIS discovery data." : "Discovery data loaded.";
     return "Navigator page loaded.";
-  }, [activeSection, error, exploreLoading, focusedOrganRoute, organLoading, organTotal, personLoading, selectedOrgan, shouldFetchExplore]);
+  }, [activeSection, discoveryLanding, error, exploreError, exploreLoading, focusedOrganRoute, hasDiscoverySearch, organLoading, organTotal, personLoading, selectedOrgan, shouldFetchExplore, shouldFetchPersons]);
   const researchActor = useMemo<NavigatorActor | undefined>(() => {
     const trimmed = staffActorId.trim();
     return trimmed ? { actorId: trimmed, authProvider: "navigator", subject: trimmed } : undefined;
@@ -4124,23 +4287,29 @@ export function App() {
     updateGeoreferencingQueueRoute(filters, DEFAULT_GEOREFERENCE_QUEUE_LIMIT, 0);
   };
 
-  const updateExploreQuery = (value: string) => {
+  const updateExploreQuery = (value: string, deferSearch = false) => {
     setGeoreferencingQueueOffset(0);
     if (activeSection === "organs") setOrganOffset(0);
+    if (value.trim() !== discoveryQuery) {
+      setDiscoveryPreviewQuery(null);
+      setDiscoveryOrganFailure(null);
+    }
+    if (!deferSearch || !value.trim()) setPendingDiscoveryQuery(null);
+    else if (value.trim() !== query.trim()) setPendingDiscoveryQuery(value.trim());
     setQuery(value);
     updateQueryRoute(value);
   };
 
   const updateOrganFilters = (filters: OrganFilterValues) => {
-    setOrganFilters(filters);
+    setRequestedOrganFilters(filters);
     setOrganOffset(0);
     updateOrganCatalogRoute(filters, organSort, false, query);
   };
 
   const updateOrganSort = (sort: OrganSort) => {
-    setOrganSort(sort);
+    setRequestedOrganSort(sort);
     setOrganOffset(0);
-    updateOrganCatalogRoute(organFilters, sort, false, query);
+    updateOrganCatalogRoute(requestedOrganFilters, sort, false, query);
   };
 
   const updatePersonFilters = (filters: PersonFilterValues, options: { preserveOffset?: boolean; replace?: boolean } = {}) => {
@@ -4171,7 +4340,7 @@ export function App() {
 
   const clearOrganCatalogFilters = () => {
     setQuery("");
-    setOrganFilters({});
+    setRequestedOrganFilters({});
     setOrganOffset(0);
     const url = new URL(window.location.href);
     url.pathname = SECTION_PATHS.organs;
@@ -4216,11 +4385,14 @@ export function App() {
     updateGeoreferencingQueueRoute(nextFilters, nextLimit, nextOffset);
   };
 
-  async function openOrgan(id: string, tab: OrganTab = "overview", push = true) {
+  async function openOrgan(id: string, tab: OrganTab = "overview", push = true, onFailure?: (message: string) => void) {
+    const generation = ++organNavigationGeneration.current;
+    setError(null);
     try {
       if (!id.toUpperCase().startsWith("MDVS:") && /^[a-z0-9][a-z0-9-]+$/.test(id)) {
         try {
           const alias = await fetchRouteAliasResolution("organ", id);
+          if (generation !== organNavigationGeneration.current) return;
           if (alias.canonicalRoute) {
             window.location.replace(alias.canonicalRoute);
             return;
@@ -4232,6 +4404,7 @@ export function App() {
       const returnPath = currentCatalogReturnPath();
       if (returnPath) setCatalogReturnPath(returnPath);
       const organ = await fetchOrgan(id);
+      if (generation !== organNavigationGeneration.current) return;
       const surfaceOrgan = { ...organ, loadedSections: {} };
       setSelectedOrgan(surfaceOrgan);
       setOrganSectionLoads({});
@@ -4242,13 +4415,17 @@ export function App() {
       if (push) updateRoute("organs", organ.id, tab, organ.canonicalUrl);
       if (tab === "research" && researchActor) {
         const researchData = await fetchOrganResearch(organ.id, researchActor);
+        if (generation !== organNavigationGeneration.current) return;
         setResearch(researchData);
       } else if (tab !== "research") {
         await ensureOrganSection(tab, surfaceOrgan);
       }
-      focusSection("main-content");
+      if (generation === organNavigationGeneration.current) focusSection("main-content");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not open organ");
+      if (generation !== organNavigationGeneration.current) return;
+      const message = err instanceof Error ? err.message : "Could not open organ";
+      if (onFailure) onFailure(message);
+      else setError(message);
     }
   }
 
@@ -4310,6 +4487,7 @@ export function App() {
   }
 
   function closeSelectedOrgan() {
+    organNavigationGeneration.current += 1;
     const returnPath = catalogReturnPath || `${SECTION_PATHS.organs}${window.location.search}`;
     const returnUrl = new URL(returnPath, window.location.origin);
     const returnQuery = returnUrl.searchParams.get("q") || "";
@@ -4322,14 +4500,16 @@ export function App() {
     setActiveSection("organs");
     setActiveTab("overview");
     setQuery(returnQuery);
-    setOrganFilters(returnFilters);
-    setOrganSort(returnSort);
+    setRequestedOrganFilters(returnFilters);
+    setRequestedOrganSort(returnSort);
     setOrganOffset(returnOffset);
     window.history.pushState(null, "", `${returnUrl.pathname}${returnUrl.search}`);
     focusSection("organs");
   }
 
   function navigate(section: MainSection, options: { mapQueue?: boolean } = {}) {
+    organNavigationGeneration.current += 1;
+    setDiscoveryOrganFailure(null);
     setMobileNavOpen(false);
     setActiveSection(section);
     setEvidenceRoute(null);
@@ -4337,15 +4517,17 @@ export function App() {
     setPublicVocabRoute(null);
     setShowMapQueue(section === "map" && Boolean(options.mapQueue));
     if (section !== activeSection) setQuery("");
-    if (section === "organs" && selectedOrgan) {
-      updateRoute(section, selectedOrgan.id, activeTab, selectedOrgan.canonicalUrl);
-    } else {
-      updateRoute(section, null);
+    if (section === "organs") {
+      setSelectedOrgan(null);
+      setOrganSectionLoads({});
+      setActiveTab("overview");
     }
+    updateRoute(section, null);
     focusSection(section);
   }
 
   function openResearchRoute(kind: ResearchRoute["kind"]) {
+    organNavigationGeneration.current += 1;
     setMobileNavOpen(false);
     window.history.pushState(null, "", researchRoutePath(kind));
     setResearchRoute({ kind });
@@ -4355,6 +4537,7 @@ export function App() {
   }
 
   function openPublicVocabulary(path = "/vocab") {
+    organNavigationGeneration.current += 1;
     setMobileNavOpen(false);
     window.history.pushState(null, "", path);
     setResearchRoute(null);
@@ -4377,7 +4560,7 @@ export function App() {
   function updateOrganPage(offset: number) {
     const nextOffset = Math.max(0, Math.min(offset, Math.max(organTotal - 1, 0)));
     setOrganOffset(nextOffset);
-    updateOrganCatalogRoute(organFilters, organSort, false, query, nextOffset);
+    updateOrganCatalogRoute(requestedOrganFilters, organSort, false, query, nextOffset);
     focusSection("organs", "auto");
   }
 
@@ -4420,50 +4603,93 @@ export function App() {
   const workspaceMode = Boolean(researchRoute)
     || MODERATOR_DIRECTORY_SURFACES.some((item) => item.id === activeSection);
 
+  const retryCatalogRead = () => {
+    lastExploreRequestKey.current = "";
+    lastOrganRequestKey.current = "";
+    lastPersonRequestKey.current = "";
+    lastFacetRequestKey.current = "";
+    setCatalogReadAttempt(attempt => attempt + 1);
+  };
+  const openDiscoveryOrgan = (id: string, tab: OrganTab = "overview") => {
+    setDiscoveryOrganFailure(null);
+    void openOrgan(id, tab, true, message => {
+      setDiscoveryOrganFailure({ query: discoveryQuery, id, tab, message });
+      focusSection("discovery-organ-open-error", "auto");
+    });
+  };
   const catalogSection = (() => {
+    if (activeSection === "pod-explorer") return <Suspense fallback={<div className="notice" role="status">Loading the POD explorer…</div>}><PodExplorer /></Suspense>;
     if (activeSection === "explore" && /^\/applications(?:\/|$)/.test(window.location.pathname)) return <RelatedApplications />;
     if (activeSection === "explore") {
       return (
         <ExploreSection
           active
           capabilities={publicCapabilities}
-          entitySearch={entitySearch}
-          error={error}
+          entitySearch={scopedEntitySearch?.data ?? null}
+          entitySearchError={scopedEntitySearch?.error ?? null}
+          entitySearchLoading={entitySearchLoading}
+          error={publicDiscoverySearch ? null : exploreError}
+          organOpenError={scopedDiscoveryOrganFailure?.message ?? null}
           explore={explore}
-          loading={exploreLoading}
-          organFacets={organFacets}
+          datasetCounts={datasetCounts}
+          loading={shouldFetchExplore && !exploreError && (exploreLoading || lastExploreRequestKey.current !== exploreRequestKey)}
+          organFacets={lastFacetRequestKey.current === facetRequestKey ? organFacets : null}
           publicDatasetProfile={publicDatasetProfile}
           releaseVersion={releaseContext?.releaseVersion}
           query={query}
+          searchPreviewOpen={discoveryPreviewOpen}
+          searchPreviewError={exploreError}
           onApplyOrganFilters={(filters) => {
             updateOrganFilters(filters);
             navigate("organs");
           }}
           onQueryChange={updateExploreQuery}
+          onSearchInput={value => updateExploreQuery(value, true)}
+          onSearchSubmit={() => setPendingDiscoveryQuery(null)}
+          onSearchRetry={() => setEntitySearchAttempt(attempt => attempt + 1)}
+          onSearchPreviewChange={(open) => {
+            setDiscoveryPreviewQuery(open ? discoveryQuery : null);
+            if (open) setPendingDiscoveryQuery(null);
+          }}
+          onRetry={retryCatalogRead}
+          onRetryOrgan={() => {
+            if (scopedDiscoveryOrganFailure) openDiscoveryOrgan(scopedDiscoveryOrganFailure.id, scopedDiscoveryOrganFailure.tab);
+          }}
           onOpenSection={navigate}
-          onOpenOrgan={(id, tab) => openOrgan(id, tab)}
+          onOpenOrgan={openDiscoveryOrgan}
         />
       );
     }
     if (activeSection === "organs") {
+      if (focusedOrganRoute && !selectedOrgan) return <section className="entity-section" id="organs" tabIndex={-1}>
+        <SectionHead eyebrow="Organ record" title={error ? "Record unavailable" : "Opening organ record"} />
+        {error ? <div className="notice error" role="alert"><p>{error}</p><button type="button" className="secondary" onClick={() => { const id = routeOrganId(); if (id) void openOrgan(id, routeTab(), false); }}>Try again</button></div>
+          : <div className="notice" role="status" aria-live="polite">Loading the organ’s identity and source context…</div>}
+        <a className="catalog-back" href="/organs">Browse the organ catalog</a>
+      </section>;
+      const resultsLoading = !error && (organLoading || lastOrganRequestKey.current !== organRequestKey);
       const organResultDetail = focusedOrganRoute
         ? undefined
-        : organLoading
+        : resultsLoading
           ? "Loading organ results"
-          : `${formatInteger(organTotal)} organ${organTotal === 1 ? "" : "s"}`;
+          : error ? "Result count unavailable" : `${formatNumber(organTotal)} organ records`;
       const catalogStaffMode = workspaceMode && staffWorkspaceReady;
       const returnParams = new URLSearchParams(catalogReturnPath?.split("?")[1] || "");
+      const defaultSort = normalizeOrganCatalogSort(undefined, publicDatasetProfile, mediaCapabilityAvailable);
+      const returnFilters = normalizeOrganCatalogFilters(organFiltersFromParams(returnParams), publicDatasetProfile, mediaCapabilityAvailable);
+      const returnSort = normalizeOrganCatalogSort(organSortFromParams(returnParams), publicDatasetProfile, mediaCapabilityAvailable);
       const catalogHasActiveContext = Boolean(
         query.trim()
         || Object.values(organFilters).some(Boolean)
-        || organSort !== (publicDatasetProfile ? "stops" : "label")
+        || organSort !== defaultSort
         || returnParams.get("q")
-        || Object.values(organFiltersFromParams(returnParams)).some(Boolean)
-        || organSortFromParams(returnParams, publicDatasetProfile ? "stops" : "label") !== (publicDatasetProfile ? "stops" : "label")
+        || Object.values(returnFilters).some(Boolean)
+        || returnSort !== defaultSort
       );
       return (
         <section className="entity-section" id="organs" tabIndex={-1}>
-          <SectionHead eyebrow="Organs" title="Pipe organ catalog" detail={organResultDetail} />
+          {!selectedOrgan && <SectionHead headingLevel={publicDatasetProfile ? 1 : 2} eyebrow={t("shell.section.organs", "Organs", "Orgeln")} title={t("organs.catalogue.title", "Pipe organ catalog", "Pfeifenorgelkatalog")} detail={organResultDetail} />}
+          {error && !selectedOrgan && <div className="notice error" role="alert"><p>{error}</p><button type="button" className="secondary" onClick={retryCatalogRead}>Try again</button></div>}
           {!selectedOrgan && (
             <OrganFilterPanel
               filters={organFilters}
@@ -4478,6 +4704,8 @@ export function App() {
               query={query}
               sort={organSort}
               total={organTotal}
+              loading={resultsLoading}
+              unavailable={Boolean(error)}
             />
           )}
           <div className={`organ-layout ${selectedOrgan ? "organ-layout-selected" : "organ-layout-catalog"}`}>
@@ -4494,14 +4722,14 @@ export function App() {
               </div>
             ) : (
               <div className="organ-results-stack">
-                <OrganList items={visibleOrgans} loading={organLoading} mediaAvailable={mediaCapabilityAvailable} publicProjection={publicDatasetProfile} selectedId={undefined} onOpen={(id) => openOrgan(id)} staffMode={catalogStaffMode} />
-                <CatalogPagination
+                {!error && <OrganList items={lastOrganRequestKey.current === organRequestKey ? visibleOrgans : []} loading={resultsLoading} mediaAvailable={mediaCapabilityAvailable} publicProjection={publicDatasetProfile} selectedId={undefined} onOpen={openOrgan} staffMode={catalogStaffMode} />}
+                {!error && <CatalogPagination
                   limit={ORGAN_PAGE_SIZE}
-                  loading={organLoading}
+                  loading={resultsLoading}
                   offset={organOffset}
                   onPageChange={updateOrganPage}
                   total={organTotal}
-                />
+                />}
               </div>
             )}
             {selectedOrgan ? (
@@ -4520,6 +4748,7 @@ export function App() {
                 onSectionRetry={retryOrganSection}
                 onTabChange={changeTab}
                 capabilities={publicCapabilities}
+                publicProjection={publicDatasetProfile}
               />
             ) : null}
           </div>
@@ -4540,6 +4769,9 @@ export function App() {
         ? <Suspense fallback={<p className="notice" role="status">Loading release scope…</p>}><ReleaseGuideArea context={releaseContext} /></Suspense>
         : <p className="notice" role="status">Verifying the selected read-only release baseline…</p>;
     }
+    if (activeSection === "api-guide") {
+      return <Suspense fallback={<p className="notice" role="status">Loading the API guide…</p>}><ApiGuideArea /></Suspense>;
+    }
     if (activeSection === "internal-docs") {
       if (authLoading) return <p className="notice" role="status">Checking documentation access…</p>;
       if (!staffWorkspaceReady) return <section className="entity-section"><div className="notice error" role="alert">Development documentation requires a Moderator, Admin, or Reviewer account.</div></section>;
@@ -4557,6 +4789,17 @@ export function App() {
           query={query}
           response={persons}
         />
+      );
+    }
+    if (publicSavedPage) {
+      return (
+        <section className="entity-section" aria-labelledby="saved-research-heading">
+          <h1 id="saved-research-heading">{t("workspace.savedPage.title", "Saved research", "Gespeicherte Recherche")}</h1>
+          <p>{t("workspace.savedPage.description", "Open your research workspace to see the views, records and source accounts saved in this browser.", "Öffnen Sie den Recherche-Arbeitsbereich, um die in diesem Browser gespeicherten Ansichten, Datensätze und Quellenbeschreibungen zu sehen.")}</p>
+          <button type="button" className="workspace-open" aria-haspopup="dialog" onClick={() => window.dispatchEvent(new CustomEvent("modavis:workspace-open"))}>
+            <Library size={16} aria-hidden="true" /> {t("workspace.savedPage.open", "Open research workspace", "Recherche-Arbeitsbereich öffnen")}
+          </button>
+        </section>
       );
     }
     if (activeSection === "me" || activeSection === "me-contributions" || activeSection === "me-saved" || activeSection === "me-notifications") {
@@ -4701,27 +4944,21 @@ export function App() {
     return null;
   })();
 
-  const showCatalogSection = !evidenceRoute && !researchRoute && !publicVocabRoute;
   const showUserArea = roleAtLeast(navigatorRole, "registered");
   const showModeratorArea = staffWorkspaceReady;
   const showAdminArea = adminWorkspaceReady;
-  const currentSurfaceLabel = researchRoute
-    ? navigatorPageTitle(activeSection, selectedOrgan, activeTab).replace(" | MODAVIS Navigator", "")
-    : SURFACES.find((item) => item.id === activeSection)?.label ?? "Navigator";
-  const sidebarMediaCount = organFacets?.mediaStates.find((item) => ["with_media", "available", "has_media", "media"].includes(item.state))?.count ?? 0;
-  const datasetPublicationLabel = releaseContext?.publicationLabel || "Dataset";
-  const sidebarPublicStats = organTotal > 0 ? [
-    {
-      label: "Organs",
-      ok: organTotal > 0,
-      detail: `${formatInteger(organTotal)} catalog page${organTotal === 1 ? "" : "s"}`,
-    },
-    ...(sidebarMediaCount > 0 ? [{
-      label: "With media",
-      ok: true,
-      detail: `${sidebarMediaCount} catalog pages`,
-    }] : []),
-  ] : [{ label: `Release ${releaseContext?.releaseVersion ?? ""}`.trim(), ok: true, detail: releaseContext?.readOnly ? "Read-only" : "Verification required" }];
+  const pageTitle = navigatorPageTitle(activeSection, selectedOrgan, activeTab).replace(" | MODAVIS Navigator", "");
+  const currentSurfaceLabel = activeSection === "organs" && selectedOrgan
+    ? `${selectedOrgan.title} — ${publicOrganTabLabel(t, activeTab, tabLabel(activeTab))}`
+    : publicPageLabel(t, window.location.pathname, activeSection, pageTitle);
+  const datasetPublicationLabel = publicDatasetProfile && releaseContext?.publicationLabel === "Public dataset"
+    ? t("shell.publicDataset", "Public dataset", "Öffentlicher Datensatz")
+    : releaseContext?.publicationLabel || t("shell.dataset", "Dataset", "Datensatz");
+  const sidebarPublicStats = datasetCounts ? [
+    { label: "Organ records", ok: true, detail: `${formatInteger(datasetCounts.organs)} in the dataset` },
+    { label: "Source records", ok: true, detail: `${formatInteger(datasetCounts.sourceEvidence)} supporting records` },
+    { label: "Mapped", ok: true, detail: `${formatInteger(datasetCounts.mapped)} organ records` },
+  ] : [{ label: `Release ${releaseContext?.releaseVersion ?? ""}`.trim(), ok: true, detail: releaseContext?.readOnly ? "Read-only dataset" : "Verification required" }];
 
   if (!releaseContextResolved) {
     return (
@@ -4731,43 +4968,46 @@ export function App() {
         <h1>Navigator</h1>
         {releaseContextError ? (
           <div role="alert">
-            <h2>The catalogue is temporarily unavailable</h2>
-            <p>We couldn’t load the dataset information. Please try again.</p>
-            <button type="button" onClick={() => setReleaseContextAttempt((attempt) => attempt + 1)}>Try again</button>
+            <h2>{t("shell.loadFailed", "The catalogue is temporarily unavailable", "Der Katalog ist vorübergehend nicht verfügbar")}</h2>
+            <p>{t("shell.loadFailedMessage", "We couldn’t load the dataset information. Please try again.", "Die Angaben zum Datensatz konnten nicht geladen werden. Bitte erneut versuchen.")}</p>
+            <button type="button" onClick={() => setReleaseContextAttempt((attempt) => attempt + 1)}>{t("shell.retry", "Try again", "Erneut versuchen")}</button>
           </div>
-        ) : <p role="status">Loading the catalogue…</p>}
+        ) : <p role="status">{t("shell.loading", "Loading the catalogue…", "Katalog wird geladen …")}</p>}
       </main>
     );
   }
 
   return (
     <>
-      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <a className="skip-link" href="#main-content">{t("shell.skip", "Skip to main content", "Zum Hauptinhalt springen")}</a>
       <div className="sr-only" role="status" aria-live="polite">{liveStatus}</div>
-      <main className={`${activeSection === "docs" || activeSection === "internal-docs" ? "entity-shell docs-shell" : "entity-shell"} ${mobileNavOpen ? "mobile-nav-open" : ""} ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
+      <main className={`${activeSection === "docs" || activeSection === "internal-docs" ? "entity-shell docs-shell" : "entity-shell"} ${mobileNavOpen ? "mobile-nav-open" : ""} ${sidebarCollapsed ? "sidebar-collapsed" : ""} ${publicDatasetProfile ? "public-shell" : ""}`}>
         <header className="mobile-task-header">
-          <div>
+          <div className="mobile-task-heading">
             <span>MODAVIS Navigator</span>
-            <strong>{currentSurfaceLabel}</strong>
+            <strong>{activeSection === "organs" && selectedOrgan ? organInstitutionLabel(selectedOrgan) : currentSurfaceLabel}</strong>
           </div>
-          <button type="button" aria-controls="navigator-sidebar" aria-expanded={mobileNavOpen} onClick={() => setMobileNavOpen((open) => !open)}>
-            {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
-            <span>{mobileNavOpen ? "Close" : "Menu"}</span>
-          </button>
+          <div className="mobile-task-actions">
+            {publicDatasetProfile && <span ref={setMobileWorkspaceAnchor} hidden={mobileNavOpen} />}
+            <button type="button" aria-controls="navigator-sidebar" aria-expanded={mobileNavOpen} onClick={() => setMobileNavOpen((open) => !open)}>
+              {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+              <span>{mobileNavOpen ? t("shell.close", "Close", "Schließen") : t("shell.menu", "Menu", "Menü")}</span>
+            </button>
+          </div>
         </header>
-        {mobileNavOpen && <button type="button" className="mobile-nav-backdrop" aria-label="Close navigation" onClick={() => setMobileNavOpen(false)} />}
-        <aside className="entity-sidebar" id="navigator-sidebar" inert={compactNavigation && !mobileNavOpen} role={compactNavigation && mobileNavOpen ? "dialog" : undefined} aria-modal={compactNavigation && mobileNavOpen ? true : undefined} aria-label="Navigation" onClick={() => { if (sidebarCollapsed) { setSidebarCollapsed(false); window.localStorage.setItem("modavis.navigator.sidebarCollapsed", "false"); } }}>
-          {compactNavigation && mobileNavOpen && <button type="button" className="mobile-sidebar-close" aria-label="Close navigation" onClick={() => setMobileNavOpen(false)}><X size={20} /> Close</button>}
+        {mobileNavOpen && <button type="button" className="mobile-nav-backdrop" aria-label={t("shell.closeNav", "Close navigation", "Navigation schließen")} onClick={() => setMobileNavOpen(false)} />}
+        <aside className="entity-sidebar" id="navigator-sidebar" inert={compactNavigation && !mobileNavOpen} role={compactNavigation && mobileNavOpen ? "dialog" : undefined} aria-modal={compactNavigation && mobileNavOpen ? true : undefined} aria-label={t("shell.navigation", "Navigation", "Navigation")} onClick={() => { if (sidebarCollapsed) { setSidebarCollapsed(false); rememberSidebarPreference(false); } }}>
+          {compactNavigation && mobileNavOpen && <button type="button" className="mobile-sidebar-close" aria-label={t("shell.closeNav", "Close navigation", "Navigation schließen")} onClick={() => setMobileNavOpen(false)}><X size={20} /> {t("shell.close", "Close", "Schließen")}</button>}
           <button
             type="button"
             className="sidebar-collapse-toggle"
-            aria-label={sidebarCollapsed ? "Expand navigation" : "Collapse navigation"}
+            aria-label={sidebarCollapsed ? t("shell.expandNav", "Expand navigation", "Navigation ausklappen") : t("shell.collapseNav", "Collapse navigation", "Navigation einklappen")}
             aria-expanded={!sidebarCollapsed}
             onClick={(event) => {
               event.stopPropagation();
               const next = !sidebarCollapsed;
               setSidebarCollapsed(next);
-              window.localStorage.setItem("modavis.navigator.sidebarCollapsed", String(next));
+              rememberSidebarPreference(next);
             }}
           >
             {sidebarCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
@@ -4776,7 +5016,7 @@ export function App() {
             <div className="brand-mark"><NavigatorMark /></div>
             <div>
               <p className="eyebrow">MODAVIS</p>
-              <h1>Navigator</h1>
+              {publicDatasetProfile ? <span className="brand-name">Navigator</span> : <h1>Navigator</h1>}
               <span className="alpha-badge">{publicDatasetProfile ? datasetPublicationLabel : "Closed alpha"}</span>
             </div>
           </div>
@@ -4786,54 +5026,65 @@ export function App() {
               <button type="button" className={workspaceMode ? "selected" : ""} aria-pressed={workspaceMode} onClick={() => openResearchRoute("moderation_home")}>Workspace</button>
             </div>
           )}
-          {!workspaceMode && <nav className="nav-list" aria-label="Primary">
-            {PUBLIC_PRIMARY_SURFACES.filter((item) => surfaceAvailableForCapabilities(item.id, publicCapabilities)).map((item) => {
+          {!workspaceMode && <nav className="nav-list" aria-label={t("shell.primary", "Primary", "Hauptnavigation")}>
+            {PUBLIC_PRIMARY_SURFACES.filter((item) => surfaceAvailableForCapabilities(item.id, publicCapabilities) && (!publicDatasetProfile || !["use-cases", "docs"].includes(item.id))).map((item) => {
               const Icon = SURFACE_ICONS[item.id];
               return (
                 <a
                   key={item.id}
                   href={item.path}
-                  title={item.label}
+                  title={publicSectionLabel(t, item.id, item.label)}
                   className={`${!publicVocabRoute && !window.location.pathname.startsWith("/applications") && activeSection === item.id ? "active" : ""} ${item.id === "contribute" ? "primary-contribute" : ""}`.trim()}
                   aria-current={!publicVocabRoute && !window.location.pathname.startsWith("/applications") && activeSection === item.id ? "page" : undefined}
                   onClick={(event) => {
+                    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                     event.preventDefault();
                     navigate(item.id);
                   }}
                 >
-                  <Icon size={18} /> {item.label}
+                  <Icon size={18} /> {publicSectionLabel(t, item.id, item.label)}
                 </a>
               );
             })}
-            {(!publicCapabilities || publicCapabilities.includes("vocabulary")) && <a
+            {!publicDatasetProfile && (!publicCapabilities || publicCapabilities.includes("vocabulary")) && <a
               href="/vocab"
               title="Vocabularies"
               className={publicVocabRoute ? "active" : ""}
               aria-current={publicVocabRoute ? "page" : undefined}
               onClick={(event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                 event.preventDefault();
                 openPublicVocabulary();
               }}
             >
               <BookOpen size={18} /> Vocabularies
             </a>}
-            <a
+            {!publicDatasetProfile && <a
               href="/about/release"
               title={publicDatasetProfile ? "About the data" : "Release scope"}
               className={activeSection === "release-guide" ? "active" : ""}
               aria-current={activeSection === "release-guide" ? "page" : undefined}
               onClick={(event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                 event.preventDefault();
                 navigate("release-guide");
               }}
             >
               {publicDatasetProfile ? <Info size={18} /> : <ShieldCheck size={18} />}
               {publicDatasetProfile ? "About the data" : "Release scope"}
-            </a>
-            <a href="/applications" title="Related applications" className={window.location.pathname.startsWith("/applications") ? "active" : ""} aria-current={window.location.pathname.startsWith("/applications") ? "page" : undefined}><Layers3 size={18} /> Related applications</a>
+            </a>}
+            {!publicDatasetProfile && <a href="/applications" title="Related applications" className={window.location.pathname.startsWith("/applications") ? "active" : ""} aria-current={window.location.pathname.startsWith("/applications") ? "page" : undefined}><Layers3 size={18} /> Related applications</a>}
           </nav>}
+          {publicDatasetProfile && !workspaceMode && <details className="nav-group" open>
+            <summary>{t("shell.research", "Research", "Forschung")}</summary>
+            <nav className="nav-list compact" aria-label={t("shell.research", "Research", "Forschung")}>
+              <a href="/use-cases/research-workbench" className={window.location.pathname === "/use-cases/research-workbench" ? "active" : ""} aria-current={window.location.pathname === "/use-cases/research-workbench" ? "page" : undefined}><ListChecks size={16} /> {t("shell.workbench", "Research workbench", "Recherchewerkzeuge")}</a>
+              <a href="/use-cases" className={activeSection === "use-cases" && window.location.pathname !== "/use-cases/research-workbench" ? "active" : ""} onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && event.button === 0) { event.preventDefault(); navigate("use-cases"); } }}><BarChart3 size={16} /> {t("shell.section.use-cases", "Data stories", "Datenberichte")}</a>
+              {publicCapabilities?.includes("vocabulary") && <a href="/vocab" className={publicVocabRoute ? "active" : ""} aria-current={publicVocabRoute ? "page" : undefined} onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && event.button === 0) { event.preventDefault(); openPublicVocabulary(); } }}><BookOpen size={16} /> {t("shell.vocabularies", "Vocabularies", "Vokabulare")}</a>}
+            </nav>
+          </details>}
           {!workspaceMode && <details className="nav-group" open>
-            <summary>Collections</summary>
+            <summary>{t("shell.collections", "Collections", "Sammlungen")}</summary>
             <div className="nav-list compact">
               {PUBLIC_COLLECTION_SURFACES.filter((item) => surfaceAvailableForCapabilities(item.id, publicCapabilities)).map((item) => {
                 const Icon = SURFACE_ICONS[item.id];
@@ -4844,15 +5095,25 @@ export function App() {
                     className={activeSection === item.id ? "active" : ""}
                     aria-current={activeSection === item.id ? "page" : undefined}
                     onClick={(event) => {
+                      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                       event.preventDefault();
                       navigate(item.id);
                     }}
                   >
-                    <Icon size={16} /> {item.label}
+                    <Icon size={16} /> {publicSectionLabel(t, item.id, item.label)}
                   </a>
                 );
               })}
             </div>
+          </details>}
+          {publicDatasetProfile && !workspaceMode && <details className="nav-group reference-nav" open={activeSection === "docs" || activeSection === "release-guide" || activeSection === "api-guide" || window.location.pathname.startsWith("/applications")}>
+            <summary>{t("shell.aboutGroup", "About and guidance", "Information und Hilfe")}</summary>
+            <nav className="nav-list compact" aria-label={t("shell.aboutGroup", "About and guidance", "Information und Hilfe")}>
+              <a href="/about/release" className={activeSection === "release-guide" ? "active" : ""} aria-current={activeSection === "release-guide" ? "page" : undefined}><Info size={16} /> {t("shell.section.release-guide", "About the data", "Über die Daten")}</a>
+              <a href="/about/api" className={activeSection === "api-guide" ? "active" : ""} aria-current={activeSection === "api-guide" ? "page" : undefined}><BookOpen size={16} /> {t("shell.section.api-guide", "API guide", "API-Leitfaden")}</a>
+              {publicCapabilities?.includes("documentation") && <a href="/docs" className={activeSection === "docs" ? "active" : ""} aria-current={activeSection === "docs" ? "page" : undefined}><BookOpen size={16} /> {t("shell.section.docs", "Documentation", "Dokumentation")}</a>}
+              <a href="/applications" className={window.location.pathname.startsWith("/applications") ? "active" : ""} aria-current={window.location.pathname.startsWith("/applications") ? "page" : undefined}><Layers3 size={16} /> {t("shell.applications", "Related applications", "Verwandte Anwendungen")}</a>
+            </nav>
           </details>}
           {(!publicCapabilities || publicCapabilities.includes("authentication")) && <AuthPanel auth={auth} error={authError} loading={authLoading} onSession={setAuth} />}
           <section className="status-panel">
@@ -4912,6 +5173,7 @@ export function App() {
                 href="/moderation"
                 className={researchRoute?.kind === "moderation_home" ? "research-link active" : "research-link"}
                 onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                   event.preventDefault();
                   openResearchRoute("moderation_home");
                 }}
@@ -4922,6 +5184,7 @@ export function App() {
                 href="/moderation/contributions"
                 className={researchRoute?.kind === "moderation_contributions" ? "research-link active" : "research-link"}
                 onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                   event.preventDefault();
                   openResearchRoute("moderation_contributions");
                 }}
@@ -4932,6 +5195,7 @@ export function App() {
                 href="/moderation/autonomous-bootstrap"
                 className={researchRoute?.kind === "review_workbench" ? "research-link active" : "research-link"}
                 onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                   event.preventDefault();
                   openReviewQueue("all");
                 }}
@@ -4942,6 +5206,7 @@ export function App() {
                 href="/moderation/locations"
                 className={researchRoute?.kind === "locations" ? "research-link active" : "research-link"}
                 onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                   event.preventDefault();
                   openResearchRoute("locations");
                 }}
@@ -4952,6 +5217,7 @@ export function App() {
                 href="/moderation/vocabulary"
                 className={researchRoute?.kind === "vocabulary" ? "research-link active" : "research-link"}
                 onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                   event.preventDefault();
                   openResearchRoute("vocabulary");
                 }}
@@ -4962,6 +5228,7 @@ export function App() {
                 href="/moderation/sources"
                 className={researchRoute?.kind === "sources" ? "research-link active" : "research-link"}
                 onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                   event.preventDefault();
                   openResearchRoute("sources");
                 }}
@@ -4972,6 +5239,7 @@ export function App() {
                 href="/moderation/files"
                 className={researchRoute?.kind === "files" ? "research-link active" : "research-link"}
                 onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
                   event.preventDefault();
                   openResearchRoute("files");
                 }}
@@ -5038,6 +5306,17 @@ export function App() {
         </aside>
 
         <section className="entity-workspace" id="main-content" tabIndex={-1} inert={compactNavigation && mobileNavOpen}>
+          {publicDatasetProfile && <header className="public-page-toolbar">
+            <nav aria-label={t("shell.pageContext", "Page context", "Seitenpfad")}><a href="/">Navigator</a><ChevronRight size={14} aria-hidden="true" /><span>{currentSurfaceLabel}</span></nav>
+            <div className="public-page-actions"><a href="/about/release" className="dataset-version">POD {releaseContext?.releaseVersion}</a><UiLanguageSelector /><button type="button" className="workspace-open" onClick={() => { setMobileNavOpen(false); window.dispatchEvent(new CustomEvent("modavis:workspace-open")); }}><Library size={16} /> {t("shell.workspace", "Research workspace", "Recherche-Arbeitsbereich")}</button></div>
+          </header>}
+          {publicDatasetProfile && <UiLanguagePreviewNotice />}
+          {releaseContext?.fixture?.synthetic && (
+            <aside className="fixture-banner" aria-label="Synthetic demonstration fixture">
+              <strong>Synthetic demonstration fixture</strong>
+              <p>These invented records demonstrate Navigator. They are not research evidence or an accepted POD release.</p>
+            </aside>
+          )}
           {releaseContext && !publicDatasetProfile && activeSection !== "release-guide" && (
             <aside className="release-context-banner" aria-label="Active release context">
               <div>
@@ -5051,10 +5330,13 @@ export function App() {
               >Scope &amp; limitations</a>
             </aside>
           )}
+          <RouteBoundary resetKey={`${activeSection}:${window.location.pathname}${window.location.search}:${selectedOrgan?.id || ""}:${activeTab}`} label={currentSurfaceLabel}>
+          <Suspense fallback={<div className="notice route-loading" role="status" aria-live="polite">{t("shell.loadingPage", "Loading page…", "Seite wird geladen …")}</div>}>
           {publicVocabRoute && (
             <PublicVocabularyRoutePage
               actorId={actorId}
               canManageRelease={adminMutationReady}
+              publicProjection={publicDatasetProfile}
               onActorIdChange={setActorId}
               route={publicVocabRoute}
               onBack={() => openPublicVocabulary()}
@@ -5065,7 +5347,8 @@ export function App() {
               actor={researchActor}
               publicProjection={publicDatasetProfile}
               route={evidenceRoute}
-              onBack={() => navigate(evidenceRoute.kind === "event" ? "events" : selectedOrgan ? "organs" : "explore")}
+              backToPeople={activeSection === "persons"}
+              onBack={() => navigate(evidenceRoute.kind === "event" ? "events" : activeSection === "persons" ? "persons" : selectedOrgan ? "organs" : "explore")}
             />
           )}
           {researchRoute?.kind === "operations" && (
@@ -5246,8 +5529,11 @@ export function App() {
           )}
           {showCatalogSection && catalogSection}
           {publicDatasetProfile && <PageFaq pathname={window.location.pathname} organTab={activeTab} />}
+          </Suspense>
+          </RouteBoundary>
         </section>
       </main>
+      {publicDatasetProfile && <RouteBoundary label="your research workspace"><ResearchWorkspace mobileAnchor={mobileWorkspaceAnchor} /></RouteBoundary>}
     </>
   );
 }
@@ -5482,116 +5768,162 @@ function ExploreSection({
   active,
   capabilities,
   entitySearch,
+  entitySearchError,
+  entitySearchLoading,
   error,
+  organOpenError,
   explore,
+  datasetCounts,
   loading,
   organFacets,
   publicDatasetProfile,
   releaseVersion,
   query,
+  searchPreviewOpen,
+  searchPreviewError,
   onApplyOrganFilters,
   onOpenOrgan,
   onOpenSection,
-  onQueryChange
+  onQueryChange,
+  onSearchInput,
+  onSearchSubmit,
+  onSearchRetry,
+  onSearchPreviewChange,
+  onRetry,
+  onRetryOrgan
 }: {
   active: boolean;
   capabilities?: string[] | null;
   entitySearch: EntitySearchResponse | null;
+  entitySearchError: string | null;
+  entitySearchLoading: boolean;
   error: string | null;
+  organOpenError: string | null;
   explore: ExploreResponse | null;
+  datasetCounts: ExploreResponse["globalCounts"] | null;
   loading: boolean;
   organFacets: OrganFacets | null;
   publicDatasetProfile: boolean;
   releaseVersion?: string;
   query: string;
+  searchPreviewOpen: boolean;
+  searchPreviewError: string | null;
   onApplyOrganFilters: (filters: OrganFilterValues) => void;
   onOpenOrgan: (id: string, tab?: OrganTab) => void;
   onOpenSection: (section: MainSection) => void;
   onQueryChange: (value: string) => void;
+  onSearchInput: (value: string) => void;
+  onSearchSubmit: () => void;
+  onSearchRetry: () => void;
+  onSearchPreviewChange: (open: boolean) => void;
+  onRetry: () => void;
+  onRetryOrgan: () => void;
 }) {
+  const { locale, t, formatNumber } = useUiLocale();
+  const hasQuery = Boolean(query.trim());
+  const optionalSearchPreview = publicDatasetProfile && hasQuery;
+  const scopedExplore = explore?.query.trim() === query.trim() ? explore : null;
   const suggestions = buildEntitySearchSuggestions(entitySearch);
   const mediaAvailable = !capabilities || capabilities.includes("media");
-  const mediaCount = organFacets?.mediaStates.find((item) => ["with_media", "available", "has_media", "media"].includes(item.state))?.count ?? 0;
   const mappedCount = (organFacets?.locationStates ?? [])
     .filter((item) => ["coordinates", "fallback_coordinates"].includes(item.state))
     .reduce((total, item) => total + item.count, 0);
+  const browsePreview = (
+    <>
+      {loading && <div className="notice" role="status">{optionalSearchPreview
+        ? t("explore.preview.loading", "Loading the organ and map preview…", "Vorschau mit Orgeln und Karte wird geladen …")
+        : t("explore.loading", "Loading organ catalog...", "Orgelkatalog wird geladen …")}</div>}
+      <div className="explore-grid">
+        <section aria-busy={loading}>
+          <div className="section-heading">
+            <h3>{hasQuery ? t("explore.matching", "Matching organ records", "Passende Orgeldatensätze") : publicDatasetProfile ? t("explore.examples", "Catalog examples", "Beispiele aus dem Katalog") : "Recent catalog additions"}</h3>
+            <span>{hasQuery ? t("explore.matchingSubset", "A selection from the current search", "Eine Auswahl aus der aktuellen Suche") : publicDatasetProfile ? t("explore.publicExamples", "Selected records from the public dataset", "Ausgewählte Einträge aus dem öffentlichen Datensatz") : "Recently added records from the current source corpus"}</span>
+          </div>
+          <div className="featured-grid">
+            {(scopedExplore?.featuredOrgans ?? []).map((organ) => <OrganCardButton key={organ.id} organ={organ} onOpen={onOpenOrgan} />)}
+          </div>
+        </section>
+        {(scopedExplore?.mapItems.length ?? 0) > 0 && <MapPreview items={scopedExplore?.mapItems ?? []} />}
+      </div>
+    </>
+  );
   return (
     <section className="explore-view" id="explore" tabIndex={-1} aria-current={active ? "page" : undefined}>
-      <section className="alpha-welcome" aria-labelledby="alpha-welcome-title">
+      <header className="alpha-welcome discovery-masthead" aria-labelledby="alpha-welcome-title">
         <div>
-          <span className="alpha-release-label">{publicDatasetProfile ? `MODAVIS Pipe Organ Dataset ${releaseVersion || ""}` : "Closed alpha"}</span>
-          <h2 id="alpha-welcome-title">{publicDatasetProfile ? "Discover pipe organs and their stories" : "Explore the evolving MODAVIS organ catalog"}</h2>
-          <p>{publicDatasetProfile
-            ? "Find an instrument, explore its specification and follow its history. Connect places, builders, source records and virtual instruments through the evidence they share."
-            : "This preview brings source-linked organ records into one searchable place. Coverage is still uneven, so consult the sources when you need more detail."}</p>
+          <span className="alpha-release-label">{publicDatasetProfile ? `Pipe Organ Dataset · ${releaseVersion || ""}` : "Closed alpha"}</span>
+          <h1 id="alpha-welcome-title">{publicDatasetProfile ? locale === "de"
+            ? t("explore.title", "Find an organ. Follow its story.", "Orgeln finden und ihre Geschichte entdecken.")
+            : <>Find an organ.<br className="discovery-title-break"/> Follow its story.</> : "Explore the MODAVIS organ catalog"}</h1>
+          <p>{publicDatasetProfile ? t("explore.intro", "Explore instruments, the people who built them and the evidence of their histories.", "Entdecken Sie Orgeln, die Menschen, die sie gebaut haben, und die Quellen zu ihrer Geschichte.") : "Search source-linked organ records and follow their evidence."}</p>
         </div>
-        <div className="alpha-welcome-actions">
-          <button type="button" onClick={() => onOpenSection("organs")}>Browse the catalog</button>
-          <button type="button" className="secondary" onClick={() => onOpenSection(publicDatasetProfile ? "release-guide" : "docs")}>{publicDatasetProfile ? "About the data" : "How to use the alpha"}</button>
-          {!publicDatasetProfile && <button type="button" className="text-link-button" onClick={() => onOpenSection("contribute")}>Report a data issue</button>}
-        </div>
-      </section>
-      <header className="explore-header">
-        <div>
-          <p className="eyebrow">Catalog snapshot</p>
-          <h2>Find an organ</h2>
-        </div>
-        <div className="catalog-metrics">
-          <Metric label="Organs" value={explore ? explore.counts.organs : "…"} />
-          {mediaAvailable && <Metric label="With media" value={organFacets ? mediaCount : "…"} />}
-          {mappedCount > 0 && <Metric label="Mapped" value={mappedCount} />}
-        </div>
+        <nav className="alpha-welcome-actions" aria-label={t("explore.startingPoints", "Discovery starting points", "Einstiege in die Suche")}>
+          <a href="/organs" onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) { event.preventDefault(); onOpenSection("organs"); } }}>{t("explore.catalog", "Browse the catalog", "Katalog durchsuchen")} <ChevronRight size={15}/></a>
+          <a href={publicDatasetProfile ? "/about/release" : "/docs"} onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) { event.preventDefault(); onOpenSection(publicDatasetProfile ? "release-guide" : "docs"); } }}>{publicDatasetProfile ? t("explore.about", "About the data", "Über die Daten") : "How to use the alpha"}</a>
+        </nav>
       </header>
-      <label className="search-field">
-        <Search size={18} aria-hidden="true" />
-        <input
-          aria-label="Search the MODAVIS catalog"
-          aria-autocomplete="list"
-          autoComplete="off"
-          list="entity-search-autocomplete"
-          value={query}
-          onChange={(event) => onQueryChange(event.target.value)}
-          placeholder="Search by organ, builder, place, or identifier"
-        />
-      </label>
+      <form className="discovery-search" aria-label={t("explore.searchRegion", "Search the dataset", "Datensatz durchsuchen")} onSubmit={event => { event.preventDefault(); onSearchSubmit(); document.getElementById("discovery-results")?.focus(); }}>
+        <div className="search-field">
+          <Search size={20} aria-hidden="true" />
+          <input aria-label={t("explore.searchLabel", "Search the MODAVIS catalog", "MODAVIS-Katalog durchsuchen")} aria-autocomplete="list" aria-describedby="discovery-search-hint" maxLength={200} autoComplete="off" list="entity-search-autocomplete" value={query} onChange={event => onSearchInput(event.target.value)} placeholder={t("explore.searchHint", "Place, builder, organ or ID", "Ort, Orgelbauer, Orgel oder ID")} />
+          {hasQuery && <button type="button" className="discovery-clear" onClick={event => { event.currentTarget.parentElement?.querySelector("input")?.focus(); onQueryChange(""); }} aria-label={t("explore.clearSearch", "Clear search", "Suche leeren")}>{t("explore.clear", "Clear", "Leeren")}</button>}
+          <button type="submit" className="discovery-submit">{t("explore.submit", "Search", "Suchen")}</button>
+        </div>
+        <p id="discovery-search-hint" className="discovery-search-hint">{t("explore.searchScope", "Organs, people, places and documented events.", "Orgeln, Personen, Orte und dokumentierte Ereignisse.")} <a href="/pod-explorer">{t("explore.allCollections", "Explore all collections", "Alle Sammlungen erkunden")} <ChevronRight size={13}/></a></p>
+      </form>
+      <div className="catalog-metrics discovery-dataset-metrics" aria-label={t("explore.coverage", "Whole dataset coverage", "Abdeckung des gesamten Datensatzes")}>
+        <Metric label={t("explore.organCount", "Organ records · whole dataset", "Orgeldatensätze im gesamten Datensatz")} value={datasetCounts ? formatNumber(datasetCounts.organs) : "…"} />
+        <Metric label={t("explore.sourceCount", "Source records · whole dataset", "Quelldatensätze im gesamten Datensatz")} value={datasetCounts ? formatNumber(datasetCounts.sourceEvidence) : "…"} />
+        <Metric label={t("explore.mappedCount", "Mapped organ records", "Kartierte Orgeldatensätze")} value={datasetCounts ? formatNumber(datasetCounts.mapped) : "…"} />
+      </div>
       <datalist id="entity-search-autocomplete">
         {suggestions.map((suggestion) => <option key={suggestion.id} value={suggestion.label}>{suggestion.group}</option>)}
       </datalist>
-      {query.trim() && mappedCount > 0 && (
-        <div className="search-handoff-actions">
+      {hasQuery && (publicDatasetProfile || mappedCount > 0) && (
+        <nav className="search-handoff-actions" aria-label={t("explore.continueSearch", "Continue this search", "Diese Suche fortsetzen")}>
+          {publicDatasetProfile && <a href={`/organs?q=${encodeURIComponent(query.trim())}`}>
+            <Library size={16} aria-hidden="true" /> {t("explore.catalogSearch", "Search the organ catalog", "Im Orgelkatalog suchen")}
+          </a>}
           <a href={mapSearchHref(query)}>
-            <MapIcon size={16} /> Map with this search
+            <MapIcon size={16} aria-hidden="true" /> {t("explore.mapSearch", "Map with this search", "Suchergebnisse auf der Karte")}
           </a>
-        </div>
+        </nav>
       )}
-      {query.trim() && <SearchAssistPanel query={query} search={entitySearch} onOpenOrgan={onOpenOrgan} onQueryChange={onQueryChange} />}
-      {query.trim() && <EntitySearchPanel search={entitySearch} onOpenOrgan={onOpenOrgan} />}
-      <p className="search-scope-note">Search covers organ names, places, builders, institutions, and stable identifiers. More filters are available in the catalog.</p>
+      {error && <div className="notice error discovery-recovery" role="alert"><p>{error}</p><button type="button" className="secondary" onClick={onRetry}>{t("explore.retry", "Try again", "Erneut versuchen")}</button></div>}
+      {organOpenError && <div className="notice error discovery-recovery" id="discovery-organ-open-error" role="alert" tabIndex={-1}><p>{organOpenError}</p><button type="button" className="secondary" onClick={onRetryOrgan}>{t("explore.retryOrgan", "Try opening the organ again", "Orgel erneut öffnen")}</button></div>}
+      {hasQuery && <SearchAssistPanel query={query} search={entitySearch} onOpenOrgan={onOpenOrgan} />}
+      {hasQuery && <EntitySearchPanel search={entitySearch} onOpenOrgan={onOpenOrgan} error={entitySearchError} loading={entitySearchLoading} onRetry={onSearchRetry} />}
+      {optionalSearchPreview && <details className="discovery-browse" key={query.trim()} onToggle={event => onSearchPreviewChange(event.currentTarget.open)}>
+        <summary>{t("explore.preview.summary", "Preview matching organs and map", "Vorschau mit passenden Orgeln und Karte")}</summary>
+        {searchPreviewOpen && (searchPreviewError
+          ? <div className="notice error" role="alert"><p>{searchPreviewError}</p><button type="button" className="secondary" onClick={onRetry}>{t("explore.retry", "Try again", "Erneut versuchen")}</button></div>
+          : browsePreview)}
+      </details>}
+      <details className="discovery-method"><summary>{t("explore.methods", "About these results and their sources", "Zu diesen Ergebnissen und ihren Quellen")}</summary><p className="search-scope-note" id="discovery-search-scope">{t("explore.scopeNote", "Search links organ records, people and organizations, places, and documented event assertions. Matching records can describe the same object or activity; the totals are not a count of physical instruments or unique historical events.", "Die Suche verknüpft Orgeldatensätze, Personen und Organisationen, Orte sowie dokumentierte Ereignisangaben. Mehrere Treffer können dasselbe Objekt oder dieselbe Tätigkeit beschreiben. Die Trefferzahlen geben daher weder die Zahl der Instrumente noch die Zahl eigenständiger historischer Ereignisse an.")}</p><p>{t("explore.datasetNote", "Dataset totals count catalogue records and supporting source memberships. Multiple records can preserve accounts of one instrument; source membership does not establish independent confirmation.", "Die Gesamtzahlen beziehen sich auf Katalogdatensätze und zugehörige Quellenbelege. Mehrere Datensätze können dasselbe Instrument beschreiben. Mehrere Quellenbelege allein weisen keine unabhängige Bestätigung nach.")}</p><p>{t("explore.mapNote", "Mapped totals include exact and approximate current locations. Each record states its coordinate precision. Search treats your text literally and ranks exact identifiers, exact names and name prefixes before broader public text matches. The result cards state why they matched.", "Die Kartenzahlen umfassen genaue und ungefähre heutige Standorte. Bei jedem Datensatz ist die Genauigkeit der Koordinaten angegeben. Die Suche berücksichtigt den eingegebenen Wortlaut. Genaue Kennungen, genaue Namen und Namensanfänge erscheinen vor weiteren Texttreffern. Bei jedem Treffer steht der Grund für die Übereinstimmung.")}</p><a href="/about/release">{t("explore.methodsLink", "Dataset scope and methods", "Umfang und Methoden des Datensatzes")}</a></details>
+      <details className="discovery-browse" open={!hasQuery}><summary>{t("explore.collections", "Browse the collections", "Sammlungen durchsuchen")} <span>{t("explore.collectionHint", "Start with a place, builder or resource", "Mit einem Ort, Orgelbauer oder Material beginnen")}</span></summary>
       <PublicEntityGateway
         facets={organFacets}
         includeMedia={mediaAvailable}
+        publicDatasetProfile={publicDatasetProfile}
         loading={loading}
-        organTotal={explore?.counts.organs ?? 0}
-        georeferencingBacklog={explore?.counts.georeferencingBacklog ?? 0}
+        organTotal={optionalSearchPreview ? datasetCounts?.organs ?? null : scopedExplore?.counts.organs ?? null}
+        queryActive={hasQuery && !optionalSearchPreview}
+        georeferencingBacklog={scopedExplore?.counts.georeferencingBacklog ?? 0}
         onApplyOrganFilters={onApplyOrganFilters}
         onOpenSection={onOpenSection}
         onQueryChange={onQueryChange}
       />
-      {error && <div className="notice error" role="alert">{error}</div>}
-      {loading && <div className="notice" role="status">Loading organ catalog...</div>}
-      <div className="explore-grid">
-        <section>
-          <div className="section-heading">
-            <h3>{publicDatasetProfile ? "Catalog examples" : "Recent catalog additions"}</h3>
-            <span>{publicDatasetProfile ? "Selected records from the public dataset" : "Recently added records from the current source corpus"}</span>
-          </div>
-          <div className="featured-grid">
-            {(explore?.featuredOrgans ?? []).map((organ) => <OrganCardButton key={organ.id} organ={organ} onOpen={onOpenOrgan} />)}
-          </div>
-        </section>
-        {(explore?.mapItems.length ?? 0) > 0 && <MapPreview items={explore?.mapItems ?? []} />}
-      </div>
-      {publicDatasetProfile && <section className="explore-stories"><div className="section-heading"><h3>Follow a question</h3><a href="/use-cases">All data stories <ChevronRight size={16} /></a></div><div className="story-link-grid"><a href="/use-cases/documented-organ-lifecycles"><strong>How has an organ changed?</strong><span>Activities and historical descriptions <ChevronRight size={16} /></span></a><a href="/use-cases/regional-organ-stop-names"><strong>Where are stop names recorded?</strong><span>Names, pitches and regional evidence <ChevronRight size={16} /></span></a><a href="/virtual-instruments?organ_link=linked"><strong>Which organs have virtual instruments?</strong><span>Explore documented links <ChevronRight size={16} /></span></a></div></section>}
+      </details>
+      {!optionalSearchPreview && browsePreview}
+      {publicDatasetProfile && <section className="explore-stories"><div className="section-heading"><h3>{t("explore.followQuestion", "Follow a question", "Einer Frage nachgehen")}</h3><a href="/use-cases">{t("explore.allStories", "All data stories", "Alle Datenberichte")} <ChevronRight size={16} /></a></div><div className="story-link-grid"><a href="/use-cases/documented-organ-lifecycles"><strong>{t("explore.changeQuestion", "How has an organ changed?", "Wie hat sich eine Orgel verändert?")}</strong><span>{t("explore.changeEvidence", "Activities and historical descriptions", "Tätigkeiten und historische Beschreibungen")} <ChevronRight size={16} /></span></a><a href="/use-cases/regional-organ-stop-names"><strong>{t("explore.stopQuestion", "Where are stop names recorded?", "Wo sind Registerbezeichnungen belegt?")}</strong><span>{t("explore.stopEvidence", "Names, pitches and regional evidence", "Bezeichnungen, Fußtonlagen und regionale Belege")} <ChevronRight size={16} /></span></a><a href="/virtual-instruments?organ_link=linked"><strong>{t("explore.virtualQuestion", "Which organs have virtual instruments?", "Für welche Orgeln gibt es virtuelle Instrumente?")}</strong><span>{t("explore.virtualEvidence", "Explore documented links", "Dokumentierte Verknüpfungen erkunden")} <ChevronRight size={16} /></span></a></div></section>}
+      {publicDatasetProfile && <section className="research-start" aria-labelledby="research-start-title">
+        <div className="section-heading"><h3 id="research-start-title">{t("explore.researchTrail", "Build a research trail", "Einen Rechercheweg festhalten")}</h3><span>{t("explore.trailHint", "From discovery to source evidence", "Vom Treffer zum Quellenbeleg")}</span></div>
+        <div className="research-start-grid">
+          <a href="/pod-explorer"><Layers3 size={21} /><strong>{t("explore.podTitle", "Explore every part of the POD", "Den gesamten POD erkunden")}</strong><span>{t("explore.podHint", "Find the available entities, relationships and reusable resources.", "Verfügbare Entitäten, Beziehungen und wiederverwendbare Materialien finden.")}</span><span className="research-start-action">{t("explore.podAction", "Explore the POD", "POD erkunden")} <ChevronRight size={16} /></span></a>
+          <a href="/use-cases/research-workbench"><ListChecks size={21} /><strong>{t("explore.researchTitle", "Ask a question of the evidence", "Quellen gezielt befragen")}</strong><span>{t("explore.researchHint", "Filter accounts, compare assertions and retain a reproducible selection.", "Quellenbeschreibungen filtern, Angaben vergleichen und die Auswahl nachvollziehbar sichern.")}</span><span className="research-start-action">{t("explore.researchAction", "Open research workbench", "Recherchewerkzeuge öffnen")} <ChevronRight size={16} /></span></a>
+          <button type="button" onClick={() => window.dispatchEvent(new CustomEvent("modavis:workspace-open"))}><Library size={21} /><strong>{t("explore.keepTitle", "Keep useful records together", "Relevante Datensätze sammeln")}</strong><span>{t("explore.keepHint", "Save views and organ records in this browser, then compare or export your work.", "Ansichten und Orgeldatensätze in diesem Browser speichern und anschließend vergleichen oder exportieren.")}</span><span className="research-start-action">{t("explore.workspaceAction", "Open research workspace", "Recherche-Arbeitsbereich öffnen")} <ChevronRight size={16} /></span></button>
+        </div>
+      </section>}
       {publicDatasetProfile && <ApplicationsPreview />}
     </section>
   );
@@ -5599,23 +5931,28 @@ function ExploreSection({
 
 function PublicEntityGateway({
   facets,
+  publicDatasetProfile = false,
   georeferencingBacklog,
   includeMedia,
   loading,
   organTotal,
+  queryActive,
   onApplyOrganFilters,
   onOpenSection,
   onQueryChange,
 }: {
   facets: OrganFacets | null;
+  publicDatasetProfile?: boolean;
   georeferencingBacklog: number;
   includeMedia: boolean;
   loading: boolean;
-  organTotal: number;
+  organTotal: number | null;
+  queryActive: boolean;
   onApplyOrganFilters: (filters: OrganFilterValues) => void;
   onOpenSection: (section: MainSection) => void;
   onQueryChange: (value: string) => void;
 }) {
+  const { t, formatNumber } = useUiLocale();
   const topCountries = (facets?.countries ?? []).slice(0, 4);
   const topBuilders = (facets?.builders ?? []).filter((item) => item.builder && item.builder !== "Builder unknown").slice(0, 4);
   const topBuildings = (facets?.institutions ?? [])
@@ -5629,20 +5966,21 @@ function PublicEntityGateway({
     ?? facets?.mediaStates.find((item) => item.state === "has_media")
     ?? facets?.mediaStates.find((item) => item.state === "media");
   const mediaCount = availableMedia?.count ?? 0;
-  type GatewayChip = { label: string; onAction: () => void };
+  type GatewayChip = { label: string; onAction: () => void; href?: string };
   const gateways = [
     {
       id: "organs",
       icon: Library,
       title: "Organs",
-      body: loading && organTotal === 0
-        ? "Organ pages and coverage are loading."
-        : `${formatInteger(organTotal)} organ pages with builders, dates, places,${includeMedia ? " media," : ""} and citation context.`,
+      body: organTotal === null
+        ? loading ? "Organ pages and coverage are loading." : "Browse organ records and their source-attributed specifications."
+        : `${formatNumber(organTotal)} ${queryActive ? "matching " : ""}organ records with source-attributed builders, dates, places,${includeMedia ? " media," : ""} and citation context.`,
       action: "Browse organs",
+      href: "/organs",
       onAction: () => onOpenSection("organs"),
       chips: [
-        includeMedia && mediaCount > 0 && availableMedia ? { label: `${formatInteger(mediaCount)} with media`, onAction: () => onApplyOrganFilters({ mediaState: availableMedia.state }) } : null,
-        locatedCount > 0 ? { label: `${formatInteger(locatedCount)} mapped`, onAction: () => onOpenSection("map") } : null,
+        includeMedia && mediaCount > 0 && availableMedia ? { label: `${formatNumber(mediaCount)} with media`, onAction: () => onApplyOrganFilters({ mediaState: availableMedia.state }) } : null,
+        locatedCount > 0 ? { label: `${formatNumber(locatedCount)} mapped`, onAction: () => onOpenSection("map") } : null,
       ].filter((chip): chip is GatewayChip => Boolean(chip)),
     },
     {
@@ -5651,9 +5989,10 @@ function PublicEntityGateway({
       title: "Places",
       body: "Start from countries and location text, then open the matching organ pages.",
       action: "Browse all places",
+      href: publicDatasetProfile ? "/pod-explorer?collection=places" : undefined,
       onAction: () => onOpenSection("organs"),
-      chips: topCountries.map((item) => ({ label: `${item.country} ${formatInteger(item.count)}`, onAction: () => onApplyOrganFilters({ country: item.country }) })),
-      note: georeferencingBacklog ? `${formatInteger(georeferencingBacklog)} pages have location text but no reviewed map point yet.` : undefined,
+      chips: topCountries.map((item) => ({ label: `${item.country} · ${formatNumber(item.count)} organ records`, onAction: () => onApplyOrganFilters({ country: item.country }) })),
+      note: georeferencingBacklog ? `${formatNumber(georeferencingBacklog)} pages have location text but no reviewed map point yet.` : undefined,
     },
     {
       id: "people",
@@ -5661,17 +6000,19 @@ function PublicEntityGateway({
       title: "People",
       body: "Browse organ pages by builder, maker, and related names.",
       action: "Browse all people",
+      href: "/persons",
       onAction: () => onOpenSection("persons"),
-      chips: topBuilders.map((item) => ({ label: `${item.builder} ${formatInteger(item.count)}`, onAction: () => onApplyOrganFilters({ builder: item.builder }) })),
+      chips: topBuilders.map((item) => ({ label: `${item.builder} · ${formatNumber(item.count)} organ records`, onAction: () => onApplyOrganFilters({ builder: item.builder }) })),
     },
     {
       id: "institutions",
       icon: Building2,
       title: "Buildings",
       body: "Churches, halls, venues, residences, and other host buildings are discoverable through organ-page context.",
-      action: "Browse all buildings",
+      action: publicDatasetProfile ? "Explore places and venues" : "Browse all buildings",
+      href: publicDatasetProfile ? "/pod-explorer?collection=places" : undefined,
       onAction: () => onOpenSection("organs"),
-      chips: topBuildings.map((item) => ({ label: `${item.institution} ${formatInteger(item.count)}`, onAction: () => onApplyOrganFilters({ institution: item.institution }) })),
+      chips: topBuildings.map((item) => ({ label: `${item.institution} · ${formatNumber(item.count)} organ records`, onAction: () => onApplyOrganFilters({ institution: item.institution }) })),
     },
     {
       id: "vmi",
@@ -5679,10 +6020,11 @@ function PublicEntityGateway({
       title: "Virtual instruments",
       body: "Explore sample sets, organ definitions, configurations, editions, and component ranks as structured, source-backed entities.",
       action: "Browse virtual instruments",
+      href: "/virtual-instruments",
       onAction: () => onOpenSection("vmi"),
       chips: [
-        { label: "Linked to organs", onAction: () => onOpenSection("vmi") },
-        { label: "Downloaded copies", onAction: () => onOpenSection("vmi") },
+        { label: "Linked to organs", href: publicDatasetProfile ? "/virtual-instruments?organ_link=linked" : undefined, onAction: () => onOpenSection("vmi") },
+        { label: publicDatasetProfile ? "No confirmed organ link" : "Downloaded copies", href: publicDatasetProfile ? "/virtual-instruments?organ_link=unlinked" : undefined, onAction: () => onOpenSection("vmi") },
       ],
     },
   ];
@@ -5699,132 +6041,85 @@ function PublicEntityGateway({
         </header>
         {gateway.chips.length > 0 && (
           <div className="public-gateway-chips">
-            {gateway.chips.slice(0, 4).map((chip) => (
-              <button
-                type="button"
-                key={`${gateway.id}:${chip.label}`}
-                onClick={chip.onAction}
-                aria-label={`Browse ${chip.label}`}
-              >
-                {chip.label}
-              </button>
+            {gateway.chips.slice(0, 4).map((chip: GatewayChip) => (
+              chip.href ? <a key={`${gateway.id}:${chip.label}`} href={chip.href} aria-label={`Browse ${chip.label}`}>{chip.label}</a> : <button type="button" key={`${gateway.id}:${chip.label}`} onClick={chip.onAction} aria-label={`Browse ${chip.label}`}>{chip.label}</button>
             ))}
           </div>
         )}
         {gateway.note && <small>{gateway.note}</small>}
-        <button type="button" className="text-link-button public-gateway-action" onClick={gateway.onAction}>
-          <ChevronRight size={15} /> {gateway.action}
-        </button>
+        {gateway.href ? <a className="gateway-action public-gateway-action" href={gateway.href}>{gateway.action}<ChevronRight size={15}/></a> : <button type="button" className="text-link-button public-gateway-action" onClick={gateway.onAction}><ChevronRight size={15} /> {gateway.action}</button>}
       </article>
     );
   };
   return (
-    <section className="public-entity-gateway" aria-label="Public catalog entry points">
-      <div className="section-heading">
-        <h3>Browse the catalog</h3>
-        <span>Choose a starting point in the public dataset</span>
-      </div>
+    <section className="public-entity-gateway" aria-label={t("explore.gateway.region", "Public catalog entry points", "Einstiege in den öffentlichen Katalog")}>
       <div className="public-gateway-grid">
         {gateways.slice(0, 3).map(renderGateway)}
       </div>
       <details className="secondary-gateways">
-        <summary>More ways to explore</summary>
+        <summary>{t("explore.gateway.more", "More ways to explore", "Weitere Einstiege")}</summary>
         <div className="public-gateway-grid secondary">{gateways.slice(3).map(renderGateway)}</div>
       </details>
     </section>
   );
 }
 
-function SearchAssistPanel({
-  query,
-  search,
-  onOpenOrgan,
-  onQueryChange,
-}: {
+function SearchAssistPanel({query, search, onOpenOrgan}: {
   query: string;
   search: EntitySearchResponse | null;
   onOpenOrgan: (id: string, tab?: OrganTab) => void;
-  onQueryChange: (value: string) => void;
 }) {
+  const { t } = useUiLocale();
   const exact = exactSearchAffordance(query, search);
-  const suggestions = buildEntitySearchSuggestions(search).slice(0, 8);
-  if (!exact && suggestions.length === 0 && search) return null;
-  const openExact = () => {
-    if (!exact?.item) return;
-    const target = searchResultTarget(exact.item);
-    if (target) onOpenOrgan(target.organId, target.tab);
-  };
-  return (
-    <section className="search-assist-panel" aria-label="Search autocomplete">
-      {exact && (
-        <div className="search-assist-exact">
-          <span>{exact.label}</span>
-          {exact.href ? (
-            <a href={exact.href}>{exact.detail}</a>
-          ) : exact.item && searchResultTarget(exact.item) ? (
-            <button type="button" onClick={openExact}>{exact.detail}</button>
-          ) : (
-            <strong>{exact.detail}</strong>
-          )}
-        </div>
-      )}
-      {suggestions.length > 0 && (
-        <div className="search-assist-suggestions">
-          {suggestions.map((suggestion) => {
-            const target = searchResultTarget(suggestion.item);
-            const content = (
-              <>
-                <span>{suggestion.group}</span>
-                <strong>{suggestion.label}</strong>
-              </>
-            );
-            if (target) {
-              return (
-                <button key={suggestion.id} type="button" onClick={() => onOpenOrgan(target.organId, target.tab)}>
-                  {content}
-                </button>
-              );
-            }
-            if (suggestion.item.url) {
-              return (
-                <a key={suggestion.id} href={suggestion.item.url}>
-                  {content}
-                </a>
-              );
-            }
-            return (
-              <button key={suggestion.id} type="button" onClick={() => onQueryChange(suggestion.label)}>
-                {content}
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </section>
-  );
+  if (!exact) return null;
+  const target = exact.item ? searchResultTarget(exact.item) : null;
+  return <section className="search-assist-panel" aria-label={t("explore.assist.direct", "Direct match", "Direkter Treffer")}>
+    <div className="search-assist-exact"><span>{exact.label}</span>
+      {exact.href ? <a href={exact.href}>{exact.detail}</a> : target ? <button type="button" onClick={() => onOpenOrgan(target.organId, target.tab)}>{exact.detail}</button> : <strong>{exact.detail}</strong>}
+    </div>
+  </section>;
 }
 
-function EntitySearchPanel({ search, onOpenOrgan }: { search: EntitySearchResponse | null; onOpenOrgan: (id: string, tab?: OrganTab) => void }) {
+function EntitySearchPanel({ search, onOpenOrgan, error, loading = true, onRetry }: { search: EntitySearchResponse | null; onOpenOrgan: (id: string, tab?: OrganTab) => void; error?: string | null; loading?: boolean; onRetry?: () => void }) {
+  const { t } = useUiLocale();
   const items = search?.items ?? [];
-  const groups = search?.groups && search.groups.length > 0
-    ? search.groups.map((group) => ({ id: group.id, label: publicSearchGroupLabel(group.label), items: group.items, total: group.total }))
-    : groupEntitySearchResults(items);
+  const groups = entitySearchGroups(search);
+  const query = search?.query || "";
+  const continueHref = (group: string) => {
+    const q = encodeURIComponent(query);
+    return ({organs:`/organs?q=${q}`,people:`/persons?q=${q}&publication_state=canonical`,places:`/pod-explorer?collection=places&q=${q}`,events:`/events?q=${q}`} as Record<string,string>)[group];
+  };
   return (
-    <section className="entity-search-panel" aria-label="Entity search results">
+    <section className="entity-search-panel" id="discovery-results" tabIndex={-1} aria-label={t("explore.results.region", "Entity search results", "Suchergebnisse nach Entitätstyp")} aria-busy={loading && !search}>
       <div className="section-heading">
-        <h3>Search results</h3>
-        <span>{search ? `${search.total} match${search.total === 1 ? "" : "es"}` : "Searching..."}</span>
+        <h3>{t("explore.results.heading", "Search results", "Suchergebnisse")}</h3>
+        <span role="status">{!search
+          ? error ? t("explore.results.unavailable", "Search unavailable", "Suche nicht verfügbar")
+            : loading ? t("explore.results.searching", "Searching…", "Suche läuft …")
+            : t("explore.results.prompt", "Enter a search to find records", "Suchbegriff eingeben, um Datensätze zu finden")
+          : search.totalScope === "matching_records"
+            ? t("explore.results.count", "{shown, number} of {total, plural, one {# match} other {# matches}} shown", "{shown, number} von {total, plural, one {# Treffer} other {# Treffern}} angezeigt", { shown: items.length, total: search.total })
+            : t("explore.results.shown", "{shown, plural, one {# result} other {# results}} shown", "{shown, plural, one {# Treffer} other {# Treffer}} angezeigt", { shown: items.length })}</span>
       </div>
+      {error && <div className="notice error" role="alert"><p>{error}</p>{onRetry && <button type="button" className="secondary" onClick={onRetry}>{t("explore.retry", "Try again", "Erneut versuchen")}</button>}</div>}
       <div className="entity-search-list">
         {groups.map((group) => (
           <section className="entity-search-group" key={group.id} aria-label={group.label}>
             <div className="entity-search-group-head">
               <strong>{group.label}</strong>
-              <span>{group.total ?? group.items.length}</span>
+              <span>{group.total !== undefined ? `${group.items.length} of ${group.total} shown` : `${group.items.length} shown`}</span>
+              {group.total !== undefined && group.total > group.items.length && continueHref(group.id) && <a href={continueHref(group.id)} className="search-group-continue">Continue in {group.label}<ChevronRight size={14}/></a>}
             </div>
             {group.items.map((item) => {
               const target = searchResultTarget(item);
               const entityStateLabel = item.entityStateLabel || (item.kind === "organ" ? "Canonical page" : item.kind === "candidate_entity" ? "Source-mentioned entity" : "");
+              const shownLabels = new Set([friendlyLabel(item.entityType || item.kind), entityStateLabel, item.match?.label || ""].map(label => label.toLocaleLowerCase()));
+              const badges = (item.badges ?? []).filter(badge => {
+                const key = badge.trim().toLocaleLowerCase();
+                if (!key || shownLabels.has(key) || !publicSearchBadgeVisible(badge)) return false;
+                shownLabels.add(key);
+                return true;
+              }).slice(0, 3);
               const resultBody = (
                 <>
                   <div>
@@ -5838,9 +6133,10 @@ function EntitySearchPanel({ search, onOpenOrgan }: { search: EntitySearchRespon
                     </div>
                   )}
                   {publicSearchSummary(item.summary) && <p>{publicSearchSummary(item.summary)}</p>}
+                  {items.filter(other => other.title === item.title).length > 1 && <small className="search-record-id">{item.mdvsId || item.targetId}</small>}
                   <div className="entity-search-meta">
-                    {(item.badges ?? []).filter(publicSearchBadgeVisible).slice(0, 3).map((badge) => <span key={`${item.targetId}:${badge}`}>{badge}</span>)}
-                    {item.match?.label && publicSearchBadgeVisible(item.match.label) ? <span>{item.match.label}</span> : null}
+                    {badges.map((badge) => <span key={`${item.targetId}:${badge}`}>{badge}</span>)}
+                    {item.match?.label ? <span className="search-match-reason">{item.match.label}</span> : null}
                     {item.targetOrganTitle && item.kind !== "organ" ? <span>{item.targetOrganTitle}</span> : null}
                   </div>
                   <ChevronRight size={16} aria-hidden="true" />
@@ -5866,20 +6162,18 @@ function EntitySearchPanel({ search, onOpenOrgan }: { search: EntitySearchRespon
             })}
           </section>
         ))}
-        {search && items.length === 0 && <p className="muted">No entity matches found.</p>}
+        {search && items.length === 0 && <div className="search-empty"><p>{t("explore.results.none", "No entity matches found.", "Keine passenden Entitäten gefunden.")}</p><span>{t("explore.results.retryHint", "Try a shorter name, another spelling or a stable MDVS identifier. You can also browse the", "Mit einem kürzeren Namen, einer anderen Schreibweise oder einer stabilen MDVS-Kennung suchen. Sie können auch die")} <a href="/pod-explorer">{t("explore.results.collections", "POD collections", "POD-Sammlungen")}</a>.</span></div>}
       </div>
     </section>
   );
 }
 
 function publicSearchGroupLabel(label: string): string {
-  if (/source|identifier/i.test(label)) return "Identifiers and links";
-  if (/evidence|other/i.test(label)) return "Other matches";
-  return label;
+  return label || "Other matches";
 }
 
 function publicSearchBadgeVisible(value: string): boolean {
-  return !/source|normalizer|evidence|raw|session|path|pending|approved|review|confidence/i.test(value);
+  return !/normalizer|raw|session|path|pending|approved|review|confidence/i.test(value);
 }
 
 function publicSearchSummary(summary?: string | null): string {
@@ -5900,6 +6194,7 @@ function entityStateClass(value?: string | null): string {
 function publicRelatedSummary(summary?: string | null): string {
   if (!summary) return "";
   return summary
+    .replace(/^(\d+) source assertion\(s\)\.$/, (_, count: string) => `${formatInteger(Number(count))} source assertion${count === "1" ? "" : "s"}.`)
     .replace(/source-backed/gi, "documented")
     .replace(/normalizer candidate/gi, "documented")
     .replace(/documented candidate/gi, "documented")
@@ -5979,25 +6274,38 @@ function reviewWorkbenchStatusTone(workbench?: ProcessorReviewWorkbench | null):
   return "neutral";
 }
 
+function entitySearchGroups(search: EntitySearchResponse | null): EntitySearchGroup[] {
+  // The flat result list is the returned membership. Older public responses
+  // contain group counts without nested items; never dereference those counts
+  // as rows or interpret them as a complete matching total.
+  return groupEntitySearchResults(search?.items ?? []).map((group) => {
+    const metadata = search?.groups?.find((item) => item.id === group.id);
+    const total = metadata?.total;
+    return {
+      ...group,
+      label: publicSearchGroupLabel(metadata?.label || group.label),
+      ...(typeof total === "number" && Number.isInteger(total) && total >= group.items.length ? { total } : {}),
+    };
+  });
+}
+
 function groupEntitySearchResults(items: EntitySearchItem[]): EntitySearchGroup[] {
   const definitions = [
     { id: "places", label: "Places and cities", predicate: (item: EntitySearchItem) => /place|city|town|location/i.test(item.entityType || "") },
     { id: "institutions", label: "Buildings and venues", predicate: (item: EntitySearchItem) => /institution|building|church|venue/i.test(`${item.entityType || ""} ${item.sourcePath || ""}`) },
     { id: "organs", label: "Organs", predicate: (item: EntitySearchItem) => item.kind === "organ" || /pipe_organ|organ/i.test(item.entityType || "") },
     { id: "people", label: "People and builders", predicate: (item: EntitySearchItem) => /person|agent|builder|maker/i.test(`${item.entityType || ""} ${item.sourcePath || ""}`) },
+    { id: "events", label: "Documented event assertions", predicate: (item: EntitySearchItem) => /event|activity/i.test(item.entityType || item.kind) },
     { id: "sources", label: "Identifiers and links", predicate: (item: EntitySearchItem) => Boolean(item.sourceRecordId || item.mdvsId || /identifier|source|id/i.test(item.sourcePath || "")) },
   ];
-  const grouped = new globalThis.Map<string, EntitySearchItem[]>(definitions.map((definition) => [definition.id, []]));
-  const other: EntitySearchItem[] = [];
+  const grouped = new globalThis.Map<string, EntitySearchGroup>(definitions.map((definition) => [definition.id, { id: definition.id, label: definition.label, items: [] }]));
   items.forEach((item) => {
     const definition = definitions.find((candidate) => candidate.predicate(item));
-    if (definition) grouped.get(definition.id)?.push(item);
-    else other.push(item);
+    const id = item.searchGroup || definition?.id || "other";
+    if (!grouped.has(id)) grouped.set(id, { id, label: item.searchGroupLabel || definition?.label || "Other matches", items: [] });
+    grouped.get(id)!.items.push(item);
   });
-  return [
-    ...definitions.map((definition) => ({ id: definition.id, label: definition.label, items: grouped.get(definition.id) ?? [] })),
-    { id: "other", label: "Other matches", items: other },
-  ].filter((group) => group.items.length > 0);
+  return [...grouped.values()].filter((group) => group.items.length > 0);
 }
 
 function OrganFilterPanel({
@@ -6012,7 +6320,9 @@ function OrganFilterPanel({
   onSortChange,
   query,
   sort,
-  total
+  total,
+  loading,
+  unavailable
 }: {
   filters: OrganFilterValues;
   facets: OrganFacets | null;
@@ -6026,7 +6336,10 @@ function OrganFilterPanel({
   query: string;
   sort: OrganSort;
   total: number;
+  loading: boolean;
+  unavailable: boolean;
 }) {
+  const { t, formatNumber } = useUiLocale();
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const filterToggleRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => {
@@ -6041,6 +6354,8 @@ function OrganFilterPanel({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [advancedOpen]);
   const queryText = query.trim();
+  const quickMediaState = publicProjection ? "with_media" : "available";
+  const quickMediaActive = filters.mediaState === quickMediaState;
   const hiddenStaffFiltersActive = !staffMode && Boolean(filters.status || filters.reviewState);
   const removeHiddenStaffFilters = () => onChange({ ...filters, status: undefined, reviewState: undefined });
   const activeFilters = [
@@ -6109,19 +6424,20 @@ function OrganFilterPanel({
   }
   mapParams.set("from", "organs");
   const mapHref = `/map?${mapParams.toString()}`;
-  const mapFilterRepresentable = !filters.country || Boolean(mapCountryCode);
+  const mapMediaUnsupported = publicProjection && Boolean(filters.mediaState);
+  const mapFilterRepresentable = !mapMediaUnsupported && (!filters.country || Boolean(mapCountryCode));
   return (
     <div className="organ-filter-panel">
       <div className="organ-filter-toolbar">
         <CatalogSearchControl value={query} onChange={onQueryChange} />
         <label className="organ-sort-control">
           <ArrowDownWideNarrow size={16} />
-          <span>Sort by</span>
+          <span>{t("organs.filters.sort", "Sort by", "Sortieren nach")}</span>
           <select value={sort} onChange={(event) => onSortChange(event.target.value as OrganSort)}>
-            {publicProjection && <option value="stops">Most documented stops</option>}
-            <option value="label">Alphabetical</option>
-            {!publicProjection && <option key="recent" value="recent">Recently documented</option>}
-            {!publicProjection && mediaAvailable && <option key="media" value="media">Most media</option>}
+            {publicProjection && <option value="stops">{t("organs.filters.mostStops", "Most documented stops", "Meiste dokumentierte Register")}</option>}
+            <option value="label">{t("organs.filters.alphabetical", "Alphabetical", "Alphabetisch")}</option>
+            {!publicProjection && <option key="recent" value="recent">{t("organs.filters.recent", "Recently documented", "Zuletzt dokumentiert")}</option>}
+            {!publicProjection && mediaAvailable && <option key="media" value="media">{t("organs.filters.mostMedia", "Most media", "Meiste Medien")}</option>}
             {!publicProjection && <option key="complete" value="complete">Most complete</option>}
             {!publicProjection && <option key="specification" value="specification">Largest specification</option>}
             {staffMode && <option key="review" value="review">Most confident</option>}
@@ -6129,22 +6445,23 @@ function OrganFilterPanel({
           </select>
         </label>
         <button ref={filterToggleRef} type="button" className="advanced-filter-toggle" aria-controls="organ-filter-fields" aria-expanded={advancedOpen} onClick={() => setAdvancedOpen((open) => !open)}>
-          <Filter size={16} /> Filters {filterCount > 0 && <span>{filterCount}</span>}
+          <Filter size={16} /> {t("organs.filters.filters", "Filters", "Filter")} {filterCount > 0 && <span>{filterCount}</span>}
         </button>
       </div>
       {publicProjection && (
         <details className="organ-public-sort-note">
-          <summary>How stop counts are ordered</summary>
+          <summary>{t("organs.filters.countOrder", "How stop counts are ordered", "Sortierung nach Registerzahl")}</summary>
           <p>
           “Most documented stops” places records with an asserted stop total first.
           Stop count indicates instrument scale, but it is not a pipe count; ranks and
-          stop construction determine the number of pipes.
+          stop construction determine the number of pipes. Select a stop total to
+          open the organ’s specification.
           </p>
         </details>
       )}
-      <div className="organ-quick-filters" aria-label="Quick catalog filters">
-        {mediaAvailable && <button type="button" aria-pressed={filters.mediaState === "available"} onClick={() => onChange({ ...filters, mediaState: filters.mediaState === "available" ? undefined : "available" })}>
-          <Image size={14} /> With media
+      <div className="organ-quick-filters" aria-label={t("organs.filters.quick", "Quick catalog filters", "Schnellfilter für den Katalog")}>
+        {mediaAvailable && <button type="button" aria-pressed={quickMediaActive} onClick={() => onChange({ ...filters, mediaState: quickMediaActive ? undefined : quickMediaState })}>
+          <Image size={14} /> {t("organs.filters.withMedia", "With media", "Mit Medien")}
         </button>}
         {staffMode && (
           <button type="button" aria-pressed={filters.locationState === "needs_georeferencing"} onClick={() => onChange({ ...filters, locationState: filters.locationState === "needs_georeferencing" ? undefined : "needs_georeferencing" })}>
@@ -6154,110 +6471,110 @@ function OrganFilterPanel({
       </div>
       <div id="organ-filter-fields" className={`filters organ-filters ${advancedOpen ? "expanded" : "collapsed"}`} inert={!advancedOpen}>
         <div className="organ-filter-popover-head">
-          <div><strong>Filter organs</strong><span>Narrow the catalog by place, maker, period, and documentation.</span></div>
-          <button type="button" className="icon-button" aria-label="Close filters" onClick={() => { setAdvancedOpen(false); window.requestAnimationFrame(() => filterToggleRef.current?.focus()); }}><X size={17} /></button>
+          <div><strong>{t("organs.filters.organFilters", "Filter organs", "Orgeln filtern")}</strong><span>{t("organs.filters.filterHint", "Narrow the catalog by place, maker, period, and documentation.", "Katalog nach Ort, Orgelbauer, Zeitraum und Dokumentation eingrenzen.")}</span></div>
+          <button type="button" className="icon-button" aria-label={t("organs.filters.close", "Close filters", "Filter schließen")} onClick={() => { setAdvancedOpen(false); window.requestAnimationFrame(() => filterToggleRef.current?.focus()); }}><X size={17} /></button>
         </div>
         <details className="organ-filter-group" open>
-          <summary>Place, source, and period</summary>
+          <summary>{t("organs.filters.groupPlace", "Place, source, and period", "Ort, Quelle und Zeitraum")}</summary>
           <div className="organ-filter-group-grid">
             {!publicProjection && <label>
-              Country
+              {t("organs.filters.country", "Country", "Land")}
               <select value={filters.country || ""} onChange={(event) => onChange({ ...filters, country: event.target.value || undefined })}>
-                <option value="">All countries</option>
-                {optionRows(facets?.countries ?? [], "country", filters.country).map((item) => (
+                <option value="">{t("organs.filters.allCountries", "All countries", "Alle Länder")}</option>
+                {optionRows(facets?.countries ?? [], "country", filters.country, formatNumber).map((item) => (
                   <option key={item.value} value={item.value}>{item.label}</option>
                 ))}
               </select>
             </label>}
             <label>
-              Source collection
+              {t("organs.filters.sourceCollection", "Source collection", "Quellensammlung")}
               <select value={filters.source || ""} onChange={(event) => onChange({ ...filters, source: event.target.value || undefined })}>
-                <option value="">All canonical organs</option>
-                {optionRows(facets?.sources ?? [], "source", filters.source).map((item) => (
+                <option value="">{t("organs.filters.allCanonical", "All canonical organs", "Alle kanonischen Orgeldatensätze")}</option>
+                {optionRows(facets?.sources ?? [], "source", filters.source, formatNumber).map((item) => (
                   <option key={item.value} value={item.value}>{item.label}</option>
                 ))}
               </select>
             </label>
             <label>
-              Builder
-              <input list="organ-builder-options" value={filters.builder || ""} onChange={(event) => onChange({ ...filters, builder: event.target.value || undefined })} placeholder="Any builder" />
+              {t("organs.filters.builder", "Builder", "Orgelbauer")}
+              <input list="organ-builder-options" value={filters.builder || ""} onChange={(event) => onChange({ ...filters, builder: event.target.value || undefined })} placeholder={t("organs.filters.anyBuilder", "Any builder", "Alle Orgelbauer")} />
               <datalist id="organ-builder-options">
-                {optionRows(facets?.builders ?? [], "builder", filters.builder).map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+                {optionRows(facets?.builders ?? [], "builder", filters.builder, formatNumber).map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
               </datalist>
             </label>
             {!publicProjection && <label>
-              Building / host venue
-              <input list="organ-institution-options" value={filters.institution || ""} onChange={(event) => onChange({ ...filters, institution: event.target.value || undefined })} placeholder="Any building or venue" />
+              {t("organs.filters.building", "Building / host venue", "Gebäude / Veranstaltungsort")}
+              <input list="organ-institution-options" value={filters.institution || ""} onChange={(event) => onChange({ ...filters, institution: event.target.value || undefined })} placeholder={t("organs.filters.anyBuilding", "Any building or venue", "Alle Gebäude und Veranstaltungsorte")} />
               <datalist id="organ-institution-options">
-                {optionRows(facets?.institutions ?? [], "institution", filters.institution).map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+                {optionRows(facets?.institutions ?? [], "institution", filters.institution, formatNumber).map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
               </datalist>
             </label>}
             {!publicProjection && <label>
-              Documented period
+              {t("organs.filters.period", "Documented period", "Dokumentierter Zeitraum")}
               <select value={filters.periodBucket || ""} onChange={(event) => onChange({ ...filters, periodBucket: event.target.value || undefined, yearFrom: undefined, yearTo: undefined })}>
-                <option value="">Any documented period</option>
-                {(facets?.periodBuckets ?? []).map((item) => <option key={item.bucket} value={item.bucket}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anyPeriod", "Any documented period", "Alle dokumentierten Zeiträume")}</option>
+                {(facets?.periodBuckets ?? []).map((item) => <option key={item.bucket} value={item.bucket}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>}
             {!publicProjection && <details className="organ-filter-range" open={Boolean(filters.yearFrom || filters.yearTo)}>
-              <summary>Custom year range</summary>
+              <summary>{t("organs.filters.customYears", "Custom year range", "Eigener Jahresbereich")}</summary>
               <div>
                 <label>
-                  Year from
-                  <input type="number" min="1" max="2500" inputMode="numeric" value={filters.yearFrom || ""} onChange={(event) => onChange({ ...filters, periodBucket: undefined, yearFrom: event.target.value || undefined })} placeholder="e.g. 1900" />
+                  {t("organs.filters.yearFrom", "Year from", "Ab Jahr")}
+                  <input type="number" min="1" max="2500" inputMode="numeric" value={filters.yearFrom || ""} onChange={(event) => onChange({ ...filters, periodBucket: undefined, yearFrom: event.target.value || undefined })} placeholder={t("organs.filters.yearFromHint", "e.g. 1900", "z. B. 1900")} />
                 </label>
                 <label>
-                  Year to
-                  <input type="number" min="1" max="2500" inputMode="numeric" value={filters.yearTo || ""} onChange={(event) => onChange({ ...filters, periodBucket: undefined, yearTo: event.target.value || undefined })} placeholder="e.g. 1950" />
+                  {t("organs.filters.yearTo", "Year to", "Bis Jahr")}
+                  <input type="number" min="1" max="2500" inputMode="numeric" value={filters.yearTo || ""} onChange={(event) => onChange({ ...filters, periodBucket: undefined, yearTo: event.target.value || undefined })} placeholder={t("organs.filters.yearToHint", "e.g. 1950", "z. B. 1950")} />
                 </label>
               </div>
             </details>}
             <label>
-              Location readiness
+              {t("organs.filters.location", "Location readiness", "Standortangaben")}
               <select value={filters.locationState || ""} onChange={(event) => onChange({ ...filters, locationState: event.target.value || undefined })}>
-                <option value="">Any location state</option>
-                {(facets?.locationStates ?? []).map((item) => <option key={item.state} value={item.state}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anyLocation", "Any location state", "Alle Arten von Standortangaben")}</option>
+                {(facets?.locationStates ?? []).map((item) => <option key={item.state} value={item.state}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>
           </div>
         </details>
         <details className="organ-filter-group" open={Boolean((!publicProjection && (filters.minSources || filters.evidenceState || filters.stopCountBucket)) || filters.conflictScope || filters.specificationState)}>
-          <summary>Sources and specification</summary>
+          <summary>{t("organs.filters.groupEvidence", "Sources and specification", "Quellen und Disposition")}</summary>
           <div className="organ-filter-group-grid">
             {!publicProjection && <label>
-              Supporting sources
+              {t("organs.filters.supportingSources", "Supporting sources", "Belegende Quellen")}
               <select value={filters.minSources || ""} onChange={(event) => onChange({ ...filters, minSources: event.target.value || undefined })}>
-                <option value="">Any source count</option>
-                {(facets?.sourceCountBuckets ?? []).map((item) => <option key={item.bucket} value={item.bucket}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anySourceCount", "Any source count", "Beliebige Quellenzahl")}</option>
+                {(facets?.sourceCountBuckets ?? []).map((item) => <option key={item.bucket} value={item.bucket}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>}
             {!publicProjection && <label>
-              Evidence agreement
+              {t("organs.filters.agreement", "Evidence agreement", "Übereinstimmung der Belege")}
               <select value={filters.evidenceState || ""} onChange={(event) => onChange({ ...filters, evidenceState: event.target.value || undefined })}>
-                <option value="">Any evidence state</option>
-                <option value="multiple_sources">Multiple supporting sources</option>
-                {(facets?.evidenceStates ?? []).filter((item) => item.state !== "single_source").map((item) => <option key={item.state} value={item.state}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anyEvidence", "Any evidence state", "Alle Belegzustände")}</option>
+                <option value="multiple_sources">{t("organs.filters.multiple", "Multiple supporting sources", "Mehrere belegende Quellen")}</option>
+                {(facets?.evidenceStates ?? []).filter((item) => item.state !== "single_source").map((item) => <option key={item.state} value={item.state}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>}
             <label>
-              Conflict area
+              {t("organs.filters.conflict", "Conflict area", "Bereich abweichender Angaben")}
               <select value={filters.conflictScope || ""} onChange={(event) => onChange({ ...filters, conflictScope: event.target.value || undefined })}>
-                <option value="">Any conflict area</option>
-                {(facets?.conflictScopes ?? []).map((item) => <option key={item.scope} value={item.scope}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anyConflict", "Any conflict area", "Alle Bereiche")}</option>
+                {(facets?.conflictScopes ?? []).map((item) => <option key={item.scope} value={item.scope}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>
             <label>
-              Specification
+              {t("organs.filters.specification", "Specification", "Disposition")}
               <select value={filters.specificationState || ""} onChange={(event) => onChange({ ...filters, specificationState: event.target.value || undefined })}>
-                <option value="">Any specification state</option>
-                {(facets?.specificationStates ?? []).map((item) => <option key={item.state} value={item.state}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anySpecification", "Any specification state", "Alle Dokumentationszustände")}</option>
+                {(facets?.specificationStates ?? []).map((item) => <option key={item.state} value={item.state}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>
             {!publicProjection && <label>
-              Stop count
+              {t("organs.filters.stopCount", "Stop count", "Registerzahl")}
               <select value={filters.stopCountBucket || ""} onChange={(event) => onChange({ ...filters, stopCountBucket: event.target.value || undefined })}>
-                <option value="">Any stop count</option>
-                {(facets?.stopCountBuckets ?? []).map((item) => <option key={item.bucket} value={item.bucket}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anyStopCount", "Any stop count", "Beliebige Registerzahl")}</option>
+                {(facets?.stopCountBuckets ?? []).map((item) => <option key={item.bucket} value={item.bucket}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>}
           </div>
@@ -6265,33 +6582,33 @@ function OrganFilterPanel({
         <details className="organ-filter-group" open={Boolean(filters.virtualInstrument || filters.eventType || filters.historyState || (mediaAvailable && (filters.mediaState || filters.mediaKind)))}>
           <summary>{mediaAvailable ? "History and media" : "History and virtual instruments"}</summary>
           <div className="organ-filter-group-grid">
-            <label>Virtual instruments<select value={filters.virtualInstrument || ""} onChange={event => onChange({ ...filters, virtualInstrument: event.target.value || undefined })}><option value="">All organs</option><option value="yes">With linked virtual instruments</option><option value="no">Without linked virtual instruments</option></select></label>
+            <label>{t("organs.filters.virtual", "Virtual instruments", "Virtuelle Instrumente")}<select value={filters.virtualInstrument || ""} onChange={event => onChange({ ...filters, virtualInstrument: event.target.value || undefined })}><option value="">{t("organs.filters.all", "All organs", "Alle Orgeln")}</option><option value="yes">{t("organs.filters.withVirtual", "With linked virtual instruments", "Mit verknüpften virtuellen Instrumenten")}</option><option value="no">{t("organs.filters.withoutVirtual", "Without linked virtual instruments", "Ohne verknüpfte virtuelle Instrumente")}</option></select></label>
             {!publicProjection && <label>
-              Documented history
+              {t("organs.filters.history", "Documented history", "Dokumentierte Geschichte")}
               <select value={filters.historyState || ""} onChange={(event) => onChange({ ...filters, historyState: event.target.value || undefined })}>
-                <option value="">Any history state</option>
-                {(facets?.historyStates ?? []).map((item) => <option key={item.state} value={item.state}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anyHistory", "Any history state", "Alle Dokumentationszustände")}</option>
+                {(facets?.historyStates ?? []).map((item) => <option key={item.state} value={item.state}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>}
             <label>
-              Event type
+              {t("organs.filters.event", "Event type", "Ereignistyp")}
               <select value={filters.eventType || ""} onChange={(event) => onChange({ ...filters, eventType: event.target.value || undefined })}>
-                <option value="">Any controlled event type</option>
-                {(facets?.eventTypes ?? []).map((item) => <option key={item.code} value={item.code}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anyEvent", "Any controlled event type", "Alle kontrollierten Ereignistypen")}</option>
+                {(facets?.eventTypes ?? []).map((item) => <option key={item.code} value={item.code}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>
             {mediaAvailable && <label>
-              Media availability
+              {t("organs.filters.media", "Media availability", "Medienverfügbarkeit")}
               <select value={filters.mediaState || ""} onChange={(event) => onChange({ ...filters, mediaState: event.target.value || undefined })}>
-                <option value="">Any media state</option>
-                {(facets?.mediaStates ?? []).map((item) => <option key={item.state} value={item.state}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anyMedia", "Any media state", "Alle Verfügbarkeitszustände")}</option>
+                {(facets?.mediaStates ?? []).map((item) => <option key={item.state} value={item.state}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>}
-            {mediaAvailable && <label>
-              Media type
+            {mediaAvailable && !publicProjection && <label>
+              {t("organs.filters.mediaType", "Media type", "Medientyp")}
               <select value={filters.mediaKind || ""} onChange={(event) => onChange({ ...filters, mediaKind: event.target.value || undefined })}>
-                <option value="">Any media type</option>
-                {(facets?.mediaKinds ?? []).map((item) => <option key={item.kind} value={item.kind}>{item.label} ({item.count})</option>)}
+                <option value="">{t("organs.filters.anyMediaType", "Any media type", "Alle Medientypen")}</option>
+                {(facets?.mediaKinds ?? []).map((item) => <option key={item.kind} value={item.kind}>{item.label} ({formatNumber(item.count)})</option>)}
               </select>
             </label>}
           </div>
@@ -6303,7 +6620,7 @@ function OrganFilterPanel({
               Status
               <select value={filters.status || ""} onChange={(event) => onChange({ ...filters, status: event.target.value || undefined })}>
                 <option value="">All states</option>
-                {optionRows(facets?.statuses ?? [], "status", filters.status).map((item) => (
+                {optionRows(facets?.statuses ?? [], "status", filters.status, formatNumber).map((item) => (
                   <option key={item.value} value={item.value}>{item.label}</option>
                 ))}
               </select>
@@ -6313,7 +6630,7 @@ function OrganFilterPanel({
               <select value={filters.reviewState || ""} onChange={(event) => onChange({ ...filters, reviewState: event.target.value || undefined })}>
                 <option value="">Any review state</option>
                 {(facets?.reviewStates ?? []).map((item) => (
-                  <option key={item.state} value={item.state}>{item.label} ({item.count})</option>
+                  <option key={item.state} value={item.state}>{item.label} ({formatNumber(item.count)})</option>
                 ))}
               </select>
             </label>
@@ -6321,8 +6638,8 @@ function OrganFilterPanel({
         )}
       </div>
       <div className="active-filters organ-filter-summary">
-        <div className="filter-chip-row" aria-label="Active organ filters">
-          <span className="result-count">{formatInteger(total)} result{total === 1 ? "" : "s"}</span>
+        <div className="filter-chip-row" aria-label={t("organs.filters.active", "Active organ filters", "Aktive Orgelfilter")}>
+          <span className="result-count" role="status">{loading ? "Loading results…" : unavailable ? "Result count unavailable" : `${formatNumber(total)} matching organ records`}</span>
           {activeFilters.map((item) => (
             <span className="filter-chip" key={`${item.id}:${item.value}`} aria-label={`${item.label}: ${item.value}`}>
               <span><strong>{item.label}</strong>{item.value}</span>
@@ -6341,10 +6658,12 @@ function OrganFilterPanel({
           ) : (
             <span
               className="organ-filter-map-link is-unavailable"
-              title="The current release has no mapped coordinates for this country."
+              title={mapMediaUnsupported ? undefined : t("organs.filters.mapUnavailable", "The current release has no mapped coordinates for this country.", "In diesem Datenstand sind für dieses Land keine Koordinaten kartiert.")}
             >
               <MapIcon size={15} aria-hidden="true" />
-              No mapped records for this country
+              {mapMediaUnsupported
+                ? t("organs.filters.mapMediaUnsupported", "Media filtering is unavailable on the map", "Der Medienfilter ist auf der Karte nicht verfügbar")
+                : t("organs.filters.noMapped", "No mapped records for this country", "Keine kartierten Datensätze für dieses Land")}
             </span>
           )}
           {clearable && (
@@ -6353,7 +6672,7 @@ function OrganFilterPanel({
               type="button"
               onClick={onClear}
             >
-              Clear filters
+              {t("organs.filters.clear", "Clear filters", "Filter zurücksetzen")}
             </button>
           )}
         </div>
@@ -6363,6 +6682,7 @@ function OrganFilterPanel({
 }
 
 function CatalogSearchControl({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const { t } = useUiLocale();
   const [draft, setDraft] = useState(value);
 
   useEffect(() => {
@@ -6383,7 +6703,7 @@ function CatalogSearchControl({ value, onChange }: { value: string; onChange: (v
     <label className="catalog-search-control">
       <Search size={16} aria-hidden="true" />
       <input
-        aria-label="Search the organ catalog"
+        aria-label={t("organs.search.label", "Search the organ catalog", "Orgelkatalog durchsuchen")}
         autoComplete="off"
         value={draft}
         onBlur={commit}
@@ -6394,13 +6714,13 @@ function CatalogSearchControl({ value, onChange }: { value: string; onChange: (v
             commit();
           }
         }}
-        placeholder="Search catalog"
+        placeholder={t("organs.search.hint", "Search catalog", "Katalog durchsuchen")}
       />
     </label>
   );
 }
 
-function optionRows<T extends Record<string, string | number | null | undefined>>(rows: T[], key: keyof T, active?: string) {
+function optionRows<T extends Record<string, string | number | null | undefined>>(rows: T[], key: keyof T, active?: string, formatCount = formatInteger) {
   const seen = new Set<string>();
   const options = rows
     .map((row) => {
@@ -6408,7 +6728,7 @@ function optionRows<T extends Record<string, string | number | null | undefined>
       const value = typeof raw === "string" ? raw : "";
       const count = typeof row.count === "number" ? row.count : 0;
       const suppliedLabel = typeof row.label === "string" ? row.label.trim() : "";
-      return value ? { value, label: `${suppliedLabel || friendlyLabel(value)} (${formatInteger(count)})` } : null;
+      return value ? { value, label: `${suppliedLabel || friendlyLabel(value)} (${formatCount(count)})` } : null;
     })
     .filter(Boolean) as Array<{ value: string; label: string }>;
   options.forEach((option) => seen.add(option.value));
@@ -6463,7 +6783,7 @@ function candidateEntityPageUrl(category: string, id: string, entityType?: strin
 }
 
 function formatInteger(value: number): string {
-  return new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(value);
+  return new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 }).format(value);
 }
 
 function recordTextValue(record: Record<string, unknown>, ...keys: string[]): string {
@@ -6611,9 +6931,11 @@ function relocationMapOverviewHref(yearFrom = "", yearTo = ""): string {
 }
 
 function EventDirectoryPage({ publicProjection = false }: { publicProjection?: boolean }) {
+  const { t, formatNumber } = useUiLocale();
   const params = new URLSearchParams(window.location.search);
   const [query, setQuery] = useState(params.get("q") || "");
-  const [type, setType] = useState(params.get("type") || "");
+  const [type, setType] = useState(params.get("type") || params.get("event_type") || "");
+  const [source, setSource] = useState(params.get("source") || "");
   const [yearFrom, setYearFrom] = useState(params.get("year_from") || "");
   const [yearTo, setYearTo] = useState(params.get("year_to") || "");
   const [subject, setSubject] = useState(params.get("subject") || "");
@@ -6636,6 +6958,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
     fetchEvents({
       query,
       type,
+      source,
       yearFrom,
       yearTo,
       subject,
@@ -6651,9 +6974,11 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
         setResponse(data);
         const next = new URL(window.location.href);
         next.pathname = SECTION_PATHS.events;
+        next.searchParams.delete("event_type");
         [
           ["q", query],
           ["type", type],
+          ["source", source],
           ["year_from", yearFrom],
           ["year_to", yearTo],
           ["subject", subject],
@@ -6677,7 +7002,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
       });
     }, 250);
     return () => { cancelled = true; window.clearTimeout(timer); };
-  }, [query, type, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset]);
+  }, [query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset]);
 
   const total = response?.total ?? 0;
   const eventTypeOptions = response?.facets?.eventTypes ?? [];
@@ -6698,6 +7023,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
     || option.code.toLocaleLowerCase().includes(normalizedTypeQuery)
   ));
   const advancedFilterCount = [
+    source,
     subject,
     participant,
     completeness,
@@ -6707,6 +7033,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
   const activeFilterCount = [
     query,
     type,
+    source,
     yearFrom,
     yearTo,
     subject,
@@ -6718,6 +7045,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
   const clearFilters = () => {
     setQuery("");
     setType("");
+    setSource("");
     setYearFrom("");
     setYearTo("");
     setSubject("");
@@ -6734,9 +7062,9 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
   };
   return (
     <section className="entity-section event-directory" id="events" tabIndex={-1}>
-      <SectionHead eyebrow="Events" title="Organ history events" detail={loading ? "Loading documented events" : `${formatInteger(total)} documented event${total === 1 ? "" : "s"}`} />
-      <p className="section-intro">Events connected to organ histories in the current source corpus.</p>
-      <nav className="event-directory-shortcuts" aria-label="Event overview shortcuts">
+      <SectionHead headingLevel={1} eyebrow="Events" title={t("event.catalogue.heading", "Organ history events", "Ereignisse der Orgelgeschichte")} detail={loading ? "Loading documented events" : `${formatNumber(total)} documented event${total === 1 ? "" : "s"}`} />
+      <p className="section-intro">{t("event.catalogue.intro", "Events connected to organ histories in the current source corpus.", "Ereignisse mit Bezug zur Orgelgeschichte im aktuellen Quellenkorpus.")}</p>
+      <nav className="event-directory-shortcuts" aria-label={t("event.catalogue.shortcuts", "Event overview shortcuts", "Schnellzugriffe zur Ereignisübersicht")}>
         <a
           className={relocationSelected ? "selected" : ""}
           href={`/events?type=${encodeURIComponent(relocationType)}`}
@@ -6744,7 +7072,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
         >
           <Move size={16} aria-hidden="true" />
           <span>{publicProjection ? "Transfer events" : "Relocation events"}</span>
-          {relocationTypeOption && <strong>{relocationTypeOption.count.toLocaleString()}</strong>}
+          {relocationTypeOption && <strong>{formatNumber(relocationTypeOption.count)}</strong>}
         </a>
         <>
         <a
@@ -6753,7 +7081,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
           aria-current={routeState === "mapped" ? "page" : undefined}
         >
           <ListChecks size={16} aria-hidden="true" />
-          <span>Mapped endpoint records</span>
+          <span>{t("event.catalogue.mapped", "Mapped endpoint records", "Kartierte Endpunkte")}</span>
         </a>
         <a href={relocationMapOverviewHref(yearFrom, yearTo)}>
           <MapIcon size={16} aria-hidden="true" />
@@ -6763,66 +7091,66 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
         {relocationSelected && (
           <a href="/events">
             <ListChecks size={16} aria-hidden="true" />
-            <span>All event types</span>
+            <span>{t("event.catalogue.allTypes", "All event types", "Alle Ereignistypen")}</span>
           </a>
         )}
       </nav>
       {relocationSelected && (
         <p className="event-relocation-scope-note">
-          Map actions appear when documented origin and destination observations have usable coordinates. Connections are schematic; unresolved endpoint evidence remains available.
+          {t("event.catalogue.mapBoundary", "Map actions appear when documented origin and destination observations have usable coordinates. Connections are schematic; unresolved endpoint evidence remains available.", "Kartenlinks erscheinen, wenn für dokumentierte Ausgangs- und Zielorte nutzbare Koordinaten vorliegen. Die Verbindungen sind schematisch. Belege zu ungeklärten Endpunkten bleiben verfügbar.")}
         </p>
       )}
       <form className="event-filter-bar" onSubmit={(event) => event.preventDefault()}>
         <label className="event-keyword-filter">
-          <span>Keywords</span>
+          <span>{t("event.catalogue.keywords", "Keywords", "Suchbegriffe")}</span>
           <div className="event-filter-input">
             <Search size={16} aria-hidden="true" />
             <input
               value={query}
               onChange={(event) => { setOffset(0); setQuery(event.target.value); }}
-              placeholder="Event, identifier, or description"
+              placeholder={t("event.catalogue.keywordsHint", "Event, identifier, or description", "Ereignis, Kennung oder Beschreibung")}
             />
           </div>
         </label>
         <div className="event-type-control">
           <label>
-            <span>Event type</span>
+            <span>{t("event.catalogue.type", "Event type", "Ereignistyp")}</span>
             <select
               value={type}
               onChange={(event) => {
                 setOffset(0);
                 setType(event.target.value);
-                if (event.target.value !== RELOCATION_EVENT_TYPE) setRouteState("");
+                if (event.target.value !== relocationType) setRouteState("");
               }}
               aria-describedby="event-type-filter-help"
             >
-              <option value="">All event types</option>
+              <option value="">{t("event.catalogue.allTypes", "All event types", "Alle Ereignistypen")}</option>
               {primaryTypeOptions.map((option) => (
                 <option key={option.code} value={option.code}>
-                  {option.displayName || option.name} ({option.count})
+                  {option.displayName || option.name} ({formatNumber(option.count)})
                 </option>
               ))}
               {type && !selectedTypeOption && <option value={type}>{friendlyLabel(type.replace("activitype:", ""))}</option>}
-              {remainingTypeCount > 0 && <option value="" disabled>{remainingTypeCount} more in vocabulary browser</option>}
+              {remainingTypeCount > 0 && <option value="" disabled>{remainingTypeCount} {t("event.catalogue.moreTypes", "more in vocabulary browser", "weitere im Vokabular")}</option>}
             </select>
           </label>
           <small id="event-type-filter-help">
             Controlled types and visibly retained source-only wording; no narrower controlled meaning is inferred for a source-only term · only labels used in this corpus ·{" "}
-            <a href="/vocab/modavis_activity_types">browse definitions and source terms</a>
+            <a href="/vocab/modavis_activity_types">{t("event.catalogue.browseTerms", "browse definitions and source terms", "Definitionen und Quellenbegriffe ansehen")}</a>
           </small>
           {remainingTypeCount > 0 && (
             <details className="event-type-browser">
               <summary>Browse all {eventTypeOptions.length} available types</summary>
               <div className="event-type-browser-panel">
                 <label>
-                  <span>Find a type</span>
+                  <span>{t("event.catalogue.findType", "Find a type", "Ereignistyp suchen")}</span>
                   <input
                     value={typeQuery}
                     onChange={(event) => setTypeQuery(event.target.value)}
-                    placeholder="Search the controlled vocabulary"
+                    placeholder={t("event.catalogue.searchVocab", "Search the controlled vocabulary", "Kontrolliertes Vokabular durchsuchen")}
                   />
                 </label>
-                <div className="event-type-option-list" role="listbox" aria-label="Event type vocabulary">
+                <div className="event-type-option-list" role="listbox" aria-label={t("event.catalogue.vocab", "Event type vocabulary", "Vokabular der Ereignistypen")}>
                   <button
                     type="button"
                     className={!type ? "selected" : ""}
@@ -6830,8 +7158,8 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
                     aria-selected={!type}
                     onClick={() => { setOffset(0); setType(""); setRouteState(""); }}
                   >
-                    <span>All event types</span>
-                    <strong>{eventTypeOptions.reduce((sum, option) => sum + option.count, 0)}</strong>
+                    <span>{t("event.catalogue.allTypes", "All event types", "Alle Ereignistypen")}</span>
+                    <strong>{formatNumber(eventTypeOptions.reduce((sum, option) => sum + option.count, 0))}</strong>
                   </button>
                   {filteredTypeOptions.map((option) => (
                     <button
@@ -6843,11 +7171,11 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
                       onClick={() => {
                         setOffset(0);
                         setType(option.code);
-                        if (option.code !== RELOCATION_EVENT_TYPE) setRouteState("");
+                        if (option.code !== relocationType) setRouteState("");
                       }}
                     >
                       <span>{option.displayName || option.name}</span>
-                      <strong>{option.count}</strong>
+                      <strong>{formatNumber(option.count)}</strong>
                     </button>
                   ))}
                 </div>
@@ -6856,39 +7184,43 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
           )}
         </div>
         <label>
-          <span>From year</span>
-          <input inputMode="numeric" value={yearFrom} onChange={(event) => { setOffset(0); setYearFrom(event.target.value); }} placeholder="e.g. 1700" />
+          <span>{t("event.catalogue.from", "From year", "Ab Jahr")}</span>
+          <input inputMode="numeric" value={yearFrom} onChange={(event) => { setOffset(0); setYearFrom(event.target.value); }} placeholder={t("event.catalogue.fromHint", "e.g. 1700", "z. B. 1700")} />
         </label>
         <label>
-          <span>To year</span>
-          <input inputMode="numeric" value={yearTo} onChange={(event) => { setOffset(0); setYearTo(event.target.value); }} placeholder="e.g. 2026" />
+          <span>{t("event.catalogue.to", "To year", "Bis Jahr")}</span>
+          <input inputMode="numeric" value={yearTo} onChange={(event) => { setOffset(0); setYearTo(event.target.value); }} placeholder={t("event.catalogue.toHint", "e.g. 2026", "z. B. 2026")} />
         </label>
         <details className="event-advanced-filters" open={advancedFilterCount > 0 || undefined}>
           <summary>
-            <span><SlidersHorizontal size={16} aria-hidden="true" /> More filters</span>
+            <span><SlidersHorizontal size={16} aria-hidden="true" /> {t("event.catalogue.more", "More filters", "Weitere Filter")}</span>
             {advancedFilterCount > 0 && <strong>{advancedFilterCount} active</strong>}
           </summary>
           <div className="event-advanced-filter-grid">
             <label>
-              <span>Affected organ</span>
-              <input value={subject} onChange={(event) => { setOffset(0); setSubject(event.target.value); }} placeholder="Name or MDVS ID" />
+              <span>{t("event.catalogue.source", "Source collection", "Quellensammlung")}</span>
+              <input value={source} onChange={(event) => { setOffset(0); setSource(event.target.value); }} placeholder={t("event.catalogue.sourceHint", "Source key, e.g. npor", "Quellenschlüssel, z. B. npor")} />
+            </label>
+            <label>
+              <span>{t("event.catalogue.organ", "Affected organ", "Betroffene Orgel")}</span>
+              <input value={subject} onChange={(event) => { setOffset(0); setSubject(event.target.value); }} placeholder={t("event.catalogue.organHint", "Name or MDVS ID", "Name oder MDVS-Kennung")} />
             </label>
             <label>
               <span>{publicProjection ? "Canonical participant ID" : "Participant"}</span>
               <input aria-label={publicProjection ? "Canonical participant ID" : "Participant"} value={participant} onChange={(event) => { setOffset(0); setParticipant(event.target.value); }} placeholder={publicProjection ? "MDVS ID from a canonical dossier" : "Person or organization"} />
-              {publicProjection && <small>Matches established identity links. Unresolved names remain on their source events.</small>}
+              {publicProjection && <small>{t("event.catalogue.organBoundary", "Matches established identity links. Unresolved names remain on their source events.", "Die Suche verwendet bestätigte Identitätsverknüpfungen. Ungeklärte Namen bleiben bei den jeweiligen Quellenereignissen erhalten.")}</small>}
             </label>
             {!publicProjection && <label>
-              <span>Record detail</span>
+              <span>{t("event.catalogue.detail", "Record detail", "Datensatzdetails")}</span>
               <select value={completeness} onChange={(event) => { setOffset(0); setCompleteness(event.target.value); }}>
-                <option value="">All records</option>
-                <option value="complete">Complete optional details</option>
-                <option value="missing_optional">Missing optional details</option>
+                <option value="">{t("event.catalogue.allRecords", "All records", "Alle Datensätze")}</option>
+                <option value="complete">{t("event.catalogue.complete", "Complete optional details", "Optionale Angaben vollständig")}</option>
+                <option value="missing_optional">{t("event.catalogue.missing", "Missing optional details", "Optionale Angaben fehlen")}</option>
               </select>
             </label>}
             {(relocationSelected || routeState) && (
               <label>
-                <span>Map availability</span>
+                <span>{t("event.catalogue.mapAvailability", "Map availability", "Kartenverfügbarkeit")}</span>
                 <select
                   value={routeState}
                   onChange={(event) => {
@@ -6897,20 +7229,20 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
                     if (event.target.value) setType(relocationType);
                   }}
                 >
-                  <option value="">All relocation events</option>
-                  <option value="mapped">Mapped origin–destination pair</option>
-                  <option value="unresolved">Endpoint coordinates unresolved</option>
+                  <option value="">{t("event.catalogue.allRelocations", "All relocation events", "Alle Verlegungsereignisse")}</option>
+                  <option value="mapped">{t("event.catalogue.mappedPair", "Mapped origin–destination pair", "Kartierter Ausgangs- und Zielort")}</option>
+                  <option value="unresolved">{t("event.catalogue.unresolved", "Endpoint coordinates unresolved", "Koordinaten der Endpunkte ungeklärt")}</option>
                 </select>
               </label>
             )}
             <label>
-              <span>Sort</span>
+              <span>{t("event.catalogue.sort", "Sort", "Sortierung")}</span>
               <select value={sort} onChange={(event) => { setOffset(0); setSort(event.target.value); }}>
                 <option value="">{publicProjection ? "Newest first" : "Historical first (newest)"}</option>
-                {!publicProjection && <option value="future">Future-dated records first</option>}
-                <option value="oldest">Oldest first</option>
-                {!publicProjection && <option value="title">Title</option>}
-                <option value="type">Event type</option>
+                {!publicProjection && <option value="future">{t("event.catalogue.futureFirst", "Future-dated records first", "Zukünftig datierte Einträge zuerst")}</option>}
+                <option value="oldest">{t("event.catalogue.oldest", "Oldest first", "Älteste zuerst")}</option>
+                {!publicProjection && <option value="title">{t("event.catalogue.title", "Title", "Titel")}</option>}
+                <option value="type">{t("event.catalogue.type", "Event type", "Ereignistyp")}</option>
               </select>
             </label>
           </div>
@@ -6919,19 +7251,19 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
           <span>{activeFilterCount ? `${activeFilterCount} active filter${activeFilterCount === 1 ? "" : "s"}` : "Showing the complete event corpus"}</span>
           {activeFilterCount > 0 && (
             <button type="button" onClick={clearFilters}>
-              <RotateCcw size={14} aria-hidden="true" /> Clear filters
+              <RotateCcw size={14} aria-hidden="true" /> {t("event.catalogue.clear", "Clear filters", "Filter zurücksetzen")}
             </button>
           )}
         </div>
       </form>
       {error && <p className="form-error">{error}</p>}
-      {loading && !response && <p className="muted">Loading event entities…</p>}
+      {loading && !response && <p className="muted">{t("event.catalogue.loading", "Loading event entities…", "Ereignisdatensätze werden geladen …")}</p>}
       <div className="event-card-grid" aria-busy={loading}>
         {(response?.items ?? []).map((event) => (
           <article className="event-card" key={event.mdvsId}>
             <div className="event-card-heading">
               <Pill tone="strong">{event.mappingKind !== "source_only" && event.type.mappingKind !== "source_only" && eventTypeBrowseHref(event.type.code) ? <a href={eventTypeBrowseHref(event.type.code) || undefined}>{event.type.name || event.type.code || "Event"}</a> : event.type.name || "Event"}</Pill>
-              {(event.mappingKind === "source_only" || event.type.mappingKind === "source_only") && <span className="event-mapping-status source-only">Source-only wording · no narrower type inferred</span>}
+              {(event.mappingKind === "source_only" || event.type.mappingKind === "source_only") && <span className="event-mapping-status source-only">{t("event.catalogue.sourceOnly", "Source-only wording · no narrower type inferred", "Quellenwortlaut · kein engerer Typ abgeleitet")}</span>}
               {event.temporalStatus?.code === "future-dated" && <span className="event-temporal-status future" title={event.temporalStatus.explanation}><AlertCircle size={13} aria-hidden="true" /> {event.temporalStatus.label}</span>}
               {(event.type.code === RELOCATION_EVENT_TYPE || event.type.name === "transfer") && (
                 <span className={`event-route-status ${event.movement?.status === "mapped" ? "mapped" : "unresolved"}`}>
@@ -6942,29 +7274,29 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
             </div>
             <h3>{event.title}</h3>
             <div className="event-card-actions">
-              <a className="event-record-link" href={event.pageUrl || `/id/${encodeURIComponent(event.mdvsId)}`} aria-label={`Open event record: ${event.title}`}><ListChecks size={14} aria-hidden="true" /> Open event record</a>
+              <a className="event-record-link" href={event.pageUrl || `/id/${encodeURIComponent(event.mdvsId)}`} aria-label={`Open event record: ${event.title}`}><ListChecks size={14} aria-hidden="true" /> {t("event.catalogue.open", "Open event record", "Ereignisdatensatz öffnen")}</a>
               {event.movement?.status === "mapped" && event.movement.mapUrl && (
-                <a className="event-map-link" href={event.movement.mapUrl} aria-label={`Show relocation connection on map: ${event.title}`}><MapIcon size={14} aria-hidden="true" /> Show connection on map</a>
+                <a className="event-map-link" href={event.movement.mapUrl} aria-label={`Show relocation connection on map: ${event.title}`}><MapIcon size={14} aria-hidden="true" /> {t("event.catalogue.showMap", "Show connection on map", "Verbindung auf der Karte anzeigen")}</a>
               )}
             </div>
             <p className="event-date"><strong>{eventDateLabel(event)}</strong>{event.when.precision ? ` · ${event.when.precision.replace("tempprectype:", "")}` : ""}</p>
             {event.movement?.status === "mapped" && event.movement.origin && event.movement.destination && (
-              <div className="event-route-summary" aria-label="Documented relocation endpoints">
+              <div className="event-route-summary" aria-label={t("event.catalogue.endpoints", "Documented relocation endpoints", "Dokumentierte Ausgangs- und Zielorte")}>
                 <span>
-                  <small>Origin</small>
+                  <small>{t("event.catalogue.origin", "Origin", "Ausgangsort")}</small>
                   {event.movement.origin.pageUrl ? <a href={event.movement.origin.pageUrl}>{event.movement.origin.title}</a> : <strong>{event.movement.origin.title}</strong>}
                   <em>{event.movement.origin.temporalRole ? `${friendlyLabel(event.movement.origin.temporalRole)} · ` : ""}{event.movement.origin.coordinateEvidence || (event.movement.origin.coordinateFallback ? "Approximate locality" : "Exact venue")}</em>
                 </span>
                 <ChevronRight size={17} aria-label="to" />
                 <span>
-                  <small>Destination</small>
+                  <small>{t("event.catalogue.destination", "Destination", "Zielort")}</small>
                   {event.movement.destination.pageUrl ? <a href={event.movement.destination.pageUrl}>{event.movement.destination.title}</a> : <strong>{event.movement.destination.title}</strong>}
                   <em>{event.movement.destination.temporalRole ? `${friendlyLabel(event.movement.destination.temporalRole)} · ` : ""}{event.movement.destination.coordinateEvidence || (event.movement.destination.coordinateFallback ? "Approximate locality" : "Exact venue")}</em>
                 </span>
               </div>
             )}
             {(event.type.code === RELOCATION_EVENT_TYPE || event.type.name === "transfer") && event.movement?.status !== "mapped" && (
-              <p className="event-route-unavailable"><MapPin size={14} aria-hidden="true" /> No resolved origin–destination pair is available for mapping.</p>
+              <p className="event-route-unavailable"><MapPin size={14} aria-hidden="true" /> {t("event.catalogue.noPair", "No resolved origin–destination pair is available for mapping.", "Für die Karte liegt kein aufgelöstes Paar aus Ausgangs- und Zielort vor.")}</p>
             )}
             {event.subject && <p>Affected entity: {event.subject.pageUrl ? <a href={event.subject.pageUrl}>{event.subject.title}</a> : event.subject.title}</p>}
             {event.participants?.length ? <p>Participants: {event.participants.map((participant, index) => <span key={participant.id}>{index > 0 ? ", " : ""}{participant.pageUrl ? <a href={participant.pageUrl}>{participant.title}</a> : participant.title}<ParticipantIdentityNote participant={participant} /></span>)}</p> : event.description && <p>{event.description}</p>}
@@ -6972,8 +7304,8 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
           </article>
         ))}
       </div>
-      {!loading && !response?.items.length && <EmptyState icon={<ListChecks size={22} />} title="No documented events" body="No events match these filters." />}
-      {total > pageSize && <div className="catalog-pagination"><button type="button" className="secondary" disabled={offset === 0 || loading} onClick={() => updateEventPage(offset - pageSize)}>Previous</button><span>{offset + 1}–{Math.min(offset + pageSize, total)} of {total}</span><button type="button" className="secondary" disabled={offset + pageSize >= total || loading} onClick={() => updateEventPage(offset + pageSize)}>Next</button></div>}
+      {!loading && !response?.items.length && <EmptyState icon={<ListChecks size={22} />} title={t("event.catalogue.empty", "No documented events", "Keine dokumentierten Ereignisse")} body={t("event.catalogue.emptyHint", "No events match these filters.", "Keine Ereignisse entsprechen diesen Filtern.")} />}
+      {total > pageSize && <div className="catalog-pagination"><button type="button" className="secondary" disabled={offset === 0 || loading} onClick={() => updateEventPage(offset - pageSize)}>{t("event.catalogue.previous", "Previous", "Zurück")}</button><span>{formatNumber(offset + 1)}–{formatNumber(Math.min(offset + pageSize, total))} of {formatNumber(total)}</span><button type="button" className="secondary" disabled={offset + pageSize >= total || loading} onClick={() => updateEventPage(offset + pageSize)}>{t("event.catalogue.next", "Next", "Weiter")}</button></div>}
     </section>
   );
 }
@@ -7015,21 +7347,30 @@ function EventDetailPage({ actor, eventId }: { actor?: NavigatorActor; eventId: 
   }, [event?.title]);
   if (loading && !event) return <p className="muted">Loading documented event…</p>;
   if (error || !event) return <EmptyState icon={<AlertCircle size={22} />} title="Event unavailable" body={error || "The event could not be found."} />;
-  const controlledTitle = event.type.name || event.type.code || event.title;
+  const controlledTitle = friendlyLabel(event.type.name || event.type.code?.split(":").pop()?.replace(/-/g, " ")) || event.title;
   const hasDistinctSourceWording = Boolean(event.title && event.title.toLocaleLowerCase() !== controlledTitle.toLocaleLowerCase());
   const hasExactRetainedWording = Boolean(event.sourceWording && event.sourceWording !== event.title && event.sourceWording !== event.description);
   const isRelocationWithoutRoute = (event.type.code === RELOCATION_EVENT_TYPE || event.type.name === "transfer") && event.movement?.status !== "mapped";
   const sourceReported = Boolean(event.sourceEventType);
   const { sourceOnly, contextAssessment } = eventSourcePresentation(event);
+  const typeLabel = sourceOnly ? event.title : controlledTitle;
+  const description = event.description !== event.title ? event.description : null;
+  const descriptionInHero = contextAssessment || event.movement?.status === "mapped";
+  const descriptionInDetails = descriptionInHero ? null : description;
+  const showEventDetails = descriptionInDetails || event.sourceEventTerm?.pageUrl;
   return (
     <article className="event-detail">
       <header className="event-detail-hero">
-        <div><p className="eyebrow">{contextAssessment ? "Retained source context" : sourceOnly ? "Source-only event wording" : sourceReported ? "Source-reported event" : "Canonical event"}</p><h2>{event.title}</h2>{hasDistinctSourceWording && !sourceOnly && <p className="event-source-wording">Controlled type: <strong>{controlledTitle}</strong></p>}{sourceOnly && <p className="event-source-wording">No narrower controlled event type is inferred from this wording.</p>}{event.description && event.description !== event.title && <p>{event.description}</p>}</div>
-        <div className="event-identity"><Pill tone="strong">{!sourceOnly && eventTypeBrowseHref(event.type.code) ? <a href={eventTypeBrowseHref(event.type.code) || undefined}>{event.type.name || event.type.code}</a> : event.type.name || event.type.code}</Pill><code>{event.mdvsId}</code>{event.movement?.status === "mapped" && event.movement.mapUrl && <a className="event-map-link" href={event.movement.mapUrl}><MapIcon size={14} aria-hidden="true" /> Show connection on map</a>}{event.externalIdentifiers.map((identifier) => <code key={identifier.id}>{identifier.type_name || identifier.type_code}: {identifier.identifier}</code>)}</div>
+        <div><p className="eyebrow">{contextAssessment ? "Retained source context" : sourceOnly ? "Source-only event wording" : sourceReported ? "Source-reported event" : "Canonical event"}</p><h1>{event.title}</h1>{hasDistinctSourceWording && !sourceOnly && <p className="event-source-wording">Controlled type: <strong>{controlledTitle}</strong></p>}{sourceOnly && <p className="event-source-wording">No narrower controlled event type is inferred from this wording.</p>}{descriptionInHero && description && <p>{description}</p>}</div>
+        <div className="event-identity"><Pill tone="strong">{!sourceOnly && eventTypeBrowseHref(event.type.code) ? <a href={eventTypeBrowseHref(event.type.code) || undefined}>{typeLabel}</a> : typeLabel}</Pill><code>{event.mdvsId}</code>{event.movement?.status === "mapped" && event.movement.mapUrl && <a className="event-map-link" href={event.movement.mapUrl}><MapIcon size={14} aria-hidden="true" /> Show connection on map</a>}{event.externalIdentifiers.map((identifier) => <code key={identifier.id}>{identifier.type_name || identifier.type_code}: {identifier.identifier}</code>)}</div>
       </header>
       {event.temporalStatus?.code === "future-dated" && <aside className="event-future-date-note" role="note"><AlertCircle size={18} aria-hidden="true" /><div><strong>{event.temporalStatus.label}</strong><p>{event.temporalStatus.explanation}</p></div></aside>}
       <div className="event-detail-grid">
-        {contextAssessment ? <ContextualEventSummary /> : <section><h3>What happened</h3><p><strong>{controlledTitle}</strong></p>{hasDistinctSourceWording && !sourceOnly && <p className="muted">The source describes this as <q>{event.title}</q>.</p>}{event.sourceEventTerm?.pageUrl && <p>Source term: <a href={event.sourceEventTerm.pageUrl}><q>{event.sourceEventTerm.rawTerm || event.sourceEventType}</q></a>{event.sourceEventTerm.terminalOutcome && <> · {friendlyLabel(event.sourceEventTerm.terminalOutcome)}</>}</p>}{event.description && event.description !== event.title && <p>{event.description}</p>}</section>}
+        {contextAssessment ? <ContextualEventSummary /> : showEventDetails && <section>
+          <h3>What happened</h3>
+          {descriptionInDetails && <p>{descriptionInDetails}</p>}
+          {event.sourceEventTerm?.pageUrl && <p>Source term: <a href={event.sourceEventTerm.pageUrl}><q>{event.sourceEventTerm.rawTerm || event.sourceEventType}</q></a>{event.sourceEventTerm.terminalOutcome && <> · {friendlyLabel(event.sourceEventTerm.terminalOutcome)}</>}</p>}
+        </section>}
         {event.temporalClaims.length > 0 && <section><h3>When</h3>{event.temporalClaims.map((claim) => <p key={claim.id}><strong>{claim.rawExpression || [claim.startDate?.slice(0, 10), claim.endDate?.slice(0, 10)].filter(Boolean).join("–")}</strong>{[claim.precisionName, claim.certaintyName].filter(Boolean).length > 0 && <><br /><span>{[claim.precisionName, claim.certaintyName].filter(Boolean).join(" · ")}</span></>}</p>)}</section>}
         {event.locations.length > 0 && <section><h3>Where</h3>{event.locations.map((location) => { const label = location.title || location.mdvsId || `Event location ${location.id}`; return <p key={location.id}>{location.pageUrl ? <a href={location.pageUrl}>{label}</a> : label}{location.role?.name ? ` · ${location.role.name}` : ""}</p>; })}</section>}
         {event.subjects.length > 0 && <section><h3>Affected entities</h3>{event.subjects.map((subject) => <p key={subject.id}>{subject.pageUrl ? <a href={subject.pageUrl}>{subject.title}</a> : subject.title}</p>)}</section>}
@@ -7070,7 +7411,7 @@ function IdentifierResolverPage({ identifier }: { identifier: string }) {
   return (
     <div className="panel-block">
       <p className="eyebrow">Canonical identity</p>
-      <h2>{resolution.title}</h2>
+      <h1>{resolution.title}</h1>
       <p><code>{resolution.identityMdvsId || resolution.entityMdvsId || identifier}</code></p>
       {resolution.canonicalUri && (
         <div className="identifier-value-row">
@@ -7101,13 +7442,21 @@ function FriendlyAliasResolverPage({ aliasKind, slug }: { aliasKind: string; slu
   return <p className="muted">Resolving the governed friendly link…</p>;
 }
 
-function EvidenceRoutePage({ actor, onBack, route, publicProjection = false }: { actor?: NavigatorActor; onBack: () => void; route: EvidenceRoute; publicProjection?: boolean }) {
+function EvidenceRoutePage({ actor, backToPeople, onBack, route, publicProjection = false }: { actor?: NavigatorActor; backToPeople?: boolean; onBack: () => void; route: EvidenceRoute; publicProjection?: boolean }) {
+  const { t } = useUiLocale();
+  const publicCatalogue = publicProjection && route.kind === "source"
+    ? { href: "/pod-explorer?collection=sources", label: t("source.detail.back", "Back to source records", "Zurück zu den Quelldatensätzen") }
+    : publicProjection && route.kind === "canonical_actor" && route.category === "places"
+      ? { href: "/pod-explorer?collection=places", label: t("place.detail.back", "Back to places", "Zurück zu den Orten") }
+      : null;
   return (
     <section className="entity-section evidence-route-page" id={`${route.kind}-evidence-route`} tabIndex={-1}>
-      {route.kind !== "release02_orgelseite" && route.kind !== "release03_npor" && route.kind !== "pipe_position" && route.kind !== "score" && (
-        <button type="button" className="catalog-back evidence-route-back" onClick={onBack}>
-          <ChevronLeft size={17} /> Back to catalog
-        </button>
+      {route.kind !== "release02_orgelseite" && route.kind !== "release03_npor" && route.kind !== "pipe_position" && route.kind !== "score" && route.kind !== "score_asset" && route.kind !== "literature" && route.kind !== "temperament" && (
+        publicCatalogue
+          ? <a className="catalog-back evidence-route-back" href={publicCatalogue.href}><ChevronLeft size={17} aria-hidden="true" /> {publicCatalogue.label}</a>
+          : <button type="button" className="catalog-back evidence-route-back" onClick={onBack}>
+              <ChevronLeft size={17} aria-hidden="true" /> {backToPeople ? t("actor.detail.back", "Back to people", "Zurück zum Personenverzeichnis") : "Back to catalog"}
+            </button>
       )}
       {route.kind === "event" && <EventDetailPage actor={actor} eventId={route.id} />}
       {route.kind === "identifier" && <IdentifierResolverPage identifier={route.id} />}
@@ -7116,7 +7465,7 @@ function EvidenceRoutePage({ actor, onBack, route, publicProjection = false }: {
       {route.kind === "source" && (publicProjection ? <PublicSourcePage id={route.id} /> : <SourceEvidenceDossierPage sourceRecordId={route.id} />)}
       {route.kind === "file" && <FileEvidenceDossierPage fileId={route.id} />}
       {route.kind === "score" && <DigitalScoreDetailPage actor={actor} scoreId={route.id} />}
-      {route.kind === "score_asset" && <DigitalScoreAssetPage scoreId={route.scoreId} assetId={route.assetId} />}
+      {route.kind === "score_asset" && <DigitalScoreAssetPage scoreId={route.scoreId} assetId={route.assetId} publicProjection={publicProjection} />}
       {route.kind === "midi" && <MidiAssetPage assetId={route.assetId} />}
       {route.kind === "literature" && <LiteratureDetailPage literatureId={route.id} />}
       {route.kind === "iconography" && <IconographyDetailPage recordId={route.id} />}
@@ -8356,12 +8705,14 @@ function ResearchEvidenceBrowserPage({
 function PublicVocabularyRoutePage({
   actorId,
   canManageRelease,
+  publicProjection,
   onActorIdChange,
   onBack,
   route,
 }: {
   actorId: string;
   canManageRelease: boolean;
+  publicProjection: boolean;
   onActorIdChange: (value: string) => void;
   onBack: () => void;
   route: PublicVocabRoute;
@@ -8372,6 +8723,9 @@ function PublicVocabularyRoutePage({
   if (route.kind === "usage") return <VocabularyUsage key={route.id} family={route.id}/>;
   if (route.kind === "scheme") {
     if (route.id === "omaro") return <OmaroExplorer />;
+    if (route.id === "reference" || route.id === "vao") return <ReferenceVocabulary />;
+    if (route.id === "registry") return <CandidateVocabularyPage />;
+    if (publicProjection) return <PublicVocabularyRecords schemeId={route.id} onBack={onBack} />;
     return <PublicVocabularySchemePage schemeId={route.id} onBack={onBack} />;
   }
   if (route.kind === "release") {
@@ -8380,7 +8734,7 @@ function PublicVocabularyRoutePage({
   if (route.kind === "source_term") {
     return <PublicVocabularySourceTermPage sourceTermId={route.id} onBack={onBack} />;
   }
-  return <PublicVocabularyConceptPage conceptId={route.id} expectedSchemeId={route.schemeId} />;
+  return publicProjection ? <PublicVocabularyRecords conceptId={route.id} expectedSchemeId={route.schemeId} /> : <PublicVocabularyConceptPage conceptId={route.id} expectedSchemeId={route.schemeId} />;
 }
 
 function PublicVocabularyCatalogPage() {
@@ -8594,7 +8948,7 @@ function PublicVocabularySchemePage({ schemeId, onBack }: { schemeId: string; on
       <div className="evidence-dossier-head">
         <div>
           <p className="eyebrow">Vocabulary Scheme</p>
-          <h2>{scheme.name || friendlyLabel(scheme.code)}</h2>
+          <h1>{scheme.name || friendlyLabel(scheme.code)}</h1>
           <p>{scheme.description || `Governed concepts in ${scheme.code}.`}</p>
         </div>
         <div className="vocabulary-status-card">
@@ -8749,7 +9103,7 @@ function PublicVocabularyReleasePage({
       <div className="evidence-dossier-head">
         <div>
           <p className="eyebrow">Vocabulary Release</p>
-          <h2>{release.versionLabel || release.mdvsId}</h2>
+          <h1>{release.versionLabel || release.mdvsId}</h1>
           <p>{release.citationText}</p>
         </div>
         <div className="vocabulary-status-card">
@@ -8989,7 +9343,7 @@ function PublicVocabularyConceptPage({ conceptId, expectedSchemeId }: { conceptI
             <span>{concept.publicProjection && !concept.mdvsId ? "Catalogue entity type" : "Controlled vocabulary concept"}</span>
             <span className="vocabulary-lifecycle-badge"><CheckCircle2 size={14} aria-hidden="true" /> {statusLabel}</span>
           </div>
-          <h2>{concept.preferredLabel || concept.code}</h2>
+          <h1>{concept.preferredLabel || concept.code}</h1>
           {labels.length > 1 && (
             <p className="vocabulary-concept-alternate">
               {labels
@@ -11588,7 +11942,15 @@ function qualityFindingText(item: Record<string, unknown>): string {
   return String(item.message || item.id || item.error || JSON.stringify(item));
 }
 
+function literatureScanFilter(value: string | null): string {
+  const normalized = value?.trim().toLowerCase();
+  if (normalized === "yes" || normalized === "true" || normalized === "1") return "yes";
+  if (normalized === "no" || normalized === "false" || normalized === "0") return "no";
+  return "";
+}
+
 function LiteratureSection() {
+  const { t, formatNumber } = useUiLocale();
   const [queryValue, setQueryValue] = useState(initialQuery);
   const initialLiteratureParams = new URLSearchParams(window.location.search);
   const [yearFrom, setYearFrom] = useState(initialLiteratureParams.get("year_from") || "");
@@ -11600,7 +11962,7 @@ function LiteratureSection() {
   const [volume, setVolume] = useState(initialLiteratureParams.get("volume") || "");
   const [containerType, setContainerType] = useState(initialLiteratureParams.get("container_type") || "");
   const [confidence, setConfidence] = useState(initialLiteratureParams.get("confidence") || "");
-  const [digitized, setDigitized] = useState(initialLiteratureParams.get("digitized") || "");
+  const [digitized, setDigitized] = useState(() => literatureScanFilter(initialLiteratureParams.get("digitized")));
   const [sort, setSort] = useState(initialLiteratureParams.get("sort") || "newest");
   const [offset, setOffset] = useState(0);
   const [literatureList, setLiteratureList] = useState<LiteratureList | null>(null);
@@ -11670,7 +12032,7 @@ function LiteratureSection() {
   }, [author, collection, confidence, containerType, digitized, publicationType, queryValue, sort, venue, volume, yearFrom, yearTo]);
 
   const facets = literatureList?.facets;
-  const detail = literatureList ? `${formatInteger(literatureList.total)} literature record${literatureList.total === 1 ? "" : "s"}` : "Loading literature evidence";
+  const detail = literatureList ? `${formatNumber(literatureList.total)} literature record${literatureList.total === 1 ? "" : "s"}` : "Loading literature evidence";
   const activeFilters = [
     queryValue.trim() && { label: "Search", value: queryValue.trim(), clear: () => setQueryValue("") },
     collection && { label: "Collection", value: collection.toUpperCase(), clear: () => setCollection("") },
@@ -11682,7 +12044,7 @@ function LiteratureSection() {
     venue && { label: "Venue", value: venue, clear: () => setVenue("") },
     containerType && { label: "Container", value: friendlyLabel(containerType), clear: () => setContainerType("") },
     confidence && { label: "Classification", value: confidence, clear: () => setConfidence("") },
-    digitized && { label: "Digital scan", value: digitized === "yes" ? "Available" : "Unavailable", clear: () => setDigitized("") },
+    digitized && { label: t("literature.catalogue.scan", "Digitized access", "Digitalisat"), value: digitized === "yes" ? "Available" : "Unavailable", clear: () => setDigitized("") },
   ].filter(Boolean) as Array<{ label: string; value: string; clear: () => void }>;
   const clearAll = () => {
     setQueryValue(""); setYearFrom(""); setYearTo(""); setCollection("");
@@ -11692,23 +12054,23 @@ function LiteratureSection() {
   const canonicalCollections = status?.collections ?? [];
   return (
     <section className="entity-section research-evidence-browser literature-browser" id="literature" tabIndex={-1}>
-      <SectionHead eyebrow="Literature" title="Literature evidence" detail={detail} />
+      <SectionHead headingLevel={1} eyebrow="Literature" title={t("literature.catalogue.heading", "Literature evidence", "Literaturbelege")} detail={detail} />
       {canonicalCollections.length > 0 && (
-        <div className="literature-collection-overview" aria-label="Literature collections">
+        <div className="literature-collection-overview" aria-label={t("literature.catalogue.collections", "Literature collections", "Literatursammlungen")}>
           {canonicalCollections.map((item) => (
             <article key={item.key}>
               <div>
-                <p className="eyebrow">Collection</p>
+                <p className="eyebrow">{t("literature.catalogue.collection", "Collection", "Sammlung")}</p>
                 <h3>{item.name}</h3>
                 <p>{item.fullName}</p>
               </div>
               <div className="literature-collection-metrics">
-                <span><strong>{formatInteger(item.publicationCount)}</strong> records</span>
+                <span><strong>{formatNumber(item.publicationCount)}</strong> records</span>
                 <span><strong>{item.yearMin ?? "?"}–{item.yearMax ?? "?"}</strong> dates</span>
-                <span><strong>{formatInteger(item.digitizedCount)}</strong> digitized</span>
+                <span><strong>{formatNumber(item.digitizedCount)}</strong> {t("literature.catalogue.digitizedAtImport", "digitized at import", "beim Import digitalisiert")}</span>
               </div>
               <button type="button" onClick={() => setCollection(item.key)}>
-                Browse {item.name}
+                {t("literature.catalogue.browse", "Browse", "Ansehen")} {item.name}
               </button>
             </article>
           ))}
@@ -11717,92 +12079,92 @@ function LiteratureSection() {
       <div className="research-evidence-controls literature-controls literature-controls-primary">
         <label className="search-field literature-search">
           <Search size={18} aria-hidden="true" />
-          <input aria-label="Search literature" value={queryValue} onChange={(event) => setQueryValue(event.target.value)} placeholder="Search title, author, venue, year, or record id" />
+          <input aria-label={t("literature.catalogue.search", "Search literature", "Literatur durchsuchen")} value={queryValue} onChange={(event) => setQueryValue(event.target.value)} placeholder={t("literature.catalogue.searchHint", "Search title, author, venue, year, or record id", "Titel, Verfasser, Publikationsort, Jahr oder Datensatzkennung suchen")} />
         </label>
         <label>
-          <span>Collection</span>
+          <span>{t("literature.catalogue.collection", "Collection", "Sammlung")}</span>
           <select value={collection} onChange={(event) => setCollection(event.target.value)}>
-            <option value="">All collections</option>
-            {(facets?.collections ?? []).map((item) => <option key={item.collection} value={item.collection}>{item.name} ({formatInteger(item.count)})</option>)}
+            <option value="">{t("literature.catalogue.allCollections", "All collections", "Alle Sammlungen")}</option>
+            {(facets?.collections ?? []).map((item) => <option key={item.collection} value={item.collection}>{item.name} ({formatNumber(item.count)})</option>)}
           </select>
         </label>
         <label>
-          <span>Type</span>
+          <span>{t("literature.catalogue.type", "Type", "Typ")}</span>
           <select value={publicationType} onChange={(event) => setPublicationType(event.target.value)}>
-            <option value="">All types</option>
-            {(facets?.publicationTypes ?? []).map((item) => <option key={item.publicationType} value={item.publicationType}>{friendlyLabel(item.publicationType)} ({item.count})</option>)}
+            <option value="">{t("literature.catalogue.allTypes", "All types", "Alle Typen")}</option>
+            {(facets?.publicationTypes ?? []).map((item) => <option key={item.publicationType} value={item.publicationType}>{friendlyLabel(item.publicationType)} ({formatNumber(item.count)})</option>)}
           </select>
         </label>
         <label>
-          <span>Sort</span>
+          <span>{t("literature.catalogue.sort", "Sort", "Sortierung")}</span>
           <select value={sort} onChange={(event) => setSort(event.target.value)}>
-            <option value="newest">Newest first</option>
-            <option value="title">Title</option>
-            <option value="author">Author</option>
-            <option value="venue">Venue</option>
-            <option value="oldest">Oldest first</option>
+            <option value="newest">{t("literature.catalogue.newest", "Newest first", "Neueste zuerst")}</option>
+            <option value="title">{t("literature.catalogue.title", "Title", "Titel")}</option>
+            <option value="author">{t("literature.catalogue.author", "Author", "Verfasser")}</option>
+            <option value="venue">{t("literature.catalogue.venue", "Venue", "Publikationsorgan")}</option>
+            <option value="oldest">{t("literature.catalogue.oldest", "Oldest first", "Älteste zuerst")}</option>
           </select>
         </label>
       </div>
       {activeFilters.length > 0 && (
-        <div className="literature-active-filters" aria-label="Active literature filters">
+        <div className="literature-active-filters" aria-label={t("literature.catalogue.active", "Active literature filters", "Aktive Literaturfilter")}>
           {activeFilters.map((filter) => <button type="button" key={`${filter.label}:${filter.value}`} onClick={filter.clear}><span>{filter.label}</span>{filter.value}<X size={14} /></button>)}
-          <button type="button" className="clear-all" onClick={clearAll}>Clear all</button>
+          <button type="button" className="clear-all" onClick={clearAll}>{t("literature.catalogue.clear", "Clear all", "Alle zurücksetzen")}</button>
         </div>
       )}
       <details className="literature-more-filters">
-        <summary><Filter size={16} /> More filters{activeFilters.filter((filter) => !["Search", "Collection", "Type"].includes(filter.label)).length ? ` (${activeFilters.filter((filter) => !["Search", "Collection", "Type"].includes(filter.label)).length})` : ""}</summary>
+        <summary><Filter size={16} /> {t("literature.catalogue.more", "More filters", "Weitere Filter")}{activeFilters.filter((filter) => !["Search", "Collection", "Type"].includes(filter.label)).length ? ` (${activeFilters.filter((filter) => !["Search", "Collection", "Type"].includes(filter.label)).length})` : ""}</summary>
         <div className="research-evidence-controls literature-controls">
           <label>
-            <span>Year from</span>
+            <span>{t("literature.catalogue.from", "Year from", "Ab Jahr")}</span>
             <input type="number" min={facets?.yearRange?.minimum ?? 1500} max={facets?.yearRange?.maximum ?? 2100} value={yearFrom} onChange={(event) => setYearFrom(event.target.value)} placeholder={String(facets?.yearRange?.minimum ?? 1500)} />
           </label>
           <label>
-            <span>Year to</span>
+            <span>{t("literature.catalogue.to", "Year to", "Bis Jahr")}</span>
             <input type="number" min={facets?.yearRange?.minimum ?? 1500} max={facets?.yearRange?.maximum ?? 2100} value={yearTo} onChange={(event) => setYearTo(event.target.value)} placeholder={String(facets?.yearRange?.maximum ?? 2100)} />
           </label>
           <label>
-            <span>Author</span>
-            <input list="literature-author-options" value={author} onChange={(event) => setAuthor(event.target.value)} placeholder="Search authors" />
-            <datalist id="literature-author-options">{(facets?.authors ?? []).slice(0, 100).map((item) => <option key={item.author} value={item.author}>{item.count} records</option>)}</datalist>
+            <span>{t("literature.catalogue.author", "Author", "Verfasser")}</span>
+            <input list="literature-author-options" value={author} onChange={(event) => setAuthor(event.target.value)} placeholder={t("literature.catalogue.authors", "Search authors", "Verfasser suchen")} />
+            <datalist id="literature-author-options">{(facets?.authors ?? []).slice(0, 100).map((item) => <option key={item.author} value={item.author}>{formatNumber(item.count)} records</option>)}</datalist>
           </label>
           <label>
-            <span>Venue</span>
-            <input list="literature-venue-options" value={venue} onChange={(event) => setVenue(event.target.value)} placeholder="Search venues" />
-            <datalist id="literature-venue-options">{(facets?.venues ?? []).slice(0, 100).map((item) => <option key={item.venue} value={item.venue}>{item.count} records</option>)}</datalist>
+            <span>{t("literature.catalogue.venue", "Venue", "Publikationsorgan")}</span>
+            <input list="literature-venue-options" value={venue} onChange={(event) => setVenue(event.target.value)} placeholder={t("literature.catalogue.venues", "Search venues", "Publikationsorgane suchen")} />
+            <datalist id="literature-venue-options">{(facets?.venues ?? []).slice(0, 100).map((item) => <option key={item.venue} value={item.venue}>{formatNumber(item.count)} records</option>)}</datalist>
           </label>
           <label>
-            <span>Container</span>
+            <span>{t("literature.catalogue.container", "Container", "Publikationskontext")}</span>
             <select value={containerType} onChange={(event) => setContainerType(event.target.value)}>
-              <option value="">All container types</option>
-              {(facets?.containerTypes ?? []).map((item) => <option key={item.containerType} value={item.containerType}>{friendlyLabel(item.containerType)} ({formatInteger(item.count)})</option>)}
+              <option value="">{t("literature.catalogue.allContainers", "All container types", "Alle Publikationskontexte")}</option>
+              {(facets?.containerTypes ?? []).map((item) => <option key={item.containerType} value={item.containerType}>{friendlyLabel(item.containerType)} ({formatNumber(item.count)})</option>)}
             </select>
           </label>
           <label>
-            <span>Classification</span>
+            <span>{t("literature.catalogue.classification", "Classification", "Klassifikation")}</span>
             <select value={confidence} onChange={(event) => setConfidence(event.target.value)}>
-              <option value="">Any confidence</option>
-              {(facets?.confidences ?? []).map((item) => <option key={item.confidence} value={item.confidence}>{item.confidence} ({formatInteger(item.count)})</option>)}
+              <option value="">{t("literature.catalogue.confidence", "Any confidence", "Alle Vertrauensstufen")}</option>
+              {(facets?.confidences ?? []).map((item) => <option key={item.confidence} value={item.confidence}>{item.confidence} ({formatNumber(item.count)})</option>)}
             </select>
           </label>
           <label>
-            <span>Digital scan</span>
+            <span>{t("literature.catalogue.scan", "Digitized access", "Digitalisat")}</span>
             <select value={digitized} onChange={(event) => setDigitized(event.target.value)}>
-              <option value="">Any scan state</option>
-              <option value="yes">Available ({formatInteger(facets?.digitized?.available ?? 0)})</option>
-              <option value="no">Unavailable ({formatInteger(facets?.digitized?.unavailable ?? 0)})</option>
+              <option value="">{t("literature.catalogue.allScan", "Any scan state", "Mit oder ohne Digitalisat")}</option>
+              <option value="yes">Available ({formatNumber(facets?.digitized?.available ?? 0)})</option>
+              <option value="no">Unavailable ({formatNumber(facets?.digitized?.unavailable ?? 0)})</option>
             </select>
           </label>
         </div>
       </details>
-      {status && !status.collections?.length && <details className="literature-data-note"><summary>About catalog data quality</summary><p>{literatureStructuringNotice(status)}</p></details>}
+      {status && !status.collections?.length && <details className="literature-data-note"><summary>{t("literature.catalogue.quality", "About catalog data quality", "Zur Datenqualität des Katalogs")}</summary><p>{literatureStructuringNotice(status)}</p></details>}
       {error && <p className="notice error">{error}</p>}
       <LiteratureResultList response={literatureList} />
       {literatureList && literatureList.total > pageSize && (
-        <nav className="catalog-pagination" aria-label="Literature result pages">
-          <button type="button" disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - pageSize))}><ChevronLeft size={16} /> Previous</button>
-          <span>{formatInteger(offset + 1)}–{formatInteger(Math.min(offset + pageSize, literatureList.total))} of {formatInteger(literatureList.total)}</span>
-          <button type="button" disabled={offset + pageSize >= literatureList.total} onClick={() => setOffset(offset + pageSize)}>Next <ChevronRight size={16} /></button>
+        <nav className="catalog-pagination" aria-label={t("literature.catalogue.pages", "Literature result pages", "Ergebnisseiten der Literatursuche")}>
+          <button type="button" disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - pageSize))}><ChevronLeft size={16} /> {t("literature.catalogue.previous", "Previous", "Zurück")}</button>
+          <span>{formatNumber(offset + 1)}–{formatNumber(Math.min(offset + pageSize, literatureList.total))} of {formatNumber(literatureList.total)}</span>
+          <button type="button" disabled={offset + pageSize >= literatureList.total} onClick={() => setOffset(offset + pageSize)}>{t("literature.catalogue.next", "Next", "Weiter")} <ChevronRight size={16} /></button>
         </nav>
       )}
     </section>
@@ -11810,8 +12172,9 @@ function LiteratureSection() {
 }
 
 function LiteratureResultList({ response }: { response: LiteratureList | null }) {
-  if (!response) return <p className="notice">Loading literature records...</p>;
-  if (response.items.length === 0) return <EmptyState icon={<FileText size={22} />} title="No literature records" body="No literature evidence matches the current filters." />;
+  const { t } = useUiLocale();
+  if (!response) return <p className="notice">{t("literature.results.loading", "Loading literature records...", "Literaturdatensätze werden geladen …")}</p>;
+  if (response.items.length === 0) return <EmptyState icon={<FileText size={22} />} title={t("literature.results.none", "No literature records", "Keine Literaturdatensätze")} body={t("literature.results.empty", "No literature evidence matches the current filters.", "Keine Literaturbelege entsprechen den aktuellen Filtern.")} />;
   return (
     <div className="research-evidence-list literature-list">
       {response.items.map((item) => (
@@ -11822,24 +12185,24 @@ function LiteratureResultList({ response }: { response: LiteratureList | null })
             <div className="vocabulary-badges literature-badges">
               {item.collection?.name && <Pill>{item.collection.name}</Pill>}
               {item.publicationType && <Pill>{friendlyLabel(item.publicationType)}</Pill>}
-              {item.digitized && <Pill>Digital scan</Pill>}
+              {item.digitized && <Pill>{t("literature.results.scan", "Digital scan", "Digitalisat")}</Pill>}
             </div>
           </div>
           <div className="research-evidence-actions">
-            <a href={item.canonicalUrl || `/literature/${encodeURIComponent(item.literatureId)}`}>View record</a>
+            <a href={item.canonicalUrl || `/literature/${encodeURIComponent(item.literatureId)}`}>{t("literature.results.view", "View record", "Datensatz ansehen")}</a>
             {item.publicAccessLinks?.[0] && <a href={item.publicAccessLinks[0].url} target="_blank" rel="noreferrer">{item.publicAccessLinks[0].label || "Read or download"}</a>}
           </div>
           {!item.collection && <details className="research-evidence-item-details">
-            <summary>Sources and catalog details</summary>
+            <summary>{t("literature.results.detail", "Sources and catalog details", "Quellen und Katalogdetails")}</summary>
             <div className="literature-secondary-actions">
-              {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">Open original catalog</a>}
-              {item.sourceRecordId && <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>View source evidence</a>}
+              {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">{t("literature.results.openSource", "Open original catalog", "Originalkatalog öffnen")}</a>}
+              {item.sourceRecordId && <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>{t("literature.results.viewEvidence", "View source evidence", "Quellenbeleg ansehen")}</a>}
             </div>
-            <div><span>Catalog structuring</span><code>{friendlyLabel(item.parserStatus || "unknown")}</code></div>
-            <div><span>Editorial status</span><code>{friendlyLabel(item.reviewStatus || "review_required")}</code></div>
-            <div><span>Literature ID</span><code>{item.literatureId || "not recorded"}</code></div>
-            <div><span>Packet</span><code>{item.packetId || "not recorded"}</code></div>
-            <div><span>Source</span><code>{item.source.name || item.source.key || "unknown source"}</code></div>
+            <div><span>{t("literature.results.structure", "Catalog structuring", "Strukturierung der Katalogangaben")}</span><code>{friendlyLabel(item.parserStatus || "unknown")}</code></div>
+            <div><span>{t("literature.results.editorial", "Editorial status", "Redaktionsstatus")}</span><code>{friendlyLabel(item.reviewStatus || "review_required")}</code></div>
+            <div><span>{t("literature.results.id", "Literature ID", "Literaturkennung")}</span><code>{item.literatureId || "not recorded"}</code></div>
+            <div><span>{t("literature.results.packet", "Packet", "Datenpaket")}</span><code>{item.packetId || "not recorded"}</code></div>
+            <div><span>{t("literature.results.source", "Source", "Quelle")}</span><code>{item.source.name || item.source.key || "unknown source"}</code></div>
           </details>}
         </article>
       ))}
@@ -11879,13 +12242,13 @@ function LiteratureDetailPage({ literatureId }: { literatureId: string }) {
 
   return (
     <section className="entity-section research-evidence-browser literature-detail" tabIndex={-1}>
-      <button type="button" className="text-link-button evidence-route-back" onClick={() => { window.history.pushState(null, "", "/literature"); window.dispatchEvent(new PopStateEvent("popstate")); }}>
-        Back to literature
+      <button type="button" className="catalog-back evidence-route-back" onClick={() => { window.history.pushState(null, "", "/literature"); window.dispatchEvent(new PopStateEvent("popstate")); }}>
+        <ChevronLeft size={17} /> Back to literature
       </button>
       <div className="evidence-dossier-head">
         <div>
           <p className="eyebrow">Literature evidence</p>
-          <h2>{literature?.title || literatureId}</h2>
+          <h1>{literature?.title || literatureId}</h1>
           <p>{literature ? literatureMetaLine(literature) : "Loading literature detail"}</p>
         </div>
         {!publicProjection && <div className="evidence-mode-switch" role="group" aria-label="Literature detail mode">
@@ -11901,9 +12264,7 @@ function LiteratureDetailPage({ literatureId }: { literatureId: string }) {
             <div className="public-evidence-summary-head">
               <div>
                 <p className="eyebrow">{literature.source.name || literature.source.key || "Literature source"}</p>
-                <h3>{literature.title}</h3>
                 {literature.mdvsId && <IdentifierCopy id={literature.mdvsId} url={literature.identifierUri} />}
-                <p>{literature.authors.length ? literature.authors.join(", ") : "Unknown author"}</p>
               </div>
               {!literature.collection && <span className="entity-state-chip entity-state-source">{friendlyLabel(literature.reviewStatus || "review_required")}</span>}
             </div>
@@ -11914,6 +12275,15 @@ function LiteratureDetailPage({ literatureId }: { literatureId: string }) {
               {literature.digitized && <Pill>Digital scan</Pill>}
               {literature.reviewFlags.map((flag) => <Pill key={flag}>{friendlyLabel(flag)}</Pill>)}
             </div>
+            {Boolean(literature.publicAccessLinks?.length) && (
+              <div className="research-evidence-actions literature-detail-actions" role="group" aria-label="Read digitized sources">
+                {literature.publicAccessLinks?.map(link => (
+                  <a href={link.url} key={link.url} target="_blank" rel="noreferrer" title={link.verifiedAt ? `Public access verified ${link.verifiedAt.slice(0, 10)}` : undefined}>
+                    {link.label} <ExternalLink size={14} aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            )}
             <div className="literature-bibtex-actions" aria-label="BibTeX export">
               <CopyButton label="Copy BibTeX" value={bibtex} />
               <button type="button" className="literature-bibtex-view-button" onClick={() => setBibtexOpen(true)}>
@@ -12037,7 +12407,6 @@ function LiteratureDetailPage({ literatureId }: { literatureId: string }) {
             <div className="research-evidence-actions literature-detail-actions">
               {literature.sourceUrl && <a href={literature.sourceUrl} target="_blank" rel="noreferrer">{publicProjection ? "Open GDO catalogue" : "Open GDO source"}</a>}
               {!publicProjection && literature.locator?.manifestUrl && <a href={literature.locator.manifestUrl} target="_blank" rel="noreferrer">Open IIIF manifest</a>}
-              {(literature.publicAccessLinks || []).map(link => <a href={link.url} key={link.url} target="_blank" rel="noreferrer" title={`Public access verified ${link.verifiedAt.slice(0, 10)}`}>{link.label} <ExternalLink size={14} /></a>)}
               {!literature.collection && literature.sourceRecordId && <a href={`/source/${encodeURIComponent(literature.sourceRecordId)}`}>Source evidence</a>}
             </div>
           </section>
@@ -12128,7 +12497,6 @@ function literatureStructuringNotice(status: LiteratureStatus): string {
 function literatureBibliographicRows(item: LiteratureDetail): Array<{ label: string; value: string; info?: "pages" }> {
   const parsed = literatureBibliographicParts(item);
   const rows: Array<{ label: string; value: string; info?: "pages" }> = [
-    { label: "Title", value: item.title },
     { label: "Authors", value: item.authors.join(", ") },
     { label: "Journal / venue", value: item.venue || parsed.journalTitle || "" },
     { label: "Container type", value: item.container?.type ? friendlyLabel(item.container.type) : "" },
@@ -12624,26 +12992,42 @@ function IconographyDetailPage({ recordId }: { recordId: string }) {
   );
 }
 
+function readTemperamentCatalogueFilters() {
+  const params = new URLSearchParams(window.location.search);
+  const scope = params.get("scope");
+  const queryScope: "identity" | "evidence" | undefined = scope === "identity" || scope === "evidence" ? scope : undefined;
+  return {
+    queryValue: params.get("q") || "",
+    queryScope,
+    groupKey: params.get("group_key") || "",
+    precision: params.get("precise_variant") === "true" ? "precise" : params.get("precise_variant") === "false" ? "rounded" : "",
+    commentary: params.get("commentary_available") === "true" ? "available" : params.get("commentary_available") === "false" ? "missing" : "",
+    commentaryQuery: params.get("commentary_q") || "",
+    offset: positiveRouteInt(params.get("offset"), 0, 100_000),
+    sort: occurrenceSort(params.get("sort")),
+    match: occurrenceScope(params.get("occurrence_scope")),
+    minimum: params.get("min_occurrences") ?? "",
+    maximum: params.get("max_occurrences") ?? "",
+  };
+}
+
 function TemperamentsSection() {
-  const [queryValue, setQueryValue] = useState(initialQuery);
-  const initialTemperamentParams = new URLSearchParams(window.location.search);
-  const queryScope = initialTemperamentParams.get("scope") === "identity" ? "identity" as const : undefined;
-  const [groupKey, setGroupKey] = useState("");
-  const [precision, setPrecision] = useState("");
-  const [commentary, setCommentary] = useState("");
-  const [commentaryQuery, setCommentaryQuery] = useState("");
-  const [offset, setOffset] = useState(() => {
-    const requestedOffset = Number.parseInt(initialTemperamentParams.get("offset") || "0", 10);
-    return Number.isFinite(requestedOffset) && requestedOffset > 0 ? requestedOffset : 0;
-  });
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [list, setList] = useState<TuningSystemList | null>(null);
+  const { t } = useUiLocale();
+  const [filters, setFilters] = useState(readTemperamentCatalogueFilters);
+  const { queryValue, queryScope, groupKey, precision, commentary, commentaryQuery, offset, sort, match, minimum, maximum } = filters;
+  const updateFilters = (change: Partial<typeof filters>) => setFilters((current) => ({ ...current, ...change, offset: 0 }));
+  const setOffset = (next: number) => setFilters((current) => ({ ...current, offset: next }));
+  const rangeIssue = occurrenceRangeIssue(minimum, maximum);
+  const requestKey = JSON.stringify(filters);
+  const [selectedIds, setSelectedIds] = useState(() => readTemperamentComparison(new URLSearchParams(window.location.search)));
+  const [result, setResult] = useState<{ key: string; data: TuningSystemList } | null>(null);
+  const list = result?.key === requestKey ? result.data : null;
   const [error, setError] = useState<string | null>(null);
-  const filtersMounted = useRef(false);
   const pageSize = 6;
   useEffect(() => {
-    let cancelled = false;
     setError(null);
+    if (rangeIssue) return;
+    const request = new AbortController();
     fetchTemperaments({
       mode: "surface",
       query: queryValue,
@@ -12654,101 +13038,153 @@ function TemperamentsSection() {
       commentaryQuery: commentaryQuery || undefined,
       limit: pageSize,
       offset,
+      sort,
+      occurrenceScope: match,
+      minOccurrences: minimum === "" ? undefined : Number(minimum),
+      maxOccurrences: maximum === "" ? undefined : Number(maximum),
+      signal: request.signal,
     })
       .then((data) => {
-        if (!cancelled) {
-          setList(data);
-          setSelectedIds((current) => current.filter((id) => data.items.some((item) => item.id === id)));
+        if (!request.signal.aborted) {
+          setResult({ key: requestKey, data });
         }
       })
       .catch((err: Error) => {
-        if (!cancelled) setError(err.message);
+        if (!request.signal.aborted) setError(err.message);
       });
-    return () => {
-      cancelled = true;
-    };
-  }, [commentary, commentaryQuery, groupKey, offset, precision, queryScope, queryValue]);
+    return () => request.abort();
+  }, [commentary, commentaryQuery, groupKey, match, maximum, minimum, offset, precision, queryScope, queryValue, rangeIssue, requestKey, sort]);
   useEffect(() => {
-    if (!filtersMounted.current) {
-      filtersMounted.current = true;
-      return;
-    }
-    setOffset(0);
-  }, [commentary, commentaryQuery, groupKey, precision, queryValue]);
+    const onBack = () => {
+      setFilters(readTemperamentCatalogueFilters());
+      setSelectedIds(readTemperamentComparison(new URLSearchParams(window.location.search)));
+    };
+    window.addEventListener("popstate", onBack);
+    return () => window.removeEventListener("popstate", onBack);
+  }, []);
   useEffect(() => {
     const url = new URL(window.location.href);
-    if (offset > 0) url.searchParams.set("offset", String(offset));
-    else url.searchParams.delete("offset");
-    window.history.replaceState(null, "", `${url.pathname}${url.search}`);
-  }, [offset]);
-  const facets = list?.facets;
+    if (!/^\/temperaments\/?$/.test(url.pathname)) return;
+    const update = (key: string, value: string) => value ? url.searchParams.set(key, value) : url.searchParams.delete(key);
+    update("q", queryValue);
+    update("scope", queryScope || "");
+    update("group_key", groupKey);
+    update("precise_variant", precision ? String(precision === "precise") : "");
+    update("commentary_available", commentary ? String(commentary === "available") : "");
+    update("commentary_q", commentaryQuery);
+    update("offset", offset ? String(offset) : "");
+    update("sort", sort === "catalogue" ? "" : sort);
+    update("occurrence_scope", match === "all" ? "" : match);
+    update("min_occurrences", minimum);
+    update("max_occurrences", maximum);
+    update("compare", selectedIds.join(","));
+    if (url.href !== window.location.href) window.history.replaceState(window.history.state, "", url);
+  }, [commentary, commentaryQuery, groupKey, match, maximum, minimum, offset, precision, queryScope, queryValue, selectedIds, sort]);
+  const catalogueQuery = new URLSearchParams(window.location.search);
+  if (selectedIds.length) catalogueQuery.set("compare", selectedIds.join(","));
+  else catalogueQuery.delete("compare");
+  const catalogueHref = temperamentCatalogueHref(`/temperaments?${catalogueQuery}`);
+  const facets = result?.data.facets;
   const publicProjection = Boolean(list?.source?.publicProjection);
-  const selectedItems = (list?.items ?? []).filter((item) => selectedIds.includes(item.id));
+  const visibleItems = useMemo(() => new Map((list?.items ?? []).map(item => [item.tuningId || item.id, item])), [list]);
   const toggleSelected = (item: TuningSystemSummary) => {
+    const id = item.tuningId || item.id;
     setSelectedIds((current) => {
-      if (current.includes(item.id)) return current.filter((id) => id !== item.id);
-      if (current.length >= 4) return [...current.slice(1), item.id];
-      return [...current, item.id];
+      if (current.includes(id)) return current.filter(value => value !== id);
+      if (current.length >= MAX_TEMPERAMENT_COMPARISON) return current;
+      return [...current, id];
     });
   };
   return (
     <section className="entity-section research-evidence-browser temperaments-browser" id="temperaments" tabIndex={-1}>
       <SectionHead
-        eyebrow="Tuning systems"
-        title="Historical temperaments"
-        detail={list ? `${formatInteger(list.total)} BDO temperament${list.total === 1 ? "" : "s"}` : "Loading BDO temperament systems"}
+        headingLevel={1}
+        eyebrow={t("tuning.catalogue.eyebrow", "Tuning systems", "Stimmungssysteme")}
+        title={t("tuning.catalogue.title", "Historical temperaments", "Historische Stimmungen")}
+        detail={list ? t("tuning.catalogue.total", "{total, plural, one {# BDO temperament} other {# BDO temperaments}}", "{total, plural, one {# Stimmungssystem des BDO} other {# Stimmungssysteme des BDO}}", { total: list.total }) : t("tuning.catalogue.loading", "Loading BDO temperament systems", "Stimmungssysteme des BDO werden geladen")}
       />
       <div className="research-evidence-controls temperaments-controls">
         <label className="search-field temperaments-search">
           <Search size={18} aria-hidden="true" />
-          <input aria-label="Search temperament systems" value={queryValue} onChange={(event) => setQueryValue(event.target.value)} placeholder="Search Kirnberger, Werckmeister, 2hKi2, cent vectors, notes, or literature" />
+          <input aria-label={t("tuning.catalogue.search", "Search temperament systems", "Stimmungssysteme durchsuchen")} value={queryValue} onChange={(event) => updateFilters({ queryValue: event.target.value })} placeholder={t("tuning.catalogue.searchHint", "Search Kirnberger, Werckmeister, 2hKi2, cent vectors, notes, or literature", "Nach Kirnberger, Werckmeister, 2hKi2, Centwerten, Anmerkungen oder Literatur suchen")} />
         </label>
         <label>
-          <span>Group</span>
-          <select value={groupKey} onChange={(event) => setGroupKey(event.target.value)}>
-            <option value="">All groups</option>
+          <span>{t("tuning.catalogue.group", "Group", "Gruppe")}</span>
+          <select value={groupKey} onChange={(event) => updateFilters({ groupKey: event.target.value })}>
+            <option value="">{t("tuning.catalogue.allGroups", "All groups", "Alle Gruppen")}</option>
+            {groupKey && !facets?.groups.some((item) => item.value === groupKey) && <option value={groupKey}>{groupKey.replace("gruppe_", "Group ")}</option>}
             {(facets?.groups ?? []).map((item) => <option key={item.value} value={item.value}>{temperamentGroupLabel(item)} ({item.count})</option>)}
           </select>
         </label>
         <label>
-          <span>Precision</span>
-          <select value={precision} onChange={(event) => setPrecision(event.target.value)}>
-            <option value="">Rounded and precise</option>
-            <option value="rounded">Rounded values</option>
-            <option value="precise">Precise variants</option>
+          <span>{t("tuning.catalogue.precision", "Precision", "Genauigkeit")}</span>
+          <select value={precision} onChange={(event) => updateFilters({ precision: event.target.value })}>
+            <option value="">{t("tuning.catalogue.allPrecision", "Rounded and precise", "Gerundete und genauere Fassungen")}</option>
+            <option value="rounded">{t("tuning.catalogue.rounded", "Rounded values", "Gerundete Werte")}</option>
+            <option value="precise">{t("tuning.catalogue.precise", "Precise variants", "Genauere Fassungen")}</option>
           </select>
         </label>
         <label>
-          <span>Commentary</span>
-          <select value={commentary} onChange={(event) => setCommentary(event.target.value)}>
-            <option value="">Any commentary state</option>
-            <option value="available">Commentary available</option>
-            <option value="missing">No commentary</option>
+          <span>{t("tuning.catalogue.commentary", "Commentary", "Erläuterungen")}</span>
+          <select value={commentary} onChange={(event) => updateFilters({ commentary: event.target.value })}>
+            <option value="">{t("tuning.catalogue.anyCommentary", "Any commentary state", "Mit oder ohne Erläuterungen")}</option>
+            <option value="available">{t("tuning.catalogue.hasCommentary", "Commentary available", "Mit Erläuterungen")}</option>
+            <option value="missing">{t("tuning.catalogue.noCommentary", "No commentary", "Ohne Erläuterungen")}</option>
           </select>
         </label>
         <label className="search-field temperament-commentary-search">
           <Search size={18} aria-hidden="true" />
-          <input aria-label={publicProjection ? "Search cited literature" : "Search temperament commentary and literature"} value={commentaryQuery} onChange={(event) => setCommentaryQuery(event.target.value)} placeholder={publicProjection ? "Search cited literature" : "Search commentary and literature"} />
+          <input aria-label={publicProjection ? t("tuning.catalogue.literature", "Search cited literature", "Zitierte Literatur durchsuchen") : t("tuning.catalogue.searchAllNotes", "Search temperament commentary and literature", "Erläuterungen und Literatur zu Stimmungen durchsuchen")} value={commentaryQuery} onChange={(event) => updateFilters({ commentaryQuery: event.target.value })} placeholder={publicProjection ? t("tuning.catalogue.literature", "Search cited literature", "Zitierte Literatur durchsuchen") : t("tuning.catalogue.searchNotes", "Search commentary and literature", "Erläuterungen und Literatur durchsuchen")} />
         </label>
       </div>
+      <section className="tuning-occurrence-controls" aria-labelledby="tuning-occurrences-title">
+        <div>
+          <h2 id="tuning-occurrences-title">{t("tuning.catalogue.occurrences", "Organ occurrences", "Belege in Orgeldatensätzen")}</h2>
+          <p>{t("tuning.catalogue.occurrenceHint", "Sort and filter by distinct organ records in the selected evidence category. Related wording can point to several catalogue entries, so their counts can overlap.", "Die Sortierung und Filterung zählen jeden Orgeldatensatz in der gewählten Belegkategorie einmal. Verwandte Angaben können auf mehrere Katalogeinträge verweisen. Daher können sich die zugehörigen Mengen überschneiden.")}</p>
+        </div>
+        <div className="tuning-occurrence-inputs">
+          <label>{t("tuning.catalogue.sort", "Sort by", "Sortieren nach")}<select value={sort} onChange={(event) => updateFilters({ sort: occurrenceSort(event.target.value) })}>
+            <option value="catalogue">{t("tuning.catalogue.order", "Catalogue order", "Katalogreihenfolge")}</option>
+            <option value="occurrences_desc">{t("tuning.catalogue.most", "Most linked organs", "Meiste verknüpfte Orgeldatensätze")}</option>
+            <option value="occurrences_asc">{t("tuning.catalogue.fewest", "Fewest linked organs", "Wenigste verknüpfte Orgeldatensätze")}</option>
+          </select></label>
+          <label>{t("tuning.catalogue.evidence", "Count evidence", "Gezählte Belegkategorie")}<select value={match} onChange={(event) => updateFilters({ match: occurrenceScope(event.target.value) })}>
+            <option value="all">{t("tuning.catalogue.allEvidence", "All linked organs", "Alle verknüpften Orgeldatensätze")}</option>
+            <option value="exact">{t("tuning.catalogue.exactEvidence", "Exact wording", "Eindeutig zuordenbarer Wortlaut")}</option>
+            <option value="family">{t("tuning.catalogue.relatedEvidence", "Related wording only", "Nur verwandter Wortlaut")}</option>
+          </select></label>
+          <label>{t("tuning.catalogue.minimum", "Minimum organs", "Mindestanzahl Orgeldatensätze")}<input type="number" min="0" max={MAX_OCCURRENCE_FILTER} step="1" placeholder={t("tuning.catalogue.anyCount", "Any", "Beliebig")} value={minimum} aria-invalid={Boolean(rangeIssue)} onChange={(event) => updateFilters({ minimum: event.target.value })} /></label>
+          <label>{t("tuning.catalogue.maximum", "Maximum organs", "Höchstanzahl Orgeldatensätze")}<input type="number" min="0" max={MAX_OCCURRENCE_FILTER} step="1" placeholder={t("tuning.catalogue.anyCount", "Any", "Beliebig")} value={maximum} aria-invalid={Boolean(rangeIssue)} onChange={(event) => updateFilters({ maximum: event.target.value })} /></label>
+        </div>
+        {rangeIssue && <p role="alert">{rangeIssue === "invalid"
+          ? t("tuning.catalogue.invalidRange", "Use whole numbers from 0 to 1,000,000 for the organ count.", "Für die Anzahl der Orgeldatensätze ganze Zahlen von 0 bis 1.000.000 eingeben.")
+          : t("tuning.catalogue.invertedRange", "Minimum organs cannot exceed maximum organs.", "Die Mindestanzahl darf die Höchstanzahl nicht überschreiten.")}</p>}
+      </section>
       {list && list.source?.rowCount === 0 && (
-        <p className="notice">BDO temperament records are not present in the shared Aggregator source-record table yet.</p>
+        <p className="notice">{t("tuning.catalogue.noSource", "BDO temperament records are not present in the shared Aggregator source-record table yet.", "Stimmungssysteme des BDO sind in diesem Datenstand noch nicht enthalten.")}</p>
       )}
       {list?.query === queryValue && <TemperamentSearchNotice interpretation={list.searchInterpretation} />}
       {queryScope === "identity" && queryValue && (
         <p className="muted">
-          Searching temperament names and identifiers for “{queryValue}”.{" "}
-          <a href={`/temperaments?q=${encodeURIComponent(queryValue)}`}>Include commentary and literature references</a>
+          {t("tuning.catalogue.identityScope", "Searching temperament names and identifiers for “{query}”.", "Bezeichnungen und Kennungen von Stimmungen werden nach „{query}“ durchsucht.", { query: queryValue })}{" "}
+          <button type="button" className="text-link-button" onClick={() => updateFilters({ queryScope: undefined })}>{t("tuning.catalogue.includeNotes", "Include commentary and literature references", "Erläuterungen und Literaturhinweise einbeziehen")}</button>
         </p>
       )}
-      {error && <p className="notice error">{error}</p>}
-      {selectedItems.length > 1 && <TemperamentComparePanel items={selectedItems} onClear={() => setSelectedIds([])} />}
-      <TemperamentsResultList response={list} selectedIds={selectedIds} onToggleSelected={toggleSelected} />
-      {list && list.total > pageSize && (
-        <nav className="catalog-pagination" aria-label="Temperament result pages">
-          <button type="button" disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - pageSize))}><ChevronLeft size={16} /> Previous</button>
-          <span aria-live="polite">{formatInteger(offset + 1)}–{formatInteger(Math.min(offset + pageSize, list.total))} of {formatInteger(list.total)}</span>
-          <button type="button" disabled={offset + pageSize >= list.total} onClick={() => setOffset(offset + pageSize)}>Next <ChevronRight size={16} /></button>
+      {queryScope === "evidence" && queryValue && (
+        <p className="muted">
+          {t("tuning.catalogue.sourceScope", "Matching the source wording “{query}” to catalogue records.", "Der Quellenwortlaut „{query}“ wird mit den Katalogeinträgen abgeglichen.", { query: queryValue })}{" "}
+          <button type="button" className="text-link-button" onClick={() => updateFilters({ queryScope: undefined })}>{t("tuning.catalogue.fullSearch", "Search catalogue text instead", "Stattdessen den Katalogtext durchsuchen")}</button>
+        </p>
+      )}
+      {error && <div className="notice error" role="alert"><p>{t("tuning.catalogue.loadError", "The temperament catalogue could not be loaded.", "Der Katalog der Stimmungssysteme konnte nicht geladen werden.")}</p><code lang="en">{error}</code></div>}
+      <TemperamentComparison ids={selectedIds} visible={visibleItems} catalogueHref={catalogueHref}
+        onRemove={id => setSelectedIds(current => current.filter(value => value !== id))} onClear={() => setSelectedIds([])} />
+      {!rangeIssue && !error && <TemperamentsResultList catalogueHref={catalogueHref} response={list} selectedIds={selectedIds} onToggleSelected={toggleSelected} />}
+      {list && (offset > 0 || list.total > pageSize) && (
+        <nav className="catalog-pagination" aria-label={t("tuning.catalogue.pages", "Temperament result pages", "Ergebnisseiten für Stimmungssysteme")}>
+          <button type="button" disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - pageSize))}><ChevronLeft size={16} /> {t("tuning.catalogue.previous", "Previous", "Zurück")}</button>
+          <span aria-live="polite">{list.items.length ? t("tuning.catalogue.pageRange", "{from, number}–{to, number} of {total, number}", "{from, number}–{to, number} von {total, number}", { from: offset + 1, to: offset + list.items.length, total: list.total }) : t("tuning.catalogue.emptyPage", "No records on this page", "Keine Datensätze auf dieser Seite")}</span>
+          <button type="button" disabled={offset + pageSize >= list.total} onClick={() => setOffset(offset + pageSize)}>{t("tuning.catalogue.next", "Next", "Weiter")} <ChevronRight size={16} /></button>
         </nav>
       )}
     </section>
@@ -12756,24 +13192,28 @@ function TemperamentsSection() {
 }
 
 function TemperamentsResultList({
+  catalogueHref,
   onToggleSelected,
   response,
   selectedIds,
 }: {
+  catalogueHref: string;
   onToggleSelected: (item: TuningSystemSummary) => void;
   response: TuningSystemList | null;
   selectedIds: string[];
 }) {
-  if (!response) return <p className="notice">Loading temperament systems...</p>;
-  if (response.items.length === 0) return <EmptyState icon={<SlidersHorizontal size={22} />} title="No temperaments" body="No BDO temperament systems match the current filters." />;
+  const { t } = useUiLocale();
+  if (!response) return <p className="notice">{t("tuning.results.loading", "Loading temperament systems...", "Stimmungssysteme werden geladen …")}</p>;
+  if (response.items.length === 0) return <EmptyState icon={<SlidersHorizontal size={22} />} title={t("tuning.results.none", "No temperaments", "Keine Stimmungen gefunden")} body={t("tuning.results.empty", "No BDO temperament systems match the current filters.", "Keine Stimmungssysteme des BDO entsprechen den aktuellen Filtern.")} />;
   return (
     <div className="research-evidence-list temperaments-list">
       {response.items.map((item) => (
         <TemperamentCard
           key={item.id}
+          catalogueHref={catalogueHref}
           item={item}
-          selected={selectedIds.includes(item.id)}
-          selectionDisabled={!selectedIds.includes(item.id) && selectedIds.length >= 4}
+          selected={selectedIds.includes(item.tuningId || item.id)}
+          selectionDisabled={!selectedIds.includes(item.tuningId || item.id) && selectedIds.length >= MAX_TEMPERAMENT_COMPARISON}
           onToggleSelected={onToggleSelected}
         />
       ))}
@@ -12782,101 +13222,84 @@ function TemperamentsResultList({
 }
 
 function TemperamentCard({
+  catalogueHref,
   item,
   onToggleSelected,
   selected,
   selectionDisabled,
 }: {
+  catalogueHref: string;
   item: TuningSystemSummary;
   onToggleSelected: (item: TuningSystemSummary) => void;
   selected: boolean;
   selectionDisabled: boolean;
 }) {
+  const { t } = useUiLocale();
   const detailId = item.tuningId || item.sourceRecordId || item.id;
+  const detailHref = temperamentDetailHref(detailId, catalogueHref);
   return (
     <article className="temperament-card">
       <div className="temperament-card-main">
         <div className="temperament-card-title">
           <div>
-            <span className="eyebrow">{item.label || item.tuningId || "BDO label"}</span>
-            <strong><a href={`/temperaments/${encodeURIComponent(detailId)}`}>{item.title}</a></strong>
+            <span className="eyebrow">{item.label || item.tuningId || t("tuning.card.labelFallback", "BDO label", "BDO-Bezeichnung")}</span>
+            <strong><a href={detailHref}>{item.title}</a></strong>
             <small>{[item.groupLabel || item.groupKey, item.precision.label, item.commentary.available ? "Commentary" : "No commentary"].filter(Boolean).join(" · ")}</small>
           </div>
-          <button type="button" className={selected ? "mini-toggle selected" : "mini-toggle"} disabled={selectionDisabled} onClick={() => onToggleSelected(item)}>
-            {selected ? "Selected" : "Compare"}
+          <button type="button" className={selected ? "mini-toggle selected" : "mini-toggle"} aria-pressed={selected} disabled={selectionDisabled} onClick={() => onToggleSelected(item)}>
+            {selected ? t("tuning.card.selected", "Selected", "Ausgewählt") : t("tuning.card.compare", "Compare", "Vergleichen")}
           </button>
         </div>
         <div className="vocabulary-badges temperament-badges">
-          <Pill>{item.groupKey || "ungrouped"}</Pill>
+          <Pill>{item.groupKey || t("tuning.card.ungrouped", "ungrouped", "Ohne Gruppe")}</Pill>
           <Pill>{item.precision.label}</Pill>
           <Pill>{item.toneOrder.length} tones</Pill>
           {item.literatureCount > 0 && <Pill>{item.literatureCount} literature</Pill>}
         </div>
+        {item.occurrences && (
+          <div className="tuning-occurrence-links" aria-label={t("tuning.card.occurrences", "Organ occurrences", "Belege in Orgeldatensätzen")}>
+            <a href={temperamentOrganHref(detailId, "all", catalogueHref)}><strong>{formatInteger(item.occurrences.total)}</strong> {t("tuning.card.allOrgans", "linked organ records", "verknüpfte Orgeldatensätze")}</a>
+            <a href={temperamentOrganHref(detailId, "exact", catalogueHref)}>{formatInteger(item.occurrences.exactVariantCount)} {t("tuning.card.exact", "exact wording", "eindeutig zuordenbare Angaben")}</a>
+            <a href={temperamentOrganHref(detailId, "family", catalogueHref)}>{formatInteger(item.occurrences.familyWordingCount)} {t("tuning.card.related", "related only", "nur verwandte Angaben")}</a>
+          </div>
+        )}
         <CentVectorSparkline values={item.centValues} labels={item.toneOrder} />
         <details className="research-evidence-item-details">
-          <summary>Cent vector and source</summary>
-          <div><span>Label</span><code>{item.label || "not recorded"}</code></div>
-          <div><span>Title</span><code>{item.title}</code></div>
-          <div><span>Cent vector</span><code>{item.centstr || item.centVectorPreview || "not recorded"}</code></div>
-          <div><span>Commentary</span><code>{item.commentary.available ? item.commentary.description || "available" : "not recorded"}</code></div>
-          <div><span>Source record</span><code>{!item.publicProjection && item.sourceRecordId?.startsWith("sr:") ? <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>{item.sourceRecordId}</a> : item.sourceRecordId || "not recorded"}</code></div>
+          <summary>{t("tuning.card.disclosure", "Cent vector and source", "Centwerte und Quelle")}</summary>
+          <div><span>{t("tuning.card.label", "Label", "Bezeichnung")}</span><code>{item.label || t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
+          <div><span>{t("tuning.card.title", "Title", "Titel")}</span><code>{item.title}</code></div>
+          <div><span>{t("tuning.card.vector", "Cent vector", "Centwerte")}</span><code>{item.centstr || item.centVectorPreview || t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
+          <div><span>{t("tuning.card.commentary", "Commentary", "Erläuterungen")}</span><code>{item.commentary.available ? item.commentary.description || "available" : t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
+          <div><span>{t("tuning.card.sourceRecord", "Source record", "Quelldatensatz")}</span><code>{!item.publicProjection && item.sourceRecordId?.startsWith("sr:") ? <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>{item.sourceRecordId}</a> : item.sourceRecordId || t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
         </details>
       </div>
       <div className="research-evidence-actions temperament-actions">
-        <a href={`/temperaments/${encodeURIComponent(detailId)}`}>View detail</a>
-        {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">Open BDO</a>}
-        {item.commentaryUrl && <a href={item.commentaryUrl} target="_blank" rel="noreferrer">Commentary</a>}
-        {!item.publicProjection && item.sourceRecordId && <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>Source evidence</a>}
+        <a href={detailHref}>{t("tuning.card.detail", "View detail", "Details ansehen")}</a>
+        {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.card.bdo", "Open BDO", "Beim BDO öffnen")}</a>}
+        {item.commentaryUrl && <a href={item.commentaryUrl} target="_blank" rel="noreferrer">{t("tuning.card.commentary", "Commentary", "Erläuterungen")}</a>}
+        {!item.publicProjection && item.sourceRecordId && <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>{t("tuning.card.evidence", "Source evidence", "Quellenbeleg")}</a>}
       </div>
     </article>
   );
 }
 
-function TemperamentComparePanel({ items, onClear }: { items: TuningSystemSummary[]; onClear: () => void }) {
-  const tones = Array.from(new Set(items.flatMap((item) => item.toneOrder))).slice(0, 13);
-  return (
-    <section className="panel-block temperament-compare">
-      <div className="temperament-compare-head">
-        <div>
-          <h3>Cent-vector comparison</h3>
-          <p>{items.length} selected temperament systems</p>
-        </div>
-        <button type="button" className="text-link-button" onClick={onClear}>Clear comparison</button>
-      </div>
-      <div className="temperament-compare-grid" style={{ gridTemplateColumns: `minmax(4rem, 0.6fr) repeat(${items.length}, minmax(8rem, 1fr))` }}>
-        <span>Tone</span>
-        {items.map((item) => <strong key={item.id}>{item.label || item.title}</strong>)}
-        {tones.map((tone) => (
-          <TemperamentCompareRow key={tone} tone={tone} items={items} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function TemperamentCompareRow({ items, tone }: { items: TuningSystemSummary[]; tone: string }) {
-  return (
-    <>
-      <span>{tone}</span>
-      {items.map((item) => {
-        const index = item.toneOrder.indexOf(tone);
-        const value = index >= 0 ? item.centValues[index] : null;
-        return <code key={`${item.id}:${tone}`}>{formatCents(value)}</code>;
-      })}
-    </>
-  );
-}
+const TEMPERAMENT_DETAIL_TABS = [["overview", "Overview"], ["technical", "Technical"], ["organs", "Organs"]] as const;
+type TemperamentDetailTab = (typeof TEMPERAMENT_DETAIL_TABS)[number][0];
 
 function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
-  const [activeTab, setActiveTab] = useState<"overview" | "technical" | "organs">(() => {
+  const { t } = useUiLocale();
+  const [activeTab, setActiveTab] = useState<TemperamentDetailTab>(() => {
     const tab = new URLSearchParams(window.location.search).get("tab");
     return tab === "technical" || tab === "organs" ? tab : "overview";
   });
   const [record, setRecord] = useState<TuningSystemDetail | null>(null);
   const [organLinks, setOrganLinks] = useState<TuningSystemOrganLinks | null>(null);
-  const [organOffset, setOrganOffset] = useState(0);
+  const [organOffset, setOrganOffset] = useState(() => positiveRouteInt(new URLSearchParams(window.location.search).get("organ_offset"), 0, 100_000));
+  const [organScope, setOrganScope] = useState(() => occurrenceScope(new URLSearchParams(window.location.search).get("match")));
   const [error, setError] = useState<string | null>(null);
   const [organError, setOrganError] = useState<string | null>(null);
+  const tabListRef = useRef<HTMLDivElement>(null);
+  const catalogueHref = temperamentCatalogueHref(new URLSearchParams(window.location.search).get("return_to"));
   const publicProjection = Boolean(record?.publicProjection);
   useEffect(() => {
     let cancelled = false;
@@ -12898,90 +13321,98 @@ function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
   }, [record, tuningId]);
   useEffect(() => {
     if (activeTab !== "organs") return;
-    let cancelled = false;
-    setOrganLinks(null);
+    const request = new AbortController();
     setOrganError(null);
-    fetchTemperamentOrgans(tuningId, 200, organOffset)
+    fetchTemperamentOrgans(tuningId, 200, organOffset, organScope, request.signal)
       .then((data) => {
-        if (!cancelled) setOrganLinks(data);
+        if (request.signal.aborted) return;
+        if ((data.scope ?? "all") !== organScope) {
+          setOrganError("This source does not support the selected evidence filter.");
+          return;
+        }
+        setOrganLinks(data);
       })
       .catch((err: Error) => {
-        if (!cancelled) setOrganError(err.message);
+        if (!request.signal.aborted) setOrganError(err.message);
       });
-    return () => {
-      cancelled = true;
+    return () => request.abort();
+  }, [activeTab, organOffset, organScope, tuningId]);
+  useEffect(() => {
+    const restore = () => {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get("tab");
+      const restoredTab = tab === "technical" || tab === "organs" ? tab : "overview";
+      setActiveTab(restoredTab);
+      if (tabListRef.current?.contains(document.activeElement)) document.getElementById(`temperament-tab-${restoredTab}`)?.focus();
+      setOrganScope(occurrenceScope(params.get("match")));
+      setOrganOffset(positiveRouteInt(params.get("organ_offset"), 0, 100_000));
     };
-  }, [activeTab, organOffset, tuningId]);
-  const selectTab = (tab: "overview" | "technical" | "organs") => {
+    restore();
+    window.addEventListener("popstate", restore);
+    return () => window.removeEventListener("popstate", restore);
+  }, [tuningId]);
+  const selectOrganEvidence = (scope: TuningOccurrenceScope, offset = 0) => {
+    const url = new URL(window.location.href);
+    setOrganScope(scope);
+    setOrganOffset(offset);
+    if (scope === "all") url.searchParams.delete("match");
+    else url.searchParams.set("match", scope);
+    if (offset) url.searchParams.set("organ_offset", String(offset));
+    else url.searchParams.delete("organ_offset");
+    if (url.href !== window.location.href) window.history.pushState(window.history.state, "", url);
+  };
+  const selectTab = (tab: TemperamentDetailTab) => {
+    if (tab === activeTab) return;
     setActiveTab(tab);
-    if (tab === "organs") setOrganOffset(0);
     const url = new URL(window.location.href);
     url.searchParams.set("tab", tab);
-    window.history.pushState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    window.history.pushState(window.history.state, "", url);
   };
-  return (
-    <section className="entity-section research-evidence-browser temperament-detail" tabIndex={-1}>
-      <button type="button" className="text-link-button evidence-route-back" onClick={() => { window.history.pushState(null, "", "/temperaments"); window.dispatchEvent(new PopStateEvent("popstate")); }}>
-        Back to temperaments
-      </button>
-      <div className="evidence-dossier-head">
-        <div>
-          <p className="eyebrow">{record?.source.key === "types.tuning_system" ? "Controlled temperament concept" : "BDO temperament system"}</p>
-          <h2>{record?.title || tuningId}</h2>
-          <p>{record ? temperamentMetaLine(record) : "Loading temperament detail"}</p>
-        </div>
-        <div className="evidence-mode-switch" role="tablist" aria-label="Temperament detail sections">
-          <button type="button" role="tab" aria-selected={activeTab === "overview"} className={activeTab === "overview" ? "selected" : ""} onClick={() => selectTab("overview")}>Overview</button>
-          <button type="button" role="tab" aria-selected={activeTab === "technical"} className={activeTab === "technical" ? "selected" : ""} onClick={() => selectTab("technical")}>Technical</button>
-          <button type="button" role="tab" aria-selected={activeTab === "organs"} className={activeTab === "organs" ? "selected" : ""} onClick={() => selectTab("organs")}>Organs</button>
-        </div>
-      </div>
-      {error && <p className="notice error">{error}</p>}
-      {!record && !error && <p className="notice">Loading temperament system...</p>}
+  const tabContent = (
+    <>
+      {error && <p className="notice error" role="alert">{error}</p>}
+      {!record && !error && <p className="notice" role="status">{t("tuning.detail.loading", "Loading temperament system…", "Stimmungssystem wird geladen …")}</p>}
       {record && (
         <>
-          {activeTab === "overview" && (
-            <>
+          {activeTab === "overview" && (!publicProjection || record.commentary.description) && (
           <section className="public-evidence-summary source-public-summary temperament-summary">
             <div>
               <div className="public-evidence-summary-head">
                 <div>
                   <p className="eyebrow">{record.source.name || "BDO Lexikon der Stimmungen"}</p>
-                  <h3>{record.title}</h3>
-                  <p>{record.commentary.description || (publicProjection ? "A compact view of the preserved BDO cent vector; commentary remains linked at the source." : "No commentary description is recorded for this temperament.")}</p>
+                  <p>{record.commentary.description || "No commentary description is recorded for this temperament."}</p>
                 </div>
                 {!publicProjection && <span className="entity-state-chip entity-state-source">{record.evidenceLabel || "Temperament evidence"}</span>}
               </div>
               <div className="vocabulary-badges temperament-badges">
-                <Pill>{record.label || record.tuningId || "BDO label"}</Pill>
+                <Pill>{record.label || record.tuningId || t("tuning.detail.bdoLabel", "BDO label", "BDO-Bezeichnung")}</Pill>
                 <Pill>{record.groupLabel || record.groupKey || "ungrouped"}</Pill>
                 <Pill>{record.precision.label}</Pill>
-                <Pill>{record.commentary.available ? "Commentary" : "No commentary"}</Pill>
+                <Pill>{record.commentary.available ? t("tuning.detail.commentary", "Commentary", "Erläuterungen") : "No commentary"}</Pill>
               </div>
             </div>
           </section>
-            </>
           )}
 
           {activeTab === "overview" && (
             <>
           <TemperamentFingerprint labels={record.toneOrder} values={record.centValues} title={record.title} />
           <section className="panel-block">
-            <h3>Identity and source links</h3>
+            <h3>{t("tuning.detail.identity", "Identity and source links", "Kennungen und Quellenlinks")}</h3>
             <div className="identifier-summary">
-              <div><span>BDO label</span><strong>{record.label || "not recorded"}</strong></div>
-              <div><span>Tuning ID</span><strong>{record.tuningId || "not recorded"}</strong></div>
-              {!publicProjection && <div><span>Entity ID</span><strong>{record.entityId || "not recorded"}</strong></div>}
-              <div><span>Group</span><strong>{record.groupLabel || record.groupKey || "not recorded"}</strong></div>
-              <div><span>Precision</span><strong>{[record.precision.label, record.precision.variant].filter(Boolean).join(" / ")}</strong></div>
-              <div><span>Source record</span><strong>{!publicProjection && record.sourceRecordId?.startsWith("sr:") ? <a href={`/source/${encodeURIComponent(record.sourceRecordId)}`}>{record.sourceRecordId}</a> : record.sourceRecordId || "not recorded"}</strong></div>
+              <div><span>{t("tuning.detail.bdoLabel", "BDO label", "BDO-Bezeichnung")}</span><strong>{record.label || "not recorded"}</strong></div>
+              <div><span>{t("tuning.detail.tuningId", "Tuning ID", "Kennung des Stimmungssystems")}</span><strong>{record.tuningId || "not recorded"}</strong></div>
+              {!publicProjection && <div><span>{t("tuning.detail.entityId", "Entity ID", "Entitätskennung")}</span><strong>{record.entityId || "not recorded"}</strong></div>}
+              <div><span>{t("tuning.detail.group", "Group", "Gruppe")}</span><strong>{record.groupLabel || record.groupKey || "not recorded"}</strong></div>
+              <div><span>{t("tuning.detail.precision", "Precision", "Genauigkeit")}</span><strong>{[record.precision.label, record.precision.variant].filter(Boolean).join(" / ")}</strong></div>
+              <div><span>{t("tuning.detail.source", "Source record", "Quelldatensatz")}</span><strong>{!publicProjection && record.sourceRecordId?.startsWith("sr:") ? <a href={`/source/${encodeURIComponent(record.sourceRecordId)}`}>{record.sourceRecordId}</a> : record.sourceRecordId || "not recorded"}</strong></div>
               {!publicProjection && <div><span>Schema</span><strong>{[record.schema?.name, record.schema?.version || record.schema?.key].filter(Boolean).join(" / ") || "not recorded"}</strong></div>}
-              {!publicProjection && <div><span>Last seen</span><strong>{record.lastSeenAt || "not recorded"}</strong></div>}
+              {!publicProjection && <div><span>{t("tuning.detail.lastSeen", "Last seen", "Zuletzt erfasst")}</span><strong>{record.lastSeenAt || "not recorded"}</strong></div>}
             </div>
             <div className="research-evidence-actions">
-              {record.sourceUrl && <a href={record.sourceUrl} target="_blank" rel="noreferrer">Open BDO tuning page</a>}
-              {record.commentaryUrl && <a href={record.commentaryUrl} target="_blank" rel="noreferrer">Open commentary page</a>}
-              {!publicProjection && record.sourceRecordId && <a href={`/source/${encodeURIComponent(record.sourceRecordId)}`}>Source evidence</a>}
+              {record.sourceUrl && <a href={record.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.detail.openBdo", "Open BDO tuning page", "Stimmung beim BDO öffnen")}</a>}
+              {record.commentaryUrl && <a href={record.commentaryUrl} target="_blank" rel="noreferrer">{t("tuning.detail.openComment", "Open commentary page", "Erläuterungen öffnen")}</a>}
+              {!publicProjection && record.sourceRecordId && <a href={`/source/${encodeURIComponent(record.sourceRecordId)}`}>{t("tuning.detail.evidence", "Source evidence", "Quellenbeleg")}</a>}
             </div>
           </section>
             </>
@@ -12990,12 +13421,12 @@ function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
           {activeTab === "technical" && (
             <>
           <section className="panel-block">
-            <h3>Tone order and cent values</h3>
+            <h3>{t("tuning.detail.toneTable", "Tone order and cent values", "Tonfolge und Centwerte")}</h3>
             <CentVectorStrip values={record.centValues} labels={record.toneOrder} />
             <div className="temperament-table-wrap">
               <table className="temperament-data-table">
                 <thead>
-                  <tr><th>#</th><th>Tone</th><th>Cent value</th><th>Absolute cents</th><th>Relative to A</th></tr>
+                  <tr><th>#</th><th>{t("tuning.detail.tone", "Tone", "Ton")}</th><th>{t("tuning.detail.centValue", "Cent value", "Centwert")}</th><th>{t("tuning.detail.absolute", "Absolute cents", "Absoluter Centwert")}</th><th>{t("tuning.detail.relative", "Relative to A", "Bezogen auf A")}</th></tr>
                 </thead>
                 <tbody>
                   {record.toneRows.map((row) => (
@@ -13013,10 +13444,10 @@ function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
           </section>
 
           <section className="temperament-interval-grid">
-            <TemperamentIntervalTable title="Derived fifths" rows={record.derivedIntervals.fifths} columns={["from", "to", "cents"]} />
-            <TemperamentIntervalTable title="Major thirds" rows={record.derivedIntervals.majorThirds} columns={["from", "to", "cents"]} />
-            <TemperamentIntervalTable title="Absolute cents" rows={record.derivedIntervals.absoluteCents} columns={["tone", "cents"]} />
-            <TemperamentIntervalTable title="Values relative to A" rows={record.derivedIntervals.relativeToA} columns={["tone", "cents"]} />
+            <TemperamentIntervalTable title={t("tuning.detail.fifths", "Derived fifths", "Berechnete Quinten")} rows={record.derivedIntervals.fifths} columns={["from", "to", "cents"]} />
+            <TemperamentIntervalTable title={t("tuning.detail.thirds", "Major thirds", "Große Terzen")} rows={record.derivedIntervals.majorThirds} columns={["from", "to", "cents"]} />
+            <TemperamentIntervalTable title={t("tuning.detail.absolute", "Absolute cents", "Absoluter Centwert")} rows={record.derivedIntervals.absoluteCents} columns={["tone", "cents"]} />
+            <TemperamentIntervalTable title={t("tuning.detail.relatives", "Values relative to A", "Werte bezogen auf A")} rows={record.derivedIntervals.relativeToA} columns={["tone", "cents"]} />
           </section>
             </>
           )}
@@ -13024,9 +13455,9 @@ function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
           {activeTab === "overview" && !publicProjection && (
             <>
           <section className="panel-block">
-            <h3>Commentary</h3>
+            <h3>{t("tuning.detail.commentary", "Commentary", "Erläuterungen")}</h3>
             {record.commentarySections.length === 0 ? (
-              <p className="notice">No commentary sections were captured for this temperament.</p>
+              <p className="notice">{t("tuning.detail.noComments", "No commentary sections were captured for this temperament.", "Zu dieser Stimmung wurden keine Erläuterungen erfasst.")}</p>
             ) : (
               <div className="temperament-commentary-sections">
                 {record.commentarySections.map((section) => (
@@ -13050,9 +13481,9 @@ function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
           {activeTab === "technical" && (
             <>
           <section className="panel-block">
-            <h3>Literature citations</h3>
+            <h3>{t("tuning.detail.citations", "Literature citations", "Literaturangaben")}</h3>
             {record.literature.length === 0 ? (
-              <p className="notice">No literature references were projected for this temperament.</p>
+              <p className="notice">{t("tuning.detail.noCitations", "No literature references were projected for this temperament.", "Zu dieser Stimmung stehen in dieser Ansicht keine Literaturangaben zur Verfügung.")}</p>
             ) : (
               <div className="temperament-literature-list">
                 {record.literature.map((item, index) => (
@@ -13060,7 +13491,7 @@ function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
                     <strong>{item.citationText || item.entityId || "Citation"}</strong>
                     <span>{item.sourcePath || "literature"}</span>
                     <div className="research-evidence-actions">
-                      {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">Open source</a>}
+                      {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.detail.openSource", "Open source", "Quelle öffnen")}</a>}
                       {!publicProjection && item.entityId && <a href={`/source/${encodeURIComponent(item.entityId)}`}>Reference entity</a>}
                     </div>
                   </article>
@@ -13118,13 +13549,72 @@ function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
 
           {activeTab === "organs" && (
             <TemperamentOrgansPanel
-              data={organLinks}
+              data={organLinks?.temperament.id === record.id ? organLinks : null}
               error={organError}
-              onPage={(offset) => setOrganOffset(Math.max(0, offset))}
+              loading={organLinks?.offset !== organOffset || (organLinks.scope ?? "all") !== organScope}
+              scope={organScope}
+              onScope={selectOrganEvidence}
+              onPage={(offset) => selectOrganEvidence(organScope, Math.max(0, offset))}
             />
           )}
         </>
       )}
+    </>
+  );
+  return (
+    <section className="entity-section research-evidence-browser temperament-detail" tabIndex={-1}>
+      <a className="catalog-back evidence-route-back" href={catalogueHref}>
+        {t("tuning.detail.return", "Back to temperaments", "Zurück zu den Stimmungen")}
+      </a>
+      <div className="evidence-dossier-head">
+        <div>
+          <p className="eyebrow">{record?.source.key === "types.tuning_system" ? "Controlled temperament concept" : "BDO temperament system"}</p>
+          <h1>{record?.title || tuningId}</h1>
+          <p>{record ? temperamentMetaLine(record) : "Loading temperament detail"}</p>
+        </div>
+        <div ref={tabListRef} className="evidence-mode-switch" role="tablist" aria-label={t("tuning.detail.tabs", "Temperament detail sections", "Abschnitte zu diesem Stimmungssystem")}>
+          {TEMPERAMENT_DETAIL_TABS.map(([tab, label], index) => (
+            <button
+              key={tab}
+              type="button"
+              id={`temperament-tab-${tab}`}
+              role="tab"
+              aria-controls={`temperament-panel-${tab}`}
+              aria-selected={activeTab === tab}
+              tabIndex={activeTab === tab ? 0 : -1}
+              className={activeTab === tab ? "selected" : ""}
+              onClick={() => selectTab(tab)}
+              onKeyDown={(event) => {
+                if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+                const count = TEMPERAMENT_DETAIL_TABS.length;
+                const nextIndex = event.key === "ArrowRight" ? (index + 1) % count
+                  : event.key === "ArrowLeft" ? (index + count - 1) % count
+                  : event.key === "Home" ? 0 : event.key === "End" ? count - 1 : -1;
+                if (nextIndex < 0) return;
+                event.preventDefault();
+                const [next] = TEMPERAMENT_DETAIL_TABS[nextIndex];
+                selectTab(next);
+                document.getElementById(`temperament-tab-${next}`)?.focus();
+              }}
+            >{tab === "overview" ? t("tuning.detail.tabOverview", label, "Übersicht")
+                : tab === "technical" ? t("tuning.detail.tabTechnical", label, "Technische Angaben")
+                : t("tuning.detail.tabOrgans", label, "Orgeln")}</button>
+          ))}
+        </div>
+      </div>
+      {TEMPERAMENT_DETAIL_TABS.map(([tab]) => (
+        <div
+          key={tab}
+          id={`temperament-panel-${tab}`}
+          className="temperament-tab-panel"
+          role="tabpanel"
+          aria-labelledby={`temperament-tab-${tab}`}
+          hidden={activeTab !== tab}
+          tabIndex={activeTab === tab ? 0 : -1}
+        >
+          {activeTab === tab && tabContent}
+        </div>
+      ))}
     </section>
   );
 }
@@ -13132,52 +13622,77 @@ function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
 function TemperamentOrgansPanel({
   data,
   error,
+  loading,
+  scope,
+  onScope,
   onPage,
 }: {
   data: TuningSystemOrganLinks | null;
   error: string | null;
+  loading: boolean;
+  scope: TuningOccurrenceScope;
+  onScope: (scope: TuningOccurrenceScope) => void;
   onPage: (offset: number) => void;
 }) {
-  if (error) return <p className="notice error">Could not load linked organs: {error}</p>;
-  if (!data) return <p className="notice">Loading linked organs...</p>;
+  const { t, locale, formatNumber } = useUiLocale();
+  const loadError = error && <div className="notice error" role="alert">
+    <p>{t("tuning.organs.loadError", "Could not load linked organs.", "Verknüpfte Orgeldatensätze konnten nicht geladen werden.")}</p>
+    <code lang="en">{error}</code>
+  </div>;
+  if (!data) return error
+    ? loadError
+    : <p className="notice" role="status">{t("tuning.organs.loading", "Loading linked organs…", "Verknüpfte Orgeldatensätze werden geladen …")}</p>;
   return (
-    <section className="panel-block temperament-organ-links" role="tabpanel">
+    <section className="panel-block temperament-organ-links">
       <div className="temperament-organ-links-head">
         <div>
-          <h3>Organs using this temperament</h3>
-          <p>{data.evidenceBoundary}</p>
+          <h3>{t("tuning.organs.heading", "Organ records linked by source wording", "Über Quellenangaben verknüpfte Orgeldatensätze")}</h3>
+          <p>{locale === "de"
+            ? "Gezählt werden dokumentierte Angaben. Jeder Orgeldatensatz zählt pro Stimmungssystem einmal. Eindeutig zuordenbare Angaben haben Vorrang. Die Centwerte stammen aus dem BDO-Katalog."
+            : data.evidenceBoundary}</p>
+          <p>{t("tuning.organs.current", "Source wording does not verify an organ’s current tuning.", "Aus dem Wortlaut der Quellen lässt sich die heutige Stimmung einer Orgel nicht bestätigen.")}</p>
         </div>
-        <div className="temperament-organ-link-counts" aria-label="Linked organ counts">
-          <span><strong>{formatInteger(data.total)}</strong> linked organs</span>
-          <span><strong>{formatInteger(data.exactVariantCount)}</strong> exact variant</span>
-          <span><strong>{formatInteger(data.familyWordingCount)}</strong> family wording</span>
+        <div className="tuning-organ-scopes" role="group" aria-label={t("tuning.organs.filter", "Filter linked organs by evidence", "Verknüpfte Orgeldatensätze nach Belegkategorie filtern")}>
+          {([
+            ["all", t("tuning.organs.all", "All linked records", "Alle verknüpften Datensätze"), data.exactVariantCount + data.familyWordingCount],
+            ["exact", t("tuning.organs.exact", "Exact wording", "Eindeutig zuordenbarer Wortlaut"), data.exactVariantCount],
+            ["family", t("tuning.organs.related", "Related wording only", "Nur verwandter Wortlaut"), data.familyWordingCount],
+          ] as const).map(([value, label, count]) => (
+            <button type="button" key={value} aria-pressed={scope === value} onClick={() => onScope(value)}>{label} <strong>{formatNumber(count)}</strong></button>
+          ))}
         </div>
       </div>
-      {data.temperament.id && data.total > 0 && (
-        <nav className="temperament-organ-map-actions" aria-label="Map organs using this temperament">
+      {data.temperament.id && (data.exactVariantCount > 0 || data.familyWordingCount > 0) && (
+        <nav className="temperament-organ-map-actions" aria-label={t("tuning.organs.mapHeading", "Map linked organ records", "Verknüpfte Orgeldatensätze auf der Karte")}>
           {data.exactVariantCount > 0 && (
             <a href={`/map?temperament=${encodeURIComponent(data.temperament.id)}&temperament_scope=exact&precision=all`}>
-              <MapIcon size={16} aria-hidden="true" /> Map exact variant
+              <MapIcon size={16} aria-hidden="true" /> {t("tuning.organs.mapExact", "Map exact wording", "Eindeutig zuordenbare Angaben auf der Karte")}
             </a>
           )}
-          <a href={`/map?temperament=${encodeURIComponent(data.temperament.id)}&temperament_scope=family&precision=all`}>
-            <MapIcon size={16} aria-hidden="true" /> Map related family wording
-          </a>
+          {data.familyWordingCount > 0 && <a href={`/map?temperament=${encodeURIComponent(data.temperament.id)}&temperament_scope=family&precision=all`}>
+            <MapIcon size={16} aria-hidden="true" /> {t("tuning.organs.mapRelated", "Map related wording", "Verwandte Angaben auf der Karte")}
+          </a>}
+          <span className="muted">{t("tuning.organs.mapCoverage", "Map results require a recorded location.", "Für die Karte muss ein Standort erfasst sein.")}</span>
         </nav>
       )}
-      {data.total === 0 ? (
-        <p className="notice">No organ source assertions currently link to this temperament.</p>
+      {error ? loadError
+      : loading ? <p className="notice" role="status">{t("tuning.organs.loading", "Loading linked organs…", "Verknüpfte Orgeldatensätze werden geladen …")}</p>
+      : data.total === 0 ? (
+        <p className="notice">{scope === "all" ? t("tuning.organs.noMatches", "No matching organ source wording was found in this POD snapshot.", "In diesem POD-Datenstand wurde kein passender Wortlaut in Orgeldatensätzen gefunden.") : t("tuning.organs.noneInScope", "No organ records match the selected evidence filter.", "Keine Orgeldatensätze entsprechen der gewählten Belegkategorie.")}</p>
       ) : (
         <div className="temperament-organ-evidence-groups">
-          {data.groups.map((group) => (
+          {data.groups.filter((group) => group.countries.length > 0).map((group) => (
             <section key={group.key} className={`temperament-organ-evidence-group ${group.key}`}>
               <div>
-                <h4>{group.label} <span>{formatInteger(group.total)}</span></h4>
-                <p>{group.guidance}</p>
+                <h4>{locale === "de" ? group.key === "exact_variant" ? "Eindeutig zuordenbare Angaben" : "Verwandte Stimmungsangaben" : group.label} <span>{formatNumber(group.total)}</span></h4>
+                <p>{locale === "de" ? group.key === "exact_variant"
+                  ? "Der Quellenwortlaut bezeichnet eindeutig diesen Katalogeintrag."
+                  : "Der Quellenwortlaut verweist auf eine Gruppe, eine Abwandlung oder eine nicht näher bezeichnete Fassung."
+                  : group.guidance}</p>
               </div>
               {group.countries.map((country) => (
                 <details key={`${group.key}:${country.country}`} open={group.key === "exact_variant"}>
-                  <summary>{country.country} <span>{formatInteger(country.count)}</span></summary>
+                  <summary>{country.country} <span>{formatNumber(country.count)}</span></summary>
                   <div className="temperament-organ-country-items">
                     {country.items.map((item) => (
                       <article key={item.mdvsId} className="temperament-organ-card">
@@ -13187,14 +13702,17 @@ function TemperamentOrgansPanel({
                           <code>{item.mdvsId}</code>
                         </div>
                         <details>
-                          <summary>{item.assertions.length} source assertion{item.assertions.length === 1 ? "" : "s"}</summary>
+                          <summary>{t("tuning.organs.assertionCount", "{count, plural, one {# source assertion} other {# source assertions}}", "{count, plural, one {# Quellenangabe} other {# Quellenangaben}}", {count: item.assertions.length})}</summary>
                           <div className="temperament-organ-assertions">
                             {item.assertions.map((assertion, index) => (
                               <div key={`${assertion.sourceRecordId || assertion.source}:${index}`}>
                                 <strong>{assertion.source}</strong>
-                                <span>{assertion.sourceValue || "Temperament wording not recorded"}</span>
-                                {assertion.sourceUrl && <a href={assertion.sourceUrl} target="_blank" rel="noreferrer">Original source</a>}
-                                {!data.publicProjection && assertion.sourceRecordId && <a href={`/source/${encodeURIComponent(assertion.sourceRecordId)}`}>Source evidence</a>}
+                                <small>{assertion.matchKind === "exact_variant"
+                                  ? t("tuning.organs.exact", "Exact wording", "Eindeutig zuordenbarer Wortlaut")
+                                  : t("tuning.organs.relatedItem", "Related wording", "Verwandter Wortlaut")}</small>
+                                <span>{assertion.sourceValue || t("tuning.organs.missingWording", "Temperament wording not recorded", "Stimmungsangabe nicht erfasst")}</span>
+                                {assertion.sourceUrl && <a href={assertion.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.organs.source", "Original source", "Originalquelle")}</a>}
+                                {!data.publicProjection && assertion.sourceRecordId && <a href={`/source/${encodeURIComponent(assertion.sourceRecordId)}`}>{t("tuning.organs.evidence", "Source evidence", "Quellenbeleg")}</a>}
                               </div>
                             ))}
                           </div>
@@ -13208,11 +13726,11 @@ function TemperamentOrgansPanel({
           ))}
         </div>
       )}
-      {(data.offset > 0 || data.hasMore) && (
-        <nav className="pagination-controls" aria-label="Temperament organ pages">
-          <button type="button" disabled={data.offset === 0} onClick={() => onPage(data.offset - data.limit)}>Previous</button>
-          <span>Showing {formatInteger(data.offset + 1)}–{formatInteger(Math.min(data.offset + data.items.length, data.total))} of {formatInteger(data.total)}</span>
-          <button type="button" disabled={!data.hasMore} onClick={() => onPage(data.offset + data.limit)}>Next</button>
+      {!error && !loading && (data.offset > 0 || data.hasMore) && (
+        <nav className="pagination-controls" aria-label={t("tuning.organs.pages", "Temperament organ pages", "Ergebnisseiten der verknüpften Orgeldatensätze")}>
+          <button type="button" disabled={data.offset === 0} onClick={() => onPage(data.offset - data.limit)}>{t("tuning.organs.previous", "Previous", "Zurück")}</button>
+          <span>{data.items.length ? t("tuning.organs.pageRange", "Showing {from, number}–{to, number} of {total, number}", "{from, number}–{to, number} von {total, number}", { from: data.offset + 1, to: data.offset + data.items.length, total: data.total }) : t("tuning.organs.emptyPage", "No records on this page", "Keine Datensätze auf dieser Seite")}</span>
+          <button type="button" disabled={!data.hasMore} onClick={() => onPage(data.offset + data.limit)}>{t("tuning.organs.next", "Next", "Weiter")}</button>
         </nav>
       )}
     </section>
@@ -13228,11 +13746,12 @@ function TemperamentIntervalTable({
   rows: Array<Record<string, string | number | null | undefined>>;
   title: string;
 }) {
+  const { t } = useUiLocale();
   return (
     <section className="panel-block temperament-interval-table">
       <h3>{title}</h3>
       {rows.length === 0 ? (
-        <p className="notice">No values recorded.</p>
+        <p className="notice">{t("tuning.interval.empty", "No values recorded.", "Keine Werte erfasst.")}</p>
       ) : (
         <div className="temperament-table-wrap">
           <table className="temperament-data-table">
@@ -13395,15 +13914,26 @@ function iconographyTypeLabel(value?: string | null): string {
   return labels[value || ""] || friendlyLabel(value || "unknown");
 }
 
+function scoreCatalogueFilters(params: URLSearchParams) {
+  const evidence = params.get("evidence_strength");
+  return {
+    queryValue: params.get("q") || "",
+    collection: params.get("collection") || "",
+    format: params.get("format") || "",
+    evidenceStrength: evidence === "all" ? "" : evidence || "strong",
+    analysisStatus: params.get("analysis_status") || "",
+    sort: params.get("sort") || "analyzed",
+    offset: positiveRouteInt(params.get("offset"), 0, 100_000),
+  };
+}
+
 function DigitalScoresSection() {
-  const [queryValue, setQueryValue] = useState(initialQuery);
-  const [collection, setCollection] = useState("");
-  const [format, setFormat] = useState("");
-  const [evidenceStrength, setEvidenceStrength] = useState("strong");
-  const [analysisStatus, setAnalysisStatus] = useState("");
-  const [sort, setSort] = useState("analyzed");
-  const [offset, setOffset] = useState(0);
-  const [scoreList, setScoreList] = useState<DigitalScoreList | null>(null);
+  const { t, formatNumber } = useUiLocale();
+  const [filters, setFilters] = useState(() => scoreCatalogueFilters(new URLSearchParams(window.location.search)));
+  const { queryValue, collection, format, evidenceStrength, analysisStatus, sort, offset } = filters;
+  const [result, setResult] = useState<{ filters: typeof filters; data: DigitalScoreList } | null>(null);
+  const scoreList = result?.filters === filters ? result.data : null;
+  const facets = result?.data.facets;
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     let cancelled = false;
@@ -13421,7 +13951,18 @@ function DigitalScoresSection() {
         offset,
       })
         .then((data) => {
-          if (!cancelled) setScoreList(data);
+          if (cancelled) return;
+          setResult({ filters, data });
+          const url = new URL(window.location.href);
+          if (!/^\/scores\/?$/.test(url.pathname)) return;
+          setOptionalSearchParam(url, "q", queryValue);
+          setOptionalSearchParam(url, "collection", collection);
+          setOptionalSearchParam(url, "format", format);
+          setOptionalSearchParam(url, "evidence_strength", evidenceStrength === "strong" ? undefined : evidenceStrength || "all");
+          setOptionalSearchParam(url, "analysis_status", analysisStatus);
+          setOptionalSearchParam(url, "sort", sort === "analyzed" ? undefined : sort);
+          setOptionalSearchParam(url, "offset", offset ? String(offset) : undefined);
+          if (url.href !== window.location.href) window.history.replaceState(window.history.state, "", url);
         })
         .catch((err: Error) => {
           if (!cancelled) setError(err.message);
@@ -13431,82 +13972,95 @@ function DigitalScoresSection() {
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [analysisStatus, collection, evidenceStrength, format, offset, queryValue, sort]);
-  const updateFilter = (setter: (value: string) => void, value: string) => {
-    setter(value);
-    setOffset(0);
+  }, [analysisStatus, collection, evidenceStrength, filters, format, offset, queryValue, sort]);
+  useEffect(() => {
+    const restore = () => setFilters(scoreCatalogueFilters(new URLSearchParams(window.location.search)));
+    window.addEventListener("popstate", restore);
+    return () => window.removeEventListener("popstate", restore);
+  }, []);
+  const updateFilter = (key: Exclude<keyof typeof filters, "offset">, value: string) => {
+    setFilters((current) => ({ ...current, [key]: value, offset: 0 }));
   };
+  const setOffset = (next: number) => setFilters((current) => ({ ...current, offset: next }));
+  const beyondResults = scoreList && scoreList.total > 0 && offset >= scoreList.total;
   return (
     <section className="entity-section research-evidence-browser score-catalog" id="scores" tabIndex={-1}>
       <SectionHead
+        headingLevel={1}
         eyebrow="Scores"
-        title="Organ score editions"
-        detail={scoreList ? `${scoreList.total.toLocaleString()} source-backed edition${scoreList.total === 1 ? "" : "s"}` : "Loading the score catalogue"}
+        title={t("scores.catalogue.title", "Organ score editions", "Notenausgaben für Orgel")}
+        detail={scoreList
+          ? t("scores.catalogue.resultCount", "{count, plural, one {# matching edition} other {# matching editions}}", "{count, plural, one {# passende Ausgabe} other {# passende Ausgaben}}", { count: scoreList.total })
+          : t("scores.catalogue.loading", "Loading the score catalogue", "Notenkatalog wird geladen")}
       />
       <p className="score-catalog-intro">
-        Explicitly identified and curated organ editions are shown first. A broader PDMX candidate set remains available
-        through the Evidence filter. Editions of the same work stay distinct and are connected on their detail pages.
+        Use the Evidence filter to distinguish explicitly identified and curated organ editions from the broader PDMX candidate set.
+        Editions of the same work stay distinct and are connected on their detail pages.
       </p>
       <div className="research-evidence-controls score-catalog-controls">
         <label className="search-field">
           <Search size={18} aria-hidden="true" />
-          <input aria-label="Search digital scores" value={queryValue} onChange={(event) => updateFilter(setQueryValue, event.target.value)} placeholder="Title, composer, or catalog number" />
+          <input aria-label={t("scores.catalogue.search", "Search digital scores", "Digitale Notenausgaben durchsuchen")} value={queryValue} onChange={(event) => updateFilter("queryValue", event.target.value)} placeholder={t("scores.catalogue.searchHint", "Title, composer, or catalog number", "Titel, Komponist oder Katalognummer")} />
         </label>
         <label>
-          <span>Collection</span>
-          <select value={collection} onChange={(event) => updateFilter(setCollection, event.target.value)}>
-            <option value="">All collections</option>
-            {(scoreList?.facets.collections ?? []).map((item) => (
-              <option key={item.collection_key} value={item.collection_key}>{item.collection_display_name} ({item.count})</option>
+          <span>{t("scores.catalogue.collection", "Collection", "Sammlung")}</span>
+          <select value={collection} onChange={(event) => updateFilter("collection", event.target.value)}>
+            <option value="">{t("scores.catalogue.allCollections", "All collections", "Alle Sammlungen")}</option>
+            {(facets?.collections ?? []).map((item) => (
+              <option key={item.collection_key} value={item.collection_key}>{item.collection_display_name} ({formatNumber(item.count)})</option>
             ))}
           </select>
         </label>
         <label>
-          <span>Format</span>
-          <select value={format} onChange={(event) => updateFilter(setFormat, event.target.value)}>
-            <option value="">All formats</option>
-            {(scoreList?.facets.formats ?? []).map((item) => (
-              <option key={item.format} value={item.format}>{scoreFormatLabel(item.format)} ({item.count})</option>
+          <span>{t("scores.catalogue.format", "Format", "Format")}</span>
+          <select value={format} onChange={(event) => updateFilter("format", event.target.value)}>
+            <option value="">{t("scores.catalogue.allFormats", "All formats", "Alle Formate")}</option>
+            {(facets?.formats ?? []).map((item) => (
+              <option key={item.format} value={item.format}>{scoreFormatLabel(item.format)} ({formatNumber(item.count)})</option>
             ))}
           </select>
         </label>
         <label>
-          <span>Evidence</span>
-          <select value={evidenceStrength} onChange={(event) => updateFilter(setEvidenceStrength, event.target.value)}>
-            <option value="">All evidence levels</option>
-            {(scoreList?.facets.evidence ?? []).map((item) => (
-              <option key={item.evidence_strength} value={item.evidence_strength}>{item.evidence_strength === "strong" ? "Explicit or curated" : "Candidate proxy"} ({item.count})</option>
+          <span>{t("scores.catalogue.evidence", "Evidence", "Belege")}</span>
+          <select value={evidenceStrength} onChange={(event) => updateFilter("evidenceStrength", event.target.value)}>
+            <option value="">{t("scores.catalogue.allEvidence", "All evidence levels", "Alle Belegstufen")}</option>
+            {(facets?.evidence ?? []).map((item) => (
+              <option key={item.evidence_strength} value={item.evidence_strength}>{item.evidence_strength === "strong" ? "Explicit or curated" : "Candidate proxy"} ({formatNumber(item.count)})</option>
             ))}
           </select>
         </label>
         <label>
-          <span>Musical profile</span>
-          <select value={analysisStatus} onChange={(event) => updateFilter(setAnalysisStatus, event.target.value)}>
-            <option value="">All editions</option>
-            {(scoreList?.facets.analysis ?? []).map((item) => (
-              <option key={item.analysis_status} value={item.analysis_status}>{item.analysis_status === "available" ? "Range available" : "Not yet profiled"} ({item.count})</option>
+          <span>{t("scores.catalogue.profile", "Musical profile", "Musikalisches Profil")}</span>
+          <select value={analysisStatus} onChange={(event) => updateFilter("analysisStatus", event.target.value)}>
+            <option value="">{t("scores.catalogue.allEditions", "All editions", "Alle Ausgaben")}</option>
+            {(facets?.analysis ?? []).map((item) => (
+              <option key={item.analysis_status} value={item.analysis_status}>{item.analysis_status === "available" ? "Range available" : "Not yet profiled"} ({formatNumber(item.count)})</option>
             ))}
           </select>
         </label>
         <label>
-          <span>Sort</span>
-          <select value={sort} onChange={(event) => updateFilter(setSort, event.target.value)}>
-            <option value="evidence">Strong evidence first</option>
-            <option value="title">Title</option>
-            <option value="composer">Composer</option>
-            <option value="catalog">Catalog number</option>
-            <option value="collection">Collection</option>
-            <option value="analyzed">Musical profile first</option>
+          <span>{t("scores.catalogue.sort", "Sort", "Sortierung")}</span>
+          <select value={sort} onChange={(event) => updateFilter("sort", event.target.value)}>
+            <option value="evidence">{t("scores.catalogue.strongFirst", "Strong evidence first", "Stärkste Belege zuerst")}</option>
+            <option value="title">{t("scores.catalogue.titleSort", "Title", "Titel")}</option>
+            <option value="composer">{t("scores.catalogue.composer", "Composer", "Komponist")}</option>
+            <option value="catalog">{t("scores.catalogue.catalogue", "Catalog number", "Katalognummer")}</option>
+            <option value="collection">{t("scores.catalogue.collection", "Collection", "Sammlung")}</option>
+            <option value="analyzed">{t("scores.catalogue.profileFirst", "Musical profile first", "Musikalisches Profil zuerst")}</option>
           </select>
         </label>
       </div>
-      {error && <p className="notice error">{error}</p>}
-      <DigitalScoreResultList response={scoreList} />
-      {scoreList && scoreList.total > scoreList.limit && (
-        <div className="score-catalog-pagination" aria-label="Score catalogue pages">
-          <button type="button" disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - scoreList.limit))}>Previous</button>
-          <span>{offset + 1}–{Math.min(offset + scoreList.limit, scoreList.total)} of {scoreList.total.toLocaleString()}</span>
-          <button type="button" disabled={offset + scoreList.limit >= scoreList.total} onClick={() => setOffset(offset + scoreList.limit)}>Next</button>
+      {error ? <p className="notice error" role="alert">{error}</p>
+        : beyondResults ? <div className="notice">
+          <p>{t("scores.catalogue.outOfRange", "This page is beyond the matching editions.", "Diese Seite liegt hinter den passenden Ausgaben.")}</p>
+          <button type="button" className="secondary" onClick={() => setOffset(0)}>{t("scores.catalogue.firstPage", "Return to the first page", "Zur ersten Seite zurückkehren")}</button>
+        </div>
+        : <DigitalScoreResultList response={scoreList} />}
+      {scoreList && scoreList.items.length > 0 && (offset > 0 || scoreList.total > scoreList.limit) && (
+        <div className="score-catalog-pagination" aria-label={t("scores.catalogue.pages", "Score catalogue pages", "Ergebnisseiten des Notenkatalogs")}>
+          <button type="button" disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - scoreList.limit))}>{t("scores.catalogue.previous", "Previous", "Zurück")}</button>
+          <span>{formatNumber(offset + 1)}–{formatNumber(Math.min(offset + scoreList.limit, scoreList.total))} of {formatNumber(scoreList.total)}</span>
+          <button type="button" disabled={offset + scoreList.limit >= scoreList.total} onClick={() => setOffset(offset + scoreList.limit)}>{t("scores.catalogue.next", "Next", "Weiter")}</button>
         </div>
       )}
     </section>
@@ -13615,7 +14169,7 @@ function DigitalScoreDetailPage({ actor, scoreId }: { actor?: NavigatorActor; sc
       <div className="evidence-dossier-head score-detail-head">
         <div>
           <p className="eyebrow">Source-backed score edition</p>
-          <h2>{score?.title || scoreId}</h2>
+          <h1>{score?.title || scoreId}</h1>
           <p>{score ? [score.composer, score.catalogNumber, score.instrumentation].filter(Boolean).join(" · ") || score.collection.displayName : "Loading score detail"}</p>
         </div>
         {score && <span className={`score-evidence-chip ${score.evidenceStrength === "candidate" ? "is-candidate" : ""}`}>{score.evidence?.label || score.evidenceLabel}</span>}
@@ -13758,20 +14312,17 @@ function AmbitusRangeGraphic({ analysis }: { analysis: DigitalScoreDetail["ambit
     const start = position(part.soundingMinMidi);
     const end = position(part.soundingMaxMidi);
     return (
-      <div key={part.partKey}>
-        <span>{part.partName || part.partKey}</span>
-        <i><b style={{ left: `${start}%`, width: `${Math.max(1, end - start)}%` }} /></i>
-        <small>{part.soundingMinPitch}–{part.soundingMaxPitch}</small>
+      <div key={part.partKey} className="ambitus-part-row">
+        <div><span>{part.partName || part.partKey}</span><small>{part.soundingMinPitch}–{part.soundingMaxPitch}</small></div>
+        <i aria-hidden="true"><b style={{ left: `${start}%`, width: `${end - start}%` }} /></i>
       </div>
     );
   };
   return (
-    <div className="ambitus-range-graphic" role="img" aria-label={`Sounding range ${analysis.globalMinPitch} to ${analysis.globalMaxPitch}`}>
-      <div className="ambitus-keyboard-track">
+    <div className="ambitus-range-graphic">
+      <div className="ambitus-keyboard-track" role="img" aria-label={`Sounding range ${analysis.globalMinPitch} to ${analysis.globalMaxPitch}`}>
         {ticks.map((tick) => <span key={tick.midi} style={{ left: `${position(tick.midi)}%` }}><i />{tick.label}</span>)}
-        <div className="ambitus-global-range" style={{ left: `${rangeStart}%`, width: `${Math.max(1.5, rangeEnd - rangeStart)}%` }}>
-          <b>{analysis.globalMinPitch}</b><b>{analysis.globalMaxPitch}</b>
-        </div>
+        <div className="ambitus-global-range" style={{ left: `${rangeStart}%`, width: `${rangeEnd - rangeStart}%` }} />
       </div>
       {parts.length > 1 && (
         <div className="ambitus-part-tracks">
@@ -13788,7 +14339,7 @@ function AmbitusRangeGraphic({ analysis }: { analysis: DigitalScoreDetail["ambit
   );
 }
 
-function DigitalScoreAssetPage({ scoreId, assetId }: { scoreId: string; assetId: string }) {
+function DigitalScoreAssetPage({ scoreId, assetId, publicProjection }: { scoreId: string; assetId: string; publicProjection: boolean }) {
   const [mode, setMode] = useState<ViewMode>("surface");
   const [asset, setAsset] = useState<DigitalScoreAssetDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -13813,7 +14364,8 @@ function DigitalScoreAssetPage({ scoreId, assetId }: { scoreId: string; assetId:
       error={error}
       mode={mode}
       onModeChange={setMode}
-      title={asset?.label || assetId}
+      title={asset?.label || "Score format"}
+      publicParentUrl={publicProjection ? `/scores/${encodeURIComponent(scoreId)}` : undefined}
     />
   );
 }
@@ -13861,6 +14413,7 @@ function DigitalAssetDetailShell({
   error,
   mode,
   onModeChange,
+  publicParentUrl,
   title,
 }: {
   asset: DigitalScoreAssetDetail | MidiAssetDetail | null;
@@ -13868,44 +14421,55 @@ function DigitalAssetDetailShell({
   error: string | null;
   mode: ViewMode;
   onModeChange: (mode: ViewMode) => void;
+  publicParentUrl?: string;
   title: string;
 }) {
+  const Heading = publicParentUrl ? "h1" : "h2";
+  const accessUrl = asset?.resolvedUrl || asset?.url;
+  const fromArchive = asset?.downloadStatus === "available_in_source_archive";
   return (
     <section className="entity-section research-evidence-browser" tabIndex={-1}>
-      <button type="button" className="text-link-button evidence-route-back" onClick={() => { const path = asset?.parentScore?.url || "/scores"; window.history.pushState(null, "", path); window.dispatchEvent(new PopStateEvent("popstate")); }}>
-        Back to score
-      </button>
+      {publicParentUrl ? (
+        <a href={publicParentUrl} className="catalog-back evidence-route-back"><ChevronLeft size={17} aria-hidden="true" /> Back to score</a>
+      ) : (
+        <button type="button" className="text-link-button evidence-route-back" onClick={() => { const path = asset?.parentScore?.url || "/scores"; window.history.pushState(null, "", path); window.dispatchEvent(new PopStateEvent("popstate")); }}>
+          Back to score
+        </button>
+      )}
       <div className="evidence-dossier-head">
         <div>
           <p className="eyebrow">Score asset evidence</p>
-          <h2>{title}</h2>
+          <Heading>{title}</Heading>
           <p>{asset ? `${asset.parentScore.title || asset.scoreId} · ${scoreFormatLabel(asset.format || "")}` : "Loading asset detail"}</p>
         </div>
-        <div className="evidence-mode-switch" role="group" aria-label="Asset detail mode">
+        {!publicParentUrl && <div className="evidence-mode-switch" role="group" aria-label="Asset detail mode">
           <button type="button" aria-pressed={mode === "surface"} className={mode === "surface" ? "selected" : ""} onClick={() => onModeChange("surface")}>Overview</button>
           <button type="button" aria-pressed={mode === "depth"} className={mode === "depth" ? "selected" : ""} onClick={() => onModeChange("depth")}>Technical</button>
-        </div>
+        </div>}
       </div>
-      {error && <p className="notice error">{error}</p>}
-      {!asset && !error && <p className="notice">Loading asset evidence...</p>}
+      {error && <p className="notice error" role="alert">{error}</p>}
+      {!asset && !error && <p className="notice" role="status">Loading asset evidence…</p>}
       {asset && (
         <>
           <section className="panel-block">
             <h3>Asset</h3>
             <div className="identifier-summary">
-              <div><span>Status</span><strong>{friendlyLabel(asset.downloadStatus || "unknown")}</strong></div>
+              <div><span>Availability</span><strong>{publicParentUrl ? scoreAssetAvailabilityLabel(asset.downloadStatus) : friendlyLabel(asset.downloadStatus || "unknown")}</strong></div>
               <div><span>Role</span><strong>{friendlyLabel(asset.role || "asset")}</strong></div>
               <div><span>Format</span><strong>{scoreFormatLabel(asset.format || "")}</strong></div>
               <div><span>Size</span><strong>{formatBytes(asset.contentSizeBytes)}</strong></div>
             </div>
+            {publicParentUrl && asset.archiveMemberPath && (
+              <p className="score-asset-member">File in the source archive <code>{asset.archiveMemberPath}</code></p>
+            )}
             <div className="research-evidence-actions">
-              {(asset.resolvedUrl || asset.url) && <a href={asset.resolvedUrl || asset.url || "#"} target="_blank" rel="noreferrer">Access URL</a>}
-              {asset.parentScore.url && <a href={asset.parentScore.url}>Parent score</a>}
-              <a href={`/source/${encodeURIComponent(asset.sourceRecordId)}`}>Source evidence</a>
+              {accessUrl && <a href={accessUrl} target="_blank" rel="noreferrer">{publicParentUrl ? fromArchive ? "Open source archive" : "Open source file" : "Access URL"}</a>}
+              {!publicParentUrl && asset.parentScore.url && <a href={asset.parentScore.url}>Parent score</a>}
+              {!publicParentUrl && <a href={`/source/${encodeURIComponent(asset.sourceRecordId)}`}>Source evidence</a>}
             </div>
           </section>
           {children}
-          {mode === "depth" && (
+          {!publicParentUrl && mode === "depth" && (
             <details className="research-evidence-item-details" open>
               <summary>Depth metadata</summary>
               <pre>{JSON.stringify(asset.raw || asset, null, 2)}</pre>
@@ -15075,7 +15639,7 @@ function StructuredNamePage({ id }: { id: string }) {
       <div className="evidence-dossier-head">
         <div>
           <p className="eyebrow">Structured name · Release {name.releaseVersion || "1.5"}</p>
-          <h2>{name.title}</h2>
+          <h1>{name.title}</h1>
           <p>{name.guidance}</p>
         </div>
         <IdentifierCopy id={name.mdvsId} />
@@ -15134,6 +15698,7 @@ function StructuredNamePage({ id }: { id: string }) {
 }
 
 function CanonicalActorPage({ category, id, staffMode }: { category: string; id: string; staffMode: boolean }) {
+  const { t, formatNumber } = useUiLocale();
   const [actor, setActor] = useState<CanonicalActorDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [infoTopic, setInfoTopic] = useState<ActorInfoKey | null>(null);
@@ -15175,7 +15740,7 @@ function CanonicalActorPage({ category, id, staffMode }: { category: string; id:
       <div className="evidence-dossier-head">
         <div>
           <p className="eyebrow">{actor?.entityTypeLabel || "Person or organization"}</p>
-          <h2>{actor?.title || id} {!sourceBacked && <ActorInfoButton topic="canonicalActor" onOpen={setInfoTopic} />}</h2>
+          <h1>{actor?.title || id} {!sourceBacked && <ActorInfoButton topic="canonicalActor" onOpen={setInfoTopic} />}</h1>
           <p>{actor?.guidance || "Promoted actor identity with source-backed candidate support."}</p>
         </div>
         <div className="actor-page-head-actions">
@@ -15308,14 +15873,14 @@ function CanonicalActorPage({ category, id, staffMode }: { category: string; id:
             {staffMode && <div><ExplainedLabel label="Promotion" topic="promotion" onOpen={setInfoTopic} /><strong>{friendlyLabel(actor.promotionState || actor.status || "promoted")}</strong></div>}
             {actor.sourceRecordCount > 0 && (
               <div className="actor-mention-metric">
-                <button type="button" onClick={() => setMentionsOpen(true)} aria-label={`Inspect ${actor.sourceRecordCount} documented mentions`}>
+                <button type="button" onClick={() => setMentionsOpen(true)} aria-label={`Inspect ${formatNumber(actor.sourceRecordCount)} documented mentions`}>
                   <span>{actor.collectionDelivery?.scope ? "Builder source records" : "Mentions"}</span>
-                  <strong>{actor.sourceRecordCount}</strong>
+                  <strong>{formatNumber(actor.sourceRecordCount)}</strong>
                   <small>Inspect records</small>
                 </button>
               </div>
             )}
-            {actor.candidateSupportCount > 0 && <div><span>Documented mentions</span><strong>{actor.candidateSupportCount}</strong></div>}
+            {actor.candidateSupportCount > 0 && <div><span>Documented mentions</span><strong>{formatNumber(actor.candidateSupportCount)}</strong></div>}
             {staffMode && <div><ExplainedLabel label="Core row" topic="coreRow" onOpen={setInfoTopic} /><strong>{actor.coreEntityId}</strong></div>}
           </div>
           {actor.eventEvidence && <section className="canonical-resolution-banner" aria-label="Event participation evidence">
@@ -15500,7 +16065,11 @@ function CanonicalActorPage({ category, id, staffMode }: { category: string; id:
           <details className="evidence-section actor-detailed-facts actor-compact-details">
             <summary>
               <span>{actor.promotionState === "canonical" ? "Details" : "Detailed Source-Backed Facts"} <ActorInfoButton topic="structuredProfile" onOpen={setInfoTopic} /></span>
-              <small>{names.length} names · {dates.length} dates · {properties.length} facts · {identifiers.length} identifiers</small>
+              <small>{t("actor.detail.profileCounts",
+                "{names, plural, one {# name} other {# names}} · {dates, plural, one {# date} other {# dates}} · {facts, plural, one {# fact} other {# facts}} · {identifiers, plural, one {# identifier} other {# identifiers}}",
+                "{names, plural, one {# Name} other {# Namen}} · {dates, plural, one {# Datum} other {# Datumsangaben}} · {facts, plural, one {# Angabe} other {# Angaben}} · {identifiers, plural, one {# Kennung} other {# Kennungen}}",
+                { names: names.length, dates: dates.length, facts: properties.length, identifiers: identifiers.length }
+              )}</small>
             </summary>
             <div className="evidence-status-grid">
               <div><ExplainedLabel label="Names" topic="names" onOpen={setInfoTopic} /><strong>{names.length}</strong></div>
@@ -17859,9 +18428,10 @@ function OrganList({
   mediaAvailable?: boolean;
   publicProjection?: boolean;
   selectedId?: string;
-  onOpen: (id: string) => void;
+  onOpen: (id: string, tab?: OrganTab) => void;
   staffMode?: boolean;
 }) {
+  const { t } = useUiLocale();
   const [sourceOrgan, setSourceOrgan] = useState<OrganCard | null>(null);
   const sourceTriggerRef = useRef<HTMLButtonElement | null>(null);
   const renderedItems = items.slice(0, ORGAN_RENDER_WINDOW_SIZE);
@@ -17871,56 +18441,75 @@ function OrganList({
     window.requestAnimationFrame(() => sourceTriggerRef.current?.focus());
   };
   return (
-    <section className={`organ-list ${loading ? "updating" : ""}`} aria-busy={loading} aria-label="Organ results">
-      {loading && <div className="catalog-updating" role="status">Updating results...</div>}
+    <section className={`organ-list ${loading ? "updating" : ""}`} aria-busy={loading} aria-label={t("organs.list.region", "Organ results", "Orgeltreffer")}>
+      {loading && <div className="catalog-updating" role="status">{t("organs.list.updating", "Updating results...", "Ergebnisse werden aktualisiert …")}</div>}
       {renderedItems.length > 0 && (
         <div className="organ-table-scroll">
           <table className={`organ-table ${publicProjection ? "organ-table-public" : ""}`} role="table">
-            <caption className="sr-only">Organs matching your search, with documented stops, location, builder, and source collections.</caption>
+            <caption className="sr-only">{t("organs.list.caption", "Organs matching your search, with documented stops, location, builder, and source collections.", "Orgeltreffer mit dokumentierter Registerzahl, Standort, Orgelbauer und Quellensammlungen.")}</caption>
             <thead role="rowgroup">
               <tr role="row">
-                <th role="columnheader" scope="col">Organ / institution</th>
-                {publicProjection && <th role="columnheader" scope="col">Documented stops</th>}
-                <th role="columnheader" scope="col">Place</th>
-                <th role="columnheader" scope="col">Builder</th>
-                {!publicProjection && <th role="columnheader" scope="col">Date</th>}
-                {!publicProjection && <th role="columnheader" scope="col">Specification</th>}
-                <th role="columnheader" scope="col">Sources</th>
-                {mediaAvailable && <th role="columnheader" scope="col">Media</th>}
-                {staffMode && <th role="columnheader" scope="col">Status</th>}
+                <th role="columnheader" scope="col">{t("organs.list.institution", "Organ / institution", "Orgel / Einrichtung")}</th>
+                {publicProjection && <th role="columnheader" scope="col">{t("organs.list.stops", "Documented stops", "Dokumentierte Register")}</th>}
+                <th role="columnheader" scope="col">{t("organs.list.place", "Place", "Ort")}</th>
+                <th role="columnheader" scope="col">{t("organs.list.builder", "Builder", "Orgelbauer")}</th>
+                {!publicProjection && <th role="columnheader" scope="col">{t("organs.list.date", "Date", "Datum")}</th>}
+                {!publicProjection && <th role="columnheader" scope="col">{t("organs.list.specification", "Specification", "Disposition")}</th>}
+                <th role="columnheader" scope="col">{t("organs.list.sources", "Sources", "Quellen")}</th>
+                {mediaAvailable && <th role="columnheader" scope="col">{t("organs.list.media", "Media", "Medien")}</th>}
+                {staffMode && <th role="columnheader" scope="col">{t("organs.list.status", "Status", "Status")}</th>}
               </tr>
             </thead>
             <tbody role="rowgroup">
               {renderedItems.map((organ) => {
                 const status = organStatusLabel(organ, staffMode);
-                const pageUrl = organ.pageUrl || `/id/${encodeURIComponent(organ.mdvsId)}`;
+                const institution = organInstitutionLabel(organ);
+                const organId = organ.targetMdvsId || organ.id;
+                const pageUrl = organ.pageUrl || organPublicUrl(organ.mdvsId);
+                const placeUrl = organ.placePageUrl || organ.placeUrl;
                 const provisional = organ.catalogState === "provisional";
+                const specification = publicProjection ? actorValue(organ.specification?.stops) || "—" : organSpecificationLabel(organ);
+                const specificationSummary = publicProjection ? `${specification} documented stop${specification === "1" ? "" : "s"}` : specification;
+                const mediaCount = organ.mediaCount > 0 ? organ.mediaCount : "—";
+                const tabHref = (tab: OrganTab) => {
+                  const url = new URL(organ.pageUrl || `/organs?organ=${encodeURIComponent(organId)}`, window.location.origin);
+                  url.searchParams.set("tab", tab);
+                  return `${url.pathname}${url.search}${url.hash}`;
+                };
+                const openTab = (event: MouseEvent<HTMLAnchorElement>, tab?: OrganTab) => {
+                  if (provisional || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                  event.preventDefault();
+                  onOpen(organId, tab);
+                };
+                const specificationLink = !provisional && specification !== "—" ? (
+                  <a
+                    className="organ-result-entity-link"
+                    href={tabHref("specification")}
+                    onClick={(event) => openTab(event, "specification")}
+                    aria-label={`${specificationSummary} for ${institution}. Open specification.`}
+                  >{specification}</a>
+                ) : specification;
                 return (
                   <tr role="row" key={organ.id} className={`organ-row ${selectedId === organ.id ? "active" : ""}`}>
                     <td role="cell" className="organ-table-identity">
                       <a
                         href={pageUrl}
                         title={organ.title}
-                        onClick={(event) => {
-                          if (provisional) return;
-                          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                          event.preventDefault();
-                          onOpen(organ.targetMdvsId || organ.id);
-                        }}
+                        onClick={openTab}
                       >
-                        <strong>{organInstitutionLabel(organ)}</strong>
+                        <strong>{institution}</strong>
                         <span>{organ.catalogReference || organ.mdvsId}</span>
-                        {provisional && <em>Source record · not yet a canonical organ</em>}
+                        {provisional && <em>{t("organs.list.provisional", "Source record · not yet a canonical organ", "Quelldatensatz · noch keiner kanonischen Orgel zugeordnet")}</em>}
                       </a>
                     </td>
                     {publicProjection && (
                       <td role="cell" className="organ-table-stop-count" data-label="Documented stops">
-                        {actorValue(organ.specification?.stops) || "—"}
+                        {specificationLink}
                       </td>
                     )}
                     <td role="cell" className="organ-table-place" data-label="Place">
-                      {organ.placeUrl ? (
-                        <a className="organ-result-entity-link" href={organ.placeUrl}><strong>{organPlaceLabel(organ)}</strong></a>
+                      {placeUrl ? (
+                        <a className="organ-result-entity-link" href={placeUrl}><strong>{organPlaceLabel(organ)}</strong></a>
                       ) : <strong>{organPlaceLabel(organ)}</strong>}
                       {publicProjection && organ.locationReadiness?.state !== "coordinates" && <small className="organ-location-qualifier">{organ.locationReadiness?.label}</small>}
                     </td>
@@ -17930,12 +18519,12 @@ function OrganList({
                       ) : organ.builder || "—"}
                     </td>
                     {!publicProjection && <td role="cell" data-label="Date">{organ.dateLabel || "—"}</td>}
-                    {!publicProjection && <td role="cell" data-label="Specification">{organSpecificationLabel(organ)}</td>}
+                    {!publicProjection && <td role="cell" data-label="Specification">{specificationLink}</td>}
                     <td role="cell" data-label="Sources">
                       <button
                         type="button"
                         className={`organ-source-count ${organ.sourceCount > 1 ? "multi-source" : ""}`}
-                        aria-label={`${organ.sourceCount} source collection${organ.sourceCount === 1 ? "" : "s"} for ${organInstitutionLabel(organ)}`}
+                        aria-label={`${organ.sourceCount} source collection${organ.sourceCount === 1 ? "" : "s"} for ${institution}`}
                         aria-haspopup="dialog"
                         aria-expanded={sourceOrgan?.id === organ.id}
                         title={`${organ.sourceCount} source collection${organ.sourceCount === 1 ? "" : "s"}`}
@@ -17947,7 +18536,18 @@ function OrganList({
                         {organ.sourceCount}
                       </button>
                     </td>
-                    {mediaAvailable && <td role="cell" data-label="Media">{organ.mediaCount > 0 ? organ.mediaCount : "—"}</td>}
+                    {mediaAvailable && (
+                      <td role="cell" data-label="Media">
+                        {organ.mediaCount > 0 && !provisional ? (
+                          <a
+                            className="organ-result-entity-link"
+                            href={tabHref("media")}
+                            onClick={(event) => openTab(event, "media")}
+                            aria-label={`${mediaCount} media item${mediaCount === 1 ? "" : "s"} for ${institution}. Open media.`}
+                          >{mediaCount}</a>
+                        ) : mediaCount}
+                      </td>
+                    )}
                     {staffMode && (
                       <td role="cell" data-label="Status">
                         <span className={`status-chip status-chip-${publicStatusClass(status)}`}>{status}</span>
@@ -17966,7 +18566,7 @@ function OrganList({
           Showing {renderedItems.length} of {items.length} loaded rows. Use Load more after narrowing filters or opening an organ.
         </p>
       )}
-      {items.length === 0 && !loading && <EmptyState icon={<Search size={22} />} title="No organs found" body="Broaden the search or clear the query." />}
+      {items.length === 0 && !loading && <EmptyState icon={<Search size={22} />} title={t("organs.list.empty", "No organs found", "Keine Orgeln gefunden")} body="Broaden the search or clear the query." />}
       {sourceOrgan && <OrganCatalogSourcesModal organ={sourceOrgan} onClose={closeSourceModal} />}
     </section>
   );
@@ -18092,6 +18692,7 @@ function CatalogPagination({
   onPageChange: (offset: number) => void;
   total: number;
 }) {
+  const { formatNumber } = useUiLocale();
   if (total === 0 && !loading) return null;
   const pageCount = Math.max(1, Math.ceil(total / limit));
   const currentPage = Math.min(pageCount, Math.floor(offset / limit) + 1);
@@ -18100,7 +18701,7 @@ function CatalogPagination({
     .sort((left, right) => left - right);
   return (
     <div className="catalog-load-more" aria-label="Catalog pagination">
-      <span>{loading ? "Updating results..." : `Showing ${formatInteger(Math.min(offset + 1, total))}–${formatInteger(Math.min(offset + limit, total))} of ${formatInteger(total)}`}</span>
+      <span>{loading ? "Updating results..." : `Showing ${formatNumber(Math.min(offset + 1, total))}–${formatNumber(Math.min(offset + limit, total))} of ${formatNumber(total)}`}</span>
       <div className="catalog-page-controls">
         <button type="button" onClick={() => onPageChange(offset - limit)} disabled={loading || currentPage === 1}>Previous</button>
         {pageNumbers.map((page, index) => {
@@ -18108,7 +18709,7 @@ function CatalogPagination({
           return (
             <span className="catalog-page-number" key={page}>
               {previous && page - previous > 1 && <span aria-hidden="true">…</span>}
-              <button type="button" aria-label={`Page ${formatInteger(page)}`} aria-current={page === currentPage ? "page" : undefined} onClick={() => onPageChange((page - 1) * limit)} disabled={loading || page === currentPage}>{formatInteger(page)}</button>
+              <button type="button" aria-label={`Page ${formatNumber(page)}`} aria-current={page === currentPage ? "page" : undefined} onClick={() => onPageChange((page - 1) * limit)} disabled={loading || page === currentPage}>{formatNumber(page)}</button>
             </span>
           );
         })}
@@ -18131,6 +18732,7 @@ function OrganPage({
   sectionLoads,
   onTabChange,
   capabilities,
+  publicProjection,
 }: {
   actorId: string;
   activeTab: OrganTab;
@@ -18144,7 +18746,9 @@ function OrganPage({
   sectionLoads: OrganSectionLoadMap;
   onTabChange: (tab: OrganTab) => void;
   capabilities?: string[] | null;
+  publicProjection: boolean;
 }) {
+  const { t } = useUiLocale();
   const staffMode = Boolean(actorId.trim());
   const mediaAvailable = !capabilities || capabilities.includes("media");
   const visibleTabs = ORGAN_TABS.filter((tab) => (
@@ -18161,9 +18765,34 @@ function OrganPage({
   const [mapContextMounted, setMapContextMounted] = useState(false);
   useEffect(() => { setMapContextOpen(false); setMapContextMounted(false); }, [organ.id]);
   const activeTabButtonRef = useRef<HTMLButtonElement>(null);
+  const previousTabLocation = useRef<{organ: string; tab: OrganTab} | null>(null);
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => activeTabButtonRef.current?.scrollIntoView({ block: "nearest", inline: "center" }));
+    const previous = previousTabLocation.current;
+    const firstOverview = activeTab === "overview" && (!previous || previous.organ !== organ.id || previous.tab === activeTab);
+    previousTabLocation.current = {organ: organ.id, tab: activeTab};
+    const frame = window.requestAnimationFrame(() => {
+      const button = activeTabButtonRef.current;
+      if (!button) return;
+      // Opening an overview starts at its title; later tab choices remain visible.
+      if (!firstOverview) { button.scrollIntoView({block:"nearest", inline:"center"}); return; }
+      const strip = button.closest<HTMLElement>(".tab-strip");
+      if (strip && strip.scrollWidth > strip.clientWidth) strip.scrollLeft = 0;
+    });
     return () => window.cancelAnimationFrame(frame);
+  }, [activeTab, organ.id]);
+  useEffect(() => {
+    const button = activeTabButtonRef.current;
+    const strip = button?.parentElement;
+    if (!button || !strip) return;
+    const observer = new ResizeObserver(() => {
+      const tab = button.getBoundingClientRect();
+      const viewport = strip.getBoundingClientRect();
+      if (tab.left < viewport.left || tab.right > viewport.right) {
+        strip.scrollLeft += (tab.left + tab.right - viewport.left - viewport.right) / 2;
+      }
+    });
+    observer.observe(strip);
+    return () => observer.disconnect();
   }, [activeTab, organ.id]);
   const [recordModal, setRecordModal] = useState<"citation" | "data" | null>(null);
   const builderRelation = organ.relatedEntities.find((entity) => (
@@ -18171,15 +18800,39 @@ function OrganPage({
   ));
   const builderUrl = organ.builderUrl || builderRelation?.entityPageUrl;
   const placeRelation = organ.relatedEntities.find((entity) => entity.kind === "Place");
+  const compactHeader = publicProjection && !staffMode && activeTab !== "overview";
+  const summaryFacts = (
+    <div className="organ-hero-facts" aria-label={t("organ.page.summary", "Organ summary", "Orgel im Überblick")}>
+            {organ.builder && <span><strong>{builderUrl ? <a href={builderUrl}>{organ.builder}</a> : organ.builder}</strong> {t("organ.page.builder", "Builder association", "Zuordnung zu einem Orgelbauer")}</span>}
+            {organ.dateLabel && <span><strong>{organ.dateLabel}</strong> {t("organ.page.date", "Source date", "Datum laut Quelle")}</span>}
+            {organ.documentedStateSummary && (
+              <button
+                type="button"
+                onClick={() => onTabChange("history")}
+                title={organ.documentedStateSummary.guidance}
+              >
+                <strong>{organ.documentedStateSummary.assertionCount}</strong>{" "}
+                event assertion{organ.documentedStateSummary.assertionCount === 1 ? "" : "s"}
+                {organ.documentedStateSummary.yearLabel ? ` · ${organ.documentedStateSummary.yearLabel}` : ""}<ChevronRight size={14} aria-hidden="true"/>
+              </button>
+            )}
+            {organ.sourceCount > 0 && <button type="button" onClick={() => onTabChange("identifiers")}>{organ.sourceSummary?.sourceRecords != null ? <><strong>{organ.sourceSummary.sourceRecords}</strong> source record{organ.sourceSummary.sourceRecords === 1 ? "" : "s"}{organ.sourceSummary.collections != null && ` · ${organ.sourceSummary.collections} collection${organ.sourceSummary.collections === 1 ? "" : "s"}`}</> : "Sources and identifiers"}<ChevronRight size={14} aria-hidden="true"/></button>}
+            <button type="button" className="organ-context-map-button" onPointerEnter={preloadMapRuntime} onFocus={preloadMapRuntime} onPointerDown={preloadMapRuntime} onClick={() => { setMapContextMounted(true); setMapContextOpen(true); }} aria-label={`Open map for ${organInstitutionLabel(organ)}`}>
+              <MapIcon size={16} aria-hidden="true" /> <strong>Map</strong>
+            </button>
+            {mediaAvailable && organ.mediaCount > 0 && <button type="button" onClick={() => onTabChange("media")}><strong>{organ.mediaCount}</strong> Media<ChevronRight size={14} aria-hidden="true"/></button>}
+            {staffMode && organ.locationReadiness?.label && <span><strong>{organ.locationReadiness.label}</strong> Location</span>}
+          </div>
+  );
   return (
     <article className={`organ-page ${staffMode ? "staff-mode" : "public-mode"}`}>
-      <header className="organ-hero">
+      <header className={`organ-hero${compactHeader ? " organ-hero-compact" : ""}`}>
         <div>
           <p className="eyebrow">Pipe organ</p>
-          <h2>{organInstitutionLabel(organ)}</h2>
+          {publicProjection ? <h1>{organInstitutionLabel(organ)}</h1> : <h2>{organInstitutionLabel(organ)}</h2>}
           {organ.transliterations?.[0]?.value && (
             <p className="organ-title-transliteration">
-              <span>Latin transliteration</span>
+              <span>{t("organ.page.transliteration", "Latin transliteration", "Umschrift in lateinischer Schrift")}</span>
               {organ.transliterations[0].value}
             </p>
           )}
@@ -18192,47 +18845,43 @@ function OrganPage({
                 : <Pill>{organ.location}</Pill>
             )}
           </div>
-          <div className="organ-hero-facts" aria-label="Organ summary">
-            {organ.builder && <span><strong>{builderUrl ? <a href={builderUrl}>{organ.builder}</a> : organ.builder}</strong> Builder</span>}
-            {organ.dateLabel && <span><strong>{organ.dateLabel}</strong> Date</span>}
-            {organ.documentedStateSummary && (
-              <button
-                type="button"
-                onClick={() => onTabChange("history")}
-                title={organ.documentedStateSummary.guidance}
-              >
-                <strong>{organ.documentedStateSummary.assertionCount}</strong>{" "}
-                event assertion{organ.documentedStateSummary.assertionCount === 1 ? "" : "s"}
-                {organ.documentedStateSummary.yearLabel ? ` · ${organ.documentedStateSummary.yearLabel}` : ""}
-              </button>
-            )}
-            {organ.sourceCount > 0 && <button type="button" onClick={() => onTabChange("identifiers")}><strong>{organ.sourceCount}</strong> Source{organ.sourceCount === 1 ? "" : "s"}</button>}
-            <button type="button" className="organ-context-map-button" onPointerEnter={preloadMapRuntime} onFocus={preloadMapRuntime} onPointerDown={preloadMapRuntime} onClick={() => { setMapContextMounted(true); setMapContextOpen(true); }} aria-label={`Open map for ${organInstitutionLabel(organ)}`}>
-              <MapIcon size={16} aria-hidden="true" /> <strong>Map</strong>
-            </button>
-            {mediaAvailable && organ.mediaCount > 0 && <button type="button" onClick={() => onTabChange("media")}><strong>{organ.mediaCount}</strong> Media</button>}
-            {staffMode && organ.locationReadiness?.label && <span><strong>{organ.locationReadiness.label}</strong> Location</span>}
-          </div>
+          {compactHeader ? <details className="organ-record-summary">
+            <summary>{t("organ.page.recordSummary", "Record summary · builder, history and sources", "Datensatz im Überblick · Orgelbauer, Geschichte und Quellen")}</summary>
+            {summaryFacts}
+          </details> : summaryFacts}
         </div>
         <div className="organ-hero-aside">
-          {mediaAvailable && <OrganHeroMedia organ={organ} onOpenTab={onTabChange} />}
+          {mediaAvailable && !compactHeader && <OrganHeroMedia organ={organ} onOpenTab={onTabChange} />}
           <div className="organ-record-actions">
-            <button type="button" className="secondary" onClick={() => setRecordModal("citation")}><Quote size={15} /> Cite</button>
+            <button type="button" className="secondary" onClick={() => setRecordModal("citation")}><Quote size={15} /> {t("organ.page.cite", "Cite", "Zitieren")}</button>
+            {publicProjection && !staffMode && <button type="button" className="secondary" onClick={() => window.dispatchEvent(new CustomEvent("modavis:workspace-add", { detail: { kind: "organ", id: organ.mdvsId, title: organ.title, url: organ.pageUrl || `/organs/${encodeURIComponent(organ.mdvsId)}` } }))}><Library size={15} /> {t("organ.page.keep", "Keep in workspace", "Im Arbeitsbereich speichern")}</button>}
             {(!capabilities || capabilities.includes("contributions")) && <button type="button" className={`secondary organ-contribute-action ${activeTab === "contributions" ? "active" : ""}`} aria-pressed={activeTab === "contributions"} onClick={() => onTabChange("contributions")}>
               <MessageSquarePlus size={15} /> Contribute
             </button>}
           </div>
         </div>
       </header>
+      {!staffMode && <BuilderAttribution organ={organ} />}
       <div className="organ-section-control">
-        <div className="tab-strip" role="tablist" aria-label="Organ page sections">
+        <div className="tab-strip" role="tablist" aria-label={t("organ.page.sections", "Organ page sections", "Abschnitte der Orgelseite")}>
           {visibleTabs.map((tab) => (
-            <button ref={activeTab === tab ? activeTabButtonRef : undefined} key={tab} role="tab" aria-selected={activeTab === tab} className={activeTab === tab ? "selected" : ""} onClick={() => onTabChange(tab)}>
-              {tabLabel(tab)}
+            <button ref={activeTab === tab ? activeTabButtonRef : undefined} key={tab} id={`organ-tab-${tab}`} role="tab" aria-controls="organ-tab-content" tabIndex={activeTab === tab ? 0 : -1} aria-selected={activeTab === tab} className={activeTab === tab ? "selected" : ""} onClick={() => onTabChange(tab)} onKeyDown={event => {
+              const index = visibleTabs.indexOf(tab);
+              const next = event.key === "ArrowRight" ? visibleTabs[(index + 1) % visibleTabs.length]
+                : event.key === "ArrowLeft" ? visibleTabs[(index + visibleTabs.length - 1) % visibleTabs.length]
+                : event.key === "Home" ? visibleTabs[0] : event.key === "End" ? visibleTabs[visibleTabs.length - 1] : null;
+              if (!next) return;
+              event.preventDefault();
+              onTabChange(next);
+              document.getElementById(`organ-tab-${next}`)?.focus();
+            }}>
+              {publicOrganTabLabel(t, tab, tabLabel(tab))}
             </button>
           ))}
         </div>
       </div>
+      <div id="organ-tab-content" role="tabpanel" aria-labelledby={`organ-tab-${activeTab}`} tabIndex={0}>
+      <Suspense fallback={<div className="notice" role="status">{t("organ.page.loadingSection", "Loading section…", "Abschnitt wird geladen …")}</div>}>
       {activeTab === "overview" && (
         <OverviewTab
           actorId={actorId}
@@ -18255,7 +18904,7 @@ function OrganPage({
       )}
       {activeTab === "specification" && (
         <OrganSectionState state={sectionLoads.specification} section="specification" onRetry={() => onSectionRetry("specification")}>
-          {organ.specificationDescriptions?.some(d => d.kind === "alternative") ? <OrganSpecificationDescriptions
+          {hasSpecificationDescriptions(organ) ? <OrganSpecificationDescriptions
             organ={organ}
             components={<SpecificationTab
               actorId={actorId}
@@ -18283,6 +18932,7 @@ function OrganPage({
       {activeTab === "related" && (
         <OrganSectionState state={sectionLoads.related} section="related entities" onRetry={() => onSectionRetry("related")}>
           <RelatedTab organ={organ} staffMode={staffMode} />
+          {publicProjection && !staffMode && <PodRelatedResources organId={organ.mdvsId} />}
         </OrganSectionState>
       )}
       {activeTab === "contributions" && (!capabilities || capabilities.includes("contributions")) && (
@@ -18304,10 +18954,12 @@ function OrganPage({
           onResearchRefresh={onResearchRefresh}
         />
       )}
+      </Suspense>
+      </div>
       {mapContextMounted && <OrganContextMapModal organ={organ} open={mapContextOpen} onClose={() => setMapContextOpen(false)} />}
       <footer className="organ-data-note"><span>MODAVIS Pipe Organ Dataset {String(organ.citation.provenanceContext?.release || "")}</span><button type="button" onClick={() => setRecordModal("data")}>About this record</button></footer>
       {recordModal === "data" && <PublicModal title="About this record" onClose={() => setRecordModal(null)}><p>This record belongs to the MODAVIS Pipe Organ Dataset, version {String(organ.citation.provenanceContext?.release || "")}.</p>{organ.candidateContext && <p>{organ.candidateContext.label}. Based on Release {organ.candidateContext.parentRelease}.</p>}<p>Source descriptions retain their own dates and attribution. An earlier description can refer to a different instrument at the same place.</p><a href="/about/release">Read about the dataset and its sources</a></PublicModal>}
-      {recordModal === "citation" && <PublicModal title="Cite this organ record" onClose={() => setRecordModal(null)}><p className="record-citation-text">{organ.citation.recommendedCitation}</p><div className="record-citation-actions"><CopyButton label="Copy citation" value={organ.citation.recommendedCitation} /><CopyButton label="Copy BibTeX" value={organ.citation.bibtex || ""} /><CopyButton label="Copy URL" value={organ.citation.canonicalUrl} /></div><p className="muted">The citation credits the dataset’s creator and MODAVIS, identifies this organ record and dataset version, and uses its persistent w3id URL.</p><a href={organ.citation.apiUrl}>Citation metadata</a></PublicModal>}
+      {recordModal === "citation" && <PublicModal title="Cite this organ record" onClose={() => setRecordModal(null)}><p className="record-citation-text">{organ.citation.recommendedCitation}</p><div className="record-citation-actions"><CopyButton label="Copy citation" value={organ.citation.recommendedCitation} /><CopyButton label="Copy BibTeX" value={organ.citation.bibtex || ""} /><CopyButton label="Copy URL" value={organ.citation.canonicalUrl} /></div><p className="muted">{organ.citation.dataset?.version === "0.0.0-fixture" ? "This citation identifies an invented demonstration record. It is not research evidence or an accepted POD release." : "The citation credits the dataset’s creator and MODAVIS and identifies this organ record, dataset version and record URL."}</p><a href={organ.citation.apiUrl}>Citation metadata</a></PublicModal>}
     </article>
   );
 }
@@ -18701,11 +19353,13 @@ function mediaEmbedUrl(item: OrganMedia): string {
   return videoId ? `https://www.youtube-nocookie.com/embed/${videoId}?rel=0` : "";
 }
 
-function mediaReferenceLabel(item: OrganMedia): string {
-  if (item.hasByteBridge) return "Available in MODAVIS";
-  if (item.url) return actorLooksLikeImage(item.url) ? "Image viewable at the source" : "Media viewable at the source";
-  if (item.mediaFileId || item.bitstreamId || item.contentHash) return "File reference awaiting preview";
-  return "Media metadata reference";
+function mediaReferenceLabel(t: UiText, item: OrganMedia): string {
+  if (item.hasByteBridge) return t("organ.media.ref.available", "Available in MODAVIS", "In MODAVIS verfügbar");
+  if (item.url) return actorLooksLikeImage(item.url)
+    ? t("organ.media.ref.image", "Image viewable at the source", "Bild bei der Quelle verfügbar")
+    : t("organ.media.ref.external", "Media viewable at the source", "Medium bei der Quelle verfügbar");
+  if (item.mediaFileId || item.bitstreamId || item.contentHash) return t("organ.media.ref.file", "File reference awaiting preview", "Dateiverweis ohne verfügbare Vorschau");
+  return t("organ.media.ref.metadata", "Media metadata reference", "Verweis auf Medienmetadaten");
 }
 
 function organMediaAnnotationHref(item: OrganMedia, organId?: string): string {
@@ -18984,71 +19638,90 @@ function OrganNarrativeEvidence({ organ }: { organ: OrganDetail }) {
 }
 
 function OrganTuningEvidencePanel({ organ }: { organ: OrganDetail }) {
+  const { t, locale } = useUiLocale();
   const technical = organ.technicalEvidence;
   if (!technical) return null;
-  const hasEvidence = Boolean(technical.pitch.preferredValue || technical.temperament.preferredValue);
+  const hasEvidence = Boolean(technical.pitch.assertions.length || technical.temperament.assertions.length);
   if (!hasEvidence) return null;
-  const relation = technical.temperament.catalogRelation;
-  const temperamentTarget = relation.targetUrl || relation.exactRecordUrl || relation.browseUrl;
-  const temperamentLinkLabel = relation.state === "exact_record"
-    ? "Open linked temperament record"
-    : relation.matchingRecordCount
-      ? `Browse ${relation.matchingRecordCount} related temperament entries`
-      : "Browse temperament-system evidence";
+  const temperament = technical.temperament;
+  const relation = temperament.catalogRelation;
+  const temperamentTarget = relation.state === "exact_record" || relation.state === "candidate_set"
+    ? relation.targetUrl || relation.exactRecordUrl
+    : null;
+  const temperamentStatuses: Record<string, string> = {
+    agreement: t("organ.tuning.agreement", "Source wording agrees", "Übereinstimmender Quellenwortlaut"),
+    single_source: t("organ.tuning.oneSource", "One source record", "Ein Quelldatensatz"),
+    equivalent_wording: t("organ.tuning.equivalent", "Equivalent source wording", "Gleichbedeutender Quellenwortlaut"),
+    sources_differ: t("organ.tuning.disagreement", "Reported temperaments differ", "Die angegebenen Stimmungen unterscheiden sich"),
+    different_wording: t("organ.tuning.wordingDiffers", "Source wording differs", "Abweichender Quellenwortlaut"),
+    not_comparable: t("organ.tuning.incomparable", "Different kinds of evidence", "Unterschiedliche Belegarten"),
+    source_code_only: t("organ.tuning.sourceCode", "Source code retained", "Quelleninterner Code erhalten"),
+  };
+  const absent = t("organ.tuning.absent", "No reported value available", "Keine Angabe verfügbar");
+  const temperamentStatus = temperamentStatuses[temperament.status] || absent;
+  const guidance = locale === "de"
+    ? relation.state === "exact_record" ? "Der Quellenwortlaut bezeichnet eindeutig diesen Stimmungseintrag des BDO. Die Centwerte stammen aus dem BDO-Katalog."
+      : relation.state === "candidate_set" ? "Der Quellenwortlaut verweist auf verwandte Katalogeinträge des BDO. Angaben zu Abwandlungen bleiben als eigene Belege erhalten."
+      : relation.state === "source_code_only" ? "Die Quelle enthält einen Code, dessen Bedeutung für diesen Datenstand ungeklärt ist."
+      : "Die Quellenangaben zeigen den überlieferten Wortlaut und gegebenenfalls passende Kataloglinks."
+    : relation.guidance;
   return (
     <section className="organ-tuning-evidence" aria-labelledby="organ-tuning-title">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">Tuning evidence</p>
-          <h3 id="organ-tuning-title">Pitch standard and temperament</h3>
+          <p className="eyebrow">{t("organ.tuning.title", "Tuning evidence", "Belege zur Stimmung")}</p>
+          <h3 id="organ-tuning-title">{t("organ.tuning.heading", "Pitch standard and temperament", "Stimmtonhöhe und Stimmung")}</h3>
         </div>
-        <span>Source-qualified</span>
+        <span>{t("organ.tuning.qualified", "Source-qualified", "Mit Quellenbezug")}</span>
       </div>
       <div className="organ-tuning-summary">
-        {technical.pitch.preferredValue && <article><span>Pitch standard</span><strong>{technical.pitch.preferredValue}</strong><small>{friendlyLabel(technical.pitch.status)}</small></article>}
-        {technical.temperament.preferredValue && (
+        {technical.pitch.preferredValue && <article><span>{t("organ.tuning.pitch", "Pitch standard", "Stimmtonhöhe")}</span><strong>{technical.pitch.preferredValue}</strong><small>{locale === "de" ? temperamentStatuses[technical.pitch.status] || absent : friendlyLabel(technical.pitch.status)}</small></article>}
+        {!technical.pitch.preferredValue && technical.pitch.assertions.length > 0 && <article><span>{t("organ.tuning.pitch", "Pitch standard", "Stimmtonhöhe")}</span><strong>{technical.pitch.status === "sources_differ" ? t("organ.tuning.pitchDiffers", "Reported values differ", "Die angegebenen Werte unterscheiden sich") : absent}</strong><small>{t("organ.tuning.readSources", "Compare the retained assertions below; no single value is selected.", "Die überlieferten Angaben sind unten vergleichbar. Es wurde kein Einzelwert ausgewählt.")}</small></article>}
+        {temperament.assertions.length > 0 && (
           <article>
-            <span>Temperament</span>
-            <a className="organ-temperament-value-link" href={temperamentTarget}>
-              <strong>{technical.temperament.concept?.label || technical.temperament.preferredValue}</strong>
-            </a>
-            <small>{technical.temperament.concept ? "Controlled multilingual concept match" : "Source wording retained"} · {friendlyLabel(technical.temperament.status)}</small>
+            <span>{t("organ.tuning.temperament", "Temperament", "Stimmung")}</span>
+            <strong>{temperament.concept?.label || temperament.preferredValue || temperamentStatus}</strong>
+            {temperament.preferredValue && <small>{temperamentStatus}</small>}
           </article>
         )}
       </div>
-      <details className="organ-tuning-sources">
-        <summary>Compare source assertions</summary>
+      {temperament.assertions.length > 0 && <div className="organ-temperament-relation" role="note">
+        <Info size={17} aria-hidden="true" />
         <div>
-          {[...technical.pitch.assertions.map((item) => ({ ...item, kind: "Pitch standard" })), ...technical.temperament.assertions.map((item) => ({ ...item, kind: "Temperament" }))].map((item, index) => (
+          <p>{guidance}</p>
+          {temperamentTarget && <a className="organ-temperament-value-link" href={temperamentTarget}>
+            {relation.state === "exact_record" ? t("organ.tuning.openExact", "Open linked temperament record", "Verknüpften Stimmungseintrag öffnen")
+              : t("organ.tuning.browseRelated", "{count, plural, one {Browse # related temperament entry} other {Browse # related temperament entries}}", "{count, plural, one {# verwandten Stimmungseintrag ansehen} other {# verwandte Stimmungseinträge ansehen}}", {count: relation.matchingRecordCount ?? 0})}
+          </a>}
+        </div>
+      </div>}
+      <details className="organ-tuning-sources">
+        <summary>{t("organ.tuning.compare", "Compare source assertions", "Quellenangaben vergleichen")}</summary>
+        <div>
+          {[...technical.pitch.assertions.map((item) => ({ ...item, kind: "pitch", label: t("organ.tuning.pitch", "Pitch standard", "Stimmtonhöhe") })), ...temperament.assertions.map((item) => ({ ...item, kind: "temperament", label: t("organ.tuning.temperament", "Temperament", "Stimmung") }))].map((item, index) => (
             <article key={`${item.kind}:${item.sourceRecordId || item.source}:${item.sourcePath}:${index}`}>
-              <div><span>{item.kind}</span>{item.kind === "Temperament" && item.value ? <a href={temperamentSearchUrl(item.value)}><strong>{item.value}</strong></a> : <strong>{item.value}</strong>}</div>
-              <div><span>{item.source}</span><code>{item.sourcePath}</code></div>
-              {item.extraction === "bounded_labeled_source_text" && <small>Deterministically extracted from an explicitly labelled source statement.</small>}
-              {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">Open original source <ExternalLink size={14} aria-hidden="true" /></a>}
+              <div><span>{item.label}</span>{item.catalogUrl ? <a href={item.catalogUrl}><strong>{item.rawValue || item.value}</strong></a> : <strong>{item.rawValue || item.value}</strong>}</div>
+              <div><span>{item.source}</span><code>{item.sourceRecordId}</code><code>{item.sourcePath}</code></div>
+              {item.valueKind === "source_code" && <small>{t("organ.tuning.opaque", "Source code with no verified temperament label.", "Quelleninterner Code ohne bestätigte Stimmungsbezeichnung.")}</small>}
+              {item.extraction === "bounded_labeled_source_text" && <small>{t("organ.tuning.extracted", "Deterministically extracted from an explicitly labelled source statement.", "Nach festen Regeln aus einer ausdrücklich bezeichneten Quellenangabe übernommen.")}</small>}
+              {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">{t("organ.tuning.original", "Open original source", "Originalquelle öffnen")} <ExternalLink size={14} aria-hidden="true" /></a>}
             </article>
           ))}
         </div>
       </details>
-      {technical.temperament.preferredValue && (
-        <div className="organ-temperament-relation" role="note">
-          <Info size={17} aria-hidden="true" />
-          <div>
-            <a href={temperamentTarget}><strong>{technical.temperament.concept?.label || technical.temperament.preferredValue}</strong></a>
-            <TemperamentSearchNotice interpretation={relation.searchInterpretation} compact />
-            <p>{relation.guidance}</p>
-            <a href={temperamentTarget}>{temperamentLinkLabel}{relation.catalogRecordCount > 0 && !relation.matchingRecordCount ? ` (${relation.catalogRecordCount} records)` : ""}</a>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
 
 function OrganParityTechnicalFactsPanel({ organ }: { organ: OrganDetail }) {
+  const { t, formatNumber } = useUiLocale();
   const technical = organ.technicalEvidence;
   const facts = technical?.facts ?? [];
   if (facts.length === 0) return null;
   const conflicts = facts.filter((fact) => fact.conflictState.startsWith("material"));
+  const comparisonGroups = technical?.comparisonGroups ?? [];
+  const differingFields = comparisonGroups.filter(technicalComparisonHasDifference);
+  const relatedActions = relatedActionGroups(comparisonGroups);
   const functionalPositions = facts.filter((fact) => (
     fact.functionalPositionStatement || fact.family === "functional_pipe_position"
   ));
@@ -19056,58 +19729,64 @@ function OrganParityTechnicalFactsPanel({ organ }: { organ: OrganDetail }) {
     <section className="organ-parity-facts" aria-labelledby="organ-parity-facts-title">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">Technical evidence</p>
-          <h3 id="organ-parity-facts-title">Source-qualified technical facts</h3>
+          <p className="eyebrow">{t("organ.technical.facts.eyebrow", "Technical evidence", "Technische Belegdaten")}</p>
+          <h3 id="organ-parity-facts-title">{t("organ.technical.facts.title", "Source-qualified technical facts", "Technische Angaben mit Quellenbezug")}</h3>
         </div>
-        <span>{facts.length} assertion{facts.length === 1 ? "" : "s"}</span>
+        <span>{t("organ.technical.facts.count", "{count, plural, one {# assertion} other {# assertions}}", "{count, plural, one {# Angabe} other {# Angaben}}", {count:facts.length})}</span>
       </div>
-      <div className="organ-parity-fact-metrics" aria-label="Technical evidence summary">
-        <Metric label="Qualified facts" value={technical?.factCount ?? facts.length} />
-        <Metric label="Material differences" value={technical?.materialConflictCount ?? conflicts.length} />
-        <Metric label="Split-position statements" value={technical?.functionalPipePositionCount ?? functionalPositions.length} />
+      <div className="organ-parity-fact-metrics" aria-label={t("organ.technical.facts.summary", "Technical evidence summary", "Übersicht der technischen Belegdaten")}>
+        <Metric label={t("organ.technical.facts.facts", "Qualified facts", "Angaben mit Quellenbezug")} value={technical?.factCount ?? facts.length} />
+        <Metric label={t("organ.technical.facts.fields", "Fields with differing assertions", "Felder mit abweichenden Angaben")} value={technical?.differingFieldCount ?? differingFields.length} />
+        <Metric label={t("organ.technical.facts.listDifferences", "Summary/list mismatches", "Abweichungen zwischen Zusammenfassung und Liste")} value={technical?.captureMismatchCount ?? facts.filter(fact => fact.comparisonKind === "source_summary_vs_captured_rows").length} />
+        <Metric label={t("organ.technical.facts.splits", "Split-position statements", "Angaben zu Teilungspunkten")} value={technical?.functionalPipePositionCount ?? functionalPositions.length} />
       </div>
+      <TechnicalSourceComparisons groups={comparisonGroups} />
       {functionalPositions.length > 0 && (
         <div className="organ-parity-functional-note" role="note">
           <Info size={17} aria-hidden="true" />
           <span>
-            These source statements document keyboard or division split points (for example bass/treble boundaries).
-            They are not counts, generated pipe references, or observations of physical pipes.
+            {t("organ.technical.facts.splitScope", "These source statements document keyboard or division split points (for example bass/treble boundaries). They are not counts, generated pipe references, or observations of physical pipes.", "Diese Quellenangaben dokumentieren Teilungspunkte einer Klaviatur oder eines Werks, etwa zwischen Bass und Diskant. Sie geben keine Mengen, erzeugten Pfeifenverweise oder Beobachtungen physischer Pfeifen an.")}
           </span>
         </div>
       )}
       <details className="organ-parity-fact-disclosure">
         <summary>
-          Browse {facts.length.toLocaleString()} technical assertion{facts.length === 1 ? "" : "s"}
-          {conflicts.length > 0 && <span>{conflicts.length.toLocaleString()} material difference{conflicts.length === 1 ? "" : "s"}</span>}
+          {t("organ.technical.facts.browse", "Browse {count, plural, one {# technical assertion} other {# technical assertions}}", "{count, plural, one {# technische Angabe} other {# technische Angaben}} ansehen", {count:facts.length})}
+          {conflicts.length > 0 && <span>{t("organ.technical.facts.conflicts", "{count, plural, one {# assertion} other {# assertions}} with an evidence difference", "{count, plural, one {# Angabe} other {# Angaben}} mit abweichenden Belegdaten", {count:conflicts.length})}</span>}
         </summary>
         <div className="organ-parity-fact-list">
           {facts.map((fact) => {
             const materialConflict = fact.conflictState.startsWith("material");
+            const differenceLabel = technicalFactDifferenceText(t, fact);
             const functionalStatement = fact.functionalPositionStatement || fact.family === "functional_pipe_position";
+            const fieldLabel = specificationFieldLabel(t, fact.family, fact.label);
             return (
               <article className={materialConflict ? "has-material-conflict" : undefined} key={fact.id}>
                 <div>
-                  <span>{friendlyLabel(fact.family)}</span>
-                  {fact.family === "temperament" ? (
-                    <a href={fact.conceptCode ? `/temperaments/${encodeURIComponent(fact.conceptCode)}` : temperamentSearchUrl(fact.displayValue)}>
-                      <strong>{fact.label}: {fact.displayValue}</strong>
+                  <span>{specificationFieldLabel(t, fact.family, friendlyLabel(fact.family))}</span>
+                  {fact.family === "temperament" && fact.catalogUrl ? (
+                    <a href={fact.catalogUrl}>
+                      <strong>{fieldLabel}: {fact.displayValue}</strong>
                     </a>
-                  ) : <strong>{fact.label}: {fact.displayValue}</strong>}
+                  ) : <strong>{fieldLabel}: {fact.displayValue}</strong>}
                 </div>
                 <div className="organ-parity-fact-state">
-                  <Pill>{materialConflict ? "Sources differ" : fact.supportState === "preserved_source_summary" ? "Preserved source summary" : "Source-backed"}</Pill>
-                  {functionalStatement && <Pill>Split-position statement</Pill>}
+                  <Pill>{differenceLabel || (fact.valueKind === "source_code" ? t("organ.technical.compare.code", "Uninterpreted source code", "Nicht interpretierter Quellencode") : fact.supportState === "preserved_source_summary" ? t("organ.technical.facts.preserved", "Preserved source summary", "Erhaltene Zusammenfassung der Quelle") : t("organ.technical.facts.sourceBacked", "Source-backed", "Quellenbasiert"))}</Pill>
+                  {differenceLabel && fact.comparisonGroupId && <button type="button" className="field-comparison-link" onClick={() => revealTechnicalComparison(fact.family)}>{t("organ.technical.facts.compareField", "Compare {field} assertions", "Angaben zu „{field}“ vergleichen", {field:fieldLabel})}</button>}
+                  {relatedActions.some(group => group.family === fact.family) && <button type="button" className="field-comparison-link" onClick={() => revealTechnicalComparison("action-context")}>{t("organ.technical.facts.relatedAction", "Compare related action descriptions", "Zugehörige Angaben zur Traktur vergleichen")}</button>}
+                  {functionalStatement && <Pill>{t("organ.technical.facts.split", "Split-position statement", "Angabe zum Teilungspunkt")}</Pill>}
                 </div>
                 {fact.qualificationGuidance && <p role="note">{fact.qualificationGuidance}</p>}
                 {fact.sourceWording && fact.sourceWording !== fact.displayValue && <p>{fact.sourceWording}</p>}
                 {fact.comparison && <small>{fact.comparison}</small>}
+                {fact.comparisonKind === "source_summary_vs_captured_rows" && <dl className="technical-comparison-values"><div><dt>{t("organ.technical.facts.reported", "This source reports", "Angabe dieser Quelle")}</dt><dd>{fact.displayValue}</dd></div><div><dt>{t("organ.technical.facts.capturedSource", "{rows} from this source", "{rows} aus dieser Quelle", {rows:technicalCaptureRowsLabel(t, fact.family)})}</dt><dd>{fact.capturedComponentCount == null ? t("organ.technical.unavailable", "Unavailable", "Nicht verfügbar") : formatNumber(fact.capturedComponentCount)}</dd></div></dl>}
                 {fact.capturedComponentCount != null && (
-                  <small>Captured component rows: {fact.capturedComponentCount.toLocaleString()}</small>
+                  <small>{t("organ.technical.facts.capturedCount", "Captured component rows: {count, number}", "Erfasste Bauteileinträge: {count, number}", {count:fact.capturedComponentCount})}</small>
                 )}
                 <footer>
                   <span>{fact.source}</span>
                   <code>{fact.sourcePath}</code>
-                  {fact.sourceUrl && <a href={fact.sourceUrl} target="_blank" rel="noreferrer">Open original source <ExternalLink size={14} aria-hidden="true" /></a>}
+                  {fact.sourceUrl && <a href={fact.sourceUrl} target="_blank" rel="noreferrer">{t("organ.technical.facts.original", "Open original source", "Originalquelle öffnen")} <ExternalLink size={14} aria-hidden="true" /></a>}
                 </footer>
               </article>
             );
@@ -19253,33 +19932,31 @@ function OverviewTab({
 
   return (
     <div className="tab-panel">
-      {staffMode ? <OrganPublicProfileSections organ={organ} mode="primary" /> : <OrganLanding organ={organ} onOpenTab={onOpenTab} />}
-      <OrganNarrativeEvidence organ={organ} />
-      <SourceComparisonDisclosure organ={organ} />
-      <div className="quick-fact-grid">
-        {(staffMode ? organ.quickFacts : publicVisibleFacts).map((fact) => (
-          staffMode ? (
-            <FactRow
-              fact={fact}
-              key={fact.key}
-              organ={organ}
-              onReviewFact={(evidence, option) => setPendingFactReview({ evidence, fact, option })}
-              staffMode
-            />
-          ) : (
-            <PublicFactCard fact={fact} key={fact.key} organ={organ} />
-          )
-        ))}
-      </div>
-      {!staffMode && publicHiddenFacts.length > 0 && (
-        <details className="public-more-facts">
-          <summary>{publicHiddenFacts.length} more documented fact{publicHiddenFacts.length === 1 ? "" : "s"}</summary>
-          <div className="quick-fact-grid">
-            {publicHiddenFacts.map((fact) => <PublicFactCard fact={fact} key={fact.key} organ={organ} />)}
-          </div>
-        </details>
-      )}
-      {staffMode && <OrganPublicProfileSections organ={organ} mode="disclosure" />}
+      {staffMode ? <>
+        <OrganPublicProfileSections organ={organ} mode="primary" />
+        <OrganNarrativeEvidence organ={organ} />
+        <SourceComparisonDisclosure organ={organ} />
+        <div className="quick-fact-grid">
+          {organ.quickFacts.map((fact) => <FactRow
+            fact={fact}
+            key={fact.key}
+            organ={organ}
+            onReviewFact={(evidence, option) => setPendingFactReview({ evidence, fact, option })}
+            staffMode
+          />)}
+        </div>
+        <OrganPublicProfileSections organ={organ} mode="disclosure" />
+      </> : <OrganOverview
+        organ={organ}
+        onOpenTab={onOpenTab}
+        facts={publicVisibleFacts.map((fact) => <PublicFactCard fact={fact} key={fact.key} organ={organ} />)}
+        factCount={publicVisibleFacts.length}
+        moreFacts={publicHiddenFacts.map((fact) => <PublicFactCard fact={fact} key={fact.key} organ={organ} />)}
+        moreFactCount={publicHiddenFacts.length}
+        accountContext={<OrganLanding organ={organ} onOpenTab={onOpenTab} />}
+        narrative={<OrganNarrativeEvidence organ={organ} />}
+        comparisons={<><SourceComparisonDisclosure organ={organ} /><TechnicalSourceComparisons groups={organ.technicalEvidence?.comparisonGroups ?? []} idPrefix="overview-technical-comparison" /></>}
+      />}
       {pendingFactReview && (
         <FactReviewModal
           action={factReviewAction(pendingFactReview.fact, pendingFactReview.evidence, pendingFactReview.option)}
@@ -19387,6 +20064,7 @@ function FactReviewModal({
 }
 
 function HistoryTab({ organ, publicProjection, staffMode }: { organ: OrganDetail; publicProjection: boolean; staffMode: boolean }) {
+  const { t } = useUiLocale();
   const [timelineOpen, setTimelineOpen] = useState(false);
   const focusedEventId = new URLSearchParams(window.location.search).get("event") || "";
   const institution = organInstitutionLabel(organ);
@@ -19395,19 +20073,19 @@ function HistoryTab({ organ, publicProjection, staffMode }: { organ: OrganDetail
     <div className="tab-panel">
       <section className="panel-block">
         <DescriptionHistory descriptions={organ.specificationDescriptions ?? []} />
-        <div className="history-heading-actions"><h3>Chronological history</h3><button type="button" className="secondary" onClick={() => setTimelineOpen(true)}><ListChecks size={16} /> Open timeline</button></div>
-        <p className="muted">These documented milestones form the history attached to this organ record. They do not by themselves prove uninterrupted material identity through rebuilding, relocation, replacement, or changes in source cataloguing.</p>
-        <details className="organ-object-biography-note" aria-label="Object-biography interpretation">
-          <summary>Reading this as an instrument biography</summary>
-          <p>Compare construction, alteration, restoration, relocation, and replacement evidence before treating two records as one continuing material object. MODAVIS keeps potentially related catalog records separate unless the evidence asserts continuity.</p>
+        <div className="history-heading-actions"><h3>{t("organ.history.title", "Chronological history", "Chronologische Geschichte")}</h3><button type="button" className="secondary" onClick={() => setTimelineOpen(true)}><ListChecks size={16} /> {t("organ.history.timeline", "Open timeline", "Zeitleiste öffnen")}</button></div>
+        <p className="muted">{t("organ.history.scope", "These documented milestones form the history attached to this organ record. They do not by themselves prove uninterrupted material identity through rebuilding, relocation, replacement, or changes in source cataloguing.", "Die dokumentierten Ereignisse bilden die Geschichte zu diesem Orgeldatensatz. Sie belegen keinen ununterbrochenen Fortbestand der Bausubstanz über Umbauten, Standortwechsel, Ersatz oder Änderungen der Katalogisierung hinweg.")}</p>
+        <details className="organ-object-biography-note" aria-label={t("organ.history.biographyAria", "Object-biography interpretation", "Einordnung als Instrumentengeschichte")}>
+          <summary>{t("organ.history.biography", "Reading this as an instrument biography", "Die Geschichte des Instruments einordnen")}</summary>
+          <p>{t("organ.history.biographyNote", "Compare construction, alteration, restoration, relocation, and replacement evidence before treating two records as one continuing material object. MODAVIS keeps potentially related catalog records separate unless the evidence asserts continuity.", "Vergleichen Sie Belege zu Bau, Umbau, Restaurierung, Standortwechsel und Ersatz, bevor Sie zwei Datensätze demselben fortbestehenden Instrument zuordnen. MODAVIS führt möglicherweise zusammengehörige Katalogeinträge getrennt, solange der Fortbestand nicht belegt ist.")}</p>
           <div>
-            <a href="/use-cases/documented-organ-lifecycles">Open the documented-organ-lifecycles method</a>
-            <a href={institutionCatalogUrl}>Browse potentially related records at this institution</a>
+            <a href="/use-cases/documented-organ-lifecycles">{t("organ.history.method", "Open the documented-organ-lifecycles method", "Methode zur dokumentierten Orgelgeschichte öffnen")}</a>
+            <a href={institutionCatalogUrl}>{t("organ.history.institution", "Browse potentially related records at this institution", "Möglicherweise zugehörige Datensätze dieser Einrichtung ansehen")}</a>
           </div>
         </details>
         <EventSourceComparisonPanel groups={organ.eventSourceComparisons ?? []} summary={organ.eventSourceComparisonSummary} />
         <Timeline items={organ.timeline} staffMode={staffMode} focusedEventId={focusedEventId} />
-        {timelineOpen && <PublicModal title="Instrument timeline" onClose={() => setTimelineOpen(false)} wide><HistoryTimeline items={organ.timeline} /></PublicModal>}
+        {timelineOpen && <PublicModal title={t("organ.history.modal", "Instrument timeline", "Zeitleiste des Instruments")} onClose={() => setTimelineOpen(false)} wide><HistoryTimeline items={organ.timeline} /></PublicModal>}
       </section>
       {staffMode && (
         <section className="panel-block">
@@ -19424,7 +20102,19 @@ function HistoryTab({ organ, publicProjection, staffMode }: { organ: OrganDetail
   );
 }
 
+function organActivityTypeLabel(t: UiText, code: string, fallback: string): string {
+  const german: Record<string, string> = {
+    construction: "Bau", repair: "Reparatur", reconstruction: "Rekonstruktion", rebuild: "Umbau",
+    restoration: "Restaurierung", maintenance: "Wartung", extension: "Erweiterung", relocation: "Standortwechsel",
+    replacement: "Ersatz", installation: "Aufstellung", tuning: "Stimmen", inauguration: "Einweihung",
+    other_documented_activity: "Weitere dokumentierte Tätigkeit",
+  };
+  const key = code.replace(/^activitype:/, "");
+  return Object.prototype.hasOwnProperty.call(german, key) ? t("organ.activity.type." + key, fallback, german[key]) : fallback;
+}
+
 function ActivitiesTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boolean }) {
+  const { t, formatNumber } = useUiLocale();
   const [diagramsOpen, setDiagramsOpen] = useState(false);
   const activityGroups = useMemo(() => {
     const groups = new Map<string, { key: string; label: string; items: Record<string, unknown>[] }>();
@@ -19441,21 +20131,21 @@ function ActivitiesTab({ organ, staffMode }: { organ: OrganDetail; staffMode: bo
   return (
     <div className="tab-panel">
       <section className="panel-block">
-        <div className="history-heading-actions"><h3>Work and participants</h3><button type="button" className="secondary" onClick={() => setDiagramsOpen(true)}><BarChart3 size={16} /> Activity diagrams</button></div>
-        <p className="muted">The same dated evidence is organized by controlled activity type where a mapping exists; retained source-only wording remains visibly separate. “Open event record” opens the event, while participant links open either a verified actor identity or a qualified source evidence record.</p>
+        <div className="history-heading-actions"><h3>{t("organ.activities.title", "Work and participants", "Arbeiten und Beteiligte")}</h3><button type="button" className="secondary" onClick={() => setDiagramsOpen(true)}><BarChart3 size={16} /> {t("organ.activities.diagrams", "Activity diagrams", "Diagramme zu Tätigkeiten")}</button></div>
+        <p className="muted">{t("organ.activities.scope", "The same dated evidence is organized by controlled activity type where a mapping exists; retained source-only wording remains visibly separate. “Open event record” opens the event, while participant links open either a verified actor identity or a qualified source evidence record.", "Die datierten Angaben werden nach kontrollierten Tätigkeitstypen geordnet, soweit eine Zuordnung vorliegt. Erfasster Quellenwortlaut ohne Zuordnung bleibt gesondert gekennzeichnet. „Ereignisdatensatz öffnen“ führt zum Ereignis. Links zu Beteiligten öffnen eine geprüfte Akteursidentität oder einen Quelldatensatz mit entsprechendem Hinweis.")}</p>
         <EventSourceComparisonPanel groups={organ.eventSourceComparisons ?? []} summary={organ.eventSourceComparisonSummary} />
-        {diagramsOpen && <PublicModal title="Activities and participants" onClose={() => setDiagramsOpen(false)} wide><ActivityDiagrams items={organ.activities} /></PublicModal>}
+        {diagramsOpen && <PublicModal title={t("organ.activities.modal", "Activities and participants", "Tätigkeiten und Beteiligte")} onClose={() => setDiagramsOpen(false)} wide><ActivityDiagrams items={organ.activities} /></PublicModal>}
         <div className="activity-type-groups">
           {activityGroups.map((group) => (
             <section className="activity-type-group" key={group.key}>
               <header>
-                <h4>{group.label}</h4>
-                <Pill>{group.items.length}</Pill>
+                <h4>{group.items.some(item => item.sourceOnly !== true) ? organActivityTypeLabel(t, group.key, group.label) : group.label}</h4>
+                <Pill>{formatNumber(group.items.length)}</Pill>
               </header>
               <Timeline items={group.items} staffMode={staffMode} />
             </section>
           ))}
-          {activityGroups.length === 0 && <p className="muted">No typed activities are available yet.</p>}
+          {activityGroups.length === 0 && <p className="muted">{t("organ.activities.empty", "No typed activities are available yet.", "Für diese Orgel sind keine Tätigkeiten mit Typangabe verfügbar.")}</p>}
         </div>
       </section>
       {staffMode && (
@@ -19492,6 +20182,10 @@ function SpecificationTab({
   const routeParameters = new URLSearchParams(query);
   const routeComponentId = routeParameters.get("component") || "";
   const routePipePositionId = routeParameters.get("pipe") || "";
+  const requestedSourceId = routeParameters.get("specificationSource");
+  const ambiguousComponentLink = ["specificationSource", "specificationView", "component", "pipe"].some(key => routeParameters.getAll(key).length > 1);
+  const requestedSourceUnavailable = requestedSourceId !== null && !sourceSpecifications.some(source => source.id === requestedSourceId);
+  const requestedAccountUnavailable = !hasSpecificationDescriptions(organ) && ["description", "descriptionRevision", "compare", "compareRevision"].some(key => routeParameters.has(key));
   const selectedSourceSpecification = specificationSource(organ, routeParameters);
   const viewingPreferredSource = !selectedSourceSpecification || selectedSourceSpecification.preferred;
   const activeSpecification = viewingPreferredSource
@@ -19508,7 +20202,7 @@ function SpecificationTab({
   const conflictingComponents = componentGroups
     .flatMap((group) => group.items)
     .filter((component) => componentSourceComparisonState(component) === "conflicting");
-  const selectedComponentId = routeComponentId || firstComponent?.id || "";
+  const selectedComponentId = routeComponentId || (staffMode ? firstComponent?.id : "") || "";
   const [pipePositionComponentId, setPipePositionComponentId] = useState(
     routePipePositionId && routeComponentId ? routeComponentId : "",
   );
@@ -19524,7 +20218,9 @@ function SpecificationTab({
     return acc;
   }, {});
   const structuredComponentCount = componentGroups.reduce((total, group) => total + group.count, 0);
-  const technicalFactCount = organ.technicalEvidence?.factCount ?? organ.technicalEvidence?.facts?.length ?? 0;
+  const sourceTechnicalFacts = selectedSpecificationFacts(organ, selectedSourceSpecification);
+  const technicalFactCount = sourceTechnicalFacts.length;
+  const allTechnicalFactCount = organ.technicalEvidence?.facts?.length ?? 0;
   const coverageState = String(activeSpecification.summary?.coverageState || (
     structuredComponentCount > 0 && technicalFactCount > 0
       ? "components_and_technical_facts"
@@ -19693,58 +20389,37 @@ function SpecificationTab({
       });
   }
 
+  if (!staffMode && (ambiguousComponentLink || requestedSourceUnavailable || requestedAccountUnavailable)) return <section className="panel-block specification-link-unavailable" role="alert" aria-label="Specification link unavailable">
+    <h3>Specification link unavailable</h3>
+    <p>{ambiguousComponentLink ? "The link repeats a component view parameter, so the requested selection is ambiguous." : requestedSourceUnavailable ? "The linked component source is not available for this organ." : "The linked source account is not available for this organ."} The requested URL has been retained; an alternative account has not been substituted.</p>
+    <button type="button" className="secondary" onClick={() => updateSpecificationView({
+      specificationSource: selectedSourceSpecification?.id ?? null, specificationView: "components",
+      description: null, descriptionRevision: null, compare: null, compareRevision: null,
+      ...(ambiguousComponentLink ? { component: null, pipe: null } : {}),
+    })}>Browse available component evidence</button>
+  </section>;
+
   return (
-    <div className="tab-panel">
-      <section className="panel-block">
+    <div className="tab-panel organ-component-workflow">
+      <section className="panel-block specification-reading-context">
         <h3>Specification details</h3>
-        <div className={`specification-coverage specification-coverage-${coverageState}`} role="status">
-          <div>
-            <strong>{coveragePresentation.label}</strong>
-            <span>{coveragePresentation.guidance}</span>
-          </div>
-          <div aria-label="Specification coverage counts">
-            <span><b>{structuredComponentCount.toLocaleString()}</b> specification rows</span>
-            <span><b>{(componentStats.stops ?? 0).toLocaleString()}</b> stop/register rows</span>
-            <span><b>{technicalFactCount.toLocaleString()}</b> technical facts</span>
-          </div>
-        </div>
         {sourceSpecifications.length > 0 && (
-          <div className="specification-source-selector" aria-label="Specification source">
-            <div>
-              <strong>{sourceSpecifications.length > 1 ? "Source-specific component sets" : structuredComponentCount > 0 ? "Structured specification source" : "Specification source"}</strong>
-              <span>{sourceSpecifications.length > 1
-                ? "Each list remains independently attributed. The most complete set opens first for readability, not because it is more authoritative."
-                : structuredComponentCount > 0 ? "This component list is projected from one captured source record; it is not presented as an unattributed canonical stoplist."
-                : "These technical statements come from one captured source record."}</span>
-            </div>
-            {sourceSpecifications.length > 1 && <div className="specification-source-options" role="group" aria-label="Choose specification source">
-              {sourceSpecifications.map((item) => {
-                const stopCount = item.componentHierarchy.find((group) => group.id === "stops")?.count ?? 0;
-                const divisionCount = item.componentHierarchy.find((group) => group.id === "divisions")?.count ?? 0;
-                const componentCount = item.componentHierarchy.reduce((total, group) => total + group.count, 0);
-                const selected = item.id === selectedSourceSpecification?.id;
-                return (
-                  <button
-                    aria-pressed={selected}
-                    className={selected ? "selected" : ""}
-                    key={item.id}
-                    onClick={() => updateSpecificationView({
-                      specificationSource: item.id, component: null, pipe: null,
-                    })}
-                    type="button"
-                  >
-                    <strong>{item.source.source || item.source.title}</strong>
-                    <small>{componentCount} specification rows · {divisionCount} division{divisionCount === 1 ? "" : "s"} · {stopCount} stop{stopCount === 1 ? "" : "s"}</small>
-                    {item.preferred && <span>Default view · most complete set</span>}
-                  </button>
-                );
-              })}
-            </div>}
+          <div className="specification-source-picker" aria-label="Specification source">
+            {sourceSpecifications.length > 1 && <label>Component source
+              <select value={selectedSourceSpecification?.id ?? ""} onChange={event => updateSpecificationView({
+                specificationSource: event.target.value, component: null, pipe: null,
+              })}>
+                {sourceSpecifications.map(item => <option key={item.id} value={item.id}>
+                  {item.source.source || item.source.title} · {(item.componentHierarchy.find(group => group.id === "stops")?.count ?? 0) > 0 ? `${item.componentHierarchy.find(group => group.id === "stops")?.count} captured stop/register rows` : "Stop list not captured"}
+                  {item.preferred ? " · default" : ""}
+                </option>)}
+              </select>
+            </label>}
             {selectedSourceSpecification && (
               <div className="specification-source-provenance">
                 <div>
                   <strong>{selectedSourceSpecification.source.source || selectedSourceSpecification.source.title}</strong>
-                  <span>{selectedSourceSpecification.source.id}</span>
+                  <span>Independently attributed source account</span>
                 </div>
                 {selectedSourceSpecification.source.url ? (
                   <a href={selectedSourceSpecification.source.url} target="_blank" rel="noreferrer">
@@ -19755,14 +20430,15 @@ function SpecificationTab({
                 )}
               </div>
             )}
-            {!viewingPreferredSource && selectedSourceSpecification && (
-              <p>
-                Viewing the independently attributed {selectedSourceSpecification.source.source || selectedSourceSpecification.source.title} specification.
-                {preferredSourceSpecification && ` ${preferredSourceSpecification.source.source || preferredSourceSpecification.source.title} remains the default only because it contains the most structured component rows.`}
-              </p>
-            )}
           </div>
         )}
+        <p className="specification-coverage-line" role="status">
+          <strong>{coveragePresentation.label}</strong>{" · "}
+          {structuredComponentCount.toLocaleString()} captured component row{structuredComponentCount === 1 ? "" : "s"}{" · "}
+          {technicalFactCount.toLocaleString()} technical fact{technicalFactCount === 1 ? "" : "s"}{selectedSourceSpecification ? " from this source" : " in this record"}.
+        </p>
+        {selectedSourceSpecification && (selectedSourceSpecification.componentHierarchy.find(group => group.id === "stops")?.count ?? 0) === 0 && <p className="notice" role="note"><strong>Stop list not captured for this source.</strong> {selectedSourceSpecification.coverageSummary?.reportedZero ? "This source explicitly reports a stop total of zero; that reported value is retained separately from capture coverage." : "The absence of stop rows does not mean that the organ has zero stops."} {structuredComponentCount > 0 ? "Other captured components remain available below." : "Any retained technical assertions are available below."}</p>}
+        {routeComponentId && requestedSourceId && requestedSourceId !== selectedSourceSpecification?.id && <p className="notice" role="note">The linked component belongs to {selectedSourceSpecification?.source.source || "another source account"}; its owning source is shown. Choosing a different component source clears the component selection.</p>}
         {selectedSourceSpecification?.parser?.countDiscrepancy
           && sourceStopCount != null
           && parsedStopCount != null && parsedStopCount > 0 && (
@@ -19775,6 +20451,14 @@ function SpecificationTab({
             </span>
           </div>
         )}
+        <SourceReportedTotals facts={sourceTechnicalFacts.filter(fact => fact.summaryEvidence)
+          .map(fact => ({ ...fact, value: fact.displayValue }))} />
+        <ConfigurationChronology description={organ.specificationDescriptions?.find((d) => d.kind === "main" && d.source.id === selectedSourceSpecification?.source.id)} />
+        <details className="specification-context-details">
+          <summary>Technical summary and capture details</summary>
+          <p>{coveragePresentation.guidance}</p>
+          {selectedSourceSpecification && <p>Source record: <code>{selectedSourceSpecification.source.id}</code>.</p>}
+          {sourceSpecifications.length > 1 && <p>Each source list remains separate. {preferredSourceSpecification ? `${preferredSourceSpecification.source.source || preferredSourceSpecification.source.title} opens first because it has the most captured component rows; this does not make it more authoritative.` : "Source selection does not establish authority or present condition."}</p>}
         {activeSpecification.rows.length > 0 && <div className="spec-table">
           {activeSpecification.rows.map((row) => (
             <div className="spec-row" key={row.label}>
@@ -19784,17 +20468,12 @@ function SpecificationTab({
             </div>
           ))}
         </div>}
-        <OrganTuningEvidencePanel organ={organ} />
-        <SourceReportedTotals facts={(organ.technicalEvidence?.facts ?? [])
-          .filter((fact) => fact.summaryEvidence && fact.sourceRecordId === selectedSourceSpecification?.source.id)
-          .map((fact) => ({ ...fact, value: fact.displayValue }))} />
-        <ConfigurationChronology description={organ.specificationDescriptions?.find((d) => d.kind === "main" && d.source.id === selectedSourceSpecification?.source.id)} />
-        <OrganParityTechnicalFactsPanel organ={organ} />
         {(selectedSourceSpecification?.source.status === "Source snapshot" || organ.sources.some((source) => source.status === "Source snapshot")) && (
           <p className="muted">
             Source snapshot means that these details come from the captured, transformed source record used by this release. The original source remains unchanged.
           </p>
         )}
+        </details>
       </section>
       <PipeworkEvidencePanel pipework={activePipework} />
       {visibleComponentGroups.length > 0 ? <section className="panel-block">
@@ -19802,6 +20481,8 @@ function SpecificationTab({
           <h3>Component hierarchy</h3>
           <span>Divisions, keyboards, and stops are grouped for scanning; evidence remains available on click.</span>
         </div>
+        <details className="specification-structure-summary">
+        <summary>Component counts and coverage</summary>
         <div className="component-summary-strip" aria-label="Component summary">
           <Metric label="Divisions / works" value={componentMetricValue(componentStats.divisions)} />
           <Metric label="Keyboards" value={componentMetricValue(componentStats.keyboards, { keyboard: true, reportedManuals })} />
@@ -19812,6 +20493,7 @@ function SpecificationTab({
         <p className="muted component-count-semantics">
           Source-reported manual count{reportedManualWording ? `: ${reportedManualWording}` : " is not recorded"}. Component counts describe separately identified rows; “not recorded” is not a claim of zero.
         </p>
+        </details>
         {conflictingComponents.length > 0 && (
           <div className="component-conflict-summary" role="note">
             <AlertCircle size={18} aria-hidden="true" />
@@ -19861,7 +20543,7 @@ function SpecificationTab({
           {routeComponentId && !selectedComponent && <p className="notice" role="status">
             The linked component is unavailable in this source set. Select an available component to inspect its evidence.
           </p>}
-          <ComponentDetail
+          {selectedComponent ? <ComponentDetail
             focusOnSelection={Boolean(routeComponentId)}
             component={selectedComponent}
             organ={organ}
@@ -19872,16 +20554,25 @@ function SpecificationTab({
             onReviewComponent={staffMode ? (component, evidence, option) => setPendingComponentReview({ component, evidence, option }) : undefined}
             onSelectComponent={setSelectedComponentId}
             staffMode={staffMode}
-          />
+          /> : !routeComponentId && <aside className="component-detail-panel component-selection-hint">
+            <h4>Inspect a component</h4>
+            <p>Select a stop, division or control to read its source evidence. Functional pipe positions, where available, open from the selected stop.</p>
+          </aside>}
         </div>
       </section> : (
         <section className="panel-block specification-component-empty" role="note">
           <h3>Component list</h3>
           <p>{technicalFactCount > 0
-            ? "No structured division, stop/register, coupler, or accessory rows are present for this organ in this dataset. The source-qualified technical facts above remain available."
-            : "No structured component rows are present for this organ in the current public sources. This is unknown coverage, not a zero-component statement."}</p>
+            ? "This source account has no structured division, stop/register, coupler or accessory rows. Its technical statements remain available in the summary and source evidence."
+            : "No structured component rows are available in this source account. This is unknown coverage, not a claim that the organ has no components."}</p>
         </section>
       )}
+      {(allTechnicalFactCount > 0 || organ.technicalEvidence?.pitch.preferredValue || organ.technicalEvidence?.temperament.preferredValue) && <details className="panel-block specification-all-source-evidence">
+        <summary>Technical evidence across all source accounts{allTechnicalFactCount > 0 ? ` · ${allTechnicalFactCount.toLocaleString()} assertions` : ""}</summary>
+        <p>This section compares evidence from all source accounts for the organ. These statements do not all belong to the component source selected above.</p>
+        <OrganTuningEvidencePanel organ={organ} />
+        <OrganParityTechnicalFactsPanel organ={organ} />
+      </details>}
       {pendingComponentReview && (
         <ComponentReviewModal
           action={componentReviewAction(pendingComponentReview.component, pendingComponentReview.evidence, pendingComponentReview.option)}
@@ -20021,14 +20712,14 @@ function componentSourceVariantPresentation(item: OrganComponent): { label: stri
       .filter((field) => field.status === "variant")
       .map((field) => field.variantKind || "source_wording"),
   );
-  if (variantKinds.has("equivalent_notation")) {
+  if (componentVariantKind(item.sourceComparison?.fields ?? []) === "equivalent_notation") {
     return {
       label: "Equivalent notation",
       ariaLabel: "Sources use equivalent notation",
       summary: "Equivalent value, different source notation",
     };
   }
-  if (variantKinds.has("name_variant")) {
+  if (variantKinds.size === 1 && variantKinds.has("name_variant")) {
     return {
       label: "Name variant",
       ariaLabel: "Sources use a name or spelling variant",
@@ -20185,8 +20876,10 @@ function ComponentDetail({
   const detailRef = useRef<HTMLElement>(null);
   const [evidenceTarget, setEvidenceTarget] = useState<EvidenceTarget | null>(null);
   const [sourceComparisonOpen, setSourceComparisonOpen] = useState(false);
+  const [comparisonField, setComparisonField] = useState<string | undefined>();
   useEffect(() => {
     setSourceComparisonOpen(false);
+    setComparisonField(undefined);
   }, [component?.id]);
   useEffect(() => {
     if (focusOnSelection && component) {
@@ -20269,7 +20962,7 @@ function ComponentDetail({
               <>
                 <span>{sourceComparison.displayPolicy.description}</span>
                 <div className="component-conflict-previews">
-                  {comparisonAttentionFields.slice(0, 2).map((field) => (
+                  {comparisonAttentionFields.map((field) => (
                     <ComponentFieldDifference key={field.field} field={field} />
                   ))}
                 </div>
@@ -20439,6 +21132,7 @@ function ComponentDetail({
                   </div>
                 </details>
               ) : <strong>{formatFieldValue(value)}</strong>}
+              {comparisonsForComponentField(sourceComparison?.fields ?? [], key).map(field => <button type="button" className="field-comparison-link" key={field.field} onClick={() => { setComparisonField(field.field); setSourceComparisonOpen(true); }}>{field.status === "conflicting" ? "Values differ" : "Source wording differs"} · compare {field.label.toLowerCase()}</button>)}
             </div>
           ))}
         </div>
@@ -20449,6 +21143,7 @@ function ComponentDetail({
         <ComponentSourceComparisonModal
           comparison={sourceComparison}
           component={component}
+          initialField={comparisonField}
           onClose={() => setSourceComparisonOpen(false)}
         />
       )}
@@ -20470,7 +21165,7 @@ function ComponentFieldDifference({ field }: { field: ComponentFieldComparison }
       <div>
         {field.valueGroups.map((group) => (
           <span className={group.displayed ? "displayed" : ""} key={`${field.field}:${group.normalizedValue || ""}:${group.displayValue || ""}`}>
-            <strong>{group.displayValue || "Not stated"}</strong>
+            <strong>{comparisonValue(group.displayValue)}</strong>
             <small>
               {group.sources.join(", ")}
               {group.displayed ? " · displayed" : ""}
@@ -20485,36 +21180,33 @@ function ComponentFieldDifference({ field }: { field: ComponentFieldComparison }
 function ComponentSourceComparisonModal({
   comparison,
   component,
+  initialField,
   onClose,
 }: {
   comparison: ComponentSourceComparison;
   component: OrganComponent;
+  initialField?: string;
   onClose: () => void;
 }) {
   const [showMatching, setShowMatching] = useState(false);
+  const fieldId = useId();
+  useEffect(() => {
+    if (!initialField) return;
+    const frame = requestAnimationFrame(() => {
+      const target = document.getElementById(fieldId + "-" + initialField);
+      target?.focus();
+      target?.scrollIntoView({ block: "nearest" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [initialField, fieldId]);
   const fields = comparison.fields.filter((field) => showMatching || field.status === "conflicting" || field.status === "variant");
   return (
-    <div className="modal-backdrop" role="presentation" onMouseDown={onClose}>
-      <div
-        className="modal-panel component-source-comparison-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="component-source-comparison-title"
-        onMouseDown={(event) => event.stopPropagation()}
-      >
-        <div className="modal-head">
-          <div>
-            <h3 id="component-source-comparison-title">{component.label}: source comparison</h3>
+    <PublicModal title={`${component.label}: source comparison`} onClose={onClose} wide>
             <p>
               {comparison.conflictingFieldCount} differing field{comparison.conflictingFieldCount === 1 ? "" : "s"}
               {comparison.variantFieldCount > 0 ? ` · ${comparison.variantFieldCount} wording variant${comparison.variantFieldCount === 1 ? "" : "s"}` : ""}
               {comparison.corroboratedFieldCount > 0 ? ` · ${comparison.corroboratedFieldCount} matching` : ""}
             </p>
-          </div>
-          <button type="button" className="icon-button" aria-label="Close source comparison" onClick={onClose}>
-            <X size={18} aria-hidden="true" />
-          </button>
-        </div>
         <div className="component-comparison-baseline" role="note">
           <strong>{comparison.displayPolicy.baselineSource} is the displayed baseline</strong>
           <span>{comparison.displayPolicy.description}</span>
@@ -20534,7 +21226,7 @@ function ComponentSourceComparisonModal({
         )}
         <div className="component-comparison-fields">
           {fields.map((field) => (
-            <section className={`component-comparison-field is-${field.status}`} key={field.field}>
+            <section id={fieldId + "-" + field.field} tabIndex={-1} className={`component-comparison-field is-${field.status}`} key={field.field}>
               <header>
                 <div>
                   <h4>{field.label}</h4>
@@ -20545,7 +21237,7 @@ function ComponentSourceComparisonModal({
               <div className="component-comparison-value-groups" aria-label={`${field.label} value groups`}>
                 {field.valueGroups.map((group) => (
                   <div className={group.displayed ? "displayed" : ""} key={`${field.field}:${group.normalizedValue || ""}:${group.displayValue || ""}`}>
-                    <strong>{group.displayValue || "Not stated"}</strong>
+                    <strong>{comparisonValue(group.displayValue)}</strong>
                     <span>{group.sources.join(", ")}</span>
                     {group.displayed && <small>Displayed baseline</small>}
                   </div>
@@ -20567,12 +21259,14 @@ function ComponentSourceComparisonModal({
                       <tr className={assertion.displayed ? "displayed" : ""} key={assertion.assertionId}>
                         <th scope="row">
                           <strong>{assertion.source}</strong>
+                          {assertion.sourceRecordId && <code>{assertion.sourceRecordId}</code>}
                           {assertion.displayed && <small>Displayed</small>}
                         </th>
-                        <td><strong>{assertion.displayValue || "Not stated"}</strong></td>
-                        <td><code>{assertion.rawValue || "Not stated"}</code></td>
+                        <td><strong>{comparisonValue(assertion.displayValue)}</strong></td>
+                        <td><code>{comparisonValue(assertion.rawValue)}</code></td>
                         <td>
                           <div className="component-comparison-links">
+                            {assertion.sourcePath && <code>{assertion.sourcePath}</code>}
                             {assertion.sourceUrl && <a aria-label={`Open ${assertion.source} original source`} href={assertion.sourceUrl} target="_blank" rel="noreferrer">Original source</a>}
                             {assertion.evidenceUrl && <a aria-label={`Open ${assertion.source} MODAVIS evidence`} href={assertion.evidenceUrl}>MODAVIS evidence</a>}
                           </div>
@@ -20585,12 +21279,12 @@ function ComponentSourceComparisonModal({
             </section>
           ))}
         </div>
-      </div>
-    </div>
+    </PublicModal>
   );
 }
 
 function MediaTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boolean }) {
+  const { t } = useUiLocale();
   const [evidenceTarget, setEvidenceTarget] = useState<EvidenceTarget | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<OrganMedia | null>(null);
   const openAssetEvidence = (asset: DerivativeAsset) => setEvidenceTarget({
@@ -20621,7 +21315,7 @@ function MediaTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boolean
   return (
     <div className="tab-panel">
       <section className="panel-block">
-        <h3>Media</h3>
+        <h3>{t("organ.media.title", "Media", "Medien")}</h3>
         <MediaGrid
           organId={organ.id}
           media={organ.media}
@@ -21044,6 +21738,9 @@ function RelatedTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boole
     acc[key].push(entity);
     return acc;
   }, {});
+  const relationshipLabel = (value: string) => !staffMode && value.startsWith("locroletype:")
+    ? friendlyLabel(value.slice("locroletype:".length))
+    : value;
   return (
     <div className="tab-panel">
       {organ.virtualInstruments?.available && organ.virtualInstruments.total > 0 && (
@@ -21087,7 +21784,7 @@ function RelatedTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boole
             {(organ.relatedSummary.relationTypes ?? []).length > 0 && (
               <div className="related-summary-chips">
                 {(organ.relatedSummary.relationTypes ?? []).slice(0, 4).map((item) => (
-                  <span key={item.state}>{item.state} ({item.count})</span>
+                  <span key={item.state}>{relationshipLabel(item.state)} ({item.count})</span>
                 ))}
               </div>
             )}
@@ -21110,7 +21807,7 @@ function RelatedTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boole
                       </strong>
                       <Pill>{staffMode ? entity.reviewStatus || friendlyLabel(entity.publicationState || entity.evidenceType || "source_backed") : friendlyLabel(entity.kind || "Related")}</Pill>
                     </div>
-                    <span>{staffMode ? String(entity.relationship) : publicRelatedSummary(String(entity.relationship))}{staffMode && entity.matchStatus ? ` · ${entity.matchStatus}` : ""}</span>
+                    <span>{staffMode ? String(entity.relationship) : publicRelatedSummary(relationshipLabel(String(entity.relationship)))}{staffMode && entity.matchStatus ? ` · ${entity.matchStatus}` : ""}</span>
                     {(staffMode ? entity.summary : publicRelatedSummary(entity.summary)) && (
                       <p>{staffMode ? entity.summary : publicRelatedSummary(entity.summary)}</p>
                     )}
@@ -25500,6 +26197,7 @@ function copyValueWithFallback(value: string): boolean {
 }
 
 function MediaVideoModal({ media, onClose }: { media: OrganMedia; onClose: () => void }) {
+  const { t } = useUiLocale();
   const embedUrl = mediaEmbedUrl(media);
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -25517,9 +26215,9 @@ function MediaVideoModal({ media, onClose }: { media: OrganMedia; onClose: () =>
         <header className="modal-head">
           <div>
             <h3 id="media-video-modal-title">{media.title}</h3>
-            <p>Video reference supplied by the documented source.</p>
+            <p>{t("organ.media.video.scope", "Video reference supplied by the documented source.", "Videoverweis aus der dokumentierten Quelle.")}</p>
           </div>
-          <button type="button" className="icon-button" aria-label="Close video" onClick={onClose}>
+          <button type="button" className="icon-button" aria-label={t("organ.media.video.close", "Close video", "Video schließen")} onClick={onClose}>
             <X size={18} />
           </button>
         </header>
@@ -25532,7 +26230,7 @@ function MediaVideoModal({ media, onClose }: { media: OrganMedia; onClose: () =>
             allowFullScreen
           />
         </div>
-        {media.url && <a href={media.url} target="_blank" rel="noreferrer">Open on YouTube</a>}
+        {media.url && <a href={media.url} target="_blank" rel="noreferrer">{t("organ.media.video.youtube", "Open on YouTube", "Auf YouTube öffnen")}</a>}
       </section>
     </div>
   );
@@ -25551,71 +26249,83 @@ function MediaGrid({
   organId?: string;
   staffMode?: boolean;
 }) {
+  const { t } = useUiLocale();
   const [requestedPreviews, setRequestedPreviews] = useState<Set<string>>(() => new Set());
+  const [failedPreviews, setFailedPreviews] = useState<Set<string>>(() => new Set());
   const [page, setPage] = useState(0);
   const pageSize = 24;
   const pageCount = Math.ceil(media.length / pageSize);
   useEffect(() => setPage(0), [organId, media.length]);
-  if (media.length === 0) return <EmptyState icon={<Image size={22} />} title="No media yet" body="Photos, documents, audio, 3D models, and generated derivatives appear here when evidence provides them." />;
+  if (media.length === 0) return <EmptyState icon={<Image size={22} />} title={t("organ.media.grid.emptyTitle", "No media yet", "Keine Medien erfasst")} body={t("organ.media.grid.emptyText", "Photos, documents, audio, 3D models, and generated derivatives appear here when evidence provides them.", "Hier erscheinen Fotos, Dokumente, Audioaufnahmen, 3D-Modelle und abgeleitete Dateien, soweit sie dokumentiert sind.")} />;
   return (
     <>
     <div className="media-grid">
       {media.slice(page * pageSize, (page + 1) * pageSize).map((item) => {
         const previewRequested = requestedPreviews.has(item.id);
         const previewSrc = mediaPreviewSrc(item, previewRequested);
+        const failedPreview = failedPreviews.has(previewSrc);
         const embedUrl = mediaEmbedUrl(item);
-        const referenceLabel = mediaReferenceLabel(item);
+        const referenceLabel = mediaReferenceLabel(t, item);
+        const rightsNotice = item.copyrightNotice?.trim() !== item.sourceCredit?.trim() ? item.copyrightNotice : null;
+        const kind = item.kind === "image"
+          ? t("organ.media.kind.image", "Image", "Bild")
+          : item.kind === "video"
+            ? t("organ.media.kind.video", "Video", "Video")
+            : item.kind === "document"
+              ? t("organ.media.kind.document", "Document", "Dokument")
+              : friendlyLabel(item.kind);
         const annotationHref = organMediaSupportsAnnotation(item) ? organMediaAnnotationHref(item, organId) : "";
         return (
-          <article key={item.id} className={embedUrl ? "media-card has-video" : previewSrc ? "media-card has-preview" : "media-card reference-only"}>
+          <article key={item.id} className={embedUrl ? "media-card has-video" : previewSrc && !failedPreview ? "media-card has-preview" : "media-card reference-only"}>
             {embedUrl && (
               <button
                 type="button"
                 className="media-video-preview"
                 onClick={() => onOpenVideo?.(item)}
-                aria-label={`Play ${item.title}`}
+                aria-label={t("organ.media.grid.play", "Play {title}", "„{title}“ abspielen", {title:item.title})}
               >
                 <span aria-hidden="true" className="media-video-play">▶</span>
-                <span>Load video from YouTube</span>
+                <span>{t("organ.media.grid.loadVideo", "Load video from YouTube", "Video von YouTube laden")}</span>
               </button>
             )}
-            {!embedUrl && previewSrc && <img src={previewSrc} alt="" onError={(event) => { event.currentTarget.hidden = true; }} />}
+            {!embedUrl && previewSrc && !failedPreview && <img src={previewSrc} alt="" onError={() => setFailedPreviews((current) => new Set(current).add(previewSrc))} />}
+            {!embedUrl && failedPreview && <p className="media-preview-unavailable" role="status">{t("organ.media.grid.previewUnavailable", "Image preview unavailable. Use the reference links below.", "Bildvorschau nicht verfügbar. Nutzen Sie die Quellenlinks unten.")}</p>}
             {!embedUrl && item.deliveryState === "user_requested_remote_preview" && !previewRequested && (
               <button type="button" className="media-remote-preview" onClick={() => setRequestedPreviews((current) => new Set(current).add(item.id))}>
-                <Image size={22} aria-hidden="true" /> Load image from source
+                <Image size={22} aria-hidden="true" /> {t("organ.media.grid.loadImage", "Load image from source", "Bild von der Quelle laden")}
               </button>
             )}
             <strong>{item.title}</strong>
-            <span>{friendlyLabel(item.kind)}{staffMode ? ` · ${friendlyLabel(item.status)}` : ""}</span>
+            <span>{kind}{staffMode ? ` · ${friendlyLabel(item.status)}` : ""}</span>
             <div className="media-evidence-row">
               <span>{referenceLabel}</span>
-              {item.source && <span>Source: {friendlyLabel(item.source)}</span>}
+              {item.source && <span>{t("organ.media.grid.sourceLabel", "Source: {source}", "Quelle: {source}", {source:friendlyLabel(item.source)})}</span>}
               {staffMode && item.sourcePath && <span>{item.sourcePath}</span>}
             </div>
-            {(item.sourceCredit || item.copyrightNotice || item.dates?.length) && <div className="media-attribution">
-              {item.sourceCredit && <span>Credit: {item.sourceCredit}</span>}
-              {item.copyrightNotice && <span>{item.copyrightNotice}</span>}
+            {Boolean(item.sourceCredit || rightsNotice || item.dates?.length) && <div className="media-attribution">
+              {item.sourceCredit && <span>{t("organ.media.grid.credit", "Credit: {credit}", "Bild- oder Mediennachweis: {credit}", {credit:item.sourceCredit})}</span>}
+              {rightsNotice && <span>{rightsNotice}</span>}
               {item.dates?.length ? <span>{item.dates.join(", ")}</span> : null}
             </div>}
             <div className="media-card-actions">
               {item.url && (
                 <a href={item.url} target="_blank" rel="noreferrer">
-                  {embedUrl ? "Open on YouTube" : "Open external reference"}
+                  {embedUrl ? t("organ.media.grid.youtube", "Open on YouTube", "Auf YouTube öffnen") : t("organ.media.grid.external", "Open external reference", "Externen Medienverweis öffnen")}
                 </a>
               )}
               {item.sourceUrl && item.sourceUrl !== item.url && (
                 <a href={item.sourceUrl} target="_blank" rel="noreferrer">
-                  Open source record
+                  {t("organ.media.grid.source", "Open source record", "Quelldatensatz öffnen")}
                 </a>
               )}
               {annotationHref && (
                 <a href={annotationHref}>
-                  Open annotations
+                  {t("organ.media.grid.annotations", "Open annotations", "Annotationen öffnen")}
                 </a>
               )}
               {onInspectMedia && (
                 <button type="button" className="secondary evidence-inline-open" onClick={() => onInspectMedia(item)}>
-                  View media details
+                  {t("organ.media.grid.details", "View media details", "Mediendetails ansehen")}
                 </button>
               )}
             </div>
@@ -25623,10 +26333,10 @@ function MediaGrid({
         );
       })}
     </div>
-    {pageCount > 1 && <nav className="catalog-pagination" aria-label="Media pages">
-      <button type="button" className="secondary" disabled={page === 0} onClick={() => setPage((current) => Math.max(0, current - 1))}><ChevronLeft size={16} /> Previous</button>
-      <span aria-live="polite">{page * pageSize + 1}–{Math.min((page + 1) * pageSize, media.length)} of {media.length}</span>
-      <button type="button" className="secondary" disabled={page + 1 >= pageCount} onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))}>Next <ChevronRight size={16} /></button>
+    {pageCount > 1 && <nav className="catalog-pagination" aria-label={t("organ.media.grid.pages", "Media pages", "Medienseiten")}>
+      <button type="button" className="secondary" disabled={page === 0} onClick={() => setPage((current) => Math.max(0, current - 1))}><ChevronLeft size={16} /> {t("organ.media.grid.previous", "Previous", "Zurück")}</button>
+      <span aria-live="polite">{t("organ.media.grid.range", "{from, number}–{to, number} of {total, number}", "{from, number}–{to, number} von {total, number}", {from:page*pageSize+1,to:Math.min((page+1)*pageSize,media.length),total:media.length})}</span>
+      <button type="button" className="secondary" disabled={page + 1 >= pageCount} onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))}>{t("organ.media.grid.next", "Next", "Weiter")} <ChevronRight size={16} /></button>
     </nav>}
     </>
   );
@@ -25712,6 +26422,7 @@ function timelineDomId(identifier: string): string {
 }
 
 function Timeline({ items, staffMode, focusedEventId = "" }: { items: Record<string, unknown>[]; staffMode: boolean; focusedEventId?: string }) {
+  const { t } = useUiLocale();
   const pageSize = staffMode ? 50 : 12;
   const focusedIndex = focusedEventId
     ? items.findIndex((item) => timelineEventIdentifier(item) === focusedEventId)
@@ -25727,14 +26438,19 @@ function Timeline({ items, staffMode, focusedEventId = "" }: { items: Record<str
     const target = document.getElementById(timelineDomId(focusedEventId));
     target?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [focusedEventId, items.length, visibleCount]);
-  if (items.length === 0) return <p className="muted">No dated activities are available yet.</p>;
+  if (items.length === 0) return <p className="muted">{t("organ.timeline.empty", "No dated activities are available yet.", "Es sind keine datierten Tätigkeiten verfügbar.")}</p>;
   const visibleItems = items.slice(0, visibleCount);
   return (
     <div className="timeline-wrap">
       <div className="timeline">
       {visibleItems.map((item, index) => {
         const eventIdentifier = timelineEventIdentifier(item);
-        const displayLabel = cleanCapturedDisplayText(item.label || "Activity");
+        const originalLabel = cleanCapturedDisplayText(item.label || t("organ.timeline.activity", "Activity", "Tätigkeit"));
+        const displayLabel = item.sourceReported === true && item.sourceOnly !== true
+          ? organActivityTypeLabel(t, String(item.eventType || ""), originalLabel) : originalLabel;
+        const typeLabel = item.sourceOnly
+          ? friendlyLabel(String(item.eventType))
+          : organActivityTypeLabel(t, String(item.eventType), friendlyLabel(String(item.eventType).replace(/^activitype:/, "")));
         const focused = Boolean(focusedEventId && eventIdentifier === focusedEventId);
         const sourceAttributions = Array.isArray(item.sourceAttributions)
           ? item.sourceAttributions.filter(isRecord)
@@ -25744,27 +26460,27 @@ function Timeline({ items, staffMode, focusedEventId = "" }: { items: Record<str
         return (
         <article id={timelineDomId(eventIdentifier)} className={focused ? "timeline-event-focused" : undefined} key={`${String(item.id || "activity")}:${index}`}>
           <div>
-            <span>{String(item.date || "Unknown")}</span>
-            <Pill>{String(item.certainty || "Candidate")}</Pill>
+            <span>{item.sourceReported === true && item.date === "Undated" ? t("organ.timeline.undatedSource", "Undated", "Undatiert") : String(item.date || t("organ.timeline.undated", "Unknown", "Datierung unbekannt"))}</span>
+            <Pill>{item.sourceReported === true && item.certainty === "Documented" ? t("organ.timeline.documented", "Documented", "Dokumentiert") : String(item.certainty || t("organ.timeline.candidate", "Candidate", "Vorschlag"))}</Pill>
           </div>
           <div className="timeline-event-heading">
             <strong>{displayLabel}</strong>
-            {item.pageUrl ? <a className="event-record-link" href={String(item.pageUrl)} aria-label={`Open event record: ${displayLabel}`}><ListChecks size={14} aria-hidden="true" /> Open event record</a> : null}
+            {item.pageUrl ? <a className="event-record-link" href={String(item.pageUrl)} aria-label={t("organ.timeline.openNamed", "Open event record: {event}", "Ereignisdatensatz „{event}“ öffnen", {event:displayLabel})}><ListChecks size={14} aria-hidden="true" /> {t("organ.timeline.open", "Open event record", "Ereignisdatensatz öffnen")}</a> : null}
           </div>
           <div className="timeline-meta">
             {item.sourceOnly
-              ? <span>Source-only event type · no narrower meaning inferred</span>
+              ? <span>{t("organ.timeline.sourceOnly", "Source-only event type · no narrower meaning inferred", "Ereignistyp laut Quelle · keine genauere Bedeutung abgeleitet")}</span>
               : item.sourceReported
-                ? <span>Source-reported structured event</span>
+                ? <span>{t("organ.timeline.reported", "Source-reported structured event", "Strukturiertes Ereignis laut Quelle")}</span>
                 : null}
-            {item.mappingKind ? <span>Mapping: {friendlyLabel(String(item.mappingKind))}</span> : null}
+            {item.mappingKind ? <span>{t("organ.timeline.mapping", "Mapping: {mapping}", "Zuordnung: {mapping}", {mapping:friendlyLabel(String(item.mappingKind))})}</span> : null}
             {item.place ? <span>{String(item.place)}</span> : null}
-            {item.eventType ? <span>Type: {!item.sourceOnly && eventTypeBrowseHref(String(item.eventType)) ? <a href={eventTypeBrowseHref(String(item.eventType)) || undefined}>{friendlyLabel(String(item.eventType).replace(/^activitype:/, ""))}</a> : friendlyLabel(String(item.eventType))}</span> : null}
+            {item.eventType ? <span>{t("organ.timeline.type", "Type:", "Typ:")} {!item.sourceOnly && eventTypeBrowseHref(String(item.eventType)) ? <a href={eventTypeBrowseHref(String(item.eventType)) || undefined}>{typeLabel}</a> : typeLabel}</span> : null}
             {Array.isArray(item.participants) && item.participants.filter(isRecord).map((participant, participantIndex) => {
-              const name = String(participant.name || "Unknown participant");
+              const name = String(participant.name || t("organ.timeline.unknownParticipant", "Unknown participant", "Unbekannte beteiligte Person"));
               const pageUrl = participant.pageUrl ? String(participant.pageUrl) : "";
               const activities = Array.isArray(participant.activities) ? participant.activities.map(String).filter(Boolean) : [];
-              const roleLabel = friendlyLabel(activities[0] || "Participant");
+              const roleLabel = activities[0] ? friendlyLabel(activities[0]) : t("organ.timeline.participant", "Participant", "Beteiligung");
               return (
                 <span className="timeline-participant" key={`${eventIdentifier}:participant:${participantIndex}`}>
                   <b>{roleLabel}: </b>
@@ -25775,7 +26491,7 @@ function Timeline({ items, staffMode, focusedEventId = "" }: { items: Record<str
               );
             })}
             {Array.isArray(item.places) && item.places.filter(isRecord).map((place, placeIndex) => {
-              const name = String(place.name || place.title || "Documented place");
+              const name = String(place.name || place.title || t("organ.timeline.place", "Documented place", "Dokumentierter Ort"));
               const pageUrl = place.pageUrl ? String(place.pageUrl) : "";
               const role = friendlyLabel(String(place.role || "contextual"));
               return (
@@ -25784,16 +26500,16 @@ function Timeline({ items, staffMode, focusedEventId = "" }: { items: Record<str
                 </span>
               );
             })}
-            {item.dateCertainty ? <span>Date: {friendlyLabel(String(item.dateCertainty))}</span> : null}
+            {item.dateCertainty ? <span>{t("organ.timeline.date", "Date: {date}", "Datierung: {date}", {date:friendlyLabel(String(item.dateCertainty))})}</span> : null}
             {staffMode && item.georeferencingState ? <span>Place review: {friendlyLabel(String(item.georeferencingState))}</span> : null}
             {staffMode && item.canonicalState ? <span>Canonical: {friendlyLabel(String(item.canonicalState))}</span> : null}
           </div>
-          {item.description ? <details><summary>Source wording</summary><p>{String(item.description)}</p></details> : null}
+          {item.description ? <details><summary>{t("organ.timeline.wording", "Source wording", "Quellenwortlaut")}</summary><p>{String(item.description)}</p></details> : null}
           {Array.isArray(item.technicalFacts) && item.technicalFacts.length > 0 ? <p>Documented specification: {item.technicalFacts.filter(isRecord).map((fact) => `${String(fact.manual_count)} manuals / ${String(fact.stop_count)} stops`).join("; ")} · event context</p> : null}
-          {Array.isArray(item.unresolvedAttributions) && item.unresolvedAttributions.length > 0 ? <details><summary>Unresolved source attribution</summary>{item.unresolvedAttributions.filter(isRecord).map((value, i) => <p key={i}>{String(value.wording || "No named participant established")}</p>)}</details> : null}
+          {Array.isArray(item.unresolvedAttributions) && item.unresolvedAttributions.length > 0 ? <details><summary>{t("organ.timeline.unresolved", "Unresolved source attribution", "Ungeklärte Quellenzuordnung")}</summary>{item.unresolvedAttributions.filter(isRecord).map((value, i) => <p key={i}>{String(value.wording || t("organ.timeline.noNamedParticipant", "No named participant established", "Keine namentliche Beteiligung belegt"))}</p>)}</details> : null}
           {sourceAttributions.length > 0 && (
-            <div className="timeline-source-attributions" aria-label="Event sources">
-              <span>Source</span>
+            <div className="timeline-source-attributions" aria-label={t("organ.timeline.sources", "Event sources", "Quellen zum Ereignis")}>
+              <span>{t("organ.timeline.source", "Source", "Quelle")}</span>
               {sourceAttributions.map((attribution, sourceIndex) => {
                 const label = String(attribution.source || attribution.title || "Source");
                 const url = String(attribution.sourceUrl || attribution.url || "");
@@ -25806,16 +26522,16 @@ function Timeline({ items, staffMode, focusedEventId = "" }: { items: Record<str
             </div>
           )}
           {item.normalizationBasis ? <small>{String(item.normalizationBasis)}</small> : null}
-          {item.derivation ? <small>Derived from a dated source statement and kept distinct from the directly reported event.</small> : null}
+          {item.derivation ? <small>{t("organ.timeline.derived", "Derived from a dated source statement and kept distinct from the directly reported event.", "Aus einer datierten Quellenangabe abgeleitet und getrennt vom direkt berichteten Ereignis erfasst.")}</small> : null}
           {staffMode && <EventProvenanceChain item={item} />}
         </article>
       );})}
       </div>
       {visibleCount < items.length && (
         <div className="timeline-pagination" aria-live="polite">
-          <span>Showing {visibleItems.length.toLocaleString()} of {items.length.toLocaleString()} events</span>
+          <span>{t("organ.timeline.shown", "Showing {shown, number} of {total, number} events", "Angezeigt: {shown, number} von {total, number} Ereignisangaben", {shown:visibleItems.length,total:items.length})}</span>
           <button type="button" className="secondary" onClick={() => setVisibleCount((current) => Math.min(items.length, current + pageSize))}>
-            Show next {Math.min(pageSize, items.length - visibleCount).toLocaleString()} events
+            {t("organ.timeline.next", "Show next {count, number} events", "Weitere {count, number} Ereignisangaben anzeigen", {count:Math.min(pageSize, items.length-visibleCount)})}
           </button>
         </div>
       )}
@@ -25837,6 +26553,7 @@ function EventSourceComparisonPanel({
   groups: EventSourceComparison[];
   summary?: EventSourceComparisonSummary;
 }) {
+  const { t } = useUiLocale();
   const conflictingGroups = groups.filter((group) => group.status === "conflicting");
   const sourceCount = summary?.sourceCount || Math.max(...groups.map((group) => group.sourceCount || 0), 1);
   const hasConflict = conflictingGroups.length > 0;
@@ -25854,30 +26571,30 @@ function EventSourceComparisonPanel({
       <summary>
         <span className="event-source-comparison-title">
           <FileText size={14} aria-hidden="true" />
-          <strong>Event evidence</strong>
-          <small>{sourceCount} source{sourceCount === 1 ? "" : "s"}</small>
+          <strong>{t("organ.eventSources.title", "Event evidence", "Belege zum Ereignis")}</strong>
+          <small>{t("organ.eventSources.count", "{count, plural, one {# source} other {# sources}}", "{count, plural, one {# Quelle} other {# Quellen}}", {count:sourceCount})}</small>
         </span>
-        <Pill>{hasConflict ? `${conflictingGroups.length} source difference${conflictingGroups.length === 1 ? "" : "s"}` : "Sources agree"}</Pill>
+        <Pill>{hasConflict ? t("organ.eventSources.differences", "{count, plural, one {# source difference} other {# source differences}}", "{count, plural, one {# abweichende Quellenangabe} other {# abweichende Quellenangaben}}", {count:conflictingGroups.length}) : t("organ.eventSources.agree", "Sources agree", "Quellenangaben stimmen überein")}</Pill>
       </summary>
       <div className="event-source-comparison-body">
         <p>
-          {summary?.baselineSource || "Orgbase"} is the displayed baseline. Other source assertions remain independently attributed and never silently overwrite an event.
+          {t("organ.eventSources.baseline", "{source} is the displayed baseline. Other source assertions remain independently attributed and never silently overwrite an event.", "Die Anzeige verwendet {source} als Ausgangspunkt. Angaben aus anderen Quellen bleiben gesondert zugeordnet und ersetzen ein Ereignis nicht stillschweigend.", {source:summary?.baselineSource || "Orgbase"})}
         </p>
         <div className="event-source-comparison-groups">
           {groups.map((group) => (
             <section className={group.status === "conflicting" ? "is-conflicting" : undefined} key={group.groupId}>
               <header>
                 <strong>{friendlyLabel(group.field)}</strong>
-                <span>{eventComparisonStatusLabel(group.status)}</span>
+                <span>{group.status === "conflicting" ? t("organ.eventSources.conflict", "Sources differ", "Quellenangaben weichen ab") : group.status === "corroborated" ? t("organ.eventSources.agree", "Sources agree", "Quellenangaben stimmen überein") : group.status === "single_source" ? t("organ.eventSources.single", "Single source", "Eine Quelle") : eventComparisonStatusLabel(group.status)}</span>
               </header>
               <div className="event-source-assertions">
                 {group.assertions.map((assertion) => (
                   <div className={assertion.displayed ? "is-displayed" : undefined} key={assertion.assertionId}>
-                    <span>{friendlyLabel(assertion.source)}{assertion.displayed ? " · displayed" : ""}</span>
+                    <span>{friendlyLabel(assertion.source)}{assertion.displayed ? " · " + t("organ.eventSources.displayed", "displayed", "angezeigt") : ""}</span>
                     <strong>{formatFieldValue(assertion.value)}</strong>
                     <div>
-                      {assertion.sourceUrl && <a href={assertion.sourceUrl} target="_blank" rel="noreferrer">Original source</a>}
-                      {assertion.evidenceUrl && <a href={assertion.evidenceUrl}>MODAVIS evidence</a>}
+                      {assertion.sourceUrl && <a href={assertion.sourceUrl} target="_blank" rel="noreferrer">{t("organ.eventSources.source", "Original source", "Originalquelle")}</a>}
+                      {assertion.evidenceUrl && <a href={assertion.evidenceUrl}>{t("organ.eventSources.modavis", "MODAVIS evidence", "MODAVIS-Belege")}</a>}
                     </div>
                   </div>
                 ))}
@@ -25885,7 +26602,7 @@ function EventSourceComparisonPanel({
             </section>
           ))}
         </div>
-        <small>Comparisons retain their source scope. Aggregate year or label assertions are not guessed into one-to-one event alignments.</small>
+        <small>{t("organ.eventSources.scope", "Comparisons retain their source scope. Aggregate year or label assertions are not guessed into one-to-one event alignments.", "Die Vergleiche berücksichtigen den Geltungsbereich der Quellen. Zusammengefasste Jahresangaben und Bezeichnungen werden einzelnen Ereignissen nur bei belegter Zuordnung gegenübergestellt.")}</small>
       </div>
     </details>
   );
@@ -25978,6 +26695,7 @@ function MapSection({
   return (
     <section className="entity-section" id="map" tabIndex={-1}>
       <SectionHead
+        headingLevel={1}
         eyebrow="Map"
         title={eventMode ? "Documented organ relocations" : "Mapped organ locations"}
         detail={showQueue ? `${explore?.counts.georeferencingBacklog ?? 0} organ page${explore?.counts.georeferencingBacklog === 1 ? "" : "s"} need coordinates` : movementSimulation ? "ARTIFICIAL relocation simulation · local-restricted" : eventMode ? "Source-documented endpoints with qualified coordinates" : canReadLocalMap ? "Local-restricted Localizer diagnostics" : "Current locations, with coordinate precision stated"}
@@ -26398,7 +27116,8 @@ function GeoLibreMap({
       if (countryCode) endpoint.searchParams.set("country", countryCode);
       appendPublicMapCatalogFilters(endpoint, catalogFilters);
     }
-    readSharedMapSummary(endpoint.toString())
+    const controller = new AbortController();
+    readSharedMapSummary(endpoint.toString(), controller.signal)
       .then((payload: unknown) => {
         if (!active) return;
         const collection = isRecord(payload) ? payload : {};
@@ -26442,7 +27161,7 @@ function GeoLibreMap({
         if (!active) return;
         setMapError(error instanceof Error ? error.message : "place endpoint failed");
       });
-    return () => { active = false; };
+    return () => { active = false; controller.abort(); };
   }, [catalogFilters, coordinateScope, countryCode, eventMode, mapApiPrefix, restrictedLayer]);
 
   useEffect(() => {
@@ -27092,7 +27811,7 @@ function GeoLibreMap({
     catalogFilters.temperament && ["Temperament", catalogFilters.temperament],
     catalogFilters.temperament && [
       "Temperament evidence",
-      catalogFilters.temperamentScope === "family" ? "Related family wording" : "Exact variant",
+      catalogFilters.temperamentScope === "family" ? "Related wording only" : "Exact wording",
     ],
   ].filter(Boolean) as Array<[string, string]>;
   const catalogFiltersDirty = JSON.stringify(catalogFilterDraft) !== JSON.stringify(catalogFilters);
@@ -27236,11 +27955,11 @@ function GeoLibreMap({
                         temperamentScope: event.target.value === "family" ? "family" : "exact",
                       })}
                     >
-                      <option value="exact">Exact temperament variant</option>
-                      <option value="family">Related family wording</option>
+                      <option value="exact">Exact wording</option>
+                      <option value="family">Related wording only</option>
                     </select>
                   </label>
-                  <a href={`/temperaments/${encodeURIComponent(catalogFilterDraft.temperament)}?tab=organs`}>
+                  <a href={temperamentOrganHref(catalogFilterDraft.temperament, catalogFilterDraft.temperamentScope)}>
                     Open temperament evidence
                   </a>
                 </div>
@@ -27891,7 +28610,7 @@ function CandidateEntityDirectorySection({
   const [profileCandidate, setProfileCandidate] = useState<CandidateEntityGroup | null>(null);
   return (
     <section className="entity-section candidate-directory-section" id={id} tabIndex={-1}>
-      <SectionHead eyebrow={title} title={publicDirectory ? `${title} directory` : `${title} candidates`} detail={response ? `${response.total} grouped ${publicDirectory ? (response.total === 1 ? "documented entity" : "documented entities") : `candidate${response.total === 1 ? "" : "s"}`}` : `Loading ${publicDirectory ? "entities" : "candidates"}`} />
+      <SectionHead headingLevel={publicDirectory ? 1 : 2} eyebrow={title} title={publicDirectory ? `${title} directory` : `${title} candidates`} detail={response ? `${response.total} grouped ${publicDirectory ? (response.total === 1 ? "documented entity" : "documented entities") : `candidate${response.total === 1 ? "" : "s"}`}` : `Loading ${publicDirectory ? "entities" : "candidates"}`} />
       {controls}
       {items.length === 0 ? (
         <EmptyState icon={icon} title={title} body={response ? emptyText : "Loading candidate entities."} />
@@ -28026,6 +28745,7 @@ function PersonsSection({
   return (
     <section className="entity-section persons-section" id="persons" tabIndex={-1}>
       <SectionHead
+        headingLevel={1}
         eyebrow="People and organizations"
         title="People and organizations"
         detail={loading ? "Loading identities and source mentions" : `${formatInteger(response?.total ?? 0)} directory entries`}
@@ -28061,7 +28781,7 @@ function PersonsSection({
             <span>Source</span>
             <select value={filters.source || ""} onChange={(event) => onFiltersChange({ ...filters, source: event.target.value || undefined })}>
               <option value="">All sources</option>
-              {(response?.facets.sources ?? []).map((item) => <option key={item.source} value={item.source}>{item.label} ({item.count})</option>)}
+              {(response?.facets.sources ?? []).map((item) => <option key={item.source} value={item.source}>{item.label} ({formatInteger(item.count)})</option>)}
             </select>
           </label>
           <label>
@@ -28077,7 +28797,7 @@ function PersonsSection({
             <select value={filters.entityClass || ""} onChange={(event) => onFiltersChange({ ...filters, entityClass: event.target.value || undefined })}>
               <option value="">Any class</option>
               {(response?.facets.entityClasses ?? []).map((item) => (
-                <option key={item.class} value={item.class}>{item.label} ({item.count})</option>
+                <option key={item.class} value={item.class}>{item.label} ({formatInteger(item.count)})</option>
               ))}
             </select>
           </label>
@@ -28086,7 +28806,7 @@ function PersonsSection({
             <select value={filters.role || ""} onChange={(event) => onFiltersChange({ ...filters, role: event.target.value || undefined })}>
               <option value="">Any role</option>
               {roleOptions.map((item) => (
-                <option key={item.role} value={item.role}>{item.label} ({item.count})</option>
+                <option key={item.role} value={item.role}>{item.label} ({formatInteger(item.count)})</option>
               ))}
             </select>
           </label>
@@ -28520,12 +29240,13 @@ function DeferredSection({ body, icon, id, title }: { body: string; icon: ReactN
   );
 }
 
-function SectionHead({ detail, eyebrow, title }: { detail?: string; eyebrow: string; title: string }) {
+function SectionHead({ detail, eyebrow, title, headingLevel = 2 }: { detail?: string; eyebrow: string; title: string; headingLevel?: 1 | 2 }) {
+  const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
     <header className="section-head">
       <div>
         <p className="eyebrow">{eyebrow}</p>
-        <h2>{title}</h2>
+        <Heading>{title}</Heading>
       </div>
       {detail && <span>{detail}</span>}
     </header>

@@ -1,3 +1,5 @@
+import { jsonRequestCache } from "./requestCache";
+
 export type ViewMode = "surface" | "depth";
 
 export interface Release11Summary {
@@ -726,6 +728,15 @@ export interface TuningFacetItem {
   [key: string]: string | number | undefined;
 }
 
+export type TuningOccurrenceScope = "all" | "exact" | "family";
+export type TuningCatalogueSort = "catalogue" | "occurrences_desc" | "occurrences_asc";
+
+export interface TuningOccurrenceCounts {
+  total: number;
+  exactVariantCount: number;
+  familyWordingCount: number;
+}
+
 export interface TuningSystemSummary {
   id: string;
   tuningId?: string | null;
@@ -752,6 +763,7 @@ export interface TuningSystemSummary {
     literatureEntries?: string[];
   };
   literatureCount: number;
+  occurrences?: TuningOccurrenceCounts;
   source: { key?: string | null; name?: string | null; url?: string | null; retrievedAt?: string | null };
   sourceUrl?: string | null;
   commentaryUrl?: string | null;
@@ -857,6 +869,7 @@ export interface TuningSystemOrganLinks {
   limit: number;
   offset: number;
   hasMore: boolean;
+  scope?: TuningOccurrenceScope;
   evidenceBoundary: string;
   publicProjection?: boolean;
 }
@@ -2305,13 +2318,26 @@ export interface OrganCard {
   builder?: string | null;
   builderMdvsId?: string | null;
   builderUrl?: string | null;
+  builderSummary?: {
+    label: string | null;
+    actorId?: string | null;
+    documentedActorCount: number | null;
+    assertionCount: number | null;
+    selectionBasis: "most_documented_association" | string;
+    qualification: string;
+    claimsUrl: string;
+    role: string | null;
+    period: string | null;
+  };
   placeMdvsId?: string | null;
   placeUrl?: string | null;
+  placePageUrl?: string | null;
   dateLabel?: string | null;
   status: string;
   certainty: string;
   sourceCount: number;
   sourceLabel?: string | null;
+  sourceSummary?: { sourceRecords: number | null; collections: number | null };
   mediaCount: number;
   documentCount: number;
   heroImage?: string | null;
@@ -2513,6 +2539,8 @@ export interface OrganSource {
   statusDetail?: string | null;
 }
 
+export type TemperamentValueKind = "wording" | "source_code" | "missing";
+
 export interface OrganTechnicalAssertion {
   source: string;
   sourceRecordId?: string | null;
@@ -2522,6 +2550,8 @@ export interface OrganTechnicalAssertion {
   rawValue?: string | null;
   text?: string | null;
   extraction?: "structured_source_field" | "bounded_labeled_source_text" | string;
+  valueKind?: TemperamentValueKind;
+  catalogUrl?: string | null;
   concept?: {
     id: string;
     label: string;
@@ -2530,9 +2560,14 @@ export interface OrganTechnicalAssertion {
 }
 
 export interface OrganParityTechnicalFact {
+  comparisonGroupId?: string;
+  comparisonState?: string;
+  sourceConflictState?: string;
+  comparisonKind?: "source_summary_vs_captured_rows" | null;
   qualificationGuidance?: string;
   aggregateQualification?: { status: string; headlineEligible: boolean };
-  summaryEvidence?: { interpretation: string; scope: string; accountWording?: string; evidence: { path: string; start: number; end: number; wording: string }[] } | null;
+  summaryEvidence?: { interpretation: string; scope: string; accountWording?: string;
+    evidence: { sourcePath?: string | null; path?: string | null; start?: number | null; end?: number | null; wording: string }[] } | null;
   id: string;
   family: string;
   label: string;
@@ -2553,9 +2588,14 @@ export interface OrganParityTechnicalFact {
   refinementOutcome?: string | null;
   evidenceKind: "functional_derived" | "source_assertion" | string;
   functionalPositionStatement?: boolean;
+  valueKind?: TemperamentValueKind;
+  catalogUrl?: string | null;
 }
 
 export interface OrganTechnicalEvidence {
+  comparisonGroups?: OrganTechnicalComparisonGroup[];
+  differingFieldCount?: number;
+  captureMismatchCount?: number;
   descriptions: OrganTechnicalAssertion[];
   descriptionSourceCount: number;
   pitch: {
@@ -2589,6 +2629,51 @@ export interface OrganTechnicalEvidence {
   functionalPipePositionCount?: number;
 }
 
+export interface OrganTechnicalComparisonGroup {
+  id: string;
+  family: string;
+  label: string;
+  status: string;
+  assertions: Array<{
+    factId: string; sourceRecordId: string; source?: string; displayValue: string;
+    normalizedNumber?: number | null; sourcePath?: string; sourceUrl?: string | null;
+    sourceWording?: string; qualificationStatus?: string; qualificationGuidance?: string;
+    valueKind?: "number" | "wording" | "qualified" | "missing" | "source_code";
+    capturedComponentCount?: number | null;
+    comparisonKind?: "source_summary_vs_captured_rows" | null;
+    comparison?: string | null;
+    captureComparison?: unknown;
+  }>;
+  valueGroups: Array<{ key: string; value: string; factIds: string[]; sourceRecordIds: string[];
+    kind?: "number" | "wording" | "qualified" | "source_code"; normalizedNumber?: number | null }>;
+  missingSourceRecordIds: string[];
+  withinSourceDifferences: boolean;
+  crossSourceDifferences?: boolean;
+  scope: string;
+  sameConfigurationEstablished: boolean;
+}
+
+export interface SpecificationDescriptionTechnicalFact {
+  comparisonState?: string;
+  comparisonGroupId?: string;
+  valueKind?: TemperamentValueKind;
+  temperamentComparisonKey?: string;
+  id: string; family: string; label: string; value: string;
+  sourcePath?: string; revision?: string;
+  normalizedNumber?: number | null; sourceRecordId?: string; source?: string;
+  qualificationGuidance?: string;
+  aggregateQualification?: OrganParityTechnicalFact["aggregateQualification"];
+  summaryEvidence?: OrganParityTechnicalFact["summaryEvidence"];
+}
+
+export interface StopListCoverageSummary {
+  capturedStopRows: number;
+  capturedComponentRows: number;
+  reportedStopTotals: SpecificationDescriptionTechnicalFact[];
+  sourceSummaries: SpecificationDescriptionTechnicalFact[];
+  reportedZero: boolean;
+}
+
 export interface ConfigurationChronologyEvidence {
   contract?: string;
   configurationDateState: string;
@@ -2609,6 +2694,9 @@ export interface ConfigurationChronologyEvidence {
 }
 
 export interface SpecificationDescription {
+  stopListAvailability?: "captured_stop_rows" | "no_captured_stop_rows";
+  coverageSummary?: StopListCoverageSummary;
+  technicalFacts?: SpecificationDescriptionTechnicalFact[];
   chronology?: ConfigurationChronologyEvidence | null;
   id: string;
   kind: "main" | "alternative";
@@ -2644,8 +2732,7 @@ export interface DescriptionEntry {
 
 export interface SpecificationDescriptionDetail extends SpecificationDescription {
   groups: Array<{ label: string; compass: string | null; entries: DescriptionEntry[] }>;
-  technicalFacts: Array<{ id: string; family: string; label: string; value: string; sourcePath?: string; revision?: string;
-    qualificationGuidance?: string; summaryEvidence?: OrganParityTechnicalFact["summaryEvidence"] }>;
+  technicalFacts: SpecificationDescriptionTechnicalFact[];
   otherComponents: Array<{ id: string; kind: string; label: string; sourcePaths: string[] }>;
 }
 
@@ -2761,6 +2848,8 @@ export interface OrganDetail extends OrganCard {
 }
 
 export interface OrganSourceSpecification {
+  stopListAvailability?: "captured_stop_rows" | "no_captured_stop_rows";
+  coverageSummary?: StopListCoverageSummary;
   id: string;
   source: OrganSource;
   preferred: boolean;
@@ -3564,6 +3653,7 @@ export interface ContributionLifecycle {
 }
 
 export interface Citation {
+  dataset?: { title: string; version: string; url: string };
   bibtex?: string;
   entityType: string;
   mdvsId: string;
@@ -3938,6 +4028,10 @@ export interface DocumentationReleasePlan {
 export interface ExploreResponse {
   query: string;
   counts: { organs: number; sourceEvidence: number; unreviewedContributions: number; georeferencingBacklog?: number };
+  countsScope?: "matching_organ_records";
+  globalCounts?: { organs: number; sourceEvidence: number; withMedia: number; mapped: number };
+  globalCountsScope?: "whole_dataset";
+  countDefinitions?: Record<string, unknown>;
   featuredOrgans: OrganCard[];
   recentOrgans: OrganCard[];
   mapItems: Array<{ id: string; mdvsId: string; title: string; location?: string | null; coordinates?: { lat: number; lon: number } | null; certainty?: string | null }>;
@@ -3965,6 +4059,14 @@ export interface ExploreResponse {
     };
   };
   filters: Array<{ id: string; label: string; available: boolean }>;
+}
+
+export interface DiscoveryContext {
+  globalCounts: NonNullable<ExploreResponse["globalCounts"]>;
+  globalCountsScope: "whole_dataset";
+  countDefinitions?: Record<string, unknown>;
+  snapshot?: Record<string, unknown>;
+  search?: { method: string; kinds: string[]; literalText: boolean; maxQueryLength: number; maxLimit: number };
 }
 
 export interface CanonicalEntityResolution {
@@ -4025,14 +4127,20 @@ export interface EntitySearchResponse {
     id: string;
     label: string;
     rank?: number | null;
+    count?: number;
     total?: number;
-    items: EntitySearchResult[];
+    items?: EntitySearchResult[];
   }>;
   total: number;
+  totalScope?: "matching_records";
+  returned?: number;
+  hasMore?: boolean;
   limit: number;
   counts?: {
     organs?: number;
     canonicalActors?: number;
+    places?: number;
+    events?: number;
     candidateEntities?: number;
     vmiCandidates?: number;
   };
@@ -5088,6 +5196,7 @@ export interface EventListResponse {
 }
 
 export interface ReleaseContext {
+  fixture?: { synthetic: boolean; contract: string; inputSha256: string; manifestSha256: string; attribution: { creator: string; license: string; note: string } };
   releaseVersion: string;
   releaseState: string;
   publicationAuthorized: boolean;
@@ -6526,7 +6635,7 @@ export async function fetchExplore(params: {
   georeferencingStatus?: string;
   georeferencingCountry?: string;
   includeGeoreferencing?: boolean;
-} = {}): Promise<ExploreResponse> {
+} = {}, signal?: AbortSignal): Promise<ExploreResponse> {
   const search = new URLSearchParams({ limit: String(params.limit ?? 8) });
   if (params.query) search.set("q", params.query);
   if (params.includeGeoreferencing) search.set("include_georeferencing", "1");
@@ -6535,13 +6644,17 @@ export async function fetchExplore(params: {
   if (params.georeferencingPriority) search.set("georeferencing_priority", params.georeferencingPriority);
   if (params.georeferencingStatus) search.set("georeferencing_status", params.georeferencingStatus);
   if (params.georeferencingCountry) search.set("georeferencing_country", params.georeferencingCountry);
-  return getJson(`/api/explore?${search.toString()}`);
+  return getJson(`/api/explore?${search.toString()}`, { signal });
 }
 
-export async function fetchEntitySearch(params: { query?: string; limit?: number } = {}): Promise<EntitySearchResponse> {
+export async function fetchEntitySearch(params: { query?: string; limit?: number } = {}, signal?: AbortSignal): Promise<EntitySearchResponse> {
   const search = new URLSearchParams({ limit: String(params.limit ?? 12) });
   if (params.query) search.set("q", params.query);
-  return getJson(`/api/entities/search?${search.toString()}`);
+  return getJson(`/api/entities/search?${search.toString()}`, { signal });
+}
+
+export async function fetchDiscoveryContext(signal?: AbortSignal): Promise<DiscoveryContext> {
+  return getJson("/api/discovery/context", { signal });
 }
 
 export async function fetchCandidateEntityGroups(params: { category?: string; query?: string; country?: string; locationState?: string; reviewState?: string; matchState?: string; sort?: string; limit?: number } = {}): Promise<CandidateEntityGroupResponse> {
@@ -6562,7 +6675,7 @@ export async function fetchCandidateEntityGroup(category: string, id: string): P
   return data.candidate;
 }
 
-export async function fetchPersons(params: { query?: string; source?: string; publicationState?: string; role?: string; entityClass?: string; sort?: string; limit?: number; offset?: number } = {}): Promise<PersonListResponse> {
+export async function fetchPersons(params: { query?: string; source?: string; publicationState?: string; role?: string; entityClass?: string; sort?: string; limit?: number; offset?: number } = {}, signal?: AbortSignal): Promise<PersonListResponse> {
   const search = new URLSearchParams({ limit: String(params.limit ?? 30), offset: String(params.offset ?? 0) });
   if (params.query) search.set("q", params.query);
   if (params.source) search.set("source", params.source);
@@ -6570,7 +6683,7 @@ export async function fetchPersons(params: { query?: string; source?: string; pu
   if (params.role) search.set("role", params.role);
   if (params.entityClass) search.set("entity_class", params.entityClass);
   if (params.sort) search.set("sort", params.sort);
-  return getJson(`/api/persons?${search.toString()}`);
+  return getJson(`/api/persons?${search.toString()}`, { signal });
 }
 
 export async function fetchCanonicalActor(id: string, category = "people"): Promise<CanonicalActorDetail> {
@@ -6601,7 +6714,7 @@ export async function fetchVmiCandidates(params: { query?: string; limit?: numbe
   return getJson(`/api/vmi-candidates?${search.toString()}`);
 }
 
-export async function fetchOrgans(params: OrganFilters & { limit?: number; offset?: number; includeFacets?: boolean } = {}): Promise<OrganListResponse> {
+export async function fetchOrgans(params: OrganFilters & { limit?: number; offset?: number; includeFacets?: boolean } = {}, signal?: AbortSignal): Promise<OrganListResponse> {
   const search = new URLSearchParams({ limit: String(params.limit ?? 30), offset: String(params.offset ?? 0) });
   if (params.query) search.set("q", params.query);
   if (params.country) search.set("country", params.country);
@@ -6626,7 +6739,7 @@ export async function fetchOrgans(params: OrganFilters & { limit?: number; offse
   if (params.mediaKind) search.set("media_kind", params.mediaKind);
   if (params.sort) search.set("sort", params.sort);
   if (params.includeFacets === false) search.set("include_facets", "0");
-  return getJson(`/api/organs?${search.toString()}`);
+  return getJson(`/api/organs?${search.toString()}`, { signal });
 }
 
 export async function fetchEvents(params: { query?: string; subject?: string; type?: string; yearFrom?: number | string; yearTo?: number | string; place?: string; participant?: string; source?: string; completeness?: string; routeState?: string; sort?: string; limit?: number; offset?: number } = {}): Promise<EventListResponse> {
@@ -6646,7 +6759,8 @@ export async function fetchEvents(params: { query?: string; subject?: string; ty
 }
 
 export async function fetchReleaseContext(): Promise<ReleaseContext> {
-  return getJson("/api/release-context", { signal: AbortSignal.timeout(15_000) });
+  // Discover the current instance even if a previous deployment cached this URL.
+  return getJson("/api/release-context", { signal: AbortSignal.timeout(15_000), cache: "no-store" });
 }
 
 export async function fetchEvent(id: string): Promise<EventDetail> {
@@ -6672,7 +6786,7 @@ export async function fetchEventResearch(id: string, actor?: NavigatorActor): Pr
   return data.research;
 }
 
-export async function fetchOrganFacets(params: OrganFilters = {}): Promise<OrganFacets> {
+export async function fetchOrganFacets(params: OrganFilters = {}, signal?: AbortSignal): Promise<OrganFacets> {
   const search = new URLSearchParams();
   if (params.query) search.set("q", params.query);
   if (params.country) search.set("country", params.country);
@@ -6696,7 +6810,7 @@ export async function fetchOrganFacets(params: OrganFilters = {}): Promise<Organ
   if (params.historyState) search.set("history_state", params.historyState);
   if (params.mediaKind) search.set("media_kind", params.mediaKind);
   const suffix = search.toString() ? `?${search.toString()}` : "";
-  const response = await getJson<OrganFacetResponse>(`/api/organs/facets${suffix}`);
+  const response = await getJson<OrganFacetResponse>(`/api/organs/facets${suffix}`, { signal });
   return response.facets ?? {
     builders: [],
     countries: [],
@@ -7379,7 +7493,12 @@ export async function fetchTemperaments(params: {
   preciseVariant?: boolean;
   commentaryAvailable?: boolean;
   commentaryQuery?: string;
-  queryScope?: "identity";
+  queryScope?: "identity" | "evidence";
+  sort?: TuningCatalogueSort;
+  occurrenceScope?: TuningOccurrenceScope;
+  minOccurrences?: number;
+  maxOccurrences?: number;
+  signal?: AbortSignal;
   limit?: number;
   offset?: number;
 }): Promise<TuningSystemList> {
@@ -7391,17 +7510,22 @@ export async function fetchTemperaments(params: {
   if (params.commentaryAvailable !== undefined) search.set("commentary_available", String(params.commentaryAvailable));
   if (params.commentaryQuery) search.set("commentary_q", params.commentaryQuery);
   if (params.queryScope) search.set("scope", params.queryScope);
-  return getJson(`/api/temperaments?${search.toString()}`);
+  if (params.sort && params.sort !== "catalogue") search.set("sort", params.sort);
+  if (params.occurrenceScope && params.occurrenceScope !== "all") search.set("occurrence_scope", params.occurrenceScope);
+  if (params.minOccurrences !== undefined) search.set("min_occurrences", String(params.minOccurrences));
+  if (params.maxOccurrences !== undefined) search.set("max_occurrences", String(params.maxOccurrences));
+  return getJson(`/api/temperaments?${search.toString()}`, { signal: params.signal });
 }
 
-export async function fetchTemperament(id: string, mode: ViewMode): Promise<TuningSystemDetail> {
-  const data = await getJson<{ temperament: TuningSystemDetail }>(`/api/temperaments/${encodeURIComponent(id)}?mode=${mode}`);
+export async function fetchTemperament(id: string, mode: ViewMode, signal?: AbortSignal): Promise<TuningSystemDetail> {
+  const data = await getJson<{ temperament: TuningSystemDetail }>(`/api/temperaments/${encodeURIComponent(id)}?mode=${mode}`, { signal });
   return data.temperament;
 }
 
-export async function fetchTemperamentOrgans(id: string, limit = 200, offset = 0): Promise<TuningSystemOrganLinks> {
+export async function fetchTemperamentOrgans(id: string, limit = 200, offset = 0, scope: TuningOccurrenceScope = "all", signal?: AbortSignal): Promise<TuningSystemOrganLinks> {
   const search = new URLSearchParams({ limit: String(limit), offset: String(offset) });
-  const data = await getJson<{ organs: TuningSystemOrganLinks }>(`/api/temperaments/${encodeURIComponent(id)}/organs?${search.toString()}`);
+  if (scope !== "all") search.set("scope", scope);
+  const data = await getJson<{ organs: TuningSystemOrganLinks }>(`/api/temperaments/${encodeURIComponent(id)}/organs?${search.toString()}`, { signal });
   return data.organs;
 }
 
@@ -8097,45 +8221,22 @@ function actorHeaders(actor?: NavigatorActor): Record<string, string> {
   };
 }
 
-const GET_DEDUPE_TTL_MS = 2000;
-const inFlightGetJson = new Map<string, Promise<unknown>>();
-const recentGetJson = new Map<string, { expiresAt: number; value: unknown }>();
+const recentGetJson = jsonRequestCache;
 let authCsrfToken: string | null = null;
 
 export function setAuthCsrfToken(token: string | null): void {
+  if (authCsrfToken !== token) recentGetJson.clear();
   authCsrfToken = token;
 }
 
-function getCacheKey(url: string, headers: Record<string, string>): string {
-  const headerKey = Object.entries(headers)
-    .sort(([left], [right]) => left.localeCompare(right))
-    .map(([key, value]) => `${key}:${value}`)
-    .join("|");
-  return `${url}::${headerKey}`;
+async function getJson<T>(url: string, options: { actor?: NavigatorActor; signal?: AbortSignal; cache?: RequestCache } = {}): Promise<T> {
+  return jsonRequestCache.get<T>(url, { headers: actorHeaders(options.actor), signal: options.signal, cache: options.cache });
 }
 
-async function getJson<T>(url: string, options: { actor?: NavigatorActor; signal?: AbortSignal } = {}): Promise<T> {
-  const headers = actorHeaders(options.actor);
-  const cacheKey = getCacheKey(url, headers);
-  const cached = recentGetJson.get(cacheKey);
-  if (cached && cached.expiresAt > Date.now()) return cached.value as T;
-  if (cached) recentGetJson.delete(cacheKey);
-  const inFlight = inFlightGetJson.get(cacheKey);
-  if (inFlight) return inFlight as Promise<T>;
-  const request = fetch(url, { headers, credentials: "include", signal: options.signal })
-    .then(async (response) => {
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`);
-      }
-      const payload = await response.json();
-      recentGetJson.set(cacheKey, { expiresAt: Date.now() + GET_DEDUPE_TTL_MS, value: payload });
-      return payload as T;
-    })
-    .finally(() => {
-      inFlightGetJson.delete(cacheKey);
-    });
-  inFlightGetJson.set(cacheKey, request);
-  return request;
+/** Same-origin public read with bounded reuse, a request budget and independent cancellation. */
+export function publicGetJson<T>(url: string, signal?: AbortSignal): Promise<T> {
+  if (!url.startsWith("/api/") || url.startsWith("//")) return Promise.reject(new Error("A local public API URL is required."));
+  return jsonRequestCache.get<T>(url, { signal });
 }
 
 async function postJson<T>(

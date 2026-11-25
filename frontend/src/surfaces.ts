@@ -5,11 +5,13 @@ export type SurfaceGroup = "public" | "collections" | "user" | "moderation" | "a
 
 export type MainSection =
   | "explore"
+  | "pod-explorer"
   | "use-cases"
   | "organs"
   | "events"
   | "docs"
   | "release-guide"
+  | "api-guide"
   | "internal-docs"
   | "persons"
   | "literature"
@@ -51,11 +53,13 @@ const ROLE_RANK: Record<NavigatorRole, number> = {
 
 export const SECTION_PATHS: Record<MainSection, string> = {
   explore: "/",
+  "pod-explorer": "/pod-explorer",
   "use-cases": "/use-cases",
   organs: "/organs",
   events: "/events",
   docs: "/docs",
   "release-guide": "/about/release",
+  "api-guide": "/about/api",
   "internal-docs": "/internal/docs",
   persons: "/persons",
   literature: "/literature",
@@ -77,11 +81,13 @@ export const SECTION_PATHS: Record<MainSection, string> = {
 
 export const SURFACES: SurfaceDefinition[] = [
   { id: "explore", path: SECTION_PATHS.explore, label: "Explore", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "primary_nav", directLink: true, endpointSensitivity: "public_read" },
+  { id: "pod-explorer", path: SECTION_PATHS["pod-explorer"], label: "Explore the POD", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "primary_nav", directLink: true, endpointSensitivity: "public_read" },
   { id: "use-cases", path: SECTION_PATHS["use-cases"], label: "Use Cases", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "primary_nav", directLink: true, endpointSensitivity: "public_read" },
   { id: "organs", path: SECTION_PATHS.organs, label: "Organs", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "primary_nav", directLink: true, endpointSensitivity: "public_read" },
   { id: "events", path: SECTION_PATHS.events, label: "Events", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "primary_nav", directLink: true, endpointSensitivity: "public_read" },
   { id: "docs", path: SECTION_PATHS.docs, label: "Documentation", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "primary_nav", directLink: true, endpointSensitivity: "public_read" },
   { id: "release-guide", path: SECTION_PATHS["release-guide"], label: "About the data", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "direct_link", directLink: true, endpointSensitivity: "public_read" },
+  { id: "api-guide", path: SECTION_PATHS["api-guide"], label: "API guide", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "direct_link", directLink: true, endpointSensitivity: "public_read" },
   { id: "persons", path: SECTION_PATHS.persons, label: "People", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "primary_nav", directLink: true, endpointSensitivity: "public_read" },
   { id: "map", path: SECTION_PATHS.map, label: "Map", group: "public", requiredRole: "public", defaultDepth: "public_summary", visibility: "primary_nav", directLink: true, endpointSensitivity: "public_read" },
   { id: "contribute", path: SECTION_PATHS.contribute, label: "Contribute", group: "public", requiredRole: "public", defaultDepth: "user_contribution", visibility: "primary_nav", directLink: true, endpointSensitivity: "registered_user" },
@@ -114,6 +120,7 @@ export const MODERATOR_DIRECTORY_SURFACES = SURFACES.filter((surface) => surface
 
 const SURFACE_CAPABILITY: Partial<Record<MainSection, string>> = {
   explore: "catalog",
+  "pod-explorer": "catalog",
   "use-cases": "catalog",
   organs: "catalog",
   events: "events",
@@ -134,7 +141,7 @@ export function surfaceAvailableForCapabilities(
   capabilities?: readonly string[] | null,
 ): boolean {
   if (!capabilities) return true;
-  if (surface === "release-guide") return true;
+  if (surface === "release-guide" || surface === "api-guide") return true;
   const required = SURFACE_CAPABILITY[surface];
   return required ? capabilities.includes(required) : false;
 }

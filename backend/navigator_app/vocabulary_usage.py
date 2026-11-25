@@ -1,31 +1,68 @@
 """Read-only, snapshot-bound source wording navigation; no concept promotion."""
 import hashlib
 import json
-import sqlite3
 from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urlencode, quote
-from flask import jsonify, request, Response
+from flask import request, Response
 from .research_workbench import norm, canonical, EXPORT_LIMIT
 from .organological_research import organ_url
 from .exploration_policy import bucket_sql
+from .vocabulary_query import query_arguments, bounded_integer, require_snapshot, workbench_resource, vocabulary_endpoint, byte_response
 
-FAMILIES = {'activities': 'Events and activities', 'stops': 'Stops', 'divisions': 'Divisions'}
+FAMILIES = {
+    'activities': 'Events and activities', 'stops': 'Stops', 'divisions': 'Divisions',
+    'key_action': 'Key action', 'stop_action': 'Stop action', 'action_system': 'Other action descriptions',
+    'windchests': 'Windchests', 'wind_system': 'Wind supply', 'wind_pressure': 'Wind pressure',
+    'accessory': 'Accessories', 'coupler': 'Couplers', 'keyboard': 'Keyboards', 'console': 'Consoles',
+    'case': 'Cases', 'compound_stop': 'Compound-stop designations',
+    'manual_compass': 'Manual compass', 'pedal_compass': 'Pedal compass',
+    'manual_total': 'Reported manual totals', 'stop_total': 'Reported stop totals',
+    'rank_total': 'Reported rank totals', 'pipe_total': 'Reported pipe totals',
+    'pitch_standard': 'Pitch standards', 'temperament': 'Temperaments',
+    'functional_pipe_position': 'Functional pipe positions',
+    'accessory_summary': 'Accessory summaries', 'coupler_summary': 'Coupler summaries',
+    'division_summary': 'Division summaries', 'manual_summary': 'Manual summaries',
+    'source_summary': 'Source summaries', 'source_note': 'Public source notes',
+    'stoplist_availability': 'Stoplist coverage statements',
+}
+FAMILY_GROUPS = {
+    **dict.fromkeys(['activities'], 'events'),
+    **dict.fromkeys(['stops', 'divisions', 'accessory', 'coupler', 'keyboard', 'console', 'case', 'compound_stop'], 'designations'),
+    **dict.fromkeys(['key_action', 'stop_action', 'action_system', 'windchests', 'wind_system'], 'actions_and_wind'),
+    **dict.fromkeys(['wind_pressure', 'manual_compass', 'pedal_compass', 'manual_total', 'stop_total', 'rank_total', 'pipe_total', 'pitch_standard', 'temperament', 'functional_pipe_position'], 'technical_statements'),
+    **dict.fromkeys(['accessory_summary', 'coupler_summary', 'division_summary', 'manual_summary', 'source_summary', 'source_note', 'stoplist_availability'], 'source_context'),
+}
+FAMILY_DESCRIPTIONS = {
+    'events': 'Recorded activity wording and independently retained event assertions.',
+    'designations': 'Source component designations. Matching wording does not establish equivalent or identical physical components.',
+    'actions_and_wind': 'Source-qualified construction wording. Key action, stop action and windchest descriptions remain separate fields.',
+    'technical_statements': 'Recorded technical statements and reported values. These are source wording, not newly approved vocabulary concepts or physical measurements.',
+    'source_context': 'Publicly disclosed source summaries, notes and coverage wording. Generated or withheld labels remain excluded.',
+}
 METHOD = 'Case and whitespace normalize lookup keys only. Original labels, punctuation, pitches and source accounts remain distinct evidence. Text matches do not establish synonymy or physical identity.'
 PAGE = 30
+
+
+def usage_capabilities(app, family):
+    health = app.extensions.get('capability_health')
+    return {'distributions': family in {'activities','stops','divisions'}
+        and bool(app.extensions.get('research_exploration'))
+        and (not health or health.resource_state('exploration')['available'])}
 
 
 def usage(work, family, args, export=False):
     if family not in FAMILIES:
         raise LookupError('Unknown terminology collection')
-    allowed = {'q', 'term', 'match', 'page', 'section', 'snapshot', 'sort', 'source', 'dimension', 'bucket', 'organ_q'}
-    if set(args) - allowed:
-        raise ValueError('Unsupported terminology filter')
-    if any(len(v) > 500 for v in args.values()):
-        raise ValueError('Terminology parameter too long')
-    if args.get('snapshot') and args['snapshot'] != work.manifest['core']['sha256']:
-        raise RuntimeError('Requested terminology snapshot is unavailable')
-    page = int(args.get('page', '0'))
+    declared = work.manifest.get('facets', {}).get('termKinds')
+    if declared is not None and family not in declared:
+        raise LookupError('Terminology collection is unavailable in this snapshot')
+    allowed = {'q', 'term', 'match', 'page', 'section', 'snapshot', 'sort', 'source', 'dimension', 'bucket', 'organ_q', 'format'}
+    args = query_arguments(args, allowed, pins={'snapshot'})
+    if args.get('format', 'json') not in ({'json', 'ro-crate'} if export else {'json'}):
+        raise ValueError('Unsupported export format')
+    require_snapshot(args, work.manifest['core']['sha256'])
+    page = bounded_integer(args, 'page', 0, 0, 100000)
     section = args.get('section', 'occurrences')
     match = args.get('match', 'exact')
     if page < 0 or page > 100000 or section not in {'occurrences', 'organs'} or match not in {'exact', 'contains'}:
@@ -37,6 +74,10 @@ def usage(work, family, args, export=False):
         raise ValueError('A nonempty term is required')
     if term is not None and args.get('q'):
         raise ValueError('Use a term or a collection search, not both')
+    if term is None and any(key in args for key in ('match', 'section')):
+        raise ValueError('Choose a term before selecting match mode or occurrence view')
+    if term is not None and 'sort' in args:
+        raise ValueError('Wording sort applies to collection browsing, not a selected term')
     organ_query = norm(args.get('organ_q', ''))
     if organ_query and term is None:
         raise ValueError('Select a term before searching related organs')
@@ -78,7 +119,7 @@ def usage(work, family, args, export=False):
                 items.append({'label':row['label'],'key':key['search'],'occurrences':key['occurrences'],'href':href(row['label'])})
             candidates = [json.loads(r[0]) for r in c.execute('select payload from seed_concept order by id')] if work.manifest.get('terminologySeedSha256') else []
             candidates = [x for x in candidates if any(m['family'] == family for m in x['mappings'])]
-            return {**binding, 'sort': sort, 'candidateConcepts': candidates, 'family': family, 'title': FAMILIES[family], 'query': args.get('q', ''), 'items': items, 'total': total, 'offset': offset, 'limit': PAGE, 'hasMore': offset + len(items) < total, 'countUnit': 'distinct case/spacing-normalized source wordings', 'method': METHOD}
+            return {**binding, 'sort': sort, 'candidateConcepts': candidates, 'family': family, 'title': FAMILIES[family], 'group': FAMILY_GROUPS[family], 'description': FAMILY_DESCRIPTIONS[FAMILY_GROUPS[family]], 'query': args.get('q', ''), 'items': items, 'total': total, 'offset': offset, 'limit': PAGE, 'hasMore': offset + len(items) < total, 'countUnit': 'distinct case/spacing-normalized source wordings', 'method': METHOD, 'terminologySeedSha256': work.manifest.get('terminologySeedSha256')}
         # Materialize matching rows once: repeated LIKE scans can choose a pitch
         # index and exceed the budget on a cold VPS despite a small result set.
         columns = ['id','kind','organ','source','source_key','description','label','search','pitch','division','country','year','date_kind','concept','source_path']
@@ -119,7 +160,7 @@ def usage(work, family, args, export=False):
         for r in mapping_rows:
             x = dict(r); code = r['concept']; concept = c.execute('select payload_json,scheme_code,concept_code from core.vocabulary_concept where concept_code=? or mdvs_id=?', (code, code)).fetchone() if code else None
             seed = c.execute('select payload from seed_concept where id=?', (code,)).fetchone() if code and work.manifest.get('terminologySeedSha256') else None
-            x.update(status='controlled' if concept else 'candidate' if seed else 'unmapped', definition=json.loads(concept[0]) if concept else json.loads(seed[0]) if seed else None, href='/vocab/'+quote(concept[1],safe='')+'/concepts/'+quote(concept[2],safe='') if concept else None)
+            x.update(status='controlled' if concept else 'candidate' if seed else 'unmapped', definition=json.loads(concept[0]) if concept else json.loads(seed[0]) if seed else None, href='/vocab/'+quote(concept[1],safe='')+'/concepts/'+quote(concept[2],safe='') if concept else '/vocab/registry?'+urlencode({'concept':code,'snapshot':work.manifest['terminologySeedSha256']}) if seed else None)
             mappings.append(x)
         if section == 'organs' and not export:
             rows = page_items
@@ -135,11 +176,15 @@ def usage(work, family, args, export=False):
             for x in items:
                 label = c.execute('select label from research.organ where id=?', (x['organ'],)).fetchone()
                 x['organLabel'] = label[0] if label else x['organ']; x['organHref'] = organ_url(x['organ'])
-                x['href'] = '/events/'+quote(x['id'],safe='') if family=='activities' else x['organHref']+'?'+urlencode({'tab':'specification','description':x['description'] or ''})
+                x['sourceHref'] = '/source/'+quote(x['source'],safe='')
+                x['href'] = ('/events/'+quote(x['id'],safe='') if family=='activities'
+                    else x['organHref']+'?'+urlencode({'tab':'specification','description':x['description']}) if x['description']
+                    else x['sourceHref'])
+                x['evidenceTarget'] = 'event' if family=='activities' else 'source_account' if x['description'] else 'source_record'
                 member = c.execute('select source_url,source_revision_sha256,native_identifier from core.source_membership where source_record_id=?', (x['source'],)).fetchone()
                 x['sourceEvidence'] = dict(member) if member else None
         selection = {'family':family,'term':norm(term),'match':match,'source':args.get('source',''),**({'organQuery':organ_query} if organ_query else {}),**({k:args[k] for k in ('dimension','bucket')} if args.get('dimension') else {})}
-        return {**binding,'organQuery':args.get('organ_q',''),'sourceOptions':sources,'family':family,'term':term,'match':match,'status':'source_wording','canonicalConceptInferred':False,'method':METHOD,'counts':counts,'variants':variants,'variantsTruncated':len(variants)<counts['wordings'],'mappings':mappings,'items':items,'section':section,'total':total,'offset':offset,'limit':EXPORT_LIMIT if export else PAGE,'hasMore':False if export else offset+len(items)<total,'completeSelection':export,'href':href(term,match),'selectionSha256':hashlib.sha256(canonical({'binding':binding,'selection':selection}).encode()).hexdigest()}
+        return {**binding,'organQuery':args.get('organ_q',''),'sourceOptions':sources,'family':family,'title':FAMILIES[family],'group':FAMILY_GROUPS[family],'description':FAMILY_DESCRIPTIONS[FAMILY_GROUPS[family]],'term':term,'match':match,'status':'source_wording','canonicalConceptInferred':False,'method':METHOD,'counts':counts,'variants':variants,'variantsTruncated':len(variants)<counts['wordings'],'mappings':mappings,'items':items,'section':section,'total':total,'offset':offset,'limit':EXPORT_LIMIT if export else PAGE,'hasMore':False if export else offset+len(items)<total,'completeSelection':export,'href':href(term,match),'selectionSha256':hashlib.sha256(canonical({'binding':binding,'selection':selection}).encode()).hexdigest(),'terminologySeedSha256':work.manifest.get('terminologySeedSha256')}
 
 
 def register_vocabulary_usage(app):
@@ -149,20 +194,19 @@ def register_vocabulary_usage(app):
 
     @app.get('/api/vocab/usage/<family>')
     @app.get('/api/vocab/usage/<family>/export')
+    @vocabulary_endpoint
     def route(family):
-        work = app.extensions.get('research_workbench')
-        if work is None:return jsonify({'error':'Source terminology is unavailable for this snapshot'}),503
-        try:
-            work.assert_binding()
-            args = dict(request.args)
-            export = request.path.endswith('/export')
-            content = canonical(usage(work,family,args,True)) if export else cached(family,tuple(sorted(args.items())))
-            response = Response(content+'\n',mimetype='application/json')
-            response.headers['Cache-Control'] = 'private, max-age=60'
-            if export:response.headers['Content-Disposition']='attachment; filename="modavis-source-terminology.json"'
-            return response
-        except LookupError as e:return jsonify({'error':str(e)}),404
-        except RuntimeError as e:return jsonify({'error':str(e)}),409
-        except OverflowError as e:return jsonify({'error':str(e)}),422
-        except (ValueError,TypeError) as e:return jsonify({'error':str(e)}),400
-        except sqlite3.OperationalError:return jsonify({'error':'Terminology query exceeded its budget. Narrow the search; no partial results were returned.'}),503
+        work = workbench_resource(app)
+        args = query_arguments(request.args, {'q','term','match','page','section','snapshot','sort','source','dimension','bucket','organ_q','format'}, pins={'snapshot'})
+        export = request.path.endswith('/export')
+        if args.get('format') == 'ro-crate' and not app.extensions.get('research_package_export'):
+            raise ValueError('Research package export is unavailable; use JSON')
+        content = canonical(usage(work,family,args,True)) if export else cached(family,tuple(sorted(args.items())))
+        data = json.loads(content)
+        data['capabilities'] = usage_capabilities(app, family)
+        content = canonical(data)
+        # The registered research-package adapter turns complete JSON selections
+        # into RO-Crate archives; it still requires an exact core pin and license.
+        if args.get('format') == 'ro-crate':
+            return Response(content+'\n', mimetype='application/json')
+        return byte_response(content+'\n','application/json',filename='modavis-source-terminology.json' if export else None)

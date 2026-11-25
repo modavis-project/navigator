@@ -1,0 +1,52 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/modavis/shapes/exchange/0.1.0#OrganPitchDesignationShape> a sh:NodeShape ;
+    rdfs:label "organ pitch designation shape"@en ;
+    sh:name "organ pitch designation shape"@en ;
+    sh:property <https://w3id.org/modavis/shapes/exchange/0.1.0#OrganPitchDesignationShape-hasNominalPitchDesignation-PropertyShape-01> ;
+    sh:severity sh:Violation ;
+    sh:targetSubjectsOf <https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation> .
+
+<https://w3id.org/modavis/shapes/exchange/0.1.0#OrganStopShape> a sh:NodeShape ;
+    rdfs:label "organ stop shape"@en ;
+    sh:name "organ stop shape"@en ;
+    sh:property <https://w3id.org/modavis/shapes/exchange/0.1.0#OrganStopShape-rankCount-PropertyShape-01> ;
+    sh:severity sh:Violation ;
+    sh:targetClass <https://w3id.org/modavis/ontology/organ#OrganStop> .
+
+<https://w3id.org/modavis/shapes/exchange/0.1.0#SourceResourceShape> a sh:NodeShape ;
+    rdfs:label "source resource shape"@en ;
+    sh:name "source resource shape"@en ;
+    sh:property <https://w3id.org/modavis/shapes/exchange/0.1.0#SourceResourceShape-sourceUri-PropertyShape-01> ;
+    sh:severity sh:Violation ;
+    sh:targetClass <https://w3id.org/modavis/ontology/evidence#SourceResource> .
+
+<https://w3id.org/modavis/shapes/exchange/0.1.0#OrganPitchDesignationShape-hasNominalPitchDesignation-PropertyShape-01> a sh:PropertyShape ;
+    rdfs:label "has nominal pitch designation property constraint"@en ;
+    sh:datatype xsd:string ;
+    sh:message "An organ nominal-pitch designation must be a non-empty source-preserving string."@en ;
+    sh:minLength 1 ;
+    sh:name "has nominal pitch designation property constraint"@en ;
+    sh:path <https://w3id.org/modavis/ontology/organ#hasNominalPitchDesignation> ;
+    sh:severity sh:Violation .
+
+<https://w3id.org/modavis/shapes/exchange/0.1.0#OrganStopShape-rankCount-PropertyShape-01> a sh:PropertyShape ;
+    rdfs:label "rank count property constraint"@en ;
+    sh:datatype xsd:positiveInteger ;
+    sh:maxCount 1 ;
+    sh:message "Rank count constraint: at most 1 value(s) are permitted; values must use the positiveInteger datatype."@en ;
+    sh:name "rank count property constraint"@en ;
+    sh:path <https://w3id.org/modavis/ontology/organ#rankCount> ;
+    sh:severity sh:Violation .
+
+<https://w3id.org/modavis/shapes/exchange/0.1.0#SourceResourceShape-sourceUri-PropertyShape-01> a sh:PropertyShape ;
+    rdfs:label "source uri property constraint"@en ;
+    sh:datatype xsd:anyURI ;
+    sh:message "Source uri constraint: values must use the anyURI datatype; lexical form must match the declared pattern."@en ;
+    sh:name "source uri property constraint"@en ;
+    sh:path <https://w3id.org/modavis/ontology/evidence#sourceUri> ;
+    sh:pattern "^[A-Za-z][A-Za-z0-9+.-]*:" ;
+    sh:severity sh:Violation .
+

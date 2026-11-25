@@ -1,0 +1,30 @@
+{
+  "profile": "modavis.navigator-native-export-check/v1",
+  "upstream": "MODAVIS Ontology Network 0.1.0",
+  "license": "CC-BY-4.0",
+  "copyright": "2026 Dominik Ukolov and MODAVIS contributors",
+  "sourceCommit": "8d04605e7ea1921c4ad84f8543f062298eddf109",
+  "sourceFiles": [
+    {
+      "file": "modavis-organ.shacl.ttl",
+      "sha256": "b2c3e775b28bcd171252f89bdccd9a759e80b60dfb532f179ff36c17d9d6a023",
+      "selectedShapes": [
+        "OrganStopShape",
+        "OrganPitchDesignationShape"
+      ]
+    },
+    {
+      "file": "modavis-evidence.shacl.ttl",
+      "sha256": "5f536b67ee1bf32ab0fb532ee325d6128807d1ef3a8051a7bde3ce57149d94fd",
+      "selectedShapes": [
+        "SourceResourceShape"
+      ]
+    }
+  ],
+  "subsetSha256": "d6b77f0f21049eb83251e77595f46c554ddd28b2ea9b77d59dcc6abe6a205537",
+  "scope": "Selected compatible explicit-data checks; not full ontology-network conformance",
+  "ontologyInference": "none; exact target classes/predicates only",
+  "compatibilityExceptions": [
+    "Legacy POD nameValue supports xsd:string or rdf:langString. Current ontology NameShape requires rdf:langString and is not applied. Navigator supplies a separately named compatibility shape without inferring language."
+  ]
+}

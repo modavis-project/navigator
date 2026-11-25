@@ -13,7 +13,6 @@ import math
 import re
 from collections.abc import Mapping
 from dataclasses import replace
-from functools import lru_cache
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote, unquote, urlencode
@@ -51,6 +50,7 @@ from .pipework import (
 from .public_repository import PROFILE, PublicReleaseRepository
 from .public_source_projection_schema import public_source_projection_schema
 from .uri_policy import UriPolicy, parse_identifier
+from .vocabulary_query import query_arguments, bounded_integer, require_snapshot, vocabulary_endpoint, byte_response
 
 
 def _supports_complete_entity_exports(release_version: str) -> bool:
@@ -285,15 +285,19 @@ def create_public_app(
     historical_repositories: Mapping[str, PublicReleaseRepository] | None = None,
 ) -> Flask:
     app = Flask(__name__)
+    repo = repository or PublicReleaseRepository(settings)
+    from .request_reliability import register_request_reliability
+    register_request_reliability(app, repo)
     from .historical_renderers import register_historical_renderers
     pinned_renderers = register_historical_renderers(app, settings)
     from .versioned_response_cache import register_versioned_response_cache
     register_versioned_response_cache(app)
-    repo = repository or PublicReleaseRepository(settings)
     from .organological_research import register_research
     register_research(app, settings, repo)
     from .research_workbench import register_workbench
     register_workbench(app, settings, repo)
+    from .research_package import register_research_packages
+    register_research_packages(app)
     from .vocabulary_usage import register_vocabulary_usage
     register_vocabulary_usage(app)
     from .research_exploration import register_exploration
@@ -312,6 +316,8 @@ def create_public_app(
         else None
     )
     readiness = dict(repo.assert_ready())
+    if hasattr(repo, "snapshot_binding"):
+        repo.snapshot_binding()
     if dataset_catalog and dataset_catalog.supports(settings.uri_release_version):
         source_release = settings.public_source_release_version or settings.uri_release_version
         if dataset_catalog.manifest.get("sourceReleaseVersion", settings.uri_release_version) != source_release:
@@ -419,6 +425,13 @@ def create_public_app(
             return version_repo.get_virtual_instrument(identifier)
         return None
 
+    from .public_graphql import register_public_graphql
+    register_public_graphql(app, repo, export_record)
+    from .pod_capabilities import register_pod_capabilities
+    register_pod_capabilities(app, repo)
+    from .capability_health import register_capability_health
+    capability_health = register_capability_health(app, repo, settings, readiness, dataset_catalog)
+
     def record_from_resolution(version_repo, resolved: Mapping[str, Any]):
         kind = str(resolved.get("canonicalRouteKind") or "entity")
         kind = "virtual_instrument" if kind in {"vmi", "virtual-instrument"} else kind
@@ -450,6 +463,10 @@ def create_public_app(
     )
     from .terminology import register_terminology_routes
     register_terminology_routes(app)
+    from .vocabulary_references import register_vocabulary_references
+    register_vocabulary_references(app)
+    from .vocabulary_catalogue import register_vocabulary_catalogue
+    register_vocabulary_catalogue(app, repo)
 
     @app.before_request
     def validate_map_filters():
@@ -465,7 +482,9 @@ def create_public_app(
             return jsonify({"error": "invalid_temperament_scope"}), 400
         return None
 
-    @lru_cache(maxsize=1_024)
+    from .public_query_cache import BoundedQueryCache
+    map_tile_cache = BoundedQueryCache(max_entries=256, max_bytes=16 * 1024 * 1024, ttl=60)
+
     def cached_public_map_tile(
         zoom: int,
         tile_x: int,
@@ -473,6 +492,11 @@ def create_public_app(
         coordinate_scope: str,
         catalog_filters: tuple[tuple[str, str | None], ...],
     ) -> bytes:
+        binding = repo.snapshot_binding() if hasattr(repo, "snapshot_binding") else {}
+        key = json.dumps([binding, zoom, tile_x, tile_y, coordinate_scope, catalog_filters], sort_keys=True)
+        cached = map_tile_cache.get(key)
+        if cached is not None:
+            return cached
         bounds = public_map_tile_bounds(zoom, tile_x, tile_y)
         rows = repo.public_map_tile_features(
             zoom=zoom,
@@ -481,7 +505,9 @@ def create_public_app(
             coordinate_scope=coordinate_scope,
             **dict(catalog_filters),
         )
-        return encode_public_map_tile(rows, bounds=bounds)
+        body = encode_public_map_tile(rows, bounds=bounds)
+        map_tile_cache.put(key, body)
+        return body
 
     @app.after_request
     def public_headers(response: Response) -> Response:
@@ -490,7 +516,9 @@ def create_public_app(
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         if request.path.startswith("/api/"):
             response.headers.setdefault("Cache-Control", "public, max-age=300")
-        if request.path.startswith("/api/health/") or response.status_code >= 400:
+        if (request.path.startswith("/api/health/")
+                or request.path in {"/api/release-context", "/api/status"}
+                or response.status_code >= 400):
             response.headers["Cache-Control"] = "no-store"
         if (
             request.method == "GET"
@@ -517,12 +545,12 @@ def create_public_app(
 
     @app.get("/api/health/ready")
     def ready():
-        try:
-            repo.ping()
-        except Exception:
-            app.logger.warning("Public database readiness probe failed")
-            return jsonify({"ok": False, "error": "database_unavailable", "dataProfile": PROFILE}), 503
-        return jsonify(readiness)
+        current = capability_health.document()
+        return jsonify(current), 200 if current["ok"] else 503
+
+    @app.get("/api/health/capabilities")
+    def capability_status():
+        return jsonify(capability_health.document())
 
     @app.get("/api/status")
     def status():
@@ -549,6 +577,7 @@ def create_public_app(
             "/use-cases",
             "/applications",
             "/about/release",
+            "/about/api",
         )
         urls = "\n".join(
             f"  <url><loc>{xml_escape(base_url + path)}</loc></url>"
@@ -580,7 +609,16 @@ def create_public_app(
 
     @app.get("/api/entities/search")
     def entity_search():
-        return jsonify(repo.entity_search(query=request.args.get("q") or "", limit=_bounded(request.args.get("limit"), 12, 1, 50)))
+        from .public_discovery import validate_discovery_query
+        try:
+            query, limit, kinds = validate_discovery_query(request.args)
+        except ValueError as error:
+            return jsonify({"error": "invalid_discovery_query", "message": str(error)}), 400
+        return jsonify(repo.entity_search(query=query, limit=limit, kinds=kinds))
+
+    @app.get("/api/discovery/context")
+    def discovery_context():
+        return jsonify(repo.discovery_context())
 
     @app.get("/api/organs")
     def organ_list():
@@ -758,6 +796,20 @@ def create_public_app(
         response.headers["Content-Disposition"] = f'inline; filename="modavis-source-{hashlib.sha256(identifier.encode()).hexdigest()[:12]}.json"'
         return response
 
+    @app.get("/api/exports/<kind>/<path:identifier>/evidence")
+    def entity_evidence_coverage(kind: str, identifier: str):
+        from .evidence_coverage import field_evidence_coverage
+        record = export_record(repo, kind, identifier)
+        if record is None:
+            return jsonify({"error": "entity_not_found"}), 404
+        try:
+            result = field_evidence_coverage(record, release_version=repo.policy.release_version)
+        except ValueError:
+            return jsonify({"error": "evidence_coverage_budget_exceeded"}), 413
+        response = jsonify(result)
+        response.set_etag(hashlib.sha256(response.get_data()).hexdigest())
+        return response.make_conditional(request)
+
     @app.get("/api/exports/<kind>/<path:identifier>/sources")
     def entity_source_exports(kind: str, identifier: str):
         if kind not in {"organ", "person", "organization", "place", "virtual_instrument", "name"}:
@@ -919,6 +971,19 @@ def create_public_app(
 
     @app.get("/api/temperaments")
     def tuning_system_list():
+        sort = request.args.get("sort", "catalogue")
+        if sort not in {"catalogue", "occurrences_desc", "occurrences_asc"}:
+            return jsonify({"error": "invalid_temperament_sort"}), 400
+        occurrence_scope = request.args.get("occurrence_scope", "all")
+        if occurrence_scope not in {"all", "exact", "family"}:
+            return jsonify({"error": "invalid_occurrence_scope"}), 400
+        try:
+            minimum = bounded_integer(request.args, "min_occurrences", None, 0, 1_000_000)
+            maximum = bounded_integer(request.args, "max_occurrences", None, 0, 1_000_000)
+        except ValueError:
+            return jsonify({"error": "invalid_occurrence_range"}), 400
+        if minimum is not None and maximum is not None and minimum > maximum:
+            return jsonify({"error": "invalid_occurrence_range"}), 400
         return jsonify(repo.list_tuning_systems(
             mode="surface",
             limit=_bounded(request.args.get("limit"), 40),
@@ -929,14 +994,22 @@ def create_public_app(
             commentary_available=_optional_bool(request.args.get("commentary_available")),
             commentary_query=request.args.get("commentary_q") or None,
             query_scope=request.args.get("scope") or None,
+            sort=sort,
+            occurrence_scope=occurrence_scope,
+            min_occurrences=minimum,
+            max_occurrences=maximum,
         ))
 
     @app.get("/api/temperaments/<path:tuning_id>/organs")
     def tuning_system_organs(tuning_id: str):
+        scope = request.args.get("scope", "all")
+        if scope not in {"all", "exact", "family"}:
+            return jsonify({"error": "invalid_occurrence_scope"}), 400
         data = repo.list_organs_for_tuning_system(
             tuning_id,
             limit=_bounded(request.args.get("limit"), 200, 1, 500),
             offset=_bounded(request.args.get("offset"), 0, 0, 100_000),
+            scope=scope,
         )
         return (jsonify({"mode": "surface", "organs": data}), 200) if data else (jsonify({"error": "tuning_system_not_found"}), 404)
 
@@ -968,48 +1041,83 @@ def create_public_app(
         return (jsonify({"virtualInstrument": item}), 200) if item else (jsonify({"error": "virtual_instrument_not_found"}), 404)
 
     @app.get("/api/vocab/schemes")
+    @vocabulary_endpoint
     def vocabulary_schemes():
+        query_arguments(request.args, set())
         return jsonify(repo.public_vocabulary_schemes())
 
     @app.get("/api/vocab/releases")
+    @vocabulary_endpoint
     def vocabulary_releases():
+        values = query_arguments(request.args, {'limit','offset'})
+        bounded_integer(values, 'limit', 30, 1, 500)
+        bounded_integer(values, 'offset', 0, 0, 100000)
         return jsonify({"items": [], "total": 0, "scope": "Vocabulary concepts bundled with POD; no separate formal vocabulary release is included."})
 
     @app.get("/api/vocab/overview")
+    @vocabulary_endpoint
     def vocabulary_overview():
+        query_arguments(request.args, set())
         schemes = repo.public_vocabulary_schemes()["items"]
         return jsonify({"counts": {"schemes": sum(s.get('recordKind') == 'governed_scheme' for s in schemes), "concepts": sum(s["conceptCount"] for s in schemes), "schemaCategories": sum(s.get('categoryCount', 0) for s in schemes)}, "schemes": schemes})
 
     @app.get("/api/vocab/concepts")
+    @vocabulary_endpoint
     def vocabulary_concepts():
-        return jsonify(repo.public_vocabulary_concepts(scheme=request.args.get("scheme_code"), query=request.args.get("q", ""), limit=_bounded(request.args.get("limit"), 200, 1, 500), offset=_bounded(request.args.get("offset"), 0, 0, 100_000)))
+        values = query_arguments(request.args, {'scheme_code','q','language','limit','offset','snapshot'}, pins={'snapshot'})
+        if 'scheme_code' in values and values['scheme_code'] not in {item['code'] for item in repo.public_vocabulary_schemes()['items']}:
+            raise LookupError('Vocabulary scheme is unavailable')
+        pinned = repo.public_vocabulary_snapshot(values['scheme_code']) if values.get('scheme_code') else None
+        if 'snapshot' in values and pinned is None:
+            raise ValueError('Choose a controlled vocabulary scheme before binding its snapshot')
+        if pinned:
+            require_snapshot(values, pinned['contentSha256'])
+        result = repo.public_vocabulary_concepts(scheme=values.get('scheme_code'), query=values.get('q', ''),
+            language=values.get('language'), limit=bounded_integer(values, 'limit', 200, 1, 500), offset=bounded_integer(values, 'offset', 0, 0, 100000))
+        return jsonify({**result, 'contentSha256': pinned['contentSha256'] if pinned else None})
 
     @app.get("/api/vocab/concepts/<path:identifier>")
+    @vocabulary_endpoint
     def vocabulary_concept(identifier):
-        concept = repo.public_vocabulary_concept(identifier, scheme=request.args.get("scheme_code"))
-        return (jsonify({"concept": concept}), 200) if concept else (jsonify({"error": "concept_not_found"}), 404)
+        values = query_arguments(request.args, {'scheme_code','snapshot'}, pins={'snapshot'})
+        concept = repo.public_vocabulary_concept(identifier, scheme=values.get('scheme_code'))
+        if concept is None:
+            raise LookupError('Vocabulary concept is unavailable')
+        pinned = repo.public_vocabulary_snapshot(concept['scheme']['code'])
+        if 'snapshot' in values and pinned is None:
+            raise ValueError('Schema categories have no controlled vocabulary snapshot')
+        if pinned:
+            require_snapshot(values, pinned['contentSha256'])
+        return jsonify({'concept': concept, 'contentSha256': pinned['contentSha256'] if pinned else None})
 
     @app.get("/api/vocab/source-terms/<path:identifier>")
+    @vocabulary_endpoint
     def vocabulary_source_term(identifier):
+        query_arguments(request.args, set())
         value = repo.public_vocabulary_source_term(identifier)
         return (jsonify({"sourceTerm": value}), 200) if value else (jsonify({"error": "source_term_not_in_public_snapshot"}), 404)
 
     @app.get("/api/vocab/snapshots/<scheme>")
+    @vocabulary_endpoint
     def vocabulary_snapshot(scheme):
+        values = query_arguments(request.args, {'snapshot'}, pins={'snapshot'})
         value = repo.public_vocabulary_snapshot(scheme)
-        return jsonify(value) if value else (jsonify({"error": "snapshot_not_found"}), 404)
+        if value is None:
+            raise LookupError('Vocabulary snapshot is unavailable')
+        require_snapshot(values, value['contentSha256'])
+        return byte_response(json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2)+'\n', 'application/json', content_sha256=value['contentSha256'])
 
     @app.get("/api/vocab/snapshots/<scheme>.<format>")
+    @vocabulary_endpoint
     def vocabulary_snapshot_download(scheme, format):
         from .public_vocabulary import serialize
+        values = query_arguments(request.args, {'snapshot'}, pins={'snapshot'})
         value = repo.public_vocabulary_snapshot(scheme)
         if value is None or format not in {'json', 'jsonld', 'ttl', 'skos', 'csv'}:
             return jsonify({"error": "snapshot_format_not_found"}), 404
+        require_snapshot(values, value['contentSha256'])
         body, media_type = serialize(value, format, repo.policy.canonical_id_base)
-        response = Response(body, content_type=media_type)
-        response.headers['Content-Disposition'] = f'attachment; filename="{scheme}-bundled.{format}"'
-        response.headers['X-Vocabulary-Content-SHA256'] = value['contentSha256']
-        return response
+        return byte_response(body, media_type, filename=f'{scheme}-bundled.{format}', content_sha256=value['contentSha256'])
 
     @app.get("/api/map/places.geojson")
     def map_places():

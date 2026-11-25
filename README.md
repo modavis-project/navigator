@@ -15,12 +15,16 @@ connection. POD data is distributed separately through Zenodo.
 
 ## Run locally
 
+For a small demonstration, follow the [synthetic fixture guide](docs/FIXTURE.md).
+It uses invented records and requires no full POD download.
+
 Requirements: Docker Engine/Desktop with Compose v2, Python 3.12 or later, 8 GB
 available RAM (16 GB recommended), and about 70 GB free for extracted data, the
 restored database and container builds, in addition to retained downloads.
 Linux and macOS are supported; Windows users can use WSL2.
 
-1. Clone this repository and check out `v1.0.0`.
+1. Clone this repository and record the commit with `git rev-parse HEAD`.
+   To reproduce the original software release, check out `v1.0.0`.
 2. Obtain the matching POD files and the Navigator resources attachment as described
    in [Installation](docs/INSTALLATION.md).
 3. Prepare a new runtime directory, then start the application:
@@ -37,10 +41,9 @@ Open **http://localhost:8080** after `docker compose ps` reports a healthy backe
 The first start restores the database and verifies research files; allow several
 minutes. An existing database volume is preserved on subsequent starts.
 
-The POD 1.6.0 Zenodo record is still awaiting completion/publication at the time
-of this software release. The installer already pins the exact expected files and
-checksums. It also accepts those same files supplied locally; it does not silently
-substitute an earlier dataset or claim an unpublished download is available.
+The [POD 1.6.0 archive](https://zenodo.org/records/22308263) supplies the data.
+The installer verifies the expected filenames and checksums and accepts the
+same files supplied locally.
 
 ## Included research features
 
@@ -50,6 +53,7 @@ substitute an earlier dataset or claim an unpublished download is available.
 - Stop, division and event searches with related organs and complete-selection downloads.
 - Builder networks, coverage comparisons and an evidence-based research workbench.
 - Maps, contextual help, accessible disclosures and responsive record views.
+- [Public REST and GraphQL reference](frontend/public/navigator-api.md).
 
 Current POD content can run locally without the live Navigator. External source
 media, external authority pages and geographic basemaps retain their own delivery
@@ -64,5 +68,5 @@ using [CITATION.cff](CITATION.cff), and cite the exact POD version separately wh
 reporting results. Original sources and independent vocabularies retain their
 attribution and rights; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-The repository currently remains private, with rights reserved for original
-application code. Third-party resources retain their own licenses.
+Original application code is subject to the repository [LICENSE](LICENSE).
+Third-party resources retain their own licenses.

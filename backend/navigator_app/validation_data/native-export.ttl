@@ -1,0 +1,17 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix core: <https://w3id.org/modavis/ontology/core#> .
+@prefix check: <https://navigator.modavis.org/profile/native-export-check/v1#> .
+check:ExportRoot a sh:NodeShape ;
+  sh:targetSubjectsOf dct:isPartOf ;
+  sh:nodeKind sh:IRI ;
+  sh:property [ sh:path core:mdvsIdentifier ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ] ;
+  sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:minLength 1 ] ;
+  sh:property [ sh:path dct:isPartOf ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+check:LegacyName a sh:NodeShape ;
+  sh:targetClass core:Name ;
+  sh:property [ sh:path core:nameValue ; sh:minCount 1 ; sh:maxCount 1 ; sh:minLength 1 ;
+    sh:or ( [ sh:datatype xsd:string ] [ sh:datatype rdf:langString ] ) ] .

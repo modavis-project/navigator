@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ActorCollectionPage, CanonicalActorDetail, fetchActorCollection } from "./api";
+import { useUiLocale } from "./uiLocale";
 
 /** Cancel stale requests and never show a previous query's page as the current result. */
 export function useActorCollection<T>(url: string | undefined, query: string, page: number) {
@@ -26,6 +27,7 @@ export function useActorCollection<T>(url: string | undefined, query: string, pa
 
 export function ActorRelationshipPages({ actor }: { actor: CanonicalActorDetail }) {
   type Relationship = NonNullable<CanonicalActorDetail["relationships"]>[number];
+  const { formatNumber } = useUiLocale();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
@@ -34,7 +36,7 @@ export function ActorRelationshipPages({ actor }: { actor: CanonicalActorDetail 
   );
   const total = actor.publicProfile?.relationshipCount ?? 0;
   return <details className="actor-compact-details" onToggle={(event) => setOpen(event.currentTarget.open)}>
-    <summary>Builder of · {total} connected {total === 1 ? "organ" : "organs"}</summary>
+    <summary>Builder of · {formatNumber(total)} connected {total === 1 ? "organ" : "organs"}</summary>
     {open && <>
       <label className="actor-mention-search"><span>Search related entities</span>
         <div><input value={query} maxLength={200} onChange={(event) => { setQuery(event.target.value); setPage(0); }} placeholder="Organ name or identifier" /></div>
@@ -42,7 +44,7 @@ export function ActorRelationshipPages({ actor }: { actor: CanonicalActorDetail 
       {loading && <p role="status">Loading relationships…</p>}
       {error && <p role="alert">{error} <button type="button" className="secondary" onClick={retry}>Retry relationships</button></p>}
       {data && <>
-        <p role="status">{data.total} of {total} connected organs{data.total > 0 && ` · Showing ${data.offset + 1}–${data.offset + data.items.length}`}</p>
+        <p role="status">{formatNumber(data.total)} of {formatNumber(total)} connected {total === 1 ? "organ" : "organs"}{data.total > 0 && ` · Showing ${formatNumber(data.offset + 1)}–${formatNumber(data.offset + data.items.length)}`}</p>
         <nav className="catalog-pagination" aria-label="Relationship pages">
           <button type="button" className="secondary" disabled={page === 0} onClick={() => setPage(page - 1)}>Previous relationships</button>{" "}
           <button type="button" className="secondary" disabled={!data.hasMore} onClick={() => setPage(page + 1)}>Next relationships</button>

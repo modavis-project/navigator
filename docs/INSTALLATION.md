@@ -1,14 +1,13 @@
 # Installation
 
-Use the `v1.0.0` tag, not an unpinned branch, for a reproducible installation.
-The application expects PostgreSQL 15 and the files listed in
+Record the application commit for a reproducible installation. Use the
+`v1.0.0` tag to reproduce the original software release. The application expects PostgreSQL 15 and the files listed in
 `releases/pod-1.6.0.json`. Neither a small SQLite convenience profile nor the
 semantic exports alone can replace the public PostgreSQL projection.
 
 ## Download inputs
 
-The reserved POD record is `10.5281/zenodo.22308263`. Publication remains pending.
-Once available, download and verify the exact files with:
+Download and verify the exact files from the [POD 1.6.0 archive](https://zenodo.org/records/22308263).
 
 ```bash
 python3 scripts/download_pod.py --output downloads/pod-1.6.0

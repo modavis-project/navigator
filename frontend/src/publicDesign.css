@@ -1,0 +1,187 @@
+/* Public navigation and discovery: controls first, source context close at hand. */
+:root {
+  --nav-ink: #1f3931;
+  --nav-muted: #5c6c63;
+  --nav-accent: #245b49;
+  --nav-line: #d8dfd5;
+  --nav-paper: #fffefa;
+  --nav-wash: #f5f5ef;
+}
+.public-shell .entity-workspace { grid-template-columns: minmax(0,1fr); gap: 22px; padding-bottom: 106px; }
+.public-shell .entity-workspace a { color: var(--nav-accent); text-underline-offset: .2em; }
+.public-shell .entity-workspace a:hover { color: #153d2e; }
+.public-shell .entity-workspace :focus-visible { outline: 3px solid #a58236; outline-offset: 3px; }
+.public-shell .entity-sidebar .brand-name { display: block; font-size: 1.65rem; font-weight: 650; letter-spacing: -.04em; line-height: 1.2; }
+.public-shell .entity-sidebar .brand-block { gap: 12px; padding-bottom: 6px; }
+.public-shell .entity-sidebar .alpha-badge { background: transparent; border: 0; padding: 0; margin-top: 6px; color: #bbd0c0; font-size: .66rem; font-weight: 500; }
+.public-shell .entity-sidebar .nav-list a { min-height: 42px; border-radius: 7px; padding: 9px 11px; font-size: .84rem; color: #dce6dd; }
+.public-shell .entity-sidebar .nav-list a:hover { background: #ffffff0c; border-color: #ffffff18; color: white; }
+.public-shell .entity-sidebar .nav-list a.active { background: #e6eedf; border-color: #e6eedf; color: #1b4232; font-weight: 650; }
+.public-shell .entity-sidebar .nav-group { border-top: 1px solid #ffffff16; padding-top: 13px; }
+.public-shell .entity-sidebar .nav-group summary { color: #abc4b5; font-size: .66rem; letter-spacing: .12em; padding: 5px 10px 8px; }
+.public-shell .entity-sidebar .status-panel { color: #afc5b7; font-size: .73rem; }
+.public-shell .entity-sidebar .status-panel h2 { color: #dce6dd; font-size: .75rem; }
+.public-shell .public-page-toolbar { min-height: 54px; padding: 6px 0 14px; gap: 12px; }
+.public-shell .public-page-toolbar nav { flex: 1; }
+.ui-language-selector { display: inline-flex; flex: 0 0 auto; gap: 2px; padding: 2px; border: 1px solid #d7ded6; border-radius: 7px; }
+.ui-language-selector button { min-height: 30px; padding: 3px 7px; border: 0; border-radius: 4px; background: transparent; color: #315345; font: inherit; font-size: .73rem; font-weight: 700; }
+.ui-language-selector button[aria-pressed=true] { background: #e0ede5; color: #183e31; }
+.ui-language-selector button:focus-visible { outline: 2px solid #316456; outline-offset: 1px; }
+.ui-language-preview { margin: 0 0 12px; padding: 6px 9px; border-inline-start: 2px solid #719482; color: #435f52; font-size: .8rem; }
+@media(max-width: 560px) {
+  .public-shell .public-page-toolbar { flex-wrap: wrap; }
+  .public-shell .public-page-actions { flex-wrap: wrap; justify-content: flex-end; }
+}
+.public-shell .dataset-version { white-space: nowrap; padding: 5px 9px; border: 1px solid var(--nav-line); border-radius: 5px; font-size: .68rem; }
+.public-shell .workspace-open { min-height: 38px; font-size: .76rem; background: #edf2e8; border-color: #ced9c7; }
+.public-shell .discovery-masthead { display: flex; align-items: flex-start; justify-content: space-between; gap: 26px; border: 0; border-radius: 0; background: none; padding: 10px 0 4px; margin: 0; overflow: visible; }
+.public-shell .discovery-masthead > div:first-child { display: block; }
+.public-shell .discovery-masthead .alpha-release-label { background: none; border: 0; padding: 0; color: #647359; font-size: .65rem; letter-spacing: .13em; font-weight: 650; }
+.public-shell .discovery-masthead h1 { font: 400 clamp(2.2rem, 3.5vw, 3.4rem)/1.12 Georgia, 'Times New Roman', serif; letter-spacing: -.035em; color: var(--nav-ink); margin: 12px 0 14px; max-width: 29ch; }
+.public-shell .discovery-title-break { display: none; }
+.public-shell .discovery-masthead p { font-size: .94rem; line-height: 1.65; max-width: 60ch; margin: 0; color: var(--nav-muted); }
+.public-shell .alpha-welcome-actions { display: flex; flex-direction: column; flex-shrink: 0; align-items: flex-start; gap: 14px; padding-top: 31px; }
+.public-shell .alpha-welcome-actions a { display: inline-flex; align-items: center; gap: 8px; font-size: .8rem; text-decoration: none; white-space: nowrap; min-height: 32px; }
+.public-shell .alpha-welcome-actions a:first-child { font-weight: 650; }
+.public-shell .alpha-welcome-actions a:hover { text-decoration: underline; }
+.public-shell .discovery-search { margin: 24px 0 0; }
+.public-shell .discovery-search .search-field { display: flex; height: auto; min-height: 62px; gap: 12px; padding: 7px 8px 7px 19px; border: 1px solid #9cb19b; border-radius: 10px; margin: 0; box-shadow: 0 3px 8px #243f2d07; background: white; }
+.public-shell .discovery-search .search-field > svg { flex: 0 0 auto; color: #6a816c; }
+.public-shell .discovery-search input { flex: 1; width: 100%; min-width: 0; font-size: 1rem; min-height: 42px; }
+.public-shell .discovery-search input:focus-visible { outline: 0; }
+.public-shell .discovery-search .search-field:focus-within { outline: 3px solid #a58236; outline-offset: 3px; box-shadow: none; }
+.public-shell .discovery-search button { min-height: 44px; border-radius: 7px; font: inherit; font-size: .82rem; cursor: pointer; flex-shrink: 0; }
+.public-shell .discovery-submit { padding: 10px 20px; border: 1px solid #285740; background: #285740; color: white; font-weight: 650; }
+.public-shell .discovery-submit:hover { background: #173f2d; }
+.public-shell .discovery-clear { padding: 8px; background: transparent; border: 0; color: #667469; }
+.public-shell .discovery-search-hint { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: var(--nav-muted); font-size: .75rem; line-height: 1.5; margin: 10px 0 0; }
+.public-shell .discovery-search-hint a { display: inline-flex; align-items: center; gap: 3px; text-decoration: none; font-weight: 600; }
+.public-shell .discovery-dataset-metrics { display: flex; align-items: stretch; gap: 0; margin: 20px 0 22px; padding-block: 13px; border-block: 1px solid var(--nav-line); }
+.public-shell .discovery-dataset-metrics > .metric { display: flex; flex-direction: column; gap: 3px; flex: 1; background: none; border: 0; border-right: 1px solid var(--nav-line); border-radius: 0; padding: 0 20px; }
+.public-shell .discovery-dataset-metrics > .metric:first-child { padding-left: 0; }
+.public-shell .discovery-dataset-metrics > .metric:last-child { border-right: 0; }
+.public-shell .discovery-dataset-metrics strong { font-size: 1.3rem; font-weight: 600; }
+.public-shell .discovery-dataset-metrics span { font-size: .74rem; line-height: 1.4; }
+.public-shell .search-handoff-actions { display: flex; justify-content: flex-end; margin: -9px 0 14px; }
+.public-shell .search-handoff-actions a { display: inline-flex; align-items: center; gap: 5px; padding: 5px 0; border: 0; background: none; font-size: .75rem; }
+.public-shell .entity-search-panel { background: var(--nav-paper); padding: 22px; border-radius: 12px; }
+.public-shell .entity-search-panel > .section-heading { margin: 0 0 20px; padding-bottom: 13px; border-bottom: 1px solid var(--nav-line); }
+.public-shell .entity-search-panel > .section-heading h3 { font-size: 1.15rem; }
+.public-shell .entity-search-panel > .section-heading > span { font-size: .8rem; font-variant-numeric: tabular-nums; color: var(--nav-muted); }
+.public-shell .entity-search-list { display: grid; grid-template-columns: 1fr; gap: 24px; }
+.public-shell .entity-search-group { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; border: 0; padding: 0; background: none; }
+.public-shell .entity-search-group-head { grid-column: 1/-1; display: flex; align-items: center; flex-wrap: wrap; gap: 7px 12px; padding: 0 0 4px; }
+.public-shell .entity-search-group-head > strong { color: #536c57; font-size: .66rem; letter-spacing: .09em; text-transform: uppercase; }
+.public-shell .entity-search-group-head > span { color: #68786a; font-size: .7rem; }
+.public-shell .search-group-continue { display: inline-flex; align-items: center; gap: 2px; margin-left: auto; font-size: .72rem; text-decoration: none; }
+.public-shell .entity-search-result { display: flex; position: relative; flex-direction: column; align-items: stretch; gap: 8px; text-align: left; min-width: 0; padding: 15px 27px 15px 15px; border: 1px solid #e0e5da; background: #fcfcf7; color: var(--nav-ink); text-decoration: none; border-radius: 8px; }
+.public-shell .entity-search-result:hover { background: #eff4e9; border-color: #b5c8ad; }
+.public-shell .entity-search-result > div:first-child { display: block; }
+.public-shell .entity-search-result > div:first-child strong { display: block; font-size: .88rem; line-height: 1.45; font-weight: 650; }
+.public-shell .entity-search-result > div:first-child > span { display: inline-block; border: 0; border-radius: 0; background: none; padding: 0; font-size: .66rem; color: #6a7a6a; margin-top: 3px; }
+.public-shell .entity-search-result > svg { position: absolute; right: 8px; top: 17px; color: #759174; }
+.public-shell .entity-search-result p { font-size: .76rem; line-height: 1.55; margin: 0; color: var(--nav-muted); }
+.public-shell .entity-search-meta { font-size: .69rem; line-height: 1.4; gap: 6px; }
+.public-shell .entity-search-result .entity-search-meta .search-match-reason { border: 0; padding: 0; border-radius: 0; background: none; color: #547344; font-size: .69rem; font-weight: 500; }
+.public-shell .discovery-method { margin: 16px 0 22px; }
+.public-shell .discovery-method summary { min-height: 32px; padding-block: 6px; font-size: .76rem; }
+.public-shell .discovery-browse { margin: 20px 0 26px; padding-top: 18px; border-top: 1px solid var(--nav-line); }
+.public-shell .discovery-browse > summary { font-size: 1rem; font-weight: 650; cursor: pointer; padding: 0 0 15px; }
+.public-shell .discovery-browse > summary > span { display: inline-block; font-size: .74rem; font-weight: 400; color: var(--nav-muted); margin-left: 12px; }
+.public-shell .public-gateway-card { padding: 18px; border-radius: 10px; background: var(--nav-paper); border-color: var(--nav-line); }
+.public-shell .public-gateway-card header { align-items: flex-start; gap: 10px; }
+.public-shell .public-gateway-card header p { font-size: .79rem; line-height: 1.6; }
+.public-shell .public-gateway-icon { background: #edf2e6; width: 34px; height: 34px; }
+.public-shell .public-gateway-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.public-shell .public-gateway-chips :is(a,button) { border: 1px solid #d5dfce; border-radius: 5px; background: #f4f7ed; color: #4b6845; font: inherit; font-size: .69rem; padding: 6px 8px; text-decoration: none; min-height: 32px; }
+.public-shell .gateway-action { display: inline-flex; align-items: center; gap: 5px; font-size: .8rem; text-decoration: none; font-weight: 600; margin-top: auto; padding-top: 12px; }
+.public-shell .secondary-gateways { margin-top: 12px; }
+.public-shell .organ-page.public-mode { border-radius: 12px; overflow: visible; }
+.public-shell .organ-page.public-mode .organ-hero { background: var(--nav-paper); border-radius: 12px 12px 0 0; padding: 26px; }
+.public-shell .organ-page.public-mode .organ-hero :is(h1,h2) { margin: 0 0 12px; font-family: Georgia,'Times New Roman',serif; font-weight: 400; font-size: clamp(1.8rem,3vw,2.65rem); line-height: 1.15; }
+.public-shell .organ-page.public-mode .organ-hero-facts { margin-top: 20px; gap: 7px; }
+.public-shell .organ-page.public-mode .organ-hero-facts > span { background: transparent; border: 0; border-left: 2px solid #d9e1d0; border-radius: 0; padding: 2px 12px; font-size: .72rem; }
+.public-shell .organ-page.public-mode .organ-hero-facts > button { display: inline-flex; align-items: center; gap: 5px; min-height: 42px; padding: 9px 11px; font-size: .73rem; background: #f4f7ed; border-color: #d1ddc7; cursor: pointer; }
+.public-shell .organ-page.public-mode .organ-hero-facts > button:hover { background: #e6eedb; border-color: #9eb98c; }
+.public-shell .organ-page.public-mode .organ-hero-facts > button > svg:last-child { color: #6b8660; }
+.public-shell .organ-section-control { top: 60px; padding: 6px 10px; background: #fffefaf5; border-block: 1px solid #dbe3d4; box-shadow: 0 4px 8px #27422d06; }
+.public-shell .organ-section-control .tab-strip { display: flex; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; gap: 3px; padding: 0 0 3px; }
+.public-shell .organ-section-control .tab-strip button { flex: 0 0 auto; white-space: nowrap; min-height: 44px; font-size: .81rem; padding: 10px 13px; }
+.public-shell :is([id^=organ-tab-],#discovery-results) { scroll-margin-top: 146px; }
+.public-shell .organ-hero-relation-link .pill { border: 0; background: none; font-size: .8rem; padding-inline: 0; font-weight: 400; }
+.public-shell .organ-hero-relation-link .pill:hover { text-decoration: underline; }
+.public-shell .organ-record-actions { margin-top: 4px; }
+.public-shell .organ-record-actions button { min-height: 42px; font-size: .77rem; }
+.public-shell .organ-record-actions > button:nth-child(2) { background: #e9f0e0; border-color: #b3c8a4; }
+.public-shell .organ-landing-card { padding: 22px; border-radius: 10px; }
+.public-shell .landing-description-periods { gap: 5px; }
+.public-shell .public-record-header h1 { font: 400 clamp(1.9rem,3vw,2.6rem)/1.15 Georgia,serif; letter-spacing: -.025em; }
+@media(min-width:1121px) {
+  .public-shell .entity-workspace { padding-top: 0; }
+  .public-shell .public-page-toolbar { position: sticky; top: 0; z-index: 40; min-height: 60px; padding: 10px 0; box-sizing: border-box; background: #f5f5eff5; }
+  .public-shell .entity-sidebar { position: sticky; top: 0; height: 100dvh; overflow-y: auto; padding: 32px 15px 22px; gap: 21px; }
+  .public-shell.sidebar-collapsed .entity-sidebar { padding: 55px 8px 16px; }
+}
+@media(max-width:1120px) {
+  .public-shell .public-page-toolbar .workspace-open { display: none; }
+  .public-shell .public-page-toolbar { min-height: 42px; padding-bottom: 12px; }
+  .public-shell .organ-section-control { top: 68px; }
+  .public-shell .discovery-masthead { gap: 16px; }
+  .public-shell .alpha-welcome-actions { padding-top: 25px; }
+}
+@media(max-width:760px) {
+  .public-shell .discovery-masthead { flex-direction: column; gap: 0; padding-top: 0; }
+  .public-shell .discovery-masthead h1 { font-size: clamp(2rem,5.4vw,2.8rem); margin-bottom: 10px; }
+  .public-shell .alpha-welcome-actions { flex-direction: row; padding-top: 12px; gap: 20px; }
+  .public-shell .discovery-search { margin-top: 18px; }
+  .public-shell .entity-search-group { grid-template-columns: 1fr; }
+  .public-shell .entity-search-panel { padding: 16px; }
+  .public-shell .discovery-dataset-metrics > .metric { padding-inline: 12px; }
+  .public-shell .discovery-dataset-metrics span { font-size: .71rem; }
+  .public-shell .organ-page.public-mode .organ-hero { padding: 20px 16px; }
+}
+@media(max-width:480px) {
+  .public-shell .entity-workspace { padding-inline: 15px; gap: 17px; }
+  .public-shell .public-page-toolbar { gap: 5px; }
+  .public-shell .public-page-toolbar nav { font-size: .7rem; }
+  .public-shell .dataset-version { font-size: .63rem; padding: 4px 6px; }
+  .public-shell .discovery-title-break { display: initial; }
+  .public-shell .discovery-masthead p { font-size: .84rem; }
+  .public-shell .discovery-search .search-field { padding: 6px 6px 6px 12px; gap: 7px; }
+  .public-shell .discovery-search input { font-size: .9rem; }
+  .public-shell .discovery-search button { font-size: .75rem; }
+  .public-shell .discovery-submit { padding-inline: 12px; }
+  .public-shell .discovery-clear { font-size: .68rem; }
+  .public-shell .discovery-dataset-metrics { gap: 9px; padding-block: 12px; }
+  .public-shell .discovery-dataset-metrics > .metric { padding-inline: 0; border-right: 0; }
+  .public-shell .discovery-dataset-metrics strong { font-size: 1.14rem; }
+  .public-shell .discovery-dataset-metrics span { font-size: .7rem; }
+  .public-shell .discovery-browse > summary > span { display: block; margin: 6px 0 0 15px; }
+  .public-shell .entity-search-panel > .section-heading { align-items: flex-start; gap: 5px; flex-direction: column; }
+  .public-shell .search-group-continue { margin-left: 0; }
+}
+@media(prefers-reduced-motion:no-preference) {
+  .public-shell .entity-search-result,.public-shell .discovery-submit { transition: background-color .15s ease,border-color .15s ease; }
+}
+
+.public-shell.sidebar-collapsed .entity-sidebar > .nav-list a { font-size: 0; justify-content: center; padding-inline: 8px; }
+
+.public-shell .discovery-dataset-metrics > .metric { min-height: 0; height: auto; }
+.public-shell .entity-search-group-head > span { border: 0; background: none; padding: 0; }
+
+.public-shell .section-head h1 { font: 400 clamp(1.9rem,3vw,2.6rem)/1.15 Georgia,serif; letter-spacing: -.03em; color: var(--nav-ink); margin: 5px 0 0; }
+.public-shell .search-record-id { color: #687c69; font: .65rem/1.4 ui-monospace,monospace; overflow-wrap: anywhere; }
+
+@media (max-width: 1120px) {
+  .public-shell .mobile-task-header { gap: 10px; }
+  .public-shell .mobile-task-heading { flex: 1; min-width: 0; }
+  .public-shell .mobile-task-header > .mobile-task-actions { display: flex; flex: 0 0 auto; gap: 6px; }
+  .public-shell .mobile-task-header strong {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: .9rem;
+    line-height: 1.3;
+  }
+}

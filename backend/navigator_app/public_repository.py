@@ -11,18 +11,19 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-import unicodedata
 from collections import Counter, defaultdict
 from collections.abc import Mapping
 from pathlib import Path
-from itertools import zip_longest
-from functools import lru_cache
+from functools import cached_property, lru_cache
 from threading import Lock
 from typing import Any
 from urllib.parse import quote
 
-from .temperament_lookup import search_temperaments
+from .temperament_evidence import merge_temperament_rows, summarize_temperament_assertions, temperament_assertion_kind
+from .temperament_lookup import TemperamentSearch, search_temperaments, temperament_wording_tokens
+from .temperament_occurrences import EXACT, FAMILY, OCCURRENCE_SCOPE_KINDS, TemperamentOccurrenceMatcher
 from . import public_specifications
+from .public_specification_comparisons import assertion_status, compare_technical_facts, coverage_summary
 from .public_catalog_context import PublicCatalogContext, catalogue_path
 from .config import Settings
 from .public_source_actors import PublicSourceActorsMixin
@@ -42,6 +43,12 @@ from .pipework import (
     merge_pipework_read_models,
 )
 from .uri_policy import UriPolicy
+from .fixture_contract import RELEASE as FIXTURE_RELEASE, validate_fixture
+from .public_query_cache import BoundedQueryCache, snapshot_cached
+from .public_query_identity import (
+    MAX_SEARCH_TEXT_LENGTH, SnapshotBindingChanged, literal_match_sql, literal_pattern,
+    literal_search_patterns, normalize_search_text, semantic_query_identity,
+)
 
 
 SCHEMA = "release_1_5_public"
@@ -55,6 +62,7 @@ RELEASE_CONTRACTS = {
     "1.5.4": ("1.5.4", "modavis.release-1.5-public-postgresql/v8"),
     "1.5.5": ("1.5.5", "modavis.release-1.5-public-postgresql/v8"),
     "1.6.0": ("1.6.0", "modavis.release-1.5-public-postgresql/v8"),
+    FIXTURE_RELEASE: (FIXTURE_RELEASE, "modavis.release-1.5-public-postgresql/v8"),
 }
 # POD 1.6 changes source assertions without minting or merging identities.
 # Its independently versioned identity input is the exact accepted public ledger.
@@ -90,6 +98,15 @@ def _organ_page_route(mdvs_id: Any) -> str:
     return f"/organs/{quote(token, safe='-._~')}"
 
 
+def _organ_place_page_route(place_mdvs_id: Any, assertion_id: Any, release_version: str) -> str | None:
+    if place_mdvs_id:
+        token = str(place_mdvs_id).removeprefix("MDVS:LOCN:")
+        return f"/places/{quote(token, safe='-._~')}"
+    if assertion_id and release_version not in {"1.5", "1.5.1"}:
+        return f"/places/{quote(str(assertion_id), safe='')}"
+    return None
+
+
 def _json(value: Any, fallback: Any) -> Any:
     if isinstance(value, (dict, list)):
         return value
@@ -123,48 +140,7 @@ def _public_literature_source_url(value: Any) -> str | None:
 
 
 def _temperament_match_key(value: Any) -> str:
-    text = unicodedata.normalize("NFKD", str(value or "").casefold())
-    text = text.replace("ß", "ss")
-    text = "".join(character for character in text if not unicodedata.combining(character))
-    return " ".join(re.findall(r"[a-z0-9]+", text))
-
-
-def _temperament_family_term(temperament: Mapping[str, Any]) -> str | None:
-    title = _first_text(
-        temperament.get("title"), temperament.get("label"), temperament.get("tuningId")
-    )
-    ignored = {
-        "temperament", "temperatur", "stimmung", "stufige", "genauer",
-        "nach", "fuer", "für", "eine", "einen",
-    }
-    for word in re.findall(r"[^\W\d_]+", title, flags=re.UNICODE):
-        key = _temperament_match_key(word)
-        if len(key) >= 4 and key not in ignored:
-            return word
-    return _first_text(temperament.get("label"), temperament.get("tuningId")) or None
-
-
-def _temperament_source_match_kind(
-    source_value: Any, temperament: Mapping[str, Any]
-) -> str | None:
-    source_key = _temperament_match_key(source_value)
-    if not source_key:
-        return None
-    exact_keys = {
-        _temperament_match_key(value)
-        for value in (
-            temperament.get("id"), temperament.get("tuningId"),
-            temperament.get("label"), temperament.get("title"),
-        )
-        if _first_text(value)
-    }
-    without_year = " ".join(
-        re.sub(r"\b(?:1[0-9]{3}|20[0-9]{2})\b", "", source_key).split()
-    )
-    if source_key in exact_keys or without_year in exact_keys:
-        return "exact_variant"
-    family_key = _temperament_match_key(_temperament_family_term(temperament))
-    return "family_wording" if family_key and family_key in source_key else None
+    return " ".join(word for word, _ in temperament_wording_tokens(value, normalize=False))
 
 
 def _date_claims(value: Any) -> list[dict[str, Any]]:
@@ -243,8 +219,48 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         self._literature_facets_cache_lock = Lock()
         self._tuning_system_cache: list[dict[str, Any]] | None = None
         self._tuning_system_cache_lock = Lock()
+        self._tuning_occurrence_cache: dict[str, dict[str, list[dict[str, Any]]]] | None = None
+        self._tuning_occurrence_cache_lock = Lock()
         self._score_facets_cache: dict[str, Any] | None = None
         self._score_facets_cache_lock = Lock()
+        self._public_query_cache = BoundedQueryCache()
+        self._snapshot_manifest_signature = None
+        self._snapshot_binding_cache = None
+
+    def snapshot_binding(self) -> dict[str, Any]:
+        """Public identities only; a manifest change requires a fresh runtime."""
+        path = getattr(self.settings, "public_database_manifest_path", None)
+        manifest = {}
+        manifest_sha = None
+        if path:
+            file = Path(path)
+            try:
+                stat = file.stat()
+                signature = (stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns)
+            except OSError as exc:
+                raise SnapshotBindingChanged("The selected public manifest is unavailable") from exc
+            previous = getattr(self, "_snapshot_manifest_signature", None)
+            if previous is not None and previous != signature:
+                raise SnapshotBindingChanged("The selected public manifest changed; restart against verified inputs")
+            cached = getattr(self, "_snapshot_binding_cache", None)
+            if cached is not None:
+                return dict(cached)
+            encoded = file.read_bytes()
+            manifest = json.loads(encoded)
+            manifest_sha = hashlib.sha256(encoded).hexdigest()
+            self._snapshot_manifest_signature = signature
+        metadata = getattr(self, "_metadata_cache", None) or {}
+        core_sha = (manifest.get("sourcePublicCore") or {}).get("sha256")
+        if core_sha and metadata.get("public_core_sqlite_sha256") and core_sha != metadata["public_core_sqlite_sha256"]:
+            raise SnapshotBindingChanged("The public manifest differs from the imported database snapshot")
+        binding = {"sourceReleaseVersion": self.source_release_version,
+                   "publicCoreSha256": core_sha or metadata.get("public_core_sqlite_sha256"),
+                   "publicManifestSha256": manifest_sha,
+                   "identifierLedgerSha256": getattr(self.settings, "identifier_ledger_sha256", None),
+                   "uriPolicyVersion": self.policy.policy_version}
+        if path:
+            self._snapshot_binding_cache = dict(binding)
+        return binding
 
     @property
     def source_release_version(self) -> str:
@@ -313,6 +329,13 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             failures.append("a separate source release requires URI policy v2")
         if expected != (self.source_release_version, contract):
             failures.append("database release, URI release, and PostgreSQL contract differ")
+        if self.source_release_version == FIXTURE_RELEASE:
+            try:
+                validate_fixture(self.settings, self.policy, metadata)
+                if not self._has_entity_exports():
+                    failures.append("Synthetic fixture requires existing entity export tables")
+            except (ValueError, KeyError, OSError) as exc:
+                failures.append(str(exc))
         expected_ledger = (self.settings.identifier_ledger_sha256 or "").lower()
         imported_ledger = (metadata.get("uri_ledger_sha256") or "").lower()
         if not expected_ledger or imported_ledger != expected_ledger:
@@ -343,7 +366,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                     failures.append("public database manifest ledger hash differs")
         if failures:
             raise RuntimeError("public release profile is not ready: " + "; ".join(failures))
-        if self.source_release_version in {"1.5.1", "1.5.2", "1.5.3", "1.5.4", "1.5.5", "1.6.0"}:
+        if self.source_release_version in {"1.5.1", "1.5.2", "1.5.3", "1.5.4", "1.5.5", "1.6.0", FIXTURE_RELEASE}:
             self.organ_facets()
         return {
             "ok": True,
@@ -386,7 +409,10 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
 
     def release_context(self) -> dict[str, Any]:
         active = self.policy.publication_state == "active"
+        fixture = (validate_fixture(self.settings, self.policy, self._metadata())
+                   if self.source_release_version == FIXTURE_RELEASE else None)
         return {
+            **({"fixture": fixture, "contentSha256": fixture["inputSha256"]} if fixture else {}),
             "releaseVersion": self.policy.release_version,
             "sourceReleaseVersion": self.source_release_version,
             "identityLedgerReleaseVersion": INHERITED_IDENTITY_LEDGER.get(
@@ -397,7 +423,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 else "public_reproducibility_projection"
             ),
             "publicationAuthorized": active,
-            "publicationLabel": "Public dataset" if active else "Prepared dataset",
+            "publicationLabel": "Synthetic demonstration fixture" if fixture else ("Public dataset" if active else "Prepared dataset"),
             "usageScope": "Structured public pipe-organ records",
             "readOnly": True,
             "guideUrl": "/about/release",
@@ -446,7 +472,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         return {
             "ok": True,
             "mdvsId": resolved.get("identityMdvsId") or resolved.get("mdvsId"),
-            "status": "published",
+            "status": "synthetic_fixture" if self.source_release_version == FIXTURE_RELEASE else "published",
             "publicationState": resolved.get("publicationState") or self.policy.publication_state,
             "publicationAuthorized": self.policy.publication_state == "active",
             "canonicalUri": resolved.get("canonicalUri"),
@@ -454,8 +480,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             "readOnly": True,
         }
 
-    @staticmethod
-    def _organ_card(row: Mapping[str, Any]) -> dict[str, Any]:
+    def _organ_card(self, row: Mapping[str, Any]) -> dict[str, Any]:
         coordinate = (
             {"lat": float(row["latitude"]), "lon": float(row["longitude"])}
             if row.get("latitude") is not None and row.get("longitude") is not None
@@ -479,9 +504,18 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             "catalogReference": mdvs_id,
             "catalogState": "linked",
             "canonicalProjectionAllowed": True,
-            "publicationAllowed": True,
+            "publicationAllowed": self.source_release_version != FIXTURE_RELEASE,
             "title": row.get("label") or mdvs_id,
-            "summary": f"Documented in {int(row.get('source_count') or 0)} source collection(s).",
+            "summary": (f"Documented in {row['source_collection_count']} source collection(s)."
+                        if row.get("source_collection_count") is not None else "Public organ record with retained source evidence."),
+            "sourceSummary": {"sourceRecords": row.get("source_record_count"), "collections": row.get("source_collection_count")},
+            "builderSummary": {
+                "label": builder, "actorId": row.get("builder_mdvs_id"),
+                "documentedActorCount": row.get("builder_count"), "assertionCount": row.get("builder_assertion_count"),
+                "selectionBasis": "most_documented_association", "role": None, "period": None,
+                "qualification": "Documented builder association; frequency does not establish the original or current builder.",
+                "claimsUrl": "/use-cases/research-workbench?view=claims&organ=" + quote(mdvs_id, safe=""),
+            },
             "location": place,
             "coordinates": coordinate,
             "locationReadiness": {
@@ -500,9 +534,12 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             "builderUrl": row.get("builder_url"),
             "placeMdvsId": row.get("place_mdvs_id"),
             "placeUrl": row.get("place_url"),
+            "placePageUrl": _organ_place_page_route(
+                row.get("place_mdvs_id"), row.get("place_assertion_id"), self.policy.release_version
+            ),
             "dateLabel": row.get("date_label"),
-            "status": "Published structured record",
-            "certainty": "Source-supported",
+            "status": "Synthetic demonstration record" if self.source_release_version == FIXTURE_RELEASE else "Published structured record",
+            "certainty": "Invented test evidence" if self.source_release_version == FIXTURE_RELEASE else "Source-supported",
             "sourceCount": int(row.get("source_count") or 0),
             "sourceLabel": row.get("source_text"),
             "mediaCount": int(row.get("media_count") or 0),
@@ -530,11 +567,13 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         return f"""
             select o.*,
                    p.preferred_label as place_label,
-                   p.place_mdvs_id, p.place_uri as place_url,
+                   p.place_mdvs_id, p.place_uri as place_url, p.assertion_id as place_assertion_id,
                    c.latitude, c.longitude, c.precision, c.coordinate_state,
                    c.marker_layer, c.coordinate_source,
                    b.actor_mdvs_id as builder_mdvs_id,
                    a.label as builder_label, a.canonical_uri as builder_uri,
+                   b.builder_count, b.builder_assertion_count,
+                   sources.source_record_count, sources.source_collection_count,
                    case when a.actor_type='organization'
                         then '/organizations/' || replace(a.mdvs_id, 'MDVS:ENTY:', '')
                         else '/people/' || replace(a.mdvs_id, 'MDVS:ENTY:', '') end as builder_url,
@@ -544,7 +583,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                    null::text as date_label
             from {organ_source}
             left join lateral (
-                select preferred_label, place_mdvs_id, place_uri
+                select preferred_label, place_mdvs_id, place_uri, assertion_id
                 from {SCHEMA}.place_assertion
                 where organ_mdvs_id=o.mdvs_id and temporal_scope='current'
                 order by (place_mdvs_id is not null) desc, assertion_id limit 1
@@ -558,11 +597,16 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                          source_organ_mdvs_id limit 1
             ) c on true
             left join lateral (
-                select actor_mdvs_id from {SCHEMA}.organ_builder
+                select actor_mdvs_id, count(*) over()::int as builder_count,
+                       sum(assertion_count) over()::int as builder_assertion_count from {SCHEMA}.organ_builder
                 where organ_mdvs_id=o.mdvs_id order by assertion_count desc, actor_mdvs_id limit 1
             ) b on true
             left join {SCHEMA}.actor a on a.mdvs_id=b.actor_mdvs_id
             left join {SCHEMA}.organ_search_document sd on sd.organ_mdvs_id=o.mdvs_id
+            left join lateral (
+                select count(*)::int as source_record_count, count(distinct source_key)::int as source_collection_count
+                from {SCHEMA}.source_membership where organ_mdvs_id=o.mdvs_id
+            ) sources on true
             {media_join}
             left join lateral (
                 select {self._stop_total_expression()} as stop_count, count(*) as stop_assertion_count from {SCHEMA}.technical_fact
@@ -597,8 +641,9 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                     )
                     params["builder_id"] = value.strip()
                     continue
-                search_clauses.append(f"sd.{column} ilike %({key})s")
-                params[key] = f"%{value.strip()}%"
+                patterns = literal_search_patterns(value, key) if key == "query" else {key: literal_pattern(value)}
+                search_clauses.append(literal_match_sql(f"sd.{column}", patterns))
+                params.update(patterns)
         if search_clauses:
             clauses.append(
                 f"exists(select 1 from {SCHEMA}.organ_search_document sd "
@@ -647,7 +692,60 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             clauses.append(exists if virtual_instrument == "yes" else f"not {exists}")
         return clauses, params
 
-    @lru_cache(maxsize=128)
+    def _organ_list_page_sql(self, where: str, sort_key: str, *, targeted_stop_sort: bool) -> str:
+        if targeted_stop_sort:
+            # Carry narrow keys through filtering and ranking. Fetch full organ
+            # records only for the page selected by the qualified stop totals.
+            candidate_sql = f"""
+                with matched_organs as materialized (
+                    select o.mdvs_id, o.label from {SCHEMA}.organ o {where}
+                ), stop_counts as (
+                    select f.organ_mdvs_id, {self._stop_total_expression()} as stop_count
+                    from {SCHEMA}.technical_fact f
+                    join matched_organs matched on matched.mdvs_id=f.organ_mdvs_id
+                    where f.family='stop_total'
+                    group by f.organ_mdvs_id
+                ), page as (
+                    select matched.mdvs_id, sc.stop_count, lower(matched.label) as sort_label
+                    from matched_organs matched
+                    left join stop_counts sc on sc.organ_mdvs_id=matched.mdvs_id
+                    order by sc.stop_count desc nulls last, sort_label, matched.mdvs_id
+                    limit %(limit)s offset %(offset)s
+                )
+                select o.* from page
+                join {SCHEMA}.organ o on o.mdvs_id=page.mdvs_id
+            """
+            return self._organ_select(candidate_sql) + " order by tf.stop_count desc nulls last, lower(o.label), o.mdvs_id"
+
+        candidate_prefix = ""
+        stop_count_join = ""
+        if sort_key == "stops":
+            candidate_prefix = f"""
+                with stop_counts as materialized (
+                    select organ_mdvs_id, {self._stop_total_expression()} as stop_count
+                    from {SCHEMA}.technical_fact
+                    where family='stop_total'
+                    group by organ_mdvs_id
+                )
+            """
+            stop_count_join = "left join stop_counts sc on sc.organ_mdvs_id=o.mdvs_id"
+            order = "sc.stop_count desc nulls last, lower(o.label), o.mdvs_id"
+        elif sort_key == "sources":
+            order = "o.source_count desc, lower(o.label), o.mdvs_id"
+        elif sort_key == "media":
+            order = f"(select count(*) from {SCHEMA}.public_media_reference media where media.organ_mdvs_id=o.mdvs_id) desc, lower(o.label), o.mdvs_id"
+        else:
+            order = "lower(o.label), o.mdvs_id"
+        return self._organ_select(f"""{candidate_prefix}
+            select o.*
+            from {SCHEMA}.organ o
+            {stop_count_join}
+            {where}
+            order by {order}
+            limit %(limit)s offset %(offset)s
+        """)
+
+    @snapshot_cached
     def list_organs(
         self,
         *,
@@ -678,51 +776,17 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         params.update(limit=limit, offset=offset)
         where = "where " + " and ".join(clauses) if clauses else ""
         sort_key = str(sort or "stops").strip().lower()
-        stop_count_join = ""
-        candidate_prefix = ""
-        if sort_key == "stops":
-            # Release 1.5 contains comparatively few asserted stop totals.  Aggregate
-            # that bounded subset once, rank the organ candidates, and only then run
-            # the richer lateral joins in ``_organ_select``.  This keeps the public
-            # default evidence-based without returning to the former all-row lateral
-            # enrichment plan.
-            candidate_prefix = f"""
-                with stop_counts as materialized (
-                    select organ_mdvs_id,
-                           {self._stop_total_expression()} as stop_count
-                    from {SCHEMA}.technical_fact
-                    where family='stop_total'
-                    group by organ_mdvs_id
-                )
-            """
-            stop_count_join = "left join stop_counts sc on sc.organ_mdvs_id=o.mdvs_id"
-            order = "sc.stop_count desc nulls last, lower(o.label), o.mdvs_id"
-        elif sort_key == "sources":
-            order = "o.source_count desc, lower(o.label), o.mdvs_id"
-        elif sort_key == "media":
-            order = f"(select count(*) from {SCHEMA}.public_media_reference media where media.organ_mdvs_id=o.mdvs_id) desc, lower(o.label), o.mdvs_id"
-        else:
-            order = "lower(o.label), o.mdvs_id"
-        candidate_sql = f"""{candidate_prefix}
-            select o.*
-            from {SCHEMA}.organ o
-            {stop_count_join}
-            {where}
-            order by {order}
-            limit %(limit)s offset %(offset)s
-        """
-        page_select = self._organ_select(candidate_sql)
         with connect(self.settings) as conn:
             total = conn.execute(
-                f"""select count(*)::int as count
-                    from {SCHEMA}.organ o
-                    {where}""",
-                params,
+                f"select count(*)::int as count from {SCHEMA}.organ o {where}", params,
             ).fetchone()["count"]
-            rows = conn.execute(
-                page_select,
-                params,
-            ).fetchall()
+            rows = []
+            if offset < total:
+                # A materialized candidate set pays off for narrow searches.
+                # Keep the existing set-wise plan for broad or unfiltered pages.
+                targeted_stop_sort = sort_key == "stops" and bool(clauses) and total <= 5_000
+                page_select = self._organ_list_page_sql(where, sort_key, targeted_stop_sort=targeted_stop_sort)
+                rows = conn.execute(page_select, params).fetchall()
         result = {
             "items": [self._organ_card(row) for row in rows],
             "total": total,
@@ -730,6 +794,14 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             "offset": offset,
             "filters": {"query": query or "", "source": source or "", "builder": builder or ""},
             "source": "release_1_5_public",
+            "countsScope": "matching_organ_records",
+            "queryIdentity": semantic_query_identity("/api/organs", {
+                "q": normalize_search_text(query), "source": (source or "").strip(),
+                "builder": normalize_search_text(builder), "location_state": location_state or "",
+                "media_state": media_state or "", "conflict_scope": conflict_scope or "",
+                "specification_state": specification_state or "", "event_type": event_type or "",
+                "virtual_instrument": virtual_instrument or "",
+            }, bindings=self.snapshot_binding(), method="modavis.literal-organ-selection/v3"),
         }
         if include_facets:
             result["facets"] = self.organ_facets()
@@ -835,21 +907,50 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             }
             return dict(self._organ_facets_cache)
 
+    @snapshot_cached
+    def global_counts(self) -> dict[str, int]:
+        media_count = (f"(SELECT count(distinct organ_mdvs_id) FROM {SCHEMA}.public_media_reference)"
+                       if self._has_entity_exports() else "0")
+        with connect(self.settings) as conn:
+            counts = conn.execute(
+                f"SELECT (SELECT count(*) FROM {SCHEMA}.organ) AS organs, "
+                f"(SELECT count(*) FROM {SCHEMA}.source_membership) AS source_records, "
+                f"{media_count} AS with_media, "
+                f"(SELECT count(distinct c.organ_mdvs_id) FROM {SCHEMA}.coordinate_assertion c "
+                f"JOIN {SCHEMA}.organ o ON o.mdvs_id=c.organ_mdvs_id "
+                "WHERE c.marker_layer IN ('current_exact','current_fallback') "
+                "AND c.latitude IS NOT NULL AND c.longitude IS NOT NULL) AS mapped"
+            ).fetchone()
+        return {"organs": int(counts["organs"]), "sourceEvidence": int(counts["source_records"]),
+                "withMedia": int(counts["with_media"]), "mapped": int(counts["mapped"])}
+
+    def discovery_context(self) -> dict[str, Any]:
+        from .public_discovery import KINDS, METHOD
+        return {"globalCounts": self.global_counts(), "globalCountsScope": "whole_dataset",
+                "countDefinitions": {"organs": "Canonical organ records", "sourceEvidence": "Source membership records; independence unestablished",
+                                     "withMedia": "Organ records with at least one public media reference",
+                                     "mapped": "Organ records with exact or approximate current coordinates"},
+                "snapshot": self.snapshot_binding(),
+                "search": {"method": METHOD, "kinds": list(KINDS), "literalText": True,
+                           "maxQueryLength": MAX_SEARCH_TEXT_LENGTH, "maxLimit": 50}}
+
+    @snapshot_cached
     def explore(self, *, query: str = "", limit: int = 8, **_: Any) -> dict[str, Any]:
         organs = self.list_organs(query=query or None, limit=limit, include_facets=False)
         mapped = self.list_organs(query=query or None, location_state="coordinates", limit=min(limit, 12))
-        with connect(self.settings) as conn:
-            source_count = conn.execute(
-                f"select count(*)::int as count from {SCHEMA}.source_membership"
-            ).fetchone()["count"]
+        context = self.discovery_context()
         return {
             "query": query,
             "counts": {
                 "organs": organs["total"],
-                "sourceEvidence": source_count,
+                "sourceEvidence": context["globalCounts"]["sourceEvidence"],
                 "unreviewedContributions": 0,
                 "georeferencingBacklog": 0,
             },
+            **context,
+            "countsScope": "matching_organ_records",
+            "countScopes": {"organs": "matching_organ_records", "sourceEvidence": "whole_dataset_source_membership_records",
+                            "unreviewedContributions": "not_applicable_public_profile", "georeferencingBacklog": "not_applicable_public_profile"},
             "featuredOrgans": organs["items"][:6],
             "recentOrgans": organs["items"],
             "mapItems": [
@@ -867,59 +968,10 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             ],
         }
 
-    def entity_search(self, *, query: str, limit: int = 12) -> dict[str, Any]:
-        limit = _bounded(limit, 12)
-        organs = self.list_organs(query=query, limit=limit, include_facets=False)["items"]
-        actors = self.list_persons(query=query, limit=limit)["items"]
-        organ_items = [
-            {
-                "kind": "canonical_organ",
-                "entityType": "organ",
-                "searchGroup": "organs",
-                "searchGroupLabel": "Pipe organs",
-                "targetId": item["mdvsId"],
-                "mdvsId": item["mdvsId"],
-                "title": item["title"],
-                "summary": item.get("summary"),
-                "url": item.get("pageUrl"),
-                "badges": ["Organ"],
-            }
-            for item in organs
-        ]
-        actor_items = [
-            {
-                "kind": "canonical_actor",
-                "entityType": item.get("entityClass") or "person",
-                "searchGroup": "people",
-                "searchGroupLabel": "People and builders",
-                "targetId": item.get("mdvsId"),
-                "mdvsId": item.get("mdvsId"),
-                "title": item["title"],
-                "summary": item.get("summary"),
-                "url": item.get("canonicalUrl"),
-                "badges": item.get("badges") or [],
-            }
-            for item in actors
-        ]
-        items = [item for pair in zip_longest(organ_items, actor_items) for item in pair if item]
-        normalized_query = query.strip().casefold()
-        items.sort(key=lambda item: (
-            str(item.get("mdvsId") or "").casefold() != normalized_query
-            and str(item.get("title") or "").casefold() != normalized_query
-        ))
-        items = items[:limit]
-        counts = Counter(item["searchGroup"] for item in items)
-        return {
-            "query": query,
-            "items": items,
-            "groups": [
-                {"id": key, "label": "Pipe organs" if key == "organs" else "People and builders", "count": count}
-                for key, count in counts.items()
-            ],
-            "total": len(items),
-            "limit": limit,
-            "counts": {"organs": counts["organs"], "events": 0, "candidateEntities": counts["people"], "vmiCandidates": 0},
-        }
+    @snapshot_cached
+    def entity_search(self, *, query: str, limit: int = 12, kinds=None) -> dict[str, Any]:
+        from .public_discovery import KINDS, search_entities
+        return search_entities(self, query=query, limit=limit, kinds=KINDS if kinds is None else kinds)
 
     def _resolve_organ_mdvs_id(self, organ_id: str) -> tuple[str, str | None] | None:
         value = str(organ_id or "").strip()
@@ -1023,12 +1075,8 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 "kind": "Place",
                 "relationship": row.get("relation_role") or row.get("temporal_scope") or "Documented place",
                 "entityCategory": "places",
-                "entityPageUrl": (
-                    f"/places/{quote(str(row['place_mdvs_id']).removeprefix('MDVS:LOCN:'), safe='-._~')}"
-                    if row.get("place_mdvs_id") else (
-                        f"/places/{quote(str(row['assertion_id']), safe='')}"
-                        if self.policy.release_version not in {"1.5", "1.5.1"} else None
-                    )
+                "entityPageUrl": _organ_place_page_route(
+                    row.get("place_mdvs_id"), row["assertion_id"], self.policy.release_version
                 ),
                 "publicationState": "canonical" if row.get("place_mdvs_id") else "structured_assertion",
             }
@@ -1053,7 +1101,10 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         citation = self.get_organ_citation(mdvs_id)
         related = [*builders, *places]
         primary_builder = builders[0] if builders else None
-        primary_place = next((item for item in places if item.get("relationship") == "current"), places[0] if places else None)
+        selected_place_id = row.get("place_mdvs_id") or row.get("place_assertion_id")
+        primary_place = next((item for item in places if item["id"] == selected_place_id), None)
+        if primary_place is None:
+            primary_place = next((item for item in places if item.get("relationship") == "current"), places[0] if places else None)
         if primary_builder:
             card.update(
                 builder=primary_builder["label"],
@@ -1066,6 +1117,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                           else row.get("place_label") or primary_place["label"]),
                 placeMdvsId=primary_place.get("mdvsId"),
                 placeUrl=primary_place.get("entityPageUrl"),
+                placePageUrl=primary_place.get("entityPageUrl"),
             )
         return {
             **card,
@@ -1178,8 +1230,11 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             return None
         source_hashes = [str(item["row_sha256"]) for item in hashes]
         digest = hashlib.sha256("\n".join(source_hashes).encode()).hexdigest()
-        metadata = self._metadata() if self.source_release_version in {"1.5.1", "1.5.2", "1.5.3", "1.5.4", "1.5.5", "1.6.0"} else {}
+        metadata = self._metadata() if self.source_release_version in {"1.5.1", "1.5.2", "1.5.3", "1.5.4", "1.5.5", "1.6.0", FIXTURE_RELEASE} else {}
         citation_version = self.source_release_version if metadata else "1.5"
+        dataset_label = ("MODAVIS Navigator synthetic demonstration fixture"
+                         if self.source_release_version == FIXTURE_RELEASE
+                         else "MODAVIS Pipe Organ Dataset (POD)")
         from datetime import date
         access_date = date.today().isoformat()
         def bib(value):
@@ -1191,7 +1246,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             "  title = {" + bib(row["label"]) + "},\n"
             "  year = {2026},\n"
             "  publisher = {MODAVIS},\n"
-            "  howpublished = {MODAVIS Pipe Organ Dataset (POD)},\n"
+            "  howpublished = {" + dataset_label + "},\n"
             "  version = {" + citation_version + "},\n"
             "  note = {Organ record " + bib(mdvs_id) + "; dataset version " + citation_version + "},\n"
             "  url = {" + str(row["canonical_uri"]) + "},\n"
@@ -1205,13 +1260,13 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             "apiUrl": f"/api/organs/{quote(mdvs_id, safe='')}/citation",
             "accessDate": access_date,
             "authors": [{"given": "Dominik", "family": "Ukolov"}, {"literal": "MODAVIS"}],
-            "dataset": {"title": "MODAVIS Pipe Organ Dataset (POD)", "version": citation_version, "url": self.policy.dataset_version_uri},
+            "dataset": {"title": dataset_label, "version": citation_version, "url": self.policy.dataset_version_uri},
             "bibtex": bibtex,
             "sourceHashes": source_hashes,
             "schemaVersions": [{"schemaKey": metadata.get("public_postgresql_contract", CONTRACT), "schemaVersion": metadata.get("initiator_schema_version", "2")}],
             "provenanceContext": {"dataProfile": PROFILE, "release": metadata.get("release_version", "1.5.0"), "rowSetSha256": digest},
             "versioning": {"status": "release_versioned", "currentProjectionStable": True, "versionedSnapshotsAvailable": True},
-            "recommendedCitation": f"Ukolov, Dominik; MODAVIS (2026). {row['label']}. In MODAVIS Pipe Organ Dataset (POD), version {citation_version}. {row['canonical_uri']} (accessed {access_date}).",
+            "recommendedCitation": f"Ukolov, Dominik; MODAVIS (2026). {row['label']}. In {dataset_label}, version {citation_version}. {row['canonical_uri']} (accessed {access_date}).",
         }
 
     def get_organ_sources_bundle(self, organ_id: str) -> dict[str, Any] | None:
@@ -1228,7 +1283,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         if not resolved:
             return []
         with connect(self.settings) as conn:
-            return public_specifications.index(conn, resolved[0], history=self._metadata().get("history_configuration_evidence_contract") == "modavis.history-configuration-evidence/v1")
+            return public_specifications.index(conn, resolved[0], history=self._metadata().get("history_configuration_evidence_contract") == "modavis.history-configuration-evidence/v1", quality=self._metadata().get("aggregate_quality_contract") == "modavis.aggregate-quality/v1")
 
     def get_organ_specification_description(self, organ_id: str, description_id: str) -> dict[str, Any] | None:
         if self._metadata().get("specification_description_contract") != public_specifications.CONTRACT:
@@ -1386,15 +1441,6 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             )
             return specification, hierarchy
 
-        values_by_family: dict[str, set[str]] = defaultdict(set)
-        sources_by_family: dict[str, set[str]] = defaultdict(set)
-        for row in facts:
-            family = str(row["family"])
-            value = _first_text(row.get("normalized_number"), row.get("display_value"))
-            if value:
-                values_by_family[family].add(_temperament_match_key(value))
-            sources_by_family[family].add(str(row["source_record_id"]))
-
         technical_facts = []
         for row in facts:
             normalized_number = row.get("normalized_number")
@@ -1404,14 +1450,9 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             )
             source = source_for(row)
             family = str(row["family"])
-            cross_source_conflict = (
-                len(sources_by_family[family]) > 1
-                and len(values_by_family[family]) > 1
-            )
-            material_conflict = (
-                row.get("conflict_state") == "material_technical_disagreement"
-                or cross_source_conflict
-            )
+            # Stored evidence flags and source-list capture discrepancies remain
+            # distinct from the computed comparison of independent assertions.
+            material_conflict = row.get("conflict_state") == "material_technical_disagreement"
             captured_count = (
                 row.get("captured_component_count")
                 if family in {"manual_total", "stop_total"} else None
@@ -1422,15 +1463,13 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 captured_count = capture_evidence["capturedRows"]
                 material_conflict = material_conflict or capture_evidence["disagrees"]
             comparison = None
-            if (material_conflict and captured_count is not None
+            if (material_conflict and captured_count is not None and captured_count > 0
                     and normalized_number is not None
                     and normalized_number != captured_count):
                 comparison = (
                     f"The source summary reports {display_value}; the captured structured list "
                     f"contains {int(captured_count):,} component row{'s' if captured_count != 1 else ''}. Both are retained."
                 )
-            elif cross_source_conflict:
-                comparison = "Other source records give a different value for this field."
             technical_facts.append(
                 {
                     "id": row["fact_id"],
@@ -1446,11 +1485,13 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                     "sourcePath": row.get("source_path") or f"specifications.{row['family']}",
                     "evidenceSha256": row["evidence_sha256"],
                     "supportState": row["support_state"],
+                    "sourceConflictState": row["conflict_state"],
                     "conflictState": (
                         "material_technical_disagreement"
                         if material_conflict else row["conflict_state"]
                     ),
                     "comparison": comparison,
+                    "comparisonKind": "source_summary_vs_captured_rows" if comparison else None,
                     "capturedComponentCount": captured_count,
                     "captureComparison": capture_evidence,
                     "evidenceKind": "source_assertion",
@@ -1460,6 +1501,18 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
 
         from .public_aggregate_quality import qualify_public_fact
         technical_facts = [qualify_public_fact(f) for f in technical_facts]
+        for fact in technical_facts:
+            if fact.get('normalizedNumber') is None:
+                # A withheld/qualified quantity cannot support a numeric
+                # discrepancy against captured component occurrences.
+                fact['comparison'] = None
+                fact['comparisonKind'] = None
+        technical_facts, comparison_groups = compare_technical_facts(technical_facts, source_by_record)
+        for fact in technical_facts:
+            if fact["family"] == "temperament":
+                fact["catalogUrl"] = self._tuning_occurrence_matcher.catalog_url(
+                    fact["displayValue"], fact["source"], fact["sourceRecordId"],
+                )
 
         def pipework_for(fact_rows: list[Mapping[str, Any]]) -> dict[str, Any] | None:
             models = []
@@ -1526,13 +1579,11 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 source_pipework, source_hierarchy = apply_register_pipe_quantities(
                     pipework_for(source_facts), source_hierarchy
                 )
-                stop_totals = [
-                    row for row in source_facts
-                    if row["family"] == "stop_total" and row.get("normalized_number") is not None
-                ]
+                qualified_source_facts = [f for f in technical_facts if f['sourceRecordId'] == source_id]
+                stop_totals = [f for f in qualified_source_facts if f['family'] == 'stop_total']
                 source_stop_count = (
-                    int(stop_totals[0]["normalized_number"])
-                    if len(stop_totals) == 1
+                    int(stop_totals[0]["normalizedNumber"])
+                    if len(stop_totals) == 1 and stop_totals[0].get('normalizedNumber') is not None
                     else None
                 )
                 parsed_stop_count = sum(
@@ -1552,6 +1603,8 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                         "specification": source_spec,
                         "componentHierarchy": source_hierarchy,
                         "pipework": source_pipework,
+                        "stopListAvailability": 'captured_stop_rows' if parsed_stop_count > 0 else 'no_captured_stop_rows',
+                        "coverageSummary": coverage_summary(parsed_stop_count, len(source_components), qualified_source_facts),
                         "parser": {
                             "source": (source_by_record.get(source_id) or {}).get("source"),
                             "status": "structured_public_projection",
@@ -1564,7 +1617,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                                 and parsed_stop_count > 0
                                 and source_stop_count != parsed_stop_count
                             ) or any(
-                                row.get("conflict_state") == "material_technical_disagreement"
+                                row.get("conflictState") == "material_technical_disagreement"
                                 for row in stop_totals
                             ),
                         },
@@ -1580,124 +1633,21 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 "source": source_for(row)["source"],
                 "sourceRecordId": row["source_record_id"],
                 "sourceUrl": row.get("source_url") or source_for(row).get("url"),
-                "sourcePath": "specifications.pitch_standard",
+                "sourcePath": row.get('source_path') or "specifications.pitch_standard",
                 "extraction": "structured_source_field",
             }
             for row in pitch_rows
         ]
-        pitch_values = {
-            _temperament_match_key(item["value"])
-            for item in pitch_assertions
-            if item["value"]
-        }
-        pitch_source_count = len({item["sourceRecordId"] for item in pitch_assertions})
-        pitch_status = (
-            "unavailable" if not pitch_assertions
-            else "single_source" if pitch_source_count == 1
-            else "agreement" if len(pitch_values) == 1
-            else "sources_differ"
-        )
-        temperament_sources = [
-            {
-                "source_value": row["source_value"],
-                "source_key": row["source_key"],
-                "source_record_id": row["source_record_id"],
-                "source_url": row.get("source_url"),
-            }
-            for row in temperament_rows
-        ]
-        seen_temperaments = {
+        pitch_status = assertion_status(pitch_assertions)
+        temperament_sources = merge_temperament_rows(
+            temperament_rows,
             (
-                str(row["source_record_id"]),
-                _temperament_match_key(row["source_value"]),
-            )
-            for row in temperament_sources
-        }
-        for row in facts:
-            if row["family"] != "temperament":
-                continue
-            value = _first_text(row.get("display_value"), row.get("normalized_number"))
-            if not value:
-                continue
-            source = source_for(row)
-            key = (str(row["source_record_id"]), _temperament_match_key(value))
-            if key in seen_temperaments:
-                continue
-            seen_temperaments.add(key)
-            temperament_sources.append(
-                {
-                    "source_value": value,
-                    "source_key": source["source"],
-                    "source_record_id": row["source_record_id"],
-                    "source_url": row.get("source_url") or source.get("url"),
-                }
-            )
-        temperament_assertions = [
-            {
-                "value": row["source_value"],
-                "rawValue": row["source_value"],
-                "text": row["source_value"],
-                "source": row["source_key"],
-                "sourceRecordId": row["source_record_id"],
-                "sourceUrl": row.get("source_url"),
-                "sourcePath": "specifications.temperament",
-                "extraction": "structured_source_field",
-            }
-            for row in temperament_sources
-        ]
-        preferred_temperament = (
-            str(temperament_sources[0]["source_value"])
-            if temperament_sources else None
+                {**row, "source_key": source["source"], "source_url": row.get("source_url") or source.get("url")}
+                for row in facts if row["family"] == "temperament"
+                for source in (source_for(row),)
+            ),
         )
-        tuning_systems = self._tuning_systems()
-        exact_records = [
-            tuning for tuning in tuning_systems
-            if _temperament_source_match_kind(preferred_temperament, tuning) == "exact_variant"
-        ]
-        exact_record = exact_records[0] if len(exact_records) == 1 else None
-        lookup = search_temperaments(preferred_temperament, tuning_systems, identity_only=True)
-        browse_url = (
-            f"/temperaments?q={quote(preferred_temperament, safe='')}&scope=identity"
-            if preferred_temperament
-            else "/temperaments"
-        )
-        if exact_record:
-            target_url = f"/temperaments/{quote(str(exact_record['id']), safe='')}"
-            relation_state = "exact_record"
-            guidance = (
-                "The source wording uniquely matches this BDO tuning-system record and its cent vector."
-            )
-            matching_count = 1
-        elif preferred_temperament and lookup.ids:
-            target_url = browse_url
-            relation_state = "candidate_set"
-            guidance = (
-                "Related catalogue entries are offered for comparison. The source wording and any "
-                "adaptation comments remain separate evidence; they do not establish an exact cent vector."
-            )
-            matching_count = len(lookup.ids)
-        else:
-            target_url = browse_url
-            relation_state = "source_wording_only"
-            guidance = (
-                "The source wording is retained without an exact or family-level catalogue match."
-            )
-            matching_count = 0
-        temperament_status = "unavailable"
-        if temperament_sources:
-            normalized_values = {
-                _temperament_match_key(row["source_value"])
-                for row in temperament_sources
-            }
-            source_count = len({
-                str(row["source_record_id"])
-                for row in temperament_sources
-            })
-            temperament_status = (
-                "single_source" if source_count == 1
-                else "agreement" if len(normalized_values) == 1
-                else "sources_differ"
-            )
+        temperament_evidence = self._organ_temperament_evidence(temperament_sources)
         return {
             "specification": spec,
             "componentHierarchy": hierarchy,
@@ -1708,34 +1658,15 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 "descriptions": [],
                 "descriptionSourceCount": 0,
                 "pitch": {
-                    "preferredValue": pitch_assertions[0]["value"] if pitch_assertions else None,
+                    "preferredValue": next((item['value'] for item in pitch_assertions if _first_text(item.get('value'))), None) if pitch_status != 'sources_differ' else None,
                     "status": pitch_status,
                     "assertions": pitch_assertions,
                 },
-                "temperament": {
-                    "preferredValue": preferred_temperament,
-                    "concept": ({
-                        "id": exact_record["id"],
-                        "label": exact_record["title"],
-                        "matchKind": "exact_catalog_record",
-                    } if exact_record else None),
-                    "status": temperament_status,
-                    "assertions": temperament_assertions,
-                    "catalogRelation": {
-                        "catalogSource": "BDO Lexikon der Stimmungen",
-                        "catalogSourceKey": "bdo_tuning_systems",
-                        "catalogRecordCount": len(tuning_systems),
-                        "matchingRecordCount": matching_count,
-                        "browseUrl": browse_url,
-                        "targetUrl": target_url,
-                        "exactRecordId": exact_record["id"] if exact_record else None,
-                        "exactRecordUrl": target_url if exact_record else None,
-                        "state": relation_state,
-                        "guidance": guidance,
-                        "searchInterpretation": lookup.interpretation,
-                    },
-                },
+                "temperament": temperament_evidence,
                 "facts": technical_facts,
+                "comparisonGroups": comparison_groups,
+                "differingFieldCount": sum(g['status'] in {'different_values', 'different_wording'} for g in comparison_groups),
+                "captureMismatchCount": sum(f.get('comparisonKind') == 'source_summary_vs_captured_rows' for f in technical_facts),
                 "factCount": len(technical_facts),
                 "materialConflictCount": sum(item["conflictState"] == "material_technical_disagreement" for item in technical_facts),
                 "wordingVariantCount": sum(item["conflictState"] not in {"none", "material_technical_disagreement"} for item in technical_facts),
@@ -1813,7 +1744,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             ).fetchall()
         return {
             "status": "canonical",
-            "schemaVersion": self._metadata()["initiator_schema_version"] if self.source_release_version in {"1.5.1", "1.5.2", "1.5.3", "1.5.4", "1.5.5", "1.6.0"} else "0.3.48",
+            "schemaVersion": self._metadata()["initiator_schema_version"] if self.source_release_version in {"1.5.1", "1.5.2", "1.5.3", "1.5.4", "1.5.5", "1.6.0", FIXTURE_RELEASE} else "0.3.48",
             "publicProjection": True,
             "collections": [
                 {
@@ -2006,7 +1937,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             ("confidence", confidence, "classification_confidence=%(confidence)s"),
         ):
             if value not in (None, ""):
-                params[key] = f"%{value}%" if key in {"author", "venue"} else value
+                params[key] = literal_pattern(value) if key in {"author", "venue"} else value
                 clauses.append(expression)
         if digitized is not None:
             access_clause = (
@@ -2062,7 +1993,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 "confidence": confidence or "", "digitized": digitized,
             },
             "facets": self._literature_facets(),
-            "source": {"module": "release_1_5_public", "schemaVersion": self._metadata()["initiator_schema_version"] if self.source_release_version in {"1.5.1", "1.5.2", "1.5.3", "1.5.4", "1.5.5", "1.6.0"} else "0.3.48", "publicProjection": True},
+            "source": {"module": "release_1_5_public", "schemaVersion": self._metadata()["initiator_schema_version"] if self.source_release_version in {"1.5.1", "1.5.2", "1.5.3", "1.5.4", "1.5.5", "1.6.0", FIXTURE_RELEASE} else "0.3.48", "publicProjection": True},
         }
 
     def get_literature(self, literature_id: str, *, mode: str = "surface") -> dict[str, Any] | None:
@@ -2465,6 +2396,170 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 self._tuning_system_cache = [self._tuning_summary(row) for row in rows]
             return [dict(item) for item in self._tuning_system_cache]
 
+    @cached_property
+    def _tuning_occurrence_matcher(self) -> TemperamentOccurrenceMatcher:
+        return TemperamentOccurrenceMatcher(self._tuning_systems())
+
+    def _organ_temperament_evidence(self, rows: list[dict[str, Any]]) -> dict[str, Any]:
+        matcher = self._tuning_occurrence_matcher
+        assertions = []
+        for row in rows:
+            value = row["source_value"]
+            source = row["source_key"]
+            source_id = row["source_record_id"]
+            assertions.append({
+                "value": value, "rawValue": value, "text": value,
+                "source": source, "sourceRecordId": source_id, "sourceUrl": row.get("source_url"),
+                "sourcePath": row.get("source_path") or "specifications.temperament",
+                "extraction": "structured_source_field",
+                "valueKind": temperament_assertion_kind(value, source, source_id),
+                "catalogUrl": matcher.catalog_url(value, source, source_id),
+            })
+        status, preferred = summarize_temperament_assertions(assertions)
+        matches = matcher.match(preferred)
+        exact_id = next((record_id for record_id, kind in matches.items() if kind == EXACT), None)
+        catalogue_url = "/temperaments"
+        target_url = matcher.catalog_url(preferred) or catalogue_url
+        if exact_id:
+            state = "exact_record"
+            guidance = "The source wording identifies this BDO tuning-system record. Its cent values come from the BDO catalogue."
+        elif matches:
+            state = "candidate_set"
+            guidance = "These BDO catalogue entries are related to the source wording. The cited wording and any adaptations remain separate evidence."
+        elif status == "source_code_only":
+            state = "source_code_only"
+            guidance = "The source supplies a code whose meaning is unresolved in this snapshot."
+        else:
+            state = "source_wording_only"
+            guidance = "Consult the source assertions for the retained wording and any catalogue links."
+        return {
+            "preferredValue": preferred,
+            "concept": ({
+                "id": exact_id, "label": matcher.records[exact_id]["title"], "matchKind": "exact_catalog_record",
+            } if exact_id else None),
+            "status": status, "assertions": assertions,
+            "catalogRelation": {
+                "catalogSource": "BDO Lexikon der Stimmungen",
+                "catalogSourceKey": "bdo_tuning_systems",
+                "catalogRecordCount": len(matcher.records), "matchingRecordCount": len(matches),
+                "browseUrl": target_url, "targetUrl": target_url, "exactRecordId": exact_id,
+                "exactRecordUrl": target_url if exact_id else None,
+                "state": state, "guidance": guidance, "searchInterpretation": None,
+            },
+        }
+
+    def _tuning_occurrences(self) -> dict[str, dict[str, list[dict[str, Any]]]]:
+        """Index public assertions once for this immutable release snapshot."""
+        with self._tuning_occurrence_cache_lock:
+            if self._tuning_occurrence_cache is not None:
+                return self._tuning_occurrence_cache
+            matcher = self._tuning_occurrence_matcher
+            with connect(self.settings) as conn:
+                structured = conn.execute(
+                    f"""select assertion.*, organ.label as title
+                        from {SCHEMA}.organ_temperament_assertion assertion
+                        join {SCHEMA}.organ organ on organ.mdvs_id=assertion.organ_mdvs_id
+                        order by assertion.organ_mdvs_id, assertion.source_record_id, assertion.assertion_id"""
+                ).fetchall()
+                facts = conn.execute(
+                    f"""select fact.*, organ.label as title, membership.source_key,
+                               membership.source_url as membership_source_url
+                        from {SCHEMA}.technical_fact fact
+                        join {SCHEMA}.organ organ on organ.mdvs_id=fact.organ_mdvs_id
+                        left join {SCHEMA}.source_membership membership
+                          on membership.source_record_id=fact.source_record_id
+                         and membership.organ_mdvs_id=fact.organ_mdvs_id
+                        where fact.family='temperament'
+                        order by fact.organ_mdvs_id, fact.source_record_id, fact.fact_id"""
+                ).fetchall()
+            rows = merge_temperament_rows(structured, facts)
+            matches: dict[tuple[str, str], dict[str, str]] = {}
+            by_tuning: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
+            fact_only_places: set[str] = set()
+            for row in rows:
+                source_value = row["source_value"]
+                source = row.get("source_key") or row["source_record_id"]
+                source_id = row["source_record_id"]
+                value_kind = temperament_assertion_kind(source_value, source, source_id)
+                cache_key = (source_value, value_kind)
+                if cache_key not in matches:
+                    matches[cache_key] = matcher.match(source_value, source, source_id)
+                for record_id, kind in matches[cache_key].items():
+                    organ_id = row["organ_mdvs_id"]
+                    organs = by_tuning[record_id]
+                    if organ_id not in organs:
+                        if row.get("family") == "temperament":
+                            fact_only_places.add(organ_id)
+                        organs[organ_id] = {
+                            "mdvsId": organ_id,
+                            "title": row["title"] or organ_id,
+                            "url": _organ_page_route(organ_id),
+                            "country": row.get("country") or "Country not recorded",
+                            "location": ", ".join(dict.fromkeys(
+                                value for value in (row.get("building"), row.get("town"), row.get("country")) if value
+                            )),
+                            "matchKind": kind,
+                            "assertions": [],
+                        }
+                    organ = organs[organ_id]
+                    if kind == EXACT:
+                        organ["matchKind"] = EXACT
+                    assertion = {
+                        "source": source,
+                        "sourceRecordId": source_id,
+                        "sourceUrl": row.get("source_url") or row.get("membership_source_url"),
+                        "sourcePath": row.get("source_path") or "specifications.temperament",
+                        "sourceValue": source_value,
+                        "matchKind": kind,
+                    }
+                    if assertion not in organ["assertions"]:
+                        organ["assertions"].append(assertion)
+            places = self._tuning_occurrence_places(fact_only_places)
+            index: dict[str, dict[str, list[dict[str, Any]]]] = {}
+            for record_id, organs in by_tuning.items():
+                cohorts: dict[str, list[dict[str, Any]]] = {EXACT: [], FAMILY: []}
+                for organ_id, organ in organs.items():
+                    if not organ["location"] and organ_id in places:
+                        organ.update(places[organ_id])
+                for item in sorted(organs.values(), key=lambda item: (
+                    item["country"].casefold(), item["title"].casefold(), item["mdvsId"],
+                )):
+                    cohorts[item["matchKind"]].append(item)
+                index[record_id] = cohorts
+            self._tuning_occurrence_cache = index
+            return index
+
+    def _tuning_occurrence_places(self, organ_ids: set[str]) -> dict[str, dict[str, str]]:
+        if not organ_ids:
+            return {}
+        enriched = self._metadata().get("public_place_detail_contract") == "modavis.public-place-detail/v1"
+        columns = ", detail.source_hierarchy_json, detail.provider_hierarchy_json" if enriched else ""
+        join = f"left join {SCHEMA}.place_detail detail on detail.mdvs_id=place.place_mdvs_id" if enriched else ""
+        with connect(self.settings) as conn:
+            rows = conn.execute(
+                f"""select distinct on (place.organ_mdvs_id) place.organ_mdvs_id, place.preferred_label {columns}
+                    from {SCHEMA}.place_assertion place {join}
+                    where place.organ_mdvs_id = any(%(ids)s) and place.temporal_scope='current'
+                    order by place.organ_mdvs_id, (place.place_mdvs_id is not null) desc, place.assertion_id""",
+                {"ids": sorted(organ_ids)},
+            ).fetchall()
+        locations = {}
+        for row in rows:
+            hierarchy = self._public_place_hierarchy(row.get("source_hierarchy_json"))
+            hierarchy += self._public_place_hierarchy(row.get("provider_hierarchy_json"))
+            country = next((item["value"] for item in hierarchy if item["role"] == "country"), None)
+            locations[row["organ_mdvs_id"]] = {
+                "country": country or "Country not recorded",
+                "location": row["preferred_label"] or "",
+            }
+        return locations
+
+    @staticmethod
+    def _tuning_occurrence_counts(cohorts: Mapping[str, list[dict[str, Any]]]) -> dict[str, int]:
+        exact = len(cohorts.get(EXACT, []))
+        family = len(cohorts.get(FAMILY, []))
+        return {"total": exact + family, "exactVariantCount": exact, "familyWordingCount": family}
+
     @staticmethod
     def _tuning_facets(items: list[Mapping[str, Any]]) -> dict[str, Any]:
         groups = Counter(_first_text(item.get("groupKey")) for item in items if _first_text(item.get("groupKey")))
@@ -2481,11 +2576,20 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         query: str | None = None, group_key: str | None = None,
         precise_variant: bool | None = None, commentary_available: bool | None = None,
         commentary_query: str | None = None, query_scope: str | None = None,
+        sort: str = "catalogue", occurrence_scope: str = "all",
+        min_occurrences: int | None = None, max_occurrences: int | None = None,
     ) -> dict[str, Any]:
         limit = _bounded(limit, 40)
         offset = max(0, int(offset or 0))
         items = self._tuning_systems()
-        lookup = search_temperaments(query, items, identity_only=query_scope == "identity")
+        if query_scope == "evidence":
+            lookup = TemperamentSearch(frozenset(self._tuning_occurrence_matcher.match(query)))
+        else:
+            lookup = search_temperaments(query, items, identity_only=query_scope == "identity")
+        occurrences = self._tuning_occurrences()
+        count_key = {"exact": "exactVariantCount", "family": "familyWordingCount"}.get(
+            occurrence_scope, "total"
+        )
         filtered = []
         for item in items:
             if str(item["id"]) not in lookup.ids:
@@ -2498,15 +2602,28 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 continue
             if commentary_query and _temperament_match_key(commentary_query) not in _temperament_match_key(item.get("searchText")):
                 continue
-            filtered.append(item)
+            counts = self._tuning_occurrence_counts(occurrences.get(str(item["id"]), {}))
+            count = counts[count_key]
+            if min_occurrences is not None and count < min_occurrences:
+                continue
+            if max_occurrences is not None and count > max_occurrences:
+                continue
+            filtered.append({**item, "occurrences": counts})
+        if sort in {"occurrences_asc", "occurrences_desc"}:
+            filtered.sort(key=lambda item: item["occurrences"][count_key], reverse=sort == "occurrences_desc")
         return {
             "mode": "surface", "items": filtered[offset:offset + limit],
             "total": len(filtered), "limit": limit, "offset": offset,
             "query": (query or "").strip(),
             "searchInterpretation": lookup.interpretation,
-            "filters": {"query": query, "groupKey": group_key, "preciseVariant": precise_variant, "commentaryAvailable": commentary_available, "commentaryQuery": commentary_query, "queryScope": query_scope},
+            "filters": {
+                "query": query, "groupKey": group_key, "preciseVariant": precise_variant,
+                "commentaryAvailable": commentary_available, "commentaryQuery": commentary_query,
+                "queryScope": query_scope, "sort": sort, "occurrenceScope": occurrence_scope,
+                "minOccurrences": min_occurrences, "maxOccurrences": max_occurrences,
+            },
             "facets": self._tuning_facets(filtered),
-            "source": {"schemaKey": "aggregator.tuning_system_record", "sourceKey": "bdo_tuning_systems", "rowCount": len(self._tuning_systems()), "publicProjection": True},
+            "source": {"schemaKey": "aggregator.tuning_system_record", "sourceKey": "bdo_tuning_systems", "rowCount": len(items), "publicProjection": True},
         }
 
     def get_tuning_system(self, tuning_id: str, *, mode: str = "surface") -> dict[str, Any] | None:
@@ -2555,65 +2672,45 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         return detail
 
     def list_organs_for_tuning_system(
-        self, tuning_id: str, *, limit: int = 200, offset: int = 0,
+        self, tuning_id: str, *, limit: int = 200, offset: int = 0, scope: str = "all",
     ) -> dict[str, Any] | None:
         temperament = self.get_tuning_system(tuning_id, mode="surface")
         if not temperament:
             return None
-        family_term = _temperament_family_term(temperament)
-        if not family_term:
-            rows = []
+        cohorts = self._tuning_occurrences().get(str(temperament["id"]), {})
+        counts = self._tuning_occurrence_counts(cohorts)
+        selected_kind = OCCURRENCE_SCOPE_KINDS.get(scope)
+        if selected_kind:
+            items = cohorts.get(selected_kind, [])
         else:
-            with connect(self.settings) as conn:
-                rows = conn.execute(
-                    f"""select assertion.*, organ.label as title,
-                               assertion.organ_mdvs_id as target_mdvs_id
-                        from {SCHEMA}.organ_temperament_assertion assertion
-                        join {SCHEMA}.organ organ on organ.mdvs_id=assertion.organ_mdvs_id
-                        where assertion.source_value ilike %(family)s
-                        order by assertion.organ_mdvs_id, assertion.source_record_id""",
-                    {"family": f"%{family_term}%"},
-                ).fetchall()
-        organs: dict[str, dict[str, Any]] = {}
-        rank = {"exact_variant": 0, "family_wording": 1}
-        for row in rows:
-            match_kind = _temperament_source_match_kind(row.get("source_value"), temperament)
-            mdvs_id = _first_text(row.get("target_mdvs_id"))
-            if not match_kind or not mdvs_id:
-                continue
-            organ = organs.setdefault(mdvs_id, {
-                "mdvsId": mdvs_id, "title": row.get("title") or mdvs_id,
-                "url": _organ_page_route(mdvs_id),
-                "country": row.get("country") or "Country not recorded",
-                "location": ", ".join(dict.fromkeys(value for value in (row.get("building"), row.get("town"), row.get("country")) if value)),
-                "matchKind": match_kind, "assertions": [],
-            })
-            if rank[match_kind] < rank[organ["matchKind"]]:
-                organ["matchKind"] = match_kind
-            assertion = {"source": row.get("source_key"), "sourceRecordId": row.get("source_record_id"), "sourceUrl": row.get("source_url"), "sourceValue": row.get("source_value"), "matchKind": match_kind}
-            if assertion not in organ["assertions"]:
-                organ["assertions"].append(assertion)
-        items = sorted(organs.values(), key=lambda item: (rank[item["matchKind"]], str(item["country"]).casefold(), str(item["title"]).casefold(), item["mdvsId"]))
-        counts = Counter(item["matchKind"] for item in items)
-        page = items[offset:offset + _bounded(limit, 200, 1000)]
+            items = cohorts.get(EXACT, []) + cohorts.get(FAMILY, [])
+        limit = _bounded(limit, 200, 1000)
+        offset = max(0, offset)
+        page = items[offset:offset + limit]
         groups = []
         for key, label, guidance in (
-            ("exact_variant", "Exact variant assertions", "The cited source wording uniquely names this tuning-system record."),
-            ("family_wording", "Related temperament-family wording", "The source names the temperament family, but does not prove this exact cent-vector variant."),
+            (EXACT, "Exact variant assertions", "The cited source wording identifies this tuning-system record."),
+            (FAMILY, "Related temperament wording", "The source wording points to a family, an adaptation, or an unspecified precision variant."),
         ):
-            if not counts.get(key):
+            if (selected_kind and key != selected_kind) or not cohorts.get(key):
                 continue
             countries: dict[str, list[dict[str, Any]]] = defaultdict(list)
             for item in page:
                 if item["matchKind"] == key:
                     countries[item["country"]].append(item)
-            groups.append({"key": key, "label": label, "guidance": guidance, "total": counts[key], "countries": [{"country": country, "count": len(country_items), "items": country_items} for country, country_items in countries.items()]})
+            groups.append({
+                "key": key, "label": label, "guidance": guidance, "total": len(cohorts[key]),
+                "countries": [
+                    {"country": country, "count": len(country_items), "items": country_items}
+                    for country, country_items in countries.items()
+                ],
+            })
         return {
             "temperament": {"id": temperament["id"], "label": temperament["label"], "title": temperament["title"]},
-            "items": page, "groups": groups, "total": len(items),
-            "exactVariantCount": counts.get("exact_variant", 0), "familyWordingCount": counts.get("family_wording", 0),
+            "items": page, "groups": groups, "total": len(items), "scope": scope,
+            "exactVariantCount": counts["exactVariantCount"], "familyWordingCount": counts["familyWordingCount"],
             "limit": limit, "offset": offset, "hasMore": offset + limit < len(items),
-            "evidenceBoundary": "Exact source wording and family-level wording are grouped separately; family evidence never asserts one specific cent vector.",
+            "evidenceBoundary": "Counts reflect documented source wording. Each organ is counted once per record, with exact wording taking precedence. The cent values come from the BDO catalogue.",
             "publicProjection": True,
         }
 
@@ -2676,7 +2773,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         params: dict[str, Any] = {"limit": limit, "offset": offset}
         if query:
             clauses.append("sd.search_text ilike %(query)s")
-            params["query"] = f"%{query.strip()}%"
+            params["query"] = literal_pattern(query)
         if entity_class in {"person", "organization"}:
             clauses.append("a.actor_type=%(entity_class)s")
             params["entity_class"] = entity_class
@@ -2984,10 +3081,10 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         if query:
             clauses.append("(e.event_id ilike %(query)s or e.source_event_type ilike %(query)s or e.controlled_event_type ilike %(query)s or e.organ_mdvs_id ilike %(query)s "
                            f"or exists(select 1 from {SCHEMA}.organ o where o.mdvs_id=e.organ_mdvs_id and o.label ilike %(query)s))")
-            params["query"] = f"%{query.strip()}%"
+            params["query"] = literal_pattern(query)
         if subject:
             clauses.append(f"exists(select 1 from {SCHEMA}.organ o where o.mdvs_id=e.organ_mdvs_id and (o.mdvs_id=%(subject)s or replace(o.mdvs_id,'MDVS:ENTY:','')=%(subject)s or o.label ilike %(subject_label)s))")
-            params.update(subject=subject, subject_label=f"%{subject.strip()}%")
+            params.update(subject=subject, subject_label=literal_pattern(subject))
         if event_type:
             clauses.append("coalesce(e.controlled_event_type,e.source_event_type,'unspecified')=%(event_type)s")
             params["event_type"] = event_type
@@ -3154,15 +3251,9 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         temperament = self.get_tuning_system(temperament_id, mode="surface")
         if not temperament:
             return ()
-        with connect(self.settings) as conn:
-            rows = conn.execute(
-                f"select organ_mdvs_id, source_value from {SCHEMA}.organ_temperament_assertion"
-            ).fetchall()
-        kind = "family_wording" if scope == "family" else "exact_variant"
-        return tuple(sorted({
-            row["organ_mdvs_id"] for row in rows
-            if _temperament_source_match_kind(row["source_value"], temperament) == kind
-        }))
+        cohorts = self._tuning_occurrences().get(str(temperament["id"]), {})
+        kind = OCCURRENCE_SCOPE_KINDS.get(scope, EXACT)
+        return tuple(sorted(item["mdvsId"] for item in cohorts.get(kind, [])))
 
     def _public_map_organ_filters(self, filters: dict[str, Any]) -> dict[str, Any]:
         filters = dict(filters)

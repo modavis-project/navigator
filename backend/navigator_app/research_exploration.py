@@ -30,7 +30,10 @@ class Exploration:
         if digest(self.db)!=m['coverage']['sha256']:raise ValueError('Exploration coverage differs')
     def coverage(self,family,source,dimension):
         c=sqlite3.connect(self.db.as_uri()+'?mode=ro&immutable=1',uri=True);c.row_factory=sqlite3.Row
-        try:return [dict(r) for r in c.execute('select * from coverage where family=? and scope=? and dimension=? order by bucket',(family,source or '*',dimension))]
+        from .db import constrain_sqlite_reads
+        try:
+            constrain_sqlite_reads(c, 10)
+            return [dict(r) for r in c.execute('select * from coverage where family=? and scope=? and dimension=? order by bucket',(family,source or '*',dimension))]
         finally:c.close()
 
 @lru_cache(maxsize=96)
@@ -38,7 +41,11 @@ def _term_counts(index,core,root,family,term,match,source,dimension):
     # Cache aggregate rows only; scoped evidence remains in the normal usage API.
     import time
     c=sqlite3.connect(Path(index).as_uri()+'?mode=ro&immutable=1',uri=True);c.row_factory=sqlite3.Row
-    deadline=time.monotonic()+10;c.set_progress_handler(lambda:int(time.monotonic()>deadline),10000)
+    from .db import constrain_sqlite_reads
+    try:constrain_sqlite_reads(c, 10)
+    except BaseException:
+        c.close()
+        raise
     where='kind=? and search'+('=?' if match=='exact' else " like ? escape '\\'")
     key=norm(term) if match=='exact' else '%'+norm(term).replace('\\','\\\\').replace('%','\\%').replace('_','\\_')+'%'
     values=[family,key]
@@ -53,7 +60,7 @@ def distribution(work,explore,family,args,export=False):
     if not norm(term) or match not in ('exact','contains') or dimension not in ('source','country','period','pitch','division') or (family=='activities' and dimension in ('pitch','division')):raise ValueError('Invalid term, match mode or distribution dimension')
     if args.get('analysis') and args['analysis']!=explore.sha:raise RuntimeError('Requested analysis snapshot is unavailable')
     if args.get('zeros','no') not in ('yes','no'):raise ValueError('Invalid zero-count scope')
-    if args.get('format','json') not in ('json','csv'):raise ValueError('Invalid export format')
+    if args.get('format','json') not in ('json','csv','ro-crate'):raise ValueError('Invalid export format')
     matched=_term_counts(str(work.index),work.manifest['core']['sha256'],work.manifest['index']['sha256'],family,term,match,source,dimension)
     denominators={r['bucket']:r for r in explore.coverage(family,source,dimension)}
     if not denominators:raise LookupError('No recorded coverage for this source and family')
@@ -78,7 +85,7 @@ def distribution(work,explore,family,args,export=False):
 def network(work,args,export=False):
     page=validate(args,{'actor','mode','page','snapshot','assessment','format'},work);identifier=full_id(args.get('actor',''));mode=args.get('mode','shared')
     if mode not in MODES:raise ValueError('Invalid connection type')
-    if args.get('format','json')!='json':raise ValueError('Network exports use JSON')
+    if args.get('format','json') not in ('json','ro-crate'):raise ValueError('Network exports use JSON')
     assessment=work.manifest.get('identities',{}).get('sha256')
     if args.get('assessment') and args['assessment']!=assessment:raise RuntimeError('Requested identity assessment is unavailable')
     with work.connect(10) as c:
@@ -129,6 +136,7 @@ def register_exploration(app):
     if path and work:
         try:explore=Exploration(path,work)
         except Exception:app.logger.exception('Research exploration binding failed')
+    app.extensions['research_exploration']=explore
     @lru_cache(maxsize=96)
     def cached(kind,family,args):
         return canonical(distribution(work,explore,family,dict(args)) if kind=='terms' else network(work,dict(args)))
@@ -151,4 +159,6 @@ def register_exploration(app):
         except RuntimeError as e:return jsonify({'error':str(e)}),409
         except OverflowError as e:return jsonify({'error':str(e)}),422
         except (ValueError,TypeError) as e:return jsonify({'error':str(e)}),400
-        except sqlite3.OperationalError:return jsonify({'error':'Research query exceeded its budget. Choose a narrower term/source or another focal actor; no partial results were returned.'}),503
+        except sqlite3.OperationalError as error:
+            if 'interrupted' in str(error).lower():raise TimeoutError('Research query budget exhausted') from error
+            return jsonify({'error':'The selected research resource is unavailable.'}),503

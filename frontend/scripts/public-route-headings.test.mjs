@@ -6,6 +6,7 @@ import vm from "node:vm";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
+import { LoadingContent, UpdatingContent } from "./loading-content-test-support.mjs";
 
 const require = createRequire(import.meta.url);
 function load(name, pathname, search = "") {
@@ -15,6 +16,7 @@ function load(name, pathname, search = "") {
     exports: {}, URL, URLSearchParams, location, window: { location }, document: { title: "Navigator" },
     require: id => {
       if (id === "./uiLocale") return load("uiLocale", pathname, search).exports;
+      if (id === "./LoadingContent") return { LoadingContent, UpdatingContent };
       if (id === "./entityExport") return {
         useEntityPageTab: () => ({ activeTab: "overview", selectTab: () => {} }),
         EntityPageTabs: () => null,

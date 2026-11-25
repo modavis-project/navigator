@@ -42,6 +42,9 @@ def register_request_reliability(app, repository=None):
         # headers remains a transport concern, not an uninterruptible SQL job.
         if request.path.startswith("/api/health/"):
             seconds = app.config["PUBLIC_HEALTH_BUDGET_SECONDS"]
+        elif request.endpoint == "public_area":
+            # A cold national view can build the area index and aggregate the whole country.
+            seconds = 18.0
         elif request.path in DISPOSITION_REQUEST_BUDGETS:
             seconds = DISPOSITION_REQUEST_BUDGETS[request.path]
         elif request.path.endswith("/export") or (

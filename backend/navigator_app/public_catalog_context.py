@@ -7,6 +7,7 @@ import json
 from urllib.parse import quote
 
 from .db import connect
+from .public_relocations import movement_context, transfer_endpoints
 
 SCHEMA = "release_1_5_public"
 CONTRACT = "modavis.public-catalog-context/v1"
@@ -64,10 +65,7 @@ class PublicCatalogContext:
             actors = conn.execute(f"SELECT mdvs_id,label,actor_type FROM {SCHEMA}.actor WHERE mdvs_id=ANY(%(ids)s)", {"ids": targets}).fetchall() if targets else []
         actors = {a["mdvs_id"]: a for a in actors}
         source_actor_links = self._source_actor_links([r["source_record_id"] for r in rows])
-        movements = {}
-        for item in self.public_relocation_movements():
-            movements.setdefault(item["eventMdvsId"], []).append(item)
-        from .public_relocations import movement_context
+        movements = self._public_relocations_by_event()
         result = []
         for row in rows:
             context = by_event.get(row["event_id"], {})
@@ -93,10 +91,13 @@ class PublicCatalogContext:
                     "activities": value.get("activities") or [value.get("role") or "participant"],
                     "evidencePath": value.get("evidencePath"), "evidenceSha256": value.get("evidenceSha256"),
                 })
+            place_evidence = decoded(context.get("places_json"), [])
             places = [{"name": p.get("wording"), "role": p.get("role"), "evidencePath": p.get("evidencePath")}
-                      for p in decoded(context.get("places_json"), []) if p.get("wording")]
+                      for p in place_evidence if p.get("wording")]
+            event_movements = movements.get(row["event_id"], [])
+            endpoints = transfer_endpoints(event_movements, place_evidence) if row.get("controlled_event_type") == "transfer" else None
             interpretation = interpretations.get(row["event_id"], {})
-            result.append({**row, "movement": movement_context(movements.get(row["event_id"], [])), "participants": names, "places": places,
+            result.append({**row, "movement": movement_context(event_movements), "transfer_endpoints": endpoints, "participants": names, "places": places,
                            "description": interpretation.get("narrative"),
                            "technicalFacts": decoded(interpretation.get("technical_facts_json"), []),
                            "unresolvedAttributions": decoded(interpretation.get("unresolved_json"), []),
@@ -108,6 +109,33 @@ class PublicCatalogContext:
         if self._metadata().get("public_relocation_evidence_contract") != "modavis.public-relocation-evidence/v1":return []
         with connect(self.settings) as c:
             return [decoded(r["payload_json"], {}) for r in c.execute(f"select payload_json from {SCHEMA}.relocation_evidence order by activity_id").fetchall()]
+
+    @lru_cache(maxsize=1)
+    def _public_relocations_by_event(self):
+        movements = {}
+        for item in self.public_relocation_movements():
+            movements.setdefault(item["eventMdvsId"], []).append(item)
+        return movements
+
+    @lru_cache(maxsize=1)
+    def _public_transfer_endpoints(self):
+        movements = self._public_relocations_by_event()
+        places = {}
+        if self._has_catalog_context():
+            with connect(self.settings) as conn:
+                rows = conn.execute(f"""
+                    SELECT c.event_id, c.places_json
+                    FROM {SCHEMA}.documented_event_context c
+                    JOIN {SCHEMA}.documented_event e USING (event_id)
+                    WHERE e.controlled_event_type='transfer'
+                      AND (c.places_json::jsonb @> '[{{"role":"origin"}}]'
+                           OR c.places_json::jsonb @> '[{{"role":"destination"}}]')
+                """).fetchall()
+            places = {row["event_id"]: decoded(row["places_json"], []) for row in rows}
+        return {
+            event_id: transfer_endpoints(movements.get(event_id, []), places.get(event_id, []))
+            for event_id in movements.keys() | places.keys()
+        }
 
     def _actor_mentions(self, mdvs_id):
         with connect(self.settings) as conn:

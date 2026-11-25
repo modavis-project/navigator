@@ -13,8 +13,10 @@ from psycopg_pool import PoolTimeout
 
 from navigator_app import db
 from navigator_app.capability_health import register_capability_health
+from navigator_app.config import Settings
 from navigator_app.public_query_cache import BoundedQueryCache, snapshot_cached
 from navigator_app.public_query_identity import SnapshotBindingChanged, semantic_query_identity
+from navigator_app.public_read_cache import SNAPSHOT_HEADER, public_read_snapshot, register_public_read_cache
 from navigator_app.public_repository import PublicReleaseRepository
 from navigator_app.request_reliability import register_request_reliability
 
@@ -171,6 +173,19 @@ def test_disposition_deadlines_are_bounded_and_route_specific(monkeypatch, path,
     assert "items" not in response.json
 
 
+def test_area_detail_allows_cold_country_counts_without_extending_lookup():
+    app = Flask(__name__)
+    register_request_reliability(app)
+    app.add_url_rule("/api/areas/<identifier>", "public_area", lambda identifier: jsonify(id=identifier))
+    app.add_url_rule("/api/areas", "search_public_areas", lambda: jsonify(items=[]))
+    client = app.test_client()
+    assert client.get("/api/areas").headers["X-MODAVIS-Query-Budget-Ms"] == "10000"
+    detail = "/api/areas/locadmin:example"
+    assert client.get(detail).headers["X-MODAVIS-Query-Budget-Ms"] == "18000"
+    response = client.get(detail, headers={"X-Request-Timeout-Ms": "9000"})
+    assert response.headers["X-MODAVIS-Query-Budget-Ms"] == "9000"
+
+
 @pytest.mark.parametrize("path,server_budget", [
     ("/api/organs", 10000),
     ("/api/explore", 10000),
@@ -248,6 +263,74 @@ def test_cached_responses_are_snapshot_scoped_and_mutation_isolated():
     repo.snapshot = "second"
     assert repo.read("chapel")["snapshot"] == "second" and repo.calls == 2
     assert Repo().read("chapel")["snapshot"] == "first"
+
+
+def test_public_read_cache_reuses_anonymous_reads_and_revalidates_on_pod_change():
+    def setup(source):
+        app = Flask(__name__)
+        calls = []
+        binding = {"sourceReleaseVersion": "1.6.0", "publicCoreSha256": source}
+        snapshot = public_read_snapshot(binding, Settings(uri_release_version="1.6.0"))
+        register_public_read_cache(app, snapshot)
+
+        def read():
+            calls.append(source)
+            return jsonify(corpus=source)
+
+        app.add_url_rule("/api/organs", "organ_list", read)
+        app.add_url_rule("/api/release-context", "release_context", lambda: jsonify(readSnapshot=snapshot))
+        return app, snapshot, calls
+
+    app, snapshot, calls = setup("old")
+    first_visit = app.test_client()
+    release = first_visit.get("/api/release-context")
+    assert release.headers["Cache-Control"] == "private, no-cache"
+    assert release.json["readSnapshot"] == snapshot
+    assert first_visit.get("/api/release-context", headers={"If-None-Match": release.headers["ETag"]}).status_code == 304
+
+    headers = {SNAPSHOT_HEADER: snapshot}
+    cold = first_visit.get("/api/organs?limit=1", headers=headers)
+    assert "immutable" in cold.headers["Cache-Control"]
+    assert {SNAPSHOT_HEADER, "Cookie", "Authorization"}.issubset(cold.vary)
+    assert 'navigator-cache;desc="miss"' in cold.headers["Server-Timing"]
+    headers["If-None-Match"] = cold.headers["ETag"]
+    second_visit = app.test_client().get("/api/organs?limit=1", headers=headers)
+    assert second_visit.status_code == 304
+    assert 'navigator-cache;desc="hit"' in second_visit.headers["Server-Timing"]
+    assert calls == ["old"]
+
+    current, current_snapshot, _ = setup("new")
+    assert current_snapshot != snapshot
+    client = current.test_client()
+    latest = client.get("/api/organs?limit=1", headers=headers)
+    assert latest.json == {"corpus": "new"}
+    assert latest.headers["Cache-Control"] == "private, no-cache"
+    assert latest.headers["ETag"] != cold.headers["ETag"]
+    assert "immutable" in client.get("/api/organs?limit=1", headers={SNAPSHOT_HEADER: current_snapshot}).headers["Cache-Control"]
+
+
+def test_shared_cache_excludes_private_and_free_text_reads():
+    app = Flask(__name__)
+    register_public_read_cache(app, "current")
+    calls = []
+
+    def read():
+        calls.append(len(calls) + 1)
+        return jsonify(read=calls[-1])
+
+    app.add_url_rule("/api/organs", "organ_list", read)
+    client = app.test_client()
+    assert client.get("/api/organs").json == {"read": 1}
+    for extra in ({"Authorization": "Bearer example"}, {"X-Navigator-Actor-Id": "researcher"}):
+        response = client.get("/api/organs", headers={SNAPSHOT_HEADER: "current", **extra})
+        assert response.headers["Cache-Control"] == "no-store"
+        assert response.json != {"read": 1}
+    client.set_cookie("session", "example")
+    assert client.get("/api/organs").headers["Cache-Control"] == "no-store"
+    client.delete_cookie("session")
+    assert client.get("/api/organs?mode=depth").headers["Cache-Control"] == "no-store"
+    assert client.get("/api/organs?q=Oxford").json != client.get("/api/organs?q=Oxford").json
+    assert client.get("/api/organs").json == {"read": 1}
 
 
 def test_semantic_identity_is_key_order_stable_but_retains_all_operands():

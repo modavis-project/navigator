@@ -5,6 +5,8 @@ import hashlib
 import json
 import math
 from collections import defaultdict
+from functools import lru_cache
+from pathlib import Path
 from typing import Any, Iterable, Mapping
 from urllib.parse import quote
 
@@ -16,7 +18,7 @@ GEOLIBRE_RUNTIME_VERSION = "2.8.0"
 GEOLIBRE_RUNTIME_COMMIT = "477e9cfb4e0cdde0623007bf98b97f6cfb401493"
 MAP_LAYER_ID = "modavis-reviewed-current-places-v1"
 FALLBACK_MAP_LAYER_ID = "modavis-locality-fallback-places-v1"
-OPENFREEMAP_STYLE = "https://tiles.openfreemap.org/styles/positron"
+NAVIGATOR_BASEMAP_STYLE = "/basemap/assets-v2/style.json"
 MAP_SITE_GROUP_CONTRACT = "modavis.navigator.map-site-group/v1"
 MAP_SITE_GROUP_ID_PREFIX = "mapsite:v1:"
 COMPACT_EXACT_SELECTION_TOLERANCE = 2e-5
@@ -25,6 +27,8 @@ ORGAN_CONTEXT_BUILDER_FALLBACK_LAYER_ID = "modavis-organ-context-builder-fallbac
 ORGAN_CONTEXT_BUILDER_ORIGIN_LAYER_ID = "modavis-organ-context-builder-origin-v1"
 ACTOR_CONTEXT_LAYER_PREFIX = "modavis-actor-context-activity-v1-"
 PUBLIC_MAP_VECTOR_SOURCE_LAYER = "organ_sites"
+PUBLIC_MAP_MARKER_STYLE = "/api/map/marker-style.json"
+PUBLIC_MAP_STYLE_VERSION = 2
 PUBLIC_MAP_INITIAL_VIEW = {
     "center": [8.8, 50.2],
     "zoom": 3.35,
@@ -585,7 +589,7 @@ def geolibre_project(
         "version": GEOLIBRE_PROJECT_VERSION,
         "name": "MODAVIS reviewed organ places",
         "mapView": computed_map_view,
-        "basemapStyleUrl": OPENFREEMAP_STYLE,
+        "basemapStyleUrl": NAVIGATOR_BASEMAP_STYLE,
         "basemapVisible": True,
         "basemapOpacity": 1,
         "layers": layers,
@@ -646,6 +650,7 @@ def public_tiled_geolibre_project(
     coordinate_scope: str = "exact",
     summary: Mapping[str, Any],
     map_view: Mapping[str, Any] | None = None,
+    basemap_style_url: str = NAVIGATOR_BASEMAP_STYLE,
 ) -> dict[str, Any]:
     """Build a tiny public project backed by zoom-dependent vector tiles.
 
@@ -654,6 +659,7 @@ def public_tiled_geolibre_project(
     catalog size while preserving the exact/fallback layer distinction.
     """
     coordinate_scope = parse_coordinate_scope(coordinate_scope)
+    native_markers = basemap_style_url != NAVIGATOR_BASEMAP_STYLE
 
     def layer(
         *,
@@ -683,17 +689,17 @@ def public_tiled_geolibre_project(
                 "maxZoom": 24,
                 "fillColor": "#d69a2d" if fallback else "#2f7169",
                 "strokeColor": "#6f4b00" if fallback else "#f8f5ed",
-                "strokeWidth": 1.1 if fallback else 0.8,
+                "strokeWidth": 0 if native_markers else 1.1 if fallback else 0.8,
                 "strokeWidthUnit": "pixels",
-                "fillOpacity": 0.58 if fallback else 0.64,
+                "fillOpacity": 0 if native_markers else 0.58 if fallback else 0.64,
                 "circleRadius": 4,
                 "pointRenderer": "single",
                 "proportionalSizeEnabled": True,
-                "proportionalSizeProperty": "visualWeight",
-                "proportionalSizeMinValue": 0.3,
-                "proportionalSizeMaxValue": 5.1,
-                "proportionalSizeMinRadius": 3.0,
-                "proportionalSizeMaxRadius": 17.0,
+                "proportionalSizeProperty": "markerRadius" if native_markers else "visualWeight",
+                "proportionalSizeMinValue": 5 if native_markers else 0.3,
+                "proportionalSizeMaxValue": 17 if native_markers else 5.1,
+                "proportionalSizeMinRadius": 5 if native_markers else 3.0,
+                "proportionalSizeMaxRadius": 17 if native_markers else 17.0,
             },
             "metadata": {
                 "contract": (
@@ -709,7 +715,10 @@ def public_tiled_geolibre_project(
                     if fallback
                     else "persisted-position-density-to-site-groups"
                 ),
-                "renderingSemantics": "density-cells-through-zoom-11; individual-sites-from-zoom-12",
+                "renderingSemantics": (
+                    "counted-site-groups-through-zoom-11; individual-sites-from-zoom-12"
+                    if native_markers else "density-cells-through-zoom-11; individual-sites-from-zoom-12"
+                ),
                 **({"precisionSemantics": "per-feature-coordinatePrecision"} if fallback else {}),
             },
             "capabilities": {
@@ -740,7 +749,7 @@ def public_tiled_geolibre_project(
         "version": GEOLIBRE_PROJECT_VERSION,
         "name": "MODAVIS organ geography",
         "mapView": dict(map_view or PUBLIC_MAP_INITIAL_VIEW),
-        "basemapStyleUrl": OPENFREEMAP_STYLE,
+        "basemapStyleUrl": basemap_style_url,
         "basemapVisible": True,
         "basemapOpacity": 1,
         "layers": layers,
@@ -759,7 +768,7 @@ def public_tiled_geolibre_project(
             "geolibreCommit": GEOLIBRE_RUNTIME_COMMIT,
             "coordinateScope": coordinate_scope,
             "remoteGroupedSources": True,
-            "renderingModel": "density-to-cluster-to-venue",
+            "renderingModel": "counted-groups-to-individual-sites" if native_markers else "density-to-cluster-to-venue",
             "initialPayloadContainsGlobalFeatures": False,
             "tileMaxZoom": 14,
             "individualSiteMinZoom": 12,
@@ -775,6 +784,85 @@ def public_tiled_geolibre_project(
             "historicalRouteAssertion": False,
             "canonicalMutationAllowed": False,
         },
+    }
+
+
+@lru_cache(maxsize=1)
+def _map_basemap_style() -> dict[str, Any]:
+    installed = Path(__file__).with_name("basemap-assets-v2.json")
+    source = Path(__file__).resolve().parents[2] / "frontend/public/basemap/assets-v2/style.json"
+    return json.loads((installed if installed.is_file() else source).read_bytes())
+
+
+def public_map_marker_style(
+    *, project: Mapping[str, Any], origin: str,
+) -> dict[str, Any]:
+    """Add counted bubbles and site dots to the same native MVT sources GeoLibre queries."""
+    basemap = _map_basemap_style()
+    sources = dict(basemap["sources"])
+    circles = []
+    labels = []
+    local_zoom = 6
+    for layer in project["layers"]:
+        if not layer["visible"]:
+            continue
+        layer_id = layer["id"]
+        # The pinned GeoLibre runtime uses this source id for the interactive
+        # project layer as well. Sharing it avoids a second vector tile source.
+        source_id = f"source-{layer_id}"
+        sources[source_id] = {
+            key: value for key, value in layer["source"].items()
+            if key not in {"sourceLayer", "sourceLayers"}
+        }
+        source = {"source": source_id, "source-layer": PUBLIC_MAP_VECTOR_SOURCE_LAYER}
+        fallback = layer_id == FALLBACK_MAP_LAYER_ID
+        color = "#895512" if fallback else "#225e55"
+        counted = [">", ["get", "point_count"], 1]
+        source_grid = ["in", "source grid", ["downcase", ["get", "coordinatePrecision"]]]
+        circles.append({
+            "id": f"navigator-marker-{layer_id}",
+            "type": "circle",
+            **source,
+            "paint": {
+                "circle-radius": [
+                    "interpolate", ["linear"], ["zoom"], 5, ["get", "markerRadius"],
+                    8, ["*", 0.72, ["get", "markerRadius"]],
+                ],
+                "circle-color": [
+                    "case", counted, color, source_grid, "#497c88",
+                    "#c38b3e" if fallback else "#34756c",
+                ],
+                "circle-opacity": ["step", ["zoom"], 0.94, local_zoom, ["case", counted, 0.16, 0.78]],
+                "circle-stroke-color": ["step", ["zoom"], "#fffdf6", local_zoom, ["case", counted, color, "#fffdf6"]],
+                "circle-stroke-width": ["case", counted, 1.35, 1],
+                "circle-stroke-opacity": ["step", ["zoom"], 1, local_zoom, ["case", counted, 0.53, 0.92]],
+            },
+        })
+        labels.append({
+            "id": f"navigator-count-{layer_id}",
+            "type": "symbol",
+            **source,
+            "filter": counted,
+            "layout": {
+                "text-field": ["get", "clusterLabel"],
+                "text-font": ["Noto Sans Bold"],
+                "text-size": 11,
+                "text-allow-overlap": ["step", ["zoom"], True, local_zoom, False],
+                "text-ignore-placement": True,
+            },
+            "paint": {
+                "text-color": ["step", ["zoom"], "#ffffff", local_zoom, "#583607" if fallback else "#163d35"],
+                "text-halo-color": "#fffdf6",
+                "text-halo-width": ["step", ["zoom"], 0, local_zoom, 0.9],
+            },
+        })
+    basemap_layers = basemap["layers"]
+    first_label = next((i for i, layer in enumerate(basemap_layers) if layer["type"] == "symbol"), len(basemap_layers))
+    return {
+        **basemap,
+        "sprite": origin + basemap["sprite"],
+        "sources": sources,
+        "layers": [*basemap_layers[:first_label], *circles, *labels, *basemap_layers[first_label:]],
     }
 
 

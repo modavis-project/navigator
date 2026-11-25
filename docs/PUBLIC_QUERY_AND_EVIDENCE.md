@@ -21,6 +21,36 @@ distribution manifest, `GET /api/health/capabilities` for serving status and
 The [POD Explorer data-access tools](https://navigator.modavis.org/pod-explorer?collection=data-access)
 include an interactive GraphQL editor, entity exports and dataset downloads.
 
+### Administrative areas
+
+Use `GET /api/areas?q=...` to look up up to six reported administrative
+areas. Match a full area name, a supported alias, or the area and an ancestor
+name in either order. Search input is case-insensitive. Ambiguous names favour
+areas associated with more documented places. An empty query returns an
+empty list. The global entity search includes up to three such matches in
+its Places group alongside location records. Administrative results have
+`kind=administrative_area` and retain their area type and context.
+
+```sh
+curl -fsS --get 'https://navigator.modavis.org/api/areas' \
+  --data-urlencode 'q=Lower Saxony'
+curl -fsS --get 'https://navigator.modavis.org/api/areas' \
+  --data-urlencode 'q=Winterhude, Hamburg'
+```
+
+Follow the area link or use its ID with `GET /api/areas/{id}`. An area record
+includes ancestor links, directly reported child areas, and linked organs.
+`child_offset` and `organ_offset` paginate the two lists independently. Both
+start at zero and return twelve records per page.
+
+Statistics count distinct organ records and place records connected by a
+documented current location assertion and a retained containment relation.
+Mapped sites are distinct current map groups tied to those assertions through
+the same location route. The figures cover the published evidence and may omit
+organs without an administrative association. Administrative links describe
+reported context and do not establish boundaries, centroids or identity
+equivalence with a MODAVIS place record.
+
 ### Tuning system occurrences
 
 `GET /api/temperaments` includes `occurrences.total`, `exactVariantCount` and

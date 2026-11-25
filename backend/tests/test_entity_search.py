@@ -14,6 +14,7 @@ import pytest
 from werkzeug.datastructures import MultiDict
 
 from navigator_app import public_discovery
+from navigator_app.public_areas import AreaIndex
 from navigator_app.public_repository import PublicReleaseRepository
 
 CONTRACT_PATH = Path(__file__).resolve().parents[2] / "fixtures/entity-search-contract.json"
@@ -99,6 +100,37 @@ def test_empty_search_has_no_invented_groups_or_matching_counts(corpus):
     assert response["total"] == response["returned"] == 0
     assert not response["hasMore"]
     assert set(response["counts"].values()) == {0}
+
+
+def test_administrative_areas_fit_within_the_place_and_global_limits(corpus):
+    index = AreaIndex([
+        {"identifier": f"locadmin:place{number}", "title": "Marburg", "role": "town",
+         "hierarchy": {"country": f"Country {number}"}, "support": number}
+        for number in range(1, 6)
+    ])
+    corpus.repo.public_areas = SimpleNamespace(search=index.matches)
+    corpus.insert("place", [("MDVS:LOCN:P1", "Marburg Market Church", "canonical_venue", 2)])
+    result = corpus.search("marburg", limit=2)
+    assert result["counts"]["places"] == 4
+    assert result["returned"] == 2
+    assert result["groups"][0]["id"] == "places"
+    assert [item["targetId"] for item in result["items"]] == ["locadmin:place5", "locadmin:place4"]
+    assert result["items"][0]["url"] == "/areas/locadmin%3Aplace5"
+    assert result["items"][0]["kind"] == "administrative_area"
+    assert result["items"][0]["areaType"] == "town"
+    assert "mdvsId" not in result["items"][0]
+    assert corpus.search("marburg", kinds=("organs",))["total"] == 0
+
+
+def test_qualified_area_keeps_the_associated_organ_visible_first(corpus):
+    index = AreaIndex([{
+        "identifier": "locadmin:winterhude", "title": "Winterhude", "role": "district",
+        "hierarchy": {"municipality": "Hamburg"}, "support": 1,
+    }])
+    corpus.repo.public_areas = SimpleNamespace(search=index.matches)
+    corpus.insert("organ", [("MDVS:ENTY:CHAPEL", "Winterhude Church, Hamburg", 1)])
+    result = corpus.search("Hamburg Winterhude")
+    assert [item["targetId"] for item in result["items"]] == ["MDVS:ENTY:CHAPEL", "locadmin:winterhude"]
 
 
 def test_exact_and_prefix_matches_are_ranked_before_limit(corpus):

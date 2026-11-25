@@ -21,7 +21,7 @@ function load(name) {
   return exports;
 }
 const { SourceReportedTotals } = load("organSpecificationDescriptions");
-const { SourceOccurrenceEvidence } = load("eventParticipation");
+const { EventTransferEndpoints, SourceOccurrenceEvidence } = load("eventParticipation");
 const escape = value => value.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" }[c]));
 function renderTotal(span) {
   const summaryEvidence = { interpretation: "source_assertion", scope: "source_account", evidence: [span] };
@@ -71,4 +71,14 @@ test("event source locations omit blank field labels while preserving verified s
     assert.match(html, /Built here\./);
   }
   assert.match(render("history.description"), /Source field: <code>history\.description<\/code>/);
+});
+
+test("a transfer card shows the documented endpoint even without a map connection", () => {
+  const event = {
+    movement: { status: "unresolved" },
+    transferEndpoints: { origin: [], destination: [{ title: "North Chapel", pageUrl: "/places/EXAMPLE" }] },
+  };
+  const html = renderToStaticMarkup(createElement(EventTransferEndpoints, { event }));
+  assert.match(html, /<dt>Origin<\/dt><dd>Undocumented<\/dd>/);
+  assert.match(html, /<dt>Destination<\/dt><dd><a href="\/places\/EXAMPLE">North Chapel<\/a>/);
 });

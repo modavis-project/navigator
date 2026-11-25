@@ -1,17 +1,19 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Braces, ExternalLink, MapPin } from "lucide-react";
 import { IdentifierCopy } from "./publicExperience";
+import { LoadingContent } from "./LoadingContent";
 import { EntityExportPanel, EntityPageTabs, EntityTabPanel, useEntityPageTab } from "./entityExport";
 import type { EntityExportManifest } from "./api";
 import { publicGetJson } from "./api";
 
-function useRecord<T>(path: string) {
+export function useRecord<T>(path: string | null) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
-    const controller = new AbortController();
     setData(null); setError("");
+    if (!path) return;
+    const controller = new AbortController();
     publicGetJson<T>(path, controller.signal)
       .then(value => { if (!controller.signal.aborted) setData(value); })
       .catch(error => { if (!controller.signal.aborted) setError(String(error.message)); });
@@ -50,9 +52,14 @@ interface PlaceRecord {
   export?: EntityExportManifest;
 }
 
-function Hierarchy({ title, items }: { title: string; items?: PlaceRecord["sourceHierarchy"] }) {
+function Hierarchy({ title, items, areas }: { title: string; items?: PlaceRecord["sourceHierarchy"]; areas?: PlaceRecord["administrativeNodes"] }) {
   if (!items?.length) return null;
-  return <section className="place-hierarchy"><h3>{title}</h3><ol>{items.map((item, index) => <li key={`${item.role}:${item.value}:${index}`}><span>{item.role.replace(/_/g, " ")}</span><strong>{item.value}</strong>{item.language && <small>{item.language}</small>}</li>)}</ol></section>;
+  return <section className="place-hierarchy"><h3>{title}</h3><ol>{items.map((item, index) => {
+    const area = areas?.find(area => area.role === item.role && area.preferredName === item.value);
+    return <li key={`${item.role}:${item.value}:${index}`}><span>{item.role.replace(/_/g, " ")}</span>
+      <strong>{area ? <a href={`/areas/${encodeURIComponent(area.nodeId)}`}>{item.value}</a> : item.value}</strong>
+      {item.language && <small>{item.language}</small>}</li>;
+  })}</ol></section>;
 }
 
 export function PublicPlacePage({ id }: { id: string }) {
@@ -60,7 +67,7 @@ export function PublicPlacePage({ id }: { id: string }) {
   const { activeTab, selectTab } = useEntityPageTab(place ? Boolean(place.export) : undefined, id);
   useEffect(() => { if (place) document.title = `${place.title} · Place | MODAVIS Navigator`; }, [place]);
   if (error) return <RecordLoadFailure kind="place" error={error} onRetry={retry} />;
-  if (!place) return <p role="status">Loading place…</p>;
+  if (!place) return <LoadingContent kind="article" label="Loading place…" />;
   const sources = [...new Map(place.sources.map(source => [source.id, source])).values()];
   const venueCoordinates = ["venue", "exact_venue", "building", "exact"].includes(place.coordinate?.precision?.toLowerCase() || "");
   const placeKind = place.kind.startsWith("source_scoped_")
@@ -75,7 +82,7 @@ export function PublicPlacePage({ id }: { id: string }) {
       {(hasSourceHierarchy || hasProviderHierarchy) && <section className="panel-block">
         <h2>Administrative context</h2>
         {hasSourceHierarchy && hasProviderHierarchy && <p className="muted">Source wording and geocoding observations are shown separately. Provider identifiers document a match and do not replace the MODAVIS identity.</p>}
-        <div className="place-hierarchy-grid"><Hierarchy title="As stated by sources" items={place.sourceHierarchy} /><Hierarchy title="Geocoding result" items={place.providerHierarchy} /></div>
+        <div className="place-hierarchy-grid"><Hierarchy title="As stated by sources" items={place.sourceHierarchy} /><Hierarchy title="Geocoding result" items={place.providerHierarchy} areas={place.administrativeNodes} /></div>
       </section>}
       {place.names && place.names.length > 1 && <section className="panel-block"><h2>Documented names</h2><div className="place-name-list">{place.names.map((item, index) => <div key={`${item.name}:${index}`}><strong>{item.name}</strong><span>{[item.kind?.replace(/_/g, " "), item.language, item.evidenceLayer?.replace(/_/g, " ")].filter(Boolean).join(" · ")}</span></div>)}</div></section>}
       <section className="panel-block"><h2>{place.organCount === 1 ? "Organ at this location" : `${place.organCount.toLocaleString()} organs at this location`}</h2><div className="public-record-list">{place.organs.map(organ => <a key={organ.id} href={organ.url}><strong>{organ.title}</strong><span>{organ.scope === "current" ? "Current location" : "Historical location"} · {organ.source}</span></a>)}</div>{place.organCount > place.organs.length && <p>Showing the first {place.organs.length} organs.</p>}</section>
@@ -98,7 +105,7 @@ export function PublicSourcePage({ id }: { id: string }) {
   const { data: source, error, retry } = useRecord<SourceRecord>(`/api/public/sources/${encodeURIComponent(id)}`);
   useEffect(() => { if (source) document.title = `${source.title} · Source record | MODAVIS Navigator`; }, [source]);
   if (error) return <RecordLoadFailure kind="source" error={error} onRetry={retry} />;
-  if (!source) return <p role="status">Loading source record…</p>;
+  if (!source) return <LoadingContent kind="article" label="Loading source record…" />;
   const counts = [
     { count: source.counts.events, singular: "activity", plural: "activities", tab: "history" },
     { count: source.counts.components, singular: "main specification entry", plural: "main specification entries", tab: "specification" },

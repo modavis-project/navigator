@@ -25,10 +25,12 @@ from .temperament_occurrences import EXACT, FAMILY, OCCURRENCE_SCOPE_KINDS, Temp
 from . import public_specifications
 from .public_specification_comparisons import assertion_status, compare_technical_facts, coverage_summary
 from .public_catalog_context import PublicCatalogContext, catalogue_path
+from .public_relocations import EVENT_ROUTE_FILTERS, MAP_FILTERS, matches_endpoint_filter
 from .config import Settings
 from .public_source_actors import PublicSourceActorsMixin
 from .public_actor_pages import PublicActorPagesMixin
 from .public_actor_directory import PublicActorDirectoryMixin
+from .public_areas import AREA_MAP_MEMBER_EXISTS, PublicAreas
 from .db import connect
 from .identity_ledger import IdentityLedgerError, cached_ledger_resolver
 from .map_projection import COMPACT_EXACT_SELECTION_TOLERANCE
@@ -224,6 +226,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         self._score_facets_cache: dict[str, Any] | None = None
         self._score_facets_cache_lock = Lock()
         self._public_query_cache = BoundedQueryCache()
+        self.public_areas = PublicAreas(settings)
         self._snapshot_manifest_signature = None
         self._snapshot_binding_cache = None
 
@@ -972,6 +975,10 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
     def entity_search(self, *, query: str, limit: int = 12, kinds=None) -> dict[str, Any]:
         from .public_discovery import KINDS, search_entities
         return search_entities(self, query=query, limit=limit, kinds=KINDS if kinds is None else kinds)
+
+    @snapshot_cached
+    def get_public_area(self, identifier: str, *, child_offset: int = 0, organ_offset: int = 0):
+        return self.public_areas.detail(identifier, child_offset=child_offset, organ_offset=organ_offset)
 
     def _resolve_organ_mdvs_id(self, organ_id: str) -> tuple[str, str | None] | None:
         value = str(organ_id or "").strip()
@@ -3046,6 +3053,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             "counts": {"participants": len(row.get("participants", [])), "locations": len(row.get("places", [])), "sources": 1},
             "completeness": {"state": "complete", "required": {"identity": True, "type": True, "subject": True, "source": True}, "missingOptional": [key for key, value in (("participants", row.get("participants")), ("locations", row.get("places"))) if not value]},
             "movement": row.get("movement") or {"status": "unresolved"},
+            "transferEndpoints": row.get("transfer_endpoints"),
             "source": {"id": row["source_record_id"], "source": row["source_key"], "title": row["source_key"], "status": "Structured event assertion", "url": row.get("source_url")},
             "pageUrl": f"/events/{quote(event_id, safe='')}",
         }
@@ -3079,8 +3087,18 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             else:
                 clauses.append("false")
         if query:
-            clauses.append("(e.event_id ilike %(query)s or e.source_event_type ilike %(query)s or e.controlled_event_type ilike %(query)s or e.organ_mdvs_id ilike %(query)s "
-                           f"or exists(select 1 from {SCHEMA}.organ o where o.mdvs_id=e.organ_mdvs_id and o.label ilike %(query)s))")
+            texts = ["e.event_id", "e.source_event_type", "e.controlled_event_type", "e.organ_mdvs_id"]
+            matches = [f"{field} ilike %(query)s" for field in texts]
+            matches.append(f"exists(select 1 from {SCHEMA}.organ o where o.mdvs_id=e.organ_mdvs_id and o.label ilike %(query)s)")
+            term = normalize_search_text(query).casefold()
+            if term and (event_type == "transfer" or route in EVENT_ROUTE_FILTERS):
+                params["endpoint_name_ids"] = sorted(
+                    event_id for event_id, endpoints in self._public_transfer_endpoints().items()
+                    if any(term in normalize_search_text(endpoint["title"]).casefold()
+                           for role in endpoints.values() for endpoint in role)
+                )
+                matches.append("e.event_id=ANY(%(endpoint_name_ids)s)")
+            clauses.append("(" + " or ".join(matches) + ")")
             params["query"] = literal_pattern(query)
         if subject:
             clauses.append(f"exists(select 1 from {SCHEMA}.organ o where o.mdvs_id=e.organ_mdvs_id and (o.mdvs_id=%(subject)s or replace(o.mdvs_id,'MDVS:ENTY:','')=%(subject)s or o.label ilike %(subject_label)s))")
@@ -3091,11 +3109,15 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         if source:
             clauses.append("e.source_key=%(source)s")
             params["source"] = source
-        if route in {"mapped","unresolved"}:
+        if route in EVENT_ROUTE_FILTERS:
             clauses.append("e.controlled_event_type='transfer'")
-            ids=sorted({x["eventMdvsId"] for x in self.public_relocation_movements() if x["status"]=="linked_complete_route"})
-            params["mapped_ids"]=ids
-            clauses.append(("" if route=="mapped" else "not ")+"(e.event_id=ANY(%(mapped_ids)s))")
+            if route in MAP_FILTERS:
+                params["route_ids"] = sorted({item["eventMdvsId"] for item in self.public_relocation_movements()
+                                              if item["status"] == "linked_complete_route"})
+            else:
+                params["route_ids"] = sorted(event_id for event_id, endpoints in self._public_transfer_endpoints().items()
+                                             if matches_endpoint_filter(endpoints, route))
+            clauses.append(("not " if route == "unresolved" else "") + "(e.event_id=ANY(%(route_ids)s))")
         date_join = """left join lateral (
             select min(coalesce((d->>'startYear')::int,(d->>'endYear')::int)) as year_start,
                    max(coalesce((d->>'endYear')::int,(d->>'startYear')::int)) as year_end
@@ -3125,7 +3147,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         facets = self._public_event_facets()
         return {
             "items": [self._event_summary(row) for row in self._event_context(rows)], "total": total, "limit": limit, "offset": offset,
-            "filters": {"query": query or "", "subject": subject or "", "participant": participant or "", "type": event_type or "", "source": source or "", "yearFrom": year_from, "yearTo": year_to, "sort": sort or "newest"},
+            "filters": {"query": query or "", "subject": subject or "", "participant": participant or "", "type": event_type or "", "source": source or "", "yearFrom": year_from, "yearTo": year_to, "sort": sort or "newest", "route": route or ""},
             "facets": {"eventTypes": [{"code": row["value"], "name": row["value"], "displayName": str(row["value"]).replace("_", " ").title(), "count": row["count"]} for row in facets]},
         }
 
@@ -3164,11 +3186,16 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         result["locations"] = [{"id": f"{event_id}:place:{index}", "title": p["name"],
             "role": {"name": p.get("role") or "Documented place"}} for index, p in enumerate(result["places"])]
         movement = result.get("movement") or {}
-        if movement.get("movements"):
-            result["locations"] = [{"id":f"{event_id}:{role}", "title":movement[role]["title"],
-                "pageUrl":movement[role]["pageUrl"], "role":{"name":role + ("; coordinates unresolved" if not movement[role].get("coordinates") else "; historical endpoint")}}
-                for role in ("origin","destination")]
-            result["description"] = movement["summary"] + (" Endpoint coordinates remain unresolved; no map connection is shown." if movement["status"] != "mapped" else "")
+        endpoints = result.get("transferEndpoints") or {}
+        if any(endpoints.values()):
+            locations = [item for item in result["locations"] if item["role"]["name"] not in endpoints]
+            result["locations"] = [
+                {"id": f"{event_id}:{role}:{index}", "title": endpoint["title"],
+                 "pageUrl": endpoint.get("pageUrl"), "role": {"name": role.title()}}
+                for role, values in endpoints.items() for index, endpoint in enumerate(values)
+            ] + locations
+        if movement.get("summary") and not result["description"]:
+            result["description"] = movement["summary"]
         result["subjects"] = [result["subject"]]
         source = result.pop("source")
         source["originalSourceUrl"] = source.pop("url", None)
@@ -3266,7 +3293,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
     def _public_map_relation(
         self, *, coordinate_scope: str = "all",
         bbox: tuple[float, float, float, float] | None = None,
-        site_group_id: str | None = None, **filters: Any,
+        site_group_id: str | None = None, area_identifier: str | None = None, **filters: Any,
     ) -> tuple[str, str, dict[str, Any]]:
         clauses: list[str] = []
         params: dict[str, Any] = {}
@@ -3282,6 +3309,9 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             params["site_group_id"] = site_group_id
         organ_clauses, organ_params = self._organ_filter_sql(**self._public_map_organ_filters(filters))
         params.update(organ_params)
+        if area_identifier:
+            organ_clauses.append(AREA_MAP_MEMBER_EXISTS)
+            params["identifier"] = area_identifier
         if not organ_clauses:
             where = "where " + " and ".join(clauses) if clauses else ""
             return f"{SCHEMA}.map_site_group g", where, params
@@ -3350,8 +3380,8 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         """
         bounds = public_map_tile_bounds(zoom, tile_x, tile_y)
         grid_size = public_map_tile_grid_size(zoom)
-        longitude_buffer = bounds.longitude_span / 64
-        latitude_buffer = (bounds.latitude_max - bounds.latitude_min) / 64
+        longitude_buffer = bounds.longitude_span / 64 if grid_size is None else 0
+        latitude_buffer = (bounds.latitude_max - bounds.latitude_min) / 64 if grid_size is None else 0
         relation, where, params = self._public_map_relation(
             coordinate_scope=coordinate_scope,
             bbox=(
@@ -3381,9 +3411,21 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 {where}
                 order by g.site_group_id"""
         else:
+            # Every site contributes to one aggregate cell. Individual tiles
+            # retain their rendering buffer, but aggregated tiles own only
+            # their interior and one side of each shared edge.
+            ownership = []
+            if tile_x < 2**zoom - 1:
+                ownership.append("g.longitude < %(tile_longitude_max)s")
+            if tile_y > 0:
+                ownership.append("g.latitude < %(tile_latitude_max)s")
+            if ownership:
+                where = " and ".join([where, *ownership]) if where else "where " + " and ".join(ownership)
             params.update(
                 grid_size=grid_size,
                 tile_longitude_min=bounds.longitude_min,
+                tile_longitude_max=bounds.longitude_max,
+                tile_latitude_max=bounds.latitude_max,
                 tile_longitude_span=bounds.longitude_span,
                 tile_projected_y_min=(bounds.projected_y_min / WEB_MERCATOR_RADIUS),
                 tile_projected_y_span=(bounds.projected_y_span / WEB_MERCATOR_RADIUS),
@@ -3402,16 +3444,16 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                     coalesce(sum(g.entity_count), 0)::bigint as entity_count,
                     coalesce(sum(g.location_count), 0)::bigint as location_count,
                     true as aggregate,
-                    floor(
+                    least(%(grid_size)s - 1, greatest(0, floor(
                         (g.longitude - %(tile_longitude_min)s)
                         / %(tile_longitude_span)s * %(grid_size)s
-                    )::int as grid_x,
-                    floor(
+                    )::int)) as grid_x,
+                    least(%(grid_size)s - 1, greatest(0, floor(
                         (
                             ln(tan(pi() / 4 + radians(g.latitude) / 2))
                             - %(tile_projected_y_min)s
                         ) / %(tile_projected_y_span)s * %(grid_size)s
-                    )::int as grid_y
+                    )::int)) as grid_y
                 from {relation}
                 {where}
                 group by g.coordinate_fallback, grid_x, grid_y
@@ -3473,6 +3515,35 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
 
     def public_map_has_site_group(self, **filters: Any) -> bool:
         return bool(self.public_map_site_groups(limit=1, **filters))
+
+    @snapshot_cached
+    def public_map_area_summary(
+        self, identifier: str, *, coordinate_scope: str, **filters: Any,
+    ) -> dict[str, Any] | None:
+        area = self.public_areas.resolve(identifier)
+        if area is None:
+            return None
+        clauses, params = self._organ_filter_sql(**self._public_map_organ_filters(filters))
+        if clauses:
+            sites = organs = self.public_areas.filtered_map_counts(area, clauses, params)
+        else:
+            sites = self.public_areas.map_data(area)
+            organs = sites["mapped_organ_counts"]
+        exact_sites = sites["exact_group_count"] if coordinate_scope != "fallback" else 0
+        fallback_sites = sites["fallback_group_count"] if coordinate_scope != "exact" else 0
+        organ_count_key = "mapped_organ_count" if coordinate_scope == "all" else f"{coordinate_scope}_mapped_organ_count"
+        return {
+            "contract": "modavis.navigator.public-map-area-summary/v1",
+            "area": area.link(),
+            "dataProfile": PROFILE,
+            "countsScope": "documented_area_membership",
+            "coordinateScope": coordinate_scope,
+            "groupCount": exact_sites + fallback_sites,
+            "exactGroupCount": exact_sites,
+            "fallbackGroupCount": fallback_sites,
+            "mappedOrganCount": organs[organ_count_key],
+            "canonicalMutationAllowed": False,
+        }
 
     def public_map_group_at(
         self,

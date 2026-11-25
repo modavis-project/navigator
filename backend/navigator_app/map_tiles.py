@@ -11,6 +11,7 @@ import mapbox_vector_tile
 
 PUBLIC_MAP_TILE_CONTRACT = "modavis.navigator.public-map-vector-tile/v1"
 PUBLIC_MAP_TILE_LAYER = "organ_sites"
+PUBLIC_MAP_MARKER_VERSION = 2
 PUBLIC_MAP_TILE_MAX_ZOOM = 14
 PUBLIC_MAP_TILE_RAW_MIN_ZOOM = 12
 WEB_MERCATOR_LATITUDE_LIMIT = 85.0511287798066
@@ -45,11 +46,11 @@ def public_map_tile_grid_size(zoom: int) -> int | None:
     if zoom >= PUBLIC_MAP_TILE_RAW_MIN_ZOOM:
         return None
     if zoom <= 2:
-        return 4
+        return 5
     if zoom <= 5:
-        return 6
-    if zoom <= 7:
         return 8
+    if zoom <= 7:
+        return 10
     if zoom <= 9:
         return 12
     return 16
@@ -109,6 +110,7 @@ def encode_public_map_tile(
         group_count = max(1, int(row.get("group_count") or 1))
         aggregate = bool(row.get("aggregate"))
         coordinate_fallback = bool(row.get("coordinate_fallback"))
+        marker_radius = 5 if group_count == 1 else 12 if group_count < 10 else 14 if group_count < 100 else 17
         properties: dict[str, Any] = {
             "aggregate": aggregate,
             "cluster": aggregate,
@@ -116,12 +118,18 @@ def encode_public_map_tile(
             "entityCount": entity_count,
             "locationCount": max(0, int(row.get("location_count") or 0)),
             "visualWeight": round(math.log10(max(1, entity_count) + 1), 4),
+            "markerRadius": marker_radius,
             "coordinateFallback": coordinate_fallback,
             "coordinatePrecision": str(
                 row.get("coordinate_precision")
                 or ("locality" if coordinate_fallback else "venue")
             ),
         }
+        if group_count > 1:
+            properties["clusterLabel"] = (
+                str(group_count) if group_count < 1000
+                else f"{group_count / 1000:.1f}".removesuffix(".0") + "k"
+            )
         if not aggregate:
             site_group_id = str(row.get("site_group_id") or "").strip()
             if not site_group_id:

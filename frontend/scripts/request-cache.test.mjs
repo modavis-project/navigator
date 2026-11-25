@@ -82,6 +82,26 @@ test("mutation invalidation prevents an older in-flight read from repopulating t
   assert.equal(calls, 2);
 });
 
+test("reads are scoped to the discovered POD and follow server cache policy", async () => {
+  const route = "/api/temperaments";
+  const snapshotHeader = "X-MODAVIS-POD-Snapshot";
+  const seen = [];
+  const { cache, tick } = setup(async (_url, { headers }) => {
+    const scope = headers[snapshotHeader];
+    seen.push(scope);
+    return { ...response(seen.length), headers: { get: () => scope === "old" ? "private, max-age=86400, immutable" : "private, no-cache" } };
+  });
+  cache.setPublicSnapshot("old");
+  assert.equal(await cache.get(route), 1);
+  tick(10_000);
+  assert.equal(await cache.get(route), 1);
+  cache.setPublicSnapshot("new");
+  assert.equal(await cache.get(route), 2);
+  assert.equal(await cache.get(route), 3);
+  assert.equal(await cache.get(route, { headers: { Authorization: "Bearer example" } }), 4);
+  assert.deepEqual(seen, ["old", "new", "new", undefined]);
+});
+
 test("service failures are retryable and do not reveal server details", async () => {
   let calls = 0;
   const { cache } = setup(async () => ++calls === 1 ? { ok: false, status: 503, text: async () => "private stack" } : response("ready"));

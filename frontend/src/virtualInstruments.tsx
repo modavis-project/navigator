@@ -1,6 +1,7 @@
 import { IdentifierCopy } from "./publicExperience";
+import { LoadingContent, UpdatingContent } from "./LoadingContent";
 import { EntityExportPanel, EntityPageTabs, EntityTabPanel, useEntityPageTab } from "./entityExport";
-import type { EntityExportManifest } from "./api";
+import { publicGetJson, type EntityExportManifest } from "./api";
 import { FormEvent, MouseEvent as ReactMouseEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
@@ -278,7 +279,8 @@ function filtersFromLocation(): CatalogFilters {
   };
 }
 
-async function readJson<T>(url: string): Promise<T> {
+async function readJson<T>(url: string, publicProjection: boolean): Promise<T> {
+  if (publicProjection) return publicGetJson<T>(url);
   const response = await fetch(url, { credentials: "same-origin", headers: { Accept: "application/json" } });
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(String(payload.detail || payload.error || `Request failed (${response.status})`));
@@ -814,7 +816,7 @@ export function VirtualInstrumentsArea({ activeReleaseVersion, baselineReleaseVe
     setLoading(true); setError("");
     if (selectedId) {
       setDetail(null);
-      readJson<{ virtualInstrument: VirtualInstrumentDetail }>(`/api/virtual-instruments/${encodeURIComponent(selectedId)}`)
+      readJson<{ virtualInstrument: VirtualInstrumentDetail }>(`/api/virtual-instruments/${encodeURIComponent(selectedId)}`, publicProjection)
         .then((response) => { if (!cancelled) {
           setDetail(response.virtualInstrument);
           const path = response.virtualInstrument.canonicalUrl;
@@ -823,14 +825,13 @@ export function VirtualInstrumentsArea({ activeReleaseVersion, baselineReleaseVe
         .catch((reason: Error) => { if (!cancelled) setError(reason.message); })
         .finally(() => { if (!cancelled) setLoading(false); });
     } else {
-      setCatalog(null);
-      readJson<CatalogResponse>(requestUrl)
+      readJson<CatalogResponse>(requestUrl, publicProjection)
         .then((response) => { if (!cancelled) setCatalog(response); })
         .catch((reason: Error) => { if (!cancelled) setError(reason.message); })
         .finally(() => { if (!cancelled) setLoading(false); });
     }
     return () => { cancelled = true; };
-  }, [requestUrl, selectedId]);
+  }, [publicProjection, requestUrl, selectedId]);
 
   useEffect(() => {
     document.title = detail ? `${detail.title} · MODAVIS Navigator` : "Virtual instruments · MODAVIS Navigator";
@@ -858,17 +859,18 @@ export function VirtualInstrumentsArea({ activeReleaseVersion, baselineReleaseVe
   };
   const open = (id: string) => {
     catalogScrollPosition.current = window.scrollY;
+    setDetail(null); setLoading(true); setError("");
     window.history.pushState(null, "", `/virtual-instruments/${encodeURIComponent(id.replace(/^MDVS:VMIN:/, ""))}${window.location.search}`);
     setSelectedId(id); window.scrollTo({ top: 0, behavior: "auto" });
   };
   const back = () => {
     restoreCatalogScroll.current = true;
-    setCatalog(null); setLoading(true);
+    setLoading(true);
     updateCatalogRoute(filters); setSelectedId(""); setDetail(null);
   };
 
   if (selectedId) {
-    if (loading) return <section className="vpi-shell"><p className="notice" role="status">Loading virtual instrument entity…</p></section>;
+    if (loading) return <section className="vpi-shell"><LoadingContent kind="article" label="Loading virtual instrument entity…" /></section>;
     if (error || !detail) return <section className="vpi-shell"><button className="vpi-back" type="button" onClick={back}><ArrowLeft size={16} /> Back</button><p className="notice error">{error || "Virtual instrument not found."}</p></section>;
     return <section className="vpi-shell" id="vmi" tabIndex={-1}>{publicProjection
       ? <PublicVirtualInstrumentDetail instrument={detail} releaseVersion={String(detail.releaseBoundary?.targetRelease || activeReleaseVersion || "")} onBack={back} />
@@ -884,8 +886,8 @@ export function VirtualInstrumentsArea({ activeReleaseVersion, baselineReleaseVe
 
       <section className="vpi-filter-panel" aria-label="Virtual instrument filters">
         <form onSubmit={applySearch}><label><span>{publicProjection ? "Search titles and identifiers" : "Search all structured fields"}</span><div><Search size={16} /><input aria-label={publicProjection ? "Search virtual instruments" : "Search all structured fields"} value={draftQuery} onChange={(event) => setDraftQuery(event.target.value)} placeholder={publicProjection ? "Virtual instrument title or identifier" : "Instrument, venue, builder, producer, platform…"} /><button type="submit">Search</button></div></label></form>
-        {catalog && <div className="vpi-filter-grid vpi-filter-primary">
-          <label><span>Organ relationship</span><select value={filters.organ_link} onChange={event => changeFilter("organ_link", event.target.value)}><option value="">All virtual instruments</option><option value="linked">Linked to an organ record</option><option value="unlinked">No confirmed organ link</option></select></label>
+        {catalog && <div className="vpi-filter-grid vpi-filter-primary aligned-catalogue-controls">
+          <label><span>Organ relationship</span><select value={filters.organ_link} onChange={event => changeFilter("organ_link", event.target.value)}><option value="">All instruments</option><option value="linked">Linked to an organ record</option><option value="unlinked">No confirmed organ link</option></select></label>
           <FacetSelect label="Producer" name="producer" value={filters.producer} items={catalog.facets.producers} itemKey="producer" onChange={changeFilter} />
           <FacetSelect label="Platform" name="platform" value={filters.platform} items={catalog.facets.platforms} itemKey="platform" onChange={changeFilter} />
           <FacetSelect label="Access" name="access" value={filters.access} items={catalog.facets.accessCategories} itemKey={publicProjection ? "value" : "access"} onChange={changeFilter} />
@@ -905,18 +907,20 @@ export function VirtualInstrumentsArea({ activeReleaseVersion, baselineReleaseVe
         <footer>{!publicProjection && <label className="vpi-subordinate-toggle"><input type="checkbox" checked={filters.independently_distributed === ""} onChange={(event) => changeFilter("independently_distributed", event.target.checked ? "" : "yes")} /><span><strong>Include subordinate components and variants</strong><small>Off by default; components remain available inside their parent packages.</small></span></label>}<button type="button" onClick={clear}>Reset filters</button></footer>
       </section>
 
-      {error && <p className="notice error">{error}</p>}
-      {loading && <p className="notice" role="status">Loading virtual instrument entities…</p>}
-      {catalog && !loading && <>
-        <div className="vpi-result-head"><strong>{formatInteger(catalog.total)} {publicProjection ? "virtual instrument" : filters.independently_distributed === "yes" ? "independent package" : "evidence result"}{catalog.total === 1 ? "" : "s"}</strong><span>{publicProjection ? "Listed alphabetically" : filters.place ? "Filtered to one source-backed recording place" : filters.independently_distributed === "yes" ? "Components and variants are nested in each package" : "All package, component and variant rows included"}</span></div>
-        <div className="vpi-card-grid">{catalog.items.map((item) => <VirtualInstrumentCard key={item.id} item={item} onOpen={open} publicProjection={publicProjection} />)}</div>
-        {catalog.items.length === 0 && <div className="vpi-empty"><Layers3 size={28} /><strong>No virtual instruments match these filters.</strong><button type="button" onClick={clear}>Reset the collection</button></div>}
-        <nav className="vpi-pagination" aria-label="Virtual instrument pagination">
+      {error && <p className="notice error" role="alert">{error}</p>}
+      {!error && loading && (catalog?.items.length
+        ? <UpdatingContent label="Updating virtual instrument results…" />
+        : <LoadingContent kind="cards" className="vpi-card-grid" label="Loading virtual instruments…" />)}
+      {!error && catalog && (catalog.items.length > 0 || !loading) && <>
+        {!loading && <div className="vpi-result-head"><strong>{formatInteger(catalog.total)} {publicProjection ? "virtual instrument" : filters.independently_distributed === "yes" ? "independent package" : "evidence result"}{catalog.total === 1 ? "" : "s"}</strong><span>{publicProjection ? "Listed alphabetically" : filters.place ? "Filtered to one source-backed recording place" : filters.independently_distributed === "yes" ? "Components and variants are nested in each package" : "All package, component and variant rows included"}</span></div>}
+        <div className="vpi-card-grid" aria-busy={loading}>{catalog.items.map((item) => <VirtualInstrumentCard key={item.id} item={item} onOpen={open} publicProjection={publicProjection} />)}</div>
+        {!loading && catalog.items.length === 0 && <div className="vpi-empty"><Layers3 size={28} /><strong>No virtual instruments match these filters.</strong><button type="button" onClick={clear}>Reset the collection</button></div>}
+        {!loading && <nav className="vpi-pagination" aria-label="Virtual instrument pagination">
           <button type="button" disabled={filters.offset === 0} onClick={() => { const next = { ...filters, offset: Math.max(0, filters.offset - PAGE_SIZE) }; setFilters(next); updateCatalogRoute(next); }}><ChevronLeft size={15} /> Previous</button>
           <span>{formatInteger(catalog.total ? filters.offset + 1 : 0)}–{formatInteger(Math.min(filters.offset + PAGE_SIZE, catalog.total))} of {formatInteger(catalog.total)}</span>
           <button type="button" disabled={filters.offset + PAGE_SIZE >= catalog.total} onClick={() => { const next = { ...filters, offset: filters.offset + PAGE_SIZE }; setFilters(next); updateCatalogRoute(next); }}>Next <ChevronRight size={15} /></button>
-        </nav>
-        {!publicProjection && <details className="vpi-catalog-context">
+        </nav>}
+        {!loading && !publicProjection && <details className="vpi-catalog-context">
           <summary>Collection scope and linkage evidence</summary>
           <div className="vpi-metrics">
             <article><strong>{formatInteger(catalog.counts.entities)}</strong><span>evidence entities total</span></article>

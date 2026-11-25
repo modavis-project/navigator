@@ -50,6 +50,25 @@ def test_public_routes_bind_snapshot_and_export(work):
  assert client.get('/api/vocab/usage/unknown').status_code==404
  r=client.get('/api/vocab/usage/stops/export?term=Vox%20Humana');assert r.json['completeSelection'] and 'attachment' in r.headers['Content-Disposition']
 
+
+@pytest.mark.parametrize("query", ["dankesbrief", "Dankesbrief", "DANKESBRIEF"])
+def test_vocabulary_search_preserves_recorded_spelling_across_query_case(work, query):
+    app = Flask(__name__)
+    app.extensions["research_workbench"] = work
+    register_vocabulary_usage(app)
+    client = app.test_client()
+
+    matches = client.get("/api/vocab/usage/activities", query_string={"q": query}).json
+    assert matches["total"] == 1
+    assert matches["items"][0]["label"] == "Dankesbrief"
+    assert "term=Dankesbrief&match=exact&snapshot=core" in matches["items"][0]["href"]
+
+    evidence = client.get("/api/vocab/usage/activities", query_string={"term": query, "snapshot": "core"}).json
+    assert evidence["counts"]["occurrences"] == 1
+    assert evidence["items"][0]["href"] == "/events/5"
+    assert evidence["items"][0]["label"] == "Dankesbrief"
+
+
 def test_source_scope_and_search_order_do_not_merge_other_wordings(work):
  assert usage(work,'stops',{'q':'Vox Humana'})['items'][0]['key']=='vox humana'
  d=usage(work,'stops',{'term':'Vox Humana','source':'test'})

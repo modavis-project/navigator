@@ -12,7 +12,8 @@ from .public_query_identity import (
 )
 
 SCHEMA = "release_1_5_public"
-METHOD = "modavis.literal-ranked-discovery/v3"
+METHOD = "modavis.literal-ranked-discovery/v4"
+DISCOVERY_AREA_LIMIT = 3
 KINDS = ("organs", "people", "places", "events")
 LABELS = {"organs": "Pipe organs", "people": "People and builders", "places": "Places",
           "events": "Documented event assertions"}
@@ -169,6 +170,22 @@ def _item(kind, row, query):
     return result
 
 
+def _area_item(area, field):
+    link = area.link()
+    rank, label = {
+        "identifier": (0, "Exact area identifier"),
+        "name": (1, "Exact area name"),
+        "context": (4, "Area name and administrative context"),
+    }[field]
+    return {
+        "kind": "administrative_area", "entityType": "administrative_area",
+        "searchGroup": "places", "searchGroupLabel": LABELS["places"], "searchRank": rank,
+        "targetId": link["id"], "title": link["title"], "url": link["url"],
+        "areaType": link["type"], "context": link["context"], "badges": [],
+        "match": {"field": field, "value": link["title"], "label": label},
+    }
+
+
 def search_entities(repo, *, query, limit=12, kinds=KINDS):
     query = normalize_search_text(query)
     if len(query) > MAX_SEARCH_TEXT_LENGTH or set(kinds) - set(KINDS):
@@ -177,14 +194,22 @@ def search_entities(repo, *, query, limit=12, kinds=KINDS):
     kinds = tuple(kind for kind in KINDS if kind in kinds)
     totals = dict.fromkeys(KINDS, 0)
     pages = []
+    area_items = []
     if query:
+        area_directory = getattr(repo, "public_areas", None)
+        if "places" in kinds and area_directory is not None:
+            area_items = [_area_item(area, field) for area, field in area_directory.search(query, DISCOVERY_AREA_LIMIT)]
         directory = repo._has_actor_directory() if "people" in kinds else False
         with connect(repo.settings) as connection:
             for kind in kinds:
                 count_sql, page_sql, bound = discovery_sql(kind, query, limit, actor_directory=directory)
                 rows = connection.execute(page_sql, bound).fetchall()
                 totals[kind] = int(rows[0]["matching_total"]) if rows else 0
-                pages.append([_item(kind, row, query) for row in rows])
+                page = [_item(kind, row, query) for row in rows]
+                if kind == "places":
+                    totals[kind] += len(area_items)
+                    page = sorted(area_items + page, key=lambda item: item["searchRank"])[:limit]
+                pages.append(page)
     # Equal-rank ties rotate through entity kinds, in deterministic SQL order.
     # Each source is ranked BEFORE LIMIT, so a distant exact name cannot be lost.
     candidates = [item for row in zip_longest(*pages) for item in row if item] if pages else []
@@ -207,6 +232,7 @@ def search_entities(repo, *, query, limit=12, kinds=KINDS):
             "counts": {"organs": totals["organs"], "canonicalActors": totals["people"], "places": totals["places"],
                        "events": totals["events"], "candidateEntities": 0, "vmiCandidates": 0},
             "countScopes": {"organs": "canonical_organ_records", "canonicalActors": "canonical_actor_identities",
-                            "places": "place_and_source_location_records", "events": "source_event_assertions"},
+                            "places": "place_location_records_and_bounded_administrative_area_matches"
+                            if area_items else "place_and_source_location_records", "events": "source_event_assertions"},
             "queryIdentity": semantic_query_identity("/api/entities/search", {"q": query, "kinds": list(kinds)},
                                                      bindings=binding, method=METHOD)}

@@ -4,6 +4,7 @@ WORKDIR /app
 COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/navigator_app ./navigator_app
+COPY frontend/public/basemap/assets-v2/style.json ./navigator_app/basemap-assets-v2.json
 COPY LICENSE NOTICE THIRD_PARTY_NOTICES.md /usr/share/licenses/modavis-navigator/
 USER 10001:10001
 EXPOSE 8506

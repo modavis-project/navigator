@@ -5,6 +5,7 @@ import test from "node:test";
 import vm from "node:vm";
 import ts from "typescript";
 import { testUiLocale } from "./ui-locale-test-support.mjs";
+import { LoadingContent } from "./loading-content-test-support.mjs";
 
 const appUrl = new URL("../src/App.tsx", import.meta.url);
 const temperamentRoutesUrl = new URL("../src/temperamentOccurrences.ts", import.meta.url);
@@ -57,6 +58,7 @@ test("temperament detail provides a labelled panel and keyboard focus for each t
   const context = {
     exports: {}, require: createRequire(import.meta.url), URL, URLSearchParams, ...routes,
     useUiLocale: testUiLocale,
+    LoadingContent,
     useState: initial => [typeof initial === "function" ? initial() : initial, () => {}],
     useRef: () => ({ current: null }), useEffect: () => {}, positiveRouteInt: () => 0,
     window: { location: url, history: { pushState: (_state, _title, next) => { destination = next; } } },
@@ -113,6 +115,7 @@ test("person and organization record URLs retain the public people section", asy
     assert.equal(context.sectionFromPath(url), "persons");
   }
   assert.equal(context.sectionFromPath("/places/TEST-0003-C"), "pod-explorer");
+  assert.equal(context.sectionFromPath("/areas/locadmin%3Aexample"), "map");
   assert.equal(context.sectionFromPath("/source/sr%3Aorgbase%3Aexample"), "pod-explorer");
 });
 

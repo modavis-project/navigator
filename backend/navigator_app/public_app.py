@@ -34,20 +34,26 @@ from .dataset_distributions import (
 from .entity_exports import FORMAT_MEDIA_TYPES, serialize_entity
 from .lod import alternate_links, normalize_standard, organ_jsonld
 from .map_projection import (
+    FALLBACK_MAP_LAYER_ID,
+    PUBLIC_MAP_MARKER_STYLE,
+    PUBLIC_MAP_STYLE_VERSION,
     actor_context_geolibre_project,
     geolibre_project,
     organ_context_geolibre_project,
     parse_bbox,
     parse_coordinate_scope,
+    public_map_marker_style,
     public_tiled_geolibre_project,
     public_site_groups_geojson,
 )
-from .map_tiles import encode_public_map_tile, public_map_tile_bounds
+from .map_tiles import PUBLIC_MAP_MARKER_VERSION, encode_public_map_tile, public_map_tile_bounds
+from .public_areas import AREA_MAP_CONTRACT, LOOKUP_LIMIT, area_map_view, area_page_offsets, validate_lookup
 from .pipework import (
     build_pipe_position_detail_record,
     build_register_pipe_position_page,
 )
 from .public_repository import PROFILE, PublicReleaseRepository
+from .public_relocations import EVENT_ROUTE_FILTERS
 from .public_source_projection_schema import public_source_projection_schema
 from .uri_policy import UriPolicy, parse_identifier
 from .vocabulary_query import query_arguments, bounded_integer, require_snapshot, vocabulary_endpoint, byte_response
@@ -79,18 +85,17 @@ def _optional_bool(value: Any) -> bool | None:
     return None
 
 
+_MAP_CATALOG_PARAMETERS = (
+    "q", "builder", "source", "location_state", "conflict_scope",
+    "specification_state", "event_type", "virtual_instrument", "temperament",
+    "temperament_scope",
+)
+
+
 def _catalog_filters() -> dict[str, str | None]:
     return {
-        "query": request.args.get("q") or None,
-        "builder": request.args.get("builder") or None,
-        "source": request.args.get("source") or None,
-        "location_state": request.args.get("location_state") or None,
-        "conflict_scope": request.args.get("conflict_scope") or None,
-        "specification_state": request.args.get("specification_state") or None,
-        "event_type": request.args.get("event_type") or None,
-        "virtual_instrument": request.args.get("virtual_instrument") or None,
-        "temperament": request.args.get("temperament") or None,
-        "temperament_scope": request.args.get("temperament_scope") or None,
+        ("query" if name == "q" else name): request.args.get(name) or None
+        for name in _MAP_CATALOG_PARAMETERS
     }
 
 
@@ -316,8 +321,9 @@ def create_public_app(
         else None
     )
     readiness = dict(repo.assert_ready())
-    if hasattr(repo, "snapshot_binding"):
-        repo.snapshot_binding()
+    from .public_read_cache import public_read_snapshot, register_public_read_cache
+    binding = repo.snapshot_binding() if hasattr(repo, "snapshot_binding") else {}
+    read_snapshot = public_read_snapshot(binding, settings)
     if dataset_catalog and dataset_catalog.supports(settings.uri_release_version):
         source_release = settings.public_source_release_version or settings.uri_release_version
         if dataset_catalog.manifest.get("sourceReleaseVersion", settings.uri_release_version) != source_release:
@@ -467,6 +473,8 @@ def create_public_app(
     register_vocabulary_references(app)
     from .vocabulary_catalogue import register_vocabulary_catalogue
     register_vocabulary_catalogue(app, repo)
+    from .region_boundaries import register_region_boundaries
+    register_region_boundaries(app, lambda: repo.public_areas.index())
 
     @app.before_request
     def validate_map_filters():
@@ -515,29 +523,31 @@ def create_public_app(
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         if request.path.startswith("/api/"):
-            response.headers.setdefault("Cache-Control", "public, max-age=300")
-        if (request.path.startswith("/api/health/")
-                or request.path in {"/api/release-context", "/api/status"}
+            response.headers.setdefault("Cache-Control", "private, no-cache")
+        if (request.path.startswith(("/api/health/", "/api/auth/", "/api/admin/"))
+                or request.path == "/api/status"
+                or (request.path == "/api/release-context" and not read_snapshot)
+                or (request.path.startswith("/api/") and request.method not in {"GET", "HEAD"})
                 or response.status_code >= 400):
             response.headers["Cache-Control"] = "no-store"
         if (
-            request.method == "GET"
-            and request.path in {
+            request.path in {
                 "/api/map/places.geojson",
                 "/api/map/project.geolibre.json",
+                "/api/map/regions.geojson",
             }
-            and response.status_code == 200
-            and request.accept_encodings["gzip"] > 0
-            and not response.headers.get("Content-Encoding")
+            and response.status_code in {200, 304}
         ):
-            body = response.get_data()
-            if len(body) >= 16_384:
-                compressed = gzip.compress(body, compresslevel=5, mtime=0)
-                response.set_data(compressed)
-                response.headers["Content-Encoding"] = "gzip"
-                response.headers["Content-Length"] = str(len(compressed))
-                response.headers["Vary"] = "Accept-Encoding"
+            response.vary.add("Accept-Encoding")
+            if (response.status_code == 200 and request.accept_encodings["gzip"] > 0
+                    and not response.headers.get("Content-Encoding")):
+                body = response.get_data()
+                if len(body) >= 16_384:
+                    response.set_data(gzip.compress(body, compresslevel=5, mtime=0))
+                    response.headers["Content-Encoding"] = "gzip"
         return response
+
+    register_public_read_cache(app, read_snapshot)
 
     @app.get("/api/health/live")
     def live():
@@ -558,7 +568,8 @@ def create_public_app(
 
     @app.get("/api/release-context")
     def release_context():
-        return jsonify(repo.release_context())
+        context = repo.release_context()
+        return jsonify({**context, "readSnapshot": read_snapshot} if read_snapshot else context)
 
     @app.get("/sitemap.xml")
     def public_sitemap():
@@ -782,6 +793,120 @@ def create_public_app(
         value = repo.get_public_place(identifier)
         return (jsonify(value), 200) if value else (jsonify({"error": "place_not_found"}), 404)
 
+    @app.get("/api/areas")
+    def search_public_areas():
+        try:
+            query = validate_lookup(request.args)
+        except ValueError as exc:
+            return jsonify({"error": "invalid_area_query", "message": str(exc)}), 400
+        return jsonify({"items": [area.link() for area, _ in repo.public_areas.suggest(query, LOOKUP_LIMIT)]})
+
+    @app.get("/api/areas/<identifier>")
+    def public_area(identifier: str):
+        try:
+            offsets = area_page_offsets(request.args)
+        except ValueError as exc:
+            return jsonify({"error": "invalid_area_query", "message": str(exc)}), 400
+        value = repo.get_public_area(identifier, **offsets)
+        return (jsonify(value), 200) if value else (jsonify({"error": "area_not_found"}), 404)
+
+    def area_map_payload(area, precision):
+        data = repo.public_areas.map_data(area)
+        scope = precision or ("exact" if data["exact_group_count"] else "fallback")
+        site_count = data[f"{scope}_group_count"]
+        if not site_count:
+            return None
+        summary = {
+            "exactGroupCount": data["exact_group_count"],
+            "fallbackGroupCount": data["fallback_group_count"],
+            "exactEntityCount": data["exact_entity_count"],
+            "fallbackEntityCount": data["fallback_entity_count"],
+        }
+        extent = data[f"{scope}_bounds"]
+        view = area_map_view(extent)
+        if data["inline_groups"] is not None:
+            project = geolibre_project(
+                public_site_groups_geojson(data["inline_groups"], coordinate_scope=scope),
+                coordinate_scope=scope, summary=summary, map_view=view,
+            )
+            for layer in project["layers"]:
+                fallback = layer["id"] == FALLBACK_MAP_LAYER_ID
+                layer["style"].update(
+                    fillColor="#c38b3e" if fallback else "#34756c", circleRadius=6,
+                    clusterRadius=42, clusterMaxZoom=12,
+                )
+        else:
+            map_api = f"/api/areas/{quote(area.identifier, safe='')}/map"
+
+            def tile_url(scope):
+                query = urlencode({"precision": scope, "release": settings.uri_release_version})
+                return f"{map_api}/tiles/{{z}}/{{x}}/{{y}}.mvt?{query}"
+
+            project = public_tiled_geolibre_project(
+                exact_tile_url=tile_url("exact"), fallback_tile_url=tile_url("fallback"),
+                coordinate_scope=scope, summary=summary, map_view=view,
+                basemap_style_url=f"{map_api}/style.json?precision={scope}&style={PUBLIC_MAP_STYLE_VERSION}",
+            )
+            # Suppress requests for tiles that cannot contain a matching site.
+            west, south, east, north = extent
+            bounds = [max(-180, west - .01), max(-85.05112878, south - .01),
+                      min(180, east + .01), min(85.05112878, north + .01)]
+            for layer in project["layers"]:
+                layer["source"]["bounds"] = bounds
+        project["name"] = area.title
+        project["metadata"].update(
+            areaId=area.identifier, areaMapContract=AREA_MAP_CONTRACT, mappedSites=data["group_count"],
+            visibleSites=site_count, dataProfile=PROFILE, visibility="public", sourceOwner="Navigator public release",
+            canonicalMutationAllowed=False, administrativeBoundaryIncluded=False,
+        )
+        for layer in project["layers"]:
+            layer["metadata"]["visibility"] = "public"
+        return project
+
+    @app.get("/api/areas/<identifier>/map/style.json", defaults={"as_style": True}, endpoint="public_area_map_style")
+    @app.get("/api/areas/<identifier>/map.geolibre.json")
+    def public_area_map(identifier: str, as_style: bool = False):
+        precision = request.args.get("precision")
+        if precision not in {None, "exact", "fallback"} or len(request.args.getlist("precision")) > 1:
+            return jsonify({"error": "invalid_area_map_precision"}), 400
+        area = repo.public_areas.resolve(identifier)
+        if area is None:
+            return jsonify({"error": "area_not_found"}), 404
+        project = area_map_payload(area, precision)
+        if not as_style:
+            return (jsonify(project), 200) if project else (jsonify({"error": "area_map_has_no_sites"}), 404)
+        if not project or not project["metadata"]["remoteGroupedSources"]:
+            return jsonify({"error": "area_map_style_not_found"}), 404
+        scheme = "https" if request.headers.get("X-Forwarded-Proto") == "https" else request.scheme
+        return jsonify(public_map_marker_style(project=project, origin=f"{scheme}://{request.host}"))
+
+    @app.get("/api/areas/<identifier>/map/tiles/<int:zoom>/<int:tile_x>/<int:tile_y>.mvt")
+    def public_area_map_tile(identifier: str, zoom: int, tile_x: int, tile_y: int):
+        if request.args.get("release") != settings.uri_release_version:
+            return jsonify({"error": "dataset_release_not_found"}), 404
+        area = repo.public_areas.resolve(identifier)
+        if area is None:
+            return jsonify({"error": "area_not_found"}), 404
+        try:
+            scope = parse_coordinate_scope(request.args.get("precision"))
+            body = cached_public_map_tile(zoom, tile_x, tile_y, scope, (("area_identifier", area.identifier),))
+        except ValueError as exc:
+            return jsonify({"error": "invalid_map_tile", "detail": str(exc)}), 400
+        response = Response(body, content_type="application/vnd.mapbox-vector-tile")
+        response.headers["Cache-Control"] = "public, max-age=86400, immutable"
+        response.set_etag(hashlib.sha256(body).hexdigest())
+        return response.make_conditional(request)
+
+    @app.get("/api/areas/<identifier>/map/sites/<path:site_group_id>")
+    def public_area_map_site(identifier: str, site_group_id: str):
+        if len(site_group_id) > 512:
+            return jsonify({"error": "map_site_group_not_found"}), 404
+        area = repo.public_areas.resolve(identifier)
+        if area is None:
+            return jsonify({"error": "area_not_found"}), 404
+        value = repo.public_areas.map_site(area, site_group_id)
+        return (jsonify(value), 200) if value else (jsonify({"error": "map_site_group_not_found"}), 404)
+
     @app.get("/api/public/sources/<path:identifier>")
     def public_source(identifier: str):
         value = repo.get_public_source(identifier)
@@ -890,8 +1015,9 @@ def create_public_app(
         participant = (request.args.get("participant") or "").strip()
         if participant and not re.fullmatch(r"(?:MDVS:ENTY:)?[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]", participant):
             return jsonify({"error": "participant_requires_canonical_actor_id"}), 400
-        if request.args.get("route") not in {None,"","mapped","unresolved"}:
-            return jsonify({"error":"unsupported_event_route_filter"}),400
+        route = request.args.get("route") or None
+        if route is not None and route not in EVENT_ROUTE_FILTERS:
+            return jsonify({"error": "unsupported_event_route_filter"}), 400
         if request.args.get("sort") not in {None, "", "newest", "oldest", "type"}:
             return jsonify({"error": "unsupported_event_sort"}), 400
         return jsonify(repo.list_events(
@@ -899,7 +1025,7 @@ def create_public_app(
             participant=participant or None,
             subject=request.args.get("subject") or None,
             event_type=request.args.get("type") or None,
-            route=request.args.get("route") or None,
+            route=route,
             source=request.args.get("source") or None,
             year_from=year_from,
             year_to=year_to,
@@ -1161,6 +1287,18 @@ def create_public_app(
             return jsonify({"error": "invalid_map_filter", "detail": str(exc)}), 400
         return jsonify(repo.public_map_summary(coordinate_scope=scope, **_catalog_filters()))
 
+    @app.get("/api/map/areas/<identifier>/summary.json")
+    def map_area_summary(identifier: str):
+        if (set(request.args) - {"precision", *_MAP_CATALOG_PARAMETERS}
+                or any(len(values) > 1 for _, values in request.args.lists())):
+            return jsonify({"error": "invalid_map_filter", "detail": "Use one value per supported map filter."}), 400
+        try:
+            scope = parse_coordinate_scope(request.args.get("precision"))
+            summary = repo.public_map_area_summary(identifier, coordinate_scope=scope, **_catalog_filters())
+        except ValueError as exc:
+            return jsonify({"error": "invalid_map_filter", "detail": str(exc)}), 400
+        return (jsonify(summary), 200) if summary else (jsonify({"error": "area_not_found"}), 404)
+
     @app.get("/api/map/nearby.json")
     def map_nearby():
         try:
@@ -1227,6 +1365,40 @@ def create_public_app(
         items=repo.public_relocation_movements()
         return jsonify({"relocations":{"total":len(items),"mapped":sum(x["status"]=="linked_complete_route" for x in items),"unresolved":sum(x["status"]!="linked_complete_route" for x in items)},"scope":"Retained source-location sequences; no travelled path or present location inferred."})
 
+    def world_tile_url(scope, catalog_filters, *, counted=False):
+        query = urlencode({
+            key: value
+            for key, value in {
+                "precision": scope,
+                "release": settings.uri_release_version,
+                "markers": PUBLIC_MAP_MARKER_VERSION if counted else None,
+                **{("q" if key == "query" else key): value for key, value in catalog_filters.items()},
+            }.items()
+            if value
+        })
+        return f"/api/map/tiles/{{z}}/{{x}}/{{y}}.mvt?{query}"
+
+    @app.get(PUBLIC_MAP_MARKER_STYLE)
+    def marker_style():
+        try:
+            scope = parse_coordinate_scope(request.args.get("precision"))
+        except ValueError as exc:
+            return jsonify({"error": "invalid_map_filter", "detail": str(exc)}), 400
+        if request.args.get("release") != settings.uri_release_version:
+            return jsonify({"error": "dataset_release_not_found"}), 404
+        catalog_filters = _catalog_filters()
+        project = public_tiled_geolibre_project(
+            exact_tile_url=world_tile_url("exact", catalog_filters, counted=True),
+            fallback_tile_url=world_tile_url("fallback", catalog_filters, counted=True),
+            coordinate_scope=scope,
+            summary={},
+        )
+        scheme = "https" if request.headers.get("X-Forwarded-Proto") == "https" else request.scheme
+        response = jsonify(public_map_marker_style(project=project, origin=f"{scheme}://{request.host}"))
+        response.headers["Cache-Control"] = "private, max-age=86400, immutable"
+        response.set_etag(hashlib.sha256(response.get_data()).hexdigest())
+        return response.make_conditional(request)
+
     @app.get("/api/map/project.geolibre.json")
     def map_project():
         mode=(request.args.get("mode") or "places").strip().lower()
@@ -1264,29 +1436,20 @@ def create_public_app(
         else:
             catalog_filters = _catalog_filters()
 
-            def tile_url(tile_scope: str) -> str:
-                query = urlencode(
-                    {
-                        key: value
-                        for key, value in {
-                            "precision": tile_scope,
-                            "release": settings.uri_release_version,
-                            **{("q" if key == "query" else key): value for key, value in catalog_filters.items()},
-                        }.items()
-                        if value
-                    }
-                )
-                suffix = f"?{query}" if query else ""
-                return f"/api/map/tiles/{{z}}/{{x}}/{{y}}.mvt{suffix}"
-
             summary = repo.public_map_summary(
                 coordinate_scope=scope, **catalog_filters
             )
+            counted = request.args.get("markers") == str(PUBLIC_MAP_MARKER_VERSION)
+            style_options = {}
+            if counted:
+                query = world_tile_url(scope, catalog_filters, counted=True).partition("?")[2]
+                style_options["basemap_style_url"] = f"{PUBLIC_MAP_MARKER_STYLE}?{query}&style={PUBLIC_MAP_STYLE_VERSION}"
             project = public_tiled_geolibre_project(
-                exact_tile_url=tile_url("exact"),
-                fallback_tile_url=tile_url("fallback"),
+                exact_tile_url=world_tile_url("exact", catalog_filters, counted=counted),
+                fallback_tile_url=world_tile_url("fallback", catalog_filters, counted=counted),
                 coordinate_scope=scope,
                 summary=summary,
+                **style_options,
             )
         project["metadata"].update({
             "visibility": "public",

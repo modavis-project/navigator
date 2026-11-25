@@ -105,7 +105,7 @@ All paths below use GET. The listed operands are public reader filters. The opti
 | `/api/entities/{category}/{id}` | Categories `people`, `persons`, `organizations`, `institutions` and `source-actors`. Use `view=summary` or `full` for canonical actor dossiers. |
 | `/api/actors/{id}/mentions`, `/api/actors/{id}/relationships` | Actor evidence pages with `q`, `limit` (1–100) and `offset`. |
 | `/api/entities/names/{id}` | Structured name under `name`. |
-| `/api/events` | `q`, `participant` (canonical actor ID), `subject`, `type`, `route` (`mapped` or `unresolved`), `source`, `year_from`, `year_to`, `sort` (`newest`, `oldest`, `type`), `limit`, `offset`. |
+| `/api/events` | `q`, `participant` (canonical actor ID), `subject`, `type`, `route` (transfer endpoint evidence or map availability), `source`, `year_from`, `year_to`, `sort` (`newest`, `oldest`, `type`), `limit`, `offset`. |
 | `/api/events/{id}` | One documented event assertion. Separate assertions may describe the same historical event. |
 | `/api/pod/places`, `/api/places/{id}` | Place directory (`q`, `kind`, `limit`, `offset`) and place detail. |
 | `/api/pod/sources` | Source directory with `q`, `source`, `limit` and `offset`. POD place and source directories use `limit` 1–50 and `offset` 0–10,000. |
@@ -116,6 +116,8 @@ All paths below use GET. The listed operands are public reader filters. The opti
 | `/api/scores/{id}`, `/api/scores/{id}/assets/{asset_id}` | Score and asset metadata, formats and available analysis. Follow supplied access links for files. |
 | `/api/virtual-instruments`, `/api/virtual-instruments/status` | Virtual instrument catalogue and availability. Catalogue filters include `q`, `producer`, `platform`, `access_category`, `license_category`, `catalog_status`, `country`, `granularity`, `independently_distributed`, `link_state`, `organ_link`, `limit`, `offset`. |
 | `/api/virtual-instruments/{id}` | Virtual instrument metadata and qualified organ relationships. |
+
+For transfers, `route` accepts `origin`, `destination`, `either` or `both` to select documented places by role. `mapped` and `unresolved` select by schematic map-connection availability. `transferEndpoints` groups places by their recorded role. Adding `q` to a transfer selection also searches those endpoint names. A place link identifies the reported place, while a map connection requires two coordinates bound to the historical evidence.
 
 Published source membership gives attribution. It does not establish independent corroboration, continuity of physical fabric or present condition. Functional pipe positions do not establish physical pipe geometry. Media and scores may point to external resources with their own rights and availability.
 

@@ -19,12 +19,13 @@
 .vh-page :focus-visible { outline: 3px solid #99732d; outline-offset: 3px; }
 .vh-quick-links { display: flex; flex-wrap: wrap; gap: 8px; }
 .vh-quick-links a { font-size: 12px; padding: 6px 10px; background: #fffefa; border: 1px solid #d4dfce; border-radius: 20px; text-decoration: none; }
-.vh-section-heading, .vh-source-search-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 24px 0 12px; }
+.vh-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 24px 0 12px; }
 .vh-section-heading > a { font-size: 12px; }
-.vh-section-heading p, .vh-source-search-heading p { margin: 6px 0; color: #5d6e60; font-size: 13px; }
-.vh-source-search-heading > div { max-width: 58ch; }
-.vh-source-search-heading > label { display: grid; gap: 7px; flex: 0 1 300px; min-width: 0; font-size: 12px; font-weight: 600; }
+.vh-section-heading p { margin: 6px 0; color: #5d6e60; font-size: 13px; }
+.vh-search-scope { display: grid; gap: 7px; flex: 0 1 270px; min-width: 0; font-size: 12px; font-weight: 600; }
 .vh-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 16px 0 28px; }
+.vh-match-grid:empty { display: none; }
+.vh-empty-collections ul { display: flex; flex-wrap: wrap; gap: 5px 24px; padding-left: 18px; }
 .vh-collection, .vh-search-group, .vh-results > article { min-width: 0; background: #fffefa; border: 1px solid #d4dfce; border-radius: 9px; padding: 20px; overflow-wrap: anywhere; }
 .vh-collection { display: flex; flex-direction: column; align-items: flex-start; }
 .vh-collection > p { font-size: 13px; color: #5b6b5d; margin: 8px 0; }
@@ -102,8 +103,8 @@
   .vh-grid, .vh-field-grid { grid-template-columns: minmax(0, 1fr); }
   .vh-hero { padding: 18px; }
   .vh-usage-hero { padding: 10px 0 16px; border: 0; border-bottom: 1px solid #d4dfce; border-radius: 0; background: none; }
-  .vh-section-heading, .vh-source-search-heading { align-items: stretch; flex-direction: column; gap: 8px; }
-  .vh-source-search-heading > label { flex-basis: auto; }
+  .vh-section-heading { align-items: stretch; flex-direction: column; gap: 8px; }
+  .vh-search-scope { flex-basis: auto; }
   .vh-filter-bar { grid-template-columns: minmax(0, 1fr); }
   .vh-controls label { width: 100%; }
   .vh-pager { gap: 7px; }

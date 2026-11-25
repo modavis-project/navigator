@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect } from "react";
 import { useUiLocale } from "./uiLocale";
+import { LoadingContent } from "./LoadingContent";
 import "./publicApiGuide.css";
 
 const PUBLIC_ORIGIN = "https://navigator.modavis.org";
@@ -58,7 +59,7 @@ export function PublicApiGuide() {
   }, []);
 
   if (new URLSearchParams(window.location.search).get("reference") === "1") {
-    return <Suspense fallback={<p role="status">{t("guide.api.reference.loading", "Loading the API reference…", "API-Referenz wird geladen …")}</p>}><ApiReference /></Suspense>;
+    return <Suspense fallback={<LoadingContent kind="article" label={t("guide.api.reference.loading", "Loading the API reference…", "API-Referenz wird geladen …")} />}><ApiReference /></Suspense>;
   }
 
   return (

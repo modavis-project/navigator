@@ -1,5 +1,5 @@
 import { TermDistribution } from "./researchExploration";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowRight, Search, Copy, Download } from "lucide-react";
 import { JsonEvidence } from "./JsonEvidence";
 import { publicGetJson } from "./api";
@@ -16,6 +16,8 @@ export type VocabularyCollection = {
   group?: string; searchHref?: string; availability?: string; snapshot?: Row | string; capabilities?: Row;
 };
 type RequestError = { message: string; status?: number };
+type SearchStatus = "pending" | "matched" | "empty" | "error";
+type ReportSearchStatus = (id: string, title: string, status: SearchStatus) => void;
 const familyNames: Record<string, string> = { activities: "Events and activities", stops: "Stops", divisions: "Divisions" };
 const familyGerman: Record<string, string> = {
   activities: "Ereignisse und Tätigkeiten", stops: "Register", divisions: "Werke",
@@ -146,39 +148,51 @@ function SearchFailure({ error, retry }: { error: RequestError; retry: () => voi
   const { t } = useVocabularyText();
   return <div role="alert"><p>{t("vocab.search.error", "The vocabulary request could not be completed.", "Die Vokabularabfrage konnte nicht abgeschlossen werden.")} <span lang="en">{error.message}</span></p>{(!error.status || error.status >= 500) && <button type="button" onClick={retry}>{t('vocab.search.retry', "Retry", "Erneut versuchen")}</button>}</div>;
 }
-function UsageSearch({ family, title, q }: { family: string; title: string; q: string }) {
+function useSearchResult(url: string, id: string, title: string, report: ReportSearchStatus) {
+  const result = useData(url);
+  const status = result.error ? "error" : !result.data ? "pending" : result.data.total > 0 ? "matched" : "empty";
+  useEffect(() => report(id, title, status), [id, title, status, report]);
+  return result;
+}
+
+function UsageSearch({ family, title, q, report }: { family: string; title: string; q: string; report: ReportSearchStatus }) {
   const { t } = useVocabularyText();
-  const { data, error, retry } = useData(`/api/vocab/usage/${encodeURIComponent(family)}?${new URLSearchParams({ q })}`);
+  const name = t("vocab.search.sourceTitle", "{title} · source wording", "{title} · Quellenwortlaut", {title});
+  const { data, error, retry } = useSearchResult(`/api/vocab/usage/${encodeURIComponent(family)}?${new URLSearchParams({ q })}`, `usage:${family}`, name, report);
+  if (!error && !data?.total) return null;
   const href = withQuery(usageLink(family), { q, ...(data?.publicCoreSha256 ? { snapshot: data.publicCoreSha256 } : {}) });
-  return <section className="vh-search-group"><span className="vh-kind">{t("vocab.kind.wording", "Recorded source wording", "Erfasster Quellenwortlaut")}</span><h3>{t("vocab.search.sourceTitle", "{title} · source wording", "{title} · Quellenwortlaut", {title})}</h3>
-    {error ? <SearchFailure error={error} retry={retry} /> : !data ? <p role="status">{t('vocab.search.wordings', "Searching source wording…", "Quellenwortlaut wird durchsucht …")}</p> : <>
+  return <section className="vh-search-group"><span className="vh-kind">{t("vocab.kind.wording", "Recorded source wording", "Erfasster Quellenwortlaut")}</span><h3>{name}</h3>
+    {error ? <SearchFailure error={error} retry={retry} /> : data && <>
       <p className="vh-result-count">{t("vocab.search.wordingCount", "{count, plural, one {# matching wording} other {# matching wordings}}", "{count, plural, one {# passender Wortlaut} other {# passende Wortlautvarianten}}", {count:data.total})}<small>{t("vocab.search.wordingNote", "Showing {count, number}. Case and spacing are grouped for lookup.", "Angezeigt: {count, number}. Für die Suche werden Groß- und Kleinschreibung sowie Leerzeichen zusammengefasst.", {count:Math.min(data.items.length, 5)})}</small></p>
       <ul className="vh-search-results">{data.items.slice(0, 5).map((item: Row) => <li key={item.key}><a href={item.href}>{item.label}</a><small>{t("vocab.search.occurrences", "{count, plural, one {# occurrence} other {# occurrences}}", "{count, plural, one {# Vorkommen} other {# Vorkommen}}", {count:item.occurrences})}</small></li>)}</ul>
-      {!data.total && <p>{t('vocab.search.noWordings', "No recorded wording matches this search.", "Kein erfasster Wortlaut entspricht dieser Suche.")}</p>}<a className="vh-next" href={href}>{t('vocab.search.browseWordings', "Browse matching wordings", "Passende Wortlautvarianten ansehen")} <ArrowRight size={14} aria-hidden="true" /></a>
+      <a className="vh-next" href={href}>{t('vocab.search.browseWordings', "Browse matching wordings", "Passende Wortlautvarianten ansehen")} <ArrowRight size={14} aria-hidden="true" /></a>
     </>}
   </section>;
 }
-function SchemeSearch({ collection, q }: { collection: VocabularyCollection; q: string }) {
+function SchemeSearch({ collection, q, report }: { collection: VocabularyCollection; q: string; report: ReportSearchStatus }) {
   const { t, kind } = useVocabularyText();
   const scheme = decodeURIComponent(collection.href.split("?")[0].split("/").pop() || collection.id);
-  const { data, error, retry } = useData(`/api/vocab/concepts?${new URLSearchParams({ q, scheme_code: scheme, limit: "5" })}`);
+  const { data, error, retry } = useSearchResult(`/api/vocab/concepts?${new URLSearchParams({ q, scheme_code: scheme, limit: "5" })}`, `scheme:${collection.id}`, collection.title, report);
+  if (!error && !data?.total) return null;
   const category = collection.recordKind === "schema_categories";
   return <section className="vh-search-group"><span className="vh-kind">{kind(collection.recordKind)}</span><h3>{collection.title}</h3>
-    {error ? <SearchFailure error={error} retry={retry} /> : !data ? <p role="status">{t('vocab.search.scheme', "Searching this vocabulary…", "Vokabular wird durchsucht …")}</p> : <>
+    {error ? <SearchFailure error={error} retry={retry} /> : data && <>
       <p className="vh-result-count">{category ? t("vocab.search.categoryCount", "{count, plural, one {# matching category} other {# matching categories}}", "{count, plural, one {# passende Kategorie} other {# passende Kategorien}}", {count:data.total}) : t("vocab.search.conceptCount", "{count, plural, one {# matching concept} other {# matching concepts}}", "{count, plural, one {# passender Begriff} other {# passende Begriffe}}", {count:data.total})}<small>{t("vocab.search.schemeCount", "Showing {count, number} in this vocabulary.", "Angezeigt in diesem Vokabular: {count, number}.", {count:data.items.length})}</small></p>
       <ul className="vh-search-results">{data.items.map((item: Row) => <li key={item.code}><a href={`/vocab/${encodeURIComponent(item.scheme?.code || scheme)}/concepts/${encodeURIComponent(item.code)}`}>{item.preferredLabel || item.code}</a>{item.definition && <small>{item.definition}</small>}</li>)}</ul>
-      {!data.total && <p>{t('vocab.search.noScheme', "No matches in this vocabulary.", "Keine Treffer in diesem Vokabular.")}</p>}<a className="vh-next" href={withQuery(collection.href, { q })}>{t('vocab.search.browseAll', "Browse all matches", "Alle Treffer ansehen")} <ArrowRight size={14} aria-hidden="true" /></a>
+      <a className="vh-next" href={withQuery(collection.href, { q })}>{t('vocab.search.browseAll', "Browse all matches", "Alle Treffer ansehen")} <ArrowRight size={14} aria-hidden="true" /></a>
     </>}
   </section>;
 }
-function ReferenceSearch({ q }: { q: string }) {
+function ReferenceSearch({ q, report }: { q: string; report: ReportSearchStatus }) {
   const { t } = useVocabularyText();
-  const { data, error, retry } = useData(`/api/omaro/concepts?${new URLSearchParams({ q, resolution: "resolved", limit: "5" })}`);
-  return <section className="vh-search-group"><span className="vh-kind">{t("vocab.kind.reference", "Separate reference dataset", "Eigenständiger Referenzdatensatz")}</span><h3>{t('vocab.search.omaroTitle', "OMARO instrument names", "Instrumentennamen in OMARO")}</h3>
-    {error ? <SearchFailure error={error} retry={retry} /> : !data ? <p role="status">{t('vocab.search.reference', "Searching reference names…", "Referenzbenennungen werden durchsucht …")}</p> : <>
+  const name = t('vocab.search.omaroTitle', "OMARO instrument names", "Instrumentennamen in OMARO");
+  const { data, error, retry } = useSearchResult(`/api/omaro/concepts?${new URLSearchParams({ q, resolution: "resolved", limit: "5" })}`, "omaro", name, report);
+  if (!error && !data?.total) return null;
+  return <section className="vh-search-group"><span className="vh-kind">{t("vocab.kind.reference", "Separate reference dataset", "Eigenständiger Referenzdatensatz")}</span><h3>{name}</h3>
+    {error ? <SearchFailure error={error} retry={retry} /> : data && <>
       <p className="vh-result-count">{t("vocab.search.referenceCount", "{count, plural, one {# resolved reference match} other {# resolved reference matches}}", "{count, plural, one {# zugeordneter Referenztreffer} other {# zugeordnete Referenztreffer}}", {count:data.total})}<small>{t("vocab.search.referenceNote", "Showing {count, number}. These results do not classify POD organs.", "Angezeigt: {count, number}. Die Treffer stellen keine Klassifikation der im POD erfassten Orgeln dar.", {count:data.items.length})}</small></p>
       <ul className="vh-search-results">{data.items.map((item: Row) => <li key={item.uri}><a href={`/vocab/omaro?${new URLSearchParams({ uri: item.uri, snapshot: data.snapshotSha256 })}`}>{item.label}</a></li>)}</ul>
-      {!data.total && <p>{t('vocab.search.noReferences', "No resolved reference names match.", "Keine passenden zugeordneten Referenzbenennungen.")}</p>}<a className="vh-next" href={`/vocab/omaro?${new URLSearchParams({ q, resolution: "resolved", snapshot: data.snapshotSha256 })}`}>{t('vocab.search.browseOmara', "Browse OMARO matches", "Treffer in OMARO ansehen")} <ArrowRight size={14} aria-hidden="true" /></a>
+      <a className="vh-next" href={`/vocab/omaro?${new URLSearchParams({ q, resolution: "resolved", snapshot: data.snapshotSha256 })}`}>{t('vocab.search.browseOmara', "Browse OMARO matches", "Treffer in OMARO ansehen")} <ArrowRight size={14} aria-hidden="true" /></a>
     </>}
   </section>;
 }
@@ -187,20 +201,22 @@ export function candidateLabel(candidate: Row, language?: string | null): string
   return (language && candidate.label?.[language]) || candidate.label?.en || Object.values(candidate.label ?? {})[0] || candidate.id;
 }
 
-function CandidateSearch({ q }: { q: string }) {
+function CandidateSearch({ q, report }: { q: string; report: ReportSearchStatus }) {
   const { t } = useVocabularyText();
-  const { data, error, retry } = useData(`/api/vocab/registry?${new URLSearchParams({ q, limit: "5" })}`);
-  return <section className="vh-search-group"><span className="vh-kind">{t("vocab.kind.candidate", "Unpublished candidates", "Unveröffentlichte Terminologievorschläge")}</span><h3>{t('vocab.directory.candidates', "Candidate terminology registry", "Verzeichnis der Terminologievorschläge")}</h3>
-    {error ? <SearchFailure error={error} retry={retry} /> : !data ? <p role="status">{t('vocab.search.candidates', "Searching candidate entries…", "Terminologievorschläge werden durchsucht …")}</p> : <>
+  const name = t('vocab.directory.candidates', "Candidate terminology registry", "Verzeichnis der Terminologievorschläge");
+  const { data, error, retry } = useSearchResult(`/api/vocab/registry?${new URLSearchParams({ q, limit: "5" })}`, "registry", name, report);
+  if (!error && !data?.total) return null;
+  return <section className="vh-search-group"><span className="vh-kind">{t("vocab.kind.candidate", "Unpublished candidates", "Unveröffentlichte Terminologievorschläge")}</span><h3>{name}</h3>
+    {error ? <SearchFailure error={error} retry={retry} /> : data && <>
       <p className="vh-result-count">{t("vocab.search.candidateCount", "{count, plural, one {# matching candidate} other {# matching candidates}}", "{count, plural, one {# passender Vorschlag} other {# passende Vorschläge}}", {count:data.total})}<small>{t("vocab.search.candidateNote", "Showing {count, number}. Accepted lexical mappings do not promote a concept.", "Angezeigt: {count, number}. Eine akzeptierte lexikalische Zuordnung ändert den Status des vorgeschlagenen Begriffs nicht.", {count:data.items.length})}</small></p>
       <ul className="vh-search-results">{data.items.map((item: Row) => <li key={item.id}><a href={item.href}>{candidateLabel(item)}</a><small>{item.definition}</small></li>)}</ul>
-      {!data.total && <p>{t('vocab.search.noCandidates', "No candidate entries match.", "Keine passenden Terminologievorschläge.")}</p>}<a className="vh-next" href={`/vocab/registry?${new URLSearchParams({ q, snapshot: data.registrySha256 })}`}>{t('vocab.search.browseCandidates', "Browse candidate matches", "Passende Vorschläge ansehen")}<ArrowRight size={14} aria-hidden="true" /></a>
+      <a className="vh-next" href={`/vocab/registry?${new URLSearchParams({ q, snapshot: data.registrySha256 })}`}>{t('vocab.search.browseCandidates', "Browse candidate matches", "Passende Vorschläge ansehen")}<ArrowRight size={14} aria-hidden="true" /></a>
     </>}
   </section>;
 }
 
 export function VocabularyHub() {
-  const { t, n, family } = useVocabularyText();
+  const { t, n } = useVocabularyText();
   const [search, setSearch] = useState(location.search);
   const parameters = new URLSearchParams(search);
   const q = parameters.get("q") || "";
@@ -211,8 +227,6 @@ export function VocabularyHub() {
   const schemes = useData("/api/vocab/schemes");
   const releases = useData("/api/vocab/releases?limit=12");
   const collections: VocabularyCollection[] = catalogue.data?.collections ?? fallbackCollections(schemes.data);
-  const sourceCollections = collections.filter((collection) => familyOf(collection));
-  const sourcePreviews = sourcePreviewCollections(collections, selectedFamily);
   useEffect(() => { const sync = () => { setSearch(location.search); setInput(new URLSearchParams(location.search).get("q") || ""); }; window.addEventListener("popstate", sync); return () => window.removeEventListener("popstate", sync); }, []);
   function go(values: Record<string, string | null>) {
     const next = new URLSearchParams(search);
@@ -225,17 +239,77 @@ export function VocabularyHub() {
       <form className="vh-search" role="search" onSubmit={submit}><label><span>{t('vocab.hub.search', "Search terms across collections", "Sammlungsübergreifend nach Benennungen suchen")}</span><input ref={inputRef} type="search" value={input} onChange={(event) => setInput(event.target.value)} maxLength={200} placeholder={t("vocab.search.placeholder", "Dankesbrief, Vox Humana, repair…", "Dankesbrief, Vox Humana, Reparatur …")} /></label><button type="submit"><Search size={16} aria-hidden="true" />{t('vocab.hub.submit', "Search", "Suchen")}</button>{q && <button className="vh-secondary" type="button" onClick={() => { setInput(""); go({ q: null }); inputRef.current?.focus(); }}>{t('vocab.hub.clear', "Clear", "Zurücksetzen")}</button>}</form>
       <div className="vh-quick-links"><a href={usageLink("activities", "Dankesbrief")}>Dankesbrief</a><a href={usageLink("stops", "Vox Humana")}>Vox Humana</a><a href={usageLink("divisions", "Swell")}>Swell</a></div>
     </header>
-    {q && <section aria-label={t('vocab.hub.resultAria', "Term search results", "Ergebnisse der Benennungssuche")} className="vh-search-section"><div className="vh-section-heading"><div><h2>{t("vocab.search.results", "Results for “{term}”", "Ergebnisse für „{term}“", {term:q})}</h2><p>{t('vocab.hub.counts', "Counts belong to each collection; different kinds of evidence are not added together.", "Die Trefferzahlen beziehen sich jeweils auf eine Sammlung. Verschiedene Arten von Belegdaten werden getrennt gezählt.")}</p></div></div>
-      <div className="vh-grid">{collections.filter((collection) => ["controlled", "governed_scheme", "schema_categories"].includes(collection.recordKind)).map((collection) => <SchemeSearch key={`${collection.id}:${q}`} collection={collection} q={q} />)}{collections.some((collection) => collection.recordKind === "candidate") && <CandidateSearch q={q} />}<ReferenceSearch q={q} /></div>
-      <div className="vh-source-search-heading"><div><h3>{t('vocab.hub.wordingSearch', "Search recorded wording", "Erfassten Wortlaut durchsuchen")}</h3><p>{selectedFamily ? t("vocab.search.previewSelected", "Previewing the selected source field.", "Vorschau für das ausgewählte Quellenfeld.") : t("vocab.search.preview", "Previewing event, stop and division wording. Choose another field to search its recorded evidence.", "Vorschau für Ereignisse, Register und Werke. Wählen Sie ein anderes Feld, um dessen erfassten Wortlaut zu durchsuchen.")}</p></div><label>{t('vocab.hub.sourceField', "Source wording field", "Quellenfeld")}<select value={selectedFamily} onChange={(event) => go({ sourceFamily: event.target.value })}><option value="">{t('vocab.hub.preview', "Events, stops and divisions", "Ereignisse, Register und Werke")}</option>{selectedFamily && !sourceCollections.some((collection) => familyOf(collection) === selectedFamily) && <option value={selectedFamily}>{t("vocab.search.familyUnavailable", "{family} · unavailable", "{family} · nicht verfügbar", {family:selectedFamily})}</option>}{sourceCollections.map((collection) => <option key={collection.id} value={familyOf(collection)}>{family(familyOf(collection)!, collection.title)}</option>)}</select></label></div>
-      {selectedFamily && !sourcePreviews.length ? <p role="alert">{t('vocab.hub.invalidField', "This source-wording field is unavailable. Choose one of the listed fields; the search has not been broadened.", "Dieses Quellenfeld ist nicht verfügbar. Wählen Sie eines der aufgeführten Felder. Der Suchbereich bleibt unverändert.")}</p> : <div className="vh-grid">{sourcePreviews.map((collection) => <UsageSearch key={`${collection.id}:${q}`} family={familyOf(collection)!} title={family(familyOf(collection)!, collection.title)} q={q} />)}</div>}
-    </section>}
+    {q && <VocabularySearchResults
+      key={q}
+      collections={collections}
+      directoryPending={!catalogue.data && !catalogue.error}
+      q={q}
+      selectedFamily={selectedFamily}
+      onSourceFamilyChange={(value) => go({ sourceFamily: value })}
+    />}
     {catalogue.error && <p className="vh-muted" role="status">{t('vocab.hub.noDirectory', "The full collection directory is unavailable. Established vocabulary and source-wording routes remain listed below.", "Das vollständige Sammlungsverzeichnis ist nicht verfügbar. Die regulären Zugänge zu Vokabularen und Quellenwortlaut finden Sie unten.")}</p>}
     <VocabularyDirectory collections={collections} query={q} />
     <details className="vh-context" id="vocabulary-status"><summary>{t('vocab.hub.status', "Vocabulary status, versions and downloads", "Status, Versionen und Downloads der Vokabulare")}</summary><p>{t('vocab.hub.statusNote', "Controlled concepts, unpublished candidates, source wording and schema categories carry different status. An occurrence is one retained observation; several accounts may describe the same organ.", "Kontrollierte Begriffe, unveröffentlichte Vorschläge, Quellenwortlaut und Schemakategorien haben einen unterschiedlichen Status. Ein Vorkommen entspricht einer erfassten Angabe. Mehrere Quellenbeschreibungen können dieselbe Orgel betreffen.")}</p>
       {schemes.error && <SearchFailure error={schemes.error} retry={schemes.retry} />}<ul className="vh-reference-list">{schemes.data?.items.map((scheme: Row) => <li key={scheme.code}><a href={`/vocab/${encodeURIComponent(scheme.code)}`}>{scheme.name}</a><span>{scheme.version || "Version not recorded"} · {n(scheme.recordKind === "schema_categories" ? scheme.categoryCount : scheme.conceptCount)} {scheme.recordKind === "schema_categories" ? "schema categories" : "controlled concepts"}</span>{scheme.snapshot && <a href={scheme.snapshot.metadataUrl}>{t('vocab.hub.snapshot', "Snapshot, citation and downloads", "Datenstand, Zitierhinweise und Downloads")}</a>}</li>)}</ul>
       <a href="/vocab/omaro">{t('vocab.hub.omaro', "OMARO’s separate reference version and distributions", "Eigenständige Referenzversion und Downloadpakete von OMARO")}</a>{releases.data?.scope && <p>{releases.data.scope}</p>}{releases.data?.items.map((release: Row) => <p key={release.id || release.versionLabel}><a href={`/vocab/releases/${encodeURIComponent(release.versionLabel || release.mdvsId || String(release.id))}`}>Vocabulary release {release.versionLabel || release.vocabularyVersion || release.mdvsId}</a></p>)}{releases.error && <SearchFailure error={releases.error} retry={releases.retry} />}
     </details>
+  </section>;
+}
+
+function VocabularySearchResults({ collections, directoryPending, q, selectedFamily, onSourceFamilyChange }: {
+  collections: VocabularyCollection[];
+  directoryPending: boolean;
+  q: string;
+  selectedFamily: string;
+  onSourceFamilyChange: (value: string) => void;
+}) {
+  const { t, family } = useVocabularyText();
+  const [results, setResults] = useState<Record<string, { title: string; status: SearchStatus }>>({});
+  const report: ReportSearchStatus = useCallback((id, title, status) => {
+    setResults(current => current[id]?.title === title && current[id].status === status ? current : { ...current, [id]: { title, status } });
+  }, []);
+  const schemes = collections.filter((collection) => ["controlled", "governed_scheme", "schema_categories"].includes(collection.recordKind));
+  const source = collections.filter((collection) => familyOf(collection));
+  const previews = sourcePreviewCollections(collections, selectedFamily);
+  const hasRegistry = collections.some((collection) => collection.recordKind === "candidate");
+  const missingFamily = Boolean(selectedFamily && !previews.length);
+  const groupIds = [
+    ...schemes.map((collection) => `scheme:${collection.id}`),
+    ...(hasRegistry ? ["registry"] : []),
+    "omaro",
+    ...previews.map((collection) => `usage:${familyOf(collection)}`),
+  ];
+  const pending = directoryPending || groupIds.some((id) => !results[id] || results[id].status === "pending");
+  const empty = groupIds.filter((id) => results[id]?.status === "empty");
+
+  return <section aria-label={t('vocab.hub.resultAria', "Term search results", "Ergebnisse der Benennungssuche")} className="vh-search-section">
+    <div className="vh-section-heading">
+      <div>
+        <h2>{t("vocab.search.results", "Results for “{term}”", "Ergebnisse für „{term}“", {term:q})}</h2>
+        <p>{t('vocab.search.collectionCounts', "Counts are shown for each collection.", "Die Trefferzahlen werden je Sammlung angezeigt.")}</p>
+      </div>
+      <label className="vh-search-scope">
+        {t('vocab.hub.sourceField', "Source wording field", "Quellenfeld")}
+        <select value={selectedFamily} onChange={(event) => onSourceFamilyChange(event.target.value)}>
+          <option value="">{t('vocab.hub.preview', "Events, stops and divisions", "Ereignisse, Register und Werke")}</option>
+          {missingFamily && <option value={selectedFamily}>{t("vocab.search.familyUnavailable", "{family} · unavailable", "{family} · nicht verfügbar", {family:selectedFamily})}</option>}
+          {source.map((collection) => <option key={collection.id} value={familyOf(collection)}>{family(familyOf(collection)!, collection.title)}</option>)}
+        </select>
+      </label>
+    </div>
+    {missingFamily && !directoryPending && <p role="alert">{t('vocab.search.invalidField', "Choose an available field to search recorded wording.", "Wählen Sie ein verfügbares Feld für die Suche im erfassten Wortlaut.")}</p>}
+    <div className="vh-grid vh-match-grid">
+      {schemes.map((collection) => <SchemeSearch key={collection.id} collection={collection} q={q} report={report} />)}
+      {hasRegistry && <CandidateSearch q={q} report={report} />}
+      <ReferenceSearch q={q} report={report} />
+      {previews.map((collection) => <UsageSearch key={collection.id} family={familyOf(collection)!} title={family(familyOf(collection)!, collection.title)} q={q} report={report} />)}
+    </div>
+    {pending ? <p role="status" className="vh-muted">{t('vocab.search.pending', "Searching collections…", "Sammlungen werden durchsucht …")}</p>
+      : empty.length === groupIds.length && <p role="status">{t('vocab.search.empty', "No matches in the searched collections.", "Keine Treffer in den durchsuchten Sammlungen.")}</p>}
+    {empty.length > 0 && <details className="vh-context vh-empty-collections">
+      <summary>{t('vocab.search.emptyCollections', '{count, plural, one {# collection without matches} other {# collections without matches}}', '{count, plural, one {# Sammlung ohne Treffer} other {# Sammlungen ohne Treffer}}', {count: empty.length})}</summary>
+      <ul>{empty.map((id) => <li key={id}>{results[id].title}</li>)}</ul>
+    </details>}
   </section>;
 }
 
@@ -289,6 +363,8 @@ export function VocabularyUsage({ family }: { family: string }) {
   const data = issue ? undefined : response.data;
   const error = issue || response.error;
   const title = localizedFamily(family, collection?.title || data?.title || familyNames[family] || family.replace(/_/g, " "));
+  const matchingVariants: Row[] = data?.match === "exact" ? data.variants ?? [] : [];
+  const termTitle = matchingVariants.find((variant) => variant.label === term)?.label ?? matchingVariants[0]?.label ?? term;
   const share = new URLSearchParams(search);
   if (data && !share.has("snapshot")) share.set("snapshot", data.publicCoreSha256);
   const shareHref = `${usageLink(family)}?${share}`;
@@ -302,7 +378,7 @@ export function VocabularyUsage({ family }: { family: string }) {
   }
   return <section className="vh-page vh-usage-page" aria-label={t('vocab.usage.aria', "Source terminology browser", "Quellenterminologie durchsuchen")}>
     <nav className="vh-breadcrumbs" aria-label={t('vocab.usage.context', "Vocabulary context", "Vokabularkontext")}><a href="/vocab">{t('vocab.usage.all', "All vocabularies", "Alle Vokabulare")}</a>{isTerm && <><span aria-hidden="true">/</span><a href={usageCollectionLink(family, parameters)}>{t("vocab.usage.breadcrumb", "{title} wordings", "Quellenwortlaut · {title}", {title})}</a></>}</nav>
-    <header className="vh-hero vh-usage-hero"><p className="eyebrow">{isTerm ? t("vocab.kind.wording", "Recorded source wording", "Erfasster Quellenwortlaut") : t("vocab.usage.eyebrow", "Source terminology", "Terminologie aus Quellen")}</p><h1>{isTerm ? term || t("vocab.usage.emptyWording", "Empty wording", "Leerer Wortlaut") : title}</h1><p>{isTerm ? t("vocab.usage.termIntro", "Follow the wording to its source accounts and related organs. Matching text does not establish equivalent components or a new vocabulary concept.", "Verfolgen Sie den Wortlaut zu den Quellenbeschreibungen und den zugehörigen Orgeln. Gleicher Wortlaut belegt weder gleichartige Bauteile noch einen neuen Vokabularbegriff.") : t("vocab.usage.intro", "Browse recorded wording. Case and spacing are grouped for lookup; original labels and source accounts remain available.", "Durchsuchen Sie den erfassten Quellenwortlaut. Für die Suche werden Groß- und Kleinschreibung sowie Leerzeichen zusammengefasst. Ursprüngliche Benennungen und Quellenbeschreibungen bleiben erhalten.")}</p>{isTerm && data && <a className="vh-next" href="#terminology-results">{parameters.get("section") === "organs" ? t("vocab.usage.jumpOrgans", "Go to related organs", "Zu den zugehörigen Orgeln") : t("vocab.usage.jumpOccurrences", "Go to recorded occurrences", "Zu den erfassten Vorkommen")}<ArrowRight size={14} aria-hidden="true" /></a>}</header>
+    <header className="vh-hero vh-usage-hero"><p className="eyebrow">{isTerm ? t("vocab.kind.wording", "Recorded source wording", "Erfasster Quellenwortlaut") : t("vocab.usage.eyebrow", "Source terminology", "Terminologie aus Quellen")}</p><h1>{isTerm ? termTitle || t("vocab.usage.emptyWording", "Empty wording", "Leerer Wortlaut") : title}</h1><p>{isTerm ? t("vocab.usage.termIntro", "Follow the wording to its source accounts and related organs. Matching text does not establish equivalent components or a new vocabulary concept.", "Verfolgen Sie den Wortlaut zu den Quellenbeschreibungen und den zugehörigen Orgeln. Gleicher Wortlaut belegt weder gleichartige Bauteile noch einen neuen Vokabularbegriff.") : t("vocab.usage.intro", "Browse recorded wording. Case and spacing are grouped for lookup; original labels and source accounts remain available.", "Durchsuchen Sie den erfassten Quellenwortlaut. Für die Suche werden Groß- und Kleinschreibung sowie Leerzeichen zusammengefasst. Ursprüngliche Benennungen und Quellenbeschreibungen bleiben erhalten.")}</p>{isTerm && data && <a className="vh-next" href="#terminology-results">{parameters.get("section") === "organs" ? t("vocab.usage.jumpOrgans", "Go to related organs", "Zu den zugehörigen Orgeln") : t("vocab.usage.jumpOccurrences", "Go to recorded occurrences", "Zu den erfassten Vorkommen")}<ArrowRight size={14} aria-hidden="true" /></a>}</header>
     {!isTerm && <form className="vh-search" key={`${family}:${parameters.get("q") || ""}:${parameters.get("sort") || "frequency"}`} onSubmit={(event) => { event.preventDefault(); const form = new FormData(event.currentTarget); go({ q: form.get("q"), sort: form.get("sort"), page: 0 }); }}><label>{t("vocab.usage.searchTitle", "Search {title}", "Sammlung „{title}“ durchsuchen", {title})}<input type="search" name="q" defaultValue={parameters.get("q") || ""} maxLength={200} /></label><label className="vh-order">{t('vocab.usage.order', "Order", "Sortierung")}<select aria-label={t('vocab.usage.order', "Order", "Sortierung")} name="sort" defaultValue={parameters.get("sort") || "frequency"}><option value="frequency">{t('vocab.usage.frequency', "Most recorded first", "Häufigste zuerst")}</option><option value="alphabetical">{t('vocab.usage.alphabetical', "Alphabetical", "Alphabetisch")}</option></select></label><button type="submit"><Search size={16} aria-hidden="true" />{t('vocab.usage.search', "Search wording", "Wortlaut suchen")}</button></form>}
     {error && <UsageError error={error} parameters={parameters} go={go} retry={response.retry} availableSnapshot={typeof collection?.snapshot === "string" ? collection.snapshot : undefined} />}{!data && !error && <p role="status" className="vh-loading">{t('vocab.usage.loading', "Loading terminology evidence…", "Terminologische Belege werden geladen …")}</p>}
     {data && <>

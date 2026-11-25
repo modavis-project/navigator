@@ -146,11 +146,11 @@ function find(node, predicate) {
   return predicate(node) ? node : find(node.props?.children, predicate);
 }
 
-test("actual usage form survives automatic pin hydration with unchanged draft key and selection controls", () => {
+test("exact wording preserves the recorded spelling when the form hydrates a lowercase link", () => {
   const exports = {};
-  const query = "?term=Principal&organ_q=Leipzig";
-  const data = { publicCoreSha256: "core", title: "Stops", counts: { occurrences: 0, organs: 0, sourceRecords: 0, wordings: 0, accounts: 0 }, sourceOptions: [], mappings: [], variants: [], items: [], total: 0, offset: 0, limit: 30, match: "exact", capabilities: { distributions: false } };
-  const cells = [query, "", 0, { url: "/api/vocab/catalogue", data: { collections } }, 0, { url: "/api/vocab/usage/stops?term=Principal&organ_q=Leipzig", data }];
+  const query = "?term=principal&organ_q=Leipzig";
+  const data = { publicCoreSha256: "core", title: "Stops", counts: { occurrences: 1, organs: 1, sourceRecords: 1, wordings: 1, accounts: 1 }, sourceOptions: [], mappings: [], variants: [{ label: "Principal", occurrences: 1 }], items: [], total: 1, offset: 0, limit: 30, match: "exact", capabilities: { distributions: false } };
+  const cells = [query, "", 0, { url: "/api/vocab/catalogue", data: { collections } }, 0, { url: "/api/vocab/usage/stops?term=principal&organ_q=Leipzig", data }];
   let cursor = 0;
   const react = { ...require("react"), useState(initial) { const slot = cursor++; if (!(slot in cells)) cells[slot] = typeof initial === "function" ? initial() : initial; return [cells[slot], value => { cells[slot] = value; }]; }, useEffect() {}, useRef: value => ({ current: value }) };
   let locale = "en";
@@ -164,6 +164,7 @@ test("actual usage form survives automatic pin hydration with unchanged draft ke
   }) };
   runInNewContext(source("vocabularyHub"), { exports, URL, URLSearchParams, location: browserLocation, require: id => id === "react" ? react : id === "./uiLocale" ? uiLocale : id.endsWith(".css") ? {} : id.startsWith("./") ? load(id.slice(2)) : require(id) });
   const before = exports.VocabularyUsage({ family: "stops" });
+  assert.equal(find(before, node => node.type === "h1").props.children, "Principal");
   const firstForm = find(before, node => node.type === "form" && node.props["aria-label"] === "Search related organs");
   assert.ok(firstForm);
   cells[0] = `${query}&snapshot=core`; cursor = 0;
@@ -173,7 +174,7 @@ test("actual usage form survives automatic pin hydration with unchanged draft ke
   assert.equal(secondForm.key, firstForm.key);
   assert.equal(find(secondForm, node => node.type === "input").props.defaultValue, "Leipzig");
   const share = find(after, node => node.type === "a" && node.props.children === "Snapshot-bound term link");
-  assert.match(share.props.href, /term=Principal&organ_q=Leipzig&snapshot=core/);
+  assert.match(share.props.href, /term=principal&organ_q=Leipzig&snapshot=core/);
   locale = "de"; cursor = 0;
   const german = exports.VocabularyUsage({ family: "stops" });
   const germanForm = find(german, node => node.type === "form" && node.props["aria-label"] === "Zugehörige Orgeln suchen");

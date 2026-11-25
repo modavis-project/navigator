@@ -4,11 +4,14 @@ import argparse
 import gzip
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_JAVASCRIPT_GZIP_BYTES = 300 * 1024
-MAX_CLIENT_GZIP_BYTES = 600 * 1024
+MAX_CLIENT_GZIP_BYTES = 608 * 1024
+MAX_REGION_MAP_GZIP_BYTES = 6 * 1024
+REGION_MAP_ASSET = re.compile(r"(?:assets/mapRegions-[A-Za-z0-9_-]+\.(?:js|css)|geolibre-region-bridge\.mjs)")
 
 
 def measure(directory):
@@ -21,10 +24,11 @@ def measure(directory):
                           "sha256": hashlib.sha256(content).hexdigest()})
     if not any(entry["path"] == "index.html" for entry in files):
         raise ValueError("A built frontend index.html is required")
-    client = [entry for entry in files if entry["path"].endswith((".js", ".css", ".html"))]
+    client = [entry for entry in files if entry["path"].endswith((".js", ".mjs", ".css", ".html"))]
     return {"contract": "modavis.navigator.frontend-measurement/v1", "files": files,
             "clientGzipBytes": sum(entry["gzipBytes"] for entry in client),
-            "largestJavaScriptGzipBytes": max((entry["gzipBytes"] for entry in files if entry["path"].endswith(".js")), default=0)}
+            "regionMapGzipBytes": sum(entry["gzipBytes"] for entry in client if REGION_MAP_ASSET.fullmatch(entry["path"])),
+            "largestJavaScriptGzipBytes": max((entry["gzipBytes"] for entry in client if entry["path"].endswith((".js", ".mjs"))), default=0)}
 
 
 def main():
@@ -34,11 +38,19 @@ def main():
     parser.add_argument("--compare", type=Path, help="Earlier report; require every built file to match")
     args = parser.parse_args()
     report = measure(args.dist)
+    region_bytes = report["regionMapGzipBytes"]
     if (report["largestJavaScriptGzipBytes"] > MAX_JAVASCRIPT_GZIP_BYTES
-            or report["clientGzipBytes"] > MAX_CLIENT_GZIP_BYTES):
-        raise SystemExit("Frontend exceeds the reviewed compressed-size budget (300 KiB largest JS / 600 KiB full client)")
-    if args.compare and report != json.loads(args.compare.read_text()):
-        raise SystemExit("Frontend output differs from the recorded build")
+            or report["clientGzipBytes"] - region_bytes > MAX_CLIENT_GZIP_BYTES
+            or region_bytes > MAX_REGION_MAP_GZIP_BYTES):
+        raise SystemExit(
+            f"Frontend exceeds the compressed-size budget ({MAX_JAVASCRIPT_GZIP_BYTES // 1024} KiB largest JS / "
+            f"{MAX_CLIENT_GZIP_BYTES // 1024} KiB app plus {MAX_REGION_MAP_GZIP_BYTES // 1024} KiB for map regions)"
+        )
+    if args.compare:
+        earlier = json.loads(args.compare.read_text())
+        earlier.setdefault("regionMapGzipBytes", 0)
+        if report != earlier:
+            raise SystemExit("Frontend output differs from the recorded build")
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

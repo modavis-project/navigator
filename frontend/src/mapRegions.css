@@ -1,0 +1,53 @@
+.map-region-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px 12px;
+  flex-wrap: wrap;
+  min-width: 0;
+  padding: 3px 0 8px;
+  color: #355751;
+  font-size: .84rem;
+}
+
+.map-region-bar select {
+  max-width: min(100%, 16rem);
+  min-height: 35px;
+  border: 1px solid #b6c9c2;
+  border-radius: 6px;
+  color: #173e36;
+  background: #fffdf8;
+  font: inherit;
+}
+
+.map-region-selection {
+  display: flex;
+  align-items: baseline;
+  gap: 2px 12px;
+  flex-wrap: wrap;
+}
+
+.map-region-selection a { font-weight: 700; }
+.map-region-selection span { font-variant-numeric: tabular-nums; }
+.map-region-credits { margin-inline-start: auto; font-size: .76rem; }
+.map-region-selection button {
+  min-width: 30px;
+  min-height: 30px;
+  border: 0;
+  border-radius: 5px;
+  background: #e8efeb;
+  color: #24584e;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .map-region-bar:has(select) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+  }
+
+  .map-region-bar select { min-width: 0; }
+  .map-region-bar:has(select) .map-region-credits { grid-area: 1 / 2; }
+  .map-region-bar:has(select) :is(.map-region-selection, small) { grid-column: 1 / -1; }
+  .map-region-selection { gap: 2px 8px; }
+}

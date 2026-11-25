@@ -6,9 +6,18 @@
     <title>MODAVIS Navigator</title>
     <meta name="theme-color" content="#172d2b" />
     <link rel="icon" type="image/svg+xml" href="/navigator.svg" />
+    <link rel="stylesheet" href="/src/loadingContent.css" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main class="startup-placeholder">
+        <img src="/navigator.svg" width="52" height="52" alt="" />
+        <h1>MODAVIS Navigator</h1>
+        <div class="startup-placeholder-lines" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="sr-only" role="status">Loading Navigator…</p>
+      </main>
+    </div>
+    <noscript><p class="startup-noscript">Enable JavaScript to browse the MODAVIS Navigator.</p></noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

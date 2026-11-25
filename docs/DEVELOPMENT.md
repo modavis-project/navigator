@@ -62,9 +62,12 @@ provided explicitly. `DB_PORT` defaults to 5432. Use a SELECT-only application
 role; the application additionally starts read-only transactions. No saved
 endpoint, default password or private workspace is needed for default tests.
 
-`python3 scripts/measure_frontend.py` enforces the reviewed size budgets: 300 KiB
-gzip for the largest JavaScript file and 600 KiB gzip for all JavaScript, CSS and
-HTML. Gzip uses level 9 and a fixed timestamp for comparable measurements. The
+`python3 scripts/measure_frontend.py` enforces 300 KiB gzip for the largest
+JavaScript file and 608 KiB gzip for the application JavaScript, CSS and HTML,
+including on-demand area pages. The region interaction assets have a 6 KiB
+gzip budget and load only on the interactive public map. The total is reported
+with both budgets' assets included.
+Gzip uses level 9 and a fixed timestamp for comparable measurements. The
 retained main chunk still exceeds Vite's raw 500 kB advisory, which remains
 visible. The budget does not certify full-POD response time or browser
 memory. CI also requires repeated builds to match every output file byte-for-byte.

@@ -11,6 +11,42 @@
 .public-shell .entity-workspace a { color: var(--nav-accent); text-underline-offset: .2em; }
 .public-shell .entity-workspace a:hover { color: #153d2e; }
 .public-shell .entity-workspace :focus-visible { outline: 3px solid #a58236; outline-offset: 3px; }
+.public-shell select:where(:not([multiple], [size])) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  min-block-size: 40px;
+  padding-inline-end: 1.8em;
+  border: 1px solid var(--nav-line);
+  border-radius: 7px;
+  background-color: var(--nav-paper);
+  color: var(--nav-ink);
+  cursor: pointer;
+}
+.public-shell select:where(:not([multiple], [size])):enabled:hover { border-color: #8fa89a; }
+.public-shell select:disabled { cursor: default; }
+
+@media (hover: hover) and (pointer: fine) and (forced-colors: none) {
+  @supports (appearance: base-select) {
+    .public-shell select:where(:not([multiple], [size])),
+    .public-shell select:where(:not([multiple], [size]))::picker(select) { appearance: base-select; }
+    .public-shell select:where(:not([multiple], [size])) { align-items: center; padding-inline-end: .7em; }
+    .public-shell select::picker-icon { color: var(--nav-accent); font-size: .9em; }
+    .public-shell select:open { border-color: #8fa89a; }
+    .public-shell select::picker(select) {
+      margin-block-start: 4px;
+      padding: 4px;
+      border: 1px solid var(--nav-line);
+      border-radius: 8px;
+      background: var(--nav-paper);
+      color: var(--nav-ink);
+      box-shadow: 0 8px 24px #213b2720;
+    }
+    .public-shell select option { min-block-size: 34px; padding: 6px 10px; border-radius: 5px; }
+    .public-shell select option:checked { background: #e5eee5; font-weight: 650; }
+    .public-shell select option:enabled:is(:hover, :focus-visible) { background: #eff3e9; }
+    .public-shell select option::checkmark { color: var(--nav-accent); }
+  }
+}
 .public-shell .entity-sidebar .brand-name { display: block; font-size: 1.65rem; font-weight: 650; letter-spacing: -.04em; line-height: 1.2; }
 .public-shell .entity-sidebar .brand-block { gap: 12px; padding-bottom: 6px; }
 .public-shell .entity-sidebar .alpha-badge { background: transparent; border: 0; padding: 0; margin-top: 6px; color: #bbd0c0; font-size: .66rem; font-weight: 500; }

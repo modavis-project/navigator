@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { LoadingContent } from "./LoadingContent";
 
 const REFERENCE_URL = "/navigator-api.md";
 const REFERENCE_TITLE = "MODAVIS Navigator public API";
@@ -109,7 +110,7 @@ export function PublicApiReference() {
     <div className="release-guide-section api-reference-document">
       {state.markdown ? <PublicApiReferenceBody markdown={state.markdown} />
         : state.failed ? <p role="alert">The API reference could not be loaded. <a href={REFERENCE_URL} download>Download Markdown</a>.</p>
-          : <p role="status">Loading the API reference…</p>}
+          : <LoadingContent kind="article" label="Loading the API reference…" />}
     </div>
   </article>;
 }

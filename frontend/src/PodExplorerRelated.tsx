@@ -1,4 +1,5 @@
 import {usePodRead} from './PodExplorerApi';
+import {LoadingContent} from './LoadingContent';
 import './PodExplorer.css';
 type Related = {
   organ: {id:string;title:string;url:string}; relationshipBoundary:string; temperamentBoundary:string;
@@ -12,7 +13,7 @@ export function PodRelatedResources({organId}: {organId:string}) {
   const {data, error, retry} = usePodRead<Related>('/api/pod/organs/' + encodeURIComponent(organId) + '/resources');
   return <section className="pod-related" aria-label="Connected POD resources">
     <header><h2>Connected resources</h2><p>This organ’s accounts, sources and retained relationships.</p></header>
-    {error ? <div role="alert"><p>{error}</p><button onClick={retry}>Retry resources</button></div> : !data ? <p role="status">Loading connected resources…</p> : <>
+    {error ? <div role="alert"><p>{error}</p><button onClick={retry}>Retry resources</button></div> : !data ? <LoadingContent label="Loading connected resources…" /> : <>
       <div className="pod-resource-counts">{data.collections.map(item => <a key={item.id} href={item.url}>
         <strong>{item.count === null ? 'Unavailable' : item.count.toLocaleString()}</strong><span>{item.title}</span><small>{item.unit}</small>
       </a>)}</div>

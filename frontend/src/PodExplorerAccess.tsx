@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {ArrowRight, Braces, Download, FileDown, Play} from 'lucide-react';
 import {downloadPodJson, podJson, usePodRead} from './PodExplorerApi';
 import {internalHref} from './PodExplorerModel';
+import {LoadingContent} from './LoadingContent';
 import {useUiLocale} from './uiLocale';
 
 export type Access = {graphqlAvailable:boolean;graphqlEndpoint:string;entityKinds:string[];profiles:string[];distributionManifest:string;releaseContext:string;researchPackages:boolean;semanticDistributionsAvailable?:boolean;vocabularyReferenceAvailable?:boolean};
@@ -60,7 +61,7 @@ export function PodExplorerAccess({snapshot, access}: {snapshot:string|null;acce
         <label>{t('pod.access.export.id', "MODAVIS identifier", "MODAVIS-Kennung")}<input required maxLength={256} value={identifier} onChange={event=>setIdentifier(event.target.value)}/></label>
         <button type="submit">{t('pod.access.export.find', "Find exports", "Exportformate suchen")} <ArrowRight size={15} aria-hidden="true"/></button>
       </form>
-      {exported.error?<div role="alert"><p>{t('pod.access.error.export', 'The export manifest could not be loaded.', 'Das Verzeichnis der Exportformate konnte nicht geladen werden.')} <code lang="en">{exported.error}</code></p><button onClick={exported.retry}>{t('pod.access.export.retry', "Retry export lookup", "Exportformate erneut abrufen")}</button></div>:!exported.data?<p role="status">{t('pod.access.export.loading', "Loading export manifest…", "Verzeichnis der Exportformate wird geladen …")}</p>:<>
+      {exported.error?<div role="alert"><p>{t('pod.access.error.export', 'The export manifest could not be loaded.', 'Das Verzeichnis der Exportformate konnte nicht geladen werden.')} <code lang="en">{exported.error}</code></p><button onClick={exported.retry}>{t('pod.access.export.retry', "Retry export lookup", "Exportformate erneut abrufen")}</button></div>:!exported.data?<LoadingContent label={t('pod.access.export.loading', "Loading export manifest…", "Verzeichnis der Exportformate wird geladen …")}/>:<>
         <div className="pod-resolved-entity"><span>{t('pod.access.export.profiles', "Available profiles", "Verfügbare Profile")}</span>{exported.data.mdvsId&&<code>{exported.data.mdvsId}</code>}</div>
         <div className="pod-export-grid">{exported.data.profiles?.map(item=><a key={item.key} href={internalHref(item.url)}><strong>{item.label}</strong><span>{item.format}</span><Download size={15} aria-hidden="true"/></a>)}</div>
         {!!exported.data.native?.length&&<div className="pod-native-formats" aria-label={t('pod.access.export.nativeAria', "Native export formats", "MODAVIS-Exportformate")}><span>{t('pod.access.export.native', "Native formats", "MODAVIS-Formate")}</span>{exported.data.native.map(item=><a key={item.key} href={internalHref(item.url)}>{item.label}</a>)}</div>}

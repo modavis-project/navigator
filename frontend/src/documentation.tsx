@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { LoadingContent } from "./LoadingContent";
 import {
   AlertCircle, ArrowLeft, ArrowRight, BookMarked, BookOpen, Check, ChevronRight,
   Boxes, Clipboard, Database, Download, FileArchive, FileText, Filter, GitBranch,
@@ -180,7 +181,7 @@ function DocumentationHubPage({ isAdmin }: { isAdmin: boolean }) {
             : <span className="documentation-muted-action" aria-disabled="true"><History size={16} /> Release history begins with the first approved release</span>}
         </div>
       </div>
-      {loading && !visible.length ? <div className="documentation-loading" role="status">Loading documentation…</div> : null}
+      {loading && !visible.length && <LoadingContent kind="cards" className="documentation-card-grid" label="Loading documentation…" />}
       <div className="documentation-card-grid">
         {visible.map((page) => <DocumentationCard key={`${page.releaseVersion}:${page.slug}`} page={page} />)}
       </div>
@@ -243,7 +244,7 @@ function DocumentationReader({ route }: { route: Extract<DocumentationRoute, { k
     },
   } : null);
   if (error) return <DocumentationEmpty title="Documentation page unavailable" detail={error} />;
-  if (!page) return <div className="documentation-loading" role="status">Loading documentation page…</div>;
+  if (!page) return <LoadingContent kind="article" label="Loading documentation page…" />;
   const sourceContext = sourceDocumentationContext(page.slug);
   return (
     <article className="documentation-reader">
@@ -306,7 +307,7 @@ function DocumentationReleasePage({ version, isAdmin }: { version: string; isAdm
   }, [version]);
   useDocumentationMetadata(release ? { title: `${release.title} ${release.versionLabel} · MODAVIS`, description: release.citationText || "Immutable MODAVIS documentation release.", canonicalPath: release.pageUrl } : null);
   if (error) return <DocumentationEmpty title="Documentation release unavailable" detail={error} />;
-  if (!release) return <div className="documentation-loading" role="status">Loading release…</div>;
+  if (!release) return <LoadingContent kind="article" label="Loading release…" />;
   return (
     <section className="entity-section documentation-release-page">
       <nav className="documentation-breadcrumbs"><a href="/docs" onClick={(event) => { event.preventDefault(); openDocumentationPath("/docs"); }}>Documentation</a><ChevronRight size={14} /><span>Releases</span><ChevronRight size={14} /><span>{release.versionLabel}</span></nav>

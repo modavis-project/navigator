@@ -4,6 +4,7 @@ import { defineConfig, type Plugin, type ViteDevServer, type PreviewServer } fro
 import react from "@vitejs/plugin-react";
 import { geoLibreMiddleware } from "./geolibreRuntime.mjs";
 import { germanPreviewCopyPlugin } from "./germanPreviewCopy.mjs";
+import { basemapDevRelay } from "./basemapDevRelay.mjs";
 
 const navigatorBackendUrl = process.env.NAVIGATOR_BACKEND_URL || "http://127.0.0.1:8506";
 const geolibreRuntimeIndex = fileURLToPath(
@@ -14,6 +15,7 @@ const geolibreRuntimeRoot = resolve(frontendRoot, process.env.NAVIGATOR_GEOLIBRE
 
 function guardMissingGeoLibreRuntime(): Plugin {
   const install = (server: ViteDevServer | PreviewServer) => {
+    server.middlewares.use(basemapDevRelay(server.config.publicDir));
     server.middlewares.use(geoLibreMiddleware({
       runtimeRoot: geolibreRuntimeRoot,
       publicIndex: "httpServer" in server && "watcher" in server
@@ -52,6 +54,10 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      "^/api/(?:map/marker-style\\.json|areas/[^/]+/map/style\\.json)(?:\\?|$)": {
+        target: navigatorBackendUrl,
+        changeOrigin: false,
+      },
       "/api": navigatorBackendUrl,
       "/dataset": navigatorBackendUrl,
       "/resolve": navigatorBackendUrl,

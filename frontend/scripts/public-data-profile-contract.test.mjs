@@ -10,13 +10,13 @@ const requestCache = await readFile(new URL("../src/requestCache.ts", import.met
 const surfaces = await readFile(new URL("../src/surfaces.ts", import.meta.url), "utf8");
 const releaseGuide = await readFile(new URL("../src/releaseGuide.tsx", import.meta.url), "utf8");
 
-test("instance discovery bypasses a previous deployment's browser cache", async () => {
-  const current = { capabilities: ["catalog", "entity_exports"] };
+test("instance discovery revalidates a previous deployment's browser cache", async () => {
+  const current = { capabilities: ["catalog", "entity_exports"], readSnapshot: "new" };
   const stale = { capabilities: ["catalog"] };
   const requests = [];
   const shared = { AbortSignal, AbortController, DOMException, setTimeout, clearTimeout, fetch: async (url, options) => {
     requests.push({ url, options });
-    return { ok: true, text: async () => JSON.stringify(options.cache === "no-store" ? current : stale) };
+    return { ok: true, text: async () => JSON.stringify(options.cache === "no-cache" ? current : stale) };
   } };
   const cacheContext = { exports: {}, ...shared };
   vm.runInNewContext(ts.transpileModule(requestCache, {
@@ -31,9 +31,11 @@ test("instance discovery bypasses a previous deployment's browser cache", async 
   }).outputText, context);
   const result = await context.exports.fetchReleaseContext();
   assert.equal(requests[0].url, "/api/release-context");
-  assert.equal(requests[0].options.cache, "no-store");
+  assert.equal(requests[0].options.cache, "no-cache");
   assert.equal(requests[0].options.signal.aborted, false);
   assert.deepEqual(JSON.parse(JSON.stringify(result)), current);
+  await context.exports.publicGetJson("/api/temperaments");
+  assert.equal(requests[1].options.headers["X-MODAVIS-POD-Snapshot"], current.readSnapshot);
 });
 
 test("release context carries the public data profile and capability contract", () => {

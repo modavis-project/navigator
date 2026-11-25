@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type MouseEvent } from "react";
 import { publicGetJson } from "./api";
+import { LoadingContent } from "./LoadingContent";
 import type { VocabularyConcept, VocabularyMapping, VocabularyScheme } from "./api";
 import { PublicReadError } from "./requestCache";
 import "./vocabularyRecords.css";
@@ -193,7 +194,7 @@ function SnapshotAccess({ scheme, snapshot, reference }: { scheme: string; snaps
   return <details className="vr-disclosure" onToggle={event => setOpen(event.currentTarget.open)}>
     <summary>Cite and download this bundled snapshot</summary>
     <div className="vr-disclosure-body"><p>Definitions and labels are bundled with the selected POD. This is not a separately published vocabulary release.</p>
-      {open && !result.data && !result.error && <p role="status">Loading citation and checksum…</p>}
+      {open && !result.data && !result.error && <LoadingContent label="Loading citation and checksum…" />}
       {result.error && <div role="alert"><p>{result.error.message}</p>{![400, 409].includes(result.error.status || 0) && <button type="button" className="secondary" onClick={result.retry}>Retry snapshot metadata</button>}</div>}
       {reference && <div className="vr-citation"><h3>Record reference</h3><p>{reference}</p><CopyValue label="Copy record reference" value={reference} /></div>}
       {result.data && <div className="vr-citation"><h3>Snapshot citation</h3><p>{result.data.citation}</p><CopyValue label="Copy snapshot citation" value={result.data.citation} /><p>{result.data.scope}</p></div>}
@@ -314,6 +315,6 @@ export function PublicVocabularyRecords(props: PublicVocabularyRecordsProps) {
     document.title = `${title || "Vocabulary reading"} | MODAVIS Navigator`;
   }, [data]);
   if (invalid || result.error) return <VocabularyReadingFailure error={invalid || result.error!} path={path} onRetry={result.retry} />;
-  if (!data || !query) return <section className="vocabulary-reader vr-loading" aria-busy="true"><h1>{props.conceptId ? "Vocabulary record" : "Vocabulary"}</h1><p role="status">Loading the requested {props.conceptId ? "record and its evidence" : "vocabulary and matching records"}…</p></section>;
+  if (!data || !query) return <section className="vocabulary-reader vr-loading"><h1>{props.conceptId ? "Vocabulary record" : "Vocabulary"}</h1><LoadingContent kind={props.conceptId ? "article" : "rows"} label={props.conceptId ? "Loading the requested record and its evidence…" : "Loading the requested vocabulary and matching records…"} /></section>;
   return data.kind === "scheme" ? <VocabularySchemeReading scheme={data.scheme} list={data.list} query={query} contentSha256={data.contentSha256} /> : <VocabularyConceptReading concept={data.concept} query={query} contentSha256={data.contentSha256} />;
 }

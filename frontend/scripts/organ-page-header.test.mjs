@@ -7,6 +7,7 @@ import * as React from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import ts from "typescript";
 import { testUiLocale } from "./ui-locale-test-support.mjs";
+import { LoadingContent } from "./loading-content-test-support.mjs";
 
 const require = createRequire(import.meta.url);
 const compile = source => ts.transpileModule(source, {compilerOptions: {
@@ -25,6 +26,7 @@ function load(runtime = {}) {
   const context = {
     exports: {}, require, ...helpers.exports,
     useUiLocale: testUiLocale, publicOrganTabLabel: (_t, _tab, label) => label,
+    LoadingContent,
     useState: React.useState, useEffect: React.useEffect, useRef: React.useRef, Suspense: React.Suspense,
     ORGAN_TABS: ["overview", "history", "activities", "specification", "media", "export", "identifiers", "related", "contributions", "research"],
     organInstitutionLabel: organ => organ.title,

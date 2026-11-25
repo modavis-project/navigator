@@ -80,7 +80,7 @@
 .vpi-filter-panel input:focus { outline: 0; }
 .vpi-filter-panel form button { align-self: stretch; background: var(--vpi-green); border: 0; border-radius: 0 .65rem .65rem 0; color: white; font-weight: 700; padding: 0 1.1rem; }
 .vpi-filter-grid { display: grid; gap: .7rem; grid-template-columns: repeat(5, minmax(8rem, 1fr)); margin-top: .85rem; }
-.vpi-filter-primary { grid-template-columns: repeat(6, minmax(7rem, 1fr)); }
+.vpi-filter-primary { grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); }
 .vpi-filter-grid label { min-width: 0; }
 .vpi-filter-grid select { background: var(--vpi-paper); border: 1px solid var(--vpi-line); border-radius: .55rem; color: var(--vpi-ink); max-width: 100%; padding: .65rem .55rem; width: 100%; }
 .vpi-filter-panel footer { align-items: center; border-top: 1px solid var(--vpi-line); color: var(--vpi-muted); display: flex; font-size: .75rem; justify-content: space-between; margin-top: .9rem; padding-top: .8rem; }
@@ -205,7 +205,7 @@
 .vpi-provenance > p { color: var(--vpi-muted); font-size: .75rem; }
 
 @media (max-width: 1100px) {
-  .vpi-filter-grid, .vpi-filter-primary { grid-template-columns: repeat(3, minmax(8rem, 1fr)); }
+  .vpi-filter-grid:not(.vpi-filter-primary) { grid-template-columns: repeat(3, minmax(8rem, 1fr)); }
   .vpi-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .vpi-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .vpi-review-queues > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }

@@ -6,12 +6,13 @@ import test from 'node:test';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import ts from 'typescript';
+import {LoadingContent} from './loading-content-test-support.mjs';
 
 const require = createRequire(import.meta.url);
 function load(name, dependencies = {}, globals = {}) {
   const source = readFileSync(new URL('../src/' + name, import.meta.url), 'utf8');
   const context = {exports: {}, URLSearchParams, ...globals,
-    require: id => id.endsWith('.css') ? {} : dependencies[id] || (id === './uiLocale' ? load('uiLocale.tsx') : require(id))};
+    require: id => id.endsWith('.css') ? {} : dependencies[id] || (id === './LoadingContent' ? {LoadingContent} : id === './uiLocale' ? load('uiLocale.tsx') : require(id))};
   vm.runInNewContext(ts.transpileModule(source, {compilerOptions: {
     target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX,
   }}).outputText, context);

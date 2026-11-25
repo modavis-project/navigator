@@ -1,6 +1,7 @@
 import { useUiLocale, type UiText } from "./uiLocale";
 import { actionReviewCopy, capturedStopSummary, specificationFieldLabel } from "./specificationLabels";
 import { JsonEvidence } from "./JsonEvidence";
+import { LoadingContent } from "./LoadingContent";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   ArrowLeftRight,
@@ -855,9 +856,7 @@ export function OrganSpecificationDescriptions({
                 (!otherData ||
                   otherData.id !== comparison.id ||
                   otherData.revision !== comparison.revision)) ? (
-              <p role="status" className="description-loading">
-                {t("organ.spec.loading", "Loading source description…", "Quellenbeschreibung wird geladen …")}
-              </p>
+              <LoadingContent kind="table" label={t("organ.spec.loading", "Loading source description…", "Quellenbeschreibung wird geladen …")} />
             ) : (
               <>
                 {comparison && otherData ? (

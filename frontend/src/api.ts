@@ -4100,6 +4100,8 @@ export interface EntitySearchResult {
   targetId: string;
   mdvsId?: string | null;
   title: string;
+  areaType?: string;
+  context?: string | null;
   summary?: string | null;
   url?: string | null;
   targetOrganId?: string | null;
@@ -5018,6 +5020,12 @@ export interface OrganListResponse {
   facets?: OrganFacets;
 }
 
+export interface EventEndpoint {
+  title?: string | null;
+  pageUrl?: string | null;
+  coordinatePrecision?: string | null;
+}
+
 export interface EventSummary {
   sourceOnly?: boolean;
   retainedRepresentations?: Array<Record<string, unknown>>;
@@ -5083,6 +5091,7 @@ export interface EventSummary {
     } | null;
     routeGeometryStored?: boolean;
   } | null;
+  transferEndpoints?: { origin: EventEndpoint[]; destination: EventEndpoint[] } | null;
   pageUrl?: string | null;
 }
 
@@ -5204,6 +5213,7 @@ export interface ReleaseContext {
   usageScope?: string;
   readOnly: boolean;
   contentSha256?: string | null;
+  readSnapshot?: string;
   guideUrl: string;
   documentationUrl: string;
   documentationPolicy: string;
@@ -6759,8 +6769,10 @@ export async function fetchEvents(params: { query?: string; subject?: string; ty
 }
 
 export async function fetchReleaseContext(): Promise<ReleaseContext> {
-  // Discover the current instance even if a previous deployment cached this URL.
-  return getJson("/api/release-context", { signal: AbortSignal.timeout(15_000), cache: "no-store" });
+  // Revalidate the instance before reusing any data from a prior visit.
+  const context = await getJson<ReleaseContext>("/api/release-context", { signal: AbortSignal.timeout(15_000), cache: "no-cache" });
+  jsonRequestCache.setPublicSnapshot(context.readSnapshot);
+  return context;
 }
 
 export async function fetchEvent(id: string): Promise<EventDetail> {
@@ -6838,11 +6850,11 @@ export async function fetchOrgan(id: string): Promise<OrganDetail> {
 }
 
 export async function fetchOrganMapContextProject(id: string): Promise<OrganMapContextProject> {
-  return getJson(`/api/organs/${encodeURIComponent(id)}/map-context.geolibre.json?v=5`);
+  return getJson(`/api/organs/${encodeURIComponent(id)}/map-context.geolibre.json?v=6`);
 }
 
 export async function fetchActorMapContextProject(id: string): Promise<ActorMapContextProject> {
-  return getJson(`/api/actors/${encodeURIComponent(id)}/activity-map.geolibre.json`);
+  return getJson(`/api/actors/${encodeURIComponent(id)}/activity-map.geolibre.json?v=2`);
 }
 
 export async function fetchPersistorPublicationStatus(id: string): Promise<PersistorPublicationStatus> {

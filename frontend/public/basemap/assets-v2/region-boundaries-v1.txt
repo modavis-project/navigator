@@ -1,0 +1,37 @@
+Explorable administrative boundaries
+
+Country outlines use Natural Earth 1:50m Admin 0 Countries v5.1.2, and
+subdivisions use 1:10m Admin 1 States and Provinces v5.1.1. Both are public
+domain. Natural Earth's boundary policy applies to these outlines.
+Subdivision source: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-1-states-provinces/
+Country GeoJSON SHA-256: 3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb
+Subdivision archive SHA-256: efc59726337323058f9446210adc96673179cd344e053666ee3d28cb58ba2b05
+
+Additional territory-name spellings were checked against Unicode CLDR 46.1
+territory codes and used only for matching documented area names.
+Unicode CLDR: https://cldr.unicode.org/downloads/cldr-46
+Unicode data license: https://www.unicode.org/license.txt
+The Danish region spellings use Statistics Denmark's regional register.
+Statistics Denmark: https://www.dst.dk/da/Statistik/dokumentation/Times/erhvervsregister/arb-bel-region-kode
+
+Germany's Land and county-level outlines and the Lower Saxony municipality
+outlines use VG250, dated 01 January 2026. © BKG (2026), dl-de/by-2-0.
+The geometries were simplified for map display.
+BKG: https://www.bkg.bund.de
+License: https://www.govdata.de/dl-de/by-2-0
+Data sources: https://sgx.geodatenzentrum.de/web_public/gdz/datenquellen/datenquellen_vg_nuts.pdf
+Original service: https://sgx.geodatenzentrum.de/wfs_vg250
+Land GeoJSON SHA-256: 62c92f8d4c60ea7efbe9bb256a8540e7a9186364dca5a371d2522eee2b6b4ae0
+County GeoJSON SHA-256: 885c9dbad6e8903dc2c10a2062d5c666b117280531c4e1e20d849cb2753ffb3c
+Municipality GeoJSON SHA-256: 6f0f5b81920609c3ca32f76d4de71c0cb865831c5843eb6c87fca88e8f8a7ca1
+
+Hamburg neighborhoods use Freie und Hansestadt Hamburg, Landesbetrieb
+Geoinformation und Vermessung (LGV), ALKIS Verwaltungsgrenzen Hamburg,
+dl-de/by-2-0. The geometries were simplified for map display.
+Original catalogue: https://suche.transparenz.hamburg.de/dataset/alkis-verwaltungsgrenzen-hamburg31
+Original collection: https://api.hamburg.de/datasets/v1/verwaltungsgrenzen/collections/stadtteile
+License: https://www.govdata.de/dl-de/by-2-0
+Neighborhood GeoJSON SHA-256: 7314b00d8cca2f16447245654b2cc15b89d32708f70f9b53fee9c1ece2984f90
+
+The overlay is prepared by scripts/build_region_boundaries.py. A boundary
+is interactive only where its identity matches a documented Navigator area.

@@ -1,5 +1,6 @@
 import { JsonEvidence } from "./JsonEvidence";
 import { useUiLocale } from "./uiLocale";
+import type { EventSummary } from "./api";
 type ParticipationEvidence = {
   resolutionState?: unknown;
   pageUrl?: unknown;
@@ -23,6 +24,28 @@ export function eventSourcePresentation(event: { sourceOnly?: boolean; mappingKi
 
 export function ContextualEventSummary() {
   return <section><h3>Source statement</h3><p>The retained statement does not independently establish an event. Its context and any conflicting claims are preserved below.</p></section>;
+}
+
+export function EventTransferEndpoints({ event }: { event: EventSummary }) {
+  const { t } = useUiLocale();
+  const roles = ["origin", "destination"] as const;
+  const endpoints = event.transferEndpoints ?? {
+    origin: event.movement?.origin?.title ? [event.movement.origin] : [],
+    destination: event.movement?.destination?.title ? [event.movement.destination] : [],
+  };
+  if (!endpoints.origin.length && !endpoints.destination.length) {
+    return <p className="event-route-unavailable">{t("event.catalogue.noEndpoints", "Endpoints undocumented", "Ausgangs- und Zielort nicht dokumentiert")}</p>;
+  }
+  return <dl className="event-route-summary">
+    {roles.map(role => <div key={role}>
+      <dt>{role === "origin" ? t("event.catalogue.origin", "Origin", "Ausgangsort") : t("event.catalogue.destination", "Destination", "Zielort")}</dt>
+      {endpoints[role].map(endpoint => <dd key={endpoint.title}>
+        {endpoint.pageUrl ? <a href={endpoint.pageUrl}>{endpoint.title}</a> : <strong>{endpoint.title}</strong>}
+        {endpoint.coordinatePrecision === "locality" && <small>{t("event.catalogue.approxLocality", "Approximate locality", "Ungefährer Ort")}</small>}
+      </dd>)}
+      {!endpoints[role].length && <dd>{t("event.catalogue.endpointUnknown", "Undocumented", "Nicht dokumentiert")}</dd>}
+    </div>)}
+  </dl>;
 }
 
 export function ParticipantIdentityNote({ participant }: { participant: ParticipationEvidence }) {

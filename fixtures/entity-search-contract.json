@@ -160,9 +160,9 @@
       "bindings": {
         "publicCoreSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       },
-      "method": "modavis.literal-ranked-discovery/v3",
-      "sha256": "a1b80ea2ae0ff402c68c21d51c7843ecb85ce2120fa7d92576c2918af67efbd3",
-      "id": "sha256:a1b80ea2ae0ff402c68c21d51c7843ecb85ce2120fa7d92576c2918af67efbd3"
+      "method": "modavis.literal-ranked-discovery/v4",
+      "sha256": "ae0fe033fb6a2be9796e4d2044ef7175e16acd577ee3204710ecfb8fd10d552e",
+      "id": "sha256:ae0fe033fb6a2be9796e4d2044ef7175e16acd577ee3204710ecfb8fd10d552e"
     }
   }
 }

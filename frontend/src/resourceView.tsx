@@ -1,5 +1,6 @@
 import { Braces, Check, Copy, ExternalLink, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { LoadingContent } from "./LoadingContent";
 
 interface ResourceValue { kind: string; text: string; uri?: string; url?: string; language?: string; datatype?: string }
 interface ResourceDescription {
@@ -75,7 +76,7 @@ export function ResourceView({ owner, standalone = false }: { owner?: string; st
   }
   if (!uri) return standalone ? <p role="alert">Choose a dataset resource to view its description.</p> : null;
   if (error) return <section className="panel-block resource-inspector"><p role="alert">{error}</p>{!standalone && <button type="button" onClick={dismiss}>Return to entity exports</button>}</section>;
-  if (!data) return <section className="panel-block resource-inspector" role="status">Loading resource description…</section>;
+  if (!data) return <LoadingContent label="Loading resource description…" />;
   const highlights = data.properties.filter(property => keyProperties.has(property.label));
   return <section className="panel-block resource-inspector" aria-labelledby="selected-resource-heading">
     <header className="resource-header">

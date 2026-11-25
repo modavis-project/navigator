@@ -7,6 +7,7 @@ import { Children, createElement, isValidElement, useEffect, useRef, useState } 
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 import { testUiLocale } from "./ui-locale-test-support.mjs";
+import { LoadingContent, UpdatingContent } from "./loading-content-test-support.mjs";
 
 // Render the actual route components and their helpers, without importing the
 // application's browser/service startup. Only decorative icons and unrelated
@@ -35,6 +36,7 @@ const noOp = () => {};
 const context = {
   exports: {}, require: createRequire(import.meta.url), URL, URLSearchParams,
   useUiLocale: testUiLocale,
+  LoadingContent, UpdatingContent,
   window: { location: { origin: "https://navigator.test" } },
   useEffect, useRef, useState,
   ...Object.fromEntries([
@@ -283,8 +285,9 @@ test("an empty catalogue explains recovery while pending rows never claim no mat
   assert.match(empty, /No organs found/);
   assert.match(empty, /Broaden the search or clear the query/);
   const pending = render("OrganList", { items: [], loading: true, onOpen: noOp, publicProjection: true });
-  assert.match(pending, /aria-busy="true"/);
-  assert.match(pending, /role="status">Updating results/);
+  assert.doesNotMatch(pending, /aria-busy="true"/);
+  assert.match(pending, /role="status">Loading organ results…/);
+  assert.match(pending, /class="loading-shapes loading-shapes-table[^"]*" aria-hidden="true"/);
   assert.doesNotMatch(pending, /No organs found/);
   const controls = render("OrganFilterPanel", { ...filterProps, query: "No matching organ", filters: { builder: "Example builder" } });
   assert.match(controls, /aria-label="Remove search filter"/);
@@ -300,6 +303,9 @@ test("catalogue links identify the documented place and the exact organ tab", ()
     specification: { stops: 0 },
   };
   const props = { items: [organ], loading: false, onOpen: noOp, publicProjection: true };
+  const updating = render("OrganList", { ...props, loading: true });
+  assert.match(updating, /role="status"><span aria-hidden="true"><\/span>Updating results…/);
+  assert.match(updating, /class="organ-table-scroll" aria-busy="true"/);
   assert.deepEqual(links(render("OrganList", props)), [
     { href: "/organs/EXAMPLE", text: "Example ChapelMDVS:ENTY:EXAMPLE" },
     { href: "/organs/EXAMPLE?tab=specification", text: "0" },

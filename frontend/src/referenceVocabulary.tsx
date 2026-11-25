@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {ArrowLeft, ArrowRight, Copy, Download, ExternalLink, Search} from "lucide-react";
 import {JsonEvidence} from "./JsonEvidence";
+import {LoadingContent} from "./LoadingContent";
 import {publicGetJson} from "./api";
 import {PublicReadError} from "./requestCache";
 import "./referenceVocabulary.css";
@@ -106,7 +107,7 @@ export function ReferenceVocabulary() {
     {issue||result.error?<div role="alert" className="rv-error"><h2>Reference selection unavailable</h2><p>{issue||result.error}</p>
       {result.status===409?<button type="button" onClick={()=>go({snapshot:null})}>Open the available published snapshot</button>:issue?<a href={ROOT}>Browse published collections</a>:<button type="button" onClick={result.retry}>Try again</button>}
       <a href={ROOT+"?"+new URLSearchParams({collection:collectionMeta?.id||"network"})}>Browse this collection</a>
-    </div>:!data?<p role="status">Loading published vocabulary…</p>:uri&&resource?<>
+    </div>:!data?<LoadingContent kind="article" label="Loading published vocabulary…"/>:uri&&resource?<>
       <div className="rv-identity"><code>{resource.uri}</code><div className="rv-identity-actions">
         <SaveVocabularyTerm contextKey={vocabularyCaptureUrl(ROOT,search,{snapshot:data.snapshot})} label={resource.kind==="concept"?"Save term":"Save reference"}/>
         <CopyValue value={resource.uri} label="Copy source URI"/>

@@ -7,6 +7,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 import { testUiLocale } from "./ui-locale-test-support.mjs";
+import { LoadingContent } from "./loading-content-test-support.mjs";
 
 // The Python producer test asserts its actual response equals these same bytes.
 const contract = JSON.parse(readFileSync(new URL("../../fixtures/entity-search-contract.json", import.meta.url), "utf8"));
@@ -25,6 +26,7 @@ const source = [
 const context = {
   exports: {}, require: createRequire(import.meta.url),
   useUiLocale: testUiLocale,
+  LoadingContent,
   ChevronRight: () => null, friendlyLabel: value => value,
 };
 vm.runInNewContext(ts.transpileModule(source, { compilerOptions: {
@@ -85,4 +87,17 @@ test("event matches open the assertion route even when a related organ is presen
   const response = { query: "built", total: 1, limit: 10, items: [{ kind: "event", entityType: "event", targetId: "EVENT-1", targetOrganId: "ORGAN-1", title: "Documented construction", url: "/events/EVENT-1", searchGroup: "events", searchGroupLabel: "Documented event assertions" }] };
   assert.match(render(response), /href="\/events\/EVENT-1"/);
   assert.equal(context.searchResultTarget(response.items[0]), null);
+});
+
+test("administrative areas appear as compact links in Places", () => {
+  const item = {
+    kind: "administrative_area", entityType: "place", targetId: "locadmin:example",
+    title: "Winterhude", areaType: "district", context: "Hamburg",
+    url: "/areas/locadmin%3Aexample", searchGroup: "places",
+    match: { label: "Exact area name" },
+  };
+  const html = render({ query: "Winterhude", total: 1, limit: 10, items: [item] });
+  assert.match(html, /href="\/areas\/locadmin%3Aexample"/);
+  assert.match(html, />Winterhude<\/strong><span>district · Hamburg<\/span>/);
+  assert.doesNotMatch(html, /Exact area name/);
 });

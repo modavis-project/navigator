@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {LoadingContent} from './LoadingContent';
 import {ArrowLeft, ArrowRight, BookmarkPlus, Database, Search, SlidersHorizontal} from 'lucide-react';
 import {collectionCard, collectionWorkspaceItem, collectionFullUrl, collections, explorerQuery} from './PodExplorerModel';
 import {usePodRead} from './PodExplorerApi';
@@ -84,7 +85,7 @@ function CollectionResults({url, family, offset, navigate}: {url:string;family:F
   const {data,error,retry}=usePodRead<Page>(url);
   function page(next:number) {const params=new URLSearchParams(location.search);params.set('offset',String(next));navigate(params);}
   if(error) return <div className="pod-error" role="alert"><p>{t('pod.results.error', 'The collection could not be loaded.', 'Die Sammlung konnte nicht geladen werden.')} <code lang="en">{error}</code></p><button onClick={retry}>{t('pod.results.retry', "Retry this collection", "Sammlung erneut laden")}</button></div>;
-  if(!data) return <p className="pod-loading" role="status">{t('pod.results.loading', 'Loading {collection}…', '„{collection}“ wird geladen …', {collection:family.title})}</p>;
+  if(!data) return <LoadingContent kind="cards" className="pod-result-grid" label={t('pod.results.loading', 'Loading {collection}…', '„{collection}“ wird geladen …', {collection:family.title})}/>;
   if(!Array.isArray(data.items)||!Number.isInteger(data.total)) return <p role="alert">{t('pod.results.unsupported', "This collection returned an unsupported response.", "Die Sammlung lieferte ein Antwortformat, das der Navigator nicht verarbeiten kann.")} <a href={family.url}>{t('pod.results.full', "Open the full collection", "Gesamte Sammlung öffnen")}</a>.</p>;
   if(data.total>0&&!data.items.length&&offset>=data.total){
     return <div className="pod-empty">
@@ -176,7 +177,7 @@ export function PodExplorer() {
     <header className="pod-header"><div><p className="eyebrow"><Database size={14} aria-hidden="true"/> Pipe Organ Dataset</p><h1>{title}</h1></div>
       <div className="pod-header-links">{catalog.data&&<a className="pod-release" href="/about/release">POD {catalog.data.release}</a>}<a href="/use-cases/research-workbench">{t('pod.workbench', "Research workbench", "Recherchewerkzeuge")} <ArrowRight size={15} aria-hidden="true"/></a></div>
     </header>
-    {catalog.error?<div role="alert"><p>{t('pod.catalog.error', 'The POD collections could not be loaded.', 'Die POD-Sammlungen konnten nicht geladen werden.')} <code lang="en">{catalog.error}</code></p><button onClick={catalog.retry}>{t('pod.catalog.retry', "Retry available collections", "Sammlungsübersicht erneut laden")}</button></div>:!catalog.data?<p role="status">{t('pod.catalog.loading', "Reading collection coverage…", "Sammlungsübersicht wird geladen …")}</p>:<>
+    {catalog.error?<div role="alert"><p>{t('pod.catalog.error', 'The POD collections could not be loaded.', 'Die POD-Sammlungen konnten nicht geladen werden.')} <code lang="en">{catalog.error}</code></p><button onClick={catalog.retry}>{t('pod.catalog.retry', "Retry available collections", "Sammlungsübersicht erneut laden")}</button></div>:!catalog.data?<LoadingContent kind="cards" label={t('pod.catalog.loading', "Reading collection coverage…", "Sammlungsübersicht wird geladen …")}/>:<>
       <div className="pod-explorer-layout">
         <CollectionNavigation families={families} selected={family?.id} choose={id=>navigate(new URLSearchParams({collection:id}))}/>
         <section id="pod-collection-results" className="pod-collection-content" aria-label={t('pod.catalog.selected', "Selected collection", "Ausgewählte Sammlung")}>

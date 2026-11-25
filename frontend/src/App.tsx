@@ -1,10 +1,11 @@
 import { ResearchWorkspace } from "./ResearchWorkspacePanel";
 import { RouteBoundary } from "./RouteBoundary";
+import { LoadingContent, UpdatingContent } from "./LoadingContent";
 import { jsonRequestCache } from "./requestCache";
 import { fetchDiscoveryContext } from "./api";
 import { PageFaq } from "./PageFaq";
 import { ActorRelationshipPages, useActorCollection } from "./actorCollections";
-import { ContextualEventSummary, eventSourcePresentation, ParticipantIdentityNote, ParticipantSourceEvidence, SourceOccurrenceEvidence } from "./eventParticipation";
+import { ContextualEventSummary, EventTransferEndpoints, eventSourcePresentation, ParticipantIdentityNote, ParticipantSourceEvidence, SourceOccurrenceEvidence } from "./eventParticipation";
 import { TemperamentSearchNotice } from "./temperamentSearch";
 import { MAX_OCCURRENCE_FILTER, MAX_TEMPERAMENT_COMPARISON, occurrenceRangeIssue, occurrenceScope, occurrenceSort, readTemperamentComparison, temperamentCatalogueHref, temperamentDetailHref, temperamentOrganHref } from "./temperamentOccurrences";
 import { TemperamentComparison } from "./temperamentComparison";
@@ -12,7 +13,7 @@ import { UiLanguagePreviewNotice, UiLanguageSelector, useUiLocale } from "./uiLo
 import { publicOrganTabLabel, publicPageLabel, publicSectionLabel } from "./uiLabels";
 import "./temperamentOccurrences.css";
 import { EntityExportPanel, EntityPageTabs, EntityTabPanel, useEntityPageTab } from "./entityExport";
-import { preloadMapRuntime } from "./mapPreload";
+import { preloadMapRuntime, readMapRuntime } from "./mapPreload";
 import { ApplicationsPreview, RelatedApplications } from "./relatedApplications";
 import { BuilderAttribution, ActivityDiagrams, HistoryTimeline, IdentifierCopy, NavigatorMark, OrganLanding, PublicModal, SearchValueLink, stableRecordUrl } from "./publicExperience";
 import { specificationSource, updateSpecificationView } from "./specificationNavigation";
@@ -384,6 +385,8 @@ const ActorResearchPanel = lazy(() => import("./organologicalResearch").then(mod
 const ResourcePage = lazy(() => import("./resourceView").then(module => ({ default: module.ResourcePage })));
 const PublicPlacePage = lazy(() => import("./publicRecords").then(module => ({ default: module.PublicPlacePage })));
 const PublicSourcePage = lazy(() => import("./publicRecords").then(module => ({ default: module.PublicSourcePage })));
+const PublicAreaPage = lazy(() => import("./publicAreas").then(module => ({ default: module.PublicAreaPage })));
+const AreaLookup = lazy(() => import("./publicAreas").then(module => ({ default: module.AreaLookup })));
 const OrganSpecificationDescriptions = lazy(() => import("./organSpecificationDescriptions").then(module => ({ default: module.OrganSpecificationDescriptions })));
 const DescriptionHistory = lazy(() => import("./organSpecificationDescriptions").then(module => ({ default: module.DescriptionHistory })));
 const SourceReportedTotals = lazy(() => import("./organSpecificationDescriptions").then(module => ({ default: module.SourceReportedTotals })));
@@ -487,6 +490,7 @@ type SavedGeoreferencingQueueCursor = GeoreferencingQueueRouteState & {
 };
 type EvidenceRoute =
   | { kind: "resource" }
+  | { kind: "area"; id: string }
   | { kind: "event"; id: string }
   | { kind: "identifier"; id: string }
   | { kind: "friendly_alias"; aliasKind: string; slug: string }
@@ -781,6 +785,7 @@ function navigatorPageTitle(activeSection: MainSection, selectedOrgan: OrganDeta
   if (!label && path.startsWith("/people/")) label = "Person record";
   if (!label && path.startsWith("/organizations/")) label = "Organization record";
   if (!label && path.startsWith("/places/")) label = "Place record";
+  if (!label && path.startsWith("/areas/")) label = "Area";
   if (!label && path.startsWith("/names/")) label = "Name record";
   if (!label && path.startsWith("/sources/")) label = "Source record";
   if (!label && path.startsWith("/literature/")) label = "Literature Record";
@@ -868,6 +873,7 @@ function sectionFromPath(pathname: string): MainSection | null {
   if (normalized.startsWith("/literature/")) return "literature";
   if (normalized.startsWith("/scores/")) return "scores";
   if (normalized.startsWith("/temperaments/")) return "temperaments";
+  if (/^\/areas\/[^/]+$/.test(normalized)) return "map";
   if (/^\/(?:places|source)\/[^/]+$/.test(normalized)) return "pod-explorer";
   if (/^\/(?:people|organizations|actors|entity\/(?:people|organizations|source-actors))\/[^/]+$/.test(normalized)) return "persons";
   const match = (Object.entries(SECTION_PATHS) as Array<[MainSection, string]>).find(([, path]) => path === normalized);
@@ -983,6 +989,11 @@ function isCanonicalEntityRoute(category: string, id: string): boolean {
 
 function routeEvidenceRoute(): EvidenceRoute | null {
   if (window.location.pathname === "/resources") return { kind: "resource" };
+  const area = window.location.pathname.match(/^\/areas\/([^/]+)\/?$/);
+  if (area) {
+    try { return { kind: "area", id: decodeURIComponent(area[1]) }; }
+    catch { return { kind: "area", id: area[1] }; }
+  }
   const eventId = routeEventId();
   const mdvsId = routeMdvsId();
   const annotationMatch = window.location.pathname.match(/^\/imageseg\/annotation\/?$/);
@@ -1657,9 +1668,10 @@ function buildEntitySearchSuggestions(search: EntitySearchResponse | null): Arra
 function exactSearchAffordance(query: string, search: EntitySearchResponse | null): { label: string; detail: string; href?: string; item?: EntitySearchItem } | null {
   const value = query.trim();
   if (!value) return null;
-  const exactItem = search?.items.find((item) => [item.mdvsId, item.targetId, item.sourceRecordId, item.sessionId]
-    .filter(Boolean)
-    .some((candidate) => String(candidate).toLowerCase() === value.toLowerCase()) || item.title.toLowerCase() === value.toLowerCase());
+  const exactItem = search?.items.find((item) => item.kind !== "administrative_area" && (
+    [item.mdvsId, item.targetId, item.sourceRecordId, item.sessionId]
+      .some((candidate) => candidate?.toLowerCase() === value.toLowerCase()) || item.title.toLowerCase() === value.toLowerCase()
+  ));
   if (/^sr:/i.test(value)) {
     return { label: "Source record", detail: value, href: `/source/${encodeURIComponent(value)}`, item: exactItem };
   }
@@ -4618,7 +4630,7 @@ export function App() {
     });
   };
   const catalogSection = (() => {
-    if (activeSection === "pod-explorer") return <Suspense fallback={<div className="notice" role="status">Loading the POD explorer…</div>}><PodExplorer /></Suspense>;
+    if (activeSection === "pod-explorer") return <Suspense fallback={<LoadingContent kind="article" label="Loading the POD explorer…" />}><PodExplorer /></Suspense>;
     if (activeSection === "explore" && /^\/applications(?:\/|$)/.test(window.location.pathname)) return <RelatedApplications />;
     if (activeSection === "explore") {
       return (
@@ -4662,17 +4674,15 @@ export function App() {
     }
     if (activeSection === "organs") {
       if (focusedOrganRoute && !selectedOrgan) return <section className="entity-section" id="organs" tabIndex={-1}>
-        <SectionHead eyebrow="Organ record" title={error ? "Record unavailable" : "Opening organ record"} />
+        <SectionHead eyebrow="Organs" title={error ? "Record unavailable" : "Organ record"} />
         {error ? <div className="notice error" role="alert"><p>{error}</p><button type="button" className="secondary" onClick={() => { const id = routeOrganId(); if (id) void openOrgan(id, routeTab(), false); }}>Try again</button></div>
-          : <div className="notice" role="status" aria-live="polite">Loading the organ’s identity and source context…</div>}
+          : <LoadingContent kind="article" label={t("organ.page.loading", "Loading the organ’s identity and source context…", "Identität und Quellen der Orgel werden geladen …")} />}
         <a className="catalog-back" href="/organs">Browse the organ catalog</a>
       </section>;
       const resultsLoading = !error && (organLoading || lastOrganRequestKey.current !== organRequestKey);
-      const organResultDetail = focusedOrganRoute
+      const organResultDetail = focusedOrganRoute || resultsLoading
         ? undefined
-        : resultsLoading
-          ? "Loading organ results"
-          : error ? "Result count unavailable" : `${formatNumber(organTotal)} organ records`;
+        : error ? "Result count unavailable" : `${formatNumber(organTotal)} organ records`;
       const catalogStaffMode = workspaceMode && staffWorkspaceReady;
       const returnParams = new URLSearchParams(catalogReturnPath?.split("?")[1] || "");
       const defaultSort = normalizeOrganCatalogSort(undefined, publicDatasetProfile, mediaCapabilityAvailable);
@@ -4723,7 +4733,7 @@ export function App() {
             ) : (
               <div className="organ-results-stack">
                 {!error && <OrganList items={lastOrganRequestKey.current === organRequestKey ? visibleOrgans : []} loading={resultsLoading} mediaAvailable={mediaCapabilityAvailable} publicProjection={publicDatasetProfile} selectedId={undefined} onOpen={openOrgan} staffMode={catalogStaffMode} />}
-                {!error && <CatalogPagination
+                {!error && (!resultsLoading || organTotal > 0) && <CatalogPagination
                   limit={ORGAN_PAGE_SIZE}
                   loading={resultsLoading}
                   offset={organOffset}
@@ -4759,18 +4769,18 @@ export function App() {
       return <EventDirectoryPage publicProjection={publicDatasetProfile} />;
     }
     if (activeSection === "use-cases") {
-      return <Suspense fallback={<p className="notice" role="status">Loading data stories…</p>}><UseCasesArea /></Suspense>;
+      return <Suspense fallback={<LoadingContent kind="article" label="Loading data stories…" />}><UseCasesArea /></Suspense>;
     }
     if (activeSection === "docs") {
-      return <Suspense fallback={<p className="notice" role="status">Loading documentation…</p>}><DocumentationArea isAdmin={adminMutationReady} /></Suspense>;
+      return <Suspense fallback={<LoadingContent kind="article" label="Loading documentation…" />}><DocumentationArea isAdmin={adminMutationReady} /></Suspense>;
     }
     if (activeSection === "release-guide") {
       return releaseContext
-        ? <Suspense fallback={<p className="notice" role="status">Loading release scope…</p>}><ReleaseGuideArea context={releaseContext} /></Suspense>
+        ? <Suspense fallback={<LoadingContent kind="article" label="Loading release scope…" />}><ReleaseGuideArea context={releaseContext} /></Suspense>
         : <p className="notice" role="status">Verifying the selected read-only release baseline…</p>;
     }
     if (activeSection === "api-guide") {
-      return <Suspense fallback={<p className="notice" role="status">Loading the API guide…</p>}><ApiGuideArea /></Suspense>;
+      return <Suspense fallback={<LoadingContent kind="article" label="Loading the API guide…" />}><ApiGuideArea /></Suspense>;
     }
     if (activeSection === "internal-docs") {
       if (authLoading) return <p className="notice" role="status">Checking documentation access…</p>;
@@ -4781,11 +4791,13 @@ export function App() {
       return (
         <PersonsSection
           filters={personFilters}
-          loading={personLoading}
+          loading={!error && (personLoading || lastPersonRequestKey.current !== personRequestKey)}
+          error={error}
           onClear={clearPersonFilters}
           onFiltersChange={updatePersonFilters}
           onPageChange={updatePersonPage}
           onQueryChange={updatePersonQuery}
+          onRetry={retryCatalogRead}
           query={query}
           response={persons}
         />
@@ -4823,7 +4835,7 @@ export function App() {
       return <IconographySection />;
     }
     if (activeSection === "temperaments") {
-      return <TemperamentsSection />;
+      return <TemperamentsSection publicDatasetProfile={publicDatasetProfile} />;
     }
     if (activeSection === "models") {
       return <PublicModelsPage />;
@@ -4933,7 +4945,7 @@ export function App() {
     }
     if (activeSection === "vmi") {
       return (
-        <Suspense fallback={<div className="notice" role="status">Loading the virtual instrument catalog…</div>}>
+        <Suspense fallback={<LoadingContent kind="article" label="Loading the virtual instrument catalog…" />}>
           <VirtualInstrumentsArea activeReleaseVersion={releaseContext?.releaseVersion} baselineReleaseVersion={releaseContext?.baselineRelease} publicProjection={publicDatasetProfile} />
         </Suspense>
       );
@@ -4962,17 +4974,19 @@ export function App() {
 
   if (!releaseContextResolved) {
     return (
-      <main className="navigator-startup" aria-busy={!releaseContextError}>
-        <div className="brand-mark"><Layers3 size={24} /></div>
-        <p className="eyebrow">MODAVIS</p>
-        <h1>Navigator</h1>
+      <main className="navigator-startup startup-placeholder">
+        <img src="/navigator.svg" width={52} height={52} alt="" />
+        <h1>MODAVIS Navigator</h1>
         {releaseContextError ? (
           <div role="alert">
             <h2>{t("shell.loadFailed", "The catalogue is temporarily unavailable", "Der Katalog ist vorübergehend nicht verfügbar")}</h2>
             <p>{t("shell.loadFailedMessage", "We couldn’t load the dataset information. Please try again.", "Die Angaben zum Datensatz konnten nicht geladen werden. Bitte erneut versuchen.")}</p>
             <button type="button" onClick={() => setReleaseContextAttempt((attempt) => attempt + 1)}>{t("shell.retry", "Try again", "Erneut versuchen")}</button>
           </div>
-        ) : <p role="status">{t("shell.loading", "Loading the catalogue…", "Katalog wird geladen …")}</p>}
+        ) : <>
+          <div className="startup-placeholder-lines" aria-hidden="true"><span /><span /><span /></div>
+          <p className="sr-only" role="status">{t("shell.loading", "Loading the catalogue…", "Katalog wird geladen …")}</p>
+        </>}
       </main>
     );
   }
@@ -5331,7 +5345,7 @@ export function App() {
             </aside>
           )}
           <RouteBoundary resetKey={`${activeSection}:${window.location.pathname}${window.location.search}:${selectedOrgan?.id || ""}:${activeTab}`} label={currentSurfaceLabel}>
-          <Suspense fallback={<div className="notice route-loading" role="status" aria-live="polite">{t("shell.loadingPage", "Loading page…", "Seite wird geladen …")}</div>}>
+          <Suspense fallback={<LoadingContent kind="article" label={t("shell.loadingPage", "Loading page…", "Seite wird geladen …")} />}>
           {publicVocabRoute && (
             <PublicVocabularyRoutePage
               actorId={actorId}
@@ -5830,18 +5844,17 @@ function ExploreSection({
     .reduce((total, item) => total + item.count, 0);
   const browsePreview = (
     <>
-      {loading && <div className="notice" role="status">{optionalSearchPreview
-        ? t("explore.preview.loading", "Loading the organ and map preview…", "Vorschau mit Orgeln und Karte wird geladen …")
-        : t("explore.loading", "Loading organ catalog...", "Orgelkatalog wird geladen …")}</div>}
       <div className="explore-grid">
-        <section aria-busy={loading}>
+        <section>
           <div className="section-heading">
             <h3>{hasQuery ? t("explore.matching", "Matching organ records", "Passende Orgeldatensätze") : publicDatasetProfile ? t("explore.examples", "Catalog examples", "Beispiele aus dem Katalog") : "Recent catalog additions"}</h3>
             <span>{hasQuery ? t("explore.matchingSubset", "A selection from the current search", "Eine Auswahl aus der aktuellen Suche") : publicDatasetProfile ? t("explore.publicExamples", "Selected records from the public dataset", "Ausgewählte Einträge aus dem öffentlichen Datensatz") : "Recently added records from the current source corpus"}</span>
           </div>
-          <div className="featured-grid">
+          {loading && !scopedExplore ? <LoadingContent kind="cards" className="featured-grid" count={4} label={optionalSearchPreview
+            ? t("explore.preview.loading", "Loading the organ and map preview…", "Vorschau mit Orgeln und Karte wird geladen …")
+            : t("explore.loading", "Loading organ catalog...", "Orgelkatalog wird geladen …")} /> : <div className="featured-grid" aria-busy={loading}>
             {(scopedExplore?.featuredOrgans ?? []).map((organ) => <OrganCardButton key={organ.id} organ={organ} onOpen={onOpenOrgan} />)}
-          </div>
+          </div>}
         </section>
         {(scopedExplore?.mapItems.length ?? 0) > 0 && <MapPreview items={scopedExplore?.mapItems ?? []} />}
       </div>
@@ -6090,7 +6103,7 @@ function EntitySearchPanel({ search, onOpenOrgan, error, loading = true, onRetry
     return ({organs:`/organs?q=${q}`,people:`/persons?q=${q}&publication_state=canonical`,places:`/pod-explorer?collection=places&q=${q}`,events:`/events?q=${q}`} as Record<string,string>)[group];
   };
   return (
-    <section className="entity-search-panel" id="discovery-results" tabIndex={-1} aria-label={t("explore.results.region", "Entity search results", "Suchergebnisse nach Entitätstyp")} aria-busy={loading && !search}>
+    <section className="entity-search-panel" id="discovery-results" tabIndex={-1} aria-label={t("explore.results.region", "Entity search results", "Suchergebnisse nach Entitätstyp")}>
       <div className="section-heading">
         <h3>{t("explore.results.heading", "Search results", "Suchergebnisse")}</h3>
         <span role="status">{!search
@@ -6102,7 +6115,8 @@ function EntitySearchPanel({ search, onOpenOrgan, error, loading = true, onRetry
             : t("explore.results.shown", "{shown, plural, one {# result} other {# results}} shown", "{shown, plural, one {# Treffer} other {# Treffer}} angezeigt", { shown: items.length })}</span>
       </div>
       {error && <div className="notice error" role="alert"><p>{error}</p>{onRetry && <button type="button" className="secondary" onClick={onRetry}>{t("explore.retry", "Try again", "Erneut versuchen")}</button>}</div>}
-      <div className="entity-search-list">
+      {!error && loading && !search && <LoadingContent kind="rows" count={3} />}
+      <div className="entity-search-list" aria-busy={loading && !search}>
         {groups.map((group) => (
           <section className="entity-search-group" key={group.id} aria-label={group.label}>
             <div className="entity-search-group-head">
@@ -6111,6 +6125,12 @@ function EntitySearchPanel({ search, onOpenOrgan, error, loading = true, onRetry
               {group.total !== undefined && group.total > group.items.length && continueHref(group.id) && <a href={continueHref(group.id)} className="search-group-continue">Continue in {group.label}<ChevronRight size={14}/></a>}
             </div>
             {group.items.map((item) => {
+              if (item.kind === "administrative_area" && item.url) {
+                return <a className="entity-search-result" href={item.url} key={`${item.kind}:${item.targetId}`}>
+                  <div><strong>{item.title}</strong><span>{[item.areaType && friendlyLabel(item.areaType), item.context].filter(Boolean).join(" · ")}</span></div>
+                  <ChevronRight size={16} aria-hidden="true" />
+                </a>;
+              }
               const target = searchResultTarget(item);
               const entityStateLabel = item.entityStateLabel || (item.kind === "organ" ? "Canonical page" : item.kind === "candidate_entity" ? "Source-mentioned entity" : "");
               const shownLabels = new Set([friendlyLabel(item.entityType || item.kind), entityStateLabel, item.match?.label || ""].map(label => label.toLocaleLowerCase()));
@@ -6933,6 +6953,7 @@ function relocationMapOverviewHref(yearFrom = "", yearTo = ""): string {
 function EventDirectoryPage({ publicProjection = false }: { publicProjection?: boolean }) {
   const { t, formatNumber } = useUiLocale();
   const params = new URLSearchParams(window.location.search);
+  const relocationType = publicProjection ? "transfer" : RELOCATION_EVENT_TYPE;
   const [query, setQuery] = useState(params.get("q") || "");
   const [type, setType] = useState(params.get("type") || params.get("event_type") || "");
   const [source, setSource] = useState(params.get("source") || "");
@@ -6943,12 +6964,13 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
   const [completeness, setCompleteness] = useState(params.get("completeness") || "");
   const [routeState, setRouteState] = useState(params.get("route") || "");
   const [sort, setSort] = useState(params.get("sort") || "");
-  const [typeQuery, setTypeQuery] = useState("");
   const [offset, setOffset] = useState(() => positiveRouteInt(params.get("offset"), 0, 100_000));
-  const [response, setResponse] = useState<EventListResponse | null>(null);
+  const [result, setResult] = useState<{ key: string; response: EventListResponse } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const pageSize = 12;
+  const requestKey = JSON.stringify([query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset]);
+  const response = result?.response ?? null;
 
   useEffect(() => {
     let cancelled = false;
@@ -6971,7 +6993,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
     })
       .then((data) => {
         if (cancelled) return;
-        setResponse(data);
+        setResult({ key: requestKey, response: data });
         const next = new URL(window.location.href);
         next.pathname = SECTION_PATHS.events;
         next.searchParams.delete("event_type");
@@ -7002,32 +7024,22 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
       });
     }, 250);
     return () => { cancelled = true; window.clearTimeout(timer); };
-  }, [query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset]);
+  }, [query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset, requestKey]);
 
   const total = response?.total ?? 0;
   const eventTypeOptions = response?.facets?.eventTypes ?? [];
-  const relocationType = publicProjection ? "transfer" : RELOCATION_EVENT_TYPE;
   const relocationTypeOption = eventTypeOptions.find((option) => option.code === relocationType);
-  const relocationSelected = type === relocationType;
-  const selectedTypeOption = eventTypeOptions.find((option) => option.code === type);
+  const displayedType = type || (routeState ? relocationType : "");
+  const relocationSelected = displayedType === relocationType;
+  const selectedTypeOption = eventTypeOptions.find((option) => option.code === displayedType);
   const primaryTypeOptions = eventTypeOptions.slice(0, 8);
-  if (selectedTypeOption && !primaryTypeOptions.some((option) => option.code === selectedTypeOption.code)) {
-    primaryTypeOptions.push(selectedTypeOption);
-  }
-  const primaryTypeCodes = new Set(primaryTypeOptions.map((option) => option.code));
-  const remainingTypeCount = eventTypeOptions.filter((option) => !primaryTypeCodes.has(option.code)).length;
-  const normalizedTypeQuery = typeQuery.trim().toLocaleLowerCase();
-  const filteredTypeOptions = eventTypeOptions.filter((option) => (
-    !normalizedTypeQuery
-    || (option.displayName || option.name).toLocaleLowerCase().includes(normalizedTypeQuery)
-    || option.code.toLocaleLowerCase().includes(normalizedTypeQuery)
-  ));
+  const otherTypeOptions = eventTypeOptions.slice(8).sort((a, b) => (a.displayName || a.name).localeCompare(b.displayName || b.name));
+  const showsEndpoints = relocationSelected || Boolean(routeState);
   const advancedFilterCount = [
     source,
     subject,
     participant,
     completeness,
-    routeState,
     sort,
   ].filter(Boolean).length;
   const activeFilterCount = [
@@ -7053,7 +7065,6 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
     setCompleteness("");
     setRouteState("");
     setSort("");
-    setTypeQuery("");
     setOffset(0);
   };
   const updateEventPage = (nextOffset: number) => {
@@ -7062,32 +7073,30 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
   };
   return (
     <section className="entity-section event-directory" id="events" tabIndex={-1}>
-      <SectionHead headingLevel={1} eyebrow="Events" title={t("event.catalogue.heading", "Organ history events", "Ereignisse der Orgelgeschichte")} detail={loading ? "Loading documented events" : `${formatNumber(total)} documented event${total === 1 ? "" : "s"}`} />
+      <SectionHead headingLevel={1} eyebrow="Events" title={t("event.catalogue.heading", "Organ history events", "Ereignisse der Orgelgeschichte")} detail={routeState || error ? undefined : loading ? "Loading documented events" : `${formatNumber(total)} documented event${total === 1 ? "" : "s"}`} />
       <p className="section-intro">{t("event.catalogue.intro", "Events connected to organ histories in the current source corpus.", "Ereignisse mit Bezug zur Orgelgeschichte im aktuellen Quellenkorpus.")}</p>
       <nav className="event-directory-shortcuts" aria-label={t("event.catalogue.shortcuts", "Event overview shortcuts", "Schnellzugriffe zur Ereignisübersicht")}>
         <a
-          className={relocationSelected ? "selected" : ""}
+          className={relocationSelected && !routeState ? "selected" : ""}
           href={`/events?type=${encodeURIComponent(relocationType)}`}
-          aria-current={relocationSelected ? "page" : undefined}
+          aria-current={relocationSelected && !routeState ? "page" : undefined}
         >
           <Move size={16} aria-hidden="true" />
-          <span>{publicProjection ? "Transfer events" : "Relocation events"}</span>
+          <span>{publicProjection ? t("event.catalogue.transfers", "Transfer events", "Verlegungsereignisse") : "Relocation events"}</span>
           {relocationTypeOption && <strong>{formatNumber(relocationTypeOption.count)}</strong>}
         </a>
-        <>
         <a
-          className={routeState === "mapped" ? "selected" : ""}
-          href={`/events?type=${encodeURIComponent(relocationType)}&route=mapped`}
-          aria-current={routeState === "mapped" ? "page" : undefined}
+          className={routeState === (publicProjection ? "either" : "mapped") ? "selected" : ""}
+          href={`/events?type=${encodeURIComponent(relocationType)}&route=${publicProjection ? "either" : "mapped"}`}
+          aria-current={routeState === (publicProjection ? "either" : "mapped") ? "page" : undefined}
         >
           <ListChecks size={16} aria-hidden="true" />
-          <span>{t("event.catalogue.mapped", "Mapped endpoint records", "Kartierte Endpunkte")}</span>
+          <span>{publicProjection ? t("event.catalogue.withEndpoints", "With documented endpoints", "Mit dokumentierten Endpunkten") : t("event.catalogue.mapped", "Mapped endpoint records", "Kartierte Endpunkte")}</span>
         </a>
         <a href={relocationMapOverviewHref(yearFrom, yearTo)}>
           <MapIcon size={16} aria-hidden="true" />
           <span>{yearFrom && yearFrom === yearTo ? `Mapped connections in ${yearFrom}` : "Mapped relocation connections"}</span>
         </a>
-        </>
         {relocationSelected && (
           <a href="/events">
             <ListChecks size={16} aria-hidden="true" />
@@ -7097,10 +7106,10 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
       </nav>
       {relocationSelected && (
         <p className="event-relocation-scope-note">
-          {t("event.catalogue.mapBoundary", "Map actions appear when documented origin and destination observations have usable coordinates. Connections are schematic; unresolved endpoint evidence remains available.", "Kartenlinks erscheinen, wenn für dokumentierte Ausgangs- und Zielorte nutzbare Koordinaten vorliegen. Die Verbindungen sind schematisch. Belege zu ungeklärten Endpunkten bleiben verfügbar.")}
+          {t("event.catalogue.mapBoundary", "Endpoints are shown as documented. A map connection needs coordinates for both places and is shown schematically.", "Endpunkte werden wie dokumentiert angezeigt. Eine Kartenverbindung benötigt Koordinaten für beide Orte und wird schematisch dargestellt.")}
         </p>
       )}
-      <form className="event-filter-bar" onSubmit={(event) => event.preventDefault()}>
+      <form className={showsEndpoints ? "event-filter-bar has-endpoint-filter" : "event-filter-bar"} onSubmit={(event) => event.preventDefault()}>
         <label className="event-keyword-filter">
           <span>{t("event.catalogue.keywords", "Keywords", "Suchbegriffe")}</span>
           <div className="event-filter-input">
@@ -7108,7 +7117,9 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
             <input
               value={query}
               onChange={(event) => { setOffset(0); setQuery(event.target.value); }}
-              placeholder={t("event.catalogue.keywordsHint", "Event, identifier, or description", "Ereignis, Kennung oder Beschreibung")}
+              placeholder={publicProjection && showsEndpoints
+                ? t("event.catalogue.endpointSearch", "Event, organ, or endpoint", "Ereignis, Orgel oder Endpunkt")
+                : t("event.catalogue.keywordsHint", "Event, identifier, or description", "Ereignis, Kennung oder Beschreibung")}
             />
           </div>
         </label>
@@ -7116,7 +7127,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
           <label>
             <span>{t("event.catalogue.type", "Event type", "Ereignistyp")}</span>
             <select
-              value={type}
+              value={displayedType}
               onChange={(event) => {
                 setOffset(0);
                 setType(event.target.value);
@@ -7125,63 +7136,18 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
               aria-describedby="event-type-filter-help"
             >
               <option value="">{t("event.catalogue.allTypes", "All event types", "Alle Ereignistypen")}</option>
-              {primaryTypeOptions.map((option) => (
-                <option key={option.code} value={option.code}>
-                  {option.displayName || option.name} ({formatNumber(option.count)})
-                </option>
-              ))}
-              {type && !selectedTypeOption && <option value={type}>{friendlyLabel(type.replace("activitype:", ""))}</option>}
-              {remainingTypeCount > 0 && <option value="" disabled>{remainingTypeCount} {t("event.catalogue.moreTypes", "more in vocabulary browser", "weitere im Vokabular")}</option>}
+              {primaryTypeOptions.length > 0 && <optgroup label={t("event.catalogue.commonTypes", "Most frequent types", "Häufigste Ereignistypen")}>
+                {primaryTypeOptions.map((option) => <option key={option.code} value={option.code}>{option.displayName || option.name} ({formatNumber(option.count)})</option>)}
+              </optgroup>}
+              {otherTypeOptions.length > 0 && <optgroup label={t("event.catalogue.otherTypes", "Other recorded types", "Weitere erfasste Ereignistypen")}>
+                {otherTypeOptions.map((option) => <option key={option.code} value={option.code}>{option.displayName || option.name} ({formatNumber(option.count)})</option>)}
+              </optgroup>}
+              {displayedType && !selectedTypeOption && <option value={displayedType}>{friendlyLabel(displayedType.replace("activitype:", ""))}</option>}
             </select>
           </label>
           <small id="event-type-filter-help">
-            Controlled types and visibly retained source-only wording; no narrower controlled meaning is inferred for a source-only term · only labels used in this corpus ·{" "}
             <a href="/vocab/modavis_activity_types">{t("event.catalogue.browseTerms", "browse definitions and source terms", "Definitionen und Quellenbegriffe ansehen")}</a>
           </small>
-          {remainingTypeCount > 0 && (
-            <details className="event-type-browser">
-              <summary>Browse all {eventTypeOptions.length} available types</summary>
-              <div className="event-type-browser-panel">
-                <label>
-                  <span>{t("event.catalogue.findType", "Find a type", "Ereignistyp suchen")}</span>
-                  <input
-                    value={typeQuery}
-                    onChange={(event) => setTypeQuery(event.target.value)}
-                    placeholder={t("event.catalogue.searchVocab", "Search the controlled vocabulary", "Kontrolliertes Vokabular durchsuchen")}
-                  />
-                </label>
-                <div className="event-type-option-list" role="listbox" aria-label={t("event.catalogue.vocab", "Event type vocabulary", "Vokabular der Ereignistypen")}>
-                  <button
-                    type="button"
-                    className={!type ? "selected" : ""}
-                    role="option"
-                    aria-selected={!type}
-                    onClick={() => { setOffset(0); setType(""); setRouteState(""); }}
-                  >
-                    <span>{t("event.catalogue.allTypes", "All event types", "Alle Ereignistypen")}</span>
-                    <strong>{formatNumber(eventTypeOptions.reduce((sum, option) => sum + option.count, 0))}</strong>
-                  </button>
-                  {filteredTypeOptions.map((option) => (
-                    <button
-                      type="button"
-                      key={option.code}
-                      className={type === option.code ? "selected" : ""}
-                      role="option"
-                      aria-selected={type === option.code}
-                      onClick={() => {
-                        setOffset(0);
-                        setType(option.code);
-                        if (option.code !== relocationType) setRouteState("");
-                      }}
-                    >
-                      <span>{option.displayName || option.name}</span>
-                      <strong>{formatNumber(option.count)}</strong>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </details>
-          )}
         </div>
         <label>
           <span>{t("event.catalogue.from", "From year", "Ab Jahr")}</span>
@@ -7191,6 +7157,26 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
           <span>{t("event.catalogue.to", "To year", "Bis Jahr")}</span>
           <input inputMode="numeric" value={yearTo} onChange={(event) => { setOffset(0); setYearTo(event.target.value); }} placeholder={t("event.catalogue.toHint", "e.g. 2026", "z. B. 2026")} />
         </label>
+        {showsEndpoints && <label>
+          <span>{t("event.catalogue.transferEndpoints", "Transfer endpoints", "Endpunkte der Verlegung")}</span>
+          <select value={routeState} onChange={(event) => {
+            setOffset(0);
+            setRouteState(event.target.value);
+            if (event.target.value) setType(relocationType);
+          }}>
+            <option value="">{t("event.catalogue.allRelocations", "Any endpoint status", "Beliebiger Endpunktstatus")}</option>
+            {publicProjection && <optgroup label={t("event.catalogue.recordedPlaces", "Documented places", "Dokumentierte Orte")}>
+              <option value="either">{t("event.catalogue.either", "At least one endpoint", "Mindestens ein Endpunkt")}</option>
+              <option value="origin">{t("event.catalogue.knownOrigin", "Origin documented", "Ausgangsort belegt")}</option>
+              <option value="destination">{t("event.catalogue.knownDestination", "Destination documented", "Zielort belegt")}</option>
+              <option value="both">{t("event.catalogue.both", "Both endpoints", "Beide Endpunkte")}</option>
+            </optgroup>}
+            <optgroup label={t("event.catalogue.mapping", "Map availability", "Kartenverfügbarkeit")}>
+              <option value="mapped">{t("event.catalogue.mappedPair", "With map connection", "Mit Kartenverbindung")}</option>
+              <option value="unresolved">{t("event.catalogue.unresolved", "Without map connection", "Ohne Kartenverbindung")}</option>
+            </optgroup>
+          </select>
+        </label>}
         <details className="event-advanced-filters" open={advancedFilterCount > 0 || undefined}>
           <summary>
             <span><SlidersHorizontal size={16} aria-hidden="true" /> {t("event.catalogue.more", "More filters", "Weitere Filter")}</span>
@@ -7218,23 +7204,6 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
                 <option value="missing_optional">{t("event.catalogue.missing", "Missing optional details", "Optionale Angaben fehlen")}</option>
               </select>
             </label>}
-            {(relocationSelected || routeState) && (
-              <label>
-                <span>{t("event.catalogue.mapAvailability", "Map availability", "Kartenverfügbarkeit")}</span>
-                <select
-                  value={routeState}
-                  onChange={(event) => {
-                    setOffset(0);
-                    setRouteState(event.target.value);
-                    if (event.target.value) setType(relocationType);
-                  }}
-                >
-                  <option value="">{t("event.catalogue.allRelocations", "All relocation events", "Alle Verlegungsereignisse")}</option>
-                  <option value="mapped">{t("event.catalogue.mappedPair", "Mapped origin–destination pair", "Kartierter Ausgangs- und Zielort")}</option>
-                  <option value="unresolved">{t("event.catalogue.unresolved", "Endpoint coordinates unresolved", "Koordinaten der Endpunkte ungeklärt")}</option>
-                </select>
-              </label>
-            )}
             <label>
               <span>{t("event.catalogue.sort", "Sort", "Sortierung")}</span>
               <select value={sort} onChange={(event) => { setOffset(0); setSort(event.target.value); }}>
@@ -7248,7 +7217,16 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
           </div>
         </details>
         <div className="event-filter-summary" aria-live="polite">
-          <span>{activeFilterCount ? `${activeFilterCount} active filter${activeFilterCount === 1 ? "" : "s"}` : "Showing the complete event corpus"}</span>
+          <span>
+            {activeFilterCount
+              ? t("event.catalogue.active", "{count, plural, one {# active filter} other {# active filters}}", "{count, plural, one {# aktiver Filter} other {# aktive Filter}}", { count: activeFilterCount })
+              : t("event.catalogue.unfiltered", "Showing the complete event corpus", "Alle Ereignisse werden angezeigt")}
+            {routeState && <> · <strong>{loading || (!error && result?.key !== requestKey)
+              ? t("event.catalogue.counting", "Counting matching events…", "Passende Ereignisse werden gezählt …")
+              : error
+                ? t("event.catalogue.totalUnavailable", "Matching total unavailable", "Trefferzahl nicht verfügbar")
+                : t("event.catalogue.matchingTotal", "{count, plural, one {# matching event} other {# matching events}}", "{count, plural, one {# passendes Ereignis} other {# passende Ereignisse}}", { count: total })}</strong></>}
+          </span>
           {activeFilterCount > 0 && (
             <button type="button" onClick={clearFilters}>
               <RotateCcw size={14} aria-hidden="true" /> {t("event.catalogue.clear", "Clear filters", "Filter zurücksetzen")}
@@ -7256,21 +7234,17 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
           )}
         </div>
       </form>
-      {error && <p className="form-error">{error}</p>}
-      {loading && !response && <p className="muted">{t("event.catalogue.loading", "Loading event entities…", "Ereignisdatensätze werden geladen …")}</p>}
-      <div className="event-card-grid" aria-busy={loading}>
+      {error && <p className="form-error" role="alert">{error}</p>}
+      {!error && loading && (response
+        ? <UpdatingContent label={t("event.catalogue.updating", "Updating event results…", "Ereignistreffer werden aktualisiert …")} />
+        : <LoadingContent kind="cards" className="event-card-grid" count={8} label={t("event.catalogue.loading", "Loading event entities…", "Ereignisdatensätze werden geladen …")} />)}
+      {!error && <div className="event-card-grid" aria-busy={loading}>
         {(response?.items ?? []).map((event) => (
           <article className="event-card" key={event.mdvsId}>
             <div className="event-card-heading">
               <Pill tone="strong">{event.mappingKind !== "source_only" && event.type.mappingKind !== "source_only" && eventTypeBrowseHref(event.type.code) ? <a href={eventTypeBrowseHref(event.type.code) || undefined}>{event.type.name || event.type.code || "Event"}</a> : event.type.name || "Event"}</Pill>
               {(event.mappingKind === "source_only" || event.type.mappingKind === "source_only") && <span className="event-mapping-status source-only">{t("event.catalogue.sourceOnly", "Source-only wording · no narrower type inferred", "Quellenwortlaut · kein engerer Typ abgeleitet")}</span>}
               {event.temporalStatus?.code === "future-dated" && <span className="event-temporal-status future" title={event.temporalStatus.explanation}><AlertCircle size={13} aria-hidden="true" /> {event.temporalStatus.label}</span>}
-              {(event.type.code === RELOCATION_EVENT_TYPE || event.type.name === "transfer") && (
-                <span className={`event-route-status ${event.movement?.status === "mapped" ? "mapped" : "unresolved"}`}>
-                  <MapPin size={13} aria-hidden="true" />
-                  {event.movement?.status === "mapped" ? "Mapped endpoints" : "Coordinates unresolved"}
-                </span>
-              )}
             </div>
             <h3>{event.title}</h3>
             <div className="event-card-actions">
@@ -7280,37 +7254,21 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
               )}
             </div>
             <p className="event-date"><strong>{eventDateLabel(event)}</strong>{event.when.precision ? ` · ${event.when.precision.replace("tempprectype:", "")}` : ""}</p>
-            {event.movement?.status === "mapped" && event.movement.origin && event.movement.destination && (
-              <div className="event-route-summary" aria-label={t("event.catalogue.endpoints", "Documented relocation endpoints", "Dokumentierte Ausgangs- und Zielorte")}>
-                <span>
-                  <small>{t("event.catalogue.origin", "Origin", "Ausgangsort")}</small>
-                  {event.movement.origin.pageUrl ? <a href={event.movement.origin.pageUrl}>{event.movement.origin.title}</a> : <strong>{event.movement.origin.title}</strong>}
-                  <em>{event.movement.origin.temporalRole ? `${friendlyLabel(event.movement.origin.temporalRole)} · ` : ""}{event.movement.origin.coordinateEvidence || (event.movement.origin.coordinateFallback ? "Approximate locality" : "Exact venue")}</em>
-                </span>
-                <ChevronRight size={17} aria-label="to" />
-                <span>
-                  <small>{t("event.catalogue.destination", "Destination", "Zielort")}</small>
-                  {event.movement.destination.pageUrl ? <a href={event.movement.destination.pageUrl}>{event.movement.destination.title}</a> : <strong>{event.movement.destination.title}</strong>}
-                  <em>{event.movement.destination.temporalRole ? `${friendlyLabel(event.movement.destination.temporalRole)} · ` : ""}{event.movement.destination.coordinateEvidence || (event.movement.destination.coordinateFallback ? "Approximate locality" : "Exact venue")}</em>
-                </span>
-              </div>
-            )}
-            {(event.type.code === RELOCATION_EVENT_TYPE || event.type.name === "transfer") && event.movement?.status !== "mapped" && (
-              <p className="event-route-unavailable"><MapPin size={14} aria-hidden="true" /> {t("event.catalogue.noPair", "No resolved origin–destination pair is available for mapping.", "Für die Karte liegt kein aufgelöstes Paar aus Ausgangs- und Zielort vor.")}</p>
-            )}
+            {(event.type.code === RELOCATION_EVENT_TYPE || event.type.name === "transfer") && <EventTransferEndpoints event={event} />}
             {event.subject && <p>Affected entity: {event.subject.pageUrl ? <a href={event.subject.pageUrl}>{event.subject.title}</a> : event.subject.title}</p>}
             {event.participants?.length ? <p>Participants: {event.participants.map((participant, index) => <span key={participant.id}>{index > 0 ? ", " : ""}{participant.pageUrl ? <a href={participant.pageUrl}>{participant.title}</a> : participant.title}<ParticipantIdentityNote participant={participant} /></span>)}</p> : event.description && <p>{event.description}</p>}
             <footer><code>{event.mdvsId}</code>{event.counts.sources > 0 && <span>{event.counts.sources} source{event.counts.sources === 1 ? "" : "s"}</span>}</footer>
           </article>
         ))}
-      </div>
-      {!loading && !response?.items.length && <EmptyState icon={<ListChecks size={22} />} title={t("event.catalogue.empty", "No documented events", "Keine dokumentierten Ereignisse")} body={t("event.catalogue.emptyHint", "No events match these filters.", "Keine Ereignisse entsprechen diesen Filtern.")} />}
-      {total > pageSize && <div className="catalog-pagination"><button type="button" className="secondary" disabled={offset === 0 || loading} onClick={() => updateEventPage(offset - pageSize)}>{t("event.catalogue.previous", "Previous", "Zurück")}</button><span>{formatNumber(offset + 1)}–{formatNumber(Math.min(offset + pageSize, total))} of {formatNumber(total)}</span><button type="button" className="secondary" disabled={offset + pageSize >= total || loading} onClick={() => updateEventPage(offset + pageSize)}>{t("event.catalogue.next", "Next", "Weiter")}</button></div>}
+      </div>}
+      {!loading && !error && !response?.items.length && <EmptyState icon={<ListChecks size={22} />} title={t("event.catalogue.empty", "No documented events", "Keine dokumentierten Ereignisse")} body={t("event.catalogue.emptyHint", "No events match these filters.", "Keine Ereignisse entsprechen diesen Filtern.")} />}
+      {!error && total > pageSize && <div className="catalog-pagination"><button type="button" className="secondary" disabled={offset === 0 || loading} onClick={() => updateEventPage(offset - pageSize)}>{t("event.catalogue.previous", "Previous", "Zurück")}</button><span>{!loading && <>{formatNumber(offset + 1)}–{formatNumber(Math.min(offset + pageSize, total))} of {formatNumber(total)}</>}</span><button type="button" className="secondary" disabled={offset + pageSize >= total || loading} onClick={() => updateEventPage(offset + pageSize)}>{t("event.catalogue.next", "Next", "Weiter")}</button></div>}
     </section>
   );
 }
 
 function EventDetailPage({ actor, eventId }: { actor?: NavigatorActor; eventId: string }) {
+  const { t } = useUiLocale();
   const [event, setEvent] = useState<EventDetail | null>(null);
   const [research, setResearch] = useState<CanonicalEventResearch | null>(null);
   const [researchLoading, setResearchLoading] = useState(false);
@@ -7345,12 +7303,13 @@ function EventDetailPage({ actor, eventId }: { actor?: NavigatorActor; eventId: 
   useEffect(() => {
     if (event?.title) document.title = `${event.title} | MODAVIS Navigator`;
   }, [event?.title]);
-  if (loading && !event) return <p className="muted">Loading documented event…</p>;
+  if (loading && !event) return <LoadingContent kind="article" label={t("event.record.loading", "Loading documented event…", "Dokumentiertes Ereignis wird geladen …")} />;
   if (error || !event) return <EmptyState icon={<AlertCircle size={22} />} title="Event unavailable" body={error || "The event could not be found."} />;
   const controlledTitle = friendlyLabel(event.type.name || event.type.code?.split(":").pop()?.replace(/-/g, " ")) || event.title;
   const hasDistinctSourceWording = Boolean(event.title && event.title.toLocaleLowerCase() !== controlledTitle.toLocaleLowerCase());
   const hasExactRetainedWording = Boolean(event.sourceWording && event.sourceWording !== event.title && event.sourceWording !== event.description);
   const isRelocationWithoutRoute = (event.type.code === RELOCATION_EVENT_TYPE || event.type.name === "transfer") && event.movement?.status !== "mapped";
+  const hasDocumentedEndpoint = Boolean(event.transferEndpoints?.origin.length || event.transferEndpoints?.destination.length || event.movement?.origin?.title || event.movement?.destination?.title);
   const sourceReported = Boolean(event.sourceEventType);
   const { sourceOnly, contextAssessment } = eventSourcePresentation(event);
   const typeLabel = sourceOnly ? event.title : controlledTitle;
@@ -7375,7 +7334,12 @@ function EventDetailPage({ actor, eventId }: { actor?: NavigatorActor; eventId: 
         {event.locations.length > 0 && <section><h3>Where</h3>{event.locations.map((location) => { const label = location.title || location.mdvsId || `Event location ${location.id}`; return <p key={location.id}>{location.pageUrl ? <a href={location.pageUrl}>{label}</a> : label}{location.role?.name ? ` · ${location.role.name}` : ""}</p>; })}</section>}
         {event.subjects.length > 0 && <section><h3>Affected entities</h3>{event.subjects.map((subject) => <p key={subject.id}>{subject.pageUrl ? <a href={subject.pageUrl}>{subject.title}</a> : subject.title}</p>)}</section>}
         {event.participants.length > 0 && <section><h3>Participants</h3>{event.participants.map((participant) => <div key={participant.id}><p>{participant.pageUrl ? <a href={participant.pageUrl}>{participant.title}</a> : participant.title}{participant.role?.name ? ` · ${friendlyLabel(participant.role.name)}` : ""}<ParticipantIdentityNote participant={participant} /></p><ParticipantSourceEvidence participant={participant} /></div>)}</section>}
-        {isRelocationWithoutRoute && <section className="event-evidence-note"><h3>Route evidence</h3><p>This record identifies a relocation, but it does not assert a resolved origin-and-destination pair. The source citation and any available original source remain below for investigation; no route is inferred.</p></section>}
+        {isRelocationWithoutRoute && <section className="event-evidence-note">
+          <h3>{t("event.detail.endpointEvidence", "Endpoint evidence", "Belege zu den Endpunkten")}</h3>
+          <p>{hasDocumentedEndpoint
+            ? t("event.detail.mapNeedsPair", "The places above are documented. A schematic map connection requires usable coordinates for both endpoints.", "Die obigen Orte sind dokumentiert. Eine schematische Kartenverbindung benötigt nutzbare Koordinaten für beide Endpunkte.")
+            : t("event.detail.noEndpoints", "The transfer endpoints are unknown in this source. See the source record below for the documented event.", "Die Endpunkte der Verlegung sind in dieser Quelle unbekannt. Der unten aufgeführte Quellenbeleg dokumentiert das Ereignis.")}</p>
+        </section>}
       </div>
       {event.sources.length > 0 && <section className="event-source-panel" aria-labelledby="event-source-heading"><header><div><p className="eyebrow">Investigate the evidence</p><h3 id="event-source-heading">Source {event.sources.length === 1 ? "record" : "records"}</h3></div><span>{event.sources.length} {event.sources.length === 1 ? "record" : "records"}</span></header><div className="event-sources">{event.sources.map((source) => { const evidenceUrl = source.pageUrl || (source.captureAvailable !== false && source.id.startsWith("sr:") ? `/source/${encodeURIComponent(source.id)}` : null); const originalUrl = source.originalSourceUrl || source.uri; return <article key={source.id}><div className="event-source-card-heading"><div><small>{source.sourceName || "Source evidence"}</small><strong>{evidenceUrl ? <a href={evidenceUrl}>{source.title}</a> : source.title}</strong></div>{source.identifier && <code>{source.identifier}</code>}</div>{source.citation && <p>{source.citation}</p>}<div className="event-source-actions">{evidenceUrl && <a href={evidenceUrl}>View captured source record</a>}{originalUrl && <a href={originalUrl} target="_blank" rel="noreferrer">Open original source page</a>}</div></article>; })}</div></section>}
       <SourceOccurrenceEvidence representations={event.retainedRepresentations} />
@@ -7446,6 +7410,8 @@ function EvidenceRoutePage({ actor, backToPeople, onBack, route, publicProjectio
   const { t } = useUiLocale();
   const publicCatalogue = publicProjection && route.kind === "source"
     ? { href: "/pod-explorer?collection=sources", label: t("source.detail.back", "Back to source records", "Zurück zu den Quelldatensätzen") }
+    : route.kind === "area"
+      ? { href: "/map", label: t("area.detail.back", "Back to map", "Zurück zur Karte") }
     : publicProjection && route.kind === "canonical_actor" && route.category === "places"
       ? { href: "/pod-explorer?collection=places", label: t("place.detail.back", "Back to places", "Zurück zu den Orten") }
       : null;
@@ -7462,6 +7428,7 @@ function EvidenceRoutePage({ actor, backToPeople, onBack, route, publicProjectio
       {route.kind === "identifier" && <IdentifierResolverPage identifier={route.id} />}
       {route.kind === "friendly_alias" && <FriendlyAliasResolverPage aliasKind={route.aliasKind} slug={route.slug} />}
       {route.kind === "resource" && <ResourcePage />}
+      {route.kind === "area" && <PublicAreaPage id={route.id} />}
       {route.kind === "source" && (publicProjection ? <PublicSourcePage id={route.id} /> : <SourceEvidenceDossierPage sourceRecordId={route.id} />)}
       {route.kind === "file" && <FileEvidenceDossierPage fileId={route.id} />}
       {route.kind === "score" && <DigitalScoreDetailPage actor={actor} scoreId={route.id} />}
@@ -8690,8 +8657,7 @@ function ResearchEvidenceBrowserPage({
             <h3>{kind === "sources" ? "Source records" : "Files and media"}</h3>
             <span>{total == null ? "Loading..." : `${total} match${total === 1 ? "" : "es"}`}</span>
           </div>
-          {error && <p className="notice error">{error}</p>}
-          {kind === "sources" ? (
+          {error ? <p className="notice error" role="alert">{error}</p> : kind === "sources" ? (
             <SourceEvidenceResultList response={sourceRecords} />
           ) : (
             <FileEvidenceResultList response={fileEvidence} />
@@ -12076,10 +12042,13 @@ function LiteratureSection() {
           ))}
         </div>
       )}
-      <div className="research-evidence-controls literature-controls literature-controls-primary">
-        <label className="search-field literature-search">
-          <Search size={18} aria-hidden="true" />
-          <input aria-label={t("literature.catalogue.search", "Search literature", "Literatur durchsuchen")} value={queryValue} onChange={(event) => setQueryValue(event.target.value)} placeholder={t("literature.catalogue.searchHint", "Search title, author, venue, year, or record id", "Titel, Verfasser, Publikationsort, Jahr oder Datensatzkennung suchen")} />
+      <div className="research-evidence-controls literature-controls literature-controls-primary aligned-catalogue-controls">
+        <label className="literature-search">
+          <span>{t("literature.catalogue.search", "Search literature", "Literatur durchsuchen")}</span>
+          <span className="search-field">
+            <Search size={18} aria-hidden="true" />
+            <input value={queryValue} onChange={(event) => setQueryValue(event.target.value)} placeholder={t("literature.catalogue.searchHint", "Title, author, venue, year, or record ID", "Titel, Verfasser, Publikationsort, Jahr oder Datensatzkennung")} />
+          </span>
         </label>
         <label>
           <span>{t("literature.catalogue.collection", "Collection", "Sammlung")}</span>
@@ -12158,8 +12127,7 @@ function LiteratureSection() {
         </div>
       </details>
       {status && !status.collections?.length && <details className="literature-data-note"><summary>{t("literature.catalogue.quality", "About catalog data quality", "Zur Datenqualität des Katalogs")}</summary><p>{literatureStructuringNotice(status)}</p></details>}
-      {error && <p className="notice error">{error}</p>}
-      <LiteratureResultList response={literatureList} />
+      {error ? <p className="notice error" role="alert">{error}</p> : <LiteratureResultList response={literatureList} />}
       {literatureList && literatureList.total > pageSize && (
         <nav className="catalog-pagination" aria-label={t("literature.catalogue.pages", "Literature result pages", "Ergebnisseiten der Literatursuche")}>
           <button type="button" disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - pageSize))}><ChevronLeft size={16} /> {t("literature.catalogue.previous", "Previous", "Zurück")}</button>
@@ -12173,7 +12141,7 @@ function LiteratureSection() {
 
 function LiteratureResultList({ response }: { response: LiteratureList | null }) {
   const { t } = useUiLocale();
-  if (!response) return <p className="notice">{t("literature.results.loading", "Loading literature records...", "Literaturdatensätze werden geladen …")}</p>;
+  if (!response) return <LoadingContent kind="rows" label={t("literature.results.loading", "Loading literature records…", "Literaturdatensätze werden geladen …")} />;
   if (response.items.length === 0) return <EmptyState icon={<FileText size={22} />} title={t("literature.results.none", "No literature records", "Keine Literaturdatensätze")} body={t("literature.results.empty", "No literature evidence matches the current filters.", "Keine Literaturbelege entsprechen den aktuellen Filtern.")} />;
   return (
     <div className="research-evidence-list literature-list">
@@ -12257,7 +12225,7 @@ function LiteratureDetailPage({ literatureId }: { literatureId: string }) {
         </div>}
       </div>
       {error && <p className="notice error">{error}</p>}
-      {!literature && !error && <p className="notice">Loading literature packet...</p>}
+      {!literature && !error && <LoadingContent kind="article" label="Loading literature evidence…" />}
       {literature && (
         <>
           <section className="public-evidence-summary source-public-summary literature-summary">
@@ -12786,14 +12754,13 @@ function IconographySection() {
       {list && list.source?.rowCount === 0 && (
         <p className="notice">RIdIM iconography records are not present in the shared Aggregator source-record table yet.</p>
       )}
-      {error && <p className="notice error">{error}</p>}
-      <IconographyResultList response={list} />
+      {error ? <p className="notice error" role="alert">{error}</p> : <IconographyResultList response={list} />}
     </section>
   );
 }
 
 function IconographyResultList({ response }: { response: IconographyList | null }) {
-  if (!response) return <p className="notice">Loading iconography records...</p>;
+  if (!response) return <LoadingContent kind="rows" label="Loading iconography records…" />;
   if (response.items.length === 0) return <EmptyState icon={<Image size={22} />} title="No iconography records" body="No RIdIM iconography evidence matches the current filters." />;
   return (
     <div className="research-evidence-list iconography-list">
@@ -12880,7 +12847,7 @@ function IconographyDetailPage({ recordId }: { recordId: string }) {
         </div>
       </div>
       {error && <p className="notice error">{error}</p>}
-      {!record && !error && <p className="notice">Loading iconography evidence...</p>}
+      {!record && !error && <LoadingContent kind="article" label="Loading iconography evidence…" />}
       {record && (
         <>
           <section className="public-evidence-summary source-public-summary iconography-summary">
@@ -13011,7 +12978,7 @@ function readTemperamentCatalogueFilters() {
   };
 }
 
-function TemperamentsSection() {
+function TemperamentsSection({ publicDatasetProfile }: { publicDatasetProfile: boolean }) {
   const { t } = useUiLocale();
   const [filters, setFilters] = useState(readTemperamentCatalogueFilters);
   const { queryValue, queryScope, groupKey, precision, commentary, commentaryQuery, offset, sort, match, minimum, maximum } = filters;
@@ -13085,7 +13052,7 @@ function TemperamentsSection() {
   else catalogueQuery.delete("compare");
   const catalogueHref = temperamentCatalogueHref(`/temperaments?${catalogueQuery}`);
   const facets = result?.data.facets;
-  const publicProjection = Boolean(list?.source?.publicProjection);
+  const publicProjection = publicDatasetProfile || Boolean(result?.data.source?.publicProjection);
   const visibleItems = useMemo(() => new Map((list?.items ?? []).map(item => [item.tuningId || item.id, item])), [list]);
   const toggleSelected = (item: TuningSystemSummary) => {
     const id = item.tuningId || item.id;
@@ -13103,10 +13070,20 @@ function TemperamentsSection() {
         title={t("tuning.catalogue.title", "Historical temperaments", "Historische Stimmungen")}
         detail={list ? t("tuning.catalogue.total", "{total, plural, one {# BDO temperament} other {# BDO temperaments}}", "{total, plural, one {# Stimmungssystem des BDO} other {# Stimmungssysteme des BDO}}", { total: list.total }) : t("tuning.catalogue.loading", "Loading BDO temperament systems", "Stimmungssysteme des BDO werden geladen")}
       />
-      <div className="research-evidence-controls temperaments-controls">
-        <label className="search-field temperaments-search">
-          <Search size={18} aria-hidden="true" />
-          <input aria-label={t("tuning.catalogue.search", "Search temperament systems", "Stimmungssysteme durchsuchen")} value={queryValue} onChange={(event) => updateFilters({ queryValue: event.target.value })} placeholder={t("tuning.catalogue.searchHint", "Search Kirnberger, Werckmeister, 2hKi2, cent vectors, notes, or literature", "Nach Kirnberger, Werckmeister, 2hKi2, Centwerten, Anmerkungen oder Literatur suchen")} />
+      <div className="research-evidence-controls temperaments-controls aligned-catalogue-controls">
+        <label className="temperaments-search">
+          <span>{t("tuning.catalogue.search", "Search temperament systems", "Stimmungssysteme durchsuchen")}</span>
+          <span className="search-field">
+            <Search size={18} aria-hidden="true" />
+            <input value={queryValue} onChange={(event) => updateFilters({ queryValue: event.target.value })} placeholder={t("tuning.catalogue.searchHint", "e.g. Kirnberger or 2hKi2", "z. B. Kirnberger oder 2hKi2")} />
+          </span>
+        </label>
+        <label className="temperaments-search">
+          <span>{publicProjection ? t("tuning.catalogue.literature", "Search cited literature", "Zitierte Literatur durchsuchen") : t("tuning.catalogue.searchNotes", "Search commentary and literature", "Erläuterungen und Literatur durchsuchen")}</span>
+          <span className="search-field">
+            <Search size={18} aria-hidden="true" />
+            <input value={commentaryQuery} onChange={(event) => updateFilters({ commentaryQuery: event.target.value })} placeholder={t("tuning.catalogue.referenceHint", "Author or title", "Autor oder Titel")} />
+          </span>
         </label>
         <label>
           <span>{t("tuning.catalogue.group", "Group", "Gruppe")}</span>
@@ -13119,7 +13096,7 @@ function TemperamentsSection() {
         <label>
           <span>{t("tuning.catalogue.precision", "Precision", "Genauigkeit")}</span>
           <select value={precision} onChange={(event) => updateFilters({ precision: event.target.value })}>
-            <option value="">{t("tuning.catalogue.allPrecision", "Rounded and precise", "Gerundete und genauere Fassungen")}</option>
+            <option value="">{t("tuning.catalogue.allPrecision", "All variants", "Alle Fassungen")}</option>
             <option value="rounded">{t("tuning.catalogue.rounded", "Rounded values", "Gerundete Werte")}</option>
             <option value="precise">{t("tuning.catalogue.precise", "Precise variants", "Genauere Fassungen")}</option>
           </select>
@@ -13127,14 +13104,10 @@ function TemperamentsSection() {
         <label>
           <span>{t("tuning.catalogue.commentary", "Commentary", "Erläuterungen")}</span>
           <select value={commentary} onChange={(event) => updateFilters({ commentary: event.target.value })}>
-            <option value="">{t("tuning.catalogue.anyCommentary", "Any commentary state", "Mit oder ohne Erläuterungen")}</option>
+            <option value="">{t("tuning.catalogue.anyCommentary", "Any availability", "Alle Verfügbarkeiten")}</option>
             <option value="available">{t("tuning.catalogue.hasCommentary", "Commentary available", "Mit Erläuterungen")}</option>
             <option value="missing">{t("tuning.catalogue.noCommentary", "No commentary", "Ohne Erläuterungen")}</option>
           </select>
-        </label>
-        <label className="search-field temperament-commentary-search">
-          <Search size={18} aria-hidden="true" />
-          <input aria-label={publicProjection ? t("tuning.catalogue.literature", "Search cited literature", "Zitierte Literatur durchsuchen") : t("tuning.catalogue.searchAllNotes", "Search temperament commentary and literature", "Erläuterungen und Literatur zu Stimmungen durchsuchen")} value={commentaryQuery} onChange={(event) => updateFilters({ commentaryQuery: event.target.value })} placeholder={publicProjection ? t("tuning.catalogue.literature", "Search cited literature", "Zitierte Literatur durchsuchen") : t("tuning.catalogue.searchNotes", "Search commentary and literature", "Erläuterungen und Literatur durchsuchen")} />
         </label>
       </div>
       <section className="tuning-occurrence-controls" aria-labelledby="tuning-occurrences-title">
@@ -13203,10 +13176,10 @@ function TemperamentsResultList({
   selectedIds: string[];
 }) {
   const { t } = useUiLocale();
-  if (!response) return <p className="notice">{t("tuning.results.loading", "Loading temperament systems...", "Stimmungssysteme werden geladen …")}</p>;
+  if (!response) return <LoadingContent kind="cards" className="temperaments-list" label={t("tuning.results.loading", "Loading temperament systems…", "Stimmungssysteme werden geladen …")} />;
   if (response.items.length === 0) return <EmptyState icon={<SlidersHorizontal size={22} />} title={t("tuning.results.none", "No temperaments", "Keine Stimmungen gefunden")} body={t("tuning.results.empty", "No BDO temperament systems match the current filters.", "Keine Stimmungssysteme des BDO entsprechen den aktuellen Filtern.")} />;
   return (
-    <div className="research-evidence-list temperaments-list">
+    <div className="temperaments-list">
       {response.items.map((item) => (
         <TemperamentCard
           key={item.id}
@@ -13234,50 +13207,55 @@ function TemperamentCard({
   selected: boolean;
   selectionDisabled: boolean;
 }) {
-  const { t } = useUiLocale();
+  const { t, formatNumber } = useUiLocale();
   const detailId = item.tuningId || item.sourceRecordId || item.id;
   const detailHref = temperamentDetailHref(detailId, catalogueHref);
+  const group = item.groupLabel || item.groupTitle || item.groupKey || t("tuning.card.ungrouped", "No group recorded", "Keine Gruppe erfasst");
+  const precision = item.precision.isPreciseVariant ? t("tuning.card.precise", "Precise", "Genau") : t("tuning.card.rounded", "Rounded", "Gerundet");
   return (
     <article className="temperament-card">
-      <div className="temperament-card-main">
-        <div className="temperament-card-title">
-          <div>
-            <span className="eyebrow">{item.label || item.tuningId || t("tuning.card.labelFallback", "BDO label", "BDO-Bezeichnung")}</span>
-            <strong><a href={detailHref}>{item.title}</a></strong>
-            <small>{[item.groupLabel || item.groupKey, item.precision.label, item.commentary.available ? "Commentary" : "No commentary"].filter(Boolean).join(" · ")}</small>
-          </div>
-          <button type="button" className={selected ? "mini-toggle selected" : "mini-toggle"} aria-pressed={selected} disabled={selectionDisabled} onClick={() => onToggleSelected(item)}>
-            {selected ? t("tuning.card.selected", "Selected", "Ausgewählt") : t("tuning.card.compare", "Compare", "Vergleichen")}
-          </button>
+      <header className="temperament-card-title">
+        <div>
+          <small>{item.label || item.tuningId}</small>
+          <h2><a href={detailHref}>{item.title}</a></h2>
+          <p>{group}</p>
         </div>
-        <div className="vocabulary-badges temperament-badges">
-          <Pill>{item.groupKey || t("tuning.card.ungrouped", "ungrouped", "Ohne Gruppe")}</Pill>
-          <Pill>{item.precision.label}</Pill>
-          <Pill>{item.toneOrder.length} tones</Pill>
-          {item.literatureCount > 0 && <Pill>{item.literatureCount} literature</Pill>}
-        </div>
-        {item.occurrences && (
-          <div className="tuning-occurrence-links" aria-label={t("tuning.card.occurrences", "Organ occurrences", "Belege in Orgeldatensätzen")}>
-            <a href={temperamentOrganHref(detailId, "all", catalogueHref)}><strong>{formatInteger(item.occurrences.total)}</strong> {t("tuning.card.allOrgans", "linked organ records", "verknüpfte Orgeldatensätze")}</a>
-            <a href={temperamentOrganHref(detailId, "exact", catalogueHref)}>{formatInteger(item.occurrences.exactVariantCount)} {t("tuning.card.exact", "exact wording", "eindeutig zuordenbare Angaben")}</a>
-            <a href={temperamentOrganHref(detailId, "family", catalogueHref)}>{formatInteger(item.occurrences.familyWordingCount)} {t("tuning.card.related", "related only", "nur verwandte Angaben")}</a>
-          </div>
-        )}
-        <CentVectorSparkline values={item.centValues} labels={item.toneOrder} />
+        <button type="button" className={selected ? "mini-toggle selected" : "mini-toggle"} aria-pressed={selected} disabled={selectionDisabled} onClick={() => onToggleSelected(item)}>
+          {selected ? t("tuning.card.selected", "Selected", "Ausgewählt") : t("tuning.card.compare", "Compare", "Vergleichen")}
+        </button>
+      </header>
+      <ul className="temperament-card-meta">
+        <li>{precision}</li>
+        {item.toneOrder.length > 0 && <li>{t("tuning.card.tones", "{count, plural, one {# tone} other {# tones}}", "{count, plural, one {# Ton} other {# Töne}}", {count: item.toneOrder.length})}</li>}
+        {item.literatureCount > 0 && <li>{t("tuning.card.references", "{count, plural, one {# reference} other {# references}}", "{count, plural, one {# Literaturangabe} other {# Literaturangaben}}", {count: item.literatureCount})}</li>}
+      </ul>
+      {item.centValues.length > 0 && (
+        <figure className="temperament-card-profile">
+          <figcaption>{t("tuning.card.chart", "Cent deviations", "Abweichungen in Cent")}</figcaption>
+          <CentVectorSparkline values={item.centValues} labels={item.toneOrder} />
+        </figure>
+      )}
+      {item.occurrences && (
+        <ul className="temperament-card-counts" aria-label={t("tuning.card.occurrences", "Organ occurrences", "Belege in Orgeldatensätzen")}>
+          <li><a href={temperamentOrganHref(detailId, "all", catalogueHref)}><strong>{formatNumber(item.occurrences.total)}</strong><span>{t("tuning.card.allOrgans", "linked organ records", "verknüpfte Orgeldatensätze")}</span></a></li>
+          <li><a href={temperamentOrganHref(detailId, "exact", catalogueHref)}><strong>{formatNumber(item.occurrences.exactVariantCount)}</strong><span>{t("tuning.card.exact", "exact wording", "eindeutig zuordenbare Angaben")}</span></a></li>
+          <li><a href={temperamentOrganHref(detailId, "family", catalogueHref)}><strong>{formatNumber(item.occurrences.familyWordingCount)}</strong><span>{t("tuning.card.related", "related only", "nur verwandte Angaben")}</span></a></li>
+        </ul>
+      )}
+      <div className="temperament-card-foot">
         <details className="research-evidence-item-details">
           <summary>{t("tuning.card.disclosure", "Cent vector and source", "Centwerte und Quelle")}</summary>
           <div><span>{t("tuning.card.label", "Label", "Bezeichnung")}</span><code>{item.label || t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
           <div><span>{t("tuning.card.title", "Title", "Titel")}</span><code>{item.title}</code></div>
           <div><span>{t("tuning.card.vector", "Cent vector", "Centwerte")}</span><code>{item.centstr || item.centVectorPreview || t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
-          <div><span>{t("tuning.card.commentary", "Commentary", "Erläuterungen")}</span><code>{item.commentary.available ? item.commentary.description || "available" : t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
+          <div><span>{t("tuning.card.commentary", "Commentary", "Erläuterungen")}</span><code>{item.commentary.available ? item.commentary.description || t("tuning.card.available", "available", "Vorhanden") : t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
           <div><span>{t("tuning.card.sourceRecord", "Source record", "Quelldatensatz")}</span><code>{!item.publicProjection && item.sourceRecordId?.startsWith("sr:") ? <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>{item.sourceRecordId}</a> : item.sourceRecordId || t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
         </details>
-      </div>
-      <div className="research-evidence-actions temperament-actions">
-        <a href={detailHref}>{t("tuning.card.detail", "View detail", "Details ansehen")}</a>
-        {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.card.bdo", "Open BDO", "Beim BDO öffnen")}</a>}
-        {item.commentaryUrl && <a href={item.commentaryUrl} target="_blank" rel="noreferrer">{t("tuning.card.commentary", "Commentary", "Erläuterungen")}</a>}
-        {!item.publicProjection && item.sourceRecordId && <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>{t("tuning.card.evidence", "Source evidence", "Quellenbeleg")}</a>}
+        {(item.sourceUrl || item.commentaryUrl || (!item.publicProjection && item.sourceRecordId)) && <div className="temperament-card-links">
+          {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.card.bdo", "Open BDO", "Beim BDO öffnen")}</a>}
+          {item.commentaryUrl && <a href={item.commentaryUrl} target="_blank" rel="noreferrer">{t("tuning.card.commentary", "Commentary", "Erläuterungen")}</a>}
+          {!item.publicProjection && item.sourceRecordId && <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>{t("tuning.card.evidence", "Source evidence", "Quellenbeleg")}</a>}
+        </div>}
       </div>
     </article>
   );
@@ -13371,7 +13349,7 @@ function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
   const tabContent = (
     <>
       {error && <p className="notice error" role="alert">{error}</p>}
-      {!record && !error && <p className="notice" role="status">{t("tuning.detail.loading", "Loading temperament system…", "Stimmungssystem wird geladen …")}</p>}
+      {!record && !error && <LoadingContent kind="article" label={t("tuning.detail.loading", "Loading temperament system…", "Stimmungssystem wird geladen …")} />}
       {record && (
         <>
           {activeTab === "overview" && (!publicProjection || record.commentary.description) && (
@@ -13641,7 +13619,7 @@ function TemperamentOrgansPanel({
   </div>;
   if (!data) return error
     ? loadError
-    : <p className="notice" role="status">{t("tuning.organs.loading", "Loading linked organs…", "Verknüpfte Orgeldatensätze werden geladen …")}</p>;
+    : <LoadingContent kind="rows" count={3} label={t("tuning.organs.loading", "Loading linked organs…", "Verknüpfte Orgeldatensätze werden geladen …")} />;
   return (
     <section className="panel-block temperament-organ-links">
       <div className="temperament-organ-links-head">
@@ -13676,7 +13654,7 @@ function TemperamentOrgansPanel({
         </nav>
       )}
       {error ? loadError
-      : loading ? <p className="notice" role="status">{t("tuning.organs.loading", "Loading linked organs…", "Verknüpfte Orgeldatensätze werden geladen …")}</p>
+      : loading ? <LoadingContent kind="rows" count={3} label={t("tuning.organs.loading", "Loading linked organs…", "Verknüpfte Orgeldatensätze werden geladen …")} />
       : data.total === 0 ? (
         <p className="notice">{scope === "all" ? t("tuning.organs.noMatches", "No matching organ source wording was found in this POD snapshot.", "In diesem POD-Datenstand wurde kein passender Wortlaut in Orgeldatensätzen gefunden.") : t("tuning.organs.noneInScope", "No organ records match the selected evidence filter.", "Keine Orgeldatensätze entsprechen der gewählten Belegkategorie.")}</p>
       ) : (
@@ -13997,10 +13975,13 @@ function DigitalScoresSection() {
         Use the Evidence filter to distinguish explicitly identified and curated organ editions from the broader PDMX candidate set.
         Editions of the same work stay distinct and are connected on their detail pages.
       </p>
-      <div className="research-evidence-controls score-catalog-controls">
-        <label className="search-field">
-          <Search size={18} aria-hidden="true" />
-          <input aria-label={t("scores.catalogue.search", "Search digital scores", "Digitale Notenausgaben durchsuchen")} value={queryValue} onChange={(event) => updateFilter("queryValue", event.target.value)} placeholder={t("scores.catalogue.searchHint", "Title, composer, or catalog number", "Titel, Komponist oder Katalognummer")} />
+      <div className="research-evidence-controls score-catalog-controls aligned-catalogue-controls">
+        <label className="score-catalog-search">
+          <span>{t("scores.catalogue.search", "Search digital scores", "Digitale Notenausgaben durchsuchen")}</span>
+          <span className="search-field">
+            <Search size={18} aria-hidden="true" />
+            <input value={queryValue} onChange={(event) => updateFilter("queryValue", event.target.value)} placeholder={t("scores.catalogue.searchHint", "Title, composer, or catalog number", "Titel, Komponist oder Katalognummer")} />
+          </span>
         </label>
         <label>
           <span>{t("scores.catalogue.collection", "Collection", "Sammlung")}</span>
@@ -14068,7 +14049,7 @@ function DigitalScoresSection() {
 }
 
 function DigitalScoreResultList({ response }: { response: DigitalScoreList | null }) {
-  if (!response) return <p className="notice">Loading digital scores...</p>;
+  if (!response) return <LoadingContent kind="rows" label="Loading digital scores…" />;
   if (response.items.length === 0) return <EmptyState icon={<BookOpen size={22} />} title="No score evidence" body="No digital score records match the current filters." />;
   return (
     <div className="digital-score-list">
@@ -14175,7 +14156,7 @@ function DigitalScoreDetailPage({ actor, scoreId }: { actor?: NavigatorActor; sc
         {score && <span className={`score-evidence-chip ${score.evidenceStrength === "candidate" ? "is-candidate" : ""}`}>{score.evidence?.label || score.evidenceLabel}</span>}
       </div>
       {error && <p className="notice error">{error}</p>}
-      {!score && !error && <p className="notice">Loading score evidence...</p>}
+      {!score && !error && <LoadingContent kind="article" label="Loading score evidence…" />}
       {score && (
         <>
           <section className="score-detail-overview">
@@ -14448,7 +14429,7 @@ function DigitalAssetDetailShell({
         </div>}
       </div>
       {error && <p className="notice error" role="alert">{error}</p>}
-      {!asset && !error && <p className="notice" role="status">Loading asset evidence…</p>}
+      {!asset && !error && <LoadingContent kind="article" label="Loading asset evidence…" />}
       {asset && (
         <>
           <section className="panel-block">
@@ -14493,7 +14474,7 @@ function scoreFormatLabel(value: string) {
 }
 
 function SourceEvidenceResultList({ response }: { response: SourceRecordList | null }) {
-  if (!response) return <p className="notice">Loading source records...</p>;
+  if (!response) return <LoadingContent kind="rows" label="Loading source records…" />;
   if (response.items.length === 0) return <p className="muted">No source records match the current research filters.</p>;
   return (
     <div className="research-evidence-list">
@@ -14765,7 +14746,7 @@ function SourceSupportedEntityCard({ entity }: { entity: NonNullable<SourceRecor
 }
 
 function FileEvidenceResultList({ response }: { response: FileEvidenceList | null }) {
-  if (!response) return <p className="notice">Loading files...</p>;
+  if (!response) return <LoadingContent kind="rows" label="Loading files…" />;
   if (response.items.length === 0) return <p className="muted">No files match the current research filters.</p>;
   return (
     <div className="research-evidence-list">
@@ -15762,7 +15743,7 @@ function CanonicalActorPage({ category, id, staffMode }: { category: string; id:
         </div>
       </div>
       {error && <p className="notice error">{error}</p>}
-      {!actor && !error && <p className="notice">Loading actor...</p>}
+      {!actor && !error && <LoadingContent kind="article" label="Loading actor…" />}
       {actor && (
         <>
           <EntityPageTabs scope={tabScope} label={actor.title} activeTab={activeTab} exportAvailable={Boolean(actor.export)} onChange={selectTab} />
@@ -16347,7 +16328,7 @@ function ActorActivityMapModal({ actor, open, onClose }: { actor: CanonicalActor
   // Keep the iframe URL byte-identical to the preflight request so the public
   // five-minute response cache prevents a second database read when GeoLibre
   // imports the project.
-  const projectPath = `/api/actors/${encodeURIComponent(actor.mdvsId)}/activity-map.geolibre.json`;
+  const projectPath = `/api/actors/${encodeURIComponent(actor.mdvsId)}/activity-map.geolibre.json?v=2`;
   const frameUrl = useMemo(() => {
     const projectUrl = new URL(projectPath, window.location.origin);
     const url = new URL("/geolibre/index.html", window.location.origin);
@@ -17218,7 +17199,7 @@ function CandidateEntityDossierPage({ category, id, staffMode }: { category: str
         <Pill>{staffMode ? candidate?.canonicalBoundary?.label || "Candidate detail page" : "Source-backed"}</Pill>
       </div>
       {error && <p className="notice error">{error}</p>}
-      {!candidate && !error && <p className="notice">Loading entity details...</p>}
+      {!candidate && !error && <LoadingContent kind="article" label="Loading entity details…" />}
       {candidate && (
         <>
           {(candidate.canonicalResolution || candidate.canonicalBoundary?.canonicalUrl) && (
@@ -17607,7 +17588,7 @@ function SourceEvidenceDossierPage({ sourceRecordId }: { sourceRecordId: string 
         </div>
       </div>
       {error && <p className="notice error">{error}</p>}
-      {!record && !error && <p className="notice">Loading source evidence dossier...</p>}
+      {!record && !error && <LoadingContent kind="article" label="Loading source evidence dossier…" />}
       {record && (
         <>
           <SourcePublicOrientation record={record} />
@@ -17729,7 +17710,7 @@ function FileEvidenceDossierPage({ fileId }: { fileId: string }) {
         </div>
       </div>
       {error && <p className="notice error">{error}</p>}
-      {!file && !error && <p className="notice">Loading file evidence dossier...</p>}
+      {!file && !error && <LoadingContent kind="article" label="Loading file evidence dossier…" />}
       {file && (
         <>
           <div className="evidence-status-grid">
@@ -18132,7 +18113,7 @@ function SourceEvidencePageModal({ onClose, sourceRecordId }: { onClose: () => v
           <button type="button" className={mode === "depth" ? "selected" : ""} onClick={() => setMode("depth")}>Technical</button>
         </div>
         {error && <p className="notice error">{error}</p>}
-        {!record && !error && <p className="notice">Loading source record...</p>}
+        {!record && !error && <LoadingContent kind="article" label="Loading source record…" />}
         {record && (
           <div className="source-evidence-page">
             <div className="evidence-status-grid">
@@ -18441,10 +18422,12 @@ function OrganList({
     window.requestAnimationFrame(() => sourceTriggerRef.current?.focus());
   };
   return (
-    <section className={`organ-list ${loading ? "updating" : ""}`} aria-busy={loading} aria-label={t("organs.list.region", "Organ results", "Orgeltreffer")}>
-      {loading && <div className="catalog-updating" role="status">{t("organs.list.updating", "Updating results...", "Ergebnisse werden aktualisiert …")}</div>}
+    <section className={`organ-list ${loading ? "updating" : ""}`} aria-label={t("organs.list.region", "Organ results", "Orgeltreffer")}>
+      {loading && (renderedItems.length
+        ? <UpdatingContent label={t("organs.list.updating", "Updating results…", "Ergebnisse werden aktualisiert …")} />
+        : <LoadingContent kind="table" label={t("organs.list.loading", "Loading organ results…", "Orgeltreffer werden geladen …")} />)}
       {renderedItems.length > 0 && (
-        <div className="organ-table-scroll">
+        <div className="organ-table-scroll" aria-busy={loading}>
           <table className={`organ-table ${publicProjection ? "organ-table-public" : ""}`} role="table">
             <caption className="sr-only">{t("organs.list.caption", "Organs matching your search, with documented stops, location, builder, and source collections.", "Orgeltreffer mit dokumentierter Registerzahl, Standort, Orgelbauer und Quellensammlungen.")}</caption>
             <thead role="rowgroup">
@@ -18621,7 +18604,7 @@ function OrganCatalogSourcesModal({ organ, onClose }: { organ: OrganCard; onClos
             <X size={18} aria-hidden="true" />
           </button>
         </div>
-        {!detail && !error && <p className="notice">Loading source links…</p>}
+        {!detail && !error && <LoadingContent label="Loading source links…" />}
         {error && <p className="notice error">Source links could not be loaded: {error}</p>}
         {detail && sources.length === 0 && <p className="notice">No original source link is available for this record.</p>}
         {sources.length > 0 && (
@@ -18881,7 +18864,7 @@ function OrganPage({
         </div>
       </div>
       <div id="organ-tab-content" role="tabpanel" aria-labelledby={`organ-tab-${activeTab}`} tabIndex={0}>
-      <Suspense fallback={<div className="notice" role="status">{t("organ.page.loadingSection", "Loading section…", "Abschnitt wird geladen …")}</div>}>
+      <Suspense fallback={<LoadingContent kind="article" label={t("organ.page.loadingSection", "Loading section…", "Abschnitt wird geladen …")} />}>
       {activeTab === "overview" && (
         <OverviewTab
           actorId={actorId}
@@ -18996,7 +18979,7 @@ function OrganContextMapModal({ organ, open, onClose }: { organ: OrganDetail; op
   const [showBuilderOrigin, setShowBuilderOrigin] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState<OrganContextMapSelection | null>(null);
 
-  const projectPath = `/api/organs/${encodeURIComponent(organ.id)}/map-context.geolibre.json?v=5`;
+  const projectPath = `/api/organs/${encodeURIComponent(organ.id)}/map-context.geolibre.json?v=6`;
   const frameUrl = useMemo(() => {
     const projectUrl = new URL(projectPath, window.location.origin);
     const url = new URL("/geolibre/index.html", window.location.origin);
@@ -19452,18 +19435,8 @@ function OrganSectionState({
 }) {
   if (state?.loading) {
     return (
-      <div className="tab-panel organ-section-state" role="status" aria-live="polite" aria-busy="true">
-        <section className="panel-block organ-section-loading">
-          <div>
-            <p className="eyebrow">Loading</p>
-            <h3>{friendlyLabel(section)}</h3>
-          </div>
-          <div className="section-skeleton" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </div>
-        </section>
+      <div className="tab-panel organ-section-state">
+        <LoadingContent kind="article" label={`Loading ${friendlyLabel(section)}…`} />
       </div>
     );
   }
@@ -26700,6 +26673,7 @@ function MapSection({
         title={eventMode ? "Documented organ relocations" : "Mapped organ locations"}
         detail={showQueue ? `${explore?.counts.georeferencingBacklog ?? 0} organ page${explore?.counts.georeferencingBacklog === 1 ? "" : "s"} need coordinates` : movementSimulation ? "ARTIFICIAL relocation simulation · local-restricted" : eventMode ? "Source-documented endpoints with qualified coordinates" : canReadLocalMap ? "Local-restricted Localizer diagnostics" : "Current locations, with coordinate precision stated"}
       />
+      {publicProjection && !eventMode && <Suspense fallback={null}><AreaLookup /></Suspense>}
       <div className={`map-layout ${showQueue ? "has-queue" : "map-only"}`}>
         <MapPreview
           items={explore?.mapItems ?? []}
@@ -26863,7 +26837,7 @@ function MapPreview({
       )}
       <div>
         <h3>{simulationMode ? "Synthetic relocation demonstration" : eventMode ? "Documented relocations" : "Mapped organs"}</h3>
-        <p>{simulationMode ? "Artificial displacements demonstrate explicit origin and destination observations, uncertain time intervals, and segmented schematic connectors. No connector is a historical route." : eventMode ? "Documented relocation events connect historical origin and destination observations. Segmented connectors express relationships, never reconstructed travel routes." : useGeoLibre && restrictedLayer ? "Policy-approved current-place diagnostics are loaded from Processor Localizer. They do not assert a historical event or movement route." : useGeoLibre ? "The map moves from regional density to individual persisted sites as you zoom. Approximate locations remain a separate layer and never claim a venue coordinate." : items.length ? `${items.length} mapped organ example${items.length === 1 ? "" : "s"} from the current catalog results. These points do not assert a historical event or movement route.` : "No mapped organ locations are available yet."}</p>
+        <p>{simulationMode ? "Artificial displacements demonstrate explicit origin and destination observations, uncertain time intervals, and segmented schematic connectors. No connector is a historical route." : eventMode ? "Documented relocation events connect historical origin and destination observations. Segmented connectors express relationships, never reconstructed travel routes." : useGeoLibre && restrictedLayer ? "Policy-approved current-place diagnostics are loaded from Processor Localizer. They do not assert a historical event or movement route." : useGeoLibre ? "Explore documented organ sites and approximate localities." : items.length ? `${items.length} mapped organ example${items.length === 1 ? "" : "s"} from the current catalog results. These points do not assert a historical event or movement route.` : "No mapped organ locations are available yet."}</p>
         {useGeoLibre && !simulationMode && !publicProjection && (
           <a className="map-simulation-link" href={eventMode ? "/map" : "/map?mode=events"}>
             {eventMode ? "Return to mapped organ places" : "Explore documented relocations"}
@@ -26947,10 +26921,13 @@ function appendPublicMapCatalogFilters(url: URL, filters: PublicMapCatalogFilter
   });
 }
 
-const NAVIGATOR_GEOLIBRE_BASEMAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
+const NAVIGATOR_GEOLIBRE_BASEMAP_STYLE = "/basemap/assets-v2/style.json";
+const MapRegions = lazy(() => import("./mapRegions"));
 
 function isLoadedNavigatorGeoLibreProject(value: unknown): boolean {
-  if (!isRecord(value) || value.basemapStyleUrl !== NAVIGATOR_GEOLIBRE_BASEMAP_STYLE) return false;
+  if (!isRecord(value) || typeof value.basemapStyleUrl !== "string") return false;
+  if (value.basemapStyleUrl !== NAVIGATOR_GEOLIBRE_BASEMAP_STYLE
+    && !value.basemapStyleUrl.startsWith("/api/map/marker-style.json?")) return false;
   if (!Array.isArray(value.layers)) return false;
   return value.layers.some((layer) => (
     isRecord(layer)
@@ -27052,6 +27029,7 @@ function GeoLibreMap({
   const mapApiPrefix = restrictedLayer ? "/api/internal/map" : "/api/map";
   const frameUrl = useMemo(() => {
     const projectUrl = new URL(`${mapApiPrefix}/project.geolibre.json`, window.location.origin);
+    projectUrl.searchParams.set("basemap", "2");
     if (simulationMode) {
       projectUrl.searchParams.set("simulation", "movement");
       if (temporalFilter) projectUrl.searchParams.set("datetime", temporalFilter);
@@ -27062,6 +27040,7 @@ function GeoLibreMap({
       if (movementType) projectUrl.searchParams.set("movement_type", movementType);
       if (initialMovementId) projectUrl.searchParams.set("movement", initialMovementId);
     } else if (!restrictedLayer) {
+      projectUrl.searchParams.set("markers", "2");
       projectUrl.searchParams.set("precision", coordinateScope);
       if (countryCode) projectUrl.searchParams.set("country", countryCode);
       appendPublicMapCatalogFilters(projectUrl, catalogFilters);
@@ -27075,26 +27054,12 @@ function GeoLibreMap({
   }, [catalogFilters, coordinateScope, countryCode, eventMode, initialMovementId, mapApiPrefix, movementType, restrictedLayer, simulationMode, temporalFilter]);
 
   useEffect(() => {
-    const controller = new AbortController();
-    fetch("/geolibre/index.html", {
-      cache: "no-store",
-      credentials: "same-origin",
-      headers: { Accept: "text/html" },
-      signal: controller.signal,
-    })
-      .then(async (response) => {
-        if (!response.ok) throw new Error(`GeoLibre runtime returned ${response.status}`);
-        const documentText = await response.text();
-        if (!/<title>\s*GeoLibre\s*<\/title>/i.test(documentText)) {
-          throw new Error("GeoLibre runtime path resolved to the Navigator application");
-        }
-        setRuntimeAvailable(true);
-      })
-      .catch((error: unknown) => {
-        if (error instanceof DOMException && error.name === "AbortError") return;
-        setRuntimeAvailable(false);
-      });
-    return () => controller.abort();
+    let active = true;
+    void readMapRuntime().then(
+      () => { if (active) setRuntimeAvailable(true); },
+      () => { if (active) setRuntimeAvailable(false); },
+    );
+    return () => { active = false; };
   }, []);
 
   useEffect(() => {
@@ -27894,7 +27859,6 @@ function GeoLibreMap({
         <div className="coordinate-precision-controls">
           <div>
             <strong>Map display</strong>
-            <span>Broad views show geographic density; close views resolve individual persisted sites.</span>
           </div>
           <label>
             Show
@@ -27924,10 +27888,11 @@ function GeoLibreMap({
             </select>
           </label>}
           <div className="coordinate-precision-legend" aria-label="Coordinate precision legend">
-            <span><i className="exact" />Persisted-position density</span>
-            <span><i className="source-grid" />Source-grid cell centroid</span>
-            <span><i className="fallback" />Approximate location</span>
-            <span className="density-guidance">Circle size expresses density. Select a broad-scale circle to zoom; individual sites appear at close range.</span>
+            <span><i className="counted" aria-hidden="true">24</i> Group of map sites</span>
+            <span><i className="exact" aria-hidden="true" /> Individual site</span>
+            <span><i className="source-grid" aria-hidden="true" /> Source-grid position</span>
+            <span><i className="fallback" aria-hidden="true" /> Approximate locality</span>
+            <span className="density-guidance">Select a numbered group to zoom. Groups can cross area boundaries.</span>
           </div>
           <details
             className="map-catalog-filters"
@@ -28091,9 +28056,11 @@ function GeoLibreMap({
           </details>
         </div>
       )}
+      {publicProjection && runtimeReady && !restrictedLayer && !eventMode && !simulationMode && (
+        <Suspense fallback={null}><MapRegions key={frameUrl} frameRef={frameRef} frameUrl={frameUrl} /></Suspense>
+      )}
       <div
         className={`geolibre-map-shell ${runtimeReady ? "is-ready" : effectiveMapError ? "has-error" : "is-loading"}`}
-        aria-busy={!runtimeReady && !effectiveMapError}
       >
         {runtimeAvailable === true && (
           <iframe
@@ -28105,6 +28072,7 @@ function GeoLibreMap({
             sandbox="allow-scripts allow-same-origin allow-downloads"
             onLoad={handshake}
             aria-hidden={!runtimeReady}
+            aria-busy={!runtimeReady && !effectiveMapError}
             tabIndex={runtimeReady ? 0 : -1}
           />
         )}
@@ -28117,14 +28085,15 @@ function GeoLibreMap({
             <span className="geolibre-map-loading-icon" aria-hidden="true">
               {effectiveMapError ? <AlertCircle size={24} /> : <MapIcon size={24} />}
             </span>
-            <span>
+            <div className="geolibre-map-loading-message">
               <strong>{effectiveMapError ? "Map could not be prepared" : "Preparing the MODAVIS map"}</strong>
               <small>
                 {effectiveMapError
                   ? effectiveMapError
-                  : "Loading the map shell and only the visible organ-location tiles…"}
+                  : "Loading the basemap and organ locations…"}
               </small>
-            </span>
+              {!effectiveMapError && <LoadingContent />}
+            </div>
           </div>
         )}
         {!simulationMode && !eventMode && !restrictedLayer && selectedSiteGroupId && (
@@ -28292,7 +28261,7 @@ function GeoLibreMap({
             )}
           </aside>
         )}
-        <div className="geolibre-map-status" role="status" aria-label={status}>
+        <div className="geolibre-map-status" role={runtimeReady ? "status" : undefined} aria-hidden={!runtimeReady} aria-label={status}>
           <span className="full">{status}</span>
           <span className="compact" aria-hidden="true">
             {effectiveMapError
@@ -28303,6 +28272,7 @@ function GeoLibreMap({
           </span>
         </div>
       </div>
+      {runtimeReady && <small className="muted"><a href="/basemap/assets-v2/NOTICE.txt">Basemap credits</a></small>}
     </div>
   );
 }
@@ -28711,21 +28681,25 @@ function CandidateEntityDirectorySection({
 }
 
 function PersonsSection({
+  error,
   filters,
   loading,
   onClear,
   onFiltersChange,
   onPageChange,
   onQueryChange,
+  onRetry,
   query,
   response
 }: {
+  error: string | null;
   filters: PersonFilterValues;
   loading: boolean;
   onClear: () => void;
   onFiltersChange: (filters: PersonFilterValues, options?: { preserveOffset?: boolean; replace?: boolean }) => void;
   onPageChange: (offset: number) => void;
   onQueryChange: (value: string) => void;
+  onRetry: () => void;
   query: string;
   response: PersonListResponse | null;
 }) {
@@ -28748,12 +28722,12 @@ function PersonsSection({
         headingLevel={1}
         eyebrow="People and organizations"
         title="People and organizations"
-        detail={loading ? "Loading identities and source mentions" : `${formatInteger(response?.total ?? 0)} directory entries`}
+        detail={error ? undefined : loading ? "Loading identities and source mentions" : `${formatInteger(response?.total ?? 0)} directory entries`}
       />
-      <div className="persons-overview">
+      {response && <div className="persons-overview">
         <Metric label="Canonical identities" value={formatInteger(response?.counts.canonical ?? 0)} />
         {(response?.counts.sourceMentioned ?? 0) > 0 && <Metric label="Source mentions" value={formatInteger(response?.counts.sourceMentioned ?? 0)} />}
-      </div>
+      </div>}
       <p className="person-directory-guidance">Canonical identities and documented mentions are listed separately. A source mention may name a person, an organization, or an actor whose type is unresolved; equal names do not establish a shared identity.</p>
       <div className="person-filter-panel">
         <div className="organ-filter-toolbar">
@@ -28818,15 +28792,19 @@ function PersonsSection({
           </div>
         )}
       </div>
-      {items.length === 0 ? (
+      {error && <div className="notice error" role="alert"><p>{error}</p><button type="button" className="secondary" onClick={onRetry}>Try again</button></div>}
+      {!error && loading && (items.length
+        ? <UpdatingContent label="Updating directory results…" />
+        : <LoadingContent kind="cards" className="person-directory-grid" label="Loading identities and documented mentions…" />)}
+      {!error && (items.length === 0 ? !loading && (
         <EmptyState
           icon={<UserRound size={22} />}
-          title={loading ? "Loading directory" : "No matching entries"}
-          body={loading ? "Loading identities and documented mentions." : "Broaden the search or clear the filters."}
+          title="No matching entries"
+          body="Broaden the search or clear the filters."
         />
       ) : (
         <>
-          <div className="person-directory-grid">
+          <div className="person-directory-grid" aria-busy={loading}>
             {items.map((item) => <PersonCard key={`${item.kind}:${item.id}`} item={item} />)}
           </div>
           <div className="person-pagination">
@@ -28843,7 +28821,7 @@ function PersonsSection({
             </div>
           </div>
         </>
-      )}
+      ))}
     </section>
   );
 }

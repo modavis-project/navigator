@@ -127,6 +127,10 @@ def test_frontend_recovers_without_reload_and_preserves_public_routes(tmp_path):
     html = tmp_path / "html"
     html.mkdir()
     (html / "index.html").write_text("synthetic frontend")
+    catalogue_pages = html / "catalogue-first-page" / "v1"
+    catalogue_pages.mkdir(parents=True)
+    for page in ("organs", "people", "events"):
+        (catalogue_pages / f"{page}.json").write_text(json.dumps({"page": page}))
     (tmp_path / "logs").mkdir()
     opener = build_opener(ProxyHandler({}))
 
@@ -177,6 +181,16 @@ def test_frontend_recovers_without_reload_and_preserves_public_routes(tmp_path):
             # Starting without a backend DNS record must still serve the app,
             # while readiness must detect the broken proxy path.
             eventually(frontend_ready)
+            for route, page in (("/organs", "organs"), ("/persons", "people"), ("/events", "events")):
+                with opener.open(f"http://127.0.0.1:{frontend_port}{route}", timeout=2) as response:
+                    assert response.read() == b"synthetic frontend"
+                    assert response.headers["Link"] == (
+                        f"</catalogue-first-page/v1/{page}.json>; rel=preload; as=fetch; crossorigin=anonymous"
+                    )
+            with opener.open(f"http://127.0.0.1:{frontend_port}/organs?sort=label", timeout=2) as response:
+                assert response.read() == b"synthetic frontend"
+                assert response.headers.get("Link") is None
+            assert request("/catalogue-first-page/v1/missing.json")[0] == 404
             assert request("/api/health/ready")[0] == 502
             healthy(False)
             dns.address = "127.0.0.1"

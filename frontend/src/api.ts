@@ -5216,6 +5216,7 @@ export interface ReleaseContext {
   readOnly: boolean;
   contentSha256?: string | null;
   readSnapshot?: string;
+  catalogueSnapshot?: string;
   guideUrl: string;
   documentationUrl: string;
   documentationPolicy: string;

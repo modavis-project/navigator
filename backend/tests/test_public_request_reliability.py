@@ -12,6 +12,7 @@ from psycopg.errors import QueryCanceled
 from psycopg_pool import PoolTimeout
 
 from navigator_app import db
+from navigator_app import public_repository
 from navigator_app.capability_health import register_capability_health
 from navigator_app.config import Settings
 from navigator_app.public_query_cache import BoundedQueryCache, snapshot_cached
@@ -19,6 +20,62 @@ from navigator_app.public_query_identity import SnapshotBindingChanged, semantic
 from navigator_app.public_read_cache import SNAPSHOT_HEADER, public_read_snapshot, register_public_read_cache
 from navigator_app.public_repository import PublicReleaseRepository
 from navigator_app.request_reliability import register_request_reliability
+
+
+def test_ranked_organ_pages_reuse_database_order_and_exact_counts(monkeypatch):
+    repo = PublicReleaseRepository(Settings())
+    monkeypatch.setattr(repo, "_stop_total_expression", lambda: "max(normalized_number)::int")
+    monkeypatch.setattr(repo, "_has_entity_exports", lambda: False)
+    order = ("organ-c", "organ-a", "organ-b", "organ-d")
+    matched = ("organ-d", "organ-a", "organ-c")
+    index_reads = []
+    hydrated = []
+
+    class Connection:
+        def execute(self, sql, params):
+            if "rank_limit" in params:
+                assert "sc.stop_count desc nulls last, lower(o.label), o.mdvs_id" in sql
+                index_reads.append(sql)
+                return ({"mdvs_id": key} for key in order)
+            if "page_ids" in params:
+                assert "with ordinality" in sql and "order by o.catalogue_position" in sql
+                hydrated.append(params["page_ids"])
+                return SimpleNamespace(fetchall=lambda: params["page_ids"])
+            assert "select o.mdvs_id" in sql
+            return ({"mdvs_id": key} for key in matched)
+
+    connection = Connection()
+    assert repo._list_organ_page(connection, "", {"limit": 2, "offset": 0}, "stops") == (4, ["organ-c", "organ-a"])
+    assert repo._list_organ_page(connection, "", {"limit": 2, "offset": 2}, "stops") == (4, ["organ-b", "organ-d"])
+    assert repo._list_organ_page(connection, "where selected", {"limit": 2, "offset": 1}, "stops") == (3, ["organ-a", "organ-d"])
+    assert repo._list_organ_page(connection, "where selected", {"limit": 2, "offset": 3}, "stops") == (3, [])
+    assert len(index_reads) == 1
+    assert hydrated == [["organ-c", "organ-a"], ["organ-b", "organ-d"], ["organ-a", "organ-d"]]
+
+
+def test_oversized_organ_order_uses_the_regular_bounded_query(monkeypatch):
+    repo = PublicReleaseRepository(Settings())
+    monkeypatch.setattr(repo, "_stop_total_expression", lambda: "max(normalized_number)::int")
+    monkeypatch.setattr(repo, "_has_entity_exports", lambda: False)
+    monkeypatch.setattr(public_repository, "STOP_ORDER_MAX_ROWS", 2)
+    rank_attempts = []
+
+    class Connection:
+        def execute(self, sql, params):
+            if "rank_limit" in params:
+                assert params["rank_limit"] == 3
+                rank_attempts.append(sql)
+                return ({"mdvs_id": key} for key in ("organ-c", "organ-a", "organ-b"))
+            if "count(*)::int as count" in sql:
+                return SimpleNamespace(fetchone=lambda: {"count": 3})
+            assert "limit %(limit)s offset %(offset)s" in sql
+            return SimpleNamespace(fetchall=lambda: ["organ-a"])
+
+    connection = Connection()
+    query = {"limit": 1, "offset": 1}
+    assert repo._list_organ_page(connection, "", query, "stops") == (3, ["organ-a"])
+    assert repo._list_organ_page(connection, "", query, "stops") == (3, ["organ-a"])
+    assert len(rank_attempts) == 1
 
 
 def test_deadline_is_consumed_across_statements_and_connection_wait(monkeypatch):

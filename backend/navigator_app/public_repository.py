@@ -15,6 +15,8 @@ from collections import Counter, defaultdict
 from collections.abc import Mapping
 from pathlib import Path
 from functools import cached_property, lru_cache
+from itertools import islice
+from sys import getsizeof
 from threading import Lock
 from typing import Any
 from urllib.parse import quote
@@ -57,6 +59,9 @@ from .public_query_identity import (
 SCHEMA = "release_1_5_public"
 PROFILE = "pod-1.5-public"
 CONTRACT = "modavis.release-1.5-public-postgresql/v4"
+STOP_ORDER = "sc.stop_count desc nulls last, lower(o.label), o.mdvs_id"
+STOP_ORDER_MAX_ROWS = 250_000
+STOP_ORDER_MAX_BYTES = 24 * 1024 * 1024
 RELEASE_CONTRACTS = {
     "1.5.0": ("1.5", CONTRACT),
     "1.5.1": ("1.5.1", "modavis.release-1.5-public-postgresql/v5"),
@@ -218,6 +223,9 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         self._capability_cache: tuple[str, ...] | None = None
         self._organ_facets_cache: dict[str, Any] | None = None
         self._organ_facets_cache_lock = Lock()
+        self._organ_stop_order: tuple[str, ...] | None = None
+        self._organ_stop_order_too_large = False
+        self._organ_stop_order_lock = Lock()
         self._literature_facets_cache: dict[str, Any] | None = None
         self._literature_facets_cache_lock = Lock()
         self._tuning_system_cache: list[dict[str, Any]] | None = None
@@ -697,6 +705,63 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             clauses.append(exists if virtual_instrument == "yes" else f"not {exists}")
         return clauses, params
 
+    def _organ_stop_counts_cte(self) -> str:
+        return f"""
+            with stop_counts as materialized (
+                select organ_mdvs_id, {self._stop_total_expression()} as stop_count
+                from {SCHEMA}.technical_fact
+                where family='stop_total'
+                group by organ_mdvs_id
+            )
+        """
+
+    def _snapshot_stop_order(self, conn) -> tuple[str, ...] | None:
+        # The repository is pinned to one public snapshot. Keep only the
+        # ordered IDs and let PostgreSQL choose the collation for ties.
+        with self._organ_stop_order_lock:
+            if self._organ_stop_order is not None or self._organ_stop_order_too_large:
+                return self._organ_stop_order
+            rows = conn.execute(
+                f"""{self._organ_stop_counts_cte()}
+                    select o.mdvs_id from {SCHEMA}.organ o
+                    left join stop_counts sc on sc.organ_mdvs_id=o.mdvs_id
+                    order by {STOP_ORDER}
+                    limit %(rank_limit)s
+                """, {"rank_limit": STOP_ORDER_MAX_ROWS + 1},
+            )
+            ordered_ids = tuple(row["mdvs_id"] for row in rows)
+            if (len(ordered_ids) > STOP_ORDER_MAX_ROWS
+                    or getsizeof(ordered_ids) + sum(map(getsizeof, ordered_ids)) > STOP_ORDER_MAX_BYTES):
+                self._organ_stop_order_too_large = True
+                return None
+            self._organ_stop_order = ordered_ids
+            return ordered_ids
+
+    def _read_ranked_organ_page(self, conn, ordered_ids, where, params):
+        start = params["offset"]
+        end = start + params["limit"]
+        if where:
+            matches = {
+                row["mdvs_id"] for row in conn.execute(
+                    f"select o.mdvs_id from {SCHEMA}.organ o {where}", params,
+                )
+            }
+            total = len(matches)
+            if start >= total:
+                return total, []
+            page_ids = list(islice((identifier for identifier in ordered_ids if identifier in matches), start, end))
+        else:
+            total = len(ordered_ids)
+            page_ids = list(ordered_ids[start:end])
+        if not page_ids:
+            return total, []
+        page_sql = self._organ_select(f"""
+            select o.*, page.ordinality as catalogue_position
+            from unnest(%(page_ids)s::text[]) with ordinality as page(organ_id, ordinality)
+            join {SCHEMA}.organ o on o.mdvs_id=page.organ_id
+        """) + " order by o.catalogue_position"
+        return total, conn.execute(page_sql, {"page_ids": page_ids}).fetchall()
+
     def _organ_list_page_sql(self, where: str, sort_key: str, *, targeted_stop_sort: bool) -> str:
         if targeted_stop_sort:
             # Carry narrow keys through filtering and ranking. Fetch full organ
@@ -725,16 +790,9 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         candidate_prefix = ""
         stop_count_join = ""
         if sort_key == "stops":
-            candidate_prefix = f"""
-                with stop_counts as materialized (
-                    select organ_mdvs_id, {self._stop_total_expression()} as stop_count
-                    from {SCHEMA}.technical_fact
-                    where family='stop_total'
-                    group by organ_mdvs_id
-                )
-            """
+            candidate_prefix = self._organ_stop_counts_cte()
             stop_count_join = "left join stop_counts sc on sc.organ_mdvs_id=o.mdvs_id"
-            order = "sc.stop_count desc nulls last, lower(o.label), o.mdvs_id"
+            order = STOP_ORDER
         elif sort_key == "sources":
             order = "o.source_count desc, lower(o.label), o.mdvs_id"
         elif sort_key == "media":
@@ -749,6 +807,27 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             order by {order}
             limit %(limit)s offset %(offset)s
         """)
+
+    def _list_organ_page(self, conn, where, params, sort_key):
+        order = self._organ_stop_order if sort_key == "stops" else None
+        if sort_key == "stops" and not where and order is None:
+            order = self._snapshot_stop_order(conn)
+        if order is not None:
+            return self._read_ranked_organ_page(conn, order, where, params)
+
+        total = conn.execute(
+            f"select count(*)::int as count from {SCHEMA}.organ o {where}", params,
+        ).fetchone()["count"]
+        if params["offset"] >= total:
+            return total, []
+
+        targeted_stop_sort = sort_key == "stops" and bool(where) and total <= 5_000
+        if sort_key == "stops" and where and not targeted_stop_sort:
+            order = self._snapshot_stop_order(conn)
+            if order is not None:
+                return self._read_ranked_organ_page(conn, order, where, params)
+        page_sql = self._organ_list_page_sql(where, sort_key, targeted_stop_sort=targeted_stop_sort)
+        return total, conn.execute(page_sql, params).fetchall()
 
     @snapshot_cached
     def list_organs(
@@ -782,16 +861,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         where = "where " + " and ".join(clauses) if clauses else ""
         sort_key = str(sort or "stops").strip().lower()
         with connect(self.settings) as conn:
-            total = conn.execute(
-                f"select count(*)::int as count from {SCHEMA}.organ o {where}", params,
-            ).fetchone()["count"]
-            rows = []
-            if offset < total:
-                # A materialized candidate set pays off for narrow searches.
-                # Keep the existing set-wise plan for broad or unfiltered pages.
-                targeted_stop_sort = sort_key == "stops" and bool(clauses) and total <= 5_000
-                page_select = self._organ_list_page_sql(where, sort_key, targeted_stop_sort=targeted_stop_sort)
-                rows = conn.execute(page_select, params).fetchall()
+            total, rows = self._list_organ_page(conn, where, params, sort_key)
         result = {
             "items": [self._organ_card(row) for row in rows],
             "total": total,

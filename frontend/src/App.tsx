@@ -1,4 +1,5 @@
 import { EmptyState, Metric, Pill, SectionHead } from "./catalogPresentation";
+import { EVENT_PAGE_SIZE, loadCataloguePage, ORGAN_PAGE_SIZE, PERSON_PAGE_SIZE } from "./catalogueFirstPage";
 import { formatDateTime, formatFieldValue, formatInteger, friendlyLabel } from "./formatting";
 import { positiveRouteInt } from "./routeParameters";
 import { temperamentOrganHref } from "./temperamentOccurrences";
@@ -431,9 +432,7 @@ const SURFACE_ICONS: Record<MainSection, typeof Search> = {
 const ORGAN_TABS = ["overview", "history", "activities", "specification", "media", "export", "identifiers", "related", "contributions", "research"] as const;
 const ORGAN_SORTS = ["stops", "label", "recent", "media", "complete", "review", "specification", "location"] as const;
 const DEFAULT_GEOREFERENCE_QUEUE_LIMIT = 12;
-const ORGAN_PAGE_SIZE = 50;
 const ORGAN_RENDER_WINDOW_SIZE = 72;
-const PERSON_PAGE_SIZE = 18;
 const PUBLIC_OVERVIEW_FACT_LIMIT = 6;
 type OrganTab = (typeof ORGAN_TABS)[number];
 type OrganSort = (typeof ORGAN_SORTS)[number];
@@ -3287,6 +3286,7 @@ export function App() {
   const [peopleFilters, setPeopleFilters] = useState<CandidateDirectoryFilterValues>({});
   const [institutionFilters, setInstitutionFilters] = useState<CandidateDirectoryFilterValues>({});
   const [organFacets, setOrganFacets] = useState<OrganFacets | null>(null);
+  const [organFacetsRequested, setOrganFacetsRequested] = useState(false);
   useEffect(() => {
     let active = true;
     setReleaseContextError(false);
@@ -3520,9 +3520,13 @@ export function App() {
   const focusedOrganRoute = activeSection === "organs" && Boolean(routeOrganId());
   const shouldFetchOrgans = activeSection === "organs" && !focusedOrganRoute;
   const shouldFetchPersons = activeSection === "persons" && !evidenceRoute;
+  const hasOrganFilters = Object.values(organFilters).some(Boolean);
+  const defaultOrganSelection = !query && !hasOrganFilters && organOffset === 0 && organSort === "stops";
+  const defaultPersonSelection = !query && !Object.values(personFilters).some(Boolean);
   const shouldFetchOrganFacets = releaseContextResolved && (
     (discoveryLanding && (publicDatasetProfile || !discoveryQueryPending))
-    || (activeSection === "organs" && !focusedOrganRoute) || (activeSection === "map" && !publicDatasetProfile)
+    || (shouldFetchOrgans && (!publicDatasetProfile || organFacetsRequested || hasOrganFilters))
+    || (activeSection === "map" && !publicDatasetProfile)
   );
   // Public facets describe the whole dataset. Reuse them across queries and pages.
   const facetQuery = publicDatasetProfile ? "" : query;
@@ -3538,15 +3542,17 @@ export function App() {
   }) : "", [exploreQuery, georeferencingQueueFilters, georeferencingQueueLimit, georeferencingQueueOffset, includeGeoreferencing, shouldFetchExplore]);
   const exploreError = exploreFailure?.key === exploreRequestKey ? exploreFailure.message : null;
   const organRequestKey = useMemo(() => stableRequestKey({
+    snapshot: releaseContext?.readSnapshot,
     query,
     sort: organSort,
     offset: organOffset,
     ...organFilters,
-  }), [organFilters, organOffset, organSort, query]);
+  }), [organFilters, organOffset, organSort, query, releaseContext?.readSnapshot]);
   const personRequestKey = useMemo(() => stableRequestKey({
+    snapshot: releaseContext?.readSnapshot,
     query,
     ...personFilters,
-  }), [personFilters, query]);
+  }), [personFilters, query, releaseContext?.readSnapshot]);
   const facetRequestKey = useMemo(() => shouldFetchOrganFacets ? stableRequestKey({
     query: facetQuery,
     release: releaseContext?.releaseVersion,
@@ -3629,7 +3635,8 @@ export function App() {
     const controller = new AbortController();
     setOrganLoading(true);
     setError(null);
-    fetchOrgans({ query, limit: ORGAN_PAGE_SIZE, offset: organOffset, includeFacets: false, sort: organSort, ...organFilters }, controller.signal)
+    loadCataloguePage("organs", releaseContext, defaultOrganSelection, controller.signal, () =>
+      fetchOrgans({ query, limit: ORGAN_PAGE_SIZE, offset: organOffset, includeFacets: false, sort: organSort, ...organFilters }, controller.signal))
       .then((organData) => {
         if (cancelled) return;
         lastOrganRequestKey.current = organRequestKey;
@@ -3649,11 +3656,11 @@ export function App() {
       cancelled = true;
       controller.abort();
     };
-  }, [organFilters, organOffset, organRequestKey, organSort, organs.length, query, releaseContextResolved, shouldFetchOrgans, catalogReadAttempt]);
+  }, [defaultOrganSelection, organFilters, organOffset, organRequestKey, organSort, organs.length, query, releaseContext, releaseContextResolved, shouldFetchOrgans, catalogReadAttempt]);
 
   useEffect(() => {
     let cancelled = false;
-    if (!shouldFetchPersons) {
+    if (!releaseContextResolved || !shouldFetchPersons) {
       setPersonLoading(false);
       return () => {
         cancelled = true;
@@ -3668,7 +3675,8 @@ export function App() {
     const controller = new AbortController();
     setPersonLoading(true);
     setError(null);
-    fetchPersons({ query, limit: PERSON_PAGE_SIZE, offset: personFilters.offset || 0, ...personFilters }, controller.signal)
+    loadCataloguePage("people", releaseContext, defaultPersonSelection, controller.signal, () =>
+      fetchPersons({ query, limit: PERSON_PAGE_SIZE, offset: personFilters.offset || 0, ...personFilters }, controller.signal))
       .then((data) => {
         if (cancelled) return;
         lastPersonRequestKey.current = personRequestKey;
@@ -3685,7 +3693,7 @@ export function App() {
       cancelled = true;
       controller.abort();
     };
-  }, [shouldFetchPersons, personFilters, personRequestKey, persons, query, catalogReadAttempt]);
+  }, [defaultPersonSelection, shouldFetchPersons, personFilters, personRequestKey, persons, query, releaseContext, releaseContextResolved, catalogReadAttempt]);
 
   useEffect(() => {
     if (!shouldFetchOrganFacets) return;
@@ -4686,6 +4694,7 @@ export function App() {
               onClear={clearOrganCatalogFilters}
               onQueryChange={updateExploreQuery}
               onSortChange={updateOrganSort}
+              onOpenAdvanced={() => setOrganFacetsRequested(true)}
               query={query}
               sort={organSort}
               total={organTotal}
@@ -4748,7 +4757,7 @@ export function App() {
       );
     }
     if (activeSection === "events") {
-      return <EventDirectoryPage publicProjection={publicDatasetProfile} />;
+      return <EventDirectoryPage publicProjection={publicDatasetProfile} releaseContext={releaseContext} />;
     }
     if (activeSection === "use-cases") {
       return <Suspense fallback={<LoadingContent kind="article" label={t("shell.loadingStories", "Loading data stories…", "Datenberichte werden geladen …")} />}><UseCasesArea /></Suspense>;
@@ -6103,6 +6112,7 @@ function OrganFilterPanel({
   onClear,
   onQueryChange,
   onSortChange,
+  onOpenAdvanced,
   query,
   sort,
   total,
@@ -6118,6 +6128,7 @@ function OrganFilterPanel({
   onClear: () => void;
   onQueryChange: (value: string) => void;
   onSortChange: (sort: OrganSort) => void;
+  onOpenAdvanced: () => void;
   query: string;
   sort: OrganSort;
   total: number;
@@ -6229,7 +6240,10 @@ function OrganFilterPanel({
             {staffMode && <option key="location" value="location">Location-ready first</option>}
           </select>
         </label>
-        <button ref={filterToggleRef} type="button" className="advanced-filter-toggle" aria-controls="organ-filter-fields" aria-expanded={advancedOpen} onClick={() => setAdvancedOpen((open) => !open)}>
+        <button ref={filterToggleRef} type="button" className="advanced-filter-toggle" aria-controls="organ-filter-fields" aria-expanded={advancedOpen} onClick={() => {
+          if (!advancedOpen) onOpenAdvanced();
+          setAdvancedOpen(!advancedOpen);
+        }}>
           <Filter size={16} /> {t("organs.filters.filters", "Filters", "Filter")} {filterCount > 0 && <span>{filterCount}</span>}
         </button>
       </div>
@@ -6696,7 +6710,10 @@ function relocationMapOverviewHref(yearFrom = "", yearTo = ""): string {
   return `/map?${params.toString()}`;
 }
 
-function EventDirectoryPage({ publicProjection = false }: { publicProjection?: boolean }) {
+function EventDirectoryPage({ publicProjection = false, releaseContext }: {
+  publicProjection?: boolean;
+  releaseContext: ReleaseContext | null;
+}) {
   const { t, formatNumber } = useUiLocale();
   const params = new URLSearchParams(window.location.search);
   const relocationType = publicProjection ? "transfer" : RELOCATION_EVENT_TYPE;
@@ -6715,8 +6732,11 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const textFilterEdited = useRef(false);
-  const pageSize = 12;
-  const requestKey = JSON.stringify([query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset]);
+  const pageSize = EVENT_PAGE_SIZE;
+  const selection = [query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort];
+  const activeFilterCount = selection.filter(Boolean).length;
+  const defaultSelection = activeFilterCount === 0 && offset === 0;
+  const requestKey = JSON.stringify([...selection, offset]);
   const response = result?.response ?? null;
 
   useEffect(() => {
@@ -6724,7 +6744,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
     setLoading(true);
     setError(null);
     const load = () => {
-      fetchEvents({
+      loadCataloguePage("events", releaseContext, defaultSelection, controller.signal, () => fetchEvents({
         query,
         type,
         source,
@@ -6737,7 +6757,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
         sort,
         limit: pageSize,
         offset,
-      }, controller.signal)
+      }, controller.signal))
         .then((data) => {
           if (controller.signal.aborted) return;
           setResult({ key: requestKey, response: data });
@@ -6776,7 +6796,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
       window.clearTimeout(timer);
       controller.abort();
     };
-  }, [query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset, requestKey]);
+  }, [query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset, requestKey, releaseContext, defaultSelection]);
 
   const total = response?.total ?? 0;
   const eventTypeOptions = response?.facets?.eventTypes ?? [];
@@ -6792,18 +6812,6 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
     subject,
     participant,
     completeness,
-    sort,
-  ].filter(Boolean).length;
-  const activeFilterCount = [
-    query,
-    type,
-    source,
-    yearFrom,
-    yearTo,
-    subject,
-    participant,
-    completeness,
-    routeState,
     sort,
   ].filter(Boolean).length;
   const updateEventFilter = (setter: (value: string) => void, value: string, typed = false) => {

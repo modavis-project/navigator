@@ -75,6 +75,22 @@ memory. CI also requires repeated builds to match every output file byte-for-byt
 See [Configuration](CONFIGURATION.md) for the supported entry point and evidence rules.
 The standalone commands use the dependencies pinned in this repository.
 
+Public deployments can preload the first catalogue page for Organs, People
+and Events. After building the frontend, capture the exact default responses
+from a verified reader with the deployment's data, list logic, and database
+collation. Place the resulting directory under the web root in the deployment
+package.
+
+```bash
+.venv/bin/python scripts/generate_catalogue_first_pages.py \
+  --origin https://navigator.modavis.org --release 1.6.0 \
+  --output frontend/dist/catalogue-first-page/v1
+```
+
+Use one reviewed capture for both reproducibility builds. Regenerate it when
+the snapshot or default catalogue output changes. These generated pages are
+deployment assets. A browser with missing or mismatched assets uses the list APIs.
+
 The frontend proxy regression runs real Nginx with a temporary DNS server and
 synthetic HTTP backend. It checks unresolved startup, DNS address changes and
 recovery without reload, backend readiness failure, and paths/query strings for

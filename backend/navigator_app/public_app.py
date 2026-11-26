@@ -327,9 +327,11 @@ def create_public_app(
         else None
     )
     readiness = dict(repo.assert_ready())
+    from .catalogue_first_page import catalogue_snapshot
     from .public_read_cache import public_read_snapshot, register_public_read_cache
     binding = repo.snapshot_binding() if hasattr(repo, "snapshot_binding") else {}
     read_snapshot = public_read_snapshot(binding, settings)
+    initial_catalogue_snapshot = catalogue_snapshot(binding)
     if dataset_catalog and dataset_catalog.supports(settings.uri_release_version):
         source_release = settings.public_source_release_version or settings.uri_release_version
         if dataset_catalog.manifest.get("sourceReleaseVersion", settings.uri_release_version) != source_release:
@@ -577,8 +579,12 @@ def create_public_app(
 
     @app.get("/api/release-context")
     def release_context():
-        context = repo.release_context()
-        return jsonify({**context, "readSnapshot": read_snapshot} if read_snapshot else context)
+        context = dict(repo.release_context())
+        if read_snapshot:
+            context["readSnapshot"] = read_snapshot
+        if initial_catalogue_snapshot:
+            context["catalogueSnapshot"] = initial_catalogue_snapshot
+        return jsonify(context)
 
     @app.get("/sitemap.xml")
     def public_sitemap():

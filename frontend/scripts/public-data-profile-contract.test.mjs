@@ -6,6 +6,7 @@ import ts from "typescript";
 
 const app = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
 const api = await readFile(new URL("../src/api.ts", import.meta.url), "utf8");
+const catalogue = await readFile(new URL("../src/catalogueFirstPage.ts", import.meta.url), "utf8");
 const requestCache = await readFile(new URL("../src/requestCache.ts", import.meta.url), "utf8");
 const surfaces = await readFile(new URL("../src/surfaces.ts", import.meta.url), "utf8");
 const releaseGuide = await readFile(new URL("../src/releaseGuide.tsx", import.meta.url), "utf8");
@@ -42,9 +43,103 @@ test("instance discovery revalidates a previous deployment's browser cache", asy
 test("release context carries the public data profile and capability contract", () => {
   assert.match(api, /dataProfile\?: string/);
   assert.match(api, /capabilities\?: string\[\]/);
+  assert.match(api, /catalogueSnapshot\?: string/);
   assert.match(surfaces, /surfaceAvailableForCapabilities/);
   assert.match(surfaces, /contribute: "contributions"/);
   assert.match(surfaces, /vmi: "virtual_instruments"/);
+});
+
+const snapshot = "a".repeat(64);
+const publicRelease = { catalogueSnapshot: snapshot, dataProfile: "pod-1.5-public", readOnly: true };
+const compiledCatalogue = ts.transpileModule(catalogue, {
+  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+}).outputText;
+
+function catalogueLoader(path, fetch) {
+  const context = { exports: {}, window: { location: new URL(path, "https://navigator.example") }, fetch, AbortSignal };
+  vm.runInNewContext(compiledCatalogue, context);
+  return context.exports.loadCataloguePage;
+}
+
+const firstPageCases = [
+  { page: "organs", path: "/organs", limit: 50 },
+  { page: "people", path: "/persons", limit: 18 },
+  { page: "events", path: "/events", limit: 12 },
+];
+
+function firstPagePacket(page, limit) {
+  return {
+    version: 1, catalogueSnapshot: snapshot, page,
+    response: {
+      offset: 0, limit, total: 1, items: [{ id: "example" }],
+      ...(page === "people" ? {
+        page: {}, counts: {}, filters: {},
+        facets: { sources: [], publicationStates: [], roles: [], entityClasses: [], sortOptions: [] },
+      } : {}),
+    },
+  };
+}
+
+test("all three public default catalogues reuse the exact snapshot first page", async () => {
+  for (const { page, path, limit } of firstPageCases) {
+    const packet = firstPagePacket(page, limit);
+    const requests = [];
+    const load = catalogueLoader(path, async (url, options) => {
+      requests.push(url);
+      assert.equal(options.credentials, "same-origin");
+      return Response.json(packet);
+    });
+    const fallback = () => assert.fail("The validated first page should replace the live list request");
+    const signal = new AbortController().signal;
+    const [first, second] = await Promise.all([
+      load(page, publicRelease, true, signal, fallback),
+      load(page, publicRelease, true, signal, fallback),
+    ]);
+    assert.deepEqual(first, packet.response);
+    assert.equal(first, second);
+    assert.deepEqual(requests, [`/catalogue-first-page/v1/${page}.json`]);
+  }
+});
+
+test("filtered, paginated, record, and restricted views use their own live requests", async () => {
+  for (const [page, path, release, isDefault] of [
+    ["organs", "/organs?offset=50", publicRelease, true],
+    ["organs", "/organs?virtual_instrument=yes", publicRelease, true],
+    ["organs", "/organs", publicRelease, false],
+    ["people", "/people", publicRelease, true],
+    ["people", "/people/ABCD-1234-X", publicRelease, true],
+    ["people", "/persons?q=builder", publicRelease, true],
+    ["events", "/events?type=transfer&route=both", publicRelease, true],
+    ["events", "/events", { ...publicRelease, readOnly: false }, true],
+    ["events", "/events", { ...publicRelease, capabilities: ["authentication"] }, true],
+  ]) {
+    const load = catalogueLoader(path, () => assert.fail("A nondefault view must not acquire a first page"));
+    assert.equal(await load(page, release, isDefault, new AbortController().signal, async () => "live"), "live");
+  }
+});
+
+test("invalid or missing catalogue assets fall back to the live first page", async () => {
+  const packet = firstPagePacket("organs", 50);
+  for (const response of [
+    new Response(null, { status: 404 }),
+    new Response("<!doctype html>"),
+    Response.json({ ...packet, catalogueSnapshot: "b".repeat(64) }),
+    Response.json({ ...packet, page: "events" }),
+    Response.json({ ...packet, response: { ...packet.response, offset: 50 } }),
+  ]) {
+    const load = catalogueLoader("/organs", async () => response);
+    assert.equal(await load("organs", publicRelease, true, new AbortController().signal, async () => "live"), "live");
+  }
+});
+
+test("an abandoned preload does not start a live catalogue request", async () => {
+  let finish;
+  const load = catalogueLoader("/events", () => new Promise(resolve => { finish = resolve; }));
+  const controller = new AbortController();
+  const pending = load("events", publicRelease, true, controller.signal, () => assert.fail("Aborted navigation"));
+  controller.abort();
+  finish(new Response(null, { status: 404 }));
+  await assert.rejects(pending, { name: "AbortError" });
 });
 
 test("public profile removes unsupported navigation and actor controls", () => {

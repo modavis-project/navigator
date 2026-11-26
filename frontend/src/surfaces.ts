@@ -2,6 +2,7 @@ export type NavigatorRole = "public" | "registered" | "moderator" | "admin" | "r
 export type SurfaceDepth = "public_summary" | "user_contribution" | "moderation_triage" | "admin_operations" | "technical_depth";
 export type RouteVisibility = "primary_nav" | "secondary_nav" | "direct_link" | "hidden";
 export type SurfaceGroup = "public" | "collections" | "user" | "moderation" | "admin";
+export const DALMATIA_FIRE_PATH = "/use-cases/dalmatia-pipe-organs-fire-vulnerability";
 
 export type MainSection =
   | "explore"

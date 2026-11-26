@@ -8,6 +8,7 @@ import { testUiLocale } from "./ui-locale-test-support.mjs";
 import { LoadingContent } from "./loading-content-test-support.mjs";
 
 const appUrl = new URL("../src/App.tsx", import.meta.url);
+const temperamentsUrl = new URL("../src/Temperaments.tsx", import.meta.url);
 const temperamentRoutesUrl = new URL("../src/temperamentOccurrences.ts", import.meta.url);
 
 async function temperamentRoutes() {
@@ -50,7 +51,7 @@ test("a shared temperament comparison retains up to four distinct catalogue IDs 
 });
 
 test("temperament detail provides a labelled panel and keyboard focus for each tab", async () => {
-  const [source, routes] = await Promise.all([readFile(appUrl, "utf8"), temperamentRoutes()]);
+  const [source, routes] = await Promise.all([readFile(temperamentsUrl, "utf8"), temperamentRoutes()]);
   const start = source.indexOf("const TEMPERAMENT_DETAIL_TABS =");
   const end = source.indexOf("function TemperamentOrgansPanel(", start);
   const url = new URL("https://navigator.test/temperaments/example?tab=organs&match=family");

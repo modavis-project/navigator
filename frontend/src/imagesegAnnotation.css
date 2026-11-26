@@ -1,0 +1,551 @@
+.imageseg-annotation-page {
+  background: #f7f8f4;
+  border: 1px solid #dfe5d9;
+  border-radius: 8px;
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 16px;
+}
+
+.imageseg-target-summary {
+  align-self: stretch;
+  background: #ffffff;
+  border: 1px solid #d8e0dc;
+  border-radius: 8px;
+  display: grid;
+  gap: 4px;
+  min-width: min(100%, 280px);
+  padding: 10px 12px;
+}
+
+.imageseg-target-summary span,
+.imageseg-segment-summary span,
+.imageseg-segment-summary small {
+  color: #596763;
+  overflow-wrap: anywhere;
+}
+
+.imageseg-target-summary strong,
+.imageseg-segment-summary strong {
+  color: #24332f;
+  overflow-wrap: anywhere;
+}
+
+.imageseg-annotation-layout {
+  align-items: start;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  min-width: 0;
+}
+
+.imageseg-stage-panel,
+.imageseg-side-panel {
+  background: #ffffff;
+  border: 1px solid #d8e0dc;
+  border-radius: 8px;
+  min-width: 0;
+  padding: 12px;
+}
+
+.imageseg-canvas {
+  align-items: center;
+  background: #111614;
+  border-radius: 6px;
+  display: grid;
+  justify-items: center;
+  min-height: 420px;
+  overflow: hidden;
+  position: relative;
+}
+
+.imageseg-image-frame {
+  display: grid;
+  grid-area: 1 / 1;
+  height: auto;
+  max-height: min(72vh, 760px);
+  max-width: 100%;
+  position: relative;
+  transform-origin: 0 0;
+  width: var(--imageseg-frame-max-width, 100%);
+  will-change: transform;
+}
+
+.imageseg-image-frame img,
+.imageseg-image-frame svg,
+.imageseg-interaction-plane {
+  display: block;
+  grid-area: 1 / 1;
+  height: 100%;
+  width: 100%;
+}
+
+.imageseg-image-frame img {
+  filter: saturate(1.05) contrast(1.04);
+  object-fit: contain;
+}
+
+.imageseg-overlay {
+  pointer-events: none;
+  z-index: 2;
+}
+
+.imageseg-overlay.masks-hidden .imageseg-segment-path {
+  opacity: 0;
+}
+
+.imageseg-overlay.outline-only .imageseg-segment-path {
+  fill: transparent;
+}
+
+.imageseg-overlay.isolate-selected .imageseg-segment-path:not(.selected):not(.active) {
+  opacity: 0.08;
+}
+
+.imageseg-overlay.dim-non-selected .imageseg-segment-path:not(.selected):not(.active):not(.stacked) {
+  opacity: 0.45;
+}
+
+.imageseg-pointer-plane {
+  fill: transparent;
+  pointer-events: none;
+}
+
+.imageseg-interaction-plane {
+  cursor: crosshair;
+  position: relative;
+  z-index: 3;
+}
+
+.imageseg-dimension-strip {
+  color: #596763;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  gap: 8px 14px;
+  padding-top: 10px;
+}
+
+.imageseg-dimension-strip span {
+  white-space: nowrap;
+}
+
+.imageseg-render-layer {
+  pointer-events: none;
+}
+
+.imageseg-segment-path {
+  fill: rgba(74, 137, 111, var(--imageseg-mask-opacity, 0.32));
+  stroke: rgba(255, 255, 255, 0.36);
+  stroke-width: 0.9;
+  opacity: 1;
+  transition: fill 120ms ease, stroke 120ms ease;
+  vector-effect: non-scaling-stroke;
+}
+
+.imageseg-segment-path.annotated {
+  fill: rgba(64, 123, 169, calc(var(--imageseg-mask-opacity, 0.32) + 0.06));
+  stroke: rgba(130, 190, 232, 0.72);
+}
+
+.imageseg-segment-path.stacked {
+  fill: var(--imageseg-stack-fill, rgba(219, 167, 72, 0.12));
+  stroke: var(--imageseg-stack-stroke, rgba(255, 243, 204, 0.68));
+  stroke-width: 1.8;
+}
+
+.imageseg-segment-path.active,
+.imageseg-segment-path.selected {
+  fill: var(--imageseg-stack-fill, rgba(219, 167, 72, 0.24));
+  stroke: var(--imageseg-stack-stroke, #fff3cc);
+  stroke-width: 2.4;
+}
+
+.imageseg-hit-layer {
+  pointer-events: none;
+}
+
+.imageseg-segment-hit {
+  fill: transparent;
+  pointer-events: none;
+  stroke: transparent;
+}
+
+.imageseg-cursor-legend {
+  background: rgba(17, 22, 20, 0.88);
+  border: 1px solid rgba(255, 243, 204, 0.45);
+  border-radius: 6px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+  display: grid;
+  gap: 2px;
+  max-width: 220px;
+  padding: 6px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 0;
+  z-index: 4;
+}
+
+.imageseg-zoom-controls {
+  align-items: center;
+  background: rgba(17, 22, 20, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  bottom: 10px;
+  color: #fff8df;
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  position: absolute;
+  right: 10px;
+  z-index: 5;
+}
+
+.imageseg-zoom-controls button {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 5px;
+  color: inherit;
+  display: inline-flex;
+  height: 28px;
+  justify-content: center;
+  padding: 0;
+  width: 28px;
+}
+
+.imageseg-zoom-controls button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.imageseg-zoom-controls span {
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  min-width: 42px;
+  text-align: center;
+}
+
+.imageseg-cursor-legend-row {
+  align-items: center;
+  background: color-mix(in srgb, var(--imageseg-stack-swatch, rgba(247, 201, 72, 0.72)) 12%, transparent);
+  border-radius: 4px;
+  box-shadow: inset 3px 0 0 var(--imageseg-stack-stroke, #fff3cc);
+  color: #fff8df;
+  display: grid;
+  gap: 7px;
+  grid-template-columns: 22px minmax(0, 1fr);
+  min-height: 26px;
+  padding: 3px 5px;
+  text-align: left;
+}
+
+.imageseg-cursor-legend-row.selected {
+  background: color-mix(in srgb, var(--imageseg-stack-swatch, rgba(247, 201, 72, 0.72)) 28%, transparent);
+}
+
+.imageseg-cursor-legend kbd {
+  background: var(--imageseg-stack-swatch, rgba(255, 255, 255, 0.12));
+  border: 1px solid var(--imageseg-stack-stroke, rgba(255, 255, 255, 0.18));
+  border-radius: 4px;
+  color: #111614;
+  font: 700 0.78rem/1.1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  padding: 3px 0;
+  text-align: center;
+}
+
+.imageseg-cursor-legend span {
+  font-size: 0.78rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.imageseg-cursor-legend-note {
+  color: #fff8df;
+  font-size: 0.78rem;
+  padding: 3px 5px;
+  white-space: nowrap;
+}
+
+.imageseg-mask-controls {
+  align-items: center;
+  background: rgba(17, 22, 20, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  color: #fff8df;
+  display: flex;
+  gap: 5px;
+  left: 10px;
+  padding: 5px;
+  position: absolute;
+  top: 10px;
+  z-index: 5;
+}
+
+.imageseg-mask-controls button,
+.imageseg-workflow-controls button {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 5px;
+  color: inherit;
+  display: inline-flex;
+  height: 28px;
+  justify-content: center;
+  padding: 0;
+  width: 28px;
+}
+
+.imageseg-mask-controls button.active {
+  background: rgba(247, 201, 72, 0.22);
+  border-color: rgba(247, 201, 72, 0.52);
+}
+
+.imageseg-mask-controls button:disabled,
+.imageseg-workflow-controls button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.imageseg-mask-controls label {
+  align-items: center;
+  display: flex;
+  gap: 5px;
+}
+
+.imageseg-mask-controls label span {
+  font-size: 0.76rem;
+  min-width: 32px;
+}
+
+.imageseg-mask-controls input[type="range"] {
+  accent-color: #f7c948;
+  width: 88px;
+}
+
+.imageseg-minimap {
+  background: rgba(17, 22, 20, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  height: 112px;
+  left: 10px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 10px;
+  width: 86px;
+  z-index: 5;
+}
+
+.imageseg-minimap svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.imageseg-minimap rect:first-child {
+  fill: rgba(255, 255, 255, 0.06);
+}
+
+.imageseg-minimap path {
+  fill: rgba(247, 201, 72, 0.34);
+  stroke: #f7c948;
+  stroke-width: 6;
+  vector-effect: non-scaling-stroke;
+}
+
+.imageseg-minimap .viewport {
+  fill: rgba(255, 255, 255, 0.08);
+  stroke: #fff8df;
+  stroke-width: 8;
+  vector-effect: non-scaling-stroke;
+}
+
+.imageseg-side-panel,
+.imageseg-annotation-form,
+.imageseg-annotation-list,
+.imageseg-audit-list {
+  display: grid;
+  gap: 10px;
+}
+
+.imageseg-segment-summary {
+  background: #f2f6f0;
+  border: 1px solid #d8e0dc;
+  border-radius: 8px;
+  display: grid;
+  gap: 3px;
+  padding: 10px;
+}
+
+.imageseg-workflow-controls {
+  align-items: center;
+  display: grid;
+  gap: 6px;
+  grid-template-columns: 32px minmax(56px, auto) 32px minmax(0, 1fr);
+}
+
+.imageseg-workflow-controls button {
+  background: #f5f8f4;
+  border-color: #d8e0dc;
+  color: #1f3731;
+  gap: 4px;
+  width: auto;
+}
+
+.imageseg-workflow-controls button span {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.imageseg-workflow-controls select {
+  min-width: 0;
+  width: 100%;
+}
+
+.imageseg-annotation-form label {
+  display: grid;
+  gap: 5px;
+}
+
+.imageseg-annotation-form input,
+.imageseg-annotation-form select,
+.imageseg-annotation-form textarea {
+  width: 100%;
+}
+
+.imageseg-annotation-form textarea {
+  min-height: 104px;
+  resize: vertical;
+}
+
+.imageseg-label-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: -4px;
+}
+
+.imageseg-label-suggestions button {
+  background: #eef5f1;
+  border: 1px solid #cddcd4;
+  border-radius: 999px;
+  color: #1b3c34;
+  font-size: 0.82rem;
+  line-height: 1.2;
+  max-width: 100%;
+  min-height: 28px;
+  overflow-wrap: anywhere;
+  padding: 5px 9px;
+  text-align: left;
+}
+
+.imageseg-label-suggestions button:hover {
+  background: #dfeee7;
+  border-color: #a8c4b6;
+}
+
+.imageseg-segment-list {
+  display: grid;
+  gap: 6px;
+  max-height: 260px;
+  overflow: auto;
+  padding-right: 2px;
+}
+
+.imageseg-segment-list button {
+  align-items: center;
+  background: #fffdfa;
+  border: 1px solid #d8e0dc;
+  border-radius: 8px;
+  color: inherit;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 48px minmax(0, 1fr);
+  min-height: 54px;
+  padding: 5px 8px;
+  text-align: left;
+}
+
+.imageseg-segment-list button.selected {
+  border-color: #d8ad38;
+  box-shadow: inset 3px 0 0 #f7c948;
+}
+
+.imageseg-segment-list svg {
+  background: #12211d;
+  border-radius: 5px;
+  display: block;
+  height: 42px;
+  width: 42px;
+}
+
+.imageseg-segment-list path {
+  fill: rgba(247, 201, 72, 0.42);
+  stroke: #f7c948;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.imageseg-segment-list span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.imageseg-segment-list strong,
+.imageseg-segment-list small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.imageseg-segment-list small {
+  color: #596763;
+  font-size: 0.78rem;
+}
+
+.imageseg-annotation-list h3,
+.imageseg-audit-list h3 {
+  font-size: 0.98rem;
+  margin: 4px 0 0;
+}
+
+.imageseg-annotation-list button {
+  align-items: start;
+  background: #fffdfa;
+  border: 1px solid #d8e0dc;
+  border-radius: 8px;
+  color: inherit;
+  display: grid;
+  gap: 4px;
+  padding: 9px 10px;
+  text-align: left;
+}
+
+.imageseg-annotation-list button span {
+  color: #596763;
+  font-size: 0.84rem;
+  overflow-wrap: anywhere;
+}
+
+.imageseg-audit-list div {
+  background: #fffdfa;
+  border: 1px solid #d8e0dc;
+  border-radius: 8px;
+  display: grid;
+  gap: 3px;
+  padding: 8px 10px;
+}
+
+.imageseg-audit-list div span {
+  color: #596763;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 1120px) {
+  .imageseg-annotation-layout {
+    grid-template-columns: 1fr;
+  }
+}

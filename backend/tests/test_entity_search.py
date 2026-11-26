@@ -38,7 +38,7 @@ def corpus(monkeypatch):
     """)
 
     class Adapter:
-        def execute(self, sql, bound):
+        def execute(self, sql, bound=()):
             sql = re.sub(r"%\((\w+)\)s", r":\1", sql).replace(" ILIKE ", " LIKE ")
             rows = [dict(row) for row in connection.execute(sql, bound)]
             return SimpleNamespace(fetchall=lambda: rows)
@@ -49,12 +49,16 @@ def corpus(monkeypatch):
 
     monkeypatch.setattr(public_discovery, "connect", read)
     repo = SimpleNamespace(settings=None, _has_actor_directory=lambda: False,
+                           _event_search_terms=public_discovery.EventSearchTerms(),
                            snapshot_binding=lambda: {"publicCoreSha256": "a" * 64})
 
     def insert(table, rows):
         if rows:
             placeholders = ",".join("?" for _ in rows[0])
             connection.executemany(f"INSERT INTO release_1_5_public.{table} VALUES ({placeholders})", rows)
+            # The fixture can write after searching. A public snapshot cannot.
+            if table == "documented_event":
+                repo._event_search_terms = public_discovery.EventSearchTerms()
 
     def search(query="Chapel", limit=2, kinds=None):
         return PublicReleaseRepository.entity_search(repo, query=query, limit=limit, kinds=kinds)
@@ -216,15 +220,23 @@ def test_event_discovery_preserves_normalized_and_fallback_wording(corpus):
         ("event:r05:typed", organ, "organ_repair", "mending", "example", "row2"),
     ])
     for query, expected, title in (
+        ("chapel O1", None, None),
+        ("MDVS:ENTY:O1", None, None),
         ("documented", "event:r05:fallback", "documented event"),
         ("organ repair", "event:r05:typed", "organ repair"),
         ("repair organ", "event:r05:typed", "organ repair"),
         ("repair", "event:r05:typed", "organ repair"),
         ("organ_repair", "event:r05:typed", "organ repair"),
     ):
+        terms = corpus.repo._event_search_terms
         result = corpus.search(query, kinds=("events",))
-        assert result["total"] == 1
-        assert (result["items"][0]["targetId"], result["items"][0]["title"]) == (expected, title)
+        corpus.repo._event_search_terms = None
+        legacy = corpus.search(query, kinds=("events",))
+        corpus.repo._event_search_terms = terms
+        assert result == legacy
+        if expected:
+            assert result["total"] == 1
+            assert (result["items"][0]["targetId"], result["items"][0]["title"]) == (expected, title)
 
 
 @pytest.mark.parametrize("pairs", [[("q", "x"), ("q", "y")], [("typo", "x")], [("limit", "0")], [("limit", "9" * 5000)], [("kinds", "people,people")]])

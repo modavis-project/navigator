@@ -17,8 +17,9 @@ HAMBURG = "locadmin:hamburg"
 WINTERHUDE = "locadmin:a26265a2d2ef46e15626e6f6c7ccd860da006ea57738dca2"
 
 
-def indexed_area(identifier, title, role, support=1, **hierarchy):
-    return {"identifier": identifier, "title": title, "role": role, "hierarchy": hierarchy, "support": support}
+def indexed_area(identifier, title, role, support=1, place_ids=(), **hierarchy):
+    return {"identifier": identifier, "title": title, "role": role, "hierarchy": hierarchy,
+            "support": support, "place_ids": place_ids}
 
 
 @pytest.fixture
@@ -27,7 +28,7 @@ def index():
         indexed_area(GERMANY, "Deutschland", "country"),
         indexed_area(LOWER_SAXONY, "Niedersachsen", "region", country="Deutschland"),
         indexed_area("locadmin:unrelated", "Niedersachsen", "region", country="A different country"),
-        indexed_area(HAMBURG, "Hamburg", "municipality", support=23, country="Deutschland"),
+        indexed_area(HAMBURG, "Hamburg", "municipality", support=23, place_ids=["MDVS:LOCN:PLACE-01"], country="Deutschland"),
         indexed_area("locadmin:berks", "Hamburg", "municipality", county="Berks", country="United States"),
         indexed_area(WINTERHUDE, "Winterhude", "district", municipality="Hamburg", country="Deutschland"),
         indexed_area(BREMEN_STATE, "Freie Hansestadt Bremen", "region", country="Deutschland"),
@@ -96,7 +97,10 @@ def test_detail_returns_distinct_counts_and_independent_pages(index, monkeypatch
                 "parents": [GERMANY], "children": [WINTERHUDE],
                 "organ_count": 2, "place_count": 1, "site_count": 1,
                 "map_data": {"group_count": 1, "exact_group_count": 1, "fallback_group_count": 0, "inline_groups": []},
-                "organs": [{"id": "MDVS:ENTY:TEST-0001-A", "title": "Example Organ"}],
+                "organs": [
+                    {"id": "MDVS:ENTY:TEST-0001-A", "title": "Example Organ"},
+                    {"id": "MDVS:ENTY:TEST-0002-B", "title": "Second Organ"},
+                ],
             })
 
     @contextmanager
@@ -111,13 +115,19 @@ def test_detail_returns_distinct_counts_and_independent_pages(index, monkeypatch
     assert area["mapCoordinates"] == {"exact": 1, "fallback": 0}
     assert area["children"] == {"items": [], "total": 1, "offset": 1, "limit": 12}
     assert area["organs"] == {
-        "items": [{"id": "MDVS:ENTY:TEST-0001-A", "title": "Example Organ", "url": "/organs/TEST-0001-A"}],
+        "items": [{"id": "MDVS:ENTY:TEST-0002-B", "title": "Second Organ", "url": "/organs/TEST-0002-B"}],
         "total": 2, "offset": 1, "limit": 12,
     }
     assert [parent["title"] for parent in area["parents"]] == ["Deutschland"]
     assert observed_queries[0][1] == {
-        "identifier": HAMBURG, "organ_offset": 1, "organ_limit": 12, "inline_limit": public_areas.INLINE_MAP_SITES,
+        "identifier": HAMBURG, "inline_limit": public_areas.INLINE_MAP_SITES,
+        "place_ids": ["MDVS:LOCN:PLACE-01"],
     }
+    first = areas.detail(HAMBURG, child_offset=0, organ_offset=0)
+    assert first["statistics"] == area["statistics"]
+    assert [child["id"] for child in first["children"]["items"]] == [WINTERHUDE]
+    assert [organ["id"] for organ in first["organs"]["items"]] == ["MDVS:ENTY:TEST-0001-A", "MDVS:ENTY:TEST-0002-B"]
+    assert not areas.detail(HAMBURG, child_offset=4, organ_offset=30)["organs"]["items"]
     assert areas.map_data(index.by_id[HAMBURG]) == {
         "group_count": 1, "exact_group_count": 1, "fallback_group_count": 0, "inline_groups": [],
     }

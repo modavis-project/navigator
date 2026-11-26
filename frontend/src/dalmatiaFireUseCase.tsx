@@ -14,8 +14,10 @@ import {
 import { KeyboardEvent, MouseEvent, useEffect, useMemo, useState } from "react";
 import { useUiLocale } from "./uiLocale";
 import { LoadingContent } from "./LoadingContent";
+import { DALMATIA_FIRE_PATH } from "./surfaces";
+import "./useCases.css";
+import "./dalmatiaFireUseCase.css";
 
-export const DALMATIA_FIRE_PATH = "/use-cases/dalmatia-pipe-organs-fire-vulnerability";
 const DALMATIA_FIRE_ARTIFACT = "/data/use-cases/dalmatia-fire-vulnerability-pod-1.5.5.json";
 
 type Position = [number, number];

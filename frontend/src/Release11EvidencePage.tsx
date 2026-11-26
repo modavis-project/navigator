@@ -1,3 +1,4 @@
+import "./release11Evidence.css";
 import { FormEvent, useEffect, useState } from "react";
 import {
   fetchRelease11Evidence,

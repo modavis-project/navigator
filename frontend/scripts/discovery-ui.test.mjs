@@ -14,6 +14,9 @@ import { LoadingContent, UpdatingContent } from "./loading-content-test-support.
 // featured-card/map/application modules are replaced.
 const app = readFileSync(new URL("../src/App.tsx", import.meta.url), "utf8");
 const parsed = ts.createSourceFile("App.tsx", app, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+const modules = [parsed, ...["catalogPresentation.tsx", "formatting.ts"].map(name =>
+  ts.createSourceFile(name, readFileSync(new URL(`../src/${name}`, import.meta.url), "utf8"), ts.ScriptTarget.Latest, true),
+)];
 const names = [
   "ExploreSection", "PublicEntityGateway", "SearchAssistPanel", "EntitySearchPanel",
   "publicSearchGroupLabel", "publicSearchBadgeVisible", "publicSearchSummary", "entityStateClass",
@@ -26,9 +29,10 @@ const names = [
   "publicMapCatalogFiltersFromParams", "appendPublicMapCatalogFilters",
 ];
 const extracted = names.map(name => {
-  const node = parsed.statements.find(statement => ts.isFunctionDeclaration(statement) && statement.name?.text === name);
+  const node = modules.flatMap(module => [...module.statements])
+    .find(statement => ts.isFunctionDeclaration(statement) && statement.name?.text === name);
   assert.ok(node, `Missing actual application function ${name}`);
-  return node.getText(parsed);
+  return node.getText();
 });
 const renderWindow = parsed.statements.find(statement => ts.isVariableStatement(statement)
   && statement.declarationList.declarations.some(declaration => declaration.name.getText(parsed) === "ORGAN_RENDER_WINDOW_SIZE"));

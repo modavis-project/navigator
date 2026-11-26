@@ -106,9 +106,15 @@ class AreaIndex:
         self.by_id = {}
         self.by_name = defaultdict(list)
         parent_aliases = {}
+        candidate_places = defaultdict(set)
+        place_ids = {}
         for row in rows:
             identifier, role, title = row["identifier"], row["role"], row["title"]
-            if not _valid_area_id(identifier) or not title or role not in ROLES or identifier in self.by_id:
+            if not _valid_area_id(identifier):
+                continue
+            for place_id in row.get("place_ids", ()):
+                candidate_places[identifier].add(place_ids.setdefault(place_id, place_id))
+            if not title or role not in ROLES or identifier in self.by_id:
                 continue
             hierarchy = row["hierarchy"] or {}
             parents = tuple(dict.fromkeys(
@@ -122,6 +128,7 @@ class AreaIndex:
                 parent_aliases[title] = aliases
             for name in (title, *aliases):
                 self.by_name[_name_key(name)].append(area)
+        self.candidate_places = {identifier: list(places) for identifier, places in candidate_places.items()}
         self.name_keys = sorted(self.by_name)
         self.parent_keys = {}
         for area in self.by_id.values():
@@ -200,7 +207,9 @@ class PublicAreas:
         self.settings = settings
         self._index = None
         self._index_lock = Lock()
-        self._map_data = BoundedQueryCache(max_entries=48, max_bytes=4 * 1024 * 1024, ttl=600)
+        self._projections = BoundedQueryCache(max_entries=64, max_bytes=24 * 1024 * 1024, ttl=3600)
+        self._map_data = BoundedQueryCache(max_entries=48, max_bytes=4 * 1024 * 1024, ttl=3600)
+        self._projection_locks = tuple(Lock() for _ in range(8))
 
     def index(self):
         # The repository serves one immutable public snapshot. Load the compact
@@ -235,39 +244,69 @@ class PublicAreas:
         area = self.resolve(identifier)
         if not area:
             return None
-        index = self.index()
-        with connect(self.settings) as conn:
-            row = conn.execute(AREA_DETAIL_SQL, {
-                "identifier": area.identifier, "organ_offset": organ_offset, "organ_limit": ORGAN_PAGE_SIZE,
-                "inline_limit": INLINE_MAP_SITES,
-            }).fetchone()
+        row = self._projection(area)
         map_data = row["map_data"]
-        self._remember_map_data(area.identifier, map_data)
-        parents = sorted(index.linked(row["parents"]), key=index.sort_key)
-        children = sorted(index.linked(row["children"]), key=lambda child: (_name_key(child.title), child.identifier))
-        organs = [_organ_link(organ) for organ in row["organs"]]
+        organs = [_organ_link(organ) for organ in row["organs"][organ_offset:organ_offset + ORGAN_PAGE_SIZE]]
+        children = row["children"]
         return {
             **area.link(),
-            "parents": [parent.link() for parent in parents],
-            "statistics": {"organs": row["organ_count"], "places": row["place_count"], "mappedSites": row["site_count"]},
+            "parents": row["parents"],
+            "statistics": {"organs": row["organ_count"], "places": row["place_count"], "mappedSites": map_data["group_count"]},
             "mapCoordinates": {"exact": map_data["exact_group_count"], "fallback": map_data["fallback_group_count"]},
             "children": {
-                "items": [child.link() for child in children[child_offset:child_offset + CHILD_PAGE_SIZE]],
+                "items": children[child_offset:child_offset + CHILD_PAGE_SIZE],
                 "total": len(children), "offset": child_offset, "limit": CHILD_PAGE_SIZE,
             },
             "organs": {"items": organs, "total": row["organ_count"], "offset": organ_offset, "limit": ORGAN_PAGE_SIZE},
         }
 
+    def _projection_lock(self, identifier):
+        return self._projection_locks[hash(identifier) % len(self._projection_locks)]
+
+    def _projection(self, area):
+        # A repository is pinned to one public snapshot. The canonical area
+        # ID lets alternate URLs and both offsets share the ordered index.
+        identifier = area.identifier
+        with self._projection_lock(identifier):
+            cached = self._projections.get(identifier)
+            if cached is not None:
+                return json.loads(cached)
+            map_data = self._map_data.get(identifier)
+            sql = AREA_DETAIL_SQL if map_data is None else AREA_DETAIL_WITH_CACHED_MAP_SQL
+            with connect(self.settings) as conn:
+                row = conn.execute(sql, {
+                    "identifier": identifier, "inline_limit": INLINE_MAP_SITES,
+                    "place_ids": self.index().candidate_places.get(identifier, []),
+                }).fetchone()
+            if map_data is None:
+                self._remember_map_data(identifier, row["map_data"])
+            else:
+                row["map_data"] = json.loads(map_data)
+            index = self.index()
+            parents = sorted(index.linked(row["parents"]), key=index.sort_key)
+            children = sorted(index.linked(row["children"]), key=lambda child: (_name_key(child.title), child.identifier))
+            row["parents"] = [parent.link() for parent in parents]
+            row["children"] = [child.link() for child in children]
+            self._projections.put(identifier, json.dumps(row, ensure_ascii=False, separators=(",", ":")).encode())
+            return row
+
     def map_data(self, area):
-        cached = self._map_data.get(area.identifier)
-        if cached is not None:
-            return json.loads(cached)
-        with connect(self.settings) as conn:
-            value = conn.execute(AREA_MAP_SQL, {
-                "identifier": area.identifier, "inline_limit": INLINE_MAP_SITES,
-            }).fetchone()
-        self._remember_map_data(area.identifier, value)
-        return value
+        identifier = area.identifier
+        with self._projection_lock(identifier):
+            cached = self._map_data.get(identifier)
+            if cached is not None:
+                return json.loads(cached)
+            projection = self._projections.get(identifier)
+            if projection is not None:
+                value = json.loads(projection)["map_data"]
+            else:
+                with connect(self.settings) as conn:
+                    value = conn.execute(AREA_MAP_SQL, {
+                        "identifier": identifier, "inline_limit": INLINE_MAP_SITES,
+                        "place_ids": self.index().candidate_places.get(identifier, []),
+                    }).fetchone()
+            self._remember_map_data(identifier, value)
+            return value
 
     def filtered_map_counts(self, area, organ_clauses, params):
         # The map catalogue and region summary use the same organ predicates.
@@ -287,7 +326,8 @@ class PublicAreas:
                        count(distinct site_group_id) filter(where coordinate_fallback = 1) as fallback_group_count,
                        {_MAPPED_ORGAN_COUNTS}
                 from mapped_members
-                """, {**params, "identifier": area.identifier}).fetchone()
+                """, {**params, "identifier": area.identifier,
+                      "place_ids": self.index().candidate_places.get(area.identifier, [])}).fetchone()
 
     def _remember_map_data(self, identifier, value):
         self._map_data.put(identifier, json.dumps(value, ensure_ascii=False, separators=(",", ":")).encode())
@@ -351,7 +391,8 @@ def area_page_offsets(args):
 
 AREA_INDEX_SQL = f"""
     select node->>'nodeId' as identifier, node->>'preferredName' as title,
-           node->>'role' as role, node->'hierarchy' as hierarchy, count(*) as support
+           node->>'role' as role, node->'hierarchy' as hierarchy, count(*) as support,
+           array_agg(d.mdvs_id) as place_ids
     from {SCHEMA}.place_detail d
     cross join lateral jsonb_array_elements(d.administrative_nodes_json::jsonb) entries(node)
     where d.administrative_nodes_json <> '[]'
@@ -369,22 +410,29 @@ _AREA_CONTAINMENT = """
     )
 """
 
-_AREA_PLACE_SOURCE = f"from {SCHEMA}.place_detail d where {_AREA_CONTAINMENT}"
-
-_AREA_PLACES = f"""
-    area_places as materialized (
-        select d.mdvs_id
-        {_AREA_PLACE_SOURCE}
-    )
+# Containment links name nodes from the same place's published node list.
+# Use that reverse index to read only candidate places, then verify their
+# actual containment links as before.
+_AREA_PLACE_SOURCE = f"""
+    from {SCHEMA}.place_detail d
+    where d.mdvs_id = any(%(place_ids)s::text[])
 """
 
-# The area page also reads its administrative edges; map counts only need IDs.
-_AREA_PLACES_WITH_CONTAINMENT = f"""
-    area_places as materialized (
+_AREA_CONTAINMENT_CANDIDATES = f"""
+    place_candidates as materialized (
         select d.mdvs_id, d.containment_relations_json::jsonb as containment
         {_AREA_PLACE_SOURCE}
+    ),
+    area_places as materialized (
+        select {{columns}} from place_candidates d
+        where d.containment @> jsonb_build_array(jsonb_build_object(
+            'relationKind', 'place_administrative_containment', 'parentNodeId', %(identifier)s::text
+        ))
     )
 """
+
+_AREA_PLACES = _AREA_CONTAINMENT_CANDIDATES.format(columns="d.mdvs_id")
+_AREA_PLACES_WITH_CONTAINMENT = _AREA_CONTAINMENT_CANDIDATES.format(columns="d.mdvs_id, d.containment")
 
 _AREA_CURRENT_LINKS = f"""
     matched_assertions as (
@@ -480,7 +528,7 @@ _AREA_MAP_DATA = f"""
     )
 """
 
-AREA_DETAIL_SQL = f"""
+_AREA_DETAIL_SQL = f"""
     with recursive {_AREA_PLACES_WITH_CONTAINMENT},
     administrative_edges as materialized (
         select distinct relation->>'childRef' as child_id, relation->>'parentNodeId' as parent_id
@@ -497,26 +545,28 @@ AREA_DETAIL_SQL = f"""
         where edge.parent_id <> %(identifier)s
     ),
     {_AREA_CURRENT_LINKS},
-    {_AREA_SITE_MEMBERS},
-    {_AREA_MAP_DATA},
-    organ_page as (
+    organ_members as (
         select o.mdvs_id, o.label from {SCHEMA}.organ o
         join (select distinct organ_mdvs_id from current_links) links on links.organ_mdvs_id = o.mdvs_id
-        order by lower(o.label), o.mdvs_id
-        limit %(organ_limit)s offset %(organ_offset)s
     )
+    {{map_ctes}}
     select
         (select count(distinct organ_mdvs_id) from current_links) as organ_count,
         (select count(distinct mdvs_id) from current_links) as place_count,
-        (select group_count from map_data) as site_count,
-        (select to_jsonb(scope) from map_data scope) as map_data,
+        {{map_column}}
         array(select identifier from ancestors where identifier <> %(identifier)s) as parents,
         array(select child_id from administrative_edges where parent_id = %(identifier)s) as children,
         coalesce((
           select jsonb_agg(jsonb_build_object('id', mdvs_id, 'title', label) order by lower(label), mdvs_id)
-          from organ_page
+          from organ_members
         ), '[]'::jsonb) as organs
 """
+
+AREA_DETAIL_SQL = _AREA_DETAIL_SQL.format(
+    map_ctes=f", {_AREA_SITE_MEMBERS}, {_AREA_MAP_DATA}",
+    map_column="(select to_jsonb(scope) from map_data scope) as map_data,",
+)
+AREA_DETAIL_WITH_CACHED_MAP_SQL = _AREA_DETAIL_SQL.format(map_ctes="", map_column="")
 
 AREA_MAP_SQL = f"""
     with {_AREA_PLACES}, {_AREA_CURRENT_LINKS}, {_AREA_SITE_MEMBERS}, {_AREA_MAP_DATA}

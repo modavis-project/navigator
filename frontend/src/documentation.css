@@ -372,11 +372,9 @@
 }
 
 @media print {
-  .entity-sidebar, .documentation-breadcrumbs, .documentation-page-actions, .documentation-toc,
+  .documentation-breadcrumbs, .documentation-page-actions, .documentation-toc,
   .documentation-adjacent, .source-documentation-tabs { display: none !important; }
-  .entity-workspace { overflow: visible !important; }
   .documentation-reader-layout { display: block; }
   .documentation-prose { font-size: 11pt; max-width: none; }
   .documentation-context-card { break-inside: avoid; margin-top: 20px; position: static; }
-  a { color: #000 !important; text-decoration: none !important; }
 }

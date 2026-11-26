@@ -12,6 +12,8 @@ import {
   UsersRound,
 } from "lucide-react";
 import { FormEvent, MouseEvent, useEffect, useMemo, useState } from "react";
+import "./useCases.css";
+import "./builderNetworkUseCase.css";
 
 
 export const BUILDER_NETWORK_PATH = "/use-cases/builder-workshop-networks";

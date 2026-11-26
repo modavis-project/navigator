@@ -9,6 +9,7 @@ const api = await readFile(new URL("../src/api.ts", import.meta.url), "utf8");
 const requestCache = await readFile(new URL("../src/requestCache.ts", import.meta.url), "utf8");
 const surfaces = await readFile(new URL("../src/surfaces.ts", import.meta.url), "utf8");
 const releaseGuide = await readFile(new URL("../src/releaseGuide.tsx", import.meta.url), "utf8");
+const temperaments = await readFile(new URL("../src/Temperaments.tsx", import.meta.url), "utf8");
 
 test("instance discovery revalidates a previous deployment's browser cache", async () => {
   const current = { capabilities: ["catalog", "entity_exports"], readSnapshot: "new" };
@@ -84,12 +85,12 @@ test("unsupported direct routes return to Explore after capability discovery", (
 test("public literature and tuning systems remain linked without reviewer evidence", () => {
   assert.match(surfaces, /id: "literature"[\s\S]*?label: "Literature"/);
   assert.match(surfaces, /id: "temperaments"[\s\S]*?label: "Tuning systems"/);
-  assert.match(app, /function CentVectorSparkline/);
-  assert.match(app, /function TemperamentFingerprint/);
-  assert.match(app, /Equal temperament is the reference circle/);
-  assert.match(app, /!publicProjection && record\.sourceRecordId/);
-  assert.match(app, /activeTab === "overview" && !publicProjection/);
-  assert.match(app, /!publicProjection && <section className="panel-block">[\s\S]*?Provenance documents and entity refs/);
+  assert.match(temperaments, /function CentVectorSparkline/);
+  assert.match(temperaments, /function TemperamentFingerprint/);
+  assert.match(temperaments, /Equal temperament is the reference circle/);
+  assert.match(temperaments, /!publicProjection && record\.sourceRecordId/);
+  assert.match(temperaments, /activeTab === "overview" && !publicProjection/);
+  assert.match(temperaments, /!publicProjection && <section className="panel-block">[\s\S]*?Provenance documents and entity refs/);
 });
 
 test("public media and literature actions remain bounded and human-readable", () => {

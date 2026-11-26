@@ -775,6 +775,7 @@ def public_tiled_geolibre_project(
             "initialPayloadContainsGlobalFeatures": False,
             "tileMaxZoom": 14,
             "individualSiteMinZoom": 12,
+            "groupCount": int(summary.get("groupCount") or 0),
             "exactCoordinateCount": int(summary.get("exactEntityCount") or 0),
             "fallbackCoordinateCount": int(summary.get("fallbackEntityCount") or 0),
             "exactGroupCount": int(summary.get("exactGroupCount") or 0),
@@ -799,14 +800,21 @@ def _map_basemap_style() -> dict[str, Any]:
 
 def public_map_marker_style(
     *, project: Mapping[str, Any], origin: str, site_markers_only: bool = False,
-    combined_tile_url: str | None = None,
+    combined_tile_url: str | None = None, viewport_basemap: bool = False,
 ) -> dict[str, Any]:
     """Show density, sparse overview sites and closer groups on the same tile sources."""
     basemap = _map_basemap_style()
     sources = dict(basemap["sources"])
+    if viewport_basemap:
+        sources["navigator-geography"] = {
+            **sources["navigator-geography"],
+            "data": "/basemap/assets-v2/geography-overview-v1.geojson",
+            "maxzoom": 5,
+        }
     density_layers = []
     circles = []
     show_density = not site_markers_only and "areaId" not in project.get("metadata", {})
+    combined_density = combined_tile_url and project["metadata"]["coordinateScope"] == "all"
     fade_start = PUBLIC_MAP_DENSITY_FADE_START
     fade_end = PUBLIC_MAP_DENSITY_FADE_END
     for layer in project["layers"]:
@@ -833,7 +841,7 @@ def public_map_marker_style(
         source_grid = ["in", "source grid", ["downcase", ["get", "coordinatePrecision"]]]
         regional_opacity = ["case", grouped, 0.40, 0.82]
         regional_stroke_opacity = ["case", grouped, 0.68, 0.96]
-        if show_density and not (combined_tile_url and fallback):
+        if show_density and not (combined_density and fallback):
             light, low, middle, high, peak = (
                 (
                     "rgba(209,153,65,0.1)", "rgba(194,134,53,0.27)", "rgba(165,106,30,0.56)",
@@ -849,6 +857,7 @@ def public_map_marker_style(
                 "id": f"navigator-density-{layer_id}",
                 "type": "heatmap",
                 **source,
+                **({} if combined_density else precision_filter),
                 "maxzoom": fade_end,
                 "paint": {
                     # The same number of mapped sites contributes the same

@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { LoadingContent } from "./LoadingContent";
+import "./documentation.css";
 import {
   AlertCircle, ArrowLeft, ArrowRight, BookMarked, BookOpen, Check, ChevronRight,
   Boxes, Clipboard, Database, Download, FileArchive, FileText, Filter, GitBranch,

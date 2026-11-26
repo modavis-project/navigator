@@ -1,11 +1,13 @@
 import { ArrowRight, BarChart3, BookOpen, ChevronLeft, ChevronRight, Database, Flame, MapPin, Network, Search } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
-import { DalmatiaFireUseCase, DALMATIA_FIRE_PATH } from "./dalmatiaFireUseCase";
+import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import { LoadingContent } from "./LoadingContent";
-import { OrganologicalResearch } from "./organologicalResearch";
-import { ResearchWorkbench } from "./researchWorkbench";
+import { DALMATIA_FIRE_PATH } from "./surfaces";
 import { useUiLocale, type UiLocale } from "./uiLocale";
 import "./publicStories.css";
+
+const ResearchWorkbench = lazy(() => import("./researchWorkbench").then(module => ({ default: module.ResearchWorkbench })));
+const OrganologicalResearch = lazy(() => import("./organologicalResearch").then(module => ({ default: module.OrganologicalResearch })));
+const DalmatiaFireUseCase = lazy(() => import("./dalmatiaFireUseCase").then(module => ({ default: module.DalmatiaFireUseCase })));
 
 const STORIES = [
   {
@@ -136,10 +138,10 @@ export function UseCasesArea() {
     if (!fire && !workbench) document.title = `${title} | MODAVIS Navigator`;
   }, [title, fire, workbench]);
 
-  if (workbench) return <ResearchWorkbench />;
+  if (workbench) return <Suspense fallback={<LoadingContent kind="article" label={t("story.workbench.loading", "Loading the research workbench…", "Recherchewerkzeuge werden geladen …")} />}><ResearchWorkbench /></Suspense>;
   if (fire) return <>
     <p className="notice">{t("story.fire.snapshot", "Historical analysis based on POD 1.5.5 and fire observations through 3 September 2026.", "Historische Auswertung auf Grundlage des POD 1.5.5 und der bis zum 3. September 2026 erfassten Brände.")}</p>
-    <DalmatiaFireUseCase route={route} onNavigate={setRoute} />
+    <Suspense fallback={<LoadingContent kind="article" label={t("story.fire.loading", "Loading the fire vulnerability study…", "Untersuchung zur Brandgefährdung wird geladen …")} />}><DalmatiaFireUseCase route={route} onNavigate={setRoute} /></Suspense>
   </>;
   if (!story && path !== "/use-cases") return <section className="story-page">
     <h1>{t("story.notFound", "Story not found", "Datenbericht nicht gefunden")}</h1>
@@ -320,7 +322,7 @@ function NetworkStory({ data }: { data: StoryData }) {
       <Stat value={data.networks.linkedOrganCount} label={t("story.network.organs", "organs linked to builders", "Orgeln mit Verweisen auf Orgelbauer")} />
       <Stat value={data.networks.associationCount} label={t("story.network.associations", "distinct organ–builder links", "einzelne Verknüpfungen zwischen Orgeln und Orgelbauern")} />
     </div>
-    <OrganologicalResearch />
+    <Suspense fallback={<LoadingContent label={t("story.network.loading", "Loading builder networks…", "Netzwerke der Orgelbauer werden geladen …")} />}><OrganologicalResearch /></Suspense>
   </>;
 }
 

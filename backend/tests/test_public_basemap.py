@@ -1,3 +1,4 @@
+import gzip
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -220,6 +221,7 @@ def test_filtered_tiled_project_uses_site_bounds_and_preserves_virtual_instrumen
     project = selection.get_json()
     assert project["mapView"]["bbox"] == bounds
     assert project["mapView"]["center"] == bounds[:2]
+    assert project["metadata"]["groupCount"] == 1
     assert "virtual_instrument=yes" in project["basemapStyleUrl"]
     assert all("virtual_instrument=yes" in layer["source"]["tiles"][0] for layer in project["layers"])
     fitted_style = client.get(project["basemapStyleUrl"]).get_json()
@@ -262,3 +264,27 @@ def test_native_all_precision_style_reuses_one_tile_source_for_both_precision_cl
     assert f"source-{MAP_LAYER_ID}" in legacy["sources"]
     assert f"source-{FALLBACK_MAP_LAYER_ID}" in legacy["sources"]
     assert "source-modavis-combined-places-v1" not in legacy["sources"]
+
+
+def test_native_precision_changes_keep_tile_and_overview_sources():
+    app = create_public_app(Settings(uri_release_version="1.6.0"), repository=SimpleNamespace(assert_ready=lambda: {}))
+    client = app.test_client()
+    projection = PUBLIC_MAP_MARKER_STYLE + "?release=1.6.0&source_layout=combined&basemap_detail=viewport-v1&precision="
+    styles = {scope: client.get(projection + scope).get_json() for scope in ("all", "exact", "fallback")}
+
+    all_sources = styles["all"]["sources"]
+    overview = all_sources["navigator-geography"]["data"]
+    assert overview == "/basemap/assets-v2/geography-overview-v1.geojson"
+    raw = (PUBLIC / overview.lstrip("/")).read_bytes()
+    assert len(gzip.compress(raw)) < 200 * 1024
+    features = json.loads(raw)["features"]
+    assert {item["properties"]["kind"] for item in features} == {"land", "lakes", "border", "disputed-border", "country", "city"}
+    assert {"Egypt", "Morocco", "Russia"}.issubset({
+        item["properties"].get("name") for item in features
+    })
+    assert all_sources["openmaptiles"]["minzoom"] == 5
+    for scope, layer_id in (("exact", MAP_LAYER_ID), ("fallback", FALLBACK_MAP_LAYER_ID)):
+        assert styles[scope]["sources"] == all_sources
+        layers = [layer for layer in styles[scope]["layers"] if layer["type"] == "heatmap"]
+        assert [layer["id"] for layer in layers] == [f"navigator-density-{layer_id}"]
+        assert layers[0]["filter"] == ["==", ["get", "coordinateFallback"], scope == "fallback"]

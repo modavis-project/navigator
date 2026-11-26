@@ -214,6 +214,12 @@ function attachMarkerInspection(map, regionOverlay) {
     clearPreview();
   }
 
+  function reset() {
+    clusterCounts.clear();
+    visible = undefined;
+    clear();
+  }
+
   function open(marker = pinned) {
     if (!marker) return;
     clear();
@@ -287,10 +293,10 @@ function attachMarkerInspection(map, regionOverlay) {
   install();
   // The legacy bridge may be attached after the first idle event.
   if (map.loaded()) refreshAvailability();
-  return { track, clearPreview, clear, open, click, step, replay };
+  return { track, clearPreview, clear, reset, open, click, step, replay };
 }
 
-export function observeNavigatorMap(map, { regionOverlay = true } = {}) {
+export function observeNavigatorMap(map, { regionOverlay = true, projectUrl } = {}) {
   if (activeMaps.has(map)) return;
   activeMaps.add(map);
   const markers = attachMarkerInspection(map, regionOverlay);
@@ -313,7 +319,7 @@ export function observeNavigatorMap(map, { regionOverlay = true } = {}) {
     if (!layers?.some(markerLayer)) return;
     const before = layers.find(layer => layer.type === "symbol")?.id;
     const placeLabels = layers.find(layer => layer.type === "symbol" && !markerLayer(layer))?.id;
-    map.addSource(boundarySource, { type: "geojson", data: empty, attribution: '<a href="/basemap/assets-v2/region-boundaries-v1.txt" target="_blank" rel="noopener">Boundary credits</a>' });
+    map.addSource(boundarySource, { type: "geojson", data: collection([...features.values()]), attribution: '<a href="/basemap/assets-v2/region-boundaries-v1.txt" target="_blank" rel="noopener">Boundary credits</a>' });
     map.addSource(focusSource, { type: "geojson", data: empty });
     map.addLayer({ id: regionHitLayer, source: boundarySource, type: "fill", paint: { "fill-opacity": 0 } }, before);
     map.addLayer({ id: "navigator-region-highlight", source: focusSource, type: "fill", paint: {
@@ -338,7 +344,6 @@ export function observeNavigatorMap(map, { regionOverlay = true } = {}) {
     }
     focusKey = undefined;
     paintedGeometry = undefined;
-    viewport = undefined;
     paintFocus();
     scheduleViewport();
     send("ready");
@@ -503,6 +508,7 @@ export function observeNavigatorMap(map, { regionOverlay = true } = {}) {
     if (event.origin !== origin || event.source !== parent || event.data?.type !== "navigator:map-regions") return;
     const { event: action, id, count } = event.data;
     if (action === "count" && typeof id === "string" && typeof count === "string") {
+      if (projectUrl && event.data.projectUrl !== projectUrl) return;
       if (counts.size >= 100) counts.delete(counts.keys().next().value);
       counts.set(id, count);
       paintFocus();
@@ -532,4 +538,16 @@ export function observeNavigatorMap(map, { regionOverlay = true } = {}) {
     if (event.key === "Escape") markers.clear();
   });
   install();
+  return {
+    clearSelection(nextProjectUrl) {
+      projectUrl = nextProjectUrl;
+      counts.clear();
+      pointer = undefined;
+      selected = undefined;
+      hover(null);
+      paintFocus();
+      markers.reset();
+      send("selection-cleared");
+    },
+  };
 }

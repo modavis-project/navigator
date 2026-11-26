@@ -1,4 +1,5 @@
 import { MouseEvent as ReactMouseEvent, useEffect, useMemo, useState } from "react";
+import "./documentation.css";
 import {
   AlertTriangle, Bot, ChevronRight, Download, FileArchive, FileText, Filter,
   GitBranch, LockKeyhole, Search, ShieldCheck, X,

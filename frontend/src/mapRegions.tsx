@@ -5,17 +5,19 @@ import { useUiLocale } from "./uiLocale";
 
 type Region = { id: string; title: string; type: string; url: string; rank: number };
 type Totals = { groupCount: number; mappedOrganCount: number };
+const emptyCounts: Record<string, Totals> = {};
 
-export default function MapRegions({ frameRef, frameUrl }: {
+export default function MapRegions({ frameRef, projectUrl }: {
   frameRef: RefObject<HTMLIFrameElement | null>;
-  frameUrl: string;
+  projectUrl: string;
 }) {
   const { t, locale, formatNumber } = useUiLocale();
   const [areas, setAreas] = useState<Region[]>([]);
   const [hovered, setHovered] = useState<Region | null>(null);
   const [selected, setSelected] = useState<Region | null>(null);
-  const [counts, setCounts] = useState<Record<string, Totals>>({});
-  const [failed, setFailed] = useState<string>();
+  const [countScope, setCountScope] = useState<{ projectUrl: string; counts: Record<string, Totals>; failed?: string }>();
+  const counts = countScope?.projectUrl === projectUrl ? countScope.counts : emptyCounts;
+  const failed = countScope?.projectUrl === projectUrl ? countScope.failed : undefined;
   const activeId = selected && !counts[selected.id] && selected.id !== failed ? selected.id : (hovered ?? selected)?.id;
   const origin = window.location.origin;
   const send = (event: string, fields?: object) => {
@@ -35,6 +37,9 @@ export default function MapRegions({ frameRef, frameUrl }: {
       } else if (message.event === "select") {
         setHovered(null);
         setSelected(message.area);
+      } else if (message.event === "selection-cleared") {
+        setHovered(null);
+        setSelected(null);
       }
     };
     window.addEventListener("message", receive);
@@ -47,8 +52,8 @@ export default function MapRegions({ frameRef, frameUrl }: {
   }, [frameRef, origin]);
 
   useEffect(() => {
-    if (!activeId || counts[activeId]) return;
-    const project = new URL(new URL(frameUrl).searchParams.get("url")!, origin);
+    if (!activeId || counts[activeId] || activeId === failed) return;
+    const project = new URL(projectUrl);
     project.searchParams.delete("markers");
     project.searchParams.delete("basemap");
     const path = `/api/map/areas/${encodeURIComponent(activeId)}/summary.json?${project.searchParams}`;
@@ -57,15 +62,23 @@ export default function MapRegions({ frameRef, frameUrl }: {
       try {
         const result = await jsonRequestCache.get<Totals>(path, { signal: controller.signal, credentials: "same-origin" });
         if (controller.signal.aborted) return;
-        setCounts((values) => ({ ...Object.fromEntries(Object.entries(values).slice(-95)), [activeId]: result }));
-        setFailed((value) => value === activeId ? undefined : value);
-        send("count", { id: activeId, count: Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 1 }).format(result.groupCount) });
+        setCountScope((value) => ({
+          projectUrl,
+          counts: {
+            ...Object.fromEntries(Object.entries(value?.projectUrl === projectUrl ? value.counts : {}).slice(-95)),
+            [activeId]: result,
+          },
+          failed: value?.projectUrl === projectUrl && value.failed !== activeId ? value.failed : undefined,
+        }));
+        send("count", { id: activeId, projectUrl, count: Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 1 }).format(result.groupCount) });
       } catch {
-        if (!controller.signal.aborted) setFailed(activeId);
+        if (!controller.signal.aborted) setCountScope((value) => ({
+          projectUrl, counts: value?.projectUrl === projectUrl ? value.counts : {}, failed: activeId,
+        }));
       }
     }, hovered ? 140 : 0);
     return () => { window.clearTimeout(timer); controller.abort(); };
-  }, [activeId, counts, frameUrl, hovered, locale, origin]);
+  }, [activeId, counts, failed, hovered, locale, origin, projectUrl]);
 
   const stats = selected && counts[selected.id];
   const preview = hovered && counts[hovered.id];

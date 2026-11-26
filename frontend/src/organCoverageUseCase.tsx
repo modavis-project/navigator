@@ -9,6 +9,8 @@ import {
   Search,
 } from "lucide-react";
 import { ChangeEvent, MouseEvent, useEffect, useMemo, useState } from "react";
+import "./useCases.css";
+import "./organCoverageUseCase.css";
 
 
 export const ORGAN_COVERAGE_PATH = "/use-cases/organ-corpus-coverage";

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from collections import Counter
 from itertools import zip_longest
+from threading import Lock
 from urllib.parse import quote
 
 from .db import connect
@@ -17,6 +18,55 @@ DISCOVERY_AREA_LIMIT = 3
 KINDS = ("organs", "people", "places", "events")
 LABELS = {"organs": "Pipe organs", "people": "People and builders", "places": "Places",
           "events": "Documented event assertions"}
+EVENT_TYPE_COLUMNS = ("controlled_event_type", "source_event_type")
+EVENT_TYPE_LIMIT = 1024
+
+
+class EventSearchTerms:
+    """Resolve event wording once per snapshot instead of scanning it per search."""
+
+    def __init__(self):
+        self._variants = None
+        self._lock = Lock()
+
+    def matched(self, connection, query):
+        with self._lock:
+            if self._variants is None:
+                rows = connection.execute(f"""
+                    SELECT DISTINCT controlled_event_type, source_event_type
+                    FROM {SCHEMA}.documented_event LIMIT {EVENT_TYPE_LIMIT + 1}
+                """).fetchall()
+                if len(rows) > EVENT_TYPE_LIMIT:
+                    self._variants = False
+                else:
+                    variants = {(field, row[field]) for field in EVENT_TYPE_COLUMNS
+                                for row in rows if row[field] is not None}
+                    if any(all(row[field] is None for field in EVENT_TYPE_COLUMNS) for row in rows):
+                        variants.add(("fallback", "documented event"))
+                    self._variants = tuple(sorted(variants))
+        if self._variants is False:
+            return None
+        if not self._variants:
+            return {}
+
+        # PostgreSQL applies exactly the same ILIKE collation and escaping
+        # to this small vocabulary as it does to the published event rows.
+        patterns = literal_search_patterns(query, "event_literal")
+        bound = dict(patterns)
+        values = []
+        for index, (field, wording) in enumerate(self._variants):
+            values.append(f"(%(field_{index})s, %(wording_{index})s)")
+            bound[f"field_{index}"] = field
+            bound[f"wording_{index}"] = wording
+        rows = connection.execute(
+            f"WITH variants(field, wording) AS (VALUES {', '.join(values)}) "
+            f"SELECT field, wording FROM variants WHERE {literal_match_sql('wording', patterns)}",
+            bound,
+        ).fetchall()
+        matches = {}
+        for row in rows:
+            matches.setdefault(row["field"], []).append(row["wording"])
+        return matches
 
 
 def validate_discovery_query(args):
@@ -70,7 +120,7 @@ def _definition(kind, actor_directory):
     raise ValueError("Unsupported discovery kind")
 
 
-def discovery_sql(kind, query, limit, *, actor_directory=False):
+def discovery_sql(kind, query, limit, *, actor_directory=False, event_types=None):
     """Return complete-count and pre-limit ranked page SQL plus bound values."""
     definition = _definition(kind, actor_directory)
     identity, label = definition["id"], definition["label"]
@@ -105,7 +155,7 @@ def discovery_sql(kind, query, limit, *, actor_directory=False):
                       f"UNION SELECT actor_mdvs_id AS id FROM {SCHEMA}.actor_search_document WHERE {like('search_text')}")
     elif kind == "places":
         candidates = f"SELECT mdvs_id AS id FROM {SCHEMA}.place WHERE mdvs_id=%(query_id)s OR {like('label')}"
-    else:
+    elif event_types is None:
         # Underscore replacement can only create new matches for text that
         # contains a space. For other terms the raw fields already cover
         # every match, except for the fallback label when both fields are null.
@@ -117,6 +167,26 @@ def discovery_sql(kind, query, limit, *, actor_directory=False):
                       f"OR {event_label_match} OR {like('e.source_event_type')} OR {like('e.controlled_event_type')} OR {like('e.organ_mdvs_id')} "
                       f"UNION SELECT e.event_id AS id FROM {SCHEMA}.organ o JOIN {SCHEMA}.documented_event e "
                       f"ON e.organ_mdvs_id=o.mdvs_id WHERE {like('o.label')}")
+    else:
+        # Event organ IDs reference canonical organs. Resolve associated
+        # names and IDs first, then read their events through the organ index.
+        # A label's underscore replacement cannot create a match for a term
+        # without whitespace, so only the all-null label needs special handling.
+        candidates = (f"SELECT event_id AS id FROM {SCHEMA}.documented_event WHERE event_id=%(query_id)s "
+                      f"UNION SELECT e.event_id AS id FROM {SCHEMA}.organ o JOIN {SCHEMA}.documented_event e "
+                      f"ON e.organ_mdvs_id=o.mdvs_id WHERE ({like('o.label')}) OR ({like('o.mdvs_id')})")
+        wording = []
+        for column in EVENT_TYPE_COLUMNS:
+            if terms := event_types.get(column):
+                keys = [f"{column}_{index}" for index in range(len(terms))]
+                bound.update(zip(keys, terms))
+                placeholders = ", ".join(f"%({key})s" for key in keys)
+                wording.append(f"{column} IN ({placeholders})")
+        if event_types.get("fallback"):
+            wording.append("(controlled_event_type IS NULL AND source_event_type IS NULL)")
+        if wording:
+            candidates += (f" UNION SELECT event_id AS id FROM {SCHEMA}.documented_event "
+                           f"WHERE {' OR '.join(wording)}")
     selection = f"WITH candidate_ids AS ({candidates}) "
     joined = f"{definition['from']} JOIN candidate_ids c ON c.id={identity}"
     rank = f"CASE WHEN {exact_id} THEN 0 WHEN {exact_label} THEN 1 WHEN {label_prefix} THEN 2"
@@ -200,9 +270,11 @@ def search_entities(repo, *, query, limit=12, kinds=KINDS):
         if "places" in kinds and area_directory is not None:
             area_items = [_area_item(area, field) for area, field in area_directory.search(query, DISCOVERY_AREA_LIMIT)]
         directory = repo._has_actor_directory() if "people" in kinds else False
+        event_terms = getattr(repo, "_event_search_terms", None)
         with connect(repo.settings) as connection:
             for kind in kinds:
-                count_sql, page_sql, bound = discovery_sql(kind, query, limit, actor_directory=directory)
+                event_types = event_terms.matched(connection, query) if kind == "events" and event_terms else None
+                _, page_sql, bound = discovery_sql(kind, query, limit, actor_directory=directory, event_types=event_types)
                 rows = connection.execute(page_sql, bound).fetchall()
                 totals[kind] = int(rows[0]["matching_total"]) if rows else 0
                 page = [_item(kind, row, query) for row in rows]

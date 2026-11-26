@@ -31,6 +31,7 @@ from .public_source_actors import PublicSourceActorsMixin
 from .public_actor_pages import PublicActorPagesMixin
 from .public_actor_directory import PublicActorDirectoryMixin
 from .public_areas import AREA_MAP_MEMBER_EXISTS, PublicAreas
+from .public_discovery import EventSearchTerms
 from .db import connect
 from .identity_ledger import IdentityLedgerError, cached_ledger_resolver
 from .map_projection import COMPACT_EXACT_SELECTION_TOLERANCE
@@ -227,6 +228,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         self._score_facets_cache_lock = Lock()
         self._public_query_cache = BoundedQueryCache()
         self.public_areas = PublicAreas(settings)
+        self._event_search_terms = EventSearchTerms()
         self._snapshot_manifest_signature = None
         self._snapshot_binding_cache = None
 

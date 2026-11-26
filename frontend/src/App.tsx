@@ -1,3 +1,7 @@
+import { EmptyState, Metric, Pill, SectionHead } from "./catalogPresentation";
+import { formatDateTime, formatFieldValue, formatInteger, friendlyLabel } from "./formatting";
+import { positiveRouteInt } from "./routeParameters";
+import { temperamentOrganHref } from "./temperamentOccurrences";
 import { ResearchWorkspace } from "./ResearchWorkspacePanel";
 import { RouteBoundary } from "./RouteBoundary";
 import { LoadingContent, UpdatingContent } from "./LoadingContent";
@@ -6,15 +10,11 @@ import { fetchDiscoveryContext } from "./api";
 import { PageFaq } from "./PageFaq";
 import { ActorRelationshipPages, useActorCollection } from "./actorCollections";
 import { ContextualEventSummary, EventTransferEndpoints, eventSourcePresentation, ParticipantIdentityNote, ParticipantSourceEvidence, SourceOccurrenceEvidence } from "./eventParticipation";
-import { TemperamentSearchNotice } from "./temperamentSearch";
-import { MAX_OCCURRENCE_FILTER, MAX_TEMPERAMENT_COMPARISON, occurrenceRangeIssue, occurrenceScope, occurrenceSort, readTemperamentComparison, temperamentCatalogueHref, temperamentDetailHref, temperamentOrganHref } from "./temperamentOccurrences";
-import { TemperamentComparison } from "./temperamentComparison";
 import { UiLanguagePreviewNotice, UiLanguageSelector, useUiLocale } from "./uiLocale";
 import { publicOrganTabLabel, publicPageLabel, publicSectionLabel } from "./uiLabels";
-import "./temperamentOccurrences.css";
 import { EntityExportPanel, EntityPageTabs, EntityTabPanel, useEntityPageTab } from "./entityExport";
 import { preloadMapRuntime, readMapRuntime } from "./mapPreload";
-import { ApplicationsPreview, RelatedApplications } from "./relatedApplications";
+import { ApplicationsPreview } from "./ApplicationsPreview";
 import { BuilderAttribution, ActivityDiagrams, HistoryTimeline, IdentifierCopy, NavigatorMark, OrganLanding, PublicModal, SearchValueLink, stableRecordUrl } from "./publicExperience";
 import { specificationSource, updateSpecificationView } from "./specificationNavigation";
 import { hasSpecificationDescriptions, selectedSpecificationFacts } from "./organSpecificationWorkflow";
@@ -23,7 +23,7 @@ import { TechnicalSourceComparisons, revealTechnicalComparison } from "./technic
 import { comparisonValue, comparisonsForComponentField, componentVariantKind, relatedActionGroups, technicalComparisonHasDifference } from "./sourceComparisonPresentation";
 import { specificationFieldLabel, technicalCaptureRowsLabel, technicalFactDifferenceText } from "./specificationLabels";
 import type { UiText } from "./uiLocale";
-import { CSSProperties, FormEvent, lazy, MouseEvent, PointerEvent, ReactNode, Suspense, WheelEvent as ReactWheelEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { CSSProperties, FormEvent, lazy, MouseEvent, PointerEvent, ReactNode, Suspense, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   AlertCircle,
   ArrowDownWideNarrow,
@@ -36,7 +36,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Clipboard,
-  Crosshair,
   Eye,
   EyeOff,
   ExternalLink,
@@ -63,8 +62,6 @@ import {
   RotateCcw,
   X,
   UserRound,
-  ZoomIn,
-  ZoomOut
 } from "lucide-react";
 
 function readSharedMapSummary(url: string, signal?: AbortSignal): Promise<unknown> {
@@ -112,20 +109,9 @@ import {
   DigitalScoreList,
   DigitalScoreSummary,
   ImagesegAnnotationTarget,
-  ImagesegAnnotationView,
-  ImagesegAnnotationAuditEntry,
-  ImagesegLabelSuggestion,
-  ImagesegSegment,
-  ImagesegSegmentAnnotation,
-  ImagesegViewState,
   IconographyDetail,
   IconographyList,
   IconographySummary,
-  TuningSystemDetail,
-  TuningSystemList,
-  TuningOccurrenceScope,
-  TuningSystemOrganLinks,
-  TuningSystemSummary,
   MidiAssetDetail,
   LiteratureDetail,
   LiteratureList,
@@ -163,9 +149,6 @@ import {
   ProcessorReviewDecisionOption,
   ProcessorReviewQueueItem,
   ProcessorRunInspection,
-  ProcessorPublicModelBundle,
-  ProcessorPublicModelDiscovery,
-  ProcessorPublicModelSummary,
   RelatedEntity,
   ReleaseContext,
   ResearchResponse,
@@ -260,8 +243,6 @@ import {
   fetchProcessorReviewBatchReceipts,
   fetchProcessorReviewWorkbench,
   fetchProcessorRunInspection,
-  fetchProcessorPublicModelBundle,
-  fetchProcessorPublicModels,
   fetchSourceRecord,
   fetchSourceRecords,
   fetchStructuredName,
@@ -291,15 +272,7 @@ import {
   fetchDigitalScoreAsset,
   fetchDigitalScores,
   fetchIconography,
-  fetchImagesegAnnotationAudit,
-  fetchImagesegAnnotationView,
-  fetchImagesegLabelSuggestions,
-  fetchImagesegSegmentAnnotations,
-  fetchImagesegViewState,
   fetchIconographyRecord,
-  fetchTemperament,
-  fetchTemperamentOrgans,
-  fetchTemperaments,
   fetchLiterature,
   fetchLiteratureDetail,
   fetchLiteratureStatus,
@@ -345,8 +318,6 @@ import {
   revokeAccountSessions,
   saveItem,
   setAccountRoles,
-  saveImagesegSegmentAnnotation,
-  saveImagesegViewState,
   submitContribution,
   supersedeAutonomousBootstrapException,
   updatePreferences,
@@ -403,6 +374,12 @@ const UseCasesArea = lazy(() => import("./useCases").then((module) => ({ default
 const VirtualInstrumentsArea = lazy(() => import("./virtualInstruments").then((module) => ({ default: module.VirtualInstrumentsArea })));
 const Release02CandidateCatalog = lazy(() => import("./release02Candidates").then((module) => ({ default: module.Release02CandidateCatalog })));
 const ExploreMapPreview = lazy(() => import("./ExploreMapPreview"));
+const RelatedApplications = lazy(() => import("./relatedApplications").then(module => ({ default: module.RelatedApplications })));
+const ImagesegAnnotationPage = lazy(() => import("./ImagesegAnnotationPage"));
+const PublicModelsPage = lazy(() => import("./PublicModelsPage"));
+const TemperamentsSection = lazy(() => import("./Temperaments").then(module => ({ default: module.TemperamentsSection })));
+const TemperamentDetailPage = lazy(() => import("./Temperaments").then(module => ({ default: module.TemperamentDetailPage })));
+const OrganPageWithStyles = lazy(() => import("./organSpecificationWorkflow.css").then(() => ({ default: OrganPage })));
 const Release03CandidateCatalog = lazy(() => import("./release03Candidates").then((module) => ({ default: module.Release03CandidateCatalog })));
 
 declare module "react" {
@@ -883,12 +860,6 @@ function sectionFromPath(pathname: string): MainSection | null {
 
 function initialQuery(): string {
   return new URLSearchParams(window.location.search).get("q") || "";
-}
-
-function positiveRouteInt(value: string | null, fallback: number, max = 200): number {
-  const parsed = Number.parseInt(value || "", 10);
-  if (!Number.isFinite(parsed) || parsed < 0) return fallback;
-  return Math.min(parsed, max);
 }
 
 const CANONICAL_IDENTIFIER_TOKEN = /^[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]$/;
@@ -3538,7 +3509,7 @@ export function App() {
   const publicDiscoverySearch = publicDatasetProfile && hasDiscoverySearch;
   const discoveryPreviewOpen = publicDiscoverySearch && discoveryPreviewQuery === discoveryQuery;
   const shouldFetchExplore = releaseContextResolved && (
-    activeSection === "map" || includeGeoreferencing
+    (activeSection === "map" && !publicDatasetProfile) || includeGeoreferencing
     || (discoveryLanding && !discoveryQueryPending && (!publicDiscoverySearch || discoveryPreviewOpen))
   );
   const entitySearchRequestKey = releaseContextResolved && hasDiscoverySearch && !discoveryQueryPending
@@ -3551,7 +3522,7 @@ export function App() {
   const shouldFetchPersons = activeSection === "persons" && !evidenceRoute;
   const shouldFetchOrganFacets = releaseContextResolved && (
     (discoveryLanding && (publicDatasetProfile || !discoveryQueryPending))
-    || (activeSection === "organs" && !focusedOrganRoute) || activeSection === "map"
+    || (activeSection === "organs" && !focusedOrganRoute) || (activeSection === "map" && !publicDatasetProfile)
   );
   // Public facets describe the whole dataset. Reuse them across queries and pages.
   const facetQuery = publicDatasetProfile ? "" : query;
@@ -4633,7 +4604,9 @@ export function App() {
   };
   const catalogSection = (() => {
     if (activeSection === "pod-explorer") return <Suspense fallback={<LoadingContent kind="article" label="Loading the POD explorer…" />}><PodExplorer /></Suspense>;
-    if (activeSection === "explore" && /^\/applications(?:\/|$)/.test(window.location.pathname)) return <RelatedApplications />;
+    if (activeSection === "explore" && /^\/applications(?:\/|$)/.test(window.location.pathname)) {
+      return <Suspense fallback={<LoadingContent kind="article" label={t("shell.loadingApplications", "Loading related applications…", "Verwandte Anwendungen werden geladen …")} />}><RelatedApplications /></Suspense>;
+    }
     if (activeSection === "explore") {
       return (
         <ExploreSection
@@ -4750,23 +4723,25 @@ export function App() {
               </div>
             )}
             {selectedOrgan ? (
-              <OrganPage
-                actorId={workspaceMode ? registeredActorId : ""}
-                activeTab={activeTab}
-                organ={selectedOrgan}
-                research={research}
-                onActorIdChange={setActorId}
-                onContributionSubmitted={(contribution) => {
-                  setSelectedOrgan((current) => current ? { ...current, contributions: [contribution, ...current.contributions] } : current);
-                }}
-                onOrganRefresh={refreshSelectedOrgan}
-                onResearchRefresh={refreshResearch}
-                sectionLoads={organSectionLoads}
-                onSectionRetry={retryOrganSection}
-                onTabChange={changeTab}
-                capabilities={publicCapabilities}
-                publicProjection={publicDatasetProfile}
-              />
+              <Suspense fallback={<LoadingContent kind="article" label={t("organ.page.loading", "Loading the organ’s identity and source context…", "Identität und Quellen der Orgel werden geladen …")} />}>
+                <OrganPageWithStyles
+                  actorId={workspaceMode ? registeredActorId : ""}
+                  activeTab={activeTab}
+                  organ={selectedOrgan}
+                  research={research}
+                  onActorIdChange={setActorId}
+                  onContributionSubmitted={(contribution) => {
+                    setSelectedOrgan((current) => current ? { ...current, contributions: [contribution, ...current.contributions] } : current);
+                  }}
+                  onOrganRefresh={refreshSelectedOrgan}
+                  onResearchRefresh={refreshResearch}
+                  sectionLoads={organSectionLoads}
+                  onSectionRetry={retryOrganSection}
+                  onTabChange={changeTab}
+                  capabilities={publicCapabilities}
+                  publicProjection={publicDatasetProfile}
+                />
+              </Suspense>
             ) : null}
           </div>
         </section>
@@ -4842,10 +4817,10 @@ export function App() {
       return <IconographySection />;
     }
     if (activeSection === "temperaments") {
-      return <TemperamentsSection publicDatasetProfile={publicDatasetProfile} />;
+      return <Suspense fallback={<LoadingContent kind="article" label={t("shell.loadingTuningSystems", "Loading tuning systems…", "Stimmungssysteme werden geladen …")} />}><TemperamentsSection publicDatasetProfile={publicDatasetProfile} /></Suspense>;
     }
     if (activeSection === "models") {
-      return <PublicModelsPage />;
+      return <Suspense fallback={<LoadingContent kind="article" label="Loading models…" />}><PublicModelsPage /></Suspense>;
     }
     if (activeSection === "map") {
       return (
@@ -5557,232 +5532,6 @@ export function App() {
       {publicDatasetProfile && <RouteBoundary label="your research workspace"><ResearchWorkspace mobileAnchor={mobileWorkspaceAnchor} /></RouteBoundary>}
     </>
   );
-}
-
-function PublicModelsPage() {
-  const [discovery, setDiscovery] = useState<SafeResult<ProcessorPublicModelDiscovery> | null>(null);
-  const [discoveryLoading, setDiscoveryLoading] = useState(true);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [bundle, setBundle] = useState<SafeResult<ProcessorPublicModelBundle> | null>(null);
-  const [bundleLoading, setBundleLoading] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    setDiscoveryLoading(true);
-    fetchProcessorPublicModels()
-      .then((result) => {
-        if (cancelled) return;
-        setDiscovery(result);
-        const firstModelId = result.ok ? result.data?.models?.[0]?.model_id : null;
-        if (firstModelId) setSelectedId((current) => current ?? firstModelId);
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setDiscovery({ ok: false, error: err instanceof Error ? err.message : "Could not load public models" });
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setDiscoveryLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!selectedId) {
-      setBundle(null);
-      return;
-    }
-    let cancelled = false;
-    setBundleLoading(true);
-    fetchProcessorPublicModelBundle(selectedId)
-      .then((result) => {
-        if (!cancelled) setBundle(result);
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setBundle({ ok: false, error: err instanceof Error ? err.message : "Could not load model viewer bundle" });
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setBundleLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedId]);
-
-  const models = discovery?.ok ? discovery.data?.models ?? [] : [];
-  const selectedSummary = models.find((item) => item.model_id === selectedId) ?? models[0] ?? null;
-  const viewer = bundle?.ok ? bundle.data?.viewer : undefined;
-  const modelRecord = bundle?.ok ? bundle.data?.model ?? {} : {};
-  const transparency = publicModelRecord(modelRecord.generation_transparency);
-  const quality = publicModelRecord(transparency.quality);
-  const environmentLocks = publicModelRecord(transparency.environment_locks);
-  const modelSrc = viewer?.model_viewer_src || viewer?.model_proxy_url || viewer?.model_url || viewer?.stable_processor_artifact_url || selectedSummary?.public_url || null;
-  const viewerReady = Boolean(bundle?.ok && bundle.data?.status === "ready" && viewer?.public_web_ready && modelSrc);
-  const modelViewerReady = useModelViewerScript(viewerReady);
-  const blockers = viewer?.public_web_blockers ?? bundle?.data?.blockers ?? [];
-
-  return (
-    <section className="entity-section public-models-page" id="models" tabIndex={-1}>
-      <SectionHead
-        eyebrow="3D Models"
-        title="Published reconstructions"
-        detail={discoveryLoading ? "Loading models" : `${discovery?.data?.total ?? models.length} model${(discovery?.data?.total ?? models.length) === 1 ? "" : "s"}`}
-      />
-
-      <div className="catalog-metrics public-model-metrics">
-        <Metric label="Registered models" value={discovery?.data?.total ?? models.length} />
-        <Metric label="Visible in Navigator" value={models.filter((item) => item.public_url || item.api_url).length} />
-        <Metric label="Paradata complete" value={models.filter((item) => item.paradata_complete).length} />
-      </div>
-
-      {!discoveryLoading && discovery && !discovery.ok && (
-        <EmptyState icon={<AlertCircle size={22} />} title="Models unavailable" body={discovery.error || "The Processor public model registry did not respond."} />
-      )}
-
-      {!discoveryLoading && discovery?.ok && models.length === 0 && (
-        <EmptyState icon={<Layers3 size={22} />} title="No public models yet" body="Approved Processor reconstructions will appear here after publication." />
-      )}
-
-      {models.length > 0 && (
-        <div className="public-models-layout">
-          <div className="public-model-list" aria-label="Published models">
-            {models.map((model) => (
-              <button
-                type="button"
-                key={model.model_id}
-                className={model.model_id === selectedSummary?.model_id ? "public-model-card active" : "public-model-card"}
-                onClick={() => setSelectedId(model.model_id)}
-              >
-                <span>{publicModelTitle(model)}</span>
-                <strong>{model.object_id || model.source_record_id || model.model_id}</strong>
-                <small>{model.batch_id || "No batch id"} · {publicModelQuality(model)}</small>
-                <small>{model.paradata_complete ? "Paradata complete" : "Paradata pending"} · {formatPublicModelDate(model.updated_at)}</small>
-              </button>
-            ))}
-          </div>
-
-          <section className="public-model-viewer-panel" aria-label="Selected model">
-            {bundleLoading && <EmptyState icon={<Layers3 size={22} />} title="Loading model" body="Fetching the public Processor viewer bundle." />}
-
-            {!bundleLoading && bundle && !bundle.ok && (
-              <EmptyState icon={<AlertCircle size={22} />} title="Model unavailable" body={bundle.error || "The selected model bundle could not be loaded."} />
-            )}
-
-            {!bundleLoading && bundle?.ok && (
-              <>
-                <div className="public-model-viewer-wrap">
-                  {viewerReady && modelSrc && modelViewerReady ? (
-                    <ModelViewerElement src={modelSrc} label={`3D model ${selectedSummary?.model_id ?? ""}`} />
-                  ) : (
-                    <div className="public-model-viewer-fallback">
-                      <Layers3 size={34} />
-                      <strong>{viewerReady ? "Preparing 3D viewer" : "Viewer not public-ready"}</strong>
-                      <span>{viewerReady ? "The model source is ready; the browser viewer is still loading." : blockers.join(", ") || "No public model source is available."}</span>
-                      {modelSrc && <a href={modelSrc}>Open model source</a>}
-                    </div>
-                  )}
-                </div>
-
-                <div className="public-model-detail">
-                  <div>
-                    <p className="eyebrow">Model</p>
-                    <h3>{publicModelTitle(selectedSummary)}</h3>
-                    <p>{selectedSummary?.object_id || selectedSummary?.source_record_id || selectedSummary?.model_id}</p>
-                  </div>
-                  <div className="public-model-meta-grid">
-                    <span><strong>Storage</strong>{viewer?.storage_backend || "unknown"}</span>
-                    <span><strong>Serving</strong>{viewer?.serving_strategy || "unknown"}</span>
-                    <span><strong>Quality</strong>{formatPublicModelValue(quality.label ?? selectedSummary?.quality_label)}</span>
-                    <span><strong>Score</strong>{formatPublicModelValue(quality.score ?? selectedSummary?.quality_score)}</span>
-                    <span><strong>Batch</strong>{formatPublicModelValue(selectedSummary?.batch_id)}</span>
-                    <span><strong>Paradata</strong>{transparency.paradata_complete ? "complete" : "pending"}</span>
-                  </div>
-                  <div className="public-model-provenance">
-                    <strong>Provenance</strong>
-                    <span>Source: {formatPublicModelValue(selectedSummary?.source_record_id)}</span>
-                    <span>Environment: {formatPublicModelValue(publicModelRecord(environmentLocks.batch).status ?? publicModelRecord(environmentLocks.batch).batch_id)}</span>
-                    <span>Delivery: {modelSrc ? "public web route" : "not available"}</span>
-                  </div>
-                </div>
-              </>
-            )}
-          </section>
-        </div>
-      )}
-    </section>
-  );
-}
-
-function useModelViewerScript(enabled: boolean) {
-  const [ready, setReady] = useState(() => typeof window !== "undefined" && Boolean(window.customElements?.get("model-viewer")));
-  useEffect(() => {
-    if (!enabled || ready || typeof document === "undefined") return;
-    const existing = document.querySelector<HTMLScriptElement>("script[data-modavis-model-viewer]");
-    if (existing) {
-      existing.addEventListener("load", () => setReady(Boolean(window.customElements?.get("model-viewer"))), { once: true });
-      return;
-    }
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src = "https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js";
-    script.dataset.modavisModelViewer = "true";
-    script.addEventListener("load", () => setReady(Boolean(window.customElements?.get("model-viewer"))));
-    document.head.appendChild(script);
-  }, [enabled, ready]);
-  return ready;
-}
-
-function ModelViewerElement({ label, src }: { label: string; src: string }) {
-  const hostRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    const host = hostRef.current;
-    if (!host) return;
-    let viewer = host.querySelector("model-viewer") as HTMLElement | null;
-    if (!viewer) {
-      viewer = document.createElement("model-viewer");
-      viewer.className = "public-model-viewer";
-      viewer.setAttribute("camera-controls", "");
-      viewer.setAttribute("auto-rotate", "");
-      viewer.setAttribute("exposure", "0.9");
-      host.replaceChildren(viewer);
-    }
-    viewer.setAttribute("src", src);
-    viewer.setAttribute("aria-label", label);
-  }, [label, src]);
-  return <div className="public-model-viewer-host" ref={hostRef} />;
-}
-
-function publicModelRecord(value: unknown): Record<string, unknown> {
-  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
-}
-
-function publicModelTitle(model?: ProcessorPublicModelSummary | null): string {
-  if (!model) return "Selected model";
-  return model.object_id ? `Object ${model.object_id}` : model.source_record_id ? `Source ${model.source_record_id}` : `Model ${model.model_id}`;
-}
-
-function publicModelQuality(model: ProcessorPublicModelSummary): string {
-  if (model.quality_label && typeof model.quality_score === "number") return `${model.quality_label} (${model.quality_score.toFixed(2)})`;
-  if (model.quality_label) return model.quality_label;
-  if (typeof model.quality_score === "number") return model.quality_score.toFixed(2);
-  return "Quality unrecorded";
-}
-
-function formatPublicModelValue(value: unknown): string {
-  if (typeof value === "number") return Number.isInteger(value) ? String(value) : value.toFixed(2);
-  if (typeof value === "string" && value.trim()) return value;
-  if (typeof value === "boolean") return value ? "yes" : "no";
-  return "unrecorded";
-}
-
-function formatPublicModelDate(value?: string | null): string {
-  if (!value) return "No update date";
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString();
 }
 
 function ExploreSection({
@@ -6784,14 +6533,6 @@ function labelForReviewState(state: string, facets: OrganFacets | null) {
   return facets?.reviewStates.find((item) => item.state === state)?.label || friendlyLabel(state);
 }
 
-function friendlyLabel(value?: string | null) {
-  return String(value || "")
-    .replace(/_/g, " ")
-    .split(" ")
-    .map((word) => word ? `${word[0].toLocaleUpperCase()}${word.slice(1)}` : word)
-    .join(" ");
-}
-
 function candidateEntityCategoryLabel(value?: string | null) {
   if (value === "institutions" || value === "buildings") return "Buildings";
   if (value === "virtual_instruments" || value === "virtual-instruments" || value === "vmi") return "Virtual instruments";
@@ -6816,10 +6557,6 @@ function candidateEntityPageUrl(category: string, id: string, entityType?: strin
     return `/${canonicalCategory}/${encodeURIComponent(mdvs[2].toUpperCase())}`;
   }
   return `/entity/${encodeURIComponent(routeCategory)}/${encodeURIComponent(id)}`;
-}
-
-function formatInteger(value: number): string {
-  return new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 }).format(value);
 }
 
 function recordTextValue(record: Record<string, unknown>, ...keys: string[]): string {
@@ -6908,13 +6645,6 @@ function formatTimestamp(value: string) {
   return new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short" }).format(date);
 }
 
-function formatFieldValue(value: unknown): string {
-  if (value === null || value === undefined || value === "") return "Unknown";
-  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") return String(value);
-  if (Array.isArray(value)) return value.map(formatFieldValue).join(", ");
-  return JSON.stringify(value);
-}
-
 function absoluteNavigatorUrl(path: string): string {
   try {
     return new URL(path, window.location.origin).href;
@@ -6984,62 +6714,68 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
   const [result, setResult] = useState<{ key: string; response: EventListResponse } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const textFilterEdited = useRef(false);
   const pageSize = 12;
   const requestKey = JSON.stringify([query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset]);
   const response = result?.response ?? null;
 
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
     setLoading(true);
     setError(null);
-    const timer = window.setTimeout(() => {
-    fetchEvents({
-      query,
-      type,
-      source,
-      yearFrom,
-      yearTo,
-      subject,
-      participant,
-      completeness,
-      routeState,
-      sort,
-      limit: pageSize,
-      offset,
-    })
-      .then((data) => {
-        if (cancelled) return;
-        setResult({ key: requestKey, response: data });
-        const next = new URL(window.location.href);
-        next.pathname = SECTION_PATHS.events;
-        next.searchParams.delete("event_type");
-        [
-          ["q", query],
-          ["type", type],
-          ["source", source],
-          ["year_from", yearFrom],
-          ["year_to", yearTo],
-          ["subject", subject],
-          ["participant", participant],
-          ["completeness", completeness],
-          ["route", routeState],
-          ["sort", sort],
-        ].forEach(([key, value]) => {
-          if (value) next.searchParams.set(key, value);
-          else next.searchParams.delete(key);
+    const load = () => {
+      fetchEvents({
+        query,
+        type,
+        source,
+        yearFrom,
+        yearTo,
+        subject,
+        participant,
+        completeness,
+        routeState,
+        sort,
+        limit: pageSize,
+        offset,
+      }, controller.signal)
+        .then((data) => {
+          if (controller.signal.aborted) return;
+          setResult({ key: requestKey, response: data });
+          const next = new URL(window.location.href);
+          next.pathname = SECTION_PATHS.events;
+          next.searchParams.delete("event_type");
+          [
+            ["q", query],
+            ["type", type],
+            ["source", source],
+            ["year_from", yearFrom],
+            ["year_to", yearTo],
+            ["subject", subject],
+            ["participant", participant],
+            ["completeness", completeness],
+            ["route", routeState],
+            ["sort", sort],
+          ].forEach(([key, value]) => {
+            if (value) next.searchParams.set(key, value);
+            else next.searchParams.delete(key);
+          });
+          if (offset) next.searchParams.set("offset", String(offset));
+          else next.searchParams.delete("offset");
+          window.history.replaceState(null, "", next);
+        })
+        .catch((err: Error) => {
+          if (!controller.signal.aborted) setError(err.message);
+        })
+        .finally(() => {
+          if (!controller.signal.aborted) setLoading(false);
         });
-        if (offset) next.searchParams.set("offset", String(offset));
-        else next.searchParams.delete("offset");
-        window.history.replaceState(null, "", next);
-      })
-      .catch((err: Error) => {
-        if (!cancelled) setError(err.message);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-    }, 250);
-    return () => { cancelled = true; window.clearTimeout(timer); };
+    };
+    const timer = textFilterEdited.current ? window.setTimeout(load, 250) : undefined;
+    if (timer === undefined) load();
+    return () => {
+      window.clearTimeout(timer);
+      controller.abort();
+    };
   }, [query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset, requestKey]);
 
   const total = response?.total ?? 0;
@@ -7070,7 +6806,13 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
     routeState,
     sort,
   ].filter(Boolean).length;
+  const updateEventFilter = (setter: (value: string) => void, value: string, typed = false) => {
+    textFilterEdited.current = typed;
+    setOffset(0);
+    setter(value);
+  };
   const clearFilters = () => {
+    textFilterEdited.current = false;
     setQuery("");
     setType("");
     setSource("");
@@ -7084,6 +6826,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
     setOffset(0);
   };
   const updateEventPage = (nextOffset: number) => {
+    textFilterEdited.current = false;
     setOffset(Math.max(0, nextOffset));
     focusSection("events", "auto");
   };
@@ -7132,7 +6875,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
             <Search size={16} aria-hidden="true" />
             <input
               value={query}
-              onChange={(event) => { setOffset(0); setQuery(event.target.value); }}
+              onChange={(event) => updateEventFilter(setQuery, event.target.value, true)}
               placeholder={publicProjection && showsEndpoints
                 ? t("event.catalogue.endpointSearch", "Event, organ, or endpoint", "Ereignis, Orgel oder Endpunkt")
                 : t("event.catalogue.keywordsHint", "Event, identifier, or description", "Ereignis, Kennung oder Beschreibung")}
@@ -7145,8 +6888,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
             <select
               value={displayedType}
               onChange={(event) => {
-                setOffset(0);
-                setType(event.target.value);
+                updateEventFilter(setType, event.target.value);
                 if (event.target.value !== relocationType) setRouteState("");
               }}
               aria-describedby="event-type-filter-help"
@@ -7167,17 +6909,16 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
         </div>
         <label>
           <span>{t("event.catalogue.from", "From year", "Ab Jahr")}</span>
-          <input inputMode="numeric" value={yearFrom} onChange={(event) => { setOffset(0); setYearFrom(event.target.value); }} placeholder={t("event.catalogue.fromHint", "e.g. 1700", "z. B. 1700")} />
+          <input inputMode="numeric" value={yearFrom} onChange={(event) => updateEventFilter(setYearFrom, event.target.value, true)} placeholder={t("event.catalogue.fromHint", "e.g. 1700", "z. B. 1700")} />
         </label>
         <label>
           <span>{t("event.catalogue.to", "To year", "Bis Jahr")}</span>
-          <input inputMode="numeric" value={yearTo} onChange={(event) => { setOffset(0); setYearTo(event.target.value); }} placeholder={t("event.catalogue.toHint", "e.g. 2026", "z. B. 2026")} />
+          <input inputMode="numeric" value={yearTo} onChange={(event) => updateEventFilter(setYearTo, event.target.value, true)} placeholder={t("event.catalogue.toHint", "e.g. 2026", "z. B. 2026")} />
         </label>
         {showsEndpoints && <label>
           <span>{t("event.catalogue.transferEndpoints", "Transfer endpoints", "Endpunkte der Verlegung")}</span>
           <select value={routeState} onChange={(event) => {
-            setOffset(0);
-            setRouteState(event.target.value);
+            updateEventFilter(setRouteState, event.target.value);
             if (event.target.value) setType(relocationType);
           }}>
             <option value="">{t("event.catalogue.allRelocations", "Any endpoint status", "Mit oder ohne Endpunktangaben")}</option>
@@ -7201,20 +6942,20 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
           <div className="event-advanced-filter-grid">
             <label>
               <span>{t("event.catalogue.source", "Source collection", "Quellensammlung")}</span>
-              <input value={source} onChange={(event) => { setOffset(0); setSource(event.target.value); }} placeholder={t("event.catalogue.sourceHint", "Source key, e.g. npor", "Quellenschlüssel, z. B. npor")} />
+              <input value={source} onChange={(event) => updateEventFilter(setSource, event.target.value, true)} placeholder={t("event.catalogue.sourceHint", "Source key, e.g. npor", "Quellenschlüssel, z. B. npor")} />
             </label>
             <label>
               <span>{t("event.catalogue.organ", "Affected organ", "Betroffene Orgel")}</span>
-              <input value={subject} onChange={(event) => { setOffset(0); setSubject(event.target.value); }} placeholder={t("event.catalogue.organHint", "Name or MDVS ID", "Name oder MDVS-Kennung")} />
+              <input value={subject} onChange={(event) => updateEventFilter(setSubject, event.target.value, true)} placeholder={t("event.catalogue.organHint", "Name or MDVS ID", "Name oder MDVS-Kennung")} />
             </label>
             <label>
               <span>{publicProjection ? t("event.catalogue.participantId", "Canonical participant ID", "Kanonische Kennung einer beteiligten Person oder Organisation") : t("event.catalogue.participant", "Participant", "Beteiligte")}</span>
-              <input aria-label={publicProjection ? t("event.catalogue.participantId", "Canonical participant ID", "Kanonische Kennung einer beteiligten Person oder Organisation") : t("event.catalogue.participant", "Participant", "Beteiligte")} value={participant} onChange={(event) => { setOffset(0); setParticipant(event.target.value); }} placeholder={publicProjection ? t("event.catalogue.participantIdHint", "MDVS ID from a canonical dossier", "MDVS-Kennung aus einem kanonischen Dossier") : t("event.catalogue.participantHint", "Person or organization", "Person oder Organisation")} />
+              <input aria-label={publicProjection ? t("event.catalogue.participantId", "Canonical participant ID", "Kanonische Kennung einer beteiligten Person oder Organisation") : t("event.catalogue.participant", "Participant", "Beteiligte")} value={participant} onChange={(event) => updateEventFilter(setParticipant, event.target.value, true)} placeholder={publicProjection ? t("event.catalogue.participantIdHint", "MDVS ID from a canonical dossier", "MDVS-Kennung aus einem kanonischen Dossier") : t("event.catalogue.participantHint", "Person or organization", "Person oder Organisation")} />
               {publicProjection && <small>{t("event.catalogue.organBoundary", "Matches established identity links. Unresolved names remain on their source events.", "Die Suche verwendet bestätigte Identitätsverknüpfungen. Ungeklärte Namen bleiben bei den jeweiligen Quellenereignissen erhalten.")}</small>}
             </label>
             {!publicProjection && <label>
               <span>{t("event.catalogue.detail", "Record detail", "Datensatzdetails")}</span>
-              <select value={completeness} onChange={(event) => { setOffset(0); setCompleteness(event.target.value); }}>
+              <select value={completeness} onChange={(event) => updateEventFilter(setCompleteness, event.target.value)}>
                 <option value="">{t("event.catalogue.allRecords", "All records", "Alle Datensätze")}</option>
                 <option value="complete">{t("event.catalogue.complete", "Complete optional details", "Optionale Angaben vollständig")}</option>
                 <option value="missing_optional">{t("event.catalogue.missing", "Missing optional details", "Optionale Angaben fehlen")}</option>
@@ -7222,7 +6963,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
             </label>}
             <label>
               <span>{t("event.catalogue.sort", "Sort", "Sortierung")}</span>
-              <select value={sort} onChange={(event) => { setOffset(0); setSort(event.target.value); }}>
+              <select value={sort} onChange={(event) => updateEventFilter(setSort, event.target.value)}>
                 <option value="">{publicProjection ? t("event.catalogue.newest", "Newest first", "Neueste zuerst") : t("event.catalogue.historical", "Historical first (newest)", "Historische Ereignisse zuerst, absteigend")}</option>
                 {!publicProjection && <option value="future">{t("event.catalogue.futureFirst", "Future-dated records first", "Zukünftig datierte Einträge zuerst")}</option>}
                 <option value="oldest">{t("event.catalogue.oldest", "Oldest first", "Älteste zuerst")}</option>
@@ -7452,8 +7193,8 @@ function EvidenceRoutePage({ actor, backToPeople, onBack, route, publicProjectio
       {route.kind === "midi" && <MidiAssetPage assetId={route.assetId} />}
       {route.kind === "literature" && <LiteratureDetailPage literatureId={route.id} />}
       {route.kind === "iconography" && <IconographyDetailPage recordId={route.id} />}
-      {route.kind === "image_annotation" && <ImagesegAnnotationPage actor={actor} target={route.target} />}
-      {route.kind === "temperament" && <TemperamentDetailPage tuningId={route.id} />}
+      {route.kind === "image_annotation" && <Suspense fallback={<LoadingContent kind="article" label="Loading annotations…" />}><ImagesegAnnotationPage actor={actor} target={route.target} /></Suspense>}
+      {route.kind === "temperament" && <Suspense fallback={<LoadingContent kind="article" label={t("shell.loadingTuningSystem", "Loading tuning system…", "Stimmungssystem wird geladen …")} />}><TemperamentDetailPage tuningId={route.id} /></Suspense>}
       {route.kind === "candidate_entity" && <CandidateEntityDossierPage category={route.category} id={route.id} staffMode={Boolean(actor)} />}
       {route.kind === "canonical_actor" && (publicProjection && route.category === "places" ? <PublicPlacePage id={route.id} /> : <CanonicalActorPage category={route.category} id={route.id} staffMode={Boolean(actor)} />)}
       {route.kind === "canonical_name" && <StructuredNamePage id={route.id} />}
@@ -7476,1098 +7217,6 @@ function EvidenceRoutePage({ actor, backToPeople, onBack, route, publicProjectio
       )}
     </section>
   );
-}
-
-const IMAGESEG_STACK_KEYS = "0123456789abcdefghijklmnopqrstuvwxyz".split("");
-const IMAGESEG_STACK_COLORS = [
-  { stroke: "#f7c948", fill: "rgba(247, 201, 72, 0.24)", swatch: "rgba(247, 201, 72, 0.72)" },
-  { stroke: "#45b7d1", fill: "rgba(69, 183, 209, 0.22)", swatch: "rgba(69, 183, 209, 0.72)" },
-  { stroke: "#ef476f", fill: "rgba(239, 71, 111, 0.2)", swatch: "rgba(239, 71, 111, 0.7)" },
-  { stroke: "#78c679", fill: "rgba(120, 198, 121, 0.2)", swatch: "rgba(120, 198, 121, 0.72)" },
-  { stroke: "#b388eb", fill: "rgba(179, 136, 235, 0.2)", swatch: "rgba(179, 136, 235, 0.72)" },
-  { stroke: "#ff8a5b", fill: "rgba(255, 138, 91, 0.2)", swatch: "rgba(255, 138, 91, 0.7)" },
-  { stroke: "#4ecdc4", fill: "rgba(78, 205, 196, 0.2)", swatch: "rgba(78, 205, 196, 0.72)" },
-  { stroke: "#f78fb3", fill: "rgba(247, 143, 179, 0.2)", swatch: "rgba(247, 143, 179, 0.7)" },
-  { stroke: "#a3e635", fill: "rgba(163, 230, 53, 0.18)", swatch: "rgba(163, 230, 53, 0.72)" },
-  { stroke: "#93c5fd", fill: "rgba(147, 197, 253, 0.2)", swatch: "rgba(147, 197, 253, 0.72)" },
-];
-const IMAGESEG_MIN_ZOOM = 1;
-const IMAGESEG_MAX_ZOOM = 6;
-const IMAGESEG_ZOOM_STEP = 0.16;
-const IMAGESEG_CLICK_TOLERANCE_CSS_PX = 9;
-const IMAGESEG_STATUS_OPTIONS = ["draft", "reviewed", "accepted", "rejected", "needs_review", "needs_segmentation_fix"];
-const IMAGESEG_DEFAULT_VIEW_STATE: Required<Pick<ImagesegViewState, "maskOpacity" | "outlineOnly" | "masksVisible" | "isolateSelected" | "dimNonSelected" | "segmentSort">> = {
-  maskOpacity: 0.32,
-  outlineOnly: false,
-  masksVisible: true,
-  isolateSelected: false,
-  dimNonSelected: true,
-  segmentSort: "unlabeled",
-};
-
-type ImagesegPreparedSegment = ImagesegSegment & {
-  path: string;
-  bbox: { x: number; y: number; width: number; height: number };
-  annotation?: ImagesegSegmentAnnotation;
-};
-
-function ImagesegAnnotationPage({ actor, target }: { actor?: NavigatorActor; target: ImagesegAnnotationTarget }) {
-  const [view, setView] = useState<ImagesegAnnotationView | null>(null);
-  const [annotations, setAnnotations] = useState<Record<string, ImagesegSegmentAnnotation>>({});
-  const [labelSuggestionRows, setLabelSuggestionRows] = useState<ImagesegLabelSuggestion[]>([]);
-  const [annotationAudit, setAnnotationAudit] = useState<ImagesegAnnotationAuditEntry[]>([]);
-  const [activeSegmentId, setActiveSegmentId] = useState<string | null>(null);
-  const [selectedSegmentId, setSelectedSegmentId] = useState<string | null>(null);
-  const [hoverStack, setHoverStack] = useState<ImagesegSegment[]>([]);
-  const [hoverMessage, setHoverMessage] = useState<string | null>(null);
-  const [stackCursor, setStackCursor] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
-  const [renderedImageSize, setRenderedImageSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
-  const [canvasSize, setCanvasSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
-  const [maskOpacity, setMaskOpacity] = useState(IMAGESEG_DEFAULT_VIEW_STATE.maskOpacity);
-  const [outlineOnly, setOutlineOnly] = useState(IMAGESEG_DEFAULT_VIEW_STATE.outlineOnly);
-  const [masksVisible, setMasksVisible] = useState(IMAGESEG_DEFAULT_VIEW_STATE.masksVisible);
-  const [isolateSelected, setIsolateSelected] = useState(IMAGESEG_DEFAULT_VIEW_STATE.isolateSelected);
-  const [dimNonSelected, setDimNonSelected] = useState(IMAGESEG_DEFAULT_VIEW_STATE.dimNonSelected);
-  const [segmentSort, setSegmentSort] = useState(IMAGESEG_DEFAULT_VIEW_STATE.segmentSort);
-  const [label, setLabel] = useState("");
-  const [comment, setComment] = useState("");
-  const [status, setStatus] = useState("draft");
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [saveMessage, setSaveMessage] = useState<string | null>(null);
-  const imageCanvasRef = useRef<HTMLDivElement | null>(null);
-  const imageFrameRef = useRef<HTMLDivElement | null>(null);
-  const labelInputRef = useRef<HTMLInputElement | null>(null);
-  const panGestureRef = useRef<{ pointerId: number; startX: number; startY: number; panX: number; panY: number; moved: boolean } | null>(null);
-  const targetKey = JSON.stringify(target);
-  const viewStateKey = imageSegmentViewStateKey(target);
-
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    setError(null);
-    setView(null);
-    setAnnotations({});
-    setLabelSuggestionRows([]);
-    setAnnotationAudit([]);
-    setSelectedSegmentId(null);
-    setActiveSegmentId(null);
-    setHoverMessage(null);
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
-    setMaskOpacity(IMAGESEG_DEFAULT_VIEW_STATE.maskOpacity);
-    setOutlineOnly(IMAGESEG_DEFAULT_VIEW_STATE.outlineOnly);
-    setMasksVisible(IMAGESEG_DEFAULT_VIEW_STATE.masksVisible);
-    setIsolateSelected(IMAGESEG_DEFAULT_VIEW_STATE.isolateSelected);
-    setDimNonSelected(IMAGESEG_DEFAULT_VIEW_STATE.dimNonSelected);
-    setSegmentSort(IMAGESEG_DEFAULT_VIEW_STATE.segmentSort);
-    fetchImagesegAnnotationView(target)
-      .then(async (data) => {
-        if (cancelled) return;
-        setView(data);
-        fetchImagesegViewState(viewStateKey)
-          .then((record) => {
-            if (cancelled) return;
-            applyImageSegmentViewState(record.state || {});
-          })
-          .catch(() => undefined);
-        fetchImagesegLabelSuggestions({
-          ...target,
-          runId: target.runId || data.run_id,
-          mediaReferenceId: target.mediaReferenceId || data.image?.media_reference_id,
-          imageIdentifier: target.imageIdentifier || data.image?.image_identifier,
-          query: "",
-          limit: 12,
-        })
-          .then((rows) => {
-            if (!cancelled) setLabelSuggestionRows(rows);
-          })
-          .catch(() => {
-            if (!cancelled) setLabelSuggestionRows([]);
-          });
-        const segmentIds = (data.segments || []).map((segment) => segment.segment_id).filter(Boolean);
-        if (segmentIds.length) {
-          const rows = await fetchImagesegSegmentAnnotations({
-            ...target,
-            runId: target.runId || data.run_id,
-            mediaReferenceId: target.mediaReferenceId || data.image?.media_reference_id,
-            imageIdentifier: target.imageIdentifier || data.image?.image_identifier,
-            segmentIds,
-          });
-          if (!cancelled) setAnnotations(Object.fromEntries(rows.map((row) => [row.segmentId, row])));
-        }
-        if (!cancelled) {
-          setSelectedSegmentId(null);
-          setLoading(false);
-        }
-      })
-      .catch((err: Error) => {
-        if (!cancelled) {
-          setError(err.message);
-          setLoading(false);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [targetKey]);
-
-  const selectedAnnotation = selectedSegmentId ? annotations[selectedSegmentId] : undefined;
-  useEffect(() => {
-    setLabel(selectedAnnotation?.label || "");
-    setComment(selectedAnnotation?.comment || "");
-    setStatus(selectedAnnotation?.status || "draft");
-    setSaveMessage(null);
-  }, [selectedAnnotation?.annotationId, selectedSegmentId]);
-
-  const segmentsById = useMemo(() => new Map((view?.segments || []).map((segment) => [segment.segment_id, segment])), [view]);
-  const renderIds = view?.render_segment_ids?.length ? view.render_segment_ids : (view?.segments || []).map((segment) => segment.segment_id);
-  const hitIds = view?.hit_test_segment_ids?.length ? view.hit_test_segment_ids : [...renderIds];
-  const hoverStackIds = useMemo(() => new Set(hoverStack.map((segment) => segment.segment_id)), [hoverStack]);
-  const hoverStackIndexById = useMemo(() => new Map(hoverStack.map((segment, index) => [segment.segment_id, index])), [hoverStack]);
-  const selectedSegment = selectedSegmentId ? segmentsById.get(selectedSegmentId) : null;
-  const activeSegment = activeSegmentId ? segmentsById.get(activeSegmentId) : selectedSegment;
-  const imageWidth = Number(view?.image?.width || 0);
-  const imageHeight = Number(view?.image?.height || 0);
-  const imageSrc = view?.image?.display_url || "";
-  const hasAnnotationText = label.trim().length > 0 || comment.trim().length > 0 || status !== (selectedAnnotation?.status || "draft");
-  const zoomedImageWidth = Math.round(renderedImageSize.width * zoom);
-  const zoomedImageHeight = Math.round(renderedImageSize.height * zoom);
-  const imageScaleX = imageWidth > 0 && renderedImageSize.width > 0 ? (renderedImageSize.width * zoom) / imageWidth : 0;
-  const imageScaleY = imageHeight > 0 && renderedImageSize.height > 0 ? (renderedImageSize.height * zoom) / imageHeight : 0;
-  const preparedSegments = useMemo(
-    () => imageSegmentPreparedSegments(view?.segments || [], annotations, imageWidth, imageHeight),
-    [view, annotations, imageWidth, imageHeight]
-  );
-  const preparedSegmentsById = useMemo(() => new Map(preparedSegments.map((segment) => [segment.segment_id, segment])), [preparedSegments]);
-  const sortedSegments = useMemo(() => imageSegmentSortedSegments(preparedSegments, segmentSort), [preparedSegments, segmentSort]);
-  const selectedPreparedSegment = selectedSegmentId ? preparedSegmentsById.get(selectedSegmentId) : null;
-  const selectedIndex = selectedSegmentId ? sortedSegments.findIndex((segment) => segment.segment_id === selectedSegmentId) : -1;
-  const unlabeledCount = preparedSegments.filter((segment) => !segment.annotation?.label).length;
-  const miniViewport = imageSegmentMiniViewport({ imageWidth, imageHeight, renderedImageSize, canvasSize, zoom, pan });
-  const labelSuggestions = useMemo(
-    () => imageSegmentSuggestionLabels(labelSuggestionRows, label),
-    [labelSuggestionRows, label]
-  );
-
-  useEffect(() => {
-    const node = imageFrameRef.current;
-    if (!node) return;
-    const observedNode = node;
-    function updateSize() {
-      const rect = observedNode.getBoundingClientRect();
-      setRenderedImageSize({ width: Math.round(rect.width), height: Math.round(rect.height) });
-    }
-    updateSize();
-    const observer = new ResizeObserver(updateSize);
-    observer.observe(observedNode);
-    return () => observer.disconnect();
-  }, [imageWidth, imageHeight, imageSrc]);
-
-  useEffect(() => {
-    const node = imageCanvasRef.current;
-    if (!node) return;
-    const observedNode = node;
-    function updateSize() {
-      const rect = observedNode.getBoundingClientRect();
-      setCanvasSize({ width: Math.round(rect.width), height: Math.round(rect.height) });
-    }
-    updateSize();
-    const observer = new ResizeObserver(updateSize);
-    observer.observe(observedNode);
-    return () => observer.disconnect();
-  }, [imageSrc]);
-
-  useEffect(() => {
-    if (!selectedSegmentId) {
-      setAnnotationAudit([]);
-      return;
-    }
-    let cancelled = false;
-    fetchImagesegAnnotationAudit(selectedSegmentId)
-      .then((rows) => {
-        if (!cancelled) setAnnotationAudit(rows);
-      })
-      .catch(() => {
-        if (!cancelled) setAnnotationAudit([]);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [selectedSegmentId]);
-
-  useEffect(() => {
-    if (!view) return;
-    const handle = window.setTimeout(() => {
-      saveImagesegViewState(
-        {
-          ...target,
-          targetKey: viewStateKey,
-          runId: target.runId || view.run_id,
-          mediaReferenceId: target.mediaReferenceId || view.image?.media_reference_id,
-          imageIdentifier: target.imageIdentifier || view.image?.image_identifier,
-          state: {
-            maskOpacity,
-            outlineOnly,
-            masksVisible,
-            isolateSelected,
-            dimNonSelected,
-            segmentSort,
-            zoom,
-            pan,
-            selectedSegmentId,
-          },
-        },
-        actor
-      ).catch(() => undefined);
-    }, 650);
-    return () => window.clearTimeout(handle);
-  }, [actor, dimNonSelected, isolateSelected, maskOpacity, masksVisible, outlineOnly, pan, selectedSegmentId, segmentSort, targetKey, view, viewStateKey, zoom]);
-
-  useEffect(() => {
-    if (!view) return;
-    const handle = window.setTimeout(() => {
-      fetchImagesegLabelSuggestions({
-        ...target,
-        runId: target.runId || view.run_id,
-        mediaReferenceId: target.mediaReferenceId || view.image?.media_reference_id,
-        imageIdentifier: target.imageIdentifier || view.image?.image_identifier,
-        query: label,
-        limit: 12,
-      })
-        .then(setLabelSuggestionRows)
-        .catch(() => undefined);
-    }, 180);
-    return () => window.clearTimeout(handle);
-  }, [label, targetKey, view]);
-
-  useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.metaKey || event.ctrlKey || event.altKey) return;
-      const targetElement = event.target instanceof HTMLElement ? event.target : null;
-      const tagName = targetElement?.tagName.toLowerCase();
-      if (tagName === "input" || tagName === "textarea" || tagName === "select" || targetElement?.isContentEditable) {
-        if (tagName === "input" && targetElement === labelInputRef.current && (event.key === "Tab" || event.key === "Enter") && labelSuggestions.length) {
-          event.preventDefault();
-          applyLabelSuggestion(labelSuggestions[0]);
-        }
-        return;
-      }
-      const index = imageSegmentStackKeyIndex(event.key);
-      if (index >= 0 && index < hoverStack.length) {
-        event.preventDefault();
-        const segment = hoverStack[index];
-        setActiveSegmentId(segment.segment_id);
-        setSelectedSegmentId(segment.segment_id);
-        return;
-      }
-      if (event.key.toLowerCase() === "l") {
-        event.preventDefault();
-        labelInputRef.current?.focus();
-      } else if (event.key.toLowerCase() === "s") {
-        event.preventDefault();
-        void persistAnnotation();
-      } else if (event.key.toLowerCase() === "n") {
-        event.preventDefault();
-        selectNextUnlabeledSegment();
-      } else if (event.key.toLowerCase() === "h") {
-        event.preventDefault();
-        setMasksVisible((value) => !value);
-      } else if (event.key.toLowerCase() === "o") {
-        event.preventDefault();
-        setOutlineOnly((value) => !value);
-      } else if (event.key === "Escape") {
-        event.preventDefault();
-        setSelectedSegmentId(null);
-        setActiveSegmentId(null);
-      }
-    }
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [hoverStack, labelSuggestions, selectedSegmentId, label, comment, status, sortedSegments]);
-
-  async function saveAnnotation(event: FormEvent) {
-    event.preventDefault();
-    await persistAnnotation();
-  }
-
-  async function persistAnnotation() {
-    if (!selectedSegmentId || !hasAnnotationText) return;
-    setSaving(true);
-    setError(null);
-    setSaveMessage(null);
-    try {
-      const saved = await saveImagesegSegmentAnnotation(
-        {
-          segmentId: selectedSegmentId,
-          runId: target.runId || view?.run_id,
-          mediaReferenceId: target.mediaReferenceId || view?.image?.media_reference_id,
-          imageIdentifier: target.imageIdentifier || view?.image?.image_identifier,
-          organId: target.organId,
-          label,
-          comment,
-          status,
-          metadata: {
-            segment: {
-              maskIndex: selectedSegment?.mask_index,
-              areaPx: selectedSegment?.area_px,
-              bboxXywh: selectedSegment?.bbox_xywh,
-            },
-            image: {
-              width: imageWidth || null,
-              height: imageHeight || null,
-              contentSha256: view?.image?.content_sha256 || null,
-              coordinateSpace: view?.coordinate_space || null,
-            },
-            displayTransform: {
-              renderedWidth: zoomedImageWidth || null,
-              renderedHeight: zoomedImageHeight || null,
-              scaleX: imageScaleX || null,
-              scaleY: imageScaleY || null,
-              zoom,
-              panX: Math.round(pan.x),
-              panY: Math.round(pan.y),
-            },
-          },
-        },
-        actor
-      );
-      setAnnotations((current) => ({ ...current, [saved.segmentId]: saved }));
-      setSaveMessage("Annotation saved");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to save annotation");
-    } finally {
-      setSaving(false);
-    }
-  }
-
-  function applyImageSegmentViewState(state: ImagesegViewState) {
-    setMaskOpacity(clampNumber(Number(state.maskOpacity ?? IMAGESEG_DEFAULT_VIEW_STATE.maskOpacity), 0.05, 0.75));
-    setOutlineOnly(Boolean(state.outlineOnly ?? IMAGESEG_DEFAULT_VIEW_STATE.outlineOnly));
-    setMasksVisible(Boolean(state.masksVisible ?? IMAGESEG_DEFAULT_VIEW_STATE.masksVisible));
-    setIsolateSelected(Boolean(state.isolateSelected ?? IMAGESEG_DEFAULT_VIEW_STATE.isolateSelected));
-    setDimNonSelected(Boolean(state.dimNonSelected ?? IMAGESEG_DEFAULT_VIEW_STATE.dimNonSelected));
-    setSegmentSort(typeof state.segmentSort === "string" ? state.segmentSort : IMAGESEG_DEFAULT_VIEW_STATE.segmentSort);
-    if (typeof state.zoom === "number") setZoom(clampNumber(state.zoom, IMAGESEG_MIN_ZOOM, IMAGESEG_MAX_ZOOM));
-    if (state.pan && typeof state.pan.x === "number" && typeof state.pan.y === "number") setPan({ x: state.pan.x, y: state.pan.y });
-    if (state.selectedSegmentId) setSelectedSegmentId(state.selectedSegmentId);
-  }
-
-  function selectNextUnlabeledSegment() {
-    const startIndex = Math.max(0, selectedIndex + 1);
-    const next = [...sortedSegments.slice(startIndex), ...sortedSegments.slice(0, startIndex)].find((segment) => !segment.annotation?.label);
-    if (next) selectSegment(next.segment_id);
-  }
-
-  function selectRelativeSegment(offset: number) {
-    if (!sortedSegments.length) return;
-    const current = selectedIndex >= 0 ? selectedIndex : 0;
-    const nextIndex = (current + offset + sortedSegments.length) % sortedSegments.length;
-    selectSegment(sortedSegments[nextIndex].segment_id);
-  }
-
-  function updateHoverStack(event: PointerEvent<HTMLElement | SVGSVGElement> | MouseEvent<HTMLElement | SVGSVGElement>) {
-    const result = imageSegmentStackFromEvent(event);
-    if (!result) return;
-    setHoverStack(result.stack);
-    setActiveSegmentId(result.stack[0]?.segment_id || null);
-    setStackCursor(result.cursor);
-  }
-
-  function clearHoverStack() {
-    setHoverStack([]);
-    setStackCursor(null);
-    setActiveSegmentId(null);
-    setHoverMessage(null);
-  }
-
-  function selectSegment(segmentId: string) {
-    setSelectedSegmentId(segmentId);
-    setActiveSegmentId(segmentId);
-  }
-
-  function selectSegmentFromPoint(event: MouseEvent<HTMLElement> | PointerEvent<HTMLElement>) {
-    const result = imageSegmentStackFromEvent(event);
-    const segment = result?.stack[0];
-    if (!segment) return;
-    setHoverStack(result.stack);
-    setStackCursor(result.cursor);
-    selectSegment(segment.segment_id);
-  }
-
-  function startImagePan(event: PointerEvent<HTMLElement>) {
-    if (zoom <= 1) return;
-    panGestureRef.current = { pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, panX: pan.x, panY: pan.y, moved: false };
-    event.currentTarget.setPointerCapture?.(event.pointerId);
-  }
-
-  function updateImagePan(event: PointerEvent<HTMLElement>) {
-    const gesture = panGestureRef.current;
-    if (!gesture || gesture.pointerId !== event.pointerId) {
-      updateHoverStack(event);
-      return;
-    }
-    const dx = event.clientX - gesture.startX;
-    const dy = event.clientY - gesture.startY;
-    if (Math.abs(dx) + Math.abs(dy) > 4) gesture.moved = true;
-    setPan({ x: gesture.panX + dx, y: gesture.panY + dy });
-    updateHoverStack(event);
-  }
-
-  function endImagePan(event: PointerEvent<HTMLElement>) {
-    const gesture = panGestureRef.current;
-    panGestureRef.current = null;
-    event.currentTarget.releasePointerCapture?.(event.pointerId);
-    if (!gesture || !gesture.moved) {
-      selectSegmentFromPoint(event);
-    }
-  }
-
-  function startImageMousePan(event: MouseEvent<HTMLElement>) {
-    if (zoom <= 1 || panGestureRef.current) return;
-    panGestureRef.current = { pointerId: -1, startX: event.clientX, startY: event.clientY, panX: pan.x, panY: pan.y, moved: false };
-  }
-
-  function updateImageMousePan(event: MouseEvent<HTMLElement>) {
-    const gesture = panGestureRef.current;
-    if (!gesture || gesture.pointerId !== -1 || event.buttons !== 1) {
-      updateHoverStack(event);
-      return;
-    }
-    const dx = event.clientX - gesture.startX;
-    const dy = event.clientY - gesture.startY;
-    if (Math.abs(dx) + Math.abs(dy) > 4) gesture.moved = true;
-    setPan({ x: gesture.panX + dx, y: gesture.panY + dy });
-    updateHoverStack(event);
-  }
-
-  function endImageMousePan(event: MouseEvent<HTMLElement>) {
-    const gesture = panGestureRef.current;
-    if (!gesture || gesture.pointerId !== -1) return;
-    panGestureRef.current = null;
-    if (!gesture.moved) {
-      selectSegmentFromPoint(event);
-    }
-  }
-
-  function handleZoomWheel(event: ReactWheelEvent<HTMLElement>) {
-    if (!imageSrc || imageWidth <= 0 || imageHeight <= 0) return;
-    event.preventDefault();
-    const rect = event.currentTarget.getBoundingClientRect();
-    const origin = { x: event.clientX - rect.left, y: event.clientY - rect.top };
-    const direction = event.deltaY < 0 ? 1 : -1;
-    applyImageZoom(zoom + direction * IMAGESEG_ZOOM_STEP * Math.max(1, zoom), origin);
-  }
-
-  function applyImageZoom(nextZoom: number, origin?: { x: number; y: number }) {
-    const clampedZoom = clampNumber(nextZoom, IMAGESEG_MIN_ZOOM, IMAGESEG_MAX_ZOOM);
-    const previousZoom = zoom;
-    if (clampedZoom === previousZoom) return;
-    if (clampedZoom === IMAGESEG_MIN_ZOOM) {
-      setZoom(clampedZoom);
-      setPan({ x: 0, y: 0 });
-      return;
-    }
-    setZoom(clampedZoom);
-    if (!origin) return;
-    const ratio = clampedZoom / previousZoom;
-    setPan((current) => ({
-      x: origin.x - (origin.x - current.x) * ratio,
-      y: origin.y - (origin.y - current.y) * ratio,
-    }));
-  }
-
-  function resetImageZoom() {
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
-  }
-
-  function fitImageToStage() {
-    setZoom(1);
-    setPan({ x: 0, y: 0 });
-  }
-
-  function zoomToNativeSize() {
-    const nextZoom = imageScaleX > 0 ? clampNumber(1 / imageScaleX, IMAGESEG_MIN_ZOOM, IMAGESEG_MAX_ZOOM) : 1;
-    setZoom(nextZoom);
-    setPan({ x: 0, y: 0 });
-  }
-
-  function zoomToSelectedSegment() {
-    if (!selectedPreparedSegment || !renderedImageSize.width || !renderedImageSize.height) return;
-    const bbox = selectedPreparedSegment.bbox;
-    const margin = 1.8;
-    const zoomX = bbox.width > 0 ? imageWidth / (bbox.width * margin) : IMAGESEG_MAX_ZOOM;
-    const zoomY = bbox.height > 0 ? imageHeight / (bbox.height * margin) : IMAGESEG_MAX_ZOOM;
-    const nextZoom = clampNumber(Math.min(zoomX, zoomY), IMAGESEG_MIN_ZOOM, IMAGESEG_MAX_ZOOM);
-    const centerX = ((bbox.x + bbox.width / 2) / imageWidth) * renderedImageSize.width;
-    const centerY = ((bbox.y + bbox.height / 2) / imageHeight) * renderedImageSize.height;
-    setZoom(nextZoom);
-    setPan({
-      x: canvasSize.width / 2 - centerX * nextZoom,
-      y: canvasSize.height / 2 - centerY * nextZoom,
-    });
-  }
-
-  function applyLabelSuggestion(term: string) {
-    setLabel(term);
-    requestAnimationFrame(() => labelInputRef.current?.focus());
-  }
-
-  function imageSegmentStackFromEvent(event: PointerEvent<HTMLElement | SVGSVGElement> | MouseEvent<HTMLElement | SVGSVGElement>) {
-    if (!view || imageWidth <= 0 || imageHeight <= 0) return null;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = clampNumber(((event.clientX - rect.left) / rect.width) * imageWidth, 0, imageWidth);
-    const y = clampNumber(((event.clientY - rect.top) / rect.height) * imageHeight, 0, imageHeight);
-    const hitSet = new Set(hitIds);
-    const tolerance = Math.max(1, IMAGESEG_CLICK_TOLERANCE_CSS_PX / Math.max(imageScaleX, imageScaleY, 0.1));
-    let stack = preparedSegments
-      .filter((segment) => hitSet.has(segment.segment_id) && imageSegmentPointInExpandedBbox(segment.bbox, x, y, 0) && imagesegSegmentContainsPoint(segment, x, y, imageWidth, imageHeight))
-      .sort((left, right) => Number(left.area_px || Number.MAX_SAFE_INTEGER) - Number(right.area_px || Number.MAX_SAFE_INTEGER));
-    const nearest = imageSegmentNearestSegment(preparedSegments.filter((segment) => hitSet.has(segment.segment_id)), x, y);
-    if (!stack.length) {
-      stack = preparedSegments
-        .filter((segment) => {
-          const area = Number(segment.area_px || 0);
-          return hitSet.has(segment.segment_id) && area < 16000 && imageSegmentPointInExpandedBbox(segment.bbox, x, y, tolerance);
-        })
-        .sort((left, right) => imageSegmentBboxDistance(left.bbox, x, y) - imageSegmentBboxDistance(right.bbox, x, y))
-        .slice(0, 1);
-    }
-    if (stack.length) {
-      setHoverMessage(stack.length === 1 ? "1 segment" : `${stack.length} segments`);
-    } else if (nearest && nearest.distance <= tolerance * 3) {
-      setHoverMessage(`nearest ${Math.round(nearest.distance)} px`);
-    } else {
-      setHoverMessage("no segment");
-    }
-    return {
-      stack,
-      cursor: { x: event.clientX - rect.left, y: event.clientY - rect.top, width: rect.width, height: rect.height },
-    };
-  }
-
-  return (
-    <article className="imageseg-annotation-page">
-      <div className="evidence-dossier-head">
-        <div>
-          <p className="eyebrow">Image segmentation</p>
-          <h2>Organ image annotations</h2>
-          <p>{view ? `${view.segment_count ?? view.segments.length} segment${(view.segment_count ?? view.segments.length) === 1 ? "" : "s"} loaded` : "Loading segment overlay"}</p>
-        </div>
-        <div className="imageseg-target-summary">
-          <span>{target.organId || view?.image?.source_record_id || "Organ media"}</span>
-          <strong>{target.mediaReferenceId || view?.image?.media_reference_id || target.runId || view?.run_id || "annotation target"}</strong>
-        </div>
-      </div>
-      {loading && <p className="notice">Loading image segments...</p>}
-      {error && <p className="notice error">{error}</p>}
-      {view && (
-        <div className="imageseg-annotation-layout">
-          <section className="imageseg-stage-panel" aria-label="Segmented organ image">
-	            <div className="imageseg-canvas" ref={imageCanvasRef} onWheel={handleZoomWheel}>
-	              {imageSrc && imageWidth > 0 && imageHeight > 0 ? (
-	                <div
-                    className="imageseg-image-frame"
-                    ref={imageFrameRef}
-                    style={imageSegmentFrameStyle(imageWidth, imageHeight, zoom, pan)}
-                  >
-	                  <img src={imageSrc} alt="" />
-	                  <svg
-                      className={`imageseg-overlay ${!masksVisible ? "masks-hidden" : ""} ${outlineOnly ? "outline-only" : ""} ${isolateSelected ? "isolate-selected" : ""} ${dimNonSelected ? "dim-non-selected" : ""}`}
-                      viewBox={`0 0 ${imageWidth} ${imageHeight}`}
-                      aria-label="Image segment overlay"
-                      role="img"
-                      style={{ "--imageseg-mask-opacity": String(maskOpacity) } as CSSProperties}
-                    >
-	                    <rect className="imageseg-pointer-plane" x="0" y="0" width={imageWidth} height={imageHeight} />
-	                    <g className="imageseg-render-layer">
-	                      {renderIds.map((segmentId) => {
-	                        const segment = preparedSegmentsById.get(segmentId);
-	                        const path = segment?.path || "";
-	                        if (!segment || !path) return null;
-	                        const hasAnnotation = Boolean(annotations[segment.segment_id]);
-	                        const isSelected = selectedSegmentId === segment.segment_id;
-	                        const isActive = activeSegmentId === segment.segment_id;
-	                        const isStacked = hoverStackIds.has(segment.segment_id);
-	                        const stackIndex = hoverStackIndexById.get(segment.segment_id);
-	                        return (
-	                          <path
-	                            key={`render:${segment.segment_id}`}
-	                            className={`imageseg-segment-path ${hasAnnotation ? "annotated" : ""} ${isStacked ? "stacked" : ""} ${isSelected ? "selected" : ""} ${isActive ? "active" : ""}`}
-	                            data-segment-id={segment.segment_id}
-	                            data-stack-key={stackIndex != null ? IMAGESEG_STACK_KEYS[stackIndex] : undefined}
-	                            style={stackIndex != null ? imageSegmentStackStyle(stackIndex) : undefined}
-	                            d={path}
-	                            fillRule="evenodd"
-	                          />
-	                        );
-	                      })}
-	                    </g>
-	                    <g className="imageseg-hit-layer">
-	                      {hitIds.map((segmentId) => {
-	                        const segment = preparedSegmentsById.get(segmentId);
-	                        const path = segment?.path || "";
-	                        if (!segment || !path) return null;
-	                        return (
-	                          <path
-	                            key={`hit:${segment.segment_id}`}
-	                            className="imageseg-segment-hit"
-	                            data-segment-id={segment.segment_id}
-	                            d={path}
-	                            fillRule="evenodd"
-	                          />
-	                        );
-	                      })}
-	                    </g>
-	                  </svg>
-	                  <div
-	                    className="imageseg-interaction-plane"
-                      onPointerDown={startImagePan}
-	                    onPointerMove={updateImagePan}
-                      onPointerUp={endImagePan}
-                      onPointerCancel={endImagePan}
-                      onMouseDown={startImageMousePan}
-	                    onMouseMove={updateImageMousePan}
-                      onMouseUp={endImageMousePan}
-	                    onPointerLeave={clearHoverStack}
-	                    onMouseLeave={clearHoverStack}
-	                  />
-	                  {stackCursor && (hoverStack.length > 0 || hoverMessage) && (
-	                    <div
-	                      className="imageseg-cursor-legend"
-	                      style={{
-	                        left: `${clampNumber(stackCursor.x + 14, 8, Math.max(8, stackCursor.width - 220))}px`,
-	                        top: `${clampNumber(stackCursor.y + 14, 8, Math.max(8, stackCursor.height - 120))}px`,
-                          transform: `scale(${1 / zoom})`,
-	                      }}
-	                    >
-                        {hoverMessage && hoverStack.length === 0 && <div className="imageseg-cursor-legend-note">{hoverMessage}</div>}
-	                      {hoverStack.slice(0, IMAGESEG_STACK_KEYS.length).map((segment, index) => (
-	                        <div
-	                          key={segment.segment_id}
-	                          className={`imageseg-cursor-legend-row ${segment.segment_id === selectedSegmentId ? "selected" : ""}`}
-	                          data-segment-id={segment.segment_id}
-	                          data-stack-key={IMAGESEG_STACK_KEYS[index]}
-	                          style={imageSegmentStackStyle(index)}
-	                        >
-	                          <kbd>{IMAGESEG_STACK_KEYS[index]}</kbd>
-	                          <span>{segment.area_px ? `${formatInteger(segment.area_px)} px` : "area unknown"}</span>
-	                        </div>
-	                      ))}
-	                    </div>
-	                  )}
-	                </div>
-	              ) : (
-                <div className="media-reference-preview">
-                  <Image size={28} />
-                  <span>No browser-loadable image is available for this segment payload</span>
-                </div>
-	              )}
-                {imageSrc && imageWidth > 0 && imageHeight > 0 && (
-                  <div className="imageseg-zoom-controls" aria-label="Image zoom controls">
-                    <button type="button" onClick={() => applyImageZoom(zoom - IMAGESEG_ZOOM_STEP * Math.max(1, zoom))} disabled={zoom <= IMAGESEG_MIN_ZOOM} aria-label="Zoom out" title="Zoom out">
-                      <ZoomOut size={16} />
-                    </button>
-                    <span>{Math.round(zoom * 100)}%</span>
-                    <button type="button" onClick={() => applyImageZoom(zoom + IMAGESEG_ZOOM_STEP * Math.max(1, zoom))} disabled={zoom >= IMAGESEG_MAX_ZOOM} aria-label="Zoom in" title="Zoom in">
-                      <ZoomIn size={16} />
-                    </button>
-                    <button type="button" onClick={fitImageToStage} aria-label="Fit image" title="Fit image">
-                      <Maximize2 size={16} />
-                    </button>
-                    <button type="button" onClick={zoomToNativeSize} aria-label="Show image at 100%" title="100%">
-                      <Crosshair size={16} />
-                    </button>
-                    <button type="button" onClick={zoomToSelectedSegment} disabled={!selectedPreparedSegment} aria-label="Zoom to selected segment" title="Zoom to selected">
-                      <Move size={16} />
-                    </button>
-                    <button type="button" onClick={resetImageZoom} disabled={zoom === 1 && pan.x === 0 && pan.y === 0} aria-label="Reset zoom" title="Reset zoom">
-                      <RotateCcw size={16} />
-                    </button>
-                  </div>
-                )}
-                {imageSrc && imageWidth > 0 && imageHeight > 0 && (
-                  <div className="imageseg-mask-controls" aria-label="Mask display controls">
-                    <button type="button" onClick={() => setMasksVisible((value) => !value)} aria-label={masksVisible ? "Hide masks" : "Show masks"} title={masksVisible ? "Hide masks" : "Show masks"}>
-                      {masksVisible ? <Eye size={16} /> : <EyeOff size={16} />}
-                    </button>
-                    <button type="button" className={outlineOnly ? "active" : ""} onClick={() => setOutlineOnly((value) => !value)} aria-label="Outline only" title="Outline only">
-                      <Layers3 size={16} />
-                    </button>
-                    <button type="button" className={isolateSelected ? "active" : ""} onClick={() => setIsolateSelected((value) => !value)} disabled={!selectedSegmentId} aria-label="Isolate selected segment" title="Isolate selected">
-                      <ListChecks size={16} />
-                    </button>
-                    <label>
-                      <span>{Math.round(maskOpacity * 100)}%</span>
-                      <input type="range" min="0.05" max="0.75" step="0.05" value={maskOpacity} onChange={(event) => setMaskOpacity(Number(event.target.value))} aria-label="Mask opacity" />
-                    </label>
-                  </div>
-                )}
-                {imageSrc && imageWidth > 0 && imageHeight > 0 && (
-                  <div className="imageseg-minimap" aria-label="Image viewport overview">
-                    <svg viewBox={`0 0 ${imageWidth} ${imageHeight}`}>
-                      <rect x="0" y="0" width={imageWidth} height={imageHeight} />
-                      {selectedPreparedSegment && <path d={selectedPreparedSegment.path} />}
-                      {miniViewport && <rect className="viewport" x={miniViewport.x} y={miniViewport.y} width={miniViewport.width} height={miniViewport.height} />}
-                    </svg>
-                  </div>
-                )}
-	            </div>
-	            {imageWidth > 0 && imageHeight > 0 && (
-	              <div className="imageseg-dimension-strip">
-	                <span>Original {formatInteger(imageWidth)} x {formatInteger(imageHeight)} px</span>
-	                <span>Display {formatInteger(zoomedImageWidth || imageWidth)} x {formatInteger(zoomedImageHeight || imageHeight)} px</span>
-	                {imageScaleX > 0 && imageScaleY > 0 && <span>Scale {imageScaleX.toFixed(2)} x {imageScaleY.toFixed(2)}</span>}
-	              </div>
-	            )}
-	          </section>
-          <aside className="imageseg-side-panel">
-            <div className="imageseg-segment-summary">
-              <span>{activeSegment?.segment_id || "No segment selected"}</span>
-              <strong>{activeSegment?.area_px ? `${formatInteger(activeSegment.area_px)} px` : "area unknown"}</strong>
-              <small>{activeSegment?.class_label || "Unlabeled generated segment"}</small>
-            </div>
-            <div className="imageseg-workflow-controls">
-              <button type="button" onClick={() => selectRelativeSegment(-1)} disabled={!sortedSegments.length} aria-label="Previous segment">
-                <ChevronLeft size={16} />
-              </button>
-              <button type="button" onClick={selectNextUnlabeledSegment} disabled={unlabeledCount === 0}>
-                <ListChecks size={16} />
-                <span>{unlabeledCount}</span>
-              </button>
-              <button type="button" onClick={() => selectRelativeSegment(1)} disabled={!sortedSegments.length} aria-label="Next segment">
-                <ChevronRight size={16} />
-              </button>
-              <select value={segmentSort} onChange={(event) => setSegmentSort(event.target.value)} aria-label="Segment sort">
-                <option value="unlabeled">Unlabeled first</option>
-                <option value="smallest">Smallest first</option>
-                <option value="largest">Largest first</option>
-                <option value="mask">Mask order</option>
-                <option value="selected">Selected first</option>
-              </select>
-            </div>
-            <form className="imageseg-annotation-form" onSubmit={saveAnnotation}>
-              <label>
-                <span>Segment ID</span>
-                <input value={selectedSegmentId || ""} readOnly />
-              </label>
-              <label>
-                <span>Label</span>
-                <input ref={labelInputRef} value={label} onChange={(event) => setLabel(event.target.value)} placeholder="Console, pipework, casework" disabled={!selectedSegmentId} />
-              </label>
-              {selectedSegmentId && labelSuggestions.length > 0 && (
-                <div className="imageseg-label-suggestions" aria-label="Previously used labels">
-                  {labelSuggestions.map((term) => (
-                    <button type="button" key={term} onClick={() => applyLabelSuggestion(term)}>
-                      {term}
-                    </button>
-                  ))}
-                </div>
-              )}
-              <label>
-                <span>Comment</span>
-                <textarea value={comment} onChange={(event) => setComment(event.target.value)} placeholder="Add interpretation or review notes for this segment" disabled={!selectedSegmentId} />
-              </label>
-              <label>
-                <span>Status</span>
-                <select value={status} onChange={(event) => setStatus(event.target.value)} disabled={!selectedSegmentId}>
-                  {IMAGESEG_STATUS_OPTIONS.map((option) => (
-                    <option value={option} key={option}>{friendlyLabel(option)}</option>
-                  ))}
-                </select>
-              </label>
-	              <button type="submit" disabled={!selectedSegmentId || !hasAnnotationText || saving}>
-	                {saving ? "Saving..." : "Save annotation"}
-	              </button>
-              {saveMessage && <p className="notice success">{saveMessage}</p>}
-            </form>
-            <div className="imageseg-segment-list">
-              {sortedSegments.slice(0, 64).map((segment) => (
-                <button
-                  type="button"
-                  key={segment.segment_id}
-                  className={segment.segment_id === selectedSegmentId ? "selected" : ""}
-                  onClick={() => selectSegment(segment.segment_id)}
-                >
-                  <svg viewBox={`${segment.bbox.x} ${segment.bbox.y} ${Math.max(1, segment.bbox.width)} ${Math.max(1, segment.bbox.height)}`} aria-hidden="true">
-                    <path d={segment.path} />
-                  </svg>
-                  <span>
-                    <strong>{segment.annotation?.label || `#${segment.mask_index ?? "?"}`}</strong>
-                    <small>{segment.area_px ? `${formatInteger(segment.area_px)} px` : "area unknown"}</small>
-                  </span>
-                </button>
-              ))}
-            </div>
-            <div className="imageseg-annotation-list">
-              <h3>Saved annotations</h3>
-              {Object.values(annotations).length === 0 && <p className="muted">No segment annotations saved yet.</p>}
-              {Object.values(annotations).map((annotation) => (
-                <button type="button" key={annotation.segmentId} onClick={() => setSelectedSegmentId(annotation.segmentId)}>
-                  <strong>{annotation.label || annotation.segmentId}</strong>
-                  <span>{annotation.comment || friendlyLabel(annotation.status || "draft")}</span>
-                </button>
-              ))}
-            </div>
-            {selectedSegmentId && (
-              <div className="imageseg-audit-list">
-                <h3>History</h3>
-                {annotationAudit.length === 0 && <p className="muted">No saved history yet.</p>}
-                {annotationAudit.slice(0, 5).map((entry) => (
-                  <div key={entry.auditId || `${entry.segmentId}:${entry.createdAt}`}>
-                    <strong>{friendlyLabel(entry.action || "update")}</strong>
-                    <span>{entry.actorId || "unknown actor"} {entry.createdAt ? `· ${formatDateTime(entry.createdAt)}` : ""}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </aside>
-        </div>
-      )}
-    </article>
-  );
-}
-
-function imageSegmentViewStateKey(target: ImagesegAnnotationTarget): string {
-  return [
-    target.runId ? `run:${target.runId}` : "",
-    target.mediaReferenceId ? `media:${target.mediaReferenceId}` : "",
-    target.imageIdentifier ? `image:${target.imageIdentifier}` : "",
-    target.organId ? `organ:${target.organId}` : "",
-  ].filter(Boolean).join("|") || "imageseg:annotation";
-}
-
-function imageSegmentPreparedSegments(
-  segments: ImagesegSegment[],
-  annotations: Record<string, ImagesegSegmentAnnotation>,
-  width: number,
-  height: number
-): ImagesegPreparedSegment[] {
-  return segments.map((segment) => ({
-    ...segment,
-    path: imagesegPathFromPolygons(segment.polygon_norm, width, height),
-    bbox: imageSegmentBbox(segment, width, height),
-    annotation: annotations[segment.segment_id],
-  }));
-}
-
-function imageSegmentSortedSegments(segments: ImagesegPreparedSegment[], sortMode: string): ImagesegPreparedSegment[] {
-  return [...segments].sort((left, right) => {
-    if (sortMode === "selected") {
-      const leftAnnotated = left.annotation ? 1 : 0;
-      const rightAnnotated = right.annotation ? 1 : 0;
-      if (leftAnnotated !== rightAnnotated) return leftAnnotated - rightAnnotated;
-    }
-    if (sortMode === "unlabeled") {
-      const leftLabel = left.annotation?.label ? 1 : 0;
-      const rightLabel = right.annotation?.label ? 1 : 0;
-      if (leftLabel !== rightLabel) return leftLabel - rightLabel;
-    }
-    if (sortMode === "smallest") return Number(left.area_px || 0) - Number(right.area_px || 0);
-    if (sortMode === "largest") return Number(right.area_px || 0) - Number(left.area_px || 0);
-    return Number(left.mask_index || 0) - Number(right.mask_index || 0);
-  });
-}
-
-function imagesegPathFromPolygons(polygons: unknown, width: number, height: number): string {
-  if (!Array.isArray(polygons) || width <= 0 || height <= 0) return "";
-  const commands: string[] = [];
-  for (const polygon of polygons) {
-    if (!Array.isArray(polygon)) continue;
-    for (const ring of polygon) {
-      if (!Array.isArray(ring) || ring.length < 3) continue;
-      ring.forEach((point, index) => {
-        if (!Array.isArray(point) || point.length < 2) return;
-        const x = clampNumber(Number(point[0]) * width, 0, width);
-        const y = clampNumber(Number(point[1]) * height, 0, height);
-        commands.push(`${index === 0 ? "M" : "L"} ${x.toFixed(2)} ${y.toFixed(2)}`);
-      });
-      commands.push("Z");
-    }
-  }
-  return commands.join(" ");
-}
-
-function imageSegmentBbox(segment: ImagesegSegment, width: number, height: number): { x: number; y: number; width: number; height: number } {
-  const bbox = segment.bbox_xywh;
-  if (Array.isArray(bbox) && bbox.length >= 4) {
-    return { x: Number(bbox[0]) || 0, y: Number(bbox[1]) || 0, width: Number(bbox[2]) || 1, height: Number(bbox[3]) || 1 };
-  }
-  let minX = width;
-  let minY = height;
-  let maxX = 0;
-  let maxY = 0;
-  if (Array.isArray(segment.polygon_norm)) {
-    for (const polygon of segment.polygon_norm) {
-      if (!Array.isArray(polygon)) continue;
-      for (const ring of polygon) {
-        if (!Array.isArray(ring)) continue;
-        for (const point of ring) {
-          if (!Array.isArray(point) || point.length < 2) continue;
-          const x = clampNumber(Number(point[0]) * width, 0, width);
-          const y = clampNumber(Number(point[1]) * height, 0, height);
-          minX = Math.min(minX, x);
-          minY = Math.min(minY, y);
-          maxX = Math.max(maxX, x);
-          maxY = Math.max(maxY, y);
-        }
-      }
-    }
-  }
-  if (minX > maxX || minY > maxY) return { x: 0, y: 0, width: 1, height: 1 };
-  return { x: minX, y: minY, width: Math.max(1, maxX - minX), height: Math.max(1, maxY - minY) };
-}
-
-function imageSegmentPointInExpandedBbox(bbox: { x: number; y: number; width: number; height: number }, x: number, y: number, tolerance: number): boolean {
-  return x >= bbox.x - tolerance && x <= bbox.x + bbox.width + tolerance && y >= bbox.y - tolerance && y <= bbox.y + bbox.height + tolerance;
-}
-
-function imageSegmentBboxDistance(bbox: { x: number; y: number; width: number; height: number }, x: number, y: number): number {
-  const dx = Math.max(bbox.x - x, 0, x - (bbox.x + bbox.width));
-  const dy = Math.max(bbox.y - y, 0, y - (bbox.y + bbox.height));
-  return Math.hypot(dx, dy);
-}
-
-function imageSegmentNearestSegment(segments: ImagesegPreparedSegment[], x: number, y: number): { segment: ImagesegPreparedSegment; distance: number } | null {
-  let nearest: { segment: ImagesegPreparedSegment; distance: number } | null = null;
-  for (const segment of segments) {
-    const distance = imageSegmentBboxDistance(segment.bbox, x, y);
-    if (!nearest || distance < nearest.distance) nearest = { segment, distance };
-  }
-  return nearest;
-}
-
-function imagesegSegmentContainsPoint(segment: ImagesegSegment, x: number, y: number, width: number, height: number): boolean {
-  if (!Array.isArray(segment.polygon_norm) || width <= 0 || height <= 0) return false;
-  let contains = false;
-  for (const polygon of segment.polygon_norm) {
-    if (!Array.isArray(polygon)) continue;
-    for (const ring of polygon) {
-      if (!Array.isArray(ring) || ring.length < 3) continue;
-      if (imagesegRingContainsPoint(ring, x, y, width, height)) contains = !contains;
-    }
-  }
-  return contains;
-}
-
-function imagesegRingContainsPoint(ring: unknown[], x: number, y: number, width: number, height: number): boolean {
-  let inside = false;
-  for (let index = 0, previousIndex = ring.length - 1; index < ring.length; previousIndex = index, index += 1) {
-    const point = ring[index];
-    const previousPoint = ring[previousIndex];
-    if (!Array.isArray(point) || !Array.isArray(previousPoint) || point.length < 2 || previousPoint.length < 2) continue;
-    const px = clampNumber(Number(point[0]) * width, 0, width);
-    const py = clampNumber(Number(point[1]) * height, 0, height);
-    const qx = clampNumber(Number(previousPoint[0]) * width, 0, width);
-    const qy = clampNumber(Number(previousPoint[1]) * height, 0, height);
-    if ((py > y) !== (qy > y) && x < ((qx - px) * (y - py)) / (qy - py || 1) + px) {
-      inside = !inside;
-    }
-  }
-  return inside;
-}
-
-function imageSegmentStackKeyIndex(key: string): number {
-  return IMAGESEG_STACK_KEYS.indexOf(key.toLowerCase());
-}
-
-function imageSegmentStackStyle(index: number): CSSProperties {
-  const color = IMAGESEG_STACK_COLORS[index % IMAGESEG_STACK_COLORS.length];
-  return {
-    "--imageseg-stack-fill": color.fill,
-    "--imageseg-stack-stroke": color.stroke,
-    "--imageseg-stack-swatch": color.swatch,
-  } as CSSProperties;
-}
-
-function imageSegmentSuggestionLabels(suggestions: ImagesegLabelSuggestion[], currentLabel: string): string[] {
-  const current = currentLabel.trim().toLowerCase();
-  return suggestions
-    .map((item) => item.label?.trim())
-    .filter((item): item is string => Boolean(item))
-    .filter((item, index, all) => all.findIndex((candidate) => candidate.toLowerCase() === item.toLowerCase()) === index)
-    .filter((item) => !current || (item.toLowerCase() !== current && item.toLowerCase().includes(current)))
-    .slice(0, 10);
-}
-
-function imageSegmentLabelSuggestions(annotations: ImagesegSegmentAnnotation[], currentLabel: string): string[] {
-  const current = currentLabel.trim().toLowerCase();
-  const terms = new Map<string, { label: string; count: number; latest: string }>();
-  for (const annotation of annotations) {
-    for (const term of imageSegmentLabelTerms(annotation.label)) {
-      const key = term.toLowerCase();
-      if (!key || key === current) continue;
-      if (current && !key.includes(current)) continue;
-      const existing = terms.get(key);
-      const updatedAt = annotation.updatedAt || annotation.createdAt || "";
-      if (existing) {
-        existing.count += 1;
-        if (updatedAt > existing.latest) existing.latest = updatedAt;
-      } else {
-        terms.set(key, { label: term, count: 1, latest: updatedAt });
-      }
-    }
-  }
-  return Array.from(terms.values())
-    .sort((left, right) => right.count - left.count || right.latest.localeCompare(left.latest) || left.label.localeCompare(right.label))
-    .slice(0, 10)
-    .map((item) => item.label);
-}
-
-function imageSegmentLabelTerms(label?: string | null): string[] {
-  return (label || "")
-    .split(/[;,|\n]/)
-    .map((term) => term.trim().replace(/\s+/g, " "))
-    .filter(Boolean);
-}
-
-function imageSegmentFrameStyle(width: number, height: number, zoom = 1, pan: { x: number; y: number } = { x: 0, y: 0 }): CSSProperties {
-  const ratio = width > 0 && height > 0 ? width / height : 1;
-  return {
-    aspectRatio: `${width} / ${height}`,
-    "--imageseg-frame-max-width": `min(100%, calc(min(72vh, 760px) * ${ratio}))`,
-    transform: `translate(${pan.x.toFixed(1)}px, ${pan.y.toFixed(1)}px) scale(${zoom.toFixed(3)})`,
-  } as CSSProperties;
-}
-
-function imageSegmentMiniViewport({
-  imageWidth,
-  imageHeight,
-  renderedImageSize,
-  canvasSize,
-  zoom,
-  pan,
-}: {
-  imageWidth: number;
-  imageHeight: number;
-  renderedImageSize: { width: number; height: number };
-  canvasSize: { width: number; height: number };
-  zoom: number;
-  pan: { x: number; y: number };
-}): { x: number; y: number; width: number; height: number } | null {
-  if (!imageWidth || !imageHeight || !renderedImageSize.width || !renderedImageSize.height || !canvasSize.width || !canvasSize.height || !zoom) return null;
-  const scaleX = imageWidth / (renderedImageSize.width * zoom);
-  const scaleY = imageHeight / (renderedImageSize.height * zoom);
-  const x = clampNumber(-pan.x * scaleX, 0, imageWidth);
-  const y = clampNumber(-pan.y * scaleY, 0, imageHeight);
-  const width = clampNumber(canvasSize.width * scaleX, 1, imageWidth);
-  const height = clampNumber(canvasSize.height * scaleY, 1, imageHeight);
-  return { x, y, width, height };
-}
-
-function formatDateTime(value: string): string {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
-}
-
-function clampNumber(value: number, min: number, max: number): number {
-  if (!Number.isFinite(value)) return min;
-  return Math.min(max, Math.max(min, value));
 }
 
 function ResearchEvidenceBrowserPage({
@@ -12973,912 +11622,6 @@ function IconographyDetailPage({ recordId }: { recordId: string }) {
       )}
     </section>
   );
-}
-
-function readTemperamentCatalogueFilters() {
-  const params = new URLSearchParams(window.location.search);
-  const scope = params.get("scope");
-  const queryScope: "identity" | "evidence" | undefined = scope === "identity" || scope === "evidence" ? scope : undefined;
-  return {
-    queryValue: params.get("q") || "",
-    queryScope,
-    groupKey: params.get("group_key") || "",
-    precision: params.get("precise_variant") === "true" ? "precise" : params.get("precise_variant") === "false" ? "rounded" : "",
-    commentary: params.get("commentary_available") === "true" ? "available" : params.get("commentary_available") === "false" ? "missing" : "",
-    commentaryQuery: params.get("commentary_q") || "",
-    offset: positiveRouteInt(params.get("offset"), 0, 100_000),
-    sort: occurrenceSort(params.get("sort")),
-    match: occurrenceScope(params.get("occurrence_scope")),
-    minimum: params.get("min_occurrences") ?? "",
-    maximum: params.get("max_occurrences") ?? "",
-  };
-}
-
-function TemperamentsSection({ publicDatasetProfile }: { publicDatasetProfile: boolean }) {
-  const { t } = useUiLocale();
-  const [filters, setFilters] = useState(readTemperamentCatalogueFilters);
-  const { queryValue, queryScope, groupKey, precision, commentary, commentaryQuery, offset, sort, match, minimum, maximum } = filters;
-  const updateFilters = (change: Partial<typeof filters>) => setFilters((current) => ({ ...current, ...change, offset: 0 }));
-  const setOffset = (next: number) => setFilters((current) => ({ ...current, offset: next }));
-  const rangeIssue = occurrenceRangeIssue(minimum, maximum);
-  const requestKey = JSON.stringify(filters);
-  const [selectedIds, setSelectedIds] = useState(() => readTemperamentComparison(new URLSearchParams(window.location.search)));
-  const [result, setResult] = useState<{ key: string; data: TuningSystemList } | null>(null);
-  const list = result?.key === requestKey ? result.data : null;
-  const [error, setError] = useState<string | null>(null);
-  const pageSize = 6;
-  useEffect(() => {
-    setError(null);
-    if (rangeIssue) return;
-    const request = new AbortController();
-    fetchTemperaments({
-      mode: "surface",
-      query: queryValue,
-      queryScope,
-      groupKey: groupKey || undefined,
-      preciseVariant: precision === "" ? undefined : precision === "precise",
-      commentaryAvailable: commentary === "" ? undefined : commentary === "available",
-      commentaryQuery: commentaryQuery || undefined,
-      limit: pageSize,
-      offset,
-      sort,
-      occurrenceScope: match,
-      minOccurrences: minimum === "" ? undefined : Number(minimum),
-      maxOccurrences: maximum === "" ? undefined : Number(maximum),
-      signal: request.signal,
-    })
-      .then((data) => {
-        if (!request.signal.aborted) {
-          setResult({ key: requestKey, data });
-        }
-      })
-      .catch((err: Error) => {
-        if (!request.signal.aborted) setError(err.message);
-      });
-    return () => request.abort();
-  }, [commentary, commentaryQuery, groupKey, match, maximum, minimum, offset, precision, queryScope, queryValue, rangeIssue, requestKey, sort]);
-  useEffect(() => {
-    const onBack = () => {
-      setFilters(readTemperamentCatalogueFilters());
-      setSelectedIds(readTemperamentComparison(new URLSearchParams(window.location.search)));
-    };
-    window.addEventListener("popstate", onBack);
-    return () => window.removeEventListener("popstate", onBack);
-  }, []);
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    if (!/^\/temperaments\/?$/.test(url.pathname)) return;
-    const update = (key: string, value: string) => value ? url.searchParams.set(key, value) : url.searchParams.delete(key);
-    update("q", queryValue);
-    update("scope", queryScope || "");
-    update("group_key", groupKey);
-    update("precise_variant", precision ? String(precision === "precise") : "");
-    update("commentary_available", commentary ? String(commentary === "available") : "");
-    update("commentary_q", commentaryQuery);
-    update("offset", offset ? String(offset) : "");
-    update("sort", sort === "catalogue" ? "" : sort);
-    update("occurrence_scope", match === "all" ? "" : match);
-    update("min_occurrences", minimum);
-    update("max_occurrences", maximum);
-    update("compare", selectedIds.join(","));
-    if (url.href !== window.location.href) window.history.replaceState(window.history.state, "", url);
-  }, [commentary, commentaryQuery, groupKey, match, maximum, minimum, offset, precision, queryScope, queryValue, selectedIds, sort]);
-  const catalogueQuery = new URLSearchParams(window.location.search);
-  if (selectedIds.length) catalogueQuery.set("compare", selectedIds.join(","));
-  else catalogueQuery.delete("compare");
-  const catalogueHref = temperamentCatalogueHref(`/temperaments?${catalogueQuery}`);
-  const facets = result?.data.facets;
-  const publicProjection = publicDatasetProfile || Boolean(result?.data.source?.publicProjection);
-  const visibleItems = useMemo(() => new Map((list?.items ?? []).map(item => [item.tuningId || item.id, item])), [list]);
-  const toggleSelected = (item: TuningSystemSummary) => {
-    const id = item.tuningId || item.id;
-    setSelectedIds((current) => {
-      if (current.includes(id)) return current.filter(value => value !== id);
-      if (current.length >= MAX_TEMPERAMENT_COMPARISON) return current;
-      return [...current, id];
-    });
-  };
-  return (
-    <section className="entity-section research-evidence-browser temperaments-browser" id="temperaments" tabIndex={-1}>
-      <SectionHead
-        headingLevel={1}
-        eyebrow={t("tuning.catalogue.eyebrow", "Tuning systems", "Stimmungssysteme")}
-        title={t("tuning.catalogue.title", "Historical temperaments", "Historische Stimmungen")}
-        detail={<>
-          {list ? t("tuning.catalogue.total", "{total, plural, one {# temperament} other {# temperaments}}", "{total, plural, one {# Stimmungssystem} other {# Stimmungssysteme}}", { total: list.total })
-            : t("tuning.catalogue.loading", "Loading temperaments…", "Stimmungssysteme werden geladen …")}
-          {" · "}<a href="https://bund-deutscher-orgelbaumeister.de/lexikon-der-stimmungen/">Bund Deutscher Orgelbaumeister</a>
-        </>}
-      />
-      <div className="research-evidence-controls temperaments-controls aligned-catalogue-controls">
-        <label className="temperaments-search">
-          <span>{t("tuning.catalogue.search", "Search temperament systems", "Stimmungssysteme durchsuchen")}</span>
-          <span className="search-field">
-            <Search size={18} aria-hidden="true" />
-            <input value={queryValue} onChange={(event) => updateFilters({ queryValue: event.target.value })} placeholder={t("tuning.catalogue.searchHint", "e.g. Kirnberger or 2hKi2", "z. B. Kirnberger oder 2hKi2")} />
-          </span>
-        </label>
-        <label className="temperaments-search">
-          <span>{publicProjection ? t("tuning.catalogue.literature", "Search cited literature", "Zitierte Literatur durchsuchen") : t("tuning.catalogue.searchNotes", "Search commentary and literature", "Erläuterungen und Literatur durchsuchen")}</span>
-          <span className="search-field">
-            <Search size={18} aria-hidden="true" />
-            <input value={commentaryQuery} onChange={(event) => updateFilters({ commentaryQuery: event.target.value })} placeholder={t("tuning.catalogue.referenceHint", "Author or title", "Autor oder Titel")} />
-          </span>
-        </label>
-        <label>
-          <span>{t("tuning.catalogue.group", "Group", "Gruppe")}</span>
-          <select value={groupKey} onChange={(event) => updateFilters({ groupKey: event.target.value })}>
-            <option value="">{t("tuning.catalogue.allGroups", "All groups", "Alle Gruppen")}</option>
-            {groupKey && !facets?.groups.some((item) => item.value === groupKey) && <option value={groupKey}>{groupKey.replace("gruppe_", "Group ")}</option>}
-            {(facets?.groups ?? []).map((item) => <option key={item.value} value={item.value}>{temperamentGroupLabel(item)} ({item.count})</option>)}
-          </select>
-        </label>
-        <label>
-          <span>{t("tuning.catalogue.precision", "Precision", "Genauigkeit")}</span>
-          <select value={precision} onChange={(event) => updateFilters({ precision: event.target.value })}>
-            <option value="">{t("tuning.catalogue.allPrecision", "All variants", "Alle Fassungen")}</option>
-            <option value="rounded">{t("tuning.catalogue.rounded", "Rounded values", "Gerundete Werte")}</option>
-            <option value="precise">{t("tuning.catalogue.precise", "Precise variants", "Genauere Fassungen")}</option>
-          </select>
-        </label>
-        <label>
-          <span>{t("tuning.catalogue.commentary", "Commentary", "Erläuterungen")}</span>
-          <select value={commentary} onChange={(event) => updateFilters({ commentary: event.target.value })}>
-            <option value="">{t("tuning.catalogue.anyCommentary", "Any availability", "Mit oder ohne Erläuterungen")}</option>
-            <option value="available">{t("tuning.catalogue.hasCommentary", "Commentary available", "Mit Erläuterungen")}</option>
-            <option value="missing">{t("tuning.catalogue.noCommentary", "No commentary", "Ohne Erläuterungen")}</option>
-          </select>
-        </label>
-      </div>
-      <section className="tuning-occurrence-controls" aria-labelledby="tuning-occurrences-title">
-        <div>
-          <h2 id="tuning-occurrences-title">{t("tuning.catalogue.occurrences", "Organ occurrences", "Belege in Orgeldatensätzen")}</h2>
-          <p>{t("tuning.catalogue.occurrenceHint", "Sort and filter by distinct organ records in the selected evidence category. Related wording can point to several catalogue entries, so their counts can overlap.", "Die Sortierung und Filterung zählen jeden Orgeldatensatz in der gewählten Belegkategorie einmal. Verwandte Angaben können auf mehrere Katalogeinträge verweisen. Daher können sich die zugehörigen Mengen überschneiden.")}</p>
-        </div>
-        <div className="tuning-occurrence-inputs">
-          <label>{t("tuning.catalogue.sort", "Sort by", "Sortieren nach")}<select value={sort} onChange={(event) => updateFilters({ sort: occurrenceSort(event.target.value) })}>
-            <option value="catalogue">{t("tuning.catalogue.order", "Catalogue order", "Katalogreihenfolge")}</option>
-            <option value="occurrences_desc">{t("tuning.catalogue.most", "Most linked organ records", "Anzahl verknüpfter Orgeldatensätze (absteigend)")}</option>
-            <option value="occurrences_asc">{t("tuning.catalogue.fewest", "Fewest linked organ records", "Anzahl verknüpfter Orgeldatensätze (aufsteigend)")}</option>
-          </select></label>
-          <label>{t("tuning.catalogue.evidence", "Evidence counted", "Belegkategorie")}<select value={match} onChange={(event) => updateFilters({ match: occurrenceScope(event.target.value) })}>
-            <option value="all">{t("tuning.catalogue.allEvidence", "All linked organs", "Alle verknüpften Orgeldatensätze")}</option>
-            <option value="exact">{t("tuning.catalogue.exactEvidence", "Exact wording", "Eindeutig zuordenbarer Wortlaut")}</option>
-            <option value="family">{t("tuning.catalogue.relatedEvidence", "Related wording only", "Nur verwandter Wortlaut")}</option>
-          </select></label>
-          <label>{t("tuning.catalogue.minimum", "Minimum organ records", "Mindestzahl der Orgeldatensätze")}<input type="number" min="0" max={MAX_OCCURRENCE_FILTER} step="1" placeholder={t("tuning.catalogue.anyCount", "Any", "Beliebig")} value={minimum} aria-invalid={Boolean(rangeIssue)} onChange={(event) => updateFilters({ minimum: event.target.value })} /></label>
-          <label>{t("tuning.catalogue.maximum", "Maximum organ records", "Höchstzahl der Orgeldatensätze")}<input type="number" min="0" max={MAX_OCCURRENCE_FILTER} step="1" placeholder={t("tuning.catalogue.anyCount", "Any", "Beliebig")} value={maximum} aria-invalid={Boolean(rangeIssue)} onChange={(event) => updateFilters({ maximum: event.target.value })} /></label>
-        </div>
-        {rangeIssue && <p role="alert">{rangeIssue === "invalid"
-          ? t("tuning.catalogue.invalidRange", "Use whole numbers from 0 to 1,000,000 for the organ count.", "Für die Anzahl der Orgeldatensätze ganze Zahlen von 0 bis 1.000.000 eingeben.")
-          : t("tuning.catalogue.invertedRange", "Minimum organs cannot exceed maximum organs.", "Die Mindestanzahl darf die Höchstanzahl nicht überschreiten.")}</p>}
-      </section>
-      {list && list.source?.rowCount === 0 && (
-        <p className="notice">{t("tuning.catalogue.noSource", "BDO temperament records are not present in the shared Aggregator source-record table yet.", "Stimmungssysteme des BDO sind in diesem Datenstand noch nicht enthalten.")}</p>
-      )}
-      {list?.query === queryValue && <TemperamentSearchNotice interpretation={list.searchInterpretation} />}
-      {queryScope === "identity" && queryValue && (
-        <p className="muted">
-          {t("tuning.catalogue.identityScope", "Searching temperament names and identifiers for “{query}”.", "Bezeichnungen und Kennungen von Stimmungen werden nach „{query}“ durchsucht.", { query: queryValue })}{" "}
-          <button type="button" className="text-link-button" onClick={() => updateFilters({ queryScope: undefined })}>{t("tuning.catalogue.includeNotes", "Include commentary and literature references", "Erläuterungen und Literaturhinweise einbeziehen")}</button>
-        </p>
-      )}
-      {queryScope === "evidence" && queryValue && (
-        <p className="muted">
-          {t("tuning.catalogue.sourceScope", "Matching the source wording “{query}” to catalogue records.", "Der Quellenwortlaut „{query}“ wird mit den Katalogeinträgen abgeglichen.", { query: queryValue })}{" "}
-          <button type="button" className="text-link-button" onClick={() => updateFilters({ queryScope: undefined })}>{t("tuning.catalogue.fullSearch", "Search catalogue text instead", "Stattdessen den Katalogtext durchsuchen")}</button>
-        </p>
-      )}
-      {error && <div className="notice error" role="alert"><p>{t("tuning.catalogue.loadError", "The temperament catalogue could not be loaded.", "Der Katalog der Stimmungssysteme konnte nicht geladen werden.")}</p><code lang="en">{error}</code></div>}
-      <TemperamentComparison ids={selectedIds} visible={visibleItems} catalogueHref={catalogueHref}
-        onRemove={id => setSelectedIds(current => current.filter(value => value !== id))} onClear={() => setSelectedIds([])} />
-      {!rangeIssue && !error && <TemperamentsResultList catalogueHref={catalogueHref} response={list} selectedIds={selectedIds} onToggleSelected={toggleSelected} />}
-      {list && (offset > 0 || list.total > pageSize) && (
-        <nav className="catalog-pagination" aria-label={t("tuning.catalogue.pages", "Temperament result pages", "Ergebnisseiten für Stimmungssysteme")}>
-          <button type="button" disabled={offset === 0} onClick={() => setOffset(Math.max(0, offset - pageSize))}><ChevronLeft size={16} /> {t("tuning.catalogue.previous", "Previous", "Zurück")}</button>
-          <span aria-live="polite">{list.items.length ? t("tuning.catalogue.pageRange", "{from, number}–{to, number} of {total, number}", "{from, number}–{to, number} von {total, number}", { from: offset + 1, to: offset + list.items.length, total: list.total }) : t("tuning.catalogue.emptyPage", "No records on this page", "Keine Datensätze auf dieser Seite")}</span>
-          <button type="button" disabled={offset + pageSize >= list.total} onClick={() => setOffset(offset + pageSize)}>{t("tuning.catalogue.next", "Next", "Weiter")} <ChevronRight size={16} /></button>
-        </nav>
-      )}
-    </section>
-  );
-}
-
-function TemperamentsResultList({
-  catalogueHref,
-  onToggleSelected,
-  response,
-  selectedIds,
-}: {
-  catalogueHref: string;
-  onToggleSelected: (item: TuningSystemSummary) => void;
-  response: TuningSystemList | null;
-  selectedIds: string[];
-}) {
-  const { t } = useUiLocale();
-  if (!response) return <LoadingContent kind="cards" className="temperaments-list" label={t("tuning.results.loading", "Loading temperament systems…", "Stimmungssysteme werden geladen …")} />;
-  if (response.items.length === 0) return <EmptyState icon={<SlidersHorizontal size={22} />} title={t("tuning.results.none", "No temperaments", "Keine Stimmungen gefunden")} body={t("tuning.results.empty", "No BDO temperament systems match the current filters.", "Keine Stimmungssysteme des BDO entsprechen den aktuellen Filtern.")} />;
-  return (
-    <div className="temperaments-list">
-      {response.items.map((item) => (
-        <TemperamentCard
-          key={item.id}
-          catalogueHref={catalogueHref}
-          item={item}
-          selected={selectedIds.includes(item.tuningId || item.id)}
-          selectionDisabled={!selectedIds.includes(item.tuningId || item.id) && selectedIds.length >= MAX_TEMPERAMENT_COMPARISON}
-          onToggleSelected={onToggleSelected}
-        />
-      ))}
-    </div>
-  );
-}
-
-function TemperamentCard({
-  catalogueHref,
-  item,
-  onToggleSelected,
-  selected,
-  selectionDisabled,
-}: {
-  catalogueHref: string;
-  item: TuningSystemSummary;
-  onToggleSelected: (item: TuningSystemSummary) => void;
-  selected: boolean;
-  selectionDisabled: boolean;
-}) {
-  const { t, formatNumber } = useUiLocale();
-  const detailId = item.tuningId || item.sourceRecordId || item.id;
-  const detailHref = temperamentDetailHref(detailId, catalogueHref);
-  const group = item.groupLabel || item.groupTitle || item.groupKey || t("tuning.card.ungrouped", "No group recorded", "Keine Gruppe erfasst");
-  const precision = item.precision.isPreciseVariant ? t("tuning.card.precise", "Precise", "Genau") : t("tuning.card.rounded", "Rounded", "Gerundet");
-  return (
-    <article className="temperament-card">
-      <header className="temperament-card-title">
-        <div>
-          <small>{item.label || item.tuningId}</small>
-          <h2><a href={detailHref}>{item.title}</a></h2>
-          <p>{group}</p>
-        </div>
-        <button type="button" className={selected ? "mini-toggle selected" : "mini-toggle"} aria-pressed={selected} disabled={selectionDisabled} onClick={() => onToggleSelected(item)}>
-          {selected ? t("tuning.card.selected", "Selected", "Ausgewählt") : t("tuning.card.compare", "Compare", "Vergleichen")}
-        </button>
-      </header>
-      <ul className="temperament-card-meta">
-        <li>{precision}</li>
-        {item.toneOrder.length > 0 && <li>{t("tuning.card.tones", "{count, plural, one {# tone} other {# tones}}", "{count, plural, one {# Ton} other {# Töne}}", {count: item.toneOrder.length})}</li>}
-        {item.literatureCount > 0 && <li>{t("tuning.card.references", "{count, plural, one {# reference} other {# references}}", "{count, plural, one {# Literaturangabe} other {# Literaturangaben}}", {count: item.literatureCount})}</li>}
-      </ul>
-      {item.centValues.length > 0 && (
-        <figure className="temperament-card-profile">
-          <figcaption>{t("tuning.card.chart", "Cent deviations", "Abweichungen in Cent")}</figcaption>
-          <CentVectorSparkline values={item.centValues} labels={item.toneOrder} />
-        </figure>
-      )}
-      {item.occurrences && (
-        <ul className="temperament-card-counts" aria-label={t("tuning.card.occurrences", "Organ occurrences", "Belege in Orgeldatensätzen")}>
-          <li><a href={temperamentOrganHref(detailId, "all", catalogueHref)}><strong>{formatNumber(item.occurrences.total)}</strong><span>{t("tuning.card.allOrgans", "linked organ records", "verknüpfte Orgeldatensätze")}</span></a></li>
-          <li><a href={temperamentOrganHref(detailId, "exact", catalogueHref)}><strong>{formatNumber(item.occurrences.exactVariantCount)}</strong><span>{t("tuning.card.exact", "exact wording", "eindeutig zuordenbare Angaben")}</span></a></li>
-          <li><a href={temperamentOrganHref(detailId, "family", catalogueHref)}><strong>{formatNumber(item.occurrences.familyWordingCount)}</strong><span>{t("tuning.card.related", "related only", "nur verwandte Angaben")}</span></a></li>
-        </ul>
-      )}
-      <div className="temperament-card-foot">
-        <details className="research-evidence-item-details">
-          <summary>{t("tuning.card.disclosure", "Cent vector and source", "Centwerte und Quelle")}</summary>
-          <div><span>{t("tuning.card.label", "Label", "Bezeichnung")}</span><code>{item.label || t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
-          <div><span>{t("tuning.card.title", "Title", "Titel")}</span><code>{item.title}</code></div>
-          <div><span>{t("tuning.card.vector", "Cent vector", "Centwerte")}</span><code>{item.centstr || item.centVectorPreview || t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
-          <div><span>{t("tuning.card.commentary", "Commentary", "Erläuterungen")}</span><code>{item.commentary.available ? item.commentary.description || t("tuning.card.available", "available", "Vorhanden") : t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
-          <div><span>{t("tuning.card.sourceRecord", "Source record", "Quelldatensatz")}</span><code>{!item.publicProjection && item.sourceRecordId?.startsWith("sr:") ? <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>{item.sourceRecordId}</a> : item.sourceRecordId || t("tuning.card.missing", "not recorded", "Nicht erfasst")}</code></div>
-        </details>
-        {(item.sourceUrl || item.commentaryUrl || (!item.publicProjection && item.sourceRecordId)) && <div className="temperament-card-links">
-          {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.card.bdo", "Open BDO", "Beim BDO öffnen")}</a>}
-          {item.commentaryUrl && <a href={item.commentaryUrl} target="_blank" rel="noreferrer">{t("tuning.card.commentary", "Commentary", "Erläuterungen")}</a>}
-          {!item.publicProjection && item.sourceRecordId && <a href={`/source/${encodeURIComponent(item.sourceRecordId)}`}>{t("tuning.card.evidence", "Source evidence", "Quellenbeleg")}</a>}
-        </div>}
-      </div>
-    </article>
-  );
-}
-
-const TEMPERAMENT_DETAIL_TABS = [["overview", "Overview"], ["technical", "Technical"], ["organs", "Organs"]] as const;
-type TemperamentDetailTab = (typeof TEMPERAMENT_DETAIL_TABS)[number][0];
-
-function TemperamentDetailPage({ tuningId }: { tuningId: string }) {
-  const { t } = useUiLocale();
-  const [activeTab, setActiveTab] = useState<TemperamentDetailTab>(() => {
-    const tab = new URLSearchParams(window.location.search).get("tab");
-    return tab === "technical" || tab === "organs" ? tab : "overview";
-  });
-  const [record, setRecord] = useState<TuningSystemDetail | null>(null);
-  const [organLinks, setOrganLinks] = useState<TuningSystemOrganLinks | null>(null);
-  const [organOffset, setOrganOffset] = useState(() => positiveRouteInt(new URLSearchParams(window.location.search).get("organ_offset"), 0, 100_000));
-  const [organScope, setOrganScope] = useState(() => occurrenceScope(new URLSearchParams(window.location.search).get("match")));
-  const [error, setError] = useState<string | null>(null);
-  const [organError, setOrganError] = useState<string | null>(null);
-  const tabListRef = useRef<HTMLDivElement>(null);
-  const catalogueHref = temperamentCatalogueHref(new URLSearchParams(window.location.search).get("return_to"));
-  const publicProjection = Boolean(record?.publicProjection);
-  useEffect(() => {
-    let cancelled = false;
-    setRecord(null);
-    setError(null);
-    fetchTemperament(tuningId, "surface")
-      .then((data) => {
-        if (!cancelled) setRecord(data);
-      })
-      .catch((err: Error) => {
-        if (!cancelled) setError(err.message);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [tuningId]);
-  useEffect(() => {
-    if (record) document.title = `${record.title || record.label || tuningId} | MODAVIS Navigator`;
-  }, [record, tuningId]);
-  useEffect(() => {
-    if (activeTab !== "organs") return;
-    const request = new AbortController();
-    setOrganError(null);
-    fetchTemperamentOrgans(tuningId, 200, organOffset, organScope, request.signal)
-      .then((data) => {
-        if (request.signal.aborted) return;
-        if ((data.scope ?? "all") !== organScope) {
-          setOrganError("This source does not support the selected evidence filter.");
-          return;
-        }
-        setOrganLinks(data);
-      })
-      .catch((err: Error) => {
-        if (!request.signal.aborted) setOrganError(err.message);
-      });
-    return () => request.abort();
-  }, [activeTab, organOffset, organScope, tuningId]);
-  useEffect(() => {
-    const restore = () => {
-      const params = new URLSearchParams(window.location.search);
-      const tab = params.get("tab");
-      const restoredTab = tab === "technical" || tab === "organs" ? tab : "overview";
-      setActiveTab(restoredTab);
-      if (tabListRef.current?.contains(document.activeElement)) document.getElementById(`temperament-tab-${restoredTab}`)?.focus();
-      setOrganScope(occurrenceScope(params.get("match")));
-      setOrganOffset(positiveRouteInt(params.get("organ_offset"), 0, 100_000));
-    };
-    restore();
-    window.addEventListener("popstate", restore);
-    return () => window.removeEventListener("popstate", restore);
-  }, [tuningId]);
-  const selectOrganEvidence = (scope: TuningOccurrenceScope, offset = 0) => {
-    const url = new URL(window.location.href);
-    setOrganScope(scope);
-    setOrganOffset(offset);
-    if (scope === "all") url.searchParams.delete("match");
-    else url.searchParams.set("match", scope);
-    if (offset) url.searchParams.set("organ_offset", String(offset));
-    else url.searchParams.delete("organ_offset");
-    if (url.href !== window.location.href) window.history.pushState(window.history.state, "", url);
-  };
-  const selectTab = (tab: TemperamentDetailTab) => {
-    if (tab === activeTab) return;
-    setActiveTab(tab);
-    const url = new URL(window.location.href);
-    url.searchParams.set("tab", tab);
-    window.history.pushState(window.history.state, "", url);
-  };
-  const tabContent = (
-    <>
-      {error && <p className="notice error" role="alert">{error}</p>}
-      {!record && !error && <LoadingContent kind="article" label={t("tuning.detail.loading", "Loading temperament system…", "Stimmungssystem wird geladen …")} />}
-      {record && (
-        <>
-          {activeTab === "overview" && (!publicProjection || record.commentary.description) && (
-          <section className="public-evidence-summary source-public-summary temperament-summary">
-            <div>
-              <div className="public-evidence-summary-head">
-                <div>
-                  <p className="eyebrow">{record.source.name || "BDO Lexikon der Stimmungen"}</p>
-                  <p>{record.commentary.description || "No commentary description is recorded for this temperament."}</p>
-                </div>
-                {!publicProjection && <span className="entity-state-chip entity-state-source">{record.evidenceLabel || "Temperament evidence"}</span>}
-              </div>
-              <div className="vocabulary-badges temperament-badges">
-                <Pill>{record.label || record.tuningId || t("tuning.detail.bdoLabel", "BDO label", "BDO-Bezeichnung")}</Pill>
-                <Pill>{record.groupLabel || record.groupKey || "ungrouped"}</Pill>
-                <Pill>{record.precision.label}</Pill>
-                <Pill>{record.commentary.available ? t("tuning.detail.commentary", "Commentary", "Erläuterungen") : "No commentary"}</Pill>
-              </div>
-            </div>
-          </section>
-          )}
-
-          {activeTab === "overview" && (
-            <>
-          <TemperamentFingerprint labels={record.toneOrder} values={record.centValues} title={record.title} />
-          <section className="panel-block">
-            <h3>{t("tuning.detail.identity", "Identity and source links", "Kennungen und Quellenlinks")}</h3>
-            <div className="identifier-summary">
-              <div><span>{t("tuning.detail.bdoLabel", "BDO label", "BDO-Bezeichnung")}</span><strong>{record.label || "not recorded"}</strong></div>
-              <div><span>{t("tuning.detail.tuningId", "Tuning ID", "Kennung des Stimmungssystems")}</span><strong>{record.tuningId || "not recorded"}</strong></div>
-              {!publicProjection && <div><span>{t("tuning.detail.entityId", "Entity ID", "Entitätskennung")}</span><strong>{record.entityId || "not recorded"}</strong></div>}
-              <div><span>{t("tuning.detail.group", "Group", "Gruppe")}</span><strong>{record.groupLabel || record.groupKey || "not recorded"}</strong></div>
-              <div><span>{t("tuning.detail.precision", "Precision", "Genauigkeit")}</span><strong>{[record.precision.label, record.precision.variant].filter(Boolean).join(" / ")}</strong></div>
-              <div><span>{t("tuning.detail.source", "Source record", "Quelldatensatz")}</span><strong>{!publicProjection && record.sourceRecordId?.startsWith("sr:") ? <a href={`/source/${encodeURIComponent(record.sourceRecordId)}`}>{record.sourceRecordId}</a> : record.sourceRecordId || "not recorded"}</strong></div>
-              {!publicProjection && <div><span>Schema</span><strong>{[record.schema?.name, record.schema?.version || record.schema?.key].filter(Boolean).join(" / ") || "not recorded"}</strong></div>}
-              {!publicProjection && <div><span>{t("tuning.detail.lastSeen", "Last seen", "Zuletzt erfasst")}</span><strong>{record.lastSeenAt || "not recorded"}</strong></div>}
-            </div>
-            <div className="research-evidence-actions">
-              {record.sourceUrl && <a href={record.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.detail.openBdo", "Open BDO tuning page", "Stimmung beim BDO öffnen")}</a>}
-              {record.commentaryUrl && <a href={record.commentaryUrl} target="_blank" rel="noreferrer">{t("tuning.detail.openComment", "Open commentary page", "Erläuterungen öffnen")}</a>}
-              {!publicProjection && record.sourceRecordId && <a href={`/source/${encodeURIComponent(record.sourceRecordId)}`}>{t("tuning.detail.evidence", "Source evidence", "Quellenbeleg")}</a>}
-            </div>
-          </section>
-            </>
-          )}
-
-          {activeTab === "technical" && (
-            <>
-          <section className="panel-block">
-            <h3>{t("tuning.detail.toneTable", "Tone order and cent values", "Tonfolge und Centwerte")}</h3>
-            <CentVectorStrip values={record.centValues} labels={record.toneOrder} />
-            <div className="temperament-table-wrap">
-              <table className="temperament-data-table">
-                <thead>
-                  <tr><th>#</th><th>{t("tuning.detail.tone", "Tone", "Ton")}</th><th>{t("tuning.detail.centValue", "Cent value", "Centwert")}</th><th>{t("tuning.detail.absolute", "Absolute cents", "Absoluter Centwert")}</th><th>{t("tuning.detail.relative", "Relative to A", "Bezogen auf A")}</th></tr>
-                </thead>
-                <tbody>
-                  {record.toneRows.map((row) => (
-                    <tr key={`${row.index}:${row.tone}`}>
-                      <td>{row.index + 1}</td>
-                      <td>{row.tone}</td>
-                      <td>{formatCents(row.cent)}</td>
-                      <td>{formatCents(row.absoluteCent)}</td>
-                      <td>{formatCents(row.relativeToA)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section className="temperament-interval-grid">
-            <TemperamentIntervalTable title={t("tuning.detail.fifths", "Derived fifths", "Berechnete Quinten")} rows={record.derivedIntervals.fifths} columns={["from", "to", "cents"]} />
-            <TemperamentIntervalTable title={t("tuning.detail.thirds", "Major thirds", "Große Terzen")} rows={record.derivedIntervals.majorThirds} columns={["from", "to", "cents"]} />
-            <TemperamentIntervalTable title={t("tuning.detail.absolute", "Absolute cents", "Absoluter Centwert")} rows={record.derivedIntervals.absoluteCents} columns={["tone", "cents"]} />
-            <TemperamentIntervalTable title={t("tuning.detail.relatives", "Values relative to A", "Werte bezogen auf A")} rows={record.derivedIntervals.relativeToA} columns={["tone", "cents"]} />
-          </section>
-            </>
-          )}
-
-          {activeTab === "overview" && !publicProjection && (
-            <>
-          <section className="panel-block">
-            <h3>{t("tuning.detail.commentary", "Commentary", "Erläuterungen")}</h3>
-            {record.commentarySections.length === 0 ? (
-              <p className="notice">{t("tuning.detail.noComments", "No commentary sections were captured for this temperament.", "Zu dieser Stimmung wurden keine Erläuterungen erfasst.")}</p>
-            ) : (
-              <div className="temperament-commentary-sections">
-                {record.commentarySections.map((section) => (
-                  <article key={section.id}>
-                    <h4>{section.label}</h4>
-                    <p>{section.text}</p>
-                  </article>
-                ))}
-              </div>
-            )}
-            {(record.commentary.literatureEntries || []).length > 0 && (
-              <details className="research-evidence-item-details" open>
-                <summary>Commentary literature text</summary>
-                {(record.commentary.literatureEntries || []).map((entry, index) => <div key={`${entry}:${index}`}><span>{index + 1}</span><code>{entry}</code></div>)}
-              </details>
-            )}
-          </section>
-            </>
-          )}
-
-          {activeTab === "technical" && (
-            <>
-          <section className="panel-block">
-            <h3>{t("tuning.detail.citations", "Literature citations", "Literaturangaben")}</h3>
-            {record.literature.length === 0 ? (
-              <p className="notice">{t("tuning.detail.noCitations", "No literature references were projected for this temperament.", "Zu dieser Stimmung stehen in dieser Ansicht keine Literaturangaben zur Verfügung.")}</p>
-            ) : (
-              <div className="temperament-literature-list">
-                {record.literature.map((item, index) => (
-                  <article key={`${item.entityId || item.citationText || "citation"}:${index}`}>
-                    <strong>{item.citationText || item.entityId || "Citation"}</strong>
-                    <span>{item.sourcePath || "literature"}</span>
-                    <div className="research-evidence-actions">
-                      {item.sourceUrl && <a href={item.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.detail.openSource", "Open source", "Quelle öffnen")}</a>}
-                      {!publicProjection && item.entityId && <a href={`/source/${encodeURIComponent(item.entityId)}`}>Reference entity</a>}
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
-          </section>
-
-          {!publicProjection && <section className="panel-block">
-            <h3>Provenance documents and entity refs</h3>
-            <div className="identifier-summary">
-              <div><span>Raw documents</span><strong>{formatInteger(record.documents?.length ?? 0)}</strong></div>
-              <div><span>Entity refs</span><strong>{formatInteger(record.entityRefs?.length ?? 0)}</strong></div>
-              <div><span>Literature refs</span><strong>{formatInteger(record.literatureRefs?.length ?? 0)}</strong></div>
-              <div><span>Link refs</span><strong>{formatInteger(record.linkRefs?.length ?? 0)}</strong></div>
-              <div><span>Paradata events</span><strong>{formatInteger(record.events?.length ?? 0)}</strong></div>
-            </div>
-            <details className="research-evidence-item-details">
-              <summary>Raw documents</summary>
-              {(record.documents || []).map((document, index) => (
-                <div key={String(document.id || index)}>
-                  <span>{formatFieldValue(document.kind || document.originalKind || `Document ${index + 1}`)}</span>
-                  <code>{formatFieldValue(document.url || document.storageUri || document.contentSha256 || "not recorded")}</code>
-                </div>
-              ))}
-            </details>
-            <details className="research-evidence-item-details">
-              <summary>Projected entity refs</summary>
-              {(record.entityRefs || []).map((ref, index) => (
-                <div key={String(ref.id || index)}>
-                  <span>{formatFieldValue(ref.entityType || `Entity ref ${index + 1}`)}</span>
-                  <code>{formatFieldValue(ref.id || ref.sourcePath || "not recorded")}</code>
-                </div>
-              ))}
-            </details>
-          </section>}
-
-          {!publicProjection && <section className="panel-block">
-            <h3>Quality and source snapshot</h3>
-            <details className="research-evidence-item-details" open>
-              <summary>Quality</summary>
-              <pre>{JSON.stringify(record.quality || {}, null, 2)}</pre>
-            </details>
-            <details className="research-evidence-item-details">
-              <summary>Source snapshot</summary>
-              <pre>{JSON.stringify(record.sourceSnapshot || {}, null, 2)}</pre>
-            </details>
-            <details className="research-evidence-item-details">
-              <summary>Provenance</summary>
-              <pre>{JSON.stringify(record.provenance || {}, null, 2)}</pre>
-            </details>
-          </section>}
-            </>
-          )}
-
-          {activeTab === "organs" && (
-            <TemperamentOrgansPanel
-              data={organLinks?.temperament.id === record.id ? organLinks : null}
-              error={organError}
-              loading={organLinks?.offset !== organOffset || (organLinks.scope ?? "all") !== organScope}
-              scope={organScope}
-              onScope={selectOrganEvidence}
-              onPage={(offset) => selectOrganEvidence(organScope, Math.max(0, offset))}
-            />
-          )}
-        </>
-      )}
-    </>
-  );
-  return (
-    <section className="entity-section research-evidence-browser temperament-detail" tabIndex={-1}>
-      <a className="catalog-back evidence-route-back" href={catalogueHref}>
-        {t("tuning.detail.return", "Back to temperaments", "Zurück zu den Stimmungen")}
-      </a>
-      <div className="evidence-dossier-head">
-        <div>
-          <p className="eyebrow">{record?.source.key === "types.tuning_system" ? "Controlled temperament concept" : "BDO temperament system"}</p>
-          <h1>{record?.title || tuningId}</h1>
-          <p>{record ? temperamentMetaLine(record) : "Loading temperament detail"}</p>
-        </div>
-        <div ref={tabListRef} className="evidence-mode-switch" role="tablist" aria-label={t("tuning.detail.tabs", "Temperament detail sections", "Abschnitte zu diesem Stimmungssystem")}>
-          {TEMPERAMENT_DETAIL_TABS.map(([tab, label], index) => (
-            <button
-              key={tab}
-              type="button"
-              id={`temperament-tab-${tab}`}
-              role="tab"
-              aria-controls={`temperament-panel-${tab}`}
-              aria-selected={activeTab === tab}
-              tabIndex={activeTab === tab ? 0 : -1}
-              className={activeTab === tab ? "selected" : ""}
-              onClick={() => selectTab(tab)}
-              onKeyDown={(event) => {
-                if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-                const count = TEMPERAMENT_DETAIL_TABS.length;
-                const nextIndex = event.key === "ArrowRight" ? (index + 1) % count
-                  : event.key === "ArrowLeft" ? (index + count - 1) % count
-                  : event.key === "Home" ? 0 : event.key === "End" ? count - 1 : -1;
-                if (nextIndex < 0) return;
-                event.preventDefault();
-                const [next] = TEMPERAMENT_DETAIL_TABS[nextIndex];
-                selectTab(next);
-                document.getElementById(`temperament-tab-${next}`)?.focus();
-              }}
-            >{tab === "overview" ? t("tuning.detail.tabOverview", label, "Übersicht")
-                : tab === "technical" ? t("tuning.detail.tabTechnical", label, "Technische Angaben")
-                : t("tuning.detail.tabOrgans", label, "Orgeln")}</button>
-          ))}
-        </div>
-      </div>
-      {TEMPERAMENT_DETAIL_TABS.map(([tab]) => (
-        <div
-          key={tab}
-          id={`temperament-panel-${tab}`}
-          className="temperament-tab-panel"
-          role="tabpanel"
-          aria-labelledby={`temperament-tab-${tab}`}
-          hidden={activeTab !== tab}
-          tabIndex={activeTab === tab ? 0 : -1}
-        >
-          {activeTab === tab && tabContent}
-        </div>
-      ))}
-    </section>
-  );
-}
-
-function TemperamentOrgansPanel({
-  data,
-  error,
-  loading,
-  scope,
-  onScope,
-  onPage,
-}: {
-  data: TuningSystemOrganLinks | null;
-  error: string | null;
-  loading: boolean;
-  scope: TuningOccurrenceScope;
-  onScope: (scope: TuningOccurrenceScope) => void;
-  onPage: (offset: number) => void;
-}) {
-  const { t, locale, formatNumber } = useUiLocale();
-  const loadError = error && <div className="notice error" role="alert">
-    <p>{t("tuning.organs.loadError", "Could not load linked organs.", "Verknüpfte Orgeldatensätze konnten nicht geladen werden.")}</p>
-    <code lang="en">{error}</code>
-  </div>;
-  if (!data) return error
-    ? loadError
-    : <LoadingContent kind="rows" count={3} label={t("tuning.organs.loading", "Loading linked organs…", "Verknüpfte Orgeldatensätze werden geladen …")} />;
-  return (
-    <section className="panel-block temperament-organ-links">
-      <div className="temperament-organ-links-head">
-        <div>
-          <h3>{t("tuning.organs.heading", "Organ records linked by source wording", "Über Quellenangaben verknüpfte Orgeldatensätze")}</h3>
-          <p>{locale === "de"
-            ? "Gezählt werden dokumentierte Angaben. Jeder Orgeldatensatz zählt pro Stimmungssystem einmal. Eindeutig zuordenbare Angaben haben Vorrang. Die Centwerte stammen aus dem BDO-Katalog."
-            : data.evidenceBoundary}</p>
-          <p>{t("tuning.organs.current", "Source wording does not verify an organ’s current tuning.", "Aus dem Wortlaut der Quellen lässt sich die heutige Stimmung einer Orgel nicht bestätigen.")}</p>
-        </div>
-        <div className="tuning-organ-scopes" role="group" aria-label={t("tuning.organs.filter", "Filter linked organs by evidence", "Verknüpfte Orgeldatensätze nach Belegkategorie filtern")}>
-          {([
-            ["all", t("tuning.organs.all", "All linked records", "Alle verknüpften Datensätze"), data.exactVariantCount + data.familyWordingCount],
-            ["exact", t("tuning.organs.exact", "Exact wording", "Eindeutig zuordenbarer Wortlaut"), data.exactVariantCount],
-            ["family", t("tuning.organs.related", "Related wording only", "Nur verwandter Wortlaut"), data.familyWordingCount],
-          ] as const).map(([value, label, count]) => (
-            <button type="button" key={value} aria-pressed={scope === value} onClick={() => onScope(value)}>{label} <strong>{formatNumber(count)}</strong></button>
-          ))}
-        </div>
-      </div>
-      {data.temperament.id && (data.exactVariantCount > 0 || data.familyWordingCount > 0) && (
-        <nav className="temperament-organ-map-actions" aria-label={t("tuning.organs.mapHeading", "Map linked organ records", "Verknüpfte Orgeldatensätze auf der Karte")}>
-          {data.exactVariantCount > 0 && (
-            <a href={`/map?temperament=${encodeURIComponent(data.temperament.id)}&temperament_scope=exact&precision=all`}>
-              <MapIcon size={16} aria-hidden="true" /> {t("tuning.organs.mapExact", "Map exact wording", "Eindeutig zuordenbare Angaben auf der Karte")}
-            </a>
-          )}
-          {data.familyWordingCount > 0 && <a href={`/map?temperament=${encodeURIComponent(data.temperament.id)}&temperament_scope=family&precision=all`}>
-            <MapIcon size={16} aria-hidden="true" /> {t("tuning.organs.mapRelated", "Map related wording", "Verwandte Angaben auf der Karte")}
-          </a>}
-          <span className="muted">{t("tuning.organs.mapCoverage", "Map results require a recorded location.", "Für die Karte muss ein Standort erfasst sein.")}</span>
-        </nav>
-      )}
-      {error ? loadError
-      : loading ? <LoadingContent kind="rows" count={3} label={t("tuning.organs.loading", "Loading linked organs…", "Verknüpfte Orgeldatensätze werden geladen …")} />
-      : data.total === 0 ? (
-        <p className="notice">{scope === "all" ? t("tuning.organs.noMatches", "No matching organ source wording was found in this POD snapshot.", "In diesem POD-Datenstand wurde kein passender Wortlaut in Orgeldatensätzen gefunden.") : t("tuning.organs.noneInScope", "No organ records match the selected evidence filter.", "Keine Orgeldatensätze entsprechen der gewählten Belegkategorie.")}</p>
-      ) : (
-        <div className="temperament-organ-evidence-groups">
-          {data.groups.filter((group) => group.countries.length > 0).map((group) => (
-            <section key={group.key} className={`temperament-organ-evidence-group ${group.key}`}>
-              <div>
-                <h4>{locale === "de" ? group.key === "exact_variant" ? "Eindeutig zuordenbare Angaben" : "Verwandte Stimmungsangaben" : group.label} <span>{formatNumber(group.total)}</span></h4>
-                <p>{locale === "de" ? group.key === "exact_variant"
-                  ? "Der Quellenwortlaut bezeichnet eindeutig diesen Katalogeintrag."
-                  : "Der Quellenwortlaut verweist auf eine Gruppe, eine Abwandlung oder eine nicht näher bezeichnete Fassung."
-                  : group.guidance}</p>
-              </div>
-              {group.countries.map((country) => (
-                <details key={`${group.key}:${country.country}`} open={group.key === "exact_variant"}>
-                  <summary>{country.country} <span>{formatNumber(country.count)}</span></summary>
-                  <div className="temperament-organ-country-items">
-                    {country.items.map((item) => (
-                      <article key={item.mdvsId} className="temperament-organ-card">
-                        <div>
-                          <a className="temperament-organ-title" href={item.url}>{item.title}</a>
-                          <span>{item.location || item.country}</span>
-                          <code>{item.mdvsId}</code>
-                        </div>
-                        <details>
-                          <summary>{t("tuning.organs.assertionCount", "{count, plural, one {# source assertion} other {# source assertions}}", "{count, plural, one {# Quellenangabe} other {# Quellenangaben}}", {count: item.assertions.length})}</summary>
-                          <div className="temperament-organ-assertions">
-                            {item.assertions.map((assertion, index) => (
-                              <div key={`${assertion.sourceRecordId || assertion.source}:${index}`}>
-                                <strong>{assertion.source}</strong>
-                                <small>{assertion.matchKind === "exact_variant"
-                                  ? t("tuning.organs.exact", "Exact wording", "Eindeutig zuordenbarer Wortlaut")
-                                  : t("tuning.organs.relatedItem", "Related wording", "Verwandter Wortlaut")}</small>
-                                <span>{assertion.sourceValue || t("tuning.organs.missingWording", "Temperament wording not recorded", "Stimmungsangabe nicht erfasst")}</span>
-                                {assertion.sourceUrl && <a href={assertion.sourceUrl} target="_blank" rel="noreferrer">{t("tuning.organs.source", "Original source", "Originalquelle")}</a>}
-                                {!data.publicProjection && assertion.sourceRecordId && <a href={`/source/${encodeURIComponent(assertion.sourceRecordId)}`}>{t("tuning.organs.evidence", "Source evidence", "Quellenbeleg")}</a>}
-                              </div>
-                            ))}
-                          </div>
-                        </details>
-                      </article>
-                    ))}
-                  </div>
-                </details>
-              ))}
-            </section>
-          ))}
-        </div>
-      )}
-      {!error && !loading && (data.offset > 0 || data.hasMore) && (
-        <nav className="pagination-controls" aria-label={t("tuning.organs.pages", "Temperament organ pages", "Ergebnisseiten der verknüpften Orgeldatensätze")}>
-          <button type="button" disabled={data.offset === 0} onClick={() => onPage(data.offset - data.limit)}>{t("tuning.organs.previous", "Previous", "Zurück")}</button>
-          <span>{data.items.length ? t("tuning.organs.pageRange", "Showing {from, number}–{to, number} of {total, number}", "{from, number}–{to, number} von {total, number}", { from: data.offset + 1, to: data.offset + data.items.length, total: data.total }) : t("tuning.organs.emptyPage", "No records on this page", "Keine Datensätze auf dieser Seite")}</span>
-          <button type="button" disabled={!data.hasMore} onClick={() => onPage(data.offset + data.limit)}>{t("tuning.organs.next", "Next", "Weiter")}</button>
-        </nav>
-      )}
-    </section>
-  );
-}
-
-function TemperamentIntervalTable({
-  columns,
-  rows,
-  title,
-}: {
-  columns: string[];
-  rows: Array<Record<string, string | number | null | undefined>>;
-  title: string;
-}) {
-  const { t } = useUiLocale();
-  return (
-    <section className="panel-block temperament-interval-table">
-      <h3>{title}</h3>
-      {rows.length === 0 ? (
-        <p className="notice">{t("tuning.interval.empty", "No values recorded.", "Keine Werte erfasst.")}</p>
-      ) : (
-        <div className="temperament-table-wrap">
-          <table className="temperament-data-table">
-            <thead>
-              <tr>{columns.map((column) => <th key={column}>{friendlyLabel(column)}</th>)}</tr>
-            </thead>
-            <tbody>
-              {rows.map((row, index) => (
-                <tr key={`${title}:${index}`}>
-                  {columns.map((column) => <td key={column}>{column === "cents" ? formatCents(row[column] as number | null | undefined) : formatFieldValue(row[column])}</td>)}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </section>
-  );
-}
-
-function temperamentVectorPairs(labels: string[], values: number[]) {
-  const count = Math.min(labels.length || values.length, values.length);
-  const closesCircle = count > 1 && labels[0] === labels[count - 1];
-  return Array.from({ length: closesCircle ? count - 1 : count }, (_, index) => ({
-    tone: labels[index] || String(index + 1),
-    value: Number.isFinite(values[index]) ? values[index] : 0,
-  }));
-}
-
-function CentVectorSparkline({ labels, values }: { labels: string[]; values: number[] }) {
-  const pairs = temperamentVectorPairs(labels, values);
-  const width = 260;
-  const centerY = 27;
-  const step = width / Math.max(1, pairs.length);
-  const description = pairs.map((item) => `${item.tone} ${formatCents(item.value)} cents`).join(", ");
-  return (
-    <div className="cent-vector-sparkline" role="img" aria-label={`Cent deviations: ${description}`}>
-      <svg viewBox={`0 0 ${width} 54`} aria-hidden="true" focusable="false">
-        <line className="cent-vector-zero" x1="0" y1={centerY} x2={width} y2={centerY} />
-        {pairs.map((item, index) => {
-          const x = step * index + step / 2;
-          const y = centerY - Math.max(-45, Math.min(45, item.value)) / 45 * 20;
-          return <g key={`${item.tone}:${index}`}><line className={item.value < 0 ? "negative" : "positive"} x1={x} y1={centerY} x2={x} y2={y} /><circle className={item.value < 0 ? "negative" : "positive"} cx={x} cy={y} r="2.4"><title>{item.tone}: {formatCents(item.value)} cents</title></circle></g>;
-        })}
-      </svg>
-    </div>
-  );
-}
-
-function TemperamentFingerprint({ labels, title, values }: { labels: string[]; title: string; values: number[] }) {
-  const pairs = temperamentVectorPairs(labels, values);
-  const center = 120;
-  const referenceRadius = 66;
-  const deviationScale = 24;
-  const point = (index: number, radius: number) => {
-    const angle = -Math.PI / 2 + index * Math.PI * 2 / Math.max(1, pairs.length);
-    return { x: center + Math.cos(angle) * radius, y: center + Math.sin(angle) * radius };
-  };
-  const points = pairs.map((item, index) => {
-    const radius = referenceRadius + Math.max(-45, Math.min(45, item.value)) / 45 * deviationScale;
-    return { ...item, ...point(index, radius), label: point(index, 99) };
-  });
-  const polygon = points.map((item) => `${item.x.toFixed(2)},${item.y.toFixed(2)}`).join(" ");
-  const largest = [...pairs].sort((a, b) => Math.abs(b.value) - Math.abs(a.value))[0];
-  const description = `Equal temperament is the reference circle. Points outside it are sharp and points inside it are flat, on a fixed minus 45 to plus 45 cent scale.${largest ? ` The largest deviation is ${formatCents(largest.value)} cents at ${largest.tone}.` : ""}`;
-  return (
-    <figure className="temperament-fingerprint panel-block" aria-labelledby="temperament-fingerprint-title">
-      <div className="temperament-fingerprint-copy">
-        <p className="eyebrow">Temperament fingerprint</p>
-        <h3 id="temperament-fingerprint-title">Deviation around the circle of fifths</h3>
-        <p>{description}</p>
-        <div className="temperament-fingerprint-legend" aria-label="Deviation scale">
-          <span><i className="flat" /> Flat −45</span>
-          <span><i className="equal" /> Equal 0</span>
-          <span><i className="sharp" /> Sharp +45</span>
-        </div>
-      </div>
-      <svg className="temperament-fingerprint-chart" viewBox="0 0 240 240" role="img" aria-label={`${title}. ${description}`}>
-        <title>{title} temperament fingerprint</title>
-        <desc>{description}</desc>
-        <circle className="temperament-fingerprint-guide inner" cx={center} cy={center} r={referenceRadius - deviationScale} />
-        <circle className="temperament-fingerprint-reference" cx={center} cy={center} r={referenceRadius} />
-        <circle className="temperament-fingerprint-guide outer" cx={center} cy={center} r={referenceRadius + deviationScale} />
-        {pairs.map((item, index) => {
-          const axis = point(index, referenceRadius + deviationScale);
-          return <line key={`axis:${item.tone}:${index}`} className="temperament-fingerprint-axis" x1={center} y1={center} x2={axis.x} y2={axis.y} />;
-        })}
-        <polygon className="temperament-fingerprint-shape" points={polygon} />
-        {points.map((item, index) => <g key={`${item.tone}:${index}`}>
-          <circle className="temperament-fingerprint-point" cx={item.x} cy={item.y} r="4"><title>{item.tone}: {formatCents(item.value)} cents</title></circle>
-          <text className="temperament-fingerprint-label" x={item.label.x} y={item.label.y}>{item.tone}</text>
-        </g>)}
-      </svg>
-    </figure>
-  );
-}
-
-function CentVectorStrip({ labels, values }: { labels: string[]; values: number[] }) {
-  const maxAbs = Math.max(1, ...values.map((value) => Math.abs(value || 0)));
-  return (
-    <div className="cent-vector-strip">
-      {values.map((value, index) => {
-        const width = Math.max(4, Math.round((Math.abs(value || 0) / maxAbs) * 46));
-        return (
-          <div key={`${labels[index] || index}:${index}`} className="cent-vector-item">
-            <span>{labels[index] || index + 1}</span>
-            <div className="cent-vector-track" aria-hidden="true">
-              <i className={(value || 0) < 0 ? "negative" : "positive"} style={{ width: `${width}%` }} />
-            </div>
-            <code>{formatCents(value)}</code>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-function temperamentMetaLine(item: TuningSystemSummary): string {
-  return [item.label || item.tuningId, item.groupLabel || item.groupKey, item.precision.label, item.commentary.available ? "commentary available" : "no commentary"].filter(Boolean).join(" · ");
-}
-
-function temperamentGroupLabel(item: { label?: string | null; value?: string | null; groupKey?: string | null }): string {
-  return item.label || item.groupKey || item.value || "Ungrouped";
-}
-
-function formatCents(value?: number | null): string {
-  if (typeof value !== "number" || !Number.isFinite(value)) return "not recorded";
-  const formatted = Number.isInteger(value) ? String(value) : value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
-  return value > 0 ? `+${formatted}` : formatted;
 }
 
 function iconographyMetaLine(item: IconographySummary): string {
@@ -26991,7 +24734,7 @@ function GeoLibreMap({
   items,
   publicProjection = false,
   onOpenOrgan,
-  organFacets,
+  organFacets: providedOrganFacets,
   restrictedLayer = false,
   simulationMode = false,
   eventMode = false,
@@ -27036,7 +24779,13 @@ function GeoLibreMap({
   );
   const [catalogFilters, setCatalogFilters] = useState<PublicMapCatalogFilters>(initialCatalogFilters);
   const [catalogFilterDraft, setCatalogFilterDraft] = useState<PublicMapCatalogFilters>(initialCatalogFilters);
+  const [catalogFilterOpen, setCatalogFilterOpen] = useState(false);
+  const [mapOrganFacets, setMapOrganFacets] = useState<OrganFacets | null>(null);
+  const organFacets = providedOrganFacets ?? mapOrganFacets;
   const [runtimeReady, setRuntimeReady] = useState(false);
+  const [nativeProjectUrl, setNativeProjectUrl] = useState<string>();
+  const initialNativeProject = useRef<string | null>(null);
+  const requestedNativeProject = useRef<string | null>(null);
   const [wideSelection, setWideSelection] = useState(false);
   const [runtimeVersion, setRuntimeVersion] = useState("2.8.0");
   const [pointCount, setPointCount] = useState<number | null>(null);
@@ -27087,7 +24836,7 @@ function GeoLibreMap({
   const standaloneWorldMap = adaptiveWorldMap && !legacyViewer;
   const runtimeAvailable = standaloneWorldMap ? true : legacyAvailable;
   const mapApiPrefix = restrictedLayer ? "/api/internal/map" : "/api/map";
-  const frameUrl = useMemo(() => {
+  const projectUrl = useMemo(() => {
     const projectUrl = new URL(`${mapApiPrefix}/project.geolibre.json`, window.location.origin);
     projectUrl.searchParams.set("basemap", "2");
     if (simulationMode) {
@@ -27105,15 +24854,25 @@ function GeoLibreMap({
       if (countryCode) projectUrl.searchParams.set("country", countryCode);
       appendPublicMapCatalogFilters(projectUrl, catalogFilters);
     }
-    const url = new URL(standaloneWorldMap ? "/map-viewer.html" : "/geolibre/index.html", window.location.origin);
-    url.searchParams.set("url", projectUrl.toString());
-    if (!standaloneWorldMap) {
-      url.searchParams.set("maponly", "true");
-      url.searchParams.set("embed", "1");
-      url.searchParams.set("welcome", "0");
-    }
-    return url.toString();
-  }, [catalogFilters, coordinateScope, countryCode, eventMode, initialMovementId, mapApiPrefix, movementType, restrictedLayer, simulationMode, standaloneWorldMap, temporalFilter]);
+    return projectUrl.href;
+  }, [catalogFilters, coordinateScope, countryCode, eventMode, initialMovementId, mapApiPrefix, movementType, restrictedLayer, simulationMode, temporalFilter]);
+  if (standaloneWorldMap && initialNativeProject.current === null) initialNativeProject.current = projectUrl;
+  const frame = new URL(standaloneWorldMap ? "/map-viewer.html" : "/geolibre/index.html", window.location.origin);
+  frame.searchParams.set("url", standaloneWorldMap ? initialNativeProject.current! : projectUrl);
+  if (!standaloneWorldMap) {
+    frame.searchParams.set("maponly", "true");
+    frame.searchParams.set("embed", "1");
+    frame.searchParams.set("welcome", "0");
+  }
+  const frameUrl = frame.href;
+  const mapUpdating = standaloneWorldMap && runtimeReady && nativeProjectUrl !== projectUrl;
+
+  useEffect(() => {
+    if (!adaptiveWorldMap || !catalogFilterOpen || organFacets) return;
+    const controller = new AbortController();
+    void fetchOrganFacets({}, controller.signal).then(setMapOrganFacets, () => undefined);
+    return () => controller.abort();
+  }, [adaptiveWorldMap, catalogFilterOpen, organFacets]);
 
   useEffect(() => {
     if (standaloneWorldMap) return;
@@ -27133,13 +24892,20 @@ function GeoLibreMap({
   }, [frameUrl]);
 
   useEffect(() => {
+    if (!standaloneWorldMap || !runtimeReady || requestedNativeProject.current === projectUrl) return;
+    requestedNativeProject.current = projectUrl;
+    pendingClusterZooms.current.clear();
+    frameRef.current?.contentWindow?.postMessage({ type: "navigator:map-project", url: projectUrl }, window.location.origin);
+  }, [projectUrl, runtimeReady, standaloneWorldMap]);
+
+  useEffect(() => {
     if (!standaloneWorldMap || runtimeReady) return;
     const fallback = window.setTimeout(() => setLegacyViewer(true), 18000);
     return () => window.clearTimeout(fallback);
   }, [frameUrl, runtimeReady, standaloneWorldMap]);
 
   useEffect(() => {
-    if (eventMode) return;
+    if (eventMode || adaptiveWorldMap) return;
     let active = true;
     setPointCount(null);
     setExactPointCount(null);
@@ -27199,7 +24965,7 @@ function GeoLibreMap({
         setMapError(error instanceof Error ? error.message : "place endpoint failed");
       });
     return () => { active = false; controller.abort(); };
-  }, [catalogFilters, coordinateScope, countryCode, eventMode, mapApiPrefix, restrictedLayer]);
+  }, [adaptiveWorldMap, catalogFilters, coordinateScope, countryCode, eventMode, mapApiPrefix, restrictedLayer]);
 
   useEffect(() => {
     if (restrictedLayer || simulationMode || eventMode || !selectedSiteGroupId) {
@@ -27327,35 +25093,9 @@ function GeoLibreMap({
 
   useEffect(() => {
     if (!eventMode) return;
-    const controller = new AbortController();
-    const endpoint = new URL("/api/map/movements.geojson", window.location.origin);
-    if (temporalFilter) endpoint.searchParams.set("datetime", temporalFilter);
-    if (movementType) endpoint.searchParams.set("movement_type", movementType);
-    if (initialMovementId) endpoint.searchParams.set("movement", initialMovementId);
     setSelectedMovement(null);
-    fetch(endpoint.toString(), {
-      credentials: "same-origin",
-      headers: { Accept: "application/geo+json, application/json" },
-      signal: controller.signal,
-    })
-      .then(async (response) => {
-        if (!response.ok) throw new Error(`movement endpoint returned ${response.status}`);
-        const payload: unknown = await response.json();
-        const collection = isRecord(payload) ? payload : {};
-        const metadata = isRecord(collection.metadata) ? collection.metadata : {};
-        setMovementCount(typeof metadata.movementCount === "number" ? metadata.movementCount : 0);
-        setMovementTypes(
-          Array.isArray(metadata.movementTypes)
-            ? metadata.movementTypes.map(String).filter(Boolean)
-            : [],
-        );
-      })
-      .catch((error: unknown) => {
-        if (error instanceof DOMException && error.name === "AbortError") return;
-        setMapError(error instanceof Error ? error.message : "movement endpoint failed");
-      });
-    return () => controller.abort();
-  }, [eventMode, initialMovementId, movementType, temporalFilter]);
+    setMovementCount(null);
+  }, [eventMode, projectUrl]);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -27372,6 +25112,22 @@ function GeoLibreMap({
       }
       if (message.type === "geolibre:state") {
         if (isLoadedNavigatorGeoLibreProject(message.project)) {
+          if (standaloneWorldMap) {
+            if (typeof message.projectUrl !== "string") return;
+            if (requestedNativeProject.current && message.projectUrl !== requestedNativeProject.current) return;
+            requestedNativeProject.current = message.projectUrl;
+            setNativeProjectUrl(message.projectUrl);
+          }
+          const metadata = isRecord(message.project.metadata) ? message.project.metadata : {};
+          if (adaptiveWorldMap) {
+            setPointCount(typeof metadata.groupCount === "number" ? metadata.groupCount : null);
+            setExactPointCount(typeof metadata.exactCoordinateCount === "number" ? metadata.exactCoordinateCount : null);
+            setFallbackPointCount(typeof metadata.fallbackCoordinateCount === "number" ? metadata.fallbackCoordinateCount : null);
+          }
+          if (eventMode) {
+            setMovementCount(typeof metadata.canonicalMovementCount === "number" ? metadata.canonicalMovementCount : null);
+            setMovementTypes(Array.isArray(metadata.movementTypes) ? metadata.movementTypes.map(String).filter(Boolean) : []);
+          }
           const view = isRecord(message.project.mapView) ? message.project.mapView : {};
           const bounds = view.bbox;
           setWideSelection(adaptiveWorldMap && Array.isArray(bounds) && bounds.length === 4
@@ -27385,10 +25141,12 @@ function GeoLibreMap({
         return;
       }
       if (message.type === "geolibre:error") {
+        if (standaloneWorldMap && typeof message.projectUrl === "string" && message.projectUrl !== projectUrl) return;
         if (standaloneWorldMap && !runtimeReady) setLegacyViewer(true);
         else setMapError(String(message.message || "project could not be loaded"));
         return;
       }
+      if (mapUpdating) return;
       if (message.type === "geolibre:result" && typeof message.requestId === "string") {
         const pending = pendingClusterZooms.current.get(message.requestId);
         if (!pending) return;
@@ -27692,7 +25450,7 @@ function GeoLibreMap({
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [adaptiveWorldMap, catalogFilters, coordinateScope, countryCode, eventMode, items, onOpenOrgan, restrictedLayer, runtimeReady, simulationMode, standaloneWorldMap]);
+  }, [adaptiveWorldMap, catalogFilters, coordinateScope, countryCode, eventMode, items, mapUpdating, onOpenOrgan, projectUrl, restrictedLayer, runtimeReady, simulationMode, standaloneWorldMap]);
 
   const changeTemporalFilter = useCallback((value: string) => {
     setRuntimeReady(false);
@@ -27720,7 +25478,7 @@ function GeoLibreMap({
     window.history.replaceState(window.history.state, "", pageUrl);
   };
   const changeCoordinateScope = (value: "all" | "exact" | "fallback") => {
-    setRuntimeReady(false);
+    if (!standaloneWorldMap) setRuntimeReady(false);
     setMapError("");
     setCoordinateScope(value);
     setSelectedSiteGroupId("");
@@ -27761,7 +25519,7 @@ function GeoLibreMap({
   const applyCatalogFilters = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const next = normalizedCatalogDraft();
-    setRuntimeReady(false);
+    if (!standaloneWorldMap) setRuntimeReady(false);
     setMapError("");
     setCatalogFilterDraft(next);
     setCatalogFilters(next);
@@ -27788,7 +25546,7 @@ function GeoLibreMap({
       temperament: "",
       temperamentScope: "exact",
     };
-    setRuntimeReady(false);
+    if (!standaloneWorldMap) setRuntimeReady(false);
     setMapError("");
     setCatalogFilterDraft(empty);
     setCatalogFilters(empty);
@@ -27800,7 +25558,7 @@ function GeoLibreMap({
     window.history.replaceState(window.history.state, "", pageUrl);
   };
   const changeCountryCode = (value: string) => {
-    setRuntimeReady(false);
+    if (!standaloneWorldMap) setRuntimeReady(false);
     setMapError("");
     setCountryCode(value);
     closeSiteGroup();
@@ -27826,7 +25584,9 @@ function GeoLibreMap({
   ].filter(Boolean);
   const status = effectiveMapError
     ? t("map.status.error", "Map unavailable: {message}", "Karte nicht verfügbar: {message}", { message: effectiveMapError })
-    : runtimeReady
+    : mapUpdating
+      ? t("map.status.updating", "Updating the map…", "Karte wird aktualisiert …")
+      : runtimeReady
       ? [t("map.ready", "Map ready", "Karte bereit"), ...mapTotals].join(" · ")
       : t("map.status.loading", "Loading the map…", "Karte wird geladen …");
   const selectedSiteTotal = siteGroupMembers?.total
@@ -28014,6 +25774,7 @@ function GeoLibreMap({
           <details
             className="map-catalog-filters"
             open={activeCatalogFilterEntries.length > 0 ? true : undefined}
+            onToggle={(event) => setCatalogFilterOpen(event.currentTarget.open)}
           >
             <summary>
               <span><Filter size={15} aria-hidden="true" /> {t("map.filters.title", "Filter mapped organs", "Kartierte Orgeln filtern")}</span>
@@ -28186,7 +25947,7 @@ function GeoLibreMap({
         </div>
       )}
       {adaptiveWorldMap && runtimeReady && (
-        <Suspense fallback={null}><MapRegions key={frameUrl} frameRef={frameRef} frameUrl={frameUrl} /></Suspense>
+        <Suspense fallback={null}><MapRegions key={frameUrl} frameRef={frameRef} projectUrl={nativeProjectUrl ?? projectUrl} /></Suspense>
       )}
       <div
         className={`geolibre-map-shell ${runtimeReady ? "is-ready" : effectiveMapError ? "has-error" : "is-loading"}${wideSelection ? " has-wide-selection" : ""}`}
@@ -28201,7 +25962,7 @@ function GeoLibreMap({
             sandbox="allow-scripts allow-same-origin allow-downloads"
             onLoad={handshake}
             aria-hidden={!runtimeReady}
-            aria-busy={!runtimeReady && !effectiveMapError}
+            aria-busy={(!runtimeReady || mapUpdating) && !effectiveMapError}
             tabIndex={runtimeReady ? 0 : -1}
           />
         )}
@@ -28391,7 +26152,9 @@ function GeoLibreMap({
           <span className="compact" aria-hidden="true">
             {effectiveMapError
               ? "Map unavailable"
-              : runtimeReady
+              : mapUpdating
+                ? t("map.status.updating", "Updating the map…", "Karte wird aktualisiert …")
+                : runtimeReady
                 ? (publicProjection ? t("map.ready", "Map ready", "Karte bereit") : `GeoLibre ${runtimeVersion} ready`)
                 : t("map.loadingStatus", "Loading map…", "Karte wird geladen …")}
           </span>
@@ -29373,19 +27136,6 @@ function DeferredSection({ body, icon, id, title }: { body: string; icon: ReactN
   );
 }
 
-function SectionHead({ detail, eyebrow, title, headingLevel = 2 }: { detail?: ReactNode; eyebrow: string; title: string; headingLevel?: 1 | 2 }) {
-  const Heading = headingLevel === 1 ? "h1" : "h2";
-  return (
-    <header className="section-head">
-      <div>
-        <p className="eyebrow">{eyebrow}</p>
-        <Heading>{title}</Heading>
-      </div>
-      {detail && <span>{detail}</span>}
-    </header>
-  );
-}
-
 function StatusLine({ detail, label, ok }: { detail: string; label: string; ok: boolean }) {
   return (
     <div className="status-line">
@@ -29395,31 +27145,6 @@ function StatusLine({ detail, label, ok }: { detail: string; label: string; ok: 
         <p>{detail}</p>
       </div>
     </div>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: number | string }) {
-  return (
-    <div className="metric">
-      <strong>{typeof value === "number" ? formatInteger(value) : value}</strong>
-      <span>{label}</span>
-    </div>
-  );
-}
-
-function Pill({ children, tone }: { children: ReactNode; tone?: "strong" }) {
-  return <span className={`pill ${tone === "strong" ? "strong" : ""}`}>{children}</span>;
-}
-
-function EmptyState({ body, icon, title }: { body: string; icon: ReactNode; title: string }) {
-  return (
-    <section className="empty-state">
-      <div className="empty-state-icon">{icon}</div>
-      <div>
-        <h3>{title}</h3>
-        <p>{body}</p>
-      </div>
-    </section>
   );
 }
 

@@ -12,6 +12,8 @@ import {
   Wrench,
 } from "lucide-react";
 import { ChangeEvent, MouseEvent, useEffect, useMemo, useState } from "react";
+import "./useCases.css";
+import "./organLifecycleUseCase.css";
 
 
 export const ORGAN_LIFECYCLE_PATH = "/use-cases/documented-organ-lifecycles";

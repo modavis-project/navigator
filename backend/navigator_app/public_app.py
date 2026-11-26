@@ -1405,13 +1405,15 @@ def create_public_app(
             summary={},
         )
         scheme = "https" if request.headers.get("X-Forwarded-Proto") == "https" else request.scheme
+        viewport_basemap = request.args.get("basemap_detail") == "viewport-v1"
         response = jsonify(public_map_marker_style(
             project=project, origin=f"{scheme}://{request.host}",
             site_markers_only=request.args.get("layout") == "sites",
             combined_tile_url=(
                 world_tile_url("all", catalog_filters, counted=True)
-                if scope == "all" and request.args.get("source_layout") == "combined" else None
+                if (scope == "all" or viewport_basemap) and request.args.get("source_layout") == "combined" else None
             ),
+            viewport_basemap=viewport_basemap,
         ))
         response.headers["Cache-Control"] = "private, max-age=86400, immutable"
         response.set_etag(hashlib.sha256(response.get_data()).hexdigest())
@@ -1428,6 +1430,7 @@ def create_public_app(
             project=geolibre_project({"type":"FeatureCollection","features":[]},movement_collection=collection,coordinate_scope="all")
             project["name"]="MODAVIS documented relocation connections"
             project["metadata"].update(visibility="public",sourceOwner="Navigator public source evidence",dataProfile=PROFILE,mapMode="events",canonicalMutationAllowed=False,simulationOnly=False,routeGeometryStored=False,historicalRouteAssertion=False)
+            project["metadata"]["movementTypes"] = collection["metadata"]["movementTypes"]
             for layer in project["layers"]:
                 layer.setdefault("metadata",{})["visibility"]="public"
             return jsonify(project)

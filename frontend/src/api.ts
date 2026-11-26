@@ -6754,7 +6754,7 @@ export async function fetchOrgans(params: OrganFilters & { limit?: number; offse
   return getJson(`/api/organs?${search.toString()}`, { signal });
 }
 
-export async function fetchEvents(params: { query?: string; subject?: string; type?: string; yearFrom?: number | string; yearTo?: number | string; place?: string; participant?: string; source?: string; completeness?: string; routeState?: string; sort?: string; limit?: number; offset?: number } = {}): Promise<EventListResponse> {
+export async function fetchEvents(params: { query?: string; subject?: string; type?: string; yearFrom?: number | string; yearTo?: number | string; place?: string; participant?: string; source?: string; completeness?: string; routeState?: string; sort?: string; limit?: number; offset?: number } = {}, signal?: AbortSignal): Promise<EventListResponse> {
   const search = new URLSearchParams({ limit: String(params.limit ?? 30), offset: String(params.offset ?? 0) });
   if (params.query) search.set("q", params.query);
   if (params.subject) search.set("subject", params.subject);
@@ -6767,7 +6767,7 @@ export async function fetchEvents(params: { query?: string; subject?: string; ty
   if (params.completeness) search.set("completeness", params.completeness);
   if (params.routeState) search.set("route", params.routeState);
   if (params.sort) search.set("sort", params.sort);
-  return getJson(`/api/events?${search.toString()}`);
+  return getJson(`/api/events?${search.toString()}`, { signal });
 }
 
 export async function fetchReleaseContext(): Promise<ReleaseContext> {

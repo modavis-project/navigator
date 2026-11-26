@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import { Map as MapIcon } from "lucide-react";
 import type { ExploreResponse } from "./api";
 import { useUiLocale } from "./uiLocale";
 
 type LocatedOrgan = ExploreResponse["mapItems"][number] & { coordinates: { lat: number; lon: number } };
+type PreviewFrameProps = {
+  source: string;
+  examples: LocatedOrgan[];
+  recordHref: (id: string) => string;
+};
 
 export default function ExploreMapPreview({ items, href, recordHref }: {
   items: ExploreResponse["mapItems"];
@@ -27,18 +33,27 @@ export default function ExploreMapPreview({ items, href, recordHref }: {
         {examples.length > 0 && <span>{t("explore.mapExampleCount", "{count} records", "{count} Datensätze", { count: formatNumber(examples.length) })}</span>}
       </div>
       {examples.length > 0
-        ? <PreviewFrame key={source} source={source} examples={examples} recordHref={recordHref} />
+        ? <DeferredPreview key={source} source={source} examples={examples} recordHref={recordHref} />
         : <p>{t("explore.mapNoExamples", "No mapped records in this preview.", "In dieser Vorschau sind keine kartierten Datensätze enthalten.")}</p>}
       <div><a href={href}>{t("explore.openFullMap", "Open the full map", "Vollständige Karte öffnen")}</a></div>
     </section>
   );
 }
 
-function PreviewFrame({ source, examples, recordHref }: {
-  source: string;
-  examples: LocatedOrgan[];
-  recordHref: (id: string) => string;
-}) {
+function DeferredPreview(props: PreviewFrameProps) {
+  const { t } = useUiLocale();
+  const [opened, setOpened] = useState(false);
+  if (opened) return <PreviewFrame {...props} />;
+
+  return <div className="explore-map-preview-frame explore-map-preview-placeholder">
+    <button className="secondary" type="button" onClick={() => setOpened(true)}>
+      <MapIcon size={17} aria-hidden="true" />
+      {t("explore.mapActivate", "Open interactive preview", "Interaktive Vorschau öffnen")}
+    </button>
+  </div>;
+}
+
+function PreviewFrame({ source, examples, recordHref }: PreviewFrameProps) {
   const { t } = useUiLocale();
   const frame = useRef<HTMLIFrameElement>(null);
   const loadTimer = useRef<number>(undefined);
@@ -59,6 +74,7 @@ function PreviewFrame({ source, examples, recordHref }: {
       setSelected([...new Set<number>(indices)]);
     };
     window.addEventListener("message", receive);
+    frame.current?.focus({ preventScroll: true });
     return () => {
       window.removeEventListener("message", receive);
       window.clearTimeout(loadTimer.current);
@@ -68,7 +84,7 @@ function PreviewFrame({ source, examples, recordHref }: {
   return (
     <>
       <div className="explore-map-preview-frame">
-        {status !== "error" && <iframe ref={frame} src={source} loading="lazy" sandbox="allow-scripts allow-same-origin" onLoad={() => {
+        {status !== "error" && <iframe ref={frame} src={source} sandbox="allow-scripts allow-same-origin" onLoad={() => {
           if (status !== "loading") return;
           window.clearTimeout(loadTimer.current);
           loadTimer.current = window.setTimeout(() => setStatus("error"), 20000);

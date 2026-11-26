@@ -54,10 +54,10 @@
 .story-link-grid > a { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; justify-content: space-between; text-decoration: none; padding: .9rem 1rem; border: 1px solid #d8e1d6; border-radius: .65rem; background: #fffefa; }
 .story-link-grid > a:hover { border-color: #668c6e; }
 .story-link-grid span { display: flex; gap: .4rem; align-items: center; font-size: .8rem; color: #607665; }
-.story-callout,.explore-applications { display: flex; align-items: center; gap: 1.2rem; padding: 1.5rem; background: #f1f4eb; border-radius: 1rem; margin: 2rem 0; }
-.story-callout h2,.explore-applications h2 { margin: .25rem 0; }
-.story-callout p,.explore-applications p { margin: .35rem 0; color: #5a6f5f; }
-.story-callout > a,.explore-applications > a { margin-left: auto; flex-shrink: 0; display: flex; align-items: center; gap: .4rem; }
+.story-callout { display: flex; align-items: center; gap: 1.2rem; padding: 1.5rem; background: #f1f4eb; border-radius: 1rem; margin: 2rem 0; }
+.story-callout h2 { margin: .25rem 0; }
+.story-callout p { margin: .35rem 0; color: #5a6f5f; }
+.story-callout > a { margin-left: auto; flex-shrink: 0; display: flex; align-items: center; gap: .4rem; }
 .application-link { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .9rem 0; border-bottom: 1px solid #d5dfd0; text-decoration: none; }
 .application-link + small,.story-side-card > small { display: block; margin-top: 1.5rem; color: #6b7e6c; line-height: 1.5; }
 .application-icon { color: #4a7356; }
@@ -75,8 +75,8 @@
   .story-statistics { gap: .7rem; }
   .story-statistics strong { font-size: 1.35rem; }
   .story-statistics span { font-size: .73rem; }
-  .story-callout,.explore-applications { flex-wrap: wrap; }
-  .story-callout > a,.explore-applications > a { margin-left: 0; }
+  .story-callout { flex-wrap: wrap; }
+  .story-callout > a { margin-left: 0; }
   .builder-network { grid-template-columns: 1fr; gap: 1rem; }
   .builder-network-centre::after { display: none; }
   .builder-network-leaves { margin-left: 1rem; }

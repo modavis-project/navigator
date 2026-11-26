@@ -2,6 +2,8 @@
 
 import argparse
 import json
+import subprocess
+import tempfile
 import unicodedata
 from pathlib import Path
 
@@ -69,10 +71,21 @@ def render_geography(source):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("source", type=Path, help="directory with the five Natural Earth GeoJSON files")
+    parser.add_argument("source", type=Path, help="Natural Earth input directory, or the generated geography GeoJSON with --overview")
     parser.add_argument("output", type=Path)
+    parser.add_argument("--overview", action="store_true", help="generalize geometry and retain overview labels using ogr2ogr")
     args = parser.parse_args()
-    data = render_geography(args.source)
+    if args.overview:
+        with tempfile.TemporaryDirectory() as temporary:
+            simplified = Path(temporary) / "overview.geojson"
+            subprocess.run([
+                "ogr2ogr", "-f", "GeoJSON", str(simplified), str(args.source),
+                "-simplify", "0.08", "-lco", "COORDINATE_PRECISION=3",
+                "-where", "kind <> 'city' OR minzoom <= 5",
+            ], check=True)
+            data = {"type": "FeatureCollection", "features": json.loads(simplified.read_bytes())["features"]}
+    else:
+        data = render_geography(args.source)
     args.output.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
 
 

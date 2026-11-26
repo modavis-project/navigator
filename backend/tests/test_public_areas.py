@@ -10,6 +10,9 @@ from navigator_app.public_repository import PublicReleaseRepository
 
 
 LOWER_SAXONY = "locadmin:6d7c300a7d6c613086981f120595002474fa100ae6a77df8"
+GERMANY = "locadmin:aa4b70296a6bc8fee0a50762b274af415814793426b7a6f4"
+BREMEN_STATE = "locadmin:af6ea5248938f9a55f481a48264a7f1886e56e8ce391b67c"
+BREMEN_MUNICIPALITY = "locadmin:360b22fb81e213b0657a66577888514d5792cb4702d84b6e"
 HAMBURG = "locadmin:hamburg"
 WINTERHUDE = "locadmin:a26265a2d2ef46e15626e6f6c7ccd860da006ea57738dca2"
 
@@ -21,12 +24,15 @@ def indexed_area(identifier, title, role, support=1, **hierarchy):
 @pytest.fixture
 def index():
     return public_areas.AreaIndex([
-        indexed_area("locadmin:germany", "Deutschland", "country"),
+        indexed_area(GERMANY, "Deutschland", "country"),
         indexed_area(LOWER_SAXONY, "Niedersachsen", "region", country="Deutschland"),
         indexed_area("locadmin:unrelated", "Niedersachsen", "region", country="A different country"),
         indexed_area(HAMBURG, "Hamburg", "municipality", support=23, country="Deutschland"),
         indexed_area("locadmin:berks", "Hamburg", "municipality", county="Berks", country="United States"),
         indexed_area(WINTERHUDE, "Winterhude", "district", municipality="Hamburg", country="Deutschland"),
+        indexed_area(BREMEN_STATE, "Freie Hansestadt Bremen", "region", country="Deutschland"),
+        indexed_area(BREMEN_MUNICIPALITY, "Bremen", "municipality", support=17,
+                     region="Freie Hansestadt Bremen", country="Deutschland"),
         indexed_area("locadmin:street", "Organ Street", "street", municipality="Hamburg"),
     ])
 
@@ -51,6 +57,15 @@ def test_named_alias_and_ambiguous_names(index):
     assert german_hamburg.identifier == HAMBURG
     assert american_hamburg.link()["context"] == "Berks, United States"
     assert [area.identifier for area, _ in index.matches("Hamburg Berks", 6)] == ["locadmin:berks"]
+
+
+def test_country_alias_and_bremen_state_and_city(index):
+    assert [(area.identifier, field) for area, field in index.matches("Germany", 6)] == [(GERMANY, "name")]
+    assert index.by_id[GERMANY].link()["title"] == "Deutschland"
+    assert [area.identifier for area, _ in index.matches("Winterhude Hamburg Germany", 6)] == [WINTERHUDE]
+    assert [area.identifier for area, _ in index.suggest("Bremen Germany", 6)] == [BREMEN_MUNICIPALITY, BREMEN_STATE]
+    assert [area.identifier for area, _ in index.suggest("Bremen", 6)] == [BREMEN_MUNICIPALITY, BREMEN_STATE]
+    assert [area.identifier for area, _ in index.matches("State of Bremen", 6)] == [BREMEN_STATE]
 
 
 def test_short_route_retains_every_identifier_byte_and_survives_label_edits(index):
@@ -78,7 +93,7 @@ def test_detail_returns_distinct_counts_and_independent_pages(index, monkeypatch
         def execute(self, sql, bound):
             observed_queries.append((sql, bound))
             return SimpleNamespace(fetchone=lambda: {
-                "parents": ["locadmin:germany"], "children": [WINTERHUDE],
+                "parents": [GERMANY], "children": [WINTERHUDE],
                 "organ_count": 2, "place_count": 1, "site_count": 1,
                 "map_data": {"group_count": 1, "exact_group_count": 1, "fallback_group_count": 0, "inline_groups": []},
                 "organs": [{"id": "MDVS:ENTY:TEST-0001-A", "title": "Example Organ"}],

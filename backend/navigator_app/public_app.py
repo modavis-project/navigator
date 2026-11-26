@@ -46,7 +46,13 @@ from .map_projection import (
     public_tiled_geolibre_project,
     public_site_groups_geojson,
 )
-from .map_tiles import PUBLIC_MAP_MARKER_VERSION, encode_public_map_tile, public_map_tile_bounds
+from .map_tiles import (
+    PUBLIC_MAP_DENSITY_TILE_VERSION,
+    PUBLIC_MAP_MARKER_VERSION,
+    encode_public_map_tile,
+    public_map_density_version,
+    public_map_tile_bounds,
+)
 from .public_areas import AREA_MAP_CONTRACT, LOOKUP_LIMIT, area_map_view, area_page_offsets, validate_lookup
 from .pipework import (
     build_pipe_position_detail_record,
@@ -499,9 +505,11 @@ def create_public_app(
         tile_y: int,
         coordinate_scope: str,
         catalog_filters: tuple[tuple[str, str | None], ...],
+        *,
+        density_version: str | None = None,
     ) -> bytes:
         binding = repo.snapshot_binding() if hasattr(repo, "snapshot_binding") else {}
-        key = json.dumps([binding, zoom, tile_x, tile_y, coordinate_scope, catalog_filters], sort_keys=True)
+        key = json.dumps([binding, zoom, tile_x, tile_y, coordinate_scope, catalog_filters, density_version], sort_keys=True)
         cached = map_tile_cache.get(key)
         if cached is not None:
             return cached
@@ -511,6 +519,7 @@ def create_public_app(
             tile_x=tile_x,
             tile_y=tile_y,
             coordinate_scope=coordinate_scope,
+            density_version=density_version,
             **dict(catalog_filters),
         )
         body = encode_public_map_tile(rows, bounds=bounds)
@@ -1271,6 +1280,7 @@ def create_public_app(
                 tile_y,
                 scope,
                 tuple(sorted(_catalog_filters().items())),
+                density_version=public_map_density_version(zoom, request.args.get("density")),
             )
         except ValueError as exc:
             return jsonify({"error": "invalid_map_tile", "detail": str(exc)}), 400
@@ -1372,6 +1382,7 @@ def create_public_app(
                 "precision": scope,
                 "release": settings.uri_release_version,
                 "markers": PUBLIC_MAP_MARKER_VERSION if counted else None,
+                "density": PUBLIC_MAP_DENSITY_TILE_VERSION if counted else None,
                 **{("q" if key == "query" else key): value for key, value in catalog_filters.items()},
             }.items()
             if value
@@ -1394,7 +1405,14 @@ def create_public_app(
             summary={},
         )
         scheme = "https" if request.headers.get("X-Forwarded-Proto") == "https" else request.scheme
-        response = jsonify(public_map_marker_style(project=project, origin=f"{scheme}://{request.host}"))
+        response = jsonify(public_map_marker_style(
+            project=project, origin=f"{scheme}://{request.host}",
+            site_markers_only=request.args.get("layout") == "sites",
+            combined_tile_url=(
+                world_tile_url("all", catalog_filters, counted=True)
+                if scope == "all" and request.args.get("source_layout") == "combined" else None
+            ),
+        ))
         response.headers["Cache-Control"] = "private, max-age=86400, immutable"
         response.set_etag(hashlib.sha256(response.get_data()).hexdigest())
         return response.make_conditional(request)
@@ -1439,16 +1457,22 @@ def create_public_app(
             summary = repo.public_map_summary(
                 coordinate_scope=scope, **catalog_filters
             )
+            bounds = summary.get("bounds")
+            map_view = {**area_map_view(bounds), "bbox": bounds} if bounds is not None else None
             counted = request.args.get("markers") == str(PUBLIC_MAP_MARKER_VERSION)
             style_options = {}
             if counted:
                 query = world_tile_url(scope, catalog_filters, counted=True).partition("?")[2]
-                style_options["basemap_style_url"] = f"{PUBLIC_MAP_MARKER_STYLE}?{query}&style={PUBLIC_MAP_STYLE_VERSION}"
+                # Small selections need visible markers even when spread
+                # across a continent or on opposite sides of the world.
+                layout = "&layout=sites" if bounds is not None and summary["groupCount"] <= 500 else ""
+                style_options["basemap_style_url"] = f"{PUBLIC_MAP_MARKER_STYLE}?{query}&style={PUBLIC_MAP_STYLE_VERSION}{layout}"
             project = public_tiled_geolibre_project(
                 exact_tile_url=world_tile_url("exact", catalog_filters, counted=counted),
                 fallback_tile_url=world_tile_url("fallback", catalog_filters, counted=counted),
                 coordinate_scope=scope,
                 summary=summary,
+                map_view=map_view,
                 **style_options,
             )
         project["metadata"].update({
@@ -1464,13 +1488,21 @@ def create_public_app(
 
     @app.get("/api/organs/<path:organ_id>/map-context.geolibre.json")
     def organ_map_context(organ_id: str):
+        from .movement_projection import canonical_movement_geojson
+
         context = repo.organ_map_context(organ_id)
         if not context:
             return jsonify({"error": "organ_not_found"}), 404
         current = public_site_groups_geojson(context["currentGroups"], coordinate_scope="all")
         builders = public_site_groups_geojson(context["builderGroups"], coordinate_scope="all")
+        movements = [
+            item for item in repo.public_relocation_movements()
+            if item.get("subjectId") == context["mdvsId"] and item.get("status") == "linked_complete_route"
+        ]
         return jsonify(organ_context_geolibre_project(
-            current, builder_collection=builders, organ_mdvs_id=context["mdvsId"],
+            current, builder_collection=builders,
+            movement_collection=canonical_movement_geojson(movements) if movements else None,
+            organ_mdvs_id=context["mdvsId"],
             organ_title=context["title"], builder_label=context["builderLabel"],
         ))
 

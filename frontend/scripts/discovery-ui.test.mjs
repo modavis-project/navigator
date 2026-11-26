@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import test from "node:test";
 import vm from "node:vm";
-import { Children, createElement, isValidElement, useEffect, useRef, useState } from "react";
+import { Children, createElement, isValidElement, Suspense, useEffect, useRef, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 import { testUiLocale } from "./ui-locale-test-support.mjs";
@@ -23,6 +23,7 @@ const names = [
   "organStatusLabel", "organInstitutionLabel", "organPlaceLabel", "organPublicUrl", "actorValue",
   "labelForLocationState", "labelForMediaState", "labelForReviewState", "friendlyLabel", "formatInteger",
   "organFiltersFromParams", "normalizeOrganCatalogFilters", "normalizeOrganCatalogSort", "literatureScanFilter",
+  "publicMapCatalogFiltersFromParams", "appendPublicMapCatalogFilters",
 ];
 const extracted = names.map(name => {
   const node = parsed.statements.find(statement => ts.isFunctionDeclaration(statement) && statement.name?.text === name);
@@ -38,11 +39,11 @@ const context = {
   useUiLocale: testUiLocale,
   LoadingContent, UpdatingContent,
   window: { location: { origin: "https://navigator.test" } },
-  useEffect, useRef, useState,
+  Suspense, useEffect, useRef, useState,
   ...Object.fromEntries([
     "Search", "ChevronRight", "MapIcon", "Library", "Layers3", "ListChecks", "MapPin",
     "UserRound", "Building2", "ArrowDownWideNarrow", "Filter", "Image", "X",
-    "ApplicationsPreview", "OrganCardButton", "MapPreview",
+    "ApplicationsPreview", "OrganCardButton", "ExploreMapPreview",
   ].map(name => [name, () => null])),
 };
 vm.runInNewContext(ts.transpileModule([renderWindow.getText(parsed), ...extracted].join("\n"), {
@@ -387,4 +388,17 @@ test("catalogue capabilities determine effective filters and sort without changi
   assert.equal(sort(undefined, false, true), "label");
   assert.equal(sort("media", false, true), "media");
   assert.equal(sort("media", false, false), "label");
+});
+
+test("a catalogue virtual-instrument selection reaches the filtered map project", () => {
+  const page = render("OrganFilterPanel", { ...filterProps, filters: { virtualInstrument: "yes" } });
+  const handoff = links(page).find(link => link.text === "Show these results on the map");
+  assert.ok(handoff);
+  const target = new URL(handoff.href, "https://navigator.test");
+  const filters = context.publicMapCatalogFiltersFromParams(target.searchParams);
+  const project = new URL("/api/map/project.geolibre.json", target);
+  context.appendPublicMapCatalogFilters(project, filters);
+  assert.equal(project.searchParams.get("virtual_instrument"), "yes");
+  context.appendPublicMapCatalogFilters(project, { ...filters, virtualInstrument: "" });
+  assert.equal(project.searchParams.has("virtual_instrument"), false);
 });

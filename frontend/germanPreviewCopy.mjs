@@ -17,6 +17,9 @@ const catalogs = {
   'researchFilters.tsx': {names: ['*.1']},
   'identityOccurrences.tsx': {occurrenceLabels: ['*.1']},
   'researchExploration.tsx': {dimensionGerman: []},
+  'useCases.tsx': {STORIES: ['*.title.1', '*.summary.1', '*.category.1'], FIRE_TITLE: ['1'], COVERAGE_LABELS: [], ACTIVITY_LABELS: []},
+  'organologicalResearch.tsx': {DOSSIER_GERMAN: []},
+  'dalmatiaFireUseCase.tsx': {FIRE_BANDS_GERMAN: [], FIRE_LIMITATIONS_GERMAN: [], FIRE_SOURCE_ROLES_GERMAN: []},
   'workbenchLabels.ts': {EVIDENCE_TERMS: [], UNITS: ['*.1', '*.2']},
 };
 

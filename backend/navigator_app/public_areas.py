@@ -5,6 +5,7 @@ from bisect import bisect_left
 from collections import defaultdict
 from dataclasses import dataclass
 from heapq import nsmallest
+from itertools import product
 import json
 import math
 import re
@@ -32,6 +33,17 @@ AREA_MAP_CONTRACT = "modavis.navigator.public-area-map/v1"
 
 # Names for these retained administrative nodes are display/search aliases.
 AREA_ALIASES = {
+    ("locadmin:aa4b70296a6bc8fee0a50762b274af415814793426b7a6f4", "country", "Deutschland"): ("Germany",),
+    ("locadmin:9d965de0a07e98b6c7dd88ef208fd5ff029df1a1cf30ab98", "country", "Россия"): (
+        "Russia", "Russian Federation", "Russland",
+    ),
+    ("locadmin:aac146629766d3997eff80ae98c58306a3c459768e81ab68", "country", "Maroc ⵍⵎⵖⵔⵉⴱ المغرب"): (
+        "Morocco", "Marokko", "Marocco",
+    ),
+    ("locadmin:32c8f883e8661cbb35a1eed48bd864ee3f75bbf41f6157bb", "country", "مصر"): ("Egypt", "Ägypten"),
+    ("locadmin:af6ea5248938f9a55f481a48264a7f1886e56e8ce391b67c", "region", "Freie Hansestadt Bremen"): (
+        "Bremen", "State of Bremen", "Land Bremen",
+    ),
     ("locadmin:6d7c300a7d6c613086981f120595002474fa100ae6a77df8", "region", "Niedersachsen"): ("Lower Saxony",),
 }
 
@@ -93,6 +105,7 @@ class AreaIndex:
     def __init__(self, rows):
         self.by_id = {}
         self.by_name = defaultdict(list)
+        parent_aliases = {}
         for row in rows:
             identifier, role, title = row["identifier"], row["role"], row["title"]
             if not _valid_area_id(identifier) or not title or role not in ROLES or identifier in self.by_id:
@@ -105,15 +118,22 @@ class AreaIndex:
             area = Area(identifier, title, role, parents, row["support"])
             self.by_id[identifier] = area
             aliases = AREA_ALIASES.get((identifier, role, title), ())
+            if aliases:
+                parent_aliases[title] = aliases
             for name in (title, *aliases):
                 self.by_name[_name_key(name)].append(area)
         self.name_keys = sorted(self.by_name)
         self.parent_keys = {}
         for area in self.by_id.values():
-            parents = [_name_key(parent) for parent in area.parents]
-            self.parent_keys[area.identifier] = frozenset(
-                [*parents, *(" ".join(parents[:count]) for count in range(2, len(parents) + 1))]
+            parents = [
+                tuple(_name_key(name) for name in (parent, *parent_aliases.get(parent, ())))
+                for parent in area.parents
+            ]
+            keys = {name for alternatives in parents for name in alternatives}
+            keys.update(
+                " ".join(names) for count in range(2, len(parents) + 1) for names in product(*parents[:count])
             )
+            self.parent_keys[area.identifier] = frozenset(keys)
 
     @staticmethod
     def sort_key(area):

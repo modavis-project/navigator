@@ -18,6 +18,7 @@ const pageLabels: Record<string, string> = {
   "/use-cases/organ-corpus-coverage": "Abdeckung und Dokumentationslücken im Orgelkorpus",
   "/use-cases/documented-organ-lifecycles": "Dokumentierte Orgelgeschichten",
   "/use-cases/builder-workshop-networks": "Netzwerke von Orgelbauern und Werkstätten",
+  "/use-cases/dalmatia-pipe-organs-fire-vulnerability": "Pfeifenorgeln und Brände in Dalmatien 2026",
 };
 
 export function publicPageLabel(t: UiText, path: string, section: string, label: string) {

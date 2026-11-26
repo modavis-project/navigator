@@ -7,9 +7,9 @@
 .story-page p { line-height: 1.7; }
 .story-lead { max-width: 80ch; font-size: 1.1rem; margin: 2rem 0; }
 .story-statistics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid #d8e1d9; margin: 0 0 2.3rem; padding: 1.5rem 0; gap: 1.5rem; }
-.story-statistics > div { display: grid; gap: .3rem; }
+.story-statistics > div { display: grid; gap: .3rem; min-width: 0; }
 .story-statistics strong { font-size: clamp(1.6rem, 3vw, 2.45rem); font-variant-numeric: tabular-nums; font-weight: 600; }
-.story-statistics span { color: #65776d; font-size: .85rem; }
+.story-statistics span { color: #65776d; font-size: .85rem; hyphens: auto; overflow-wrap: anywhere; }
 .story-grid,.application-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
 .story-card,.application-card { display: flex; flex-direction: column; align-items: flex-start; padding: 1.6rem; border: 1px solid #d7e0d7; border-radius: 1rem; text-decoration: none; color: inherit; background: #fffefa; transition: border-color 120ms, box-shadow 120ms; }
 .story-card:hover,.application-card:hover { border-color: #5f8975; box-shadow: 0 5px 18px #234b3b0a; }

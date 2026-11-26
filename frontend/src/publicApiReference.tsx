@@ -1,8 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { LoadingContent } from "./LoadingContent";
-
-const REFERENCE_URL = "/navigator-api.md";
-const REFERENCE_TITLE = "MODAVIS Navigator public API";
+import { useUiLocale, type UiLocale } from "./uiLocale";
 
 function inline(text: string): ReactNode[] {
   return text.split(/(`[^`\n]+`|\[[^\]\n]+\]\(#[a-z0-9-]+\))/g).map((part, index) => {
@@ -40,30 +38,37 @@ function referenceBlocks(markdown: string): string[][] {
 const sectionId = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const cells = (line: string) => line.slice(1, -1).split("|").map(cell => cell.trim());
 
+function readHeading(block: string[]) {
+  const stableAnchor = /^<a id="([a-z0-9-]+)"><\/a>$/.exec(block[0]);
+  const heading = /^(#{2,3}) (.+)$/.exec((stableAnchor ? block[1] : block[0]) ?? "");
+  if (!heading) return;
+  const [, marker, title] = heading;
+  return { title, id: stableAnchor?.[1] ?? sectionId(title), level: marker.length };
+}
+
 export function PublicApiReferenceBody({ markdown }: { markdown: string }) {
   // This renderer covers the tracked reference's controlled Markdown subset.
   // Content is rendered as React text, and only local section links are parsed.
+  const { t } = useUiLocale();
   const blocks = referenceBlocks(markdown);
-  const sections = blocks.flatMap(([line]) => /^#{2,3} /.test(line) ? [line.replace(/^#+ /, "")] : []);
-  let section = REFERENCE_TITLE;
+  const headings = blocks.map(readHeading);
+  let section = blocks[0]?.[0].slice(2) ?? "";
   return <>
-    <nav className="api-reference-contents" aria-label="API reference contents">
-      <h2>Contents</h2>
-      <ul>{sections.map(title => <li key={title}><a href={"#" + sectionId(title)}>{title}</a></li>)}</ul>
+    <nav className="api-reference-contents" aria-label={t("guide.api.reference.contentsLabel", "API reference contents", "Inhaltsverzeichnis der API-Referenz")}>
+      <h2>{t("guide.api.reference.contents", "Contents", "Inhalt")}</h2>
+      <ul>{headings.map(heading => heading && <li key={heading.id}><a href={"#" + heading.id}>{heading.title}</a></li>)}</ul>
     </nav>
     {blocks.map(([line, ...rest], index) => {
       if (line.startsWith("# ")) return null;
-      if (line.startsWith("## ")) {
-        section = line.slice(3);
-        return <h2 id={sectionId(section)} key={index}>{inline(section)}</h2>;
+      const heading = headings[index];
+      if (heading) {
+        section = heading.title;
+        const Heading = heading.level === 2 ? "h2" : "h3";
+        return <Heading id={heading.id} key={index}>{inline(section)}</Heading>;
       }
-      if (line.startsWith("### ")) {
-        section = line.slice(4);
-        return <h3 id={sectionId(section)} key={index}>{inline(section)}</h3>;
-      }
-      if (line.startsWith("```")) return <pre key={index} tabIndex={0} aria-label={section + " example"}><code>{rest.slice(0, -1).join("\n")}</code></pre>;
+      if (line.startsWith("```")) return <pre key={index} tabIndex={0} aria-label={t("guide.api.reference.exampleLabel", "{section} example", "Beispiel zu {section}", { section })}><code>{rest.slice(0, -1).join("\n")}</code></pre>;
       if (line.startsWith("|") && /^\|(?:\s*:?-+:?\s*\|)+$/.test(rest[0] ?? "")) {
-        return <div key={index} className="api-reference-table" role="region" tabIndex={0} aria-label={section + " table"}>
+        return <div key={index} className="api-reference-table" role="region" tabIndex={0} aria-label={t("guide.api.reference.tableLabel", "{section} table", "Tabelle zu {section}", { section })}>
           <table>
             <thead><tr>{cells(line).map((value, column) => <th key={column} scope="col">{inline(value)}</th>)}</tr></thead>
             <tbody>{rest.slice(1).map((row, rowIndex) => <tr key={rowIndex}>
@@ -81,36 +86,41 @@ export function PublicApiReferenceBody({ markdown }: { markdown: string }) {
 }
 
 export function PublicApiReference() {
-  const [state, setState] = useState<{ markdown?: string; failed?: boolean }>({});
+  const { locale, t } = useUiLocale();
+  const url = locale === "de" ? "/navigator-api.de.md" : "/navigator-api.md";
+  const title = t("guide.api.reference.title", "MODAVIS Navigator public API", "Öffentliche API des MODAVIS Navigators");
+  const [state, setState] = useState<{ locale: UiLocale; markdown?: string; failed?: boolean }>();
+  const current = state?.locale === locale ? state : undefined;
+  const markdown = current?.markdown;
   useEffect(() => {
-    document.title = REFERENCE_TITLE + " | MODAVIS Navigator";
+    document.title = title + " | MODAVIS Navigator";
     const controller = new AbortController();
-    fetch(REFERENCE_URL, { signal: controller.signal }).then(async response => {
+    fetch(url, { signal: controller.signal }).then(async response => {
       if (!response.ok) throw new Error("API reference unavailable");
       const markdown = await response.text();
-      if (!markdown.startsWith("# " + REFERENCE_TITLE + "\n")) throw new Error("Invalid API reference");
-      if (!controller.signal.aborted) setState({ markdown });
+      if (markdown.split(/\r?\n/, 1)[0] !== "# " + title) throw new Error("Invalid API reference");
+      if (!controller.signal.aborted) setState({ locale, markdown });
     }).catch(() => {
-      if (!controller.signal.aborted) setState({ failed: true });
+      if (!controller.signal.aborted) setState({ locale, failed: true });
     });
     return () => controller.abort();
-  }, []);
+  }, [locale, title, url]);
   useEffect(() => {
-    if (!state.markdown) return;
+    if (!markdown) return;
     document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ block: "start" });
-  }, [state.markdown]);
-  return <article className="entity-section release-guide api-guide api-reference" lang="en">
-    <header className="release-guide-hero public-data-guide-hero">
-      <div><p className="eyebrow">Public API reference</p><h1>{REFERENCE_TITLE}</h1></div>
-      <nav aria-label="API reference links">
-        <a href="/about/api">Back to the API guide</a>
-        <a href={REFERENCE_URL} download>Download Markdown</a>
+  }, [markdown]);
+  return <article className="entity-section release-guide api-guide" lang={locale}>
+    <header className="api-guide-header">
+      <div><h1>{title}</h1></div>
+      <nav className="api-reference-links" aria-label={t("guide.api.reference.links", "API reference links", "Links zur API-Referenz")}>
+        <a href="/about/api">{t("guide.api.reference.back", "Back to the API guide", "Zurück zum API-Leitfaden")}</a>
+        <a className="api-primary-link" href={url} download>{t("guide.api.reference.download", "Download Markdown", "Als Markdown herunterladen")}</a>
       </nav>
     </header>
     <div className="release-guide-section api-reference-document">
-      {state.markdown ? <PublicApiReferenceBody markdown={state.markdown} />
-        : state.failed ? <p role="alert">The API reference could not be loaded. <a href={REFERENCE_URL} download>Download Markdown</a>.</p>
-          : <LoadingContent kind="article" label="Loading the API reference…" />}
+      {markdown ? <PublicApiReferenceBody markdown={markdown} />
+        : current?.failed ? <p role="alert">{t("guide.api.reference.unavailable", "The API reference could not be loaded.", "Die API-Referenz konnte nicht geladen werden.")} <a href={url} download>{t("guide.api.reference.download", "Download Markdown", "Als Markdown herunterladen")}</a></p>
+          : <LoadingContent kind="article" label={t("guide.api.reference.loading", "Loading the API reference…", "API-Referenz wird geladen …")} />}
     </div>
   </article>;
 }

@@ -49,6 +49,9 @@ test("the API guide links both forms of the public reference", () => {
   assertPageHeading(html, "Navigator API guide");
   assert.match(html, /href="\/about\/api\?reference=1"/);
   assert.match(html, /href="\/navigator-api\.md" download=""/);
+  for (const section of ["api-rest", "api-graphql", "api-reuse"]) {
+    assert.ok(html.includes(`href="#${section}"`) && html.includes(`id="${section}"`));
+  }
 });
 
 test("the tracked API reference renders tables, runnable examples and valid section links", () => {
@@ -65,6 +68,26 @@ test("the tracked API reference renders tables, runnable examples and valid sect
   }
   const untrusted = render(module.exports.PublicApiReferenceBody, { markdown: "## Links\n\n[x](javascript:alert(1)) <script>alert(1)</script>" });
   assert.doesNotMatch(untrusted, /href="javascript:|<script>/);
+});
+
+test("the German API reference preserves endpoint contracts, executable examples and section links", () => {
+  const module = load("publicApiReference", "/about/api", "?reference=1");
+  const english = readFileSync(new URL("../public/navigator-api.md", import.meta.url), "utf8");
+  const german = readFileSync(new URL("../public/navigator-api.de.md", import.meta.url), "utf8");
+  const endpointPaths = markdown => Array.from(markdown.matchAll(/`(\/[^`]+)`/g), match => match[1]).sort();
+  const runnableExamples = markdown => Array.from(markdown.matchAll(/^```\w*\n([\s\S]+?)^```$/gm), match =>
+    match[1].replace(/^# .*\n/gm, ""));
+  const renderedSections = html => Array.from(html.matchAll(/<h[23] id="([^"]+)"/g), match => match[1]);
+  const englishHtml = render(module.exports.PublicApiReferenceBody, { markdown: english });
+  const germanHtml = render(module.exports.PublicApiReferenceBody, { markdown: german });
+  assert.deepEqual(endpointPaths(german), endpointPaths(english));
+  assert.deepEqual(runnableExamples(german), runnableExamples(english));
+  assert.deepEqual(renderedSections(germanHtml), renderedSections(englishHtml));
+  assert.match(germanHtml, /<h2 id="runtime-discovery">Verfügbare Funktionen prüfen<\/h2>/);
+  for (const [, anchor] of germanHtml.matchAll(/href="#([^"]+)"/g)) assert.ok(germanHtml.includes(`id="${anchor}"`), anchor);
+  for (const row of german.split("\n").filter(line => line.startsWith("|"))) {
+    assert.equal([...row.matchAll(/\|/g)].length, 3, row);
+  }
 });
 
 test("the public release guide owns its page h1 and the reviewer guide retains h2", () => {

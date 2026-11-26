@@ -4,6 +4,7 @@ import { useRecord } from "./publicRecords";
 import { useUiLocale } from "./uiLocale";
 import { LoadingContent } from "./LoadingContent";
 import { readMapRuntime } from "./mapPreload";
+import { MapMarkerInspector } from "./mapMarkers";
 import "./publicAreas.css";
 
 interface AreaLink {
@@ -171,7 +172,7 @@ function AreaMapFrame({ area, precision, onRetry }: { area: Area; precision: Are
           }
         } else if (typeof properties.siteGroupId === "string") {
           setSite({ id: properties.siteGroupId, title: typeof properties.title === "string" ? properties.title : "",
-            approximate: hit.layerId === AREA_SITE_LAYERS[1] || properties.coordinateFallback === true });
+            approximate: hit.layerId === AREA_SITE_LAYERS[1] || [true, "true", 1].includes(properties.coordinateFallback) });
         }
       }
     };
@@ -188,6 +189,7 @@ function AreaMapFrame({ area, precision, onRetry }: { area: Area; precision: Are
   }, []);
 
   return <>
+    {status === "ready" && <MapMarkerInspector frameRef={frameRef} regionOverlay={false} />}
     <div className={`area-map-shell ${status === "ready" ? "is-ready" : ""}`}>
       {runtime && status !== "error" && <iframe ref={frameRef} className="area-map-frame" src={frame.href}
         title={t("area.map.title", "Map of organ locations in {area}", "Karte der Orgelstandorte in {area}", { area: area.title })}
@@ -210,8 +212,9 @@ function AreaMapSite({ areaId, site, onClose }: { areaId: string; site: MapSite;
   return <aside className="area-map-site" aria-live="polite">
     <header>
       <div>
-        <h3>{site.title || t("area.map.selected", "Selected site", "Ausgewählter Standort")}</h3>
-        {site.approximate && <small>{t("area.map.approximate", "Approximate locality", "Ungefährer Ort")}</small>}
+        <h3>{site.approximate
+          ? t("map.marker.approximate", "Approximate locality", "Ungefähre Ortsangabe")
+          : site.title || t("area.map.selected", "Selected site", "Ausgewählter Standort")}</h3>
       </div>
       <button type="button" className="secondary" onClick={onClose}>{t("area.map.closeSite", "Close site", "Standort schließen")}</button>
     </header>
@@ -240,7 +243,7 @@ function AreaMap({ area }: { area: Area }) {
     </summary>
     {opened && <>
       <div className="area-map-controls">
-        <p className="muted">{t("area.map.scope", "Select a site for its organ records or a numbered group to zoom.", "Standorte für Orgeldatensätze oder nummerierte Gruppen zum Vergrößern auswählen.")}</p>
+        <p className="muted">{t("area.map.scope", "Hover or tap a marker for counts. Select a site for its records or a group to zoom.", "Für Anzahlen über einen Marker fahren oder ihn antippen. Standorte für Datensätze oder Gruppen zum Vergrößern auswählen.")}</p>
         {coordinates && coordinates.exact > 0 && coordinates.fallback > 0 && <label>
           <span>{t("area.map.showPrecision", "Show", "Anzeigen")}</span>
           <select value={precision} onChange={event => setPrecision(event.currentTarget.value === "fallback" ? "fallback" : "exact")}>

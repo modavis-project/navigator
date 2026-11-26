@@ -63,10 +63,10 @@ role; the application additionally starts read-only transactions. No saved
 endpoint, default password or private workspace is needed for default tests.
 
 `python3 scripts/measure_frontend.py` enforces 300 KiB gzip for the largest
-JavaScript file and 608 KiB gzip for the application JavaScript, CSS and HTML,
-including on-demand area pages. The region interaction assets have a 6 KiB
-gzip budget and load only on the interactive public map. The total is reported
-with both budgets' assets included.
+JavaScript file and 616 KiB gzip for the application JavaScript, CSS and HTML,
+including on-demand area pages. The map interaction assets have an 11 KiB
+gzip budget. The standalone public map viewer, including its MapLibre worker,
+has a separate 420 KiB gzip budget. The total includes both groups of assets.
 Gzip uses level 9 and a fixed timestamp for comparable measurements. The
 retained main chunk still exceeds Vite's raw 500 kB advisory, which remains
 visible. The budget does not certify full-POD response time or browser

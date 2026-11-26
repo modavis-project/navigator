@@ -12,11 +12,24 @@ import mapbox_vector_tile
 PUBLIC_MAP_TILE_CONTRACT = "modavis.navigator.public-map-vector-tile/v1"
 PUBLIC_MAP_TILE_LAYER = "organ_sites"
 PUBLIC_MAP_MARKER_VERSION = 2
+PUBLIC_MAP_DENSITY_TILE_VERSION = 2
 PUBLIC_MAP_TILE_MAX_ZOOM = 14
 PUBLIC_MAP_TILE_RAW_MIN_ZOOM = 12
 WEB_MERCATOR_LATITUDE_LIMIT = 85.0511287798066
 WEB_MERCATOR_RADIUS = 6_378_137.0
 WEB_MERCATOR_HALF_WORLD = math.pi * WEB_MERCATOR_RADIUS
+
+# Retain the previous sampling for immutable overview URLs. The new grids
+# sample below the smoothing radius and taper to the existing regional grid.
+PUBLIC_MAP_DENSITY_GRIDS = {
+    "1": (10, 10, 10, 14, 14),
+    "2": (48, 48, 64, 64, 64, 20),
+}
+
+
+def public_map_density_version(zoom: int, version: str | None) -> str | None:
+    """Identify the sampling variant only at zooms where it changes the tile."""
+    return version if 0 <= zoom < len(PUBLIC_MAP_DENSITY_GRIDS.get(version, ())) else None
 
 
 @dataclass(frozen=True)
@@ -39,12 +52,15 @@ class PublicMapTileBounds:
         return self.projected_y_max - self.projected_y_min
 
 
-def public_map_tile_grid_size(zoom: int) -> int | None:
+def public_map_tile_grid_size(zoom: int, *, density_version: str | None = None) -> int | None:
     """Return the per-tile density grid, or ``None`` for individual sites."""
     if zoom < 0 or zoom > PUBLIC_MAP_TILE_MAX_ZOOM:
         raise ValueError(f"map tile zoom must be between 0 and {PUBLIC_MAP_TILE_MAX_ZOOM}")
     if zoom >= PUBLIC_MAP_TILE_RAW_MIN_ZOOM:
         return None
+    overview_grid = PUBLIC_MAP_DENSITY_GRIDS.get(density_version, ())
+    if zoom < len(overview_grid):
+        return overview_grid[zoom]
     if zoom <= 2:
         return 5
     if zoom <= 5:

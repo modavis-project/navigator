@@ -1,11 +1,10 @@
 import { RefObject, useEffect, useState } from "react";
+import { installMapBridge, mapBridgeChannel, MapMarkerInspector } from "./mapMarkers";
 import { jsonRequestCache } from "./requestCache";
 import { useUiLocale } from "./uiLocale";
-import "./mapRegions.css";
 
 type Region = { id: string; title: string; type: string; url: string; rank: number };
 type Totals = { groupCount: number; mappedOrganCount: number };
-const channel = "navigator:map-regions";
 
 export default function MapRegions({ frameRef, frameUrl }: {
   frameRef: RefObject<HTMLIFrameElement | null>;
@@ -20,15 +19,14 @@ export default function MapRegions({ frameRef, frameUrl }: {
   const activeId = selected && !counts[selected.id] && selected.id !== failed ? selected.id : (hovered ?? selected)?.id;
   const origin = window.location.origin;
   const send = (event: string, fields?: object) => {
-    frameRef.current?.contentWindow?.postMessage({ type: channel, event, ...fields }, origin);
+    frameRef.current?.contentWindow?.postMessage({ type: mapBridgeChannel, event, ...fields }, origin);
   };
 
   useEffect(() => {
     const frame = frameRef.current;
-    const doc = frame?.contentDocument;
-    if (!doc) return;
+    if (!frame) return;
     const receive = (event: MessageEvent) => {
-      if (event.origin !== origin || event.source !== frame.contentWindow || event.data?.type !== channel) return;
+      if (event.origin !== origin || event.source !== frame.contentWindow || event.data?.type !== mapBridgeChannel) return;
       const message = event.data;
       if (message.event === "available" && Array.isArray(message.areas)) {
         setAreas(message.areas);
@@ -40,13 +38,11 @@ export default function MapRegions({ frameRef, frameUrl }: {
       }
     };
     window.addEventListener("message", receive);
-    const script = doc.createElement("script");
-    script.type = "module";
-    script.src = "/geolibre-region-bridge.mjs";
-    doc.head.append(script);
+    const remove = installMapBridge(frame);
+    frame.contentWindow?.postMessage({ type: mapBridgeChannel, event: "request-state" }, origin);
     return () => {
       window.removeEventListener("message", receive);
-      script.remove();
+      remove?.();
     };
   }, [frameRef, origin]);
 
@@ -71,7 +67,6 @@ export default function MapRegions({ frameRef, frameUrl }: {
     return () => { window.clearTimeout(timer); controller.abort(); };
   }, [activeId, counts, frameUrl, hovered, locale, origin]);
 
-  if (!areas.length && !selected) return null;
   const stats = selected && counts[selected.id];
   const preview = hovered && counts[hovered.id];
   const siteCount = (count: number) => t("map.region.sites", "{count} mapped sites", "{count} kartierte Standorte", { count: formatNumber(count) });
@@ -105,12 +100,13 @@ export default function MapRegions({ frameRef, frameUrl }: {
             setSelected(null);
           }}>×</button>
         </div>
-      ) : <small>{hovered
+      ) : areas.length > 0 && <small className={hovered ? undefined : "map-region-hint"}>{hovered
         ? [hovered.title, preview && siteCount(preview.groupCount)].filter(Boolean).join(" · ")
         : t("map.region.hint", "Hover to highlight an area. Select it for counts.", "Für die Umrisse über ein Gebiet fahren, für Zahlen auswählen.")}</small>}
-      <a className="map-region-credits" href="/basemap/assets-v2/region-boundaries-v1.txt" target="_blank" rel="noreferrer">
+      <MapMarkerInspector frameRef={frameRef} />
+      {(areas.length > 0 || selected) && <a className="map-region-credits" href="/basemap/assets-v2/region-boundaries-v1.txt" target="_blank" rel="noreferrer">
         {t("map.region.credits", "Boundary credits", "Quellen der Gebietsgrenzen")}
-      </a>
+      </a>}
     </div>
   );
 }

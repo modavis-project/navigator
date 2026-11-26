@@ -34,6 +34,10 @@ export default defineConfig({
   plugins: [guardMissingGeoLibreRuntime(), germanPreviewCopyPlugin(frontendRoot), react()],
   build: {
     rolldownOptions: {
+      input: {
+        index: resolve(frontendRoot, "index.html"),
+        "map-viewer": resolve(frontendRoot, "map-viewer.html"),
+      },
       output: {
         codeSplitting: {
           groups: [

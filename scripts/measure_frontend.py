@@ -9,9 +9,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_JAVASCRIPT_GZIP_BYTES = 300 * 1024
-MAX_CLIENT_GZIP_BYTES = 608 * 1024
-MAX_REGION_MAP_GZIP_BYTES = 6 * 1024
-REGION_MAP_ASSET = re.compile(r"(?:assets/mapRegions-[A-Za-z0-9_-]+\.(?:js|css)|geolibre-region-bridge\.mjs)")
+MAX_CLIENT_GZIP_BYTES = 616 * 1024
+MAX_REGION_MAP_GZIP_BYTES = 11 * 1024
+MAX_MAP_VIEWER_GZIP_BYTES = 420 * 1024
+REGION_MAP_ASSET = re.compile(r"(?:assets/map(?:Regions|Markers)-[A-Za-z0-9_-]+\.(?:js|css)|geolibre-region-bridge\.mjs)")
+MAP_VIEWER_ASSET = re.compile(r"(?:map-viewer\.html|assets/(?:map-viewer|maplibre-gl-worker)-[A-Za-z0-9_-]+\.(?:js|css))")
 
 
 def measure(directory):
@@ -28,6 +30,7 @@ def measure(directory):
     return {"contract": "modavis.navigator.frontend-measurement/v1", "files": files,
             "clientGzipBytes": sum(entry["gzipBytes"] for entry in client),
             "regionMapGzipBytes": sum(entry["gzipBytes"] for entry in client if REGION_MAP_ASSET.fullmatch(entry["path"])),
+            "mapViewerGzipBytes": sum(entry["gzipBytes"] for entry in client if MAP_VIEWER_ASSET.fullmatch(entry["path"])),
             "largestJavaScriptGzipBytes": max((entry["gzipBytes"] for entry in client if entry["path"].endswith((".js", ".mjs"))), default=0)}
 
 
@@ -39,16 +42,20 @@ def main():
     args = parser.parse_args()
     report = measure(args.dist)
     region_bytes = report["regionMapGzipBytes"]
+    viewer_bytes = report["mapViewerGzipBytes"]
     if (report["largestJavaScriptGzipBytes"] > MAX_JAVASCRIPT_GZIP_BYTES
-            or report["clientGzipBytes"] - region_bytes > MAX_CLIENT_GZIP_BYTES
-            or region_bytes > MAX_REGION_MAP_GZIP_BYTES):
+            or report["clientGzipBytes"] - region_bytes - viewer_bytes > MAX_CLIENT_GZIP_BYTES
+            or region_bytes > MAX_REGION_MAP_GZIP_BYTES
+            or viewer_bytes > MAX_MAP_VIEWER_GZIP_BYTES):
         raise SystemExit(
             f"Frontend exceeds the compressed-size budget ({MAX_JAVASCRIPT_GZIP_BYTES // 1024} KiB largest JS / "
-            f"{MAX_CLIENT_GZIP_BYTES // 1024} KiB app plus {MAX_REGION_MAP_GZIP_BYTES // 1024} KiB for map regions)"
+            f"{MAX_CLIENT_GZIP_BYTES // 1024} KiB app, {MAX_REGION_MAP_GZIP_BYTES // 1024} KiB map interaction, "
+            f"{MAX_MAP_VIEWER_GZIP_BYTES // 1024} KiB map viewer)"
         )
     if args.compare:
         earlier = json.loads(args.compare.read_text())
         earlier.setdefault("regionMapGzipBytes", 0)
+        earlier.setdefault("mapViewerGzipBytes", 0)
         if report != earlier:
             raise SystemExit("Frontend output differs from the recorded build")
     if args.report:

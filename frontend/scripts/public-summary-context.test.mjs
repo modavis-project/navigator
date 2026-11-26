@@ -24,17 +24,18 @@ const organ = {
   specificationDescriptions: [1, 2].map(id => ({ id: String(id), kind: "alternative", periodLabel: "Undated account", sourceHeading: "Source specification", source: { id: "s1", source: "src:Example catalogue" }, chronology: { contract: "modavis.source-account-recovery/v1" } })),
 };
 
-test("organ overview distinguishes source records, collections and specification accounts", () => {
+test("the account disclosure details recovered specifications and sources without repeating overview totals", () => {
   const html = render(experience.OrganLanding, { organ, onOpenTab: () => {} });
-  assert.match(html, /14 source records from 3 collections/);
   assert.match(html, /2 recovered specification accounts/);
-  assert.match(html, /29 assertions/);
-  assert.doesNotMatch(html, /14 collections|No dated activities/);
+  assert.match(html, /Example catalogue/);
+  assert.match(html, /tab=identifiers/);
+  assert.match(html, /different periods or instruments/);
+  assert.doesNotMatch(html, /14 source records|14 collections|29 assertions|No dated activities/);
 });
 
 test("legacy source counts and unloaded history do not become invented collection totals or absence claims", () => {
   const html = render(experience.OrganLanding, { organ: { ...organ, sourceSummary: undefined }, onOpenTab: () => {} });
-  assert.match(html, /Follow the source records/);
+  assert.match(html, /Sources and identifiers/);
   assert.match(html, /Open the history/);
   assert.doesNotMatch(html, /14 collections|No dated activities/);
 });
@@ -43,16 +44,16 @@ test("builder summary retains attribution and leaves unestablished role and time
   const html = render(experience.BuilderAttribution, { organ: { ...organ, builder: "Example workshop", builderSummary: { label: "Example workshop", documentedActorCount: 3, assertionCount: 7, qualification: "Most documented association; consult each source claim.", claimsUrl: "/use-cases/research-workbench?view=claims", role: null, period: null } } });
   assert.match(html, /Most documented association/);
   assert.match(html, /Associated actor records/);
-  assert.match(html, /Supporting assertions/);
-  assert.match(html, /Not established as a single role/);
-  assert.match(html, /Consult the dated source assertions/);
+  assert.match(html, /Supporting source assertions/);
+  assert.match(html, /No single role established/);
+  assert.match(html, /See the dated source evidence/);
   assert.match(html, /href="\/use-cases\/research-workbench\?view=claims"/);
 });
 
 test("unavailable source and builder aggregates remain unavailable instead of becoming zero or crashing", () => {
   const sparse = { ...organ, sourceSummary: { sourceRecords: null, collections: null }, builder: "Example workshop", builderSummary: { label: "Example workshop", documentedActorCount: null, assertionCount: null, qualification: "Documented association", claimsUrl: "/use-cases/research-workbench", role: null, period: null } };
   const html = render(experience.OrganLanding, { organ: sparse, onOpenTab: () => {} });
-  assert.match(html, /Follow the source records/);
+  assert.match(html, /Example catalogue/);
   assert.doesNotMatch(html, /0 source records/);
   assert.match(render(experience.BuilderAttribution, { organ: sparse }), /Not recorded/);
 });

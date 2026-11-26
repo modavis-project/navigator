@@ -3366,6 +3366,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         tile_x: int,
         tile_y: int,
         coordinate_scope: str = "exact",
+        density_version: str | None = None,
         query: str | None = None,
         builder: str | None = None,
         source: str | None = None,
@@ -3373,13 +3374,13 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
     ) -> list[dict[str, Any]]:
         """Return a bounded zoom-dependent map projection for one slippy tile.
 
-        Broad views aggregate into a deliberately sparse Web-Mercator-aligned
-        density grid. Close views return the persisted site groups themselves,
-        keeping identity selection possible without sending the global point
-        collection to every browser.
+        Broad views retain the count and mean position of mapped sites within
+        each occupied Web Mercator cell. Close views return the site groups
+        themselves, preserving site selection without transmitting the global
+        point collection.
         """
         bounds = public_map_tile_bounds(zoom, tile_x, tile_y)
-        grid_size = public_map_tile_grid_size(zoom)
+        grid_size = public_map_tile_grid_size(zoom, density_version=density_version)
         longitude_buffer = bounds.longitude_span / 64 if grid_size is None else 0
         latitude_buffer = (bounds.latitude_max - bounds.latitude_min) / 64 if grid_size is None else 0
         relation, where, params = self._public_map_relation(
@@ -3481,6 +3482,15 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             source=source,
             **filters,
         )
+        # Use the existing count query for the camera extent. The unfiltered
+        # map keeps its default view, and filtered tiles can stay pageless.
+        fit_selection = bool(query or builder or source or any(
+            value for name, value in filters.items() if name != "temperament_scope"
+        ))
+        extent_fields = """, min(g.longitude) as west, min(g.latitude) as south,
+                             max(g.longitude) as east, max(g.latitude) as north,
+                             min(case when g.longitude < 0 then g.longitude + 360 else g.longitude end) as shifted_west,
+                             max(case when g.longitude < 0 then g.longitude + 360 else g.longitude end) as shifted_east""" if fit_selection else ""
         with connect(self.settings) as conn:
             row = conn.execute(
                 f"""select
@@ -3493,11 +3503,12 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                         coalesce(sum(g.entity_count) filter(where g.coordinate_fallback=1), 0)::bigint as fallback_entity_count,
                         coalesce(sum(g.location_count) filter(where g.coordinate_fallback=0), 0)::bigint as exact_location_count,
                         coalesce(sum(g.location_count) filter(where g.coordinate_fallback=1), 0)::bigint as fallback_location_count
+                        {extent_fields}
                     from {relation}
                     {where}""",
                 params,
             ).fetchone()
-        return {
+        summary = {
             "contract": "modavis.navigator.public-map-summary/v1",
             "dataProfile": PROFILE,
             "coordinateScope": coordinate_scope,
@@ -3512,6 +3523,13 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             "fallbackLocationCount": int(row["fallback_location_count"]),
             "canonicalMutationAllowed": False,
         }
+        if fit_selection and row["group_count"]:
+            west, east = float(row["west"]), float(row["east"])
+            shifted_west, shifted_east = float(row["shifted_west"]), float(row["shifted_east"])
+            if shifted_east - shifted_west < east - west:
+                west, east = shifted_west, shifted_east
+            summary["bounds"] = [west, float(row["south"]), east, float(row["north"])]
+        return summary
 
     def public_map_has_site_group(self, **filters: Any) -> bool:
         return bool(self.public_map_site_groups(limit=1, **filters))

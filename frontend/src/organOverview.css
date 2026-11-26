@@ -1,63 +1,186 @@
-.organ-overview{width:100%;min-width:0;color:var(--nav-ink,#203b35);display:grid;gap:22px}
-.organ-overview *{box-sizing:border-box}
-.organ-overview h2,.organ-overview h3,.organ-overview p{margin:0}
-.organ-overview a{color:var(--nav-accent,#236454);text-underline-offset:.2em}
-.organ-overview a:hover{text-decoration-thickness:2px}
-.organ-overview :where(a,button,summary):focus-visible{outline:3px solid #a47b32;outline-offset:3px}
-.overview-at-a-glance>header{margin:0 0 16px}
-.organ-overview .overview-at-a-glance h2{font-family:Georgia,serif;font-size:1.4rem;font-weight:400;line-height:1.3;letter-spacing:-.02em}
-.organ-overview .overview-source-scope{font-size:.79rem;line-height:1.6;color:#625941;border-left:2px solid #b8a16b;padding:2px 0 2px 11px;margin-top:9px;max-width:95ch}
-.overview-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.overview-summary-card{display:flex;flex-direction:column;align-items:flex-start;gap:10px;background:var(--nav-paper,#fffefa);border:1px solid var(--nav-line,#d7dfd7);border-radius:9px;padding:16px;min-width:0}
-.organ-overview .overview-summary-card h3{display:flex;align-items:center;gap:7px;font-size:.86rem;font-weight:650;line-height:1.35}
-.overview-summary-card h3 svg{color:#71836b;flex:none}
-.organ-overview .overview-stop-total{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.overview-stop-total strong{font:400 1.9rem/1.2 Georgia,serif;font-variant-numeric:tabular-nums;color:var(--nav-ink,#203b35)}
-.overview-stop-total span{color:var(--nav-muted,#586963);font-size:.74rem}
-.organ-overview .overview-quantity-qualification{font-size:.85rem;line-height:1.55;color:#6a5534}
-.organ-overview .overview-history-range{font:400 1.35rem/1.3 Georgia,serif;color:var(--nav-ink,#203b35)}
-.overview-history-range small{display:block;font:400 .68rem/1.4 Inter,ui-sans-serif,system-ui,sans-serif;color:var(--nav-muted,#586963);margin-top:4px}
-.organ-overview .overview-card-description{font-size:.78rem;line-height:1.6;color:var(--nav-muted,#586963)}
-.organ-overview .overview-fact-attribution{font-size:.7rem;line-height:1.5;color:var(--nav-muted,#586963)}
-.overview-tab-link{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;font-size:.77rem;line-height:1.4;min-height:40px}
-.overview-tab-link svg{flex:none}
-.overview-summary-card>.overview-tab-link{margin-top:auto;width:100%;border-top:1px solid #e1e7dc;padding-top:10px;font-weight:600}
-.overview-summary-card>.overview-primary-action{text-decoration:none}
-.overview-summary-card>.overview-primary-action:hover{text-decoration:underline}
-.overview-source-links{list-style:none;display:flex;flex-wrap:wrap;gap:4px 10px;padding:0;margin:0;line-height:1.5;font-size:.73rem}
-.overview-related-shortcut{display:flex;align-items:center;flex-wrap:wrap;gap:5px 18px;border-bottom:1px solid var(--nav-line,#d7dfd7);padding:7px 0;margin-top:6px}
-.overview-related-shortcut span{font-size:.7rem;color:var(--nav-muted,#586963)}
-.organ-overview .overview-facts>h3{font-size:.94rem;font-weight:600;line-height:1.4}
-.organ-overview .overview-facts>p{font-size:.75rem;color:var(--nav-muted,#586963);line-height:1.6;margin:5px 0 12px}
-.organ-overview .quick-fact-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
-.organ-overview .public-fact-card{border-color:var(--nav-line,#d7dfd7);border-radius:8px;background:var(--nav-paper,#fffefa);padding:14px;gap:7px}
-.organ-overview .public-fact-card span,.organ-overview .public-fact-meta small{font-size:.71rem;font-weight:500;color:var(--nav-muted,#586963)}
-.organ-overview .public-fact-card strong{font-size:.95rem;font-weight:600;line-height:1.5;color:var(--nav-ink,#203b35)}
-.organ-overview .public-fact-source{font-size:.75rem;min-height:36px;padding-inline:0}
-.overview-details{display:grid;gap:10px}
-.organ-overview .overview-disclosure{border:1px solid var(--nav-line,#d7dfd7);border-radius:9px;background:var(--nav-paper,#fffefa);min-width:0}
-.organ-overview .overview-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:14px 16px;min-height:56px;cursor:pointer;list-style:none}
-.overview-disclosure>summary::-webkit-details-marker{display:none}
-.overview-disclosure>summary::after{content:'+';font-size:1.25rem;font-weight:400;line-height:1;flex:none;color:var(--nav-accent,#236454)}
-.overview-disclosure[open]>summary::after{content:'−'}
-.overview-disclosure>summary>span{font-size:.85rem;font-weight:600;line-height:1.4}
-.overview-disclosure>summary small{display:block;font-size:.71rem;font-weight:400;color:var(--nav-muted,#586963);margin-top:4px}
-.organ-overview .overview-disclosure-differences{border-left:3px solid #b18d54}
-.overview-disclosure-differences>summary small{color:#725a32}
-.overview-disclosure-body{padding:0 16px 16px;min-width:0}
-.overview-disclosure[open]>summary{margin-bottom:5px}
-.organ-overview .overview-disclosure-body .organ-source-comparisons,.organ-overview .overview-disclosure-body .organ-narrative-evidence{border:0;border-radius:0;padding:0;background:transparent}
-.organ-overview .overview-disclosure-body .organ-source-comparison-head h3,.organ-overview .overview-disclosure-body .organ-narrative-evidence h3{font-size:.96rem;line-height:1.4}
-.organ-overview .overview-disclosure-body .organ-source-comparison-head p,.organ-overview .overview-disclosure-body .organ-narrative-preview{font-size:.8rem;line-height:1.65}
-.organ-overview .overview-disclosure-body .organ-landing-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.organ-overview .overview-disclosure-body .organ-landing-card{padding:16px;border-radius:8px}
-.organ-overview .overview-disclosure-body .organ-landing-card:last-child{grid-column:1 / -1}
-.organ-overview .overview-disclosure-body .landing-feature-number strong{display:inline;font-size:1.7rem;margin-right:5px}
-.organ-overview .overview-disclosure-body .organ-landing-card p{font-size:.78rem;margin:5px 0 12px}
-.organ-overview .overview-disclosure-body .organ-landing-card h3{font-size:1rem}
-.organ-overview .overview-disclosure-body .organ-landing-card .landing-history-range{font-size:1.3rem}
-.organ-overview .overview-disclosure-body .organ-virtual-highlight{padding:16px;gap:12px}
-.organ-overview .overview-disclosure-body .organ-virtual-highlight h3{font-size:1rem}
-.organ-overview .overview-disclosure-body .record-scope-note{font-size:.75rem;line-height:1.6}
-@media(max-width:1000px){.overview-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.overview-source-card{grid-column:1 / -1}.overview-source-links{gap:5px 15px}}
-@media(max-width:650px){.organ-overview{gap:18px}.overview-summary-grid{grid-template-columns:minmax(0,1fr);gap:10px}.overview-source-card{grid-column:auto}.overview-summary-card{padding:14px;gap:8px}.organ-overview .overview-at-a-glance h2{font-size:1.25rem}.organ-overview .overview-source-scope{font-size:.74rem}.organ-overview .overview-disclosure>summary{padding:12px 14px}.overview-disclosure-body{padding:0 14px 14px}.organ-overview .overview-disclosure-body .organ-landing-grid{grid-template-columns:minmax(0,1fr)}.organ-overview .overview-disclosure-body .organ-landing-card:last-child{grid-column:auto}}
+.organ-overview {
+  container-type: inline-size;
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+  color: var(--nav-ink, #203b35);
+  padding-top: 10px;
+}
+
+.organ-overview :is(h2, h3, p) { margin: 0; }
+.organ-overview a { color: var(--nav-accent, #236454); text-underline-offset: .2em; }
+.organ-overview :where(a, button, summary):focus-visible { outline: 3px solid #a47b32; outline-offset: 3px; }
+
+.overview-at-a-glance > header { margin-bottom: 12px; }
+
+.organ-overview .overview-at-a-glance h2 {
+  font: 400 1.45rem/1.25 Georgia, serif;
+  letter-spacing: -.02em;
+}
+
+.organ-overview .overview-source-scope {
+  border-inline-start: 2px solid #b8a16b;
+  color: #625941;
+  font-size: .81rem;
+  line-height: 1.5;
+  margin-top: 7px;
+  max-width: 96ch;
+  padding-inline-start: 10px;
+}
+
+.overview-evidence-list {
+  border-block: 1px solid var(--nav-line, #d7dfd7);
+}
+
+.overview-evidence-row {
+  align-items: start;
+  display: grid;
+  gap: 8px 18px;
+  grid-template-columns: minmax(7.6rem, 1fr) minmax(0, 2.7fr) clamp(9rem, 22cqi, 13rem);
+  padding: 8px 4px;
+}
+
+.overview-evidence-row + .overview-evidence-row { border-top: 1px solid var(--nav-line, #d7dfd7); }
+
+.organ-overview .overview-evidence-row h3 {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  font-size: .87rem;
+  font-weight: 650;
+  line-height: 1.45;
+  padding-block: 4px;
+}
+
+.overview-evidence-row h3 svg { color: #62785f; flex: none; }
+
+.overview-evidence {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding-block: 4px;
+}
+
+.overview-evidence :is(.overview-stop-total, .overview-history-range) {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 7px;
+}
+
+.overview-evidence strong {
+  color: var(--nav-ink, #203b35);
+  font: 400 1.2rem/1.25 Georgia, serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.overview-evidence :is(.overview-stop-total, .overview-history-range) span,
+.overview-evidence-description,
+.overview-fact-attribution {
+  color: var(--nav-muted, #586963);
+  font-size: .8rem;
+  line-height: 1.45;
+}
+
+.overview-evidence .overview-quantity-qualification {
+  color: #625941;
+  font-size: .8rem;
+  line-height: 1.5;
+}
+
+.overview-tab-link {
+  align-items: center;
+  display: inline-flex;
+  font-size: .8rem;
+  font-weight: 620;
+  gap: 7px;
+  line-height: 1.4;
+  min-height: 32px;
+  text-decoration: none;
+}
+
+.overview-tab-link:hover { text-decoration: underline; }
+.overview-tab-link svg { flex: none; }
+
+.overview-evidence-row > .overview-tab-link {
+  justify-content: end;
+  text-align: end;
+}
+
+.overview-source-links {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: .8rem;
+  gap: 2px 10px;
+  line-height: 1.45;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.overview-related-shortcut {
+  align-items: center;
+  border-bottom: 1px solid var(--nav-line, #d7dfd7);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  padding-block: 5px;
+}
+
+.overview-related-shortcut span,
+.organ-overview .overview-facts > p { color: var(--nav-muted, #586963); font-size: .78rem; line-height: 1.55; }
+.organ-overview .overview-facts > h3 { font-size: .96rem; font-weight: 620; line-height: 1.4; }
+.organ-overview .overview-facts > p { margin: 4px 0 9px; }
+.organ-overview .quick-fact-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 10px; }
+.organ-overview .public-fact-card { border-color: var(--nav-line, #d7dfd7); border-radius: 8px; gap: 7px; padding: 12px; }
+.organ-overview .public-fact-card strong { color: var(--nav-ink, #203b35); font-size: .95rem; font-weight: 600; line-height: 1.5; }
+
+.overview-details { display: grid; gap: 7px; }
+
+.organ-overview .overview-disclosure {
+  background: var(--nav-paper, #fffefa);
+  border: 1px solid var(--nav-line, #d7dfd7);
+  border-radius: 7px;
+  min-width: 0;
+}
+
+.organ-overview .overview-disclosure > summary {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  list-style: none;
+  min-height: 44px;
+  padding: 9px 12px;
+}
+
+.overview-disclosure > summary::-webkit-details-marker { display: none; }
+.overview-disclosure > summary::after { color: var(--nav-accent, #236454); content: "+"; flex: none; font-size: 1.25rem; line-height: 1; }
+.overview-disclosure[open] > summary::after { content: "−"; }
+.overview-disclosure > summary > span { font-size: .86rem; font-weight: 620; line-height: 1.35; }
+.overview-disclosure > summary small { color: var(--nav-muted, #586963); display: block; font-size: .75rem; font-weight: 400; margin-top: 3px; }
+.organ-overview .overview-disclosure-differences { border-inline-start: 3px solid #b18d54; }
+.overview-disclosure-differences > summary small { color: #725a32; }
+.overview-disclosure-body { min-width: 0; padding: 2px 12px 12px; }
+.organ-overview .overview-disclosure-body :is(.organ-source-comparisons, .organ-narrative-evidence) { background: transparent; border: 0; padding: 0; }
+.organ-overview .overview-disclosure-body :is(.organ-source-comparison-head h3, .organ-narrative-evidence h3) { font-size: .96rem; }
+.organ-overview .overview-disclosure-body :is(.organ-source-comparison-head p, .organ-narrative-preview) { font-size: .8rem; line-height: 1.6; }
+
+.organ-page:has(.organ-overview) > .organ-data-note {
+  margin-top: 4px;
+  padding: 12px 14px;
+}
+
+@container (max-width: 34rem) {
+  .overview-evidence-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0 8px;
+    padding-block: 7px;
+  }
+
+  .overview-evidence { grid-column: 1 / -1; padding: 0 0 1px; }
+  .overview-evidence-row > .overview-tab-link { grid-column: 2; grid-row: 1; min-height: 44px; }
+  .organ-overview .overview-evidence-row h3 { min-height: 44px; font-size: .83rem; }
+}

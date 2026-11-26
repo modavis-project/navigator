@@ -23,7 +23,7 @@ import { TechnicalSourceComparisons, revealTechnicalComparison } from "./technic
 import { comparisonValue, comparisonsForComponentField, componentVariantKind, relatedActionGroups, technicalComparisonHasDifference } from "./sourceComparisonPresentation";
 import { specificationFieldLabel, technicalCaptureRowsLabel, technicalFactDifferenceText } from "./specificationLabels";
 import type { UiText } from "./uiLocale";
-import { CSSProperties, FormEvent, lazy, MouseEvent, PointerEvent, ReactNode, Suspense, WheelEvent as ReactWheelEvent, useEffect, useId, useMemo, useRef, useState } from "react";
+import { CSSProperties, FormEvent, lazy, MouseEvent, PointerEvent, ReactNode, Suspense, WheelEvent as ReactWheelEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   AlertCircle,
   ArrowDownWideNarrow,
@@ -402,6 +402,7 @@ const InternalDocumentationArea = lazy(() => import("./internalDocumentation").t
 const UseCasesArea = lazy(() => import("./useCases").then((module) => ({ default: module.UseCasesArea })));
 const VirtualInstrumentsArea = lazy(() => import("./virtualInstruments").then((module) => ({ default: module.VirtualInstrumentsArea })));
 const Release02CandidateCatalog = lazy(() => import("./release02Candidates").then((module) => ({ default: module.Release02CandidateCatalog })));
+const ExploreMapPreview = lazy(() => import("./ExploreMapPreview"));
 const Release03CandidateCatalog = lazy(() => import("./release03Candidates").then((module) => ({ default: module.Release03CandidateCatalog })));
 
 declare module "react" {
@@ -1634,10 +1635,11 @@ function georeferencingCursorLabel(filters: GeoreferencingQueueFilters, pageStar
   return pageStart && pageEnd ? `${filterLabel} · showing ${pageStart}-${pageEnd}` : filterLabel;
 }
 
-function mapSearchHref(query: string): string {
+function mapSearchHref(query: string, publicProjection = false): string {
   const search = new URLSearchParams();
   const trimmed = query.trim();
   if (trimmed) search.set("q", trimmed);
+  if (publicProjection) search.set("precision", "all");
   const suffix = search.toString() ? `?${search.toString()}` : "";
   return `/map${suffix}`;
 }
@@ -4720,14 +4722,19 @@ export function App() {
           )}
           <div className={`organ-layout ${selectedOrgan ? "organ-layout-selected" : "organ-layout-catalog"}`}>
             {selectedOrgan ? (
-              <div className="organ-detail-context" aria-label="Catalog navigation">
-                {publicDatasetProfile && <details><summary>Research this organ</summary><p><a href={`/use-cases/research-workbench?view=selection&section=configurations&organ=${encodeURIComponent(selectedOrgan.mdvsId)}`}>Compare configuration accounts</a></p><p><a href={`/use-cases/research-workbench?view=timeline&organ=${encodeURIComponent(selectedOrgan.mdvsId)}`}>Qualified event timeline</a></p><p><a href={`/use-cases/research-workbench?view=claims&organ=${encodeURIComponent(selectedOrgan.mdvsId)}`}>Compare attributed source claims</a></p></details>}
+              <div className="organ-detail-context" aria-label={t("organ.catalog.navigation", "Catalog navigation", "Navigation im Orgelverzeichnis")}>
+                {publicDatasetProfile && <details>
+                  <summary>{t("organ.catalog.research", "Research this organ", "Zu dieser Orgel recherchieren")}</summary>
+                  <p><a href={`/use-cases/research-workbench?view=selection&section=configurations&organ=${encodeURIComponent(selectedOrgan.mdvsId)}`}>{t("organ.catalog.compareConfigurations", "Compare configuration accounts", "Dispositionsbeschreibungen vergleichen")}</a></p>
+                  <p><a href={`/use-cases/research-workbench?view=timeline&organ=${encodeURIComponent(selectedOrgan.mdvsId)}`}>{t("organ.catalog.eventTimeline", "Event timeline with source context", "Zeitleiste mit Quellenbelegen")}</a></p>
+                  <p><a href={`/use-cases/research-workbench?view=claims&organ=${encodeURIComponent(selectedOrgan.mdvsId)}`}>{t("organ.catalog.compareSources", "Compare attributed source claims", "Quellenangaben vergleichen")}</a></p>
+                </details>}
                 <button type="button" className="secondary catalog-back" onClick={closeSelectedOrgan}>
-                  <ChevronLeft size={16} /> Back to catalog
+                  <ChevronLeft size={16} aria-hidden="true" /> {t("organ.catalog.back", "Back to catalog", "Zurück zum Orgelverzeichnis")}
                 </button>
-                {catalogHasActiveContext && <span>Filtered catalog</span>}
+                {catalogHasActiveContext && <span>{t("organ.catalog.filtered", "Filtered catalog", "Gefiltertes Orgelverzeichnis")}</span>}
                 {catalogHasActiveContext && (
-                  <small>Catalog filters remain applied</small>
+                  <small>{t("organ.catalog.activeFilters", "Catalog filters remain applied", "Die gesetzten Filter bleiben aktiv")}</small>
                 )}
               </div>
             ) : (
@@ -4769,7 +4776,7 @@ export function App() {
       return <EventDirectoryPage publicProjection={publicDatasetProfile} />;
     }
     if (activeSection === "use-cases") {
-      return <Suspense fallback={<LoadingContent kind="article" label="Loading data stories…" />}><UseCasesArea /></Suspense>;
+      return <Suspense fallback={<LoadingContent kind="article" label={t("shell.loadingStories", "Loading data stories…", "Datenberichte werden geladen …")} />}><UseCasesArea /></Suspense>;
     }
     if (activeSection === "docs") {
       return <Suspense fallback={<LoadingContent kind="article" label="Loading documentation…" />}><DocumentationArea isAdmin={adminMutationReady} /></Suspense>;
@@ -4780,7 +4787,7 @@ export function App() {
         : <p className="notice" role="status">Verifying the selected read-only release baseline…</p>;
     }
     if (activeSection === "api-guide") {
-      return <Suspense fallback={<LoadingContent kind="article" label="Loading the API guide…" />}><ApiGuideArea /></Suspense>;
+      return <Suspense fallback={<LoadingContent kind="article" label={t("shell.loadingApiGuide", "Loading the API guide…", "API-Leitfaden wird geladen …")} />}><ApiGuideArea /></Suspense>;
     }
     if (activeSection === "internal-docs") {
       if (authLoading) return <p className="notice" role="status">Checking documentation access…</p>;
@@ -5856,7 +5863,11 @@ function ExploreSection({
             {(scopedExplore?.featuredOrgans ?? []).map((organ) => <OrganCardButton key={organ.id} organ={organ} onOpen={onOpenOrgan} />)}
           </div>}
         </section>
-        {(scopedExplore?.mapItems.length ?? 0) > 0 && <MapPreview items={scopedExplore?.mapItems ?? []} />}
+        {scopedExplore && (scopedExplore.mapItems.length > 0 || optionalSearchPreview) && (
+          <Suspense fallback={<LoadingContent kind="article" label={t("explore.mapLoading", "Loading the map preview…", "Kartenvorschau wird geladen …")} />}>
+            <ExploreMapPreview items={scopedExplore.mapItems} href={mapSearchHref(query, publicDatasetProfile)} recordHref={organPublicUrl} />
+          </Suspense>
+        )}
       </div>
     </>
   );
@@ -5897,7 +5908,7 @@ function ExploreSection({
           {publicDatasetProfile && <a href={`/organs?q=${encodeURIComponent(query.trim())}`}>
             <Library size={16} aria-hidden="true" /> {t("explore.catalogSearch", "Search the organ catalog", "Im Orgelkatalog suchen")}
           </a>}
-          <a href={mapSearchHref(query)}>
+          <a href={mapSearchHref(query, publicDatasetProfile)}>
             <MapIcon size={16} aria-hidden="true" /> {t("explore.mapSearch", "Map with this search", "Suchergebnisse auf der Karte")}
           </a>
         </nav>
@@ -5965,7 +5976,7 @@ function PublicEntityGateway({
   onOpenSection: (section: MainSection) => void;
   onQueryChange: (value: string) => void;
 }) {
-  const { t, formatNumber } = useUiLocale();
+  const { t } = useUiLocale();
   const topCountries = (facets?.countries ?? []).slice(0, 4);
   const topBuilders = (facets?.builders ?? []).filter((item) => item.builder && item.builder !== "Builder unknown").slice(0, 4);
   const topBuildings = (facets?.institutions ?? [])
@@ -5980,64 +5991,69 @@ function PublicEntityGateway({
     ?? facets?.mediaStates.find((item) => item.state === "media");
   const mediaCount = availableMedia?.count ?? 0;
   type GatewayChip = { label: string; onAction: () => void; href?: string };
+  const recordCount = (count: number) => t("explore.gateway.recordCount", "{count, plural, one {# organ record} other {# organ records}}", "{count, plural, one {# Orgeldatensatz} other {# Orgeldatensätze}}", { count });
+  const matchingRecordCount = (count: number) => t("explore.gateway.matches", "{count, plural, one {# matching organ record} other {# matching organ records}}", "{count, plural, one {# passender Orgeldatensatz} other {# passende Orgeldatensätze}}", { count });
   const gateways = [
     {
       id: "organs",
       icon: Library,
-      title: "Organs",
+      title: t("explore.gateway.organs", "Organs", "Orgeln"),
       body: organTotal === null
-        ? loading ? "Organ pages and coverage are loading." : "Browse organ records and their source-attributed specifications."
-        : `${formatNumber(organTotal)} ${queryActive ? "matching " : ""}organ records with source-attributed builders, dates, places,${includeMedia ? " media," : ""} and citation context.`,
-      action: "Browse organs",
+        ? loading ? t("explore.gateway.loading", "Organ pages and coverage are loading.", "Orgeldatensätze werden geladen.") : t("explore.gateway.specifications", "Browse organ records and their source-attributed specifications.", "Orgeldatensätze und dokumentierte Dispositionen durchsuchen.")
+        : t("explore.gateway.recordDetail", "{records} with source-attributed builders, dates, places,{media} and citation context.", "{records} mit Quellenangaben zu Orgelbauern, Datierungen und Standorten{media} sowie mit Quellenverweisen.", {
+          records: queryActive ? matchingRecordCount(organTotal) : recordCount(organTotal),
+          media: includeMedia ? t("explore.gateway.mediaPart", " media,", ", mit Medien") : "",
+        }),
+      action: t("explore.gateway.browseOrgans", "Browse organs", "Orgeln durchsuchen"),
       href: "/organs",
       onAction: () => onOpenSection("organs"),
       chips: [
-        includeMedia && mediaCount > 0 && availableMedia ? { label: `${formatNumber(mediaCount)} with media`, onAction: () => onApplyOrganFilters({ mediaState: availableMedia.state }) } : null,
-        locatedCount > 0 ? { label: `${formatNumber(locatedCount)} mapped`, onAction: () => onOpenSection("map") } : null,
+        includeMedia && mediaCount > 0 && availableMedia ? { label: t("explore.gateway.media", "{count, number} with media", "{count, number} mit Medien", { count: mediaCount }), onAction: () => onApplyOrganFilters({ mediaState: availableMedia.state }) } : null,
+        locatedCount > 0 ? { label: t("explore.gateway.mapped", "{count, number} mapped", "{count, number} kartiert", { count: locatedCount }), onAction: () => onOpenSection("map") } : null,
       ].filter((chip): chip is GatewayChip => Boolean(chip)),
     },
     {
       id: "places",
       icon: MapPin,
-      title: "Places",
-      body: "Start from countries and location text, then open the matching organ pages.",
-      action: "Browse all places",
+      title: t("explore.gateway.places", "Places", "Orte"),
+      body: t("explore.gateway.placesIntro", "Find organ records by country or place.", "Orgeldatensätze nach Land oder Ort finden."),
+      action: t("explore.gateway.allPlaces", "Browse all places", "Alle Orte durchsuchen"),
       href: publicDatasetProfile ? "/pod-explorer?collection=places" : undefined,
       onAction: () => onOpenSection("organs"),
-      chips: topCountries.map((item) => ({ label: `${item.country} · ${formatNumber(item.count)} organ records`, onAction: () => onApplyOrganFilters({ country: item.country }) })),
-      note: georeferencingBacklog ? `${formatNumber(georeferencingBacklog)} pages have location text but no reviewed map point yet.` : undefined,
+      chips: topCountries.map((item) => ({ label: `${item.country} · ${recordCount(item.count)}`, onAction: () => onApplyOrganFilters({ country: item.country }) })),
+      note: georeferencingBacklog ? t("explore.gateway.pendingLocations", "{count, plural, one {# record has a place name and awaits coordinate review.} other {# records have place names and await coordinate review.}}", "{count, plural, one {Für # Datensatz mit Ortsangabe steht die Prüfung der Koordinaten aus.} other {Für # Datensätze mit Ortsangabe steht die Prüfung der Koordinaten aus.}}", { count: georeferencingBacklog }) : undefined,
     },
     {
       id: "people",
       icon: UserRound,
-      title: "People",
-      body: "Browse organ pages by builder, maker, and related names.",
-      action: "Browse all people",
+      title: t("explore.gateway.people", "People", "Personen"),
+      body: t("explore.gateway.peopleIntro", "Find organ records by builder or another documented name.", "Orgeldatensätze nach Orgelbauer oder anderen belegten Namen finden."),
+      action: t("explore.gateway.allPeople", "Browse all people", "Personen und Organisationen durchsuchen"),
       href: "/persons",
       onAction: () => onOpenSection("persons"),
-      chips: topBuilders.map((item) => ({ label: `${item.builder} · ${formatNumber(item.count)} organ records`, onAction: () => onApplyOrganFilters({ builder: item.builder }) })),
+      chips: topBuilders.map((item) => ({ label: `${item.builder} · ${recordCount(item.count)}`, onAction: () => onApplyOrganFilters({ builder: item.builder }) })),
     },
     {
       id: "institutions",
       icon: Building2,
-      title: "Buildings",
-      body: "Churches, halls, venues, residences, and other host buildings are discoverable through organ-page context.",
-      action: publicDatasetProfile ? "Explore places and venues" : "Browse all buildings",
+      title: t("explore.gateway.buildings", "Buildings", "Bauwerke"),
+      body: t("explore.gateway.buildingsIntro", "Find churches, concert halls and other buildings documented as organ sites.", "Kirchen, Konzertsäle und weitere als Orgelstandorte belegte Bauwerke finden."),
+      action: publicDatasetProfile ? t("explore.gateway.venues", "Explore places and venues", "Orte und Spielstätten erkunden") : t("explore.gateway.allBuildings", "Browse all buildings", "Alle Bauwerke durchsuchen"),
       href: publicDatasetProfile ? "/pod-explorer?collection=places" : undefined,
       onAction: () => onOpenSection("organs"),
-      chips: topBuildings.map((item) => ({ label: `${item.institution} · ${formatNumber(item.count)} organ records`, onAction: () => onApplyOrganFilters({ institution: item.institution }) })),
+      chips: topBuildings.map((item) => ({ label: `${item.institution} · ${recordCount(item.count)}`, onAction: () => onApplyOrganFilters({ institution: item.institution }) })),
     },
     {
       id: "vmi",
       icon: Layers3,
-      title: "Virtual instruments",
-      body: "Explore sample sets, organ definitions, configurations, editions, and component ranks as structured, source-backed entities.",
-      action: "Browse virtual instruments",
+      title: t("explore.gateway.virtual", "Virtual instruments", "Virtuelle Instrumente"),
+      body: t("explore.gateway.virtualIntro", "Browse documented sample sets, organ definitions, configurations, editions and ranks.", "Dokumentierte Samplesets, Orgeldefinitionen, Konfigurationen, Ausgaben und Pfeifenreihen durchsuchen."),
+      action: t("explore.gateway.allVirtual", "Browse virtual instruments", "Virtuelle Instrumente durchsuchen"),
       href: "/virtual-instruments",
       onAction: () => onOpenSection("vmi"),
       chips: [
-        { label: "Linked to organs", href: publicDatasetProfile ? "/virtual-instruments?organ_link=linked" : undefined, onAction: () => onOpenSection("vmi") },
-        { label: publicDatasetProfile ? "No confirmed organ link" : "Downloaded copies", href: publicDatasetProfile ? "/virtual-instruments?organ_link=unlinked" : undefined, onAction: () => onOpenSection("vmi") },
+        { label: t("explore.gateway.linkedVirtual", "Linked to organs", "Mit Orgeln verknüpft"), href: publicDatasetProfile ? "/virtual-instruments?organ_link=linked" : undefined, onAction: () => onOpenSection("vmi") },
+        { label: publicDatasetProfile ? t("explore.gateway.unlinkedVirtual", "No confirmed organ link", "Ohne bestätigte Orgelverknüpfung") : t("explore.gateway.downloadedVirtual", "Downloaded copies", "Heruntergeladene Kopien"), href: publicDatasetProfile ? "/virtual-instruments?organ_link=unlinked" : undefined, onAction: () => onOpenSection("vmi") },
       ],
     },
   ];
@@ -6055,7 +6071,7 @@ function PublicEntityGateway({
         {gateway.chips.length > 0 && (
           <div className="public-gateway-chips">
             {gateway.chips.slice(0, 4).map((chip: GatewayChip) => (
-              chip.href ? <a key={`${gateway.id}:${chip.label}`} href={chip.href} aria-label={`Browse ${chip.label}`}>{chip.label}</a> : <button type="button" key={`${gateway.id}:${chip.label}`} onClick={chip.onAction} aria-label={`Browse ${chip.label}`}>{chip.label}</button>
+              chip.href ? <a key={`${gateway.id}:${chip.label}`} href={chip.href} aria-label={t("explore.gateway.browseChip", "Browse {label}", "{label} anzeigen", { label: chip.label })}>{chip.label}</a> : <button type="button" key={`${gateway.id}:${chip.label}`} onClick={chip.onAction} aria-label={t("explore.gateway.browseChip", "Browse {label}", "{label} anzeigen", { label: chip.label })}>{chip.label}</button>
             ))}
           </div>
         )}
@@ -7073,7 +7089,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
   };
   return (
     <section className="entity-section event-directory" id="events" tabIndex={-1}>
-      <SectionHead headingLevel={1} eyebrow="Events" title={t("event.catalogue.heading", "Organ history events", "Ereignisse der Orgelgeschichte")} detail={routeState || error ? undefined : loading ? "Loading documented events" : `${formatNumber(total)} documented event${total === 1 ? "" : "s"}`} />
+      <SectionHead headingLevel={1} eyebrow={t("event.catalogue.eyebrow", "Events", "Ereignisse")} title={t("event.catalogue.heading", "Organ history events", "Ereignisse der Orgelgeschichte")} detail={routeState || error ? undefined : loading ? t("event.catalogue.loadingTotal", "Loading documented events", "Dokumentierte Ereignisse werden geladen") : t("event.catalogue.total", "{count, plural, one {# documented event} other {# documented events}}", "{count, plural, one {# dokumentiertes Ereignis} other {# dokumentierte Ereignisse}}", { count: total })} />
       <p className="section-intro">{t("event.catalogue.intro", "Events connected to organ histories in the current source corpus.", "Ereignisse mit Bezug zur Orgelgeschichte im aktuellen Quellenkorpus.")}</p>
       <nav className="event-directory-shortcuts" aria-label={t("event.catalogue.shortcuts", "Event overview shortcuts", "Schnellzugriffe zur Ereignisübersicht")}>
         <a
@@ -7095,7 +7111,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
         </a>
         <a href={relocationMapOverviewHref(yearFrom, yearTo)}>
           <MapIcon size={16} aria-hidden="true" />
-          <span>{yearFrom && yearFrom === yearTo ? `Mapped connections in ${yearFrom}` : "Mapped relocation connections"}</span>
+          <span>{yearFrom && yearFrom === yearTo ? t("event.catalogue.mappedInYear", "Mapped connections in {year}", "Kartierte Verlegungen im Jahr {year}", { year: yearFrom }) : t("event.catalogue.mappedConnections", "Mapped relocation connections", "Kartierte Verlegungen")}</span>
         </a>
         {relocationSelected && (
           <a href="/events">
@@ -7164,7 +7180,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
             setRouteState(event.target.value);
             if (event.target.value) setType(relocationType);
           }}>
-            <option value="">{t("event.catalogue.allRelocations", "Any endpoint status", "Beliebiger Endpunktstatus")}</option>
+            <option value="">{t("event.catalogue.allRelocations", "Any endpoint status", "Mit oder ohne Endpunktangaben")}</option>
             {publicProjection && <optgroup label={t("event.catalogue.recordedPlaces", "Documented places", "Dokumentierte Orte")}>
               <option value="either">{t("event.catalogue.either", "At least one endpoint", "Mindestens ein Endpunkt")}</option>
               <option value="origin">{t("event.catalogue.knownOrigin", "Origin documented", "Ausgangsort belegt")}</option>
@@ -7180,7 +7196,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
         <details className="event-advanced-filters" open={advancedFilterCount > 0 || undefined}>
           <summary>
             <span><SlidersHorizontal size={16} aria-hidden="true" /> {t("event.catalogue.more", "More filters", "Weitere Filter")}</span>
-            {advancedFilterCount > 0 && <strong>{advancedFilterCount} active</strong>}
+            {advancedFilterCount > 0 && <strong>{t("event.catalogue.advancedActive", "{count, number} active", "{count, number} aktiv", { count: advancedFilterCount })}</strong>}
           </summary>
           <div className="event-advanced-filter-grid">
             <label>
@@ -7192,8 +7208,8 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
               <input value={subject} onChange={(event) => { setOffset(0); setSubject(event.target.value); }} placeholder={t("event.catalogue.organHint", "Name or MDVS ID", "Name oder MDVS-Kennung")} />
             </label>
             <label>
-              <span>{publicProjection ? "Canonical participant ID" : "Participant"}</span>
-              <input aria-label={publicProjection ? "Canonical participant ID" : "Participant"} value={participant} onChange={(event) => { setOffset(0); setParticipant(event.target.value); }} placeholder={publicProjection ? "MDVS ID from a canonical dossier" : "Person or organization"} />
+              <span>{publicProjection ? t("event.catalogue.participantId", "Canonical participant ID", "Kanonische Kennung einer beteiligten Person oder Organisation") : t("event.catalogue.participant", "Participant", "Beteiligte")}</span>
+              <input aria-label={publicProjection ? t("event.catalogue.participantId", "Canonical participant ID", "Kanonische Kennung einer beteiligten Person oder Organisation") : t("event.catalogue.participant", "Participant", "Beteiligte")} value={participant} onChange={(event) => { setOffset(0); setParticipant(event.target.value); }} placeholder={publicProjection ? t("event.catalogue.participantIdHint", "MDVS ID from a canonical dossier", "MDVS-Kennung aus einem kanonischen Dossier") : t("event.catalogue.participantHint", "Person or organization", "Person oder Organisation")} />
               {publicProjection && <small>{t("event.catalogue.organBoundary", "Matches established identity links. Unresolved names remain on their source events.", "Die Suche verwendet bestätigte Identitätsverknüpfungen. Ungeklärte Namen bleiben bei den jeweiligen Quellenereignissen erhalten.")}</small>}
             </label>
             {!publicProjection && <label>
@@ -7207,7 +7223,7 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
             <label>
               <span>{t("event.catalogue.sort", "Sort", "Sortierung")}</span>
               <select value={sort} onChange={(event) => { setOffset(0); setSort(event.target.value); }}>
-                <option value="">{publicProjection ? "Newest first" : "Historical first (newest)"}</option>
+                <option value="">{publicProjection ? t("event.catalogue.newest", "Newest first", "Neueste zuerst") : t("event.catalogue.historical", "Historical first (newest)", "Historische Ereignisse zuerst, absteigend")}</option>
                 {!publicProjection && <option value="future">{t("event.catalogue.futureFirst", "Future-dated records first", "Zukünftig datierte Einträge zuerst")}</option>}
                 <option value="oldest">{t("event.catalogue.oldest", "Oldest first", "Älteste zuerst")}</option>
                 {!publicProjection && <option value="title">{t("event.catalogue.title", "Title", "Titel")}</option>}
@@ -7248,21 +7264,21 @@ function EventDirectoryPage({ publicProjection = false }: { publicProjection?: b
             </div>
             <h3>{event.title}</h3>
             <div className="event-card-actions">
-              <a className="event-record-link" href={event.pageUrl || `/id/${encodeURIComponent(event.mdvsId)}`} aria-label={`Open event record: ${event.title}`}><ListChecks size={14} aria-hidden="true" /> {t("event.catalogue.open", "Open event record", "Ereignisdatensatz öffnen")}</a>
+              <a className="event-record-link" href={event.pageUrl || `/id/${encodeURIComponent(event.mdvsId)}`} aria-label={t("event.catalogue.openNamed", "Open event record: {title}", "Ereignisdatensatz öffnen: {title}", { title: event.title })}><ListChecks size={14} aria-hidden="true" /> {t("event.catalogue.open", "Open event record", "Ereignisdatensatz öffnen")}</a>
               {event.movement?.status === "mapped" && event.movement.mapUrl && (
-                <a className="event-map-link" href={event.movement.mapUrl} aria-label={`Show relocation connection on map: ${event.title}`}><MapIcon size={14} aria-hidden="true" /> {t("event.catalogue.showMap", "Show connection on map", "Verbindung auf der Karte anzeigen")}</a>
+                <a className="event-map-link" href={event.movement.mapUrl} aria-label={t("event.catalogue.showNamed", "Show relocation connection on map: {title}", "Verlegung auf der Karte anzeigen: {title}", { title: event.title })}><MapIcon size={14} aria-hidden="true" /> {t("event.catalogue.showMap", "Show connection on map", "Verbindung auf der Karte anzeigen")}</a>
               )}
             </div>
             <p className="event-date"><strong>{eventDateLabel(event)}</strong>{event.when.precision ? ` · ${event.when.precision.replace("tempprectype:", "")}` : ""}</p>
             {(event.type.code === RELOCATION_EVENT_TYPE || event.type.name === "transfer") && <EventTransferEndpoints event={event} />}
-            {event.subject && <p>Affected entity: {event.subject.pageUrl ? <a href={event.subject.pageUrl}>{event.subject.title}</a> : event.subject.title}</p>}
-            {event.participants?.length ? <p>Participants: {event.participants.map((participant, index) => <span key={participant.id}>{index > 0 ? ", " : ""}{participant.pageUrl ? <a href={participant.pageUrl}>{participant.title}</a> : participant.title}<ParticipantIdentityNote participant={participant} /></span>)}</p> : event.description && <p>{event.description}</p>}
-            <footer><code>{event.mdvsId}</code>{event.counts.sources > 0 && <span>{event.counts.sources} source{event.counts.sources === 1 ? "" : "s"}</span>}</footer>
+            {event.subject && <p>{t("event.catalogue.subject", "Affected entity", "Betroffene Entität")}: {event.subject.pageUrl ? <a href={event.subject.pageUrl}>{event.subject.title}</a> : event.subject.title}</p>}
+            {event.participants?.length ? <p>{t("event.catalogue.participants", "Participants", "Beteiligte")}: {event.participants.map((participant, index) => <span key={participant.id}>{index > 0 ? ", " : ""}{participant.pageUrl ? <a href={participant.pageUrl}>{participant.title}</a> : participant.title}<ParticipantIdentityNote participant={participant} /></span>)}</p> : event.description && <p>{event.description}</p>}
+            <footer><code>{event.mdvsId}</code>{event.counts.sources > 0 && <span>{t("event.catalogue.sourceTotal", "{count, plural, one {# source} other {# sources}}", "{count, plural, one {# Quelle} other {# Quellen}}", { count: event.counts.sources })}</span>}</footer>
           </article>
         ))}
       </div>}
       {!loading && !error && !response?.items.length && <EmptyState icon={<ListChecks size={22} />} title={t("event.catalogue.empty", "No documented events", "Keine dokumentierten Ereignisse")} body={t("event.catalogue.emptyHint", "No events match these filters.", "Keine Ereignisse entsprechen diesen Filtern.")} />}
-      {!error && total > pageSize && <div className="catalog-pagination"><button type="button" className="secondary" disabled={offset === 0 || loading} onClick={() => updateEventPage(offset - pageSize)}>{t("event.catalogue.previous", "Previous", "Zurück")}</button><span>{!loading && <>{formatNumber(offset + 1)}–{formatNumber(Math.min(offset + pageSize, total))} of {formatNumber(total)}</>}</span><button type="button" className="secondary" disabled={offset + pageSize >= total || loading} onClick={() => updateEventPage(offset + pageSize)}>{t("event.catalogue.next", "Next", "Weiter")}</button></div>}
+      {!error && total > pageSize && <div className="catalog-pagination"><button type="button" className="secondary" disabled={offset === 0 || loading} onClick={() => updateEventPage(offset - pageSize)}>{t("event.catalogue.previous", "Previous", "Zurück")}</button><span>{!loading && t("event.catalogue.range", "{start, number}–{end, number} of {total, number}", "{start, number}–{end, number} von {total, number}", { start: offset + 1, end: Math.min(offset + pageSize, total), total })}</span><button type="button" className="secondary" disabled={offset + pageSize >= total || loading} onClick={() => updateEventPage(offset + pageSize)}>{t("event.catalogue.next", "Next", "Weiter")}</button></div>}
     </section>
   );
 }
@@ -7450,7 +7466,7 @@ function EvidenceRoutePage({ actor, backToPeople, onBack, route, publicProjectio
       )}
       {route.kind === "release02_orgelseite" && (
         <Suspense fallback={<p className="notice" role="status">Loading Release 0.2 candidate evidence…</p>}>
-          <Release02CandidateCatalog initialCandidateId={route.id} />
+          <Release02CandidateCatalog initialCandidateId={route.id} publicProjection={publicProjection} />
         </Suspense>
       )}
       {route.kind === "release03_npor" && (
@@ -13068,7 +13084,11 @@ function TemperamentsSection({ publicDatasetProfile }: { publicDatasetProfile: b
         headingLevel={1}
         eyebrow={t("tuning.catalogue.eyebrow", "Tuning systems", "Stimmungssysteme")}
         title={t("tuning.catalogue.title", "Historical temperaments", "Historische Stimmungen")}
-        detail={list ? t("tuning.catalogue.total", "{total, plural, one {# BDO temperament} other {# BDO temperaments}}", "{total, plural, one {# Stimmungssystem des BDO} other {# Stimmungssysteme des BDO}}", { total: list.total }) : t("tuning.catalogue.loading", "Loading BDO temperament systems", "Stimmungssysteme des BDO werden geladen")}
+        detail={<>
+          {list ? t("tuning.catalogue.total", "{total, plural, one {# temperament} other {# temperaments}}", "{total, plural, one {# Stimmungssystem} other {# Stimmungssysteme}}", { total: list.total })
+            : t("tuning.catalogue.loading", "Loading temperaments…", "Stimmungssysteme werden geladen …")}
+          {" · "}<a href="https://bund-deutscher-orgelbaumeister.de/lexikon-der-stimmungen/">Bund Deutscher Orgelbaumeister</a>
+        </>}
       />
       <div className="research-evidence-controls temperaments-controls aligned-catalogue-controls">
         <label className="temperaments-search">
@@ -13104,7 +13124,7 @@ function TemperamentsSection({ publicDatasetProfile }: { publicDatasetProfile: b
         <label>
           <span>{t("tuning.catalogue.commentary", "Commentary", "Erläuterungen")}</span>
           <select value={commentary} onChange={(event) => updateFilters({ commentary: event.target.value })}>
-            <option value="">{t("tuning.catalogue.anyCommentary", "Any availability", "Alle Verfügbarkeiten")}</option>
+            <option value="">{t("tuning.catalogue.anyCommentary", "Any availability", "Mit oder ohne Erläuterungen")}</option>
             <option value="available">{t("tuning.catalogue.hasCommentary", "Commentary available", "Mit Erläuterungen")}</option>
             <option value="missing">{t("tuning.catalogue.noCommentary", "No commentary", "Ohne Erläuterungen")}</option>
           </select>
@@ -13118,16 +13138,16 @@ function TemperamentsSection({ publicDatasetProfile }: { publicDatasetProfile: b
         <div className="tuning-occurrence-inputs">
           <label>{t("tuning.catalogue.sort", "Sort by", "Sortieren nach")}<select value={sort} onChange={(event) => updateFilters({ sort: occurrenceSort(event.target.value) })}>
             <option value="catalogue">{t("tuning.catalogue.order", "Catalogue order", "Katalogreihenfolge")}</option>
-            <option value="occurrences_desc">{t("tuning.catalogue.most", "Most linked organs", "Meiste verknüpfte Orgeldatensätze")}</option>
-            <option value="occurrences_asc">{t("tuning.catalogue.fewest", "Fewest linked organs", "Wenigste verknüpfte Orgeldatensätze")}</option>
+            <option value="occurrences_desc">{t("tuning.catalogue.most", "Most linked organ records", "Anzahl verknüpfter Orgeldatensätze (absteigend)")}</option>
+            <option value="occurrences_asc">{t("tuning.catalogue.fewest", "Fewest linked organ records", "Anzahl verknüpfter Orgeldatensätze (aufsteigend)")}</option>
           </select></label>
-          <label>{t("tuning.catalogue.evidence", "Count evidence", "Gezählte Belegkategorie")}<select value={match} onChange={(event) => updateFilters({ match: occurrenceScope(event.target.value) })}>
+          <label>{t("tuning.catalogue.evidence", "Evidence counted", "Belegkategorie")}<select value={match} onChange={(event) => updateFilters({ match: occurrenceScope(event.target.value) })}>
             <option value="all">{t("tuning.catalogue.allEvidence", "All linked organs", "Alle verknüpften Orgeldatensätze")}</option>
             <option value="exact">{t("tuning.catalogue.exactEvidence", "Exact wording", "Eindeutig zuordenbarer Wortlaut")}</option>
             <option value="family">{t("tuning.catalogue.relatedEvidence", "Related wording only", "Nur verwandter Wortlaut")}</option>
           </select></label>
-          <label>{t("tuning.catalogue.minimum", "Minimum organs", "Mindestanzahl Orgeldatensätze")}<input type="number" min="0" max={MAX_OCCURRENCE_FILTER} step="1" placeholder={t("tuning.catalogue.anyCount", "Any", "Beliebig")} value={minimum} aria-invalid={Boolean(rangeIssue)} onChange={(event) => updateFilters({ minimum: event.target.value })} /></label>
-          <label>{t("tuning.catalogue.maximum", "Maximum organs", "Höchstanzahl Orgeldatensätze")}<input type="number" min="0" max={MAX_OCCURRENCE_FILTER} step="1" placeholder={t("tuning.catalogue.anyCount", "Any", "Beliebig")} value={maximum} aria-invalid={Boolean(rangeIssue)} onChange={(event) => updateFilters({ maximum: event.target.value })} /></label>
+          <label>{t("tuning.catalogue.minimum", "Minimum organ records", "Mindestzahl der Orgeldatensätze")}<input type="number" min="0" max={MAX_OCCURRENCE_FILTER} step="1" placeholder={t("tuning.catalogue.anyCount", "Any", "Beliebig")} value={minimum} aria-invalid={Boolean(rangeIssue)} onChange={(event) => updateFilters({ minimum: event.target.value })} /></label>
+          <label>{t("tuning.catalogue.maximum", "Maximum organ records", "Höchstzahl der Orgeldatensätze")}<input type="number" min="0" max={MAX_OCCURRENCE_FILTER} step="1" placeholder={t("tuning.catalogue.anyCount", "Any", "Beliebig")} value={maximum} aria-invalid={Boolean(rangeIssue)} onChange={(event) => updateFilters({ maximum: event.target.value })} /></label>
         </div>
         {rangeIssue && <p role="alert">{rangeIssue === "invalid"
           ? t("tuning.catalogue.invalidRange", "Use whole numbers from 0 to 1,000,000 for the organ count.", "Für die Anzahl der Orgeldatensätze ganze Zahlen von 0 bis 1.000.000 eingeben.")
@@ -16319,6 +16339,7 @@ function actorActivityMapItems(value: unknown): Record<string, unknown>[] {
 
 function ActorActivityMapModal({ actor, open, onClose }: { actor: CanonicalActorDetail; open: boolean; onClose: () => void }) {
   const frameRef = useRef<HTMLIFrameElement | null>(null);
+  const fittedFrame = useRef<HTMLIFrameElement | null>(null);
   const closeRef = useRef<HTMLButtonElement | null>(null);
   const [project, setProject] = useState<ActorMapContextProject | null>(null);
   const [loadError, setLoadError] = useState("");
@@ -16369,11 +16390,18 @@ function ActorActivityMapModal({ actor, open, onClose }: { actor: CanonicalActor
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      if (event.source !== frameRef.current?.contentWindow || event.origin !== window.location.origin) return;
+      const frame = frameRef.current;
+      if (!frame || event.source !== frame.contentWindow || event.origin !== window.location.origin) return;
       const message = isRecord(event.data) ? event.data : {};
       if (message.type === "geolibre:ready") {
-        frameRef.current?.contentWindow?.postMessage({ type: "geolibre:request-state" }, window.location.origin);
+        frame.contentWindow?.postMessage({ type: "geolibre:request-state" }, window.location.origin);
       } else if (message.type === "geolibre:state" && isLoadedNavigatorGeoLibreProject(message.project)) {
+        if (fittedFrame.current !== frame) {
+          const metadata = isRecord(message.project.metadata) ? message.project.metadata : {};
+          // Keep the project’s venue zoom when all points share one position.
+          fitGeoLibreBounds(frame, metadata.bounds, "actor-context:initial-fit", false);
+          fittedFrame.current = frame;
+        }
         setRuntimeReady(true);
       } else if (message.type === "geolibre:error") {
         setLoadError(String(message.message || "GeoLibre could not load this actor map"));
@@ -16407,23 +16435,7 @@ function ActorActivityMapModal({ actor, open, onClose }: { actor: CanonicalActor
       Math.max(...bounds.map((item) => item[2])),
       Math.max(...bounds.map((item) => item[3])),
     ];
-    const [west, south, east, north] = merged;
-    frameRef.current?.contentWindow?.postMessage(
-      {
-        type: "geolibre:command",
-        requestId: `actor-context:bounds:${Date.now()}`,
-        method: "fitBounds",
-        params: {
-          bounds: [
-            west - (west === east ? 0.02 : 0),
-            south - (south === north ? 0.02 : 0),
-            east + (west === east ? 0.02 : 0),
-            north + (south === north ? 0.02 : 0),
-          ],
-        },
-      },
-      window.location.origin,
-    );
+    fitGeoLibreBounds(frameRef.current, merged, `actor-context:bounds:${Date.now()}`);
   };
   const toggleActivity = (key: string, layerId: string, visible: boolean) => {
     const next = { ...visibleActivities, [key]: visible };
@@ -18731,7 +18743,7 @@ function OrganPage({
   capabilities?: string[] | null;
   publicProjection: boolean;
 }) {
-  const { t } = useUiLocale();
+  const { t, formatNumber } = useUiLocale();
   const staffMode = Boolean(actorId.trim());
   const mediaAvailable = !capabilities || capabilities.includes("media");
   const visibleTabs = ORGAN_TABS.filter((tab) => (
@@ -18784,6 +18796,8 @@ function OrganPage({
   const builderUrl = organ.builderUrl || builderRelation?.entityPageUrl;
   const placeRelation = organ.relatedEntities.find((entity) => entity.kind === "Place");
   const compactHeader = publicProjection && !staffMode && activeTab !== "overview";
+  const release = String(organ.citation.provenanceContext?.release || "");
+  const aboutRecord = t("organ.page.aboutRecord", "About this record", "Über diesen Datensatz");
   const summaryFacts = (
     <div className="organ-hero-facts" aria-label={t("organ.page.summary", "Organ summary", "Orgel im Überblick")}>
             {organ.builder && <span><strong>{builderUrl ? <a href={builderUrl}>{organ.builder}</a> : organ.builder}</strong> {t("organ.page.builder", "Builder association", "Zuordnung zu einem Orgelbauer")}</span>}
@@ -18792,26 +18806,32 @@ function OrganPage({
               <button
                 type="button"
                 onClick={() => onTabChange("history")}
-                title={organ.documentedStateSummary.guidance}
+                title={t("organ.page.eventScope", "Counts reflect the source assertions. Several assertions may describe the same event.", "Gezählt werden Quellenangaben. Mehrere Angaben können dasselbe Ereignis betreffen.")}
               >
-                <strong>{organ.documentedStateSummary.assertionCount}</strong>{" "}
-                event assertion{organ.documentedStateSummary.assertionCount === 1 ? "" : "s"}
+                <strong>{formatNumber(organ.documentedStateSummary.assertionCount)}</strong>{" "}
+                {t("organ.page.eventAssertions", "{count, plural, one {event assertion} other {event assertions}}", "{count, plural, one {Ereignisangabe} other {Ereignisangaben}}", { count: organ.documentedStateSummary.assertionCount })}
                 {organ.documentedStateSummary.yearLabel ? ` · ${organ.documentedStateSummary.yearLabel}` : ""}<ChevronRight size={14} aria-hidden="true"/>
               </button>
             )}
-            {organ.sourceCount > 0 && <button type="button" onClick={() => onTabChange("identifiers")}>{organ.sourceSummary?.sourceRecords != null ? <><strong>{organ.sourceSummary.sourceRecords}</strong> source record{organ.sourceSummary.sourceRecords === 1 ? "" : "s"}{organ.sourceSummary.collections != null && ` · ${organ.sourceSummary.collections} collection${organ.sourceSummary.collections === 1 ? "" : "s"}`}</> : "Sources and identifiers"}<ChevronRight size={14} aria-hidden="true"/></button>}
-            <button type="button" className="organ-context-map-button" onPointerEnter={preloadMapRuntime} onFocus={preloadMapRuntime} onPointerDown={preloadMapRuntime} onClick={() => { setMapContextMounted(true); setMapContextOpen(true); }} aria-label={`Open map for ${organInstitutionLabel(organ)}`}>
-              <MapIcon size={16} aria-hidden="true" /> <strong>Map</strong>
+            {organ.sourceCount > 0 && <button type="button" onClick={() => onTabChange("identifiers")}>
+              {organ.sourceSummary?.sourceRecords != null ? <>
+                <strong>{formatNumber(organ.sourceSummary.sourceRecords)}</strong>{" "}
+                {t("organ.page.sourceRecords", "{count, plural, one {source record} other {source records}}", "{count, plural, one {Quelldatensatz} other {Quelldatensätze}}", { count: organ.sourceSummary.sourceRecords })}
+                {organ.sourceSummary.collections != null && <> · {t("organ.page.collections", "{count, plural, one {# collection} other {# collections}}", "{count, plural, one {# Sammlung} other {# Sammlungen}}", { count: organ.sourceSummary.collections })}</>}
+              </> : t("organ.page.sourcesAndIdentifiers", "Sources and identifiers", "Quellen und Kennungen")}<ChevronRight size={14} aria-hidden="true"/>
+            </button>}
+            <button type="button" className="organ-context-map-button" onPointerEnter={preloadMapRuntime} onFocus={preloadMapRuntime} onPointerDown={preloadMapRuntime} onClick={() => { setMapContextMounted(true); setMapContextOpen(true); }} aria-label={t("organ.page.openMap", "Open map for {name}", "Karte zu „{name}“ öffnen", { name: organInstitutionLabel(organ) })}>
+              <MapIcon size={16} aria-hidden="true" /> <strong>{t("organ.page.map", "Map", "Karte")}</strong>
             </button>
-            {mediaAvailable && organ.mediaCount > 0 && <button type="button" onClick={() => onTabChange("media")}><strong>{organ.mediaCount}</strong> Media<ChevronRight size={14} aria-hidden="true"/></button>}
-            {staffMode && organ.locationReadiness?.label && <span><strong>{organ.locationReadiness.label}</strong> Location</span>}
+            {mediaAvailable && organ.mediaCount > 0 && <button type="button" onClick={() => onTabChange("media")}><strong>{formatNumber(organ.mediaCount)}</strong> {t("organ.page.mediaCount", "{count, plural, one {media item} other {media items}}", "{count, plural, one {Medieneintrag} other {Medieneinträge}}", { count: organ.mediaCount })}<ChevronRight size={14} aria-hidden="true"/></button>}
+            {staffMode && organ.locationReadiness?.label && <span><strong>{organ.locationReadiness.label}</strong> {t("organ.page.location", "Location", "Standort")}</span>}
           </div>
   );
   return (
     <article className={`organ-page ${staffMode ? "staff-mode" : "public-mode"}`}>
       <header className={`organ-hero${compactHeader ? " organ-hero-compact" : ""}`}>
         <div>
-          <p className="eyebrow">Pipe organ</p>
+          <p className="eyebrow">{t("organ.page.pipeOrgan", "Pipe organ", "Pfeifenorgel")}</p>
           {publicProjection ? <h1>{organInstitutionLabel(organ)}</h1> : <h2>{organInstitutionLabel(organ)}</h2>}
           {organ.transliterations?.[0]?.value && (
             <p className="organ-title-transliteration">
@@ -18839,7 +18859,7 @@ function OrganPage({
             <button type="button" className="secondary" onClick={() => setRecordModal("citation")}><Quote size={15} /> {t("organ.page.cite", "Cite", "Zitieren")}</button>
             {publicProjection && !staffMode && <button type="button" className="secondary" onClick={() => window.dispatchEvent(new CustomEvent("modavis:workspace-add", { detail: { kind: "organ", id: organ.mdvsId, title: organ.title, url: organ.pageUrl || `/organs/${encodeURIComponent(organ.mdvsId)}` } }))}><Library size={15} /> {t("organ.page.keep", "Keep in workspace", "Im Arbeitsbereich speichern")}</button>}
             {(!capabilities || capabilities.includes("contributions")) && <button type="button" className={`secondary organ-contribute-action ${activeTab === "contributions" ? "active" : ""}`} aria-pressed={activeTab === "contributions"} onClick={() => onTabChange("contributions")}>
-              <MessageSquarePlus size={15} /> Contribute
+              <MessageSquarePlus size={15} /> {t("organ.page.contribute", "Contribute", "Mitwirken")}
             </button>}
           </div>
         </div>
@@ -18940,9 +18960,21 @@ function OrganPage({
       </Suspense>
       </div>
       {mapContextMounted && <OrganContextMapModal organ={organ} open={mapContextOpen} onClose={() => setMapContextOpen(false)} />}
-      <footer className="organ-data-note"><span>MODAVIS Pipe Organ Dataset {String(organ.citation.provenanceContext?.release || "")}</span><button type="button" onClick={() => setRecordModal("data")}>About this record</button></footer>
-      {recordModal === "data" && <PublicModal title="About this record" onClose={() => setRecordModal(null)}><p>This record belongs to the MODAVIS Pipe Organ Dataset, version {String(organ.citation.provenanceContext?.release || "")}.</p>{organ.candidateContext && <p>{organ.candidateContext.label}. Based on Release {organ.candidateContext.parentRelease}.</p>}<p>Source descriptions retain their own dates and attribution. An earlier description can refer to a different instrument at the same place.</p><a href="/about/release">Read about the dataset and its sources</a></PublicModal>}
-      {recordModal === "citation" && <PublicModal title="Cite this organ record" onClose={() => setRecordModal(null)}><p className="record-citation-text">{organ.citation.recommendedCitation}</p><div className="record-citation-actions"><CopyButton label="Copy citation" value={organ.citation.recommendedCitation} /><CopyButton label="Copy BibTeX" value={organ.citation.bibtex || ""} /><CopyButton label="Copy URL" value={organ.citation.canonicalUrl} /></div><p className="muted">{organ.citation.dataset?.version === "0.0.0-fixture" ? "This citation identifies an invented demonstration record. It is not research evidence or an accepted POD release." : "The citation credits the dataset’s creator and MODAVIS and identifies this organ record, dataset version and record URL."}</p><a href={organ.citation.apiUrl}>Citation metadata</a></PublicModal>}
+      <footer className="organ-data-note"><span>MODAVIS Pipe Organ Dataset {release}</span><button type="button" onClick={() => setRecordModal("data")}>{aboutRecord}</button></footer>
+      {recordModal === "data" && <PublicModal title={aboutRecord} onClose={() => setRecordModal(null)}>
+        <p>{t("organ.page.recordVersion", "This record belongs to the MODAVIS Pipe Organ Dataset, version {release}.", "Dieser Datensatz gehört zum MODAVIS Pipe Organ Dataset in der Version {release}.", { release })}</p>
+        {organ.candidateContext && <p>{organ.candidateContext.label}. {t("organ.page.candidateBase", "Based on release {release}.", "Grundlage ist die Version {release}.", { release: organ.candidateContext.parentRelease })}</p>}
+        <p>{t("organ.page.recordSourceScope", "Source descriptions retain their own dates and attribution. An earlier description can refer to a different instrument at the same place.", "Die Beschreibungen behalten ihre Datierung und ihre Zuordnung zur jeweiligen Quelle. Eine frühere Beschreibung kann eine andere Orgel am selben Standort betreffen.")}</p>
+        <a href="/about/release">{t("organ.page.readDataset", "Read about the dataset and its sources", "Mehr zum Datensatz und seinen Quellen")}</a>
+      </PublicModal>}
+      {recordModal === "citation" && <PublicModal title={t("organ.page.citationTitle", "Cite this organ record", "Diesen Orgeldatensatz zitieren")} onClose={() => setRecordModal(null)}>
+        <p className="record-citation-text">{organ.citation.recommendedCitation}</p>
+        <div className="record-citation-actions"><CopyButton label={t("organ.page.copyCitation", "Copy citation", "Zitierempfehlung kopieren")} value={organ.citation.recommendedCitation} /><CopyButton label={t("organ.page.copyBibtex", "Copy BibTeX", "BibTeX kopieren")} value={organ.citation.bibtex || ""} /><CopyButton label={t("organ.page.copyUrl", "Copy URL", "URL kopieren")} value={organ.citation.canonicalUrl} /></div>
+        <p className="muted">{organ.citation.dataset?.version === "0.0.0-fixture"
+          ? t("organ.page.fixtureCitation", "This citation identifies a fictional demonstration record. It is unsuitable as research evidence or as a reference to an accepted POD release.", "Diese Zitation verweist auf einen fiktiven Beispieldatensatz. Er eignet sich weder als Forschungsbeleg noch als Verweis auf eine freigegebene POD-Version.")
+          : t("organ.page.citationScope", "The citation credits the dataset’s creator and MODAVIS and identifies this organ record, dataset version and record URL.", "Die Zitierempfehlung nennt den Urheber des Datensatzes und MODAVIS sowie den Orgeldatensatz, die Version und die URL.")}</p>
+        <a href={organ.citation.apiUrl}>{t("organ.page.citationMetadata", "Citation metadata", "Metadaten zur Zitierung")}</a>
+      </PublicModal>}
     </article>
   );
 }
@@ -18970,6 +19002,7 @@ type OrganContextMapSelection = {
 
 function OrganContextMapModal({ organ, open, onClose }: { organ: OrganDetail; open: boolean; onClose: () => void }) {
   const frameRef = useRef<HTMLIFrameElement | null>(null);
+  const fittedFrame = useRef<HTMLIFrameElement | null>(null);
   const closeRef = useRef<HTMLButtonElement | null>(null);
   const [project, setProject] = useState<OrganMapContextProject | null>(null);
   const [loadError, setLoadError] = useState("");
@@ -18979,7 +19012,7 @@ function OrganContextMapModal({ organ, open, onClose }: { organ: OrganDetail; op
   const [showBuilderOrigin, setShowBuilderOrigin] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState<OrganContextMapSelection | null>(null);
 
-  const projectPath = `/api/organs/${encodeURIComponent(organ.id)}/map-context.geolibre.json?v=6`;
+  const projectPath = `/api/organs/${encodeURIComponent(organ.id)}/map-context.geolibre.json?v=7`;
   const frameUrl = useMemo(() => {
     const projectUrl = new URL(projectPath, window.location.origin);
     const url = new URL("/geolibre/index.html", window.location.origin);
@@ -18993,7 +19026,11 @@ function OrganContextMapModal({ organ, open, onClose }: { organ: OrganDetail; op
   useEffect(() => {
     let active = true;
     fetchOrganMapContextProject(organ.id)
-      .then((payload) => { if (active) setProject(payload); })
+      .then((payload) => {
+        if (!active) return;
+        setProject(payload);
+        setShowRelocations(payload.layers.some((layer) => layer.visible && ORGAN_CONTEXT_RELOCATION_LAYER_IDS.includes(layer.id)));
+      })
       .catch((error: unknown) => {
         if (active) setLoadError(error instanceof Error ? error.message : "Map context could not be loaded");
       });
@@ -19018,11 +19055,19 @@ function OrganContextMapModal({ organ, open, onClose }: { organ: OrganDetail; op
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      if (event.source !== frameRef.current?.contentWindow || event.origin !== window.location.origin) return;
+      const frame = frameRef.current;
+      if (!frame || event.source !== frame.contentWindow || event.origin !== window.location.origin) return;
       const message = isRecord(event.data) ? event.data : {};
       if (message.type === "geolibre:ready") {
-        frameRef.current?.contentWindow?.postMessage({ type: "geolibre:request-state" }, window.location.origin);
+        frame.contentWindow?.postMessage({ type: "geolibre:request-state" }, window.location.origin);
       } else if (message.type === "geolibre:state" && isLoadedNavigatorGeoLibreProject(message.project)) {
+        if (fittedFrame.current !== frame) {
+          const metadata = isRecord(message.project.metadata) ? message.project.metadata : {};
+          const bounds = isRecord(metadata.bounds) ? metadata.bounds : {};
+          const initialBounds = metadata.currentPlaceCount ? bounds.current : bounds.relocations;
+          fitGeoLibreBounds(frame, initialBounds, "organ-context:initial-fit", false);
+          fittedFrame.current = frame;
+        }
         setRuntimeReady(true);
       } else if (message.type === "geolibre:error") {
         setLoadError(String(message.message || "GeoLibre could not load this map"));
@@ -19086,21 +19131,6 @@ function OrganContextMapModal({ organ, open, onClose }: { organ: OrganDetail; op
       );
     });
   };
-  const fitContextBounds = (bounds?: number[] | null) => {
-    if (!bounds || bounds.length !== 4 || !bounds.every(Number.isFinite)) return;
-    const [west, south, east, north] = bounds;
-    const longitudePadding = west === east ? 0.02 : 0;
-    const latitudePadding = south === north ? 0.02 : 0;
-    frameRef.current?.contentWindow?.postMessage(
-      {
-        type: "geolibre:command",
-        requestId: `organ-context:bounds:${Date.now()}`,
-        method: "fitBounds",
-        params: { bounds: [west - longitudePadding, south - latitudePadding, east + longitudePadding, north + latitudePadding] },
-      },
-      window.location.origin,
-    );
-  };
   const fitVisibleContext = (next: { relocations: boolean; sameBuilder: boolean; builderOrigin: boolean }) => {
     const bounds = next.builderOrigin
       ? project?.metadata.bounds?.builderOrigin
@@ -19109,7 +19139,7 @@ function OrganContextMapModal({ organ, open, onClose }: { organ: OrganDetail; op
         : next.relocations
           ? project?.metadata.bounds?.relocations
           : project?.metadata.bounds?.current;
-    fitContextBounds(bounds);
+    fitGeoLibreBounds(frameRef.current, bounds, `organ-context:bounds:${Date.now()}`);
   };
   const toggleRelocations = (visible: boolean) => {
     setShowRelocations(visible);
@@ -19275,21 +19305,22 @@ function OrganContextMapModal({ organ, open, onClose }: { organ: OrganDetail; op
 }
 
 function OrganHeroMedia({ organ, onOpenTab }: { organ: OrganDetail; onOpenTab: (tab: OrganTab) => void }) {
+  const { t } = useUiLocale();
   const previewMedia = organ.media.filter((item) => mediaPreviewSrc(item)).slice(0, 4);
   const mainMedia = previewMedia[0];
   const displayedCount = Math.max(organ.mediaCount || 0, organ.media.length);
   const previewSrc = mediaPreviewSrc(mainMedia) || organ.heroImage || "";
   if (!previewSrc) return null;
   return (
-    <aside className="organ-hero-media" aria-label="Organ media preview">
+    <aside className="organ-hero-media" aria-label={t("organ.hero.mediaPreview", "Organ media preview", "Medienvorschau zur Orgel")}>
       <button type="button" className="organ-hero-image-button" onClick={() => onOpenTab("media")}>
         <img src={previewSrc} alt="" onError={(event) => { event.currentTarget.closest(".organ-hero-media")?.setAttribute("hidden", ""); }} />
-        <span>{displayedCount} media item{displayedCount === 1 ? "" : "s"}</span>
+        <span>{t("organ.hero.mediaCount", "{count, plural, one {# media item} other {# media items}}", "{count, plural, one {# Medieneintrag} other {# Medieneinträge}}", { count: displayedCount })}</span>
       </button>
       {previewMedia.length > 1 && (
         <div className="organ-hero-thumbs">
           {previewMedia.slice(1).map((item) => (
-            <button type="button" key={item.id} onClick={() => onOpenTab("media")} aria-label={`Open media item for ${item.title}`}>
+            <button type="button" key={item.id} onClick={() => onOpenTab("media")} aria-label={t("organ.hero.openMedia", "Open media item {title}", "Medieneintrag „{title}“ öffnen", { title: item.title })}>
               {mediaPreviewSrc(item) ? <img src={mediaPreviewSrc(item) || ""} alt="" /> : <Image size={18} />}
             </button>
           ))}
@@ -21416,6 +21447,7 @@ function citationCongruenceMessage(
 }
 
 function IdentifiersTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boolean }) {
+  const { t } = useUiLocale();
   const [evidenceTarget, setEvidenceTarget] = useState<EvidenceTarget | null>(null);
   const [publication, setPublication] = useState<PersistorPublicationStatus | null>(null);
   const [publicationError, setPublicationError] = useState<string | null>(null);
@@ -21464,30 +21496,35 @@ function IdentifiersTab({ organ, staffMode }: { organ: OrganDetail; staffMode: b
   const conceptDoi = publication?.currentIdentifiers?.conceptDoi ?? doiSummary.conceptDoi ?? scopedLatestPublicationDoi(publicationIdentifiers, "concept");
   const fileCount = publication?.files?.length ?? 0;
   const resolverCount = publication?.resolverTargets?.length ?? 0;
+  const stableIdentity = t("organ.identifiers.stableUri", "Stable identity URI", "Dauerhafte URI des Datensatzes");
+  const copyStableUri = t("organ.identifiers.copyStableUri", "Copy stable URI", "Dauerhafte URI kopieren");
+  const recordSources = t("organ.identifiers.recordSources", "Record sources and provenance", "Quellen und Herkunft des Datensatzes");
+  const openSource = t("organ.identifiers.originalSource", "Open original source", "Originalquelle öffnen");
+  const publicationStatus = typeof publication?.publicationState === "string" ? publication.publicationState : publication?.status || "published";
   return (
     <div className="tab-panel">
       <section className="panel-block">
-        <h3>Page identifiers</h3>
+        <h3>{t("organ.identifiers.title", "Page identifiers", "Kennungen der Seite")}</h3>
         <div className="identifier-summary">
           <div>
-            <span>Canonical URL</span>
+            <span>{t("organ.identifiers.canonicalUrl", "Canonical URL", "Kanonische URL")}</span>
             <div className="identifier-value-row">
               <a href={organ.canonicalUrl}>{organ.canonicalUrl}</a>
-              <CopyButton label="Copy URL" value={absoluteNavigatorUrl(organ.canonicalUrl)} />
+              <CopyButton label={t("organ.page.copyUrl", "Copy URL", "URL kopieren")} value={absoluteNavigatorUrl(organ.canonicalUrl)} />
             </div>
           </div>
           <div>
-            <span>Stable identity URI</span>
+            <span>{stableIdentity}</span>
             <div className="identifier-value-row">
-              {identity?.canonicalUri ? <a href={identity.canonicalUri}>{identity.canonicalUri}</a> : <strong>Prepared</strong>}
-              {identity?.canonicalUri && <CopyButton label="Copy stable URI" value={identity.canonicalUri} />}
+              {identity?.canonicalUri ? <a href={identity.canonicalUri}>{identity.canonicalUri}</a> : <strong>{t("organ.identifiers.prepared", "Prepared", "Vorbereitet")}</strong>}
+              {identity?.canonicalUri && <CopyButton label={copyStableUri} value={identity.canonicalUri} />}
             </div>
           </div>
           <div>
             <span>MODAVIS ID</span>
             <div className="identifier-value-row">
               <code>{organ.mdvsId}</code>
-              <CopyButton label="Copy MODAVIS ID" value={organ.mdvsId} />
+              <CopyButton label={t("organ.identifiers.copyModavis", "Copy MODAVIS ID", "MODAVIS-ID kopieren")} value={organ.mdvsId} />
             </div>
           </div>
           {staffMode && (
@@ -21500,46 +21537,44 @@ function IdentifiersTab({ organ, staffMode }: { organ: OrganDetail; staffMode: b
             </div>
           )}
           <div>
-            <span>Citation snapshot</span>
+            <span>{t("organ.identifiers.snapshot", "Citation snapshot", "Zitierstand")}</span>
             <div className="identifier-value-row">
-              <strong>{organ.citation.snapshot?.id || "Latest projection"}</strong>
-              {organ.citation.snapshot?.id && <CopyButton label="Copy ID" value={organ.citation.snapshot.id} />}
+              <strong>{organ.citation.snapshot?.id || t("organ.identifiers.latestProjection", "Latest projection", "Aktueller Anzeigestand")}</strong>
+              {organ.citation.snapshot?.id && <CopyButton label={t("organ.identifiers.copyId", "Copy ID", "Kennung kopieren")} value={organ.citation.snapshot.id} />}
             </div>
           </div>
         </div>
       </section>
       <section className="panel-block">
-        <h3>{publicDatasetPublication ? "Dataset publication" : "Persistor publication"}</h3>
+        <h3>{publication && !publicDatasetPublication ? t("organ.identifiers.persistor", "Persistor publication", "Veröffentlichung im Persistor") : t("organ.identifiers.publication", "Dataset publication", "Veröffentlichung des Datensatzes")}</h3>
         {publicationError ? (
-          <p className="notice error">Publication status unavailable: {publicationError}</p>
+          <p className="notice error">{t("organ.identifiers.publicationError", "Publication status unavailable.", "Der Veröffentlichungsstatus ist nicht verfügbar.")} {staffMode && publicationError}</p>
         ) : !publication ? (
-          <p className="notice">Loading publication status...</p>
+          <LoadingContent label={t("organ.identifiers.publicationLoading", "Loading publication status…", "Veröffentlichungsstatus wird geladen …")} />
         ) : publicDatasetPublication ? (
           <div className="identifier-summary public-publication-summary">
             <div>
               <span>Status</span>
-              <strong>{friendlyLabel(
-                typeof publication.publicationState === "string"
-                  ? publication.publicationState
-                  : publication.status || "published"
-              )}</strong>
-              <small>This stable identity is included in the published public dataset.</small>
+              <strong>{publicationStatus === "active" ? t("organ.identifiers.active", "Active", "Aktiv")
+                : publicationStatus === "published" ? t("organ.identifiers.published", "Published", "Veröffentlicht")
+                : friendlyLabel(publicationStatus)}</strong>
+              <small>{t("organ.identifiers.publicIdentity", "This stable identity is included in the published public dataset.", "Diese dauerhafte Kennung gehört zur veröffentlichten Fassung des Datensatzes.")}</small>
             </div>
             <div>
-              <span>Dataset release</span>
-              <strong>{publication.release || "Current public release"}</strong>
+              <span>{t("organ.identifiers.datasetRelease", "Dataset release", "Version des Datensatzes")}</span>
+              <strong>{publication.release || t("organ.identifiers.currentRelease", "Current public release", "Aktuelle öffentliche Version")}</strong>
             </div>
             <div>
-              <span>Access</span>
-              <strong>{publication.readOnly ? "Public · read-only" : "Public"}</strong>
-              <small>The Navigator presents release evidence and does not edit the accepted dataset.</small>
+              <span>{t("organ.identifiers.access", "Access", "Zugriff")}</span>
+              <strong>{publication.readOnly ? t("organ.identifiers.readOnly", "Public · read-only", "Öffentlich · nur lesbar") : t("organ.identifiers.public", "Public", "Öffentlich")}</strong>
+              <small>{t("organ.identifiers.accessScope", "The Navigator presents release evidence and does not edit the accepted dataset.", "Der Navigator zeigt die Belege zur freigegebenen Version an. Der Datensatz lässt sich hier nicht bearbeiten.")}</small>
             </div>
             {publication.canonicalUri && (
               <div>
-                <span>Stable identity URI</span>
+                <span>{stableIdentity}</span>
                 <div className="identifier-value-row">
                   <a href={publication.canonicalUri}>{publication.canonicalUri}</a>
-                  <CopyButton label="Copy stable URI" value={publication.canonicalUri} />
+                  <CopyButton label={copyStableUri} value={publication.canonicalUri} />
                 </div>
               </div>
             )}
@@ -21609,14 +21644,14 @@ function IdentifiersTab({ organ, staffMode }: { organ: OrganDetail; staffMode: b
         )}
       </section>
       <section className="panel-block">
-        <h3>{staffMode ? "MODAVIS and source identifiers" : "Known identifiers"}</h3>
+        <h3>{staffMode ? t("organ.identifiers.staffKnown", "MODAVIS and source identifiers", "MODAVIS- und Quellenkennungen") : t("organ.identifiers.known", "Known identifiers", "Bekannte Kennungen")}</h3>
         <div className="identifier-list">
           {organ.identifiers.map((identifier) => (
             <div key={`${identifier.scheme}:${identifier.value}`}>
               <span>{identifier.scheme}</span>
               <div className="identifier-value-row">
                 <strong>{identifier.value}</strong>
-                <CopyButton label={identifier.primary ? "Copy PID" : "Copy"} value={identifier.value} />
+                <CopyButton label={identifier.primary ? t("organ.identifiers.copyPid", "Copy PID", "PID kopieren") : t("organ.identifiers.copy", "Copy", "Kopieren")} value={identifier.value} />
                 {(identifier.url || identifier.evidenceUrl) && (
                   <a
                     className="source-identifier-link"
@@ -21624,11 +21659,9 @@ function IdentifiersTab({ organ, staffMode }: { organ: OrganDetail; staffMode: b
                     target={identifier.url ? "_blank" : undefined}
                     rel={identifier.url ? "noreferrer" : undefined}
                   >
-                    {identifier.linkLabel || (
-                      identifier.scheme === "MODAVIS"
-                        ? "Open stable identity"
-                        : identifier.url ? "Open original source" : "Open source evidence"
-                    )}
+                    {identifier.linkLabel && !["Open stable identity", "Open original source", "Open source evidence"].includes(identifier.linkLabel) ? identifier.linkLabel : identifier.scheme === "MODAVIS"
+                      ? t("organ.identifiers.openIdentity", "Open stable identity", "Dauerhafte Kennung öffnen")
+                      : identifier.url ? openSource : t("organ.identifiers.openEvidence", "Open source evidence", "Quellenbeleg öffnen")}
                   </a>
                 )}
                 {identifier.primary && <Pill tone="strong">PID</Pill>}
@@ -21643,31 +21676,34 @@ function IdentifiersTab({ organ, staffMode }: { organ: OrganDetail; staffMode: b
         </div>
       </section>
       <section className="panel-block organ-identifier-sources">
-        <h3>Record sources and provenance</h3>
+        <h3>{recordSources}</h3>
         <p className="muted">
-          These are the catalog records from which the public identity and documented facts were projected.
-          An original-source link opens the publisher’s record; MODAVIS does not reproduce its prose or media here.
+          {t("organ.identifiers.sourceScope", "The public identity and documented facts draw on these catalogue records. The original-source links open the publishers’ records with their text and media.", "Diese Katalogdatensätze bilden die Grundlage für die öffentliche Kennung und die dokumentierten Angaben. Über die Quellenlinks gelangen Sie zu den Originaleinträgen mit ihren Texten und Medien.")}
         </p>
         {organ.sources.length > 0 ? (
-          <div className="organ-catalog-source-list" aria-label="Record sources and provenance">
+          <div className="organ-catalog-source-list" aria-label={recordSources}>
             {organ.sources.map((source) => (
               <article key={source.id}>
                 <div>
                   <strong>{source.source || source.title}</strong>
                   <span>{source.id}</span>
-                  <small>{source.statusDetail || source.status}</small>
+                  <small>{source.statusDetail === "Consult the original page for its description and documentation."
+                    ? t("organ.identifiers.consultOriginal", "Consult the original page for its description and documentation.", "Beschreibung und Belege stehen in der Originalquelle.")
+                    : (source.statusDetail || source.status) === "Structured source membership"
+                      ? t("organ.identifiers.structuredMembership", "Structured source membership", "Strukturierte Zuordnung zur Quelle")
+                      : source.statusDetail || source.status}</small>
                 </div>
                 {source.url ? (
                   <a href={source.url} target="_blank" rel="noreferrer">
-                    Open original source <ExternalLink size={15} aria-hidden="true" />
+                    {openSource} <ExternalLink size={15} aria-hidden="true" />
                   </a>
                 ) : (
-                  <span>Original source link unavailable</span>
+                  <span>{t("organ.identifiers.noSourceLink", "Original source link unavailable", "Kein Link zur Originalquelle verfügbar")}</span>
                 )}
               </article>
             ))}
           </div>
-        ) : <p className="notice">No public source citation is available for this record.</p>}
+        ) : <p className="notice">{t("organ.identifiers.noPublicSource", "No public source citation is available for this record.", "Für diesen Datensatz liegt kein öffentlicher Quellenverweis vor.")}</p>}
       </section>
       {staffMode && (
         <section className="panel-block">
@@ -21703,6 +21739,7 @@ function ApiLinkPanel({ organ }: { organ: OrganDetail }) {
 }
 
 function RelatedTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boolean }) {
+  const { t, formatNumber } = useUiLocale();
   const [selectedRelation, setSelectedRelation] = useState<RelatedEntity | null>(null);
   const [evidenceTarget, setEvidenceTarget] = useState<EvidenceTarget | null>(null);
   const grouped = organ.relatedEntities.reduce<Record<string, typeof organ.relatedEntities>>((acc, entity) => {
@@ -21711,53 +21748,62 @@ function RelatedTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boole
     acc[key].push(entity);
     return acc;
   }, {});
-  const relationshipLabel = (value: string) => !staffMode && value.startsWith("locroletype:")
-    ? friendlyLabel(value.slice("locroletype:".length))
-    : value;
+  const relationshipLabels: Record<string, string> = {
+    builder: "Orgelbauer", place: "Ort", person: "Person", organization: "Organisation", related: "Verknüpfung",
+    installation_site: "Aufstellungsort", previous_location: "Früherer Standort", historical: "Historisch",
+    documented_place: "Dokumentierter Ort", current: "Aktuell", canonical: "Kanonisch", probable: "Wahrscheinlich",
+  };
+  const relationshipLabel = (value: string) => {
+    if (staffMode) return value;
+    const key = value.replace(/^locroletype:/, "").toLowerCase().replace(/ /g, "_");
+    const label = value.startsWith("locroletype:") ? friendlyLabel(key) : value;
+    return Object.prototype.hasOwnProperty.call(relationshipLabels, key) ? t("organ.related.relationship." + key, label, relationshipLabels[key]) : label;
+  };
+  const release = organ.virtualInstruments?.guidance?.match(/^Accepted and retained public virtual-instrument relationships from Release (.+)\.$/)?.[1];
   return (
     <div className="tab-panel">
       {organ.virtualInstruments?.available && organ.virtualInstruments.total > 0 && (
         <section className="panel-block organ-vmi-relations" aria-labelledby="organ-vmi-heading">
           <div className="organ-vmi-heading">
             <div>
-              <span className="section-kicker">Playable representations</span>
-              <h3 id="organ-vmi-heading">Virtual instruments linked to this organ</h3>
-              <p>{organ.virtualInstruments.guidance}</p>
+              <span className="section-kicker">{t("organ.related.playable", "Playable representations", "Spielbare Fassungen")}</span>
+              <h3 id="organ-vmi-heading">{t("organ.related.virtualInstruments", "Virtual instruments linked to this organ", "Virtuelle Instrumente zu dieser Orgel")}</h3>
+              <p>{release ? t("organ.related.virtualRelease", "Accepted and retained public virtual-instrument relationships from Release {release}.", "Öffentliche Verknüpfungen zu virtuellen Instrumenten aus Version {release}.", { release }) : organ.virtualInstruments.guidance}</p>
             </div>
             <div className="organ-vmi-counts">
-              <span><strong>{organ.virtualInstruments.linked}</strong> linked</span>
-              <span><strong>{organ.virtualInstruments.probableSuggestions}</strong> probable</span>
-              {organ.virtualInstruments.inheritedSubordinateCount > 0 && <span><strong>{organ.virtualInstruments.inheritedSubordinateCount}</strong> nested components</span>}
+              <span><strong>{formatNumber(organ.virtualInstruments.linked)}</strong> {t("organ.related.linked", "linked", "verknüpft")}</span>
+              <span><strong>{formatNumber(organ.virtualInstruments.probableSuggestions)}</strong> {t("organ.related.probable", "probable", "wahrscheinliche Zuordnungen")}</span>
+              {organ.virtualInstruments.inheritedSubordinateCount > 0 && <span>{t("organ.related.nested", "{count, plural, one {# nested component} other {# nested components}}", "{count, plural, one {# untergeordnete Komponente} other {# untergeordnete Komponenten}}", { count: organ.virtualInstruments.inheritedSubordinateCount })}</span>}
             </div>
           </div>
           <div className="organ-vmi-grid">
             {organ.virtualInstruments.items.map((item) => (
               <article className={item.relationshipState === "probable" ? "probable" : "linked"} key={item.id}>
-                <div><span>{item.relationshipState === "probable" ? "Probable candidate" : "Linked package"}</span><strong>{item.title}</strong><small>{item.id} · {item.producer || "Producer not recorded"}</small></div>
+                <div><span>{item.relationshipState === "probable" ? t("organ.related.probableCandidate", "Probable candidate", "Wahrscheinliche Zuordnung") : t("organ.related.linkedPackage", "Linked package", "Verknüpftes Paket")}</span><strong>{item.title}</strong><small>{item.id} · {item.producer || t("organ.related.unknownProducer", "Producer not recorded", "Anbieter nicht erfasst")}</small></div>
                 <dl>
-                  <div><dt>Confidence</dt><dd>{friendlyLabel(item.confidenceTier || item.relationshipState)}</dd></div>
-                  {item.method && <div><dt>Method</dt><dd>{friendlyLabel(item.method)}</dd></div>}
-                  {item.score != null && <div><dt>Score</dt><dd>{Math.round(item.score * 100)}%</dd></div>}
+                  <div><dt>{t("organ.related.confidence", "Confidence", "Sicherheit der Zuordnung")}</dt><dd>{relationshipLabel(friendlyLabel(item.confidenceTier || item.relationshipState))}</dd></div>
+                  {item.method && <div><dt>{t("organ.related.method", "Method", "Methode")}</dt><dd>{friendlyLabel(item.method)}</dd></div>}
+                  {item.score != null && <div><dt>{t("organ.related.score", "Score", "Bewertung")}</dt><dd>{formatNumber(item.score, { style: "percent", maximumFractionDigits: 0 })}</dd></div>}
                 </dl>
-                <a className="organ-vmi-open" href={item.canonicalUrl}>Open structured virtual instrument <ExternalLink size={14} /></a>
+                <a className="organ-vmi-open" href={item.canonicalUrl}>{t("organ.related.openVirtual", "Open structured virtual instrument", "Virtuelles Instrument öffnen")} <ExternalLink size={14} aria-hidden="true" /></a>
               </article>
             ))}
           </div>
-          {organ.virtualInstruments.probableSuggestions > 0 && <p className="organ-vmi-boundary">Probable candidates are visible for investigation but are not asserted identities or canonical merges.</p>}
+          {organ.virtualInstruments.probableSuggestions > 0 && <p className="organ-vmi-boundary">{t("organ.related.probableScope", "Probable candidates are available for research. Their identity and any merge of the records remain unconfirmed.", "Wahrscheinliche Zuordnungen können weiter geprüft werden. Die Identität und eine etwaige Zusammenführung der Datensätze bleiben unbestätigt.")}</p>}
         </section>
       )}
       <section className="panel-block">
-        <h3>Linked entities</h3>
+        <h3>{t("organ.related.entities", "Linked entities", "Verknüpfte Einträge")}</h3>
         {organ.relatedSummary && (
           <div className="related-summary">
-            <Metric label="Linked" value={organ.relatedSummary.total} />
-            <Metric label="Relations" value={organ.relatedSummary.relationCount} />
+            <Metric label={t("organ.related.linkedEntries", "Linked", "Einträge")} value={organ.relatedSummary.total} />
+            <Metric label={t("organ.related.relations", "Relations", "Beziehungen")} value={organ.relatedSummary.relationCount} />
             {staffMode && <Metric label="Source-backed" value={organ.relatedSummary.sourceBacked} />}
             {staffMode && <Metric label="Candidates" value={organ.relatedSummary.normalizerCandidates} />}
             {(organ.relatedSummary.relationTypes ?? []).length > 0 && (
               <div className="related-summary-chips">
                 {(organ.relatedSummary.relationTypes ?? []).slice(0, 4).map((item) => (
-                  <span key={item.state}>{relationshipLabel(item.state)} ({item.count})</span>
+                  <span key={item.state}>{relationshipLabel(item.state)} ({formatNumber(item.count)})</span>
                 ))}
               </div>
             )}
@@ -21766,10 +21812,11 @@ function RelatedTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boole
         <div className="related-list">
           {Object.entries(grouped).map(([kind, entities]) => (
             <section className="related-group" key={kind}>
-              <h4>{kind}</h4>
+              <h4>{relationshipLabel(kind)}</h4>
               {entities.map((entity) => {
                 const entityPageUrl = entity.entityPageUrl || "";
                 const entityLabel = String(entity.label);
+                const sourceAssertions = entity.summary?.match(/^(\d+) source assertion\(s\)\.$/);
                 return (
                   <article key={`${String(entity.id)}:${entity.sourcePath || entity.candidateEntityId || entityLabel}`}>
                     <div>
@@ -21778,14 +21825,14 @@ function RelatedTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boole
                           <a className="entity-page-link" href={entityPageUrl}>{entityLabel}</a>
                         ) : entityLabel}
                       </strong>
-                      <Pill>{staffMode ? entity.reviewStatus || friendlyLabel(entity.publicationState || entity.evidenceType || "source_backed") : friendlyLabel(entity.kind || "Related")}</Pill>
+                      <Pill>{staffMode ? entity.reviewStatus || friendlyLabel(entity.publicationState || entity.evidenceType || "source_backed") : relationshipLabel(friendlyLabel(entity.kind || "Related"))}</Pill>
                     </div>
                     <span>{staffMode ? String(entity.relationship) : publicRelatedSummary(relationshipLabel(String(entity.relationship)))}{staffMode && entity.matchStatus ? ` · ${entity.matchStatus}` : ""}</span>
                     {(staffMode ? entity.summary : publicRelatedSummary(entity.summary)) && (
-                      <p>{staffMode ? entity.summary : publicRelatedSummary(entity.summary)}</p>
+                      <p>{staffMode ? entity.summary : sourceAssertions ? t("organ.related.assertions", "{count, plural, one {# source assertion} other {# source assertions}}.", "{count, plural, one {# Quellenangabe} other {# Quellenangaben}}.", { count: Number(sourceAssertions[1]) }) : publicRelatedSummary(entity.summary)}</p>
                     )}
                     <div className="related-meta">
-                      {entityPageUrl ? <span>{entity.entityPageLabel || "Candidate entity page"}</span> : null}
+                      {entityPageUrl ? <span>{entity.entityPageLabel === "Open canonical actor" ? t("organ.related.openActor", "Open canonical actor", "Akteursdatensatz öffnen") : entity.entityPageLabel || t("organ.related.openEntity", "Linked record page", "Seite des verknüpften Eintrags")}</span> : null}
                       {entity.mdvsId ? <span>{entity.mdvsId}</span> : null}
                       {staffMode && entity.confidence != null ? <span>{Math.round(entity.confidence * 100)}% confidence</span> : null}
                       {staffMode && entity.sourcePath ? <span>Source path: {entity.sourcePath}</span> : null}
@@ -21808,7 +21855,7 @@ function RelatedTab({ organ, staffMode }: { organ: OrganDetail; staffMode: boole
               })}
             </section>
           ))}
-          {organ.relatedEntities.length === 0 && <p className="muted">No linked entities are available yet.</p>}
+          {organ.relatedEntities.length === 0 && <p className="muted">{t("organ.related.empty", "No linked entities are available yet.", "Es liegen noch keine verknüpften Einträge vor.")}</p>}
         </div>
         {selectedRelation && (
           <RelatedEntityEvidenceModal
@@ -26124,6 +26171,7 @@ function PublicCitationStrip({ citation }: { citation: Citation }) {
 }
 
 function CopyButton({ label, value }: { label: string; value: string }) {
+  const { t } = useUiLocale();
   const [copied, setCopied] = useState(false);
 
   async function copyValue() {
@@ -26148,7 +26196,7 @@ function CopyButton({ label, value }: { label: string; value: string }) {
 
   return (
     <button type="button" className="copy-button" onClick={copyValue} aria-label={label}>
-      <Clipboard size={16} /> {copied ? "Copied" : label}
+      <Clipboard size={16} /> {copied ? t("record.copy.copied", "Copied", "Kopiert") : label}
     </button>
   );
 }
@@ -26662,6 +26710,7 @@ function MapSection({
   queueFilters: GeoreferencingQueueFilters;
   showQueue: boolean;
 }) {
+  const { t } = useUiLocale();
   const mapParams = new URLSearchParams(window.location.search);
   const movementSimulation = canReadLocalMap && mapParams.get("simulation") === "movement";
   const eventMode = mapParams.get("mode") === "events";
@@ -26669,9 +26718,9 @@ function MapSection({
     <section className="entity-section" id="map" tabIndex={-1}>
       <SectionHead
         headingLevel={1}
-        eyebrow="Map"
-        title={eventMode ? "Documented organ relocations" : "Mapped organ locations"}
-        detail={showQueue ? `${explore?.counts.georeferencingBacklog ?? 0} organ page${explore?.counts.georeferencingBacklog === 1 ? "" : "s"} need coordinates` : movementSimulation ? "ARTIFICIAL relocation simulation · local-restricted" : eventMode ? "Source-documented endpoints with qualified coordinates" : canReadLocalMap ? "Local-restricted Localizer diagnostics" : "Current locations, with coordinate precision stated"}
+        eyebrow={t("map.eyebrow", "Map", "Karte")}
+        title={eventMode ? t("map.relocationHeading", "Documented organ relocations", "Dokumentierte Orgelverlegungen") : t("map.heading", "Mapped organ locations", "Kartierte Orgelstandorte")}
+        detail={showQueue ? `${explore?.counts.georeferencingBacklog ?? 0} organ page${explore?.counts.georeferencingBacklog === 1 ? "" : "s"} need coordinates` : movementSimulation ? "ARTIFICIAL relocation simulation · local-restricted" : eventMode ? "Source-documented endpoints with qualified coordinates" : canReadLocalMap ? "Local-restricted Localizer diagnostics" : t("map.precisionNote", "Current locations with coordinate precision", "Erfasste Standorte mit Angabe der Koordinatengenauigkeit")}
       />
       {publicProjection && !eventMode && <Suspense fallback={null}><AreaLookup /></Suspense>}
       <div className={`map-layout ${showQueue ? "has-queue" : "map-only"}`}>
@@ -26684,7 +26733,6 @@ function MapSection({
           restrictedLayer={canReadLocalMap && !eventMode}
           simulationMode={movementSimulation}
           eventMode={eventMode}
-          useGeoLibre
         />
         {showQueue && (
           <GeoreferencingQueue
@@ -26800,7 +26848,6 @@ function MapPreview({
   restrictedLayer = false,
   simulationMode = false,
   eventMode = false,
-  useGeoLibre = false,
 }: {
   items: ExploreResponse["mapItems"];
   publicProjection?: boolean;
@@ -26810,40 +26857,20 @@ function MapPreview({
   restrictedLayer?: boolean;
   simulationMode?: boolean;
   eventMode?: boolean;
-  useGeoLibre?: boolean;
 }) {
+  const { t } = useUiLocale();
   return (
     <section className={`map-panel ${large ? "large" : ""}`}>
-      {useGeoLibre ? (
-        <GeoLibreMap publicProjection={publicProjection} items={items} onOpenOrgan={onOpenOrgan} organFacets={organFacets} restrictedLayer={restrictedLayer} simulationMode={simulationMode} eventMode={eventMode} />
-      ) : (
-        <div className="map-canvas" aria-label="Mapped organ location preview">
-          {items.map((item) => {
-            const latitude = item.coordinates?.lat ?? 0;
-            const longitude = item.coordinates?.lon ?? 0;
-            const left = Math.min(98, Math.max(2, ((longitude + 180) / 360) * 100));
-            const top = Math.min(98, Math.max(2, ((90 - latitude) / 180) * 100));
-            return (
-              <a
-                key={item.id}
-                href={organPublicUrl(item.mdvsId)}
-                style={{ left: `${left}%`, top: `${top}%` }}
-                title={`${item.title}${item.location ? ` · ${item.location}` : ""}`}
-                aria-label={`Open ${item.title}`}
-              />
-            );
-          })}
-        </div>
-      )}
+      <GeoLibreMap publicProjection={publicProjection} items={items} onOpenOrgan={onOpenOrgan} organFacets={organFacets} restrictedLayer={restrictedLayer} simulationMode={simulationMode} eventMode={eventMode} />
       <div>
-        <h3>{simulationMode ? "Synthetic relocation demonstration" : eventMode ? "Documented relocations" : "Mapped organs"}</h3>
-        <p>{simulationMode ? "Artificial displacements demonstrate explicit origin and destination observations, uncertain time intervals, and segmented schematic connectors. No connector is a historical route." : eventMode ? "Documented relocation events connect historical origin and destination observations. Segmented connectors express relationships, never reconstructed travel routes." : useGeoLibre && restrictedLayer ? "Policy-approved current-place diagnostics are loaded from Processor Localizer. They do not assert a historical event or movement route." : useGeoLibre ? "Explore documented organ sites and approximate localities." : items.length ? `${items.length} mapped organ example${items.length === 1 ? "" : "s"} from the current catalog results. These points do not assert a historical event or movement route.` : "No mapped organ locations are available yet."}</p>
-        {useGeoLibre && !simulationMode && !publicProjection && (
+        <h3>{simulationMode ? "Synthetic relocation demonstration" : eventMode ? t("map.recordedRelocations", "Documented relocations", "Dokumentierte Verlegungen") : t("map.mappedOrgans", "Mapped organs", "Kartierte Orgeln")}</h3>
+        <p>{simulationMode ? "Artificial displacements demonstrate explicit origin and destination observations, uncertain time intervals, and segmented schematic connectors. No connector is a historical route." : eventMode ? "Documented relocation events connect historical origin and destination observations. Segmented connectors express relationships, never reconstructed travel routes." : restrictedLayer ? "Policy-approved current-place diagnostics are loaded from Processor Localizer. They do not assert a historical event or movement route." : t("map.mappedDescription", "Explore documented organ sites and approximate localities.", "Erkunden Sie dokumentierte Orgelstandorte und näherungsweise verortete Orgeln.")}</p>
+        {!simulationMode && !publicProjection && (
           <a className="map-simulation-link" href={eventMode ? "/map" : "/map?mode=events"}>
             {eventMode ? "Return to mapped organ places" : "Explore documented relocations"}
           </a>
         )}
-        {useGeoLibre && restrictedLayer && (
+        {restrictedLayer && (
           <a className="map-simulation-link" href={simulationMode ? "/map" : "/map?simulation=movement"}>
             {simulationMode ? "Exit artificial movement simulation" : "Open artificial movement simulation"}
           </a>
@@ -26878,6 +26905,7 @@ type PublicMapCatalogFilters = {
   conflictScope: string;
   specificationState: string;
   eventType: string;
+  virtualInstrument: string;
   temperament: string;
   temperamentScope: "exact" | "family";
 };
@@ -26895,6 +26923,7 @@ function publicMapCatalogFiltersFromParams(params: URLSearchParams): PublicMapCa
     conflictScope: params.get("conflict_scope") || "",
     specificationState: params.get("specification_state") || "",
     eventType: params.get("event_type") || "",
+    virtualInstrument: params.get("virtual_instrument") || "",
     temperament: params.get("temperament") || "",
     temperamentScope: params.get("temperament_scope") === "family" ? "family" : "exact",
   };
@@ -26913,6 +26942,7 @@ function appendPublicMapCatalogFilters(url: URL, filters: PublicMapCatalogFilter
     ["conflict_scope", filters.conflictScope],
     ["specification_state", filters.specificationState],
     ["event_type", filters.eventType],
+    ["virtual_instrument", filters.virtualInstrument],
     ["temperament", filters.temperament],
     ["temperament_scope", filters.temperament ? filters.temperamentScope : ""],
   ].forEach(([key, value]) => {
@@ -26924,7 +26954,21 @@ function appendPublicMapCatalogFilters(url: URL, filters: PublicMapCatalogFilter
 const NAVIGATOR_GEOLIBRE_BASEMAP_STYLE = "/basemap/assets-v2/style.json";
 const MapRegions = lazy(() => import("./mapRegions"));
 
-function isLoadedNavigatorGeoLibreProject(value: unknown): boolean {
+function fitGeoLibreBounds(frame: HTMLIFrameElement | null, value: unknown, requestId: string, fitSinglePoint = true): void {
+  if (!Array.isArray(value) || value.length !== 4 || !value.every(Number.isFinite)) return;
+  const [west, south, east, north] = value;
+  const longitudePadding = west === east ? 0.02 : 0;
+  const latitudePadding = south === north ? 0.02 : 0;
+  if (!fitSinglePoint && longitudePadding && latitudePadding) return;
+  frame?.contentWindow?.postMessage({
+    type: "geolibre:command",
+    requestId,
+    method: "fitBounds",
+    params: { bounds: [west - longitudePadding, south - latitudePadding, east + longitudePadding, north + latitudePadding] },
+  }, window.location.origin);
+}
+
+function isLoadedNavigatorGeoLibreProject(value: unknown): value is Record<string, unknown> {
   if (!isRecord(value) || typeof value.basemapStyleUrl !== "string") return false;
   if (value.basemapStyleUrl !== NAVIGATOR_GEOLIBRE_BASEMAP_STYLE
     && !value.basemapStyleUrl.startsWith("/api/map/marker-style.json?")) return false;
@@ -26934,6 +26978,13 @@ function isLoadedNavigatorGeoLibreProject(value: unknown): boolean {
     && typeof layer.id === "string"
     && layer.id.startsWith("modavis-")
   ));
+}
+
+function isMapEventDate(value: string): boolean {
+  if (!/^(?!0000)\d{4}(?:-\d{2}-\d{2})?$/.test(value)) return false;
+  if (value.length === 4) return true;
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
 }
 
 function GeoLibreMap({
@@ -26953,7 +27004,9 @@ function GeoLibreMap({
   simulationMode?: boolean;
   eventMode?: boolean;
 }) {
+  const { t } = useUiLocale();
   const frameRef = useRef<HTMLIFrameElement | null>(null);
+  const fittedFrame = useRef<HTMLIFrameElement | null>(null);
   const pendingClusterZooms = useRef(new Map<string, {
     center: [number, number];
     verifyAgainstGroups: boolean;
@@ -26963,7 +27016,10 @@ function GeoLibreMap({
     () => new URLSearchParams(window.location.search).get("datetime") || "",
     [],
   );
-  const [temporalFilter, setTemporalFilter] = useState(initialTemporalFilter);
+  const [temporalFilter, setTemporalFilter] = useState(() => (
+    !eventMode || isMapEventDate(initialTemporalFilter.trim()) ? initialTemporalFilter.trim() : ""
+  ));
+  const [eventDateDraft, setEventDateDraft] = useState(initialTemporalFilter);
   const initialMovementType = useMemo(
     () => new URLSearchParams(window.location.search).get("movement_type") || "",
     [],
@@ -26981,6 +27037,7 @@ function GeoLibreMap({
   const [catalogFilters, setCatalogFilters] = useState<PublicMapCatalogFilters>(initialCatalogFilters);
   const [catalogFilterDraft, setCatalogFilterDraft] = useState<PublicMapCatalogFilters>(initialCatalogFilters);
   const [runtimeReady, setRuntimeReady] = useState(false);
+  const [wideSelection, setWideSelection] = useState(false);
   const [runtimeVersion, setRuntimeVersion] = useState("2.8.0");
   const [pointCount, setPointCount] = useState<number | null>(null);
   const [exactPointCount, setExactPointCount] = useState<number | null>(null);
@@ -26991,13 +27048,12 @@ function GeoLibreMap({
     groupCount: number;
     entityCount: number;
   }>>([]);
-  const initialCoordinateScope = useMemo(() => {
+  const defaultCoordinateScope = publicProjection ? "all" : "exact";
+  const [requestedCoordinateScope, setCoordinateScope] = useState<"all" | "exact" | "fallback" | null>(() => {
     const value = new URLSearchParams(window.location.search).get("precision");
-    return value === "all" || value === "fallback" ? value : "exact";
-  }, []);
-  const [coordinateScope, setCoordinateScope] = useState<"all" | "exact" | "fallback">(
-    initialCoordinateScope,
-  );
+    return value === "all" || value === "exact" || value === "fallback" ? value : null;
+  });
+  const coordinateScope = requestedCoordinateScope ?? defaultCoordinateScope;
   const initialCountryCode = useMemo(
     () => (new URLSearchParams(window.location.search).get("country") || "").toUpperCase(),
     [],
@@ -27025,7 +27081,11 @@ function GeoLibreMap({
   const [movementCount, setMovementCount] = useState<number | null>(simulationMode || eventMode ? null : 0);
   const [selectedMovement, setSelectedMovement] = useState<Record<string, unknown> | null>(null);
   const [mapError, setMapError] = useState("");
-  const [runtimeAvailable, setRuntimeAvailable] = useState<boolean | null>(null);
+  const [legacyViewer, setLegacyViewer] = useState(false);
+  const [legacyAvailable, setLegacyAvailable] = useState<boolean | null>(null);
+  const adaptiveWorldMap = publicProjection && !restrictedLayer && !simulationMode && !eventMode;
+  const standaloneWorldMap = adaptiveWorldMap && !legacyViewer;
+  const runtimeAvailable = standaloneWorldMap ? true : legacyAvailable;
   const mapApiPrefix = restrictedLayer ? "/api/internal/map" : "/api/map";
   const frameUrl = useMemo(() => {
     const projectUrl = new URL(`${mapApiPrefix}/project.geolibre.json`, window.location.origin);
@@ -27045,22 +27105,25 @@ function GeoLibreMap({
       if (countryCode) projectUrl.searchParams.set("country", countryCode);
       appendPublicMapCatalogFilters(projectUrl, catalogFilters);
     }
-    const url = new URL("/geolibre/index.html", window.location.origin);
+    const url = new URL(standaloneWorldMap ? "/map-viewer.html" : "/geolibre/index.html", window.location.origin);
     url.searchParams.set("url", projectUrl.toString());
-    url.searchParams.set("maponly", "true");
-    url.searchParams.set("embed", "1");
-    url.searchParams.set("welcome", "0");
+    if (!standaloneWorldMap) {
+      url.searchParams.set("maponly", "true");
+      url.searchParams.set("embed", "1");
+      url.searchParams.set("welcome", "0");
+    }
     return url.toString();
-  }, [catalogFilters, coordinateScope, countryCode, eventMode, initialMovementId, mapApiPrefix, movementType, restrictedLayer, simulationMode, temporalFilter]);
+  }, [catalogFilters, coordinateScope, countryCode, eventMode, initialMovementId, mapApiPrefix, movementType, restrictedLayer, simulationMode, standaloneWorldMap, temporalFilter]);
 
   useEffect(() => {
+    if (standaloneWorldMap) return;
     let active = true;
     void readMapRuntime().then(
-      () => { if (active) setRuntimeAvailable(true); },
-      () => { if (active) setRuntimeAvailable(false); },
+      () => { if (active) setLegacyAvailable(true); },
+      () => { if (active) setLegacyAvailable(false); },
     );
     return () => { active = false; };
-  }, []);
+  }, [standaloneWorldMap]);
 
   useEffect(() => {
     // A changed project URL remounts the embedded runtime. Keep its default
@@ -27070,8 +27133,17 @@ function GeoLibreMap({
   }, [frameUrl]);
 
   useEffect(() => {
+    if (!standaloneWorldMap || runtimeReady) return;
+    const fallback = window.setTimeout(() => setLegacyViewer(true), 18000);
+    return () => window.clearTimeout(fallback);
+  }, [frameUrl, runtimeReady, standaloneWorldMap]);
+
+  useEffect(() => {
     if (eventMode) return;
     let active = true;
+    setPointCount(null);
+    setExactPointCount(null);
+    setFallbackPointCount(null);
     const endpoint = new URL(
       `${mapApiPrefix}/${restrictedLayer ? "places.geojson" : "summary.json"}`,
       window.location.origin,
@@ -27287,7 +27359,8 @@ function GeoLibreMap({
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      if (event.source !== frameRef.current?.contentWindow || event.origin !== window.location.origin) return;
+      const frame = frameRef.current;
+      if (!frame || event.source !== frame.contentWindow || event.origin !== window.location.origin) return;
       const message = isRecord(event.data) ? event.data : {};
       if (message.type === "geolibre:ready") {
         setRuntimeVersion(String(message.version || "2.8.0"));
@@ -27299,12 +27372,21 @@ function GeoLibreMap({
       }
       if (message.type === "geolibre:state") {
         if (isLoadedNavigatorGeoLibreProject(message.project)) {
+          const view = isRecord(message.project.mapView) ? message.project.mapView : {};
+          const bounds = view.bbox;
+          setWideSelection(adaptiveWorldMap && Array.isArray(bounds) && bounds.length === 4
+            && bounds.every(Number.isFinite) && bounds[2] - bounds[0] > 180);
+          if ((eventMode || (adaptiveWorldMap && !standaloneWorldMap)) && fittedFrame.current !== frame) {
+            fitGeoLibreBounds(frame, bounds, "navigator-map:initial-fit");
+            fittedFrame.current = frame;
+          }
           setRuntimeReady(true);
         }
         return;
       }
       if (message.type === "geolibre:error") {
-        setMapError(String(message.message || "project could not be loaded"));
+        if (standaloneWorldMap && !runtimeReady) setLegacyViewer(true);
+        else setMapError(String(message.message || "project could not be loaded"));
         return;
       }
       if (message.type === "geolibre:result" && typeof message.requestId === "string") {
@@ -27590,6 +27672,7 @@ function GeoLibreMap({
         && !restrictedLayer
         && !simulationMode
         && !eventMode
+        && !adaptiveWorldMap
       ) {
         const requestId = `modavis-cluster-probe:${Date.now()}`;
         pendingClusterZooms.current.set(requestId, {
@@ -27609,9 +27692,9 @@ function GeoLibreMap({
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  }, [catalogFilters, coordinateScope, countryCode, eventMode, items, onOpenOrgan, restrictedLayer, simulationMode]);
+  }, [adaptiveWorldMap, catalogFilters, coordinateScope, countryCode, eventMode, items, onOpenOrgan, restrictedLayer, runtimeReady, simulationMode, standaloneWorldMap]);
 
-  const changeTemporalFilter = (value: string) => {
+  const changeTemporalFilter = useCallback((value: string) => {
     setRuntimeReady(false);
     setMapError("");
     setTemporalFilter(value);
@@ -27619,7 +27702,14 @@ function GeoLibreMap({
     if (value) pageUrl.searchParams.set("datetime", value);
     else pageUrl.searchParams.delete("datetime");
     window.history.replaceState(window.history.state, "", pageUrl);
-  };
+  }, []);
+  const eventDate = eventDateDraft.trim();
+  const eventDateInvalid = eventMode && Boolean(eventDate) && !isMapEventDate(eventDate);
+  useEffect(() => {
+    if (!eventMode || eventDateInvalid || eventDate === temporalFilter) return;
+    const timer = window.setTimeout(() => changeTemporalFilter(eventDate), 300);
+    return () => window.clearTimeout(timer);
+  }, [changeTemporalFilter, eventDate, eventDateInvalid, eventMode, temporalFilter]);
   const changeMovementType = (value: string) => {
     setRuntimeReady(false);
     setMapError("");
@@ -27638,7 +27728,7 @@ function GeoLibreMap({
     setSiteGroupMembers(null);
     setSiteGroupOffset(0);
     const pageUrl = new URL(window.location.href);
-    if (value === "exact") pageUrl.searchParams.delete("precision");
+    if (value === defaultCoordinateScope) pageUrl.searchParams.delete("precision");
     else pageUrl.searchParams.set("precision", value);
     pageUrl.searchParams.delete("group");
     window.history.replaceState(window.history.state, "", pageUrl);
@@ -27664,6 +27754,7 @@ function GeoLibreMap({
     conflictScope: catalogFilterDraft.conflictScope.trim(),
     specificationState: catalogFilterDraft.specificationState.trim(),
     eventType: catalogFilterDraft.eventType.trim(),
+    virtualInstrument: catalogFilterDraft.virtualInstrument.trim(),
     temperament: catalogFilterDraft.temperament.trim(),
     temperamentScope: catalogFilterDraft.temperamentScope,
   });
@@ -27693,6 +27784,7 @@ function GeoLibreMap({
       conflictScope: "",
       specificationState: "",
       eventType: "",
+      virtualInstrument: "",
       temperament: "",
       temperamentScope: "exact",
     };
@@ -27722,18 +27814,21 @@ function GeoLibreMap({
     frameRef.current?.contentWindow?.postMessage({ type: "geolibre:request-state" }, window.location.origin);
   };
   const effectiveMapError = runtimeAvailable === false
-    ? "The map is temporarily unavailable. Please reload this page to try again."
+    ? t("map.unavailableRetry", "The map is temporarily unavailable. Please reload this page to try again.", "Die Karte ist vorübergehend nicht verfügbar. Laden Sie die Seite für einen erneuten Versuch neu.")
     : mapError;
-  const movementStatus = simulationMode || eventMode
-    ? ` · ${movementCount ?? "…"} ${simulationMode ? "simulated" : "documented"} movement${movementCount === 1 ? "" : "s"}`
-    : "";
+  const mapTotals = [
+    !eventMode && pointCount != null && t("map.count.sites", "{count, plural, one {# site} other {# sites}}", "{count, plural, one {# Standort} other {# Standorte}}", { count: pointCount }),
+    !eventMode && !restrictedLayer && exactPointCount != null && t("map.count.positions", "{count, plural, one {# organ occurrence at a recorded position} other {# organ occurrences at recorded positions}}", "{count, plural, one {# Orgelnachweis mit Standortkoordinaten} other {# Orgelnachweise mit Standortkoordinaten}}", { count: exactPointCount }),
+    !eventMode && !restrictedLayer && fallbackPointCount != null && t("map.count.localities", "{count, plural, one {# organ occurrence at an approximate locality} other {# organ occurrences at approximate localities}}", "{count, plural, one {# Orgelnachweis mit ungefährer Ortsangabe} other {# Orgelnachweise mit ungefährer Ortsangabe}}", { count: fallbackPointCount }),
+    (simulationMode || eventMode) && movementCount != null && (simulationMode
+      ? t("map.count.simulations", "{count, plural, one {# simulated relocation} other {# simulated relocations}}", "{count, plural, one {# simulierte Verlegung} other {# simulierte Verlegungen}}", { count: movementCount })
+      : t("map.count.relocations", "{count, plural, one {# documented relocation} other {# documented relocations}}", "{count, plural, one {# dokumentierte Verlegung} other {# dokumentierte Verlegungen}}", { count: movementCount })),
+  ].filter(Boolean);
   const status = effectiveMapError
-    ? `Map unavailable: ${effectiveMapError}`
+    ? t("map.status.error", "Map unavailable: {message}", "Karte nicht verfügbar: {message}", { message: effectiveMapError })
     : runtimeReady
-      ? eventMode
-        ? `Map ready${movementStatus}`
-        : `Map ready · ${pointCount === null ? "…" : formatInteger(pointCount)} site${pointCount === 1 ? "" : "s"}${!restrictedLayer && exactPointCount !== null && fallbackPointCount !== null ? ` · ${formatInteger(exactPointCount)} current positions · ${formatInteger(fallbackPointCount)} approximate localities` : ""}${movementStatus}`
-      : "Loading the map…";
+      ? [t("map.ready", "Map ready", "Karte bereit"), ...mapTotals].join(" · ")
+      : t("map.status.loading", "Loading the map…", "Karte wird geladen …");
   const selectedSiteTotal = siteGroupMembers?.total
     ?? (
       typeof selectedSiteGroupProperties?.entityCount === "number"
@@ -27752,15 +27847,20 @@ function GeoLibreMap({
   const selectedSiteGridResolution = selectedSitePrecision
     .replace(/\s*source grid cell$/i, "")
     .trim() || "declared";
-  const selectedSiteTitle = String(
-    siteGroupMembers?.title
-    || selectedSiteGroupProperties?.title
-    || "Selected map site",
-  );
+  const selectedSiteTitle = selectedSiteFallback
+    ? t("map.marker.approximate", "Approximate locality", "Ungefähre Ortsangabe")
+    : String(siteGroupMembers?.title || selectedSiteGroupProperties?.title || "Selected map site");
   const selectedSiteMember = selectedSiteTotal === 1
     ? siteGroupMembers?.items[0]
     : undefined;
-  const selectedSitePlaceUrl = siteGroupMembers?.items.find((member) => member.placeUrl)?.placeUrl;
+  const selectedSitePlaceUrl = selectedSiteFallback
+    ? undefined : siteGroupMembers?.items.find((member) => member.placeUrl)?.placeUrl;
+  const virtualInstrumentLabel = t("organs.filters.virtual", "Virtual instruments", "Virtuelle Instrumente");
+  const virtualInstrumentOptions = [
+    { value: "", label: t("organs.filters.all", "All organs", "Alle Orgeln") },
+    { value: "yes", label: t("organs.filters.withVirtual", "With linked virtual instruments", "Mit verknüpften virtuellen Instrumenten") },
+    { value: "no", label: t("organs.filters.withoutVirtual", "Without linked virtual instruments", "Ohne verknüpfte virtuelle Instrumente") },
+  ];
   const activeCatalogFilterEntries = [
     catalogFilters.query && ["Search", catalogFilters.query],
     catalogFilters.builder && ["Builder", catalogFilters.builder],
@@ -27773,6 +27873,10 @@ function GeoLibreMap({
     catalogFilters.conflictScope && ["Conflict", friendlyLabel(catalogFilters.conflictScope)],
     catalogFilters.specificationState && ["Specification", friendlyLabel(catalogFilters.specificationState)],
     catalogFilters.eventType && ["Event", friendlyLabel(catalogFilters.eventType)],
+    catalogFilters.virtualInstrument && [
+      virtualInstrumentLabel,
+      virtualInstrumentOptions.find(option => option.value === catalogFilters.virtualInstrument)?.label || catalogFilters.virtualInstrument,
+    ],
     catalogFilters.temperament && ["Temperament", catalogFilters.temperament],
     catalogFilters.temperament && [
       "Temperament evidence",
@@ -27829,16 +27933,22 @@ function GeoLibreMap({
             <strong>DOCUMENTED RELOCATION ACTIVITIES</strong>
             <span>Endpoints retain their source location and coordinate precision. Dashed connectors show the relation, not a reconstructed route.</span>
           </div>
-          <label>
-            Event date
-            <input
-              type="text"
-              inputMode="numeric"
-              value={temporalFilter}
-              onChange={(event) => changeTemporalFilter(event.target.value)}
-              placeholder="All dates or YYYY"
-            />
-          </label>
+          <div>
+            <label>
+              Event date
+              <input
+                type="text"
+                value={eventDateDraft}
+                onChange={(event) => setEventDateDraft(event.target.value)}
+                aria-invalid={eventDateInvalid || undefined}
+                aria-describedby={eventDateInvalid ? "movement-date-format" : undefined}
+                placeholder="Year or YYYY-MM-DD"
+              />
+            </label>
+            {eventDateInvalid && <small id="movement-date-format" className="movement-date-help">
+              {t("map.eventDate.format", "Enter a four-digit year or a date in YYYY-MM-DD format.", "Geben Sie ein vierstelliges Jahr oder ein Datum im Format JJJJ-MM-TT ein.")}
+            </small>}
+          </div>
           <label>
             Movement type
             <select value={movementType} onChange={(event) => changeMovementType(event.target.value)}>
@@ -27858,19 +27968,19 @@ function GeoLibreMap({
       {!simulationMode && !eventMode && !restrictedLayer && (
         <div className="coordinate-precision-controls">
           <div>
-            <strong>Map display</strong>
+            <strong>{t("map.display", "Map display", "Kartenansicht")}</strong>
           </div>
           <label>
-            Show
+            {t("map.show", "Show", "Anzeigen")}
             <select
               value={coordinateScope}
               onChange={(event) => changeCoordinateScope(
                 event.target.value as "all" | "exact" | "fallback",
               )}
             >
-              <option value="all">All current locations</option>
-              <option value="exact">Current positions</option>
-              <option value="fallback">Approximate localities</option>
+              <option value="all">{t("map.scope.all", "All current locations", "Alle erfassten Standorte")}</option>
+              <option value="exact">{t("map.scope.exact", "Current positions", "Standortkoordinaten")}</option>
+              <option value="fallback">{t("map.scope.approximate", "Approximate localities", "Näherungsweise verortete Orgeln")}</option>
             </select>
           </label>
           {!publicProjection && <label>
@@ -27887,21 +27997,28 @@ function GeoLibreMap({
               ))}
             </select>
           </label>}
-          <div className="coordinate-precision-legend" aria-label="Coordinate precision legend">
-            <span><i className="counted" aria-hidden="true">24</i> Group of map sites</span>
-            <span><i className="exact" aria-hidden="true" /> Individual site</span>
-            <span><i className="source-grid" aria-hidden="true" /> Source-grid position</span>
-            <span><i className="fallback" aria-hidden="true" /> Approximate locality</span>
-            <span className="density-guidance">Select a numbered group to zoom. Groups can cross area boundaries.</span>
+          <div className="coordinate-precision-legend" aria-label={t("map.legend.title", "Coordinate precision legend", "Legende zur Koordinatengenauigkeit")}>
+            {publicProjection
+              ? <>
+                <span><i className="density" aria-hidden="true" /> {t("map.legend.density", "Relative site density", "Relative Standortdichte")}</span>
+                <span><i className="grouped" aria-hidden="true" /> {t("map.legend.groups", "Group of sites", "Standortgruppe")}</span>
+              </>
+              : <span><i className="counted" aria-hidden="true">24</i> Group of map sites</span>}
+            <span><i className="exact" aria-hidden="true" /> {t("map.legend.site", "Site or small group", "Standort oder kleine Gruppe")}</span>
+            <span><i className="source-grid" aria-hidden="true" /> {t("map.legend.grid", "Source-grid position", "Position im Quellenraster")}</span>
+            <span><i className="fallback" aria-hidden="true" /> {t("map.legend.locality", "Approximate locality", "Näherungsweise Ortsangabe")}</span>
+            <span className="density-guidance">{publicProjection
+              ? t("map.legend.inspect", "Shading shows relative density. Dots keep scattered sites visible. POD coverage varies by region.", "Die Schattierung zeigt die relative Dichte. Punkte machen vereinzelt erfasste Standorte sichtbar. Die Abdeckung im POD variiert je nach Region.")
+              : "Select a numbered group to zoom. Groups can cross area boundaries."}</span>
           </div>
           <details
             className="map-catalog-filters"
             open={activeCatalogFilterEntries.length > 0 ? true : undefined}
           >
             <summary>
-              <span><Filter size={15} aria-hidden="true" /> Filter mapped organs</span>
+              <span><Filter size={15} aria-hidden="true" /> {t("map.filters.title", "Filter mapped organs", "Kartierte Orgeln filtern")}</span>
               {activeCatalogFilterEntries.length > 0 && (
-                <strong>{activeCatalogFilterEntries.length} active</strong>
+                <strong>{t("map.filters.active", "{count, number} active", "{count, number} aktiv", { count: activeCatalogFilterEntries.length })}</strong>
               )}
             </summary>
             <form onSubmit={applyCatalogFilters}>
@@ -27930,18 +28047,18 @@ function GeoLibreMap({
                 </div>
               )}
               <label>
-                Search
+                {t("map.filters.search", "Search", "Suche")}
                 <input
                   value={catalogFilterDraft.query}
                   onChange={(event) => setCatalogFilterDraft({
                     ...catalogFilterDraft,
                     query: event.target.value,
                   })}
-                  placeholder="Organ, place, builder, or identifier"
+                  placeholder={t("map.filters.searchHint", "Organ, place, builder, or identifier", "Orgel, Ort, Orgelbauer oder Kennung")}
                 />
               </label>
               <label>
-                Builder
+                {t("map.filters.builder", "Builder", "Orgelbauer")}
                 <input
                   list="map-builder-options"
                   value={catalogFilterDraft.builder}
@@ -27949,7 +28066,7 @@ function GeoLibreMap({
                     ...catalogFilterDraft,
                     builder: event.target.value,
                   })}
-                  placeholder="Any builder"
+                  placeholder={t("map.filters.builderHint", "Any builder", "Alle Orgelbauer")}
                 />
                 <datalist id="map-builder-options">
                   {optionRows(
@@ -27983,7 +28100,7 @@ function GeoLibreMap({
                 </datalist>
               </label>}
               <label>
-                Source collection
+                {t("map.filters.source", "Source collection", "Quellensammlung")}
                 <select
                   value={catalogFilterDraft.source}
                   onChange={(event) => setCatalogFilterDraft({
@@ -27991,7 +28108,7 @@ function GeoLibreMap({
                     source: event.target.value,
                   })}
                 >
-                  <option value="">All canonical organs</option>
+                  <option value="">{t("map.filters.allOrgans", "All canonical organs", "Alle kanonischen Orgeldatensätze")}</option>
                   {optionRows(
                     organFacets?.sources ?? [],
                     "source",
@@ -28001,7 +28118,7 @@ function GeoLibreMap({
                   ))}
                 </select>
               </label>
-              {!publicProjection && <label>
+              {!publicProjection && <label className="map-year-filter">
                 Year from
                 <input
                   type="number"
@@ -28016,7 +28133,7 @@ function GeoLibreMap({
                   placeholder="e.g. 1850"
                 />
               </label>}
-              {!publicProjection && <label>
+              {!publicProjection && <label className="map-year-filter">
                 Year to
                 <input
                   type="number"
@@ -28031,17 +28148,29 @@ function GeoLibreMap({
                   placeholder="e.g. 1950"
                 />
               </label>}
+              <label>
+                {virtualInstrumentLabel}
+                <select
+                  value={catalogFilterDraft.virtualInstrument}
+                  onChange={(event) => setCatalogFilterDraft({
+                    ...catalogFilterDraft,
+                    virtualInstrument: event.target.value,
+                  })}
+                >
+                  {virtualInstrumentOptions.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+              </label>
               <div className="map-catalog-filter-actions">
                 <button type="submit" disabled={!catalogFiltersDirty}>
-                  Apply to map
+                  {t("map.filters.apply", "Apply to map", "Auf Karte anwenden")}
                 </button>
                 {activeCatalogFilterEntries.length > 0 && (
-                  <button type="button" onClick={clearCatalogFilters}>Clear</button>
+                  <button type="button" onClick={clearCatalogFilters}>{t("map.filters.clear", "Clear", "Zurücksetzen")}</button>
                 )}
               </div>
             </form>
             {activeCatalogFilterEntries.length > 0 && (
-              <div className="map-catalog-filter-chips" aria-label="Applied map filters">
+              <div className="map-catalog-filter-chips" aria-label={t("map.filters.applied", "Applied map filters", "Aktive Kartenfilter")}>
                 {activeCatalogFilterEntries.map(([label, value]) => (
                   <span key={`${label}:${value}`}><strong>{label}</strong>{value}</span>
                 ))}
@@ -28056,11 +28185,11 @@ function GeoLibreMap({
           </details>
         </div>
       )}
-      {publicProjection && runtimeReady && !restrictedLayer && !eventMode && !simulationMode && (
+      {adaptiveWorldMap && runtimeReady && (
         <Suspense fallback={null}><MapRegions key={frameUrl} frameRef={frameRef} frameUrl={frameUrl} /></Suspense>
       )}
       <div
-        className={`geolibre-map-shell ${runtimeReady ? "is-ready" : effectiveMapError ? "has-error" : "is-loading"}`}
+        className={`geolibre-map-shell ${runtimeReady ? "is-ready" : effectiveMapError ? "has-error" : "is-loading"}${wideSelection ? " has-wide-selection" : ""}`}
       >
         {runtimeAvailable === true && (
           <iframe
@@ -28068,7 +28197,7 @@ function GeoLibreMap({
             ref={frameRef}
             className="geolibre-map-frame"
             src={frameUrl}
-            title={simulationMode ? "GeoLibre artificial relocation simulation" : eventMode ? "GeoLibre map of documented MODAVIS relocation events" : "GeoLibre map of MODAVIS organ places"}
+            title={simulationMode ? "GeoLibre artificial relocation simulation" : eventMode ? "GeoLibre map of documented MODAVIS relocation events" : t("map.frameTitle", "GeoLibre map of MODAVIS organ places", "GeoLibre-Karte der MODAVIS-Orgelstandorte")}
             sandbox="allow-scripts allow-same-origin allow-downloads"
             onLoad={handshake}
             aria-hidden={!runtimeReady}
@@ -28086,11 +28215,11 @@ function GeoLibreMap({
               {effectiveMapError ? <AlertCircle size={24} /> : <MapIcon size={24} />}
             </span>
             <div className="geolibre-map-loading-message">
-              <strong>{effectiveMapError ? "Map could not be prepared" : "Preparing the MODAVIS map"}</strong>
+              <strong>{effectiveMapError ? t("map.error", "Map could not be prepared", "Karte konnte nicht geladen werden") : t("map.loadingTitle", "Preparing the MODAVIS map", "MODAVIS-Karte wird vorbereitet")}</strong>
               <small>
                 {effectiveMapError
                   ? effectiveMapError
-                  : "Loading the basemap and organ locations…"}
+                  : t("map.loadingDetails", "Loading the basemap and organ locations…", "Grundkarte und Orgelstandorte werden geladen …")}
               </small>
               {!effectiveMapError && <LoadingContent />}
             </div>
@@ -28105,13 +28234,9 @@ function GeoLibreMap({
           >
             <div className="map-site-group-inspector-head">
               <div>
-                <span className={selectedSiteFallback ? "fallback" : selectedSiteSourceGrid ? "source-grid" : "exact"}>
-                  {selectedSiteFallback
-                    ? `${selectedSitePrecision} fallback`
-                    : selectedSiteSourceGrid
-                      ? selectedSitePrecision
-                      : "Persisted venue position"}
-                </span>
+                {!selectedSiteFallback && <span className={selectedSiteSourceGrid ? "source-grid" : "exact"}>
+                  {selectedSiteSourceGrid ? selectedSitePrecision : "Persisted venue position"}
+                </span>}
                 <h3 id="map-site-group-title">{selectedSitePlaceUrl ? <a href={selectedSitePlaceUrl}>{selectedSiteTitle}</a> : selectedSiteTitle}</h3>
               </div>
               <button
@@ -28125,7 +28250,7 @@ function GeoLibreMap({
             </div>
             <p>
               {selectedSiteFallback
-                ? "This marker is an approximate settlement anchor, not a venue coordinate."
+                ? t("map.marker.approximateDescription", "The map uses an approximate settlement location. Venue details are listed with each record.", "Die Karte zeigt einen ungefähren Siedlungsstandort. Angaben zum Gebäude stehen in den einzelnen Datensätzen.")
                 : selectedSiteSourceGrid
                   ? `This marker is the centroid of the source-declared ${selectedSiteGridResolution} grid cell, not a surveyed venue point.`
                 : selectedSiteTotal && selectedSiteTotal > 1
@@ -28267,12 +28392,12 @@ function GeoLibreMap({
             {effectiveMapError
               ? "Map unavailable"
               : runtimeReady
-                ? (publicProjection ? "Map ready" : `GeoLibre ${runtimeVersion} ready`)
-                : "Loading map…"}
+                ? (publicProjection ? t("map.ready", "Map ready", "Karte bereit") : `GeoLibre ${runtimeVersion} ready`)
+                : t("map.loadingStatus", "Loading map…", "Karte wird geladen …")}
           </span>
         </div>
       </div>
-      {runtimeReady && <small className="muted"><a href="/basemap/assets-v2/NOTICE.txt">Basemap credits</a></small>}
+      {runtimeReady && <small className="muted"><a href="/basemap/assets-v2/NOTICE.txt">{t("map.credits", "Basemap credits", "Quellen der Grundkarte")}</a></small>}
     </div>
   );
 }
@@ -28544,14 +28669,15 @@ function LocationEvidenceModal({
 }
 
 function OrganCardButton({ organ, onOpen }: { organ: OrganCard; onOpen: (id: string) => void }) {
+  const { t } = useUiLocale();
   return (
     <button className="organ-card" onClick={() => onOpen(organ.id)}>
       {organ.heroImage && <img src={organ.heroImage} alt="" onError={(event) => { event.currentTarget.hidden = true; }} />}
       <strong>{organ.title}</strong>
-      <span>{organ.location || "Unknown location"}</span>
+      <span>{organ.location || t("explore.card.unknownLocation", "Unknown location", "Ort unbekannt")}</span>
       <div className="organ-card-meta">
-        {organ.mediaCount > 0 && <span>{organ.mediaCount} media</span>}
-        {organ.sourceCount > 0 && <span>{organ.sourceCount} source{organ.sourceCount === 1 ? "" : "s"}</span>}
+        {organ.mediaCount > 0 && <span>{t("explore.card.media", "{count, plural, one {# media item} other {# media items}}", "{count, plural, one {# Medium} other {# Medien}}", { count: organ.mediaCount })}</span>}
+        {organ.sourceCount > 0 && <span>{t("explore.card.sources", "{count, plural, one {# source} other {# sources}}", "{count, plural, one {# Quelle} other {# Quellen}}", { count: organ.sourceCount })}</span>}
       </div>
     </button>
   );
@@ -28680,6 +28806,26 @@ function CandidateEntityDirectorySection({
   );
 }
 
+function personClassLabel(t: UiText, code: string | null | undefined, fallback: string): string {
+  switch (code) {
+    case "person": return t("people.class.person", "Person", "Person");
+    case "organization": return t("people.class.organization", "Organization", "Organisation");
+    case "unknown": return t("people.class.unknown", "Actor (type unresolved)", "Akteur ohne eindeutige Zuordnung");
+    default: return fallback;
+  }
+}
+
+function personSortLabel(t: UiText, code: string, fallback: string): string {
+  switch (code) {
+    case "label": return t("people.sort.name", "Name (A–Z)", "Name (A–Z)");
+    case "organs": return t("people.sort.organs", "Most associated organs", "Meiste verknüpfte Orgeldatensätze");
+    case "sources": return t("people.sort.sources", "Most source records", "Meiste Quelldatensätze");
+    case "mentions": return t("people.sort.mentions", "Most evidence entries", "Meiste Belege");
+    case "recent": return t("people.sort.recent", "Recently updated", "Zuletzt aktualisiert");
+    default: return fallback;
+  }
+}
+
 function PersonsSection({
   error,
   filters,
@@ -28703,6 +28849,7 @@ function PersonsSection({
   query: string;
   response: PersonListResponse | null;
 }) {
+  const { t, formatNumber } = useUiLocale();
   const items = response?.items ?? [];
   const hasFilters = Boolean(query.trim() || filters.source || filters.publicationState || filters.entityClass || filters.role || filters.sort);
   const currentOffset = response?.offset ?? filters.offset ?? 0;
@@ -28720,87 +28867,87 @@ function PersonsSection({
     <section className="entity-section persons-section" id="persons" tabIndex={-1}>
       <SectionHead
         headingLevel={1}
-        eyebrow="People and organizations"
-        title="People and organizations"
-        detail={error ? undefined : loading ? "Loading identities and source mentions" : `${formatInteger(response?.total ?? 0)} directory entries`}
+        eyebrow={t("people.eyebrow", "Directory", "Verzeichnis")}
+        title={t("people.title", "People and organizations", "Personen und Organisationen")}
+        detail={error ? undefined : loading ? t("people.loading", "Loading identities and source mentions", "Identitäten und Nennungen in Quellen werden geladen") : t("people.total", "{count, plural, one {# directory entry} other {# directory entries}}", "{count, plural, one {# Eintrag} other {# Einträge}}", { count: response?.total ?? 0 })}
       />
       {response && <div className="persons-overview">
-        <Metric label="Canonical identities" value={formatInteger(response?.counts.canonical ?? 0)} />
-        {(response?.counts.sourceMentioned ?? 0) > 0 && <Metric label="Source mentions" value={formatInteger(response?.counts.sourceMentioned ?? 0)} />}
+        <Metric label={t("people.identities", "Canonical identities", "Kanonische Identitäten")} value={formatNumber(response?.counts.canonical ?? 0)} />
+        {(response?.counts.sourceMentioned ?? 0) > 0 && <Metric label={t("people.sourceMentions", "Source mentions", "Nennungen in Quellen")} value={formatNumber(response?.counts.sourceMentioned ?? 0)} />}
       </div>}
-      <p className="person-directory-guidance">Canonical identities and documented mentions are listed separately. A source mention may name a person, an organization, or an actor whose type is unresolved; equal names do not establish a shared identity.</p>
+      <p className="person-directory-guidance">{t("people.scope", "The directory lists canonical identities and documented mentions separately. Identical names can refer to different people or organizations.", "Das Verzeichnis führt kanonische Identitäten und dokumentierte Nennungen getrennt auf. Gleichlautende Namen können verschiedene Personen oder Organisationen bezeichnen.")}</p>
       <div className="person-filter-panel">
         <div className="organ-filter-toolbar">
           <label className="catalog-search-control">
             <Search size={17} aria-hidden="true" />
             <input
-              aria-label="Search people and organizations"
+              aria-label={t("people.search", "Search people and organizations", "Personen und Organisationen suchen")}
               value={query}
               onChange={(event) => onQueryChange(event.target.value)}
-              placeholder="Search names, identifiers, sources, or documented roles"
+              placeholder={t("people.searchHint", "Search names, identifiers, sources, or documented roles", "Name, Kennung, Quelle oder dokumentierte Rolle")}
             />
           </label>
           <label className="organ-sort-control">
             <ArrowDownWideNarrow size={17} aria-hidden="true" />
-            <span>Sort</span>
+            <span>{t("people.sort", "Sort", "Sortierung")}</span>
             <select value={sortOptions.some((item) => item.value === filters.sort) ? filters.sort : response?.filters.sort || sortOptions[0]?.value || "label"} onChange={(event) => onFiltersChange({ ...filters, sort: event.target.value || undefined })}>
               {sortOptions.map((item) => (
-                <option key={item.value} value={item.value}>{item.label}</option>
+                <option key={item.value} value={item.value}>{personSortLabel(t, item.value, item.label)}</option>
               ))}
             </select>
           </label>
         </div>
-        <div className="candidate-directory-controls person-filter-controls" aria-label="People and organization filters">
+        <div className="candidate-directory-controls person-filter-controls" aria-label={t("people.filters", "People and organization filters", "Filter für Personen und Organisationen")}>
           <label>
-            <span>Source</span>
+            <span>{t("people.source", "Source", "Quelle")}</span>
             <select value={filters.source || ""} onChange={(event) => onFiltersChange({ ...filters, source: event.target.value || undefined })}>
-              <option value="">All sources</option>
-              {(response?.facets.sources ?? []).map((item) => <option key={item.source} value={item.source}>{item.label} ({formatInteger(item.count)})</option>)}
+              <option value="">{t("people.allSources", "All sources", "Alle Quellen")}</option>
+              {(response?.facets.sources ?? []).map((item) => <option key={item.source} value={item.source}>{item.label} ({formatNumber(item.count)})</option>)}
             </select>
           </label>
           <label>
-            <span>Page type</span>
+            <span>{t("people.entryType", "Entry type", "Art des Eintrags")}</span>
             <select value={filters.publicationState || "canonical"} onChange={(event) => onFiltersChange({ ...filters, publicationState: event.target.value || undefined })}>
-              <option value="all">All entries</option>
-              <option value="canonical">Canonical identities</option>
-              <option value="source">Source mentions</option>
+              <option value="all">{t("people.allEntries", "All entries", "Alle Einträge")}</option>
+              <option value="canonical">{t("people.identities", "Canonical identities", "Kanonische Identitäten")}</option>
+              <option value="source">{t("people.sourceMentions", "Source mentions", "Nennungen in Quellen")}</option>
             </select>
           </label>
           <label>
-            <span>Entity class</span>
+            <span>{t("people.actorType", "Actor type", "Akteurstyp")}</span>
             <select value={filters.entityClass || ""} onChange={(event) => onFiltersChange({ ...filters, entityClass: event.target.value || undefined })}>
-              <option value="">Any class</option>
+              <option value="">{t("people.allActorTypes", "All actor types", "Alle Akteurstypen")}</option>
               {(response?.facets.entityClasses ?? []).map((item) => (
-                <option key={item.class} value={item.class}>{item.label} ({formatInteger(item.count)})</option>
+                <option key={item.class} value={item.class}>{personClassLabel(t, item.class, item.label)} ({formatNumber(item.count)})</option>
               ))}
             </select>
           </label>
           <label>
-            <span>Documented role or activity</span>
+            <span>{t("people.role", "Documented role or activity", "Dokumentierte Rolle oder Tätigkeit")}</span>
             <select value={filters.role || ""} onChange={(event) => onFiltersChange({ ...filters, role: event.target.value || undefined })}>
-              <option value="">Any role</option>
+              <option value="">{t("people.allRoles", "All roles", "Alle Rollen")}</option>
               {roleOptions.map((item) => (
-                <option key={item.role} value={item.role}>{item.label} ({formatInteger(item.count)})</option>
+                <option key={item.role} value={item.role}>{item.label} ({formatNumber(item.count)})</option>
               ))}
             </select>
           </label>
         </div>
         {hasFilters && (
           <div className="candidate-directory-active-filters">
-            <span>Filtered directory</span>
-            <button type="button" className="clear-filters" onClick={onClear}>Clear filters</button>
+            <span>{t("people.filtered", "Filtered directory", "Gefilterte Einträge")}</span>
+            <button type="button" className="clear-filters" onClick={onClear}>{t("people.clear", "Clear filters", "Filter zurücksetzen")}</button>
           </div>
         )}
       </div>
-      {error && <div className="notice error" role="alert"><p>{error}</p><button type="button" className="secondary" onClick={onRetry}>Try again</button></div>}
+      {error && <div className="notice error" role="alert"><p>{error}</p><button type="button" className="secondary" onClick={onRetry}>{t("people.retry", "Try again", "Erneut versuchen")}</button></div>}
       {!error && loading && (items.length
-        ? <UpdatingContent label="Updating directory results…" />
-        : <LoadingContent kind="cards" className="person-directory-grid" label="Loading identities and documented mentions…" />)}
+        ? <UpdatingContent label={t("people.updating", "Updating directory results…", "Treffer werden aktualisiert …")} />
+        : <LoadingContent kind="cards" className="person-directory-grid" label={t("people.loadingResults", "Loading identities and documented mentions…", "Identitäten und dokumentierte Nennungen werden geladen …")} />)}
       {!error && (items.length === 0 ? !loading && (
         <EmptyState
           icon={<UserRound size={22} />}
-          title="No matching entries"
-          body="Broaden the search or clear the filters."
+          title={t("people.empty", "No matching entries", "Keine passenden Einträge")}
+          body={t("people.emptyHint", "Broaden the search or clear the filters.", "Ändern Sie die Suchbegriffe oder setzen Sie die Filter zurück.")}
         />
       ) : (
         <>
@@ -28809,14 +28956,14 @@ function PersonsSection({
           </div>
           <div className="person-pagination">
             <span>
-              Showing {formatInteger(pageStart)}-{formatInteger(pageEnd)} of {formatInteger(response?.total ?? 0)}
+              {t("people.range", "{start, number}–{end, number} of {total, number}", "{start, number}–{end, number} von {total, number}", { start: pageStart, end: pageEnd, total: response?.total ?? 0 })}
             </span>
             <div>
               <button type="button" className="secondary" disabled={loading || currentOffset <= 0} onClick={() => onPageChange(response?.page.previousOffset ?? 0)}>
-                <ChevronLeft size={16} /> Previous
+                <ChevronLeft size={16} aria-hidden="true" /> {t("people.previous", "Previous", "Zurück")}
               </button>
               <button type="button" className="secondary" disabled={loading || !response?.page.hasMore} onClick={() => response?.page.nextOffset != null && onPageChange(response.page.nextOffset)}>
-                Next <ChevronRight size={16} />
+                {t("people.next", "Next", "Weiter")} <ChevronRight size={16} aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -28827,38 +28974,46 @@ function PersonsSection({
 }
 
 function PersonCard({ item }: { item: PersonSummary }) {
+  const { t } = useUiLocale();
   const href = item.canonicalUrl || item.detailUrl || item.candidateUrl || "#";
   const sourceLabels = item.sourceLabels?.length ? item.sourceLabels : item.sourceKeys.map(friendlyLabel);
   const roleTags = item.roleTags.filter((tag) => tag !== item.entityClassLabel);
-  const publicationLabel = item.publicationState === "canonical" ? "Canonical identity" : "Documented mention";
+  const publicEvidence = item.roleEvidenceKind === "bounded_source_roles_and_governed_activity_context";
+  const participantIndex = item.evidenceReference?.participantIndex;
+  const evidenceCount = item.occurrenceCount || item.candidateCount || 0;
+  const organCount = item.associatedOrganCount ?? 0;
   const primaryStats = [
-    item.sourceRecordCount > 0 ? `${formatInteger(item.sourceRecordCount)} source record${item.sourceRecordCount === 1 ? "" : "s"}` : null,
-    (item.occurrenceCount || item.candidateCount || 0) > 0 ? `${formatInteger(item.occurrenceCount || item.candidateCount)} evidence entr${(item.occurrenceCount || item.candidateCount) === 1 ? "y" : "ies"}` : null,
-    (item.associatedOrganCount ?? 0) > 0 ? `${formatInteger(item.associatedOrganCount ?? 0)} organ${item.associatedOrganCount === 1 ? "" : "s"}` : null,
+    item.sourceRecordCount > 0 ? t("people.recordCount", "{count, plural, one {# source record} other {# source records}}", "{count, plural, one {# Quelldatensatz} other {# Quelldatensätze}}", { count: item.sourceRecordCount }) : null,
+    evidenceCount > 0 ? t("people.evidenceCount", "{count, plural, one {# evidence entry} other {# evidence entries}}", "{count, plural, one {# Beleg} other {# Belege}}", { count: evidenceCount }) : null,
+    (organCount > 0 || (publicEvidence && item.publicationState === "canonical")) ? t("people.organCount", "{count, plural, one {# linked organ record} other {# linked organ records}}", "{count, plural, one {# verknüpfter Orgeldatensatz} other {# verknüpfte Orgeldatensätze}}", { count: organCount }) : null,
   ].filter((value): value is string => Boolean(value));
   return (
     <article className="person-card">
       <header>
         <div>
           <a className="person-card-title" href={href}><strong>{item.title}</strong></a>
-          {item.publicationState !== "canonical" && <span className="entity-state-chip entity-state-source">{publicationLabel}</span>}
+          {item.publicationState !== "canonical" && <span className="entity-state-chip entity-state-source">{t("people.sourceMention", "Documented mention", "Dokumentierte Nennung")}</span>}
         </div>
         {item.entityClass === "organization" ? <Building2 size={20} aria-hidden="true" /> : <UserRound size={20} aria-hidden="true" />}
       </header>
-      {item.summary && <p>{item.summary}</p>}
-      {item.evidenceSummary && item.evidenceSummary !== item.summary && <p className="person-card-evidence">{item.evidenceSummary}</p>}
+      {publicEvidence
+        ? item.publicationState !== "canonical" && <p>{t("people.sourceBoundary", "This source attests a name. Its identity is unresolved.", "Die Quelle belegt eine Namensnennung. Die Identität ist ungeklärt.")}</p>
+        : item.summary && <p>{item.summary}</p>}
+      {item.evidenceSummary && item.evidenceSummary !== item.summary && <p className="person-card-evidence">{publicEvidence && item.kind === "source_participant" && typeof participantIndex === "number"
+        ? t("people.participantEvidence", "Participant {number, number}. The event record contains the original wording, role, and source location.", "Beteiligter Akteur Nr. {number, number}. Der Ereignisdatensatz enthält den Wortlaut, die Rolle und die Fundstelle.", { number: participantIndex + 1 })
+        : item.evidenceSummary}</p>}
       <div className="person-card-meta">
         {primaryStats.map((stat) => <span key={stat}>{stat}</span>)}
-        {item.entityClassLabel && <span>{item.entityClassLabel}</span>}
+        {item.entityClassLabel && <span>{personClassLabel(t, item.entityClass, item.entityClassLabel)}</span>}
       </div>
       <div className="person-card-tags">
-        {(item.badges ?? []).filter((badge) => badge !== item.entityClassLabel).slice(0, 2).map((badge) => <span key={`${item.id}:badge:${badge}`}>{badge}</span>)}
+        {!publicEvidence && (item.badges ?? []).filter((badge) => badge !== item.entityClassLabel).slice(0, 2).map((badge) => <span key={`${item.id}:badge:${badge}`}>{badge}</span>)}
         {roleTags.slice(0, 4).map((tag) => <span key={`${item.id}:role:${tag}`}>{tag}</span>)}
         {sourceLabels.slice(0, 3).map((source) => <span key={`${item.id}:source:${source}`}>{source}</span>)}
       </div>
       {(item.aliases ?? []).length > 0 && (
         <div className="person-card-aliases">
-          <span>Also seen as</span>
+          <span>{t("people.aliases", "Other recorded names", "Weitere belegte Namen")}</span>
           <small>{(item.aliases ?? []).slice(0, 3).join(", ")}</small>
         </div>
       )}
@@ -28881,7 +29036,7 @@ function PersonCard({ item }: { item: PersonSummary }) {
         </div>
       )}
       <a className="text-link-button person-card-link" href={href}>
-        <ChevronRight size={15} /> {item.publicationState === "canonical" ? `Open ${item.entityClass === "organization" ? "organization" : item.entityClass === "person" ? "person" : "actor"}` : "Open documented mention"}
+        <ChevronRight size={15} /> {item.publicationState === "canonical" ? t("people.openProfile", "Open profile", "Profil öffnen") : t("people.openMention", "Open documented mention", "Dokumentierte Nennung öffnen")}
       </a>
     </article>
   );
@@ -29218,7 +29373,7 @@ function DeferredSection({ body, icon, id, title }: { body: string; icon: ReactN
   );
 }
 
-function SectionHead({ detail, eyebrow, title, headingLevel = 2 }: { detail?: string; eyebrow: string; title: string; headingLevel?: 1 | 2 }) {
+function SectionHead({ detail, eyebrow, title, headingLevel = 2 }: { detail?: ReactNode; eyebrow: string; title: string; headingLevel?: 1 | 2 }) {
   const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
     <header className="section-head">

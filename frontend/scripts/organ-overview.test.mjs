@@ -46,10 +46,10 @@ test("an initial summary with no quick facts keeps useful source-qualified facts
   assert.match(visible,/64<\/strong><span>source-reported stops/);
   assert.match(visible,/Catalogue account/);
   assert.match(visible,/Attributed source summary/);
-  assert.match(visible,/2 specification descriptions · dates kept by account/);
+  assert.match(visible,/2 specification descriptions/);
   assert.match(visible,/1862–2000/);
-  assert.match(visible,/Dates of recorded assertions/);
-  assert.match(visible,/29 source event assertions/);
+  assert.match(visible,/Dates reported for events/);
+  assert.match(visible,/29 source assertions about events/);
   assert.match(visible,/14 source records from 3 collections/);
   assert.match(visible,/do not establish the organ’s present condition/);
   assert.match(visible,/href="\/organs\/EXAMPLE\?tab=specification"/);
@@ -63,11 +63,11 @@ test("sparse metadata never invents zero totals, collection counts or a lack of 
   const sparse={...organ,sourceSummary:undefined,sourceCount:14,sources:[],publicProfile:undefined,documentedStateSummary:undefined,specificationDescriptions:[],technicalEvidence:undefined,sourceComparisons:[],virtualInstruments:undefined};
   const html=render(OrganOverview,{...props,organ:sparse,facts:[],factCount:0,moreFacts:[],moreFactCount:0});
   const visible=visibleSummary(html);
-  assert.match(visible,/Read the source specifications/);
-  assert.match(visible,/Explore documented activities/);
-  assert.match(visible,/Follow the source records supporting this page/);
+  assert.match(visible,/Technical details from the available sources/);
+  assert.match(visible,/Activities, participants and dates reported by the sources/);
+  assert.match(visible,/Source records and their identifiers/);
   assert.doesNotMatch(visible,/0 stops|0 source|14 collections|No dated activities|No history/);
-  assert.match(html,/Full instrument and source context/);
+  assert.match(html,/Instrument and source details/);
 });
 
 test("qualified aggregate wording stays literal and never becomes a selected maximum", () => {
@@ -94,7 +94,7 @@ test("a long source list previews only three links and preserves the route to ev
   const html=render(OrganOverview,{...props,organ:{...organ,sources}});
   const visible=visibleSummary(html);
   assert.equal((visible.match(/https:\/\/example.org\/source\//g)||[]).length,3);
-  assert.match(visible,/Showing 3 source links; the complete list is available below/);
+  assert.match(visible,/See all source records under Sources and identifiers/);
   assert.match(visible,/href="\/organs\/EXAMPLE\?tab=identifiers"/);
   assert.match(html,/All account totals and source links/);
 });
@@ -102,9 +102,25 @@ test("a long source list previews only three links and preserves the route to ev
 test("zero event assertions are shown only when supplied, without reinterpreting dates as present condition", () => {
   const value={...organ,documentedStateSummary:{assertionCount:0,yearLabel:null},sourceSummary:{sourceRecords:null,collections:null}};
   const html=visibleSummary(render(OrganOverview,{...props,organ:value}));
-  assert.match(html,/0 source event assertions/);
-  assert.match(html,/Follow the source records/);
+  assert.match(html,/0 source assertions about events/);
+  assert.match(html,/Source records and their identifiers/);
   assert.doesNotMatch(html,/No dated activities|No history|0 source records|present-day/);
+});
+
+test("the German summary keeps source names and localizes counts for a single description", () => {
+  const GermanOverview = compile(source, {}, {
+    "./sourceComparisonPresentation": comparisonHelpers,
+    "./uiLocale": {useUiLocale: () => testUiLocale("de")},
+  }).exports.OrganOverview;
+  const sparse = {...organ, specificationDescriptions: organ.specificationDescriptions.slice(0, 1), publicProfile: undefined,
+    documentedStateSummary: {assertionCount: 1234, yearLabel: "1957"}, sourceSummary: {sourceRecords: 1, collections: 1}};
+  const visible = visibleSummary(render(GermanOverview, {...props, organ: sparse, facts: [], factCount: 0}));
+  assert.match(visible, /Quellenlage im Überblick/);
+  assert.match(visible, /1 Beschreibung der Disposition/);
+  assert.match(visible, /1\.234 Ereignisangaben aus Quellen/);
+  assert.match(visible, /1 Quelldatensatz aus 1 Sammlung/);
+  assert.match(visible, /First catalogue/);
+  assert.doesNotMatch(visible, /Technical details|Specification|Sources and identifiers|0 Register/);
 });
 
 test("primary links preserve normal tab actions and modified browser navigation", () => {

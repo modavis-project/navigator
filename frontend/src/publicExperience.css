@@ -19,19 +19,14 @@
 .record-citation-actions button { align-items: center; display: inline-flex; gap: 7px; }
 .organ-data-note { align-items: center; border-top: 1px solid #dce1d9; color: #64716b; display: flex; flex-wrap: wrap; font-size: .75rem; gap: 8px; justify-content: space-between; margin-top: 28px; padding: 16px 0; }
 .organ-data-note button { background: transparent; border: 0; color: #245d56; cursor: pointer; font: inherit; text-decoration: underline; text-underline-offset: 3px; }
-.organ-landing-grid { display: grid; gap: 18px; grid-template-columns: 1.05fr 1.2fr .85fr; }
-.organ-landing-card { background: #fff; border: 1px solid #dce2d9; border-radius: 14px; display: flex; flex-direction: column; padding: 24px; }
-.instrument-landing-card { background: #eef3ed; }
-.landing-kicker { align-items: center; color: #345b4e; display: flex; gap: 9px; margin-bottom: 16px; }
-.landing-kicker h3 { font-size: .9rem; margin: 0; }
-.organ-landing-card p { color: #5f6b64; font-size: .86rem; line-height: 1.6; margin: 4px 0 16px; }
-.organ-landing-card .landing-feature-number { color: #264d3e; }
-.landing-feature-number strong { display: block; font-family: Georgia, serif; font-size: 3.2rem; font-weight: 500; line-height: 1.15; }
-.organ-landing-card .landing-history-range { color: #264d3e; font-family: Georgia, serif; font-size: 1.8rem; margin-top: -4px; }
-.landing-detail-link { align-items: center; color: #245d56; display: inline-flex; font-size: .8rem; font-weight: 700; gap: 8px; margin-top: auto; padding-top: 18px; text-decoration: none; }
+.organ-landing-grid { display: grid; gap: 18px 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr)); }
+.organ-landing-section { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.organ-landing-section h3 { font-size: .88rem; margin: 0; }
+.organ-landing-section p { color: var(--nav-muted, #52645b); font-size: .82rem; line-height: 1.5; margin: 0; }
+.landing-detail-link { align-items: center; color: #245d56; display: inline-flex; align-self: flex-start; font-size: .8rem; font-weight: 700; gap: 8px; margin-top: auto; min-height: 36px; text-decoration: none; }
+.landing-detail-link svg { flex: none; }
 .landing-detail-link:hover { text-decoration: underline; }
-.landing-description-periods { display: flex; flex-wrap: wrap; gap: 6px; }
-.landing-description-periods span { background: #fff9; border: 1px solid #cfdbcc; border-radius: 5px; color: #526957; font-size: .7rem; padding: 3px 7px; }
+.landing-description-periods { color: var(--nav-muted, #52645b); font-size: .82rem; margin: 0; padding-inline-start: 1rem; }
 .landing-milestones { display: grid; gap: 12px; list-style: none; margin: 0 0 8px; padding: 0; }
 .landing-milestones li { display: grid; font-size: .8rem; gap: 10px; grid-template-columns: 68px 1fr; }
 .landing-milestones time { color: #567260; font-variant-numeric: tabular-nums; }
@@ -41,10 +36,6 @@
 .activity-person a { color: #245d56; }
 .landing-source-links { list-style: none; margin: 0; padding: 0; }
 .landing-source-links a { color: #245d56; display: inline-block; font-size: .87rem; padding: 5px 0; }
-.organ-virtual-highlight { align-items: center; background: #edf2f4; border: 1px solid #d3dfe3; border-radius: 12px; display: flex; gap: 18px; margin-top: 20px; padding: 20px 24px; }
-.organ-virtual-highlight h3 { font-size: .95rem; margin: 0 0 3px; }
-.organ-virtual-highlight p { color: #5c6c73; font-size: .8rem; margin: 0; }
-.organ-virtual-highlight .landing-detail-link { flex-shrink: 0; margin: 0 0 0 auto; padding: 0; }
 .organ-object-biography-note summary { cursor: pointer; font-weight: 650; }
 .history-heading-actions { align-items: center; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; margin-bottom: 15px; }
 .history-heading-actions h3 { margin: 0; }
@@ -74,8 +65,7 @@
 .literature-list strong a:hover, .digital-score-card-heading strong a:hover, .temperament-list strong a:hover { color: #245d56; text-decoration: underline; }
 .literature-pagination button, .catalog-pagination button, .score-catalog-pagination button { align-items: center; background: white; border: 1px solid #cad7cf; border-radius: 8px; color: #245d56; cursor: pointer; display: inline-flex; font: inherit; font-size: .84rem; font-weight: 650; gap: 7px; min-height: 40px; padding: 8px 14px; }
 .literature-pagination button:disabled, .catalog-pagination button:disabled, .score-catalog-pagination button:disabled { color: #7e8880; cursor: default; opacity: .55; }
-@media(max-width: 1150px) { .organ-landing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .organ-landing-card:last-child { grid-column: 1 / -1; } }
-@media(max-width: 650px) { .organ-landing-grid { grid-template-columns: minmax(0, 1fr); } .organ-landing-card { padding: 20px; } .public-modal-content { padding: 18px; } .public-modal > header { padding: 16px 18px; } .organ-virtual-highlight { align-items: flex-start; flex-wrap: wrap; padding: 18px; } .organ-virtual-highlight > div { flex: 1; } .organ-virtual-highlight .landing-detail-link { margin: 0; } .biography-timeline li { gap: 15px; grid-template-columns: 76px 1fr; } .biography-timeline li > div { padding-left: 18px; } .biography-timeline time { font-size: .8rem; } .diagram-totals { gap: 12px; padding: 14px; } .diagram-totals span { font-size: .69rem; } .activity-bars li { gap: 10px; grid-template-columns: minmax(100px, 40%) 1fr 24px; } }
+@media(max-width: 650px) { .public-modal-content { padding: 18px; } .public-modal > header { padding: 16px 18px; } .biography-timeline li { gap: 15px; grid-template-columns: 76px 1fr; } .biography-timeline li > div { padding-left: 18px; } .biography-timeline time { font-size: .8rem; } .diagram-totals { gap: 12px; padding: 14px; } .diagram-totals span { font-size: .69rem; } .activity-bars li { gap: 10px; grid-template-columns: minmax(100px, 40%) 1fr 24px; } }
 .public-record-page { max-width: 1050px; margin: 1.5rem auto; }
 .public-record-header { margin-bottom: 2rem; }
 .public-record-header h1 { font-size: clamp(1.7rem, 3.2vw, 2.6rem); line-height: 1.2; letter-spacing: -.025em; }

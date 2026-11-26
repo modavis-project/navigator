@@ -1,6 +1,6 @@
 import { ParticipantIdentityNote } from "./eventParticipation";
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { ArrowRight, BookOpen, Check, Clipboard, History, Link2, Music2, X } from "lucide-react";
+import { ArrowRight, Check, Clipboard, Link2, X } from "lucide-react";
 import type { OrganDetail, SpecificationDescription } from "./api";
 import { useUiLocale } from "./uiLocale";
 import "./publicExperience.css";
@@ -20,14 +20,16 @@ export function stableRecordUrl(id: string): string {
 }
 
 export function IdentifierCopy({ id, url }: { id: string; url?: string }) {
+  const { t } = useUiLocale();
   const [state, setState] = useState<"idle" | "copied" | "error">("idle");
   const stableUrl = url || stableRecordUrl(id);
   const target = stableUrl || id;
-  const targetLabel = stableUrl ? "record URL" : "identifier";
+  const copyLabel = stableUrl ? t("record.identifier.copyUrl", "Copy record URL", "URL des Datensatzes kopieren") : t("record.identifier.copyId", "Copy identifier", "Kennung kopieren");
+  const copiedLabel = stableUrl ? t("record.identifier.copiedUrl", "Record URL copied", "URL des Datensatzes kopiert") : t("record.identifier.copiedId", "Identifier copied", "Kennung kopiert");
   useEffect(() => { if (state === "idle") return; const timer = window.setTimeout(() => setState("idle"), 2200); return () => window.clearTimeout(timer); }, [state]);
-  return <button className="identifier-copy" type="button" title={`Copy ${targetLabel}: ${target}`} aria-label={`Copy ${targetLabel} for ${id}`} onClick={async () => {
+  return <button className="identifier-copy" type="button" title={`${copyLabel}: ${target}`} aria-label={`${copyLabel} · ${id}`} onClick={async () => {
     try { await navigator.clipboard.writeText(target); setState("copied"); } catch { setState("error"); }
-  }}><span>{id}</span>{state === "copied" ? <Check size={13} /> : stableUrl ? <Link2 size={13} /> : <Clipboard size={13} />}<span className="sr-only" role="status">{state === "copied" ? `${stableUrl ? "Record URL" : "Identifier"} copied` : state === "error" ? `Could not copy. ${targetLabel}: ${target}` : ""}</span></button>;
+  }}><span>{id}</span>{state === "copied" ? <Check size={13} /> : stableUrl ? <Link2 size={13} /> : <Clipboard size={13} />}<span className="sr-only" role="status">{state === "copied" ? copiedLabel : state === "error" ? t("record.identifier.copyError", "Could not copy {target}.", "{target} konnte nicht kopiert werden.", { target }) : ""}</span></button>;
 }
 
 export function PublicModal({ title, children, onClose, wide = false }: { title: string; children: ReactNode; onClose: () => void; wide?: boolean }) {
@@ -89,71 +91,65 @@ export function ActivityDiagrams({ items }: { items: Record<string, unknown>[] }
 }
 
 export function RecoveredAccountTotals({ descriptions }: { descriptions: SpecificationDescription[] }) {
+  const { t } = useUiLocale();
   const accounts = descriptions.filter(item => item.coverage !== "retained_source_transfer"
     && item.chronology?.contract === "modavis.source-account-recovery/v1" && item.chronology.accountSourceFacts?.length);
   if (!accounts.length) return null;
-  return <section aria-label="Source account totals"><h4>Totals by source account</h4>
+  return <section aria-label={t("organ.accountTotals.aria", "Source account totals", "Zahlenangaben aus den Quellen")}><h4>{t("organ.accountTotals.heading", "Totals by source account", "Summen nach Quellenbeschreibung")}</h4>
     {accounts.slice(0, 4).map(account => <div key={account.id}>
       <strong>{account.periodLabel}</strong>
       <p className="account-total-source">{account.source.url ? <a href={account.source.url} target="_blank" rel="noreferrer">{account.source.source.replace(/^src:/, "")}</a> : account.source.source.replace(/^src:/, "")}{account.sourceHeading && ` · ${account.sourceHeading}`}</p>
       <dl>{account.chronology!.accountSourceFacts!.map((fact, index) => <div key={index}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>
     </div>)}
-    <p className="muted">Source-reported figures remain separate by account. Registers and transmissions are not summed, and no present-condition total is inferred.</p>
-    {accounts.length > 4 && <p>{accounts.length - 4} more source accounts are available under Specifications.</p>}
+    <p className="muted">{t("organ.accountTotals.scope", "Figures are shown separately for each source account. Totals are not inferred across accounts, across registers and transmissions, or for the organ’s present condition.", "Die Zahlen stehen getrennt nach Quellenbeschreibung. Aus ihnen wird keine gemeinsame Summe für Register und Transmissionen, für mehrere Quellen oder für den heutigen Zustand abgeleitet.")}</p>
+    {accounts.length > 4 && <p>{t("organ.accountTotals.more", "{count, plural, one {# more source account is} other {# more source accounts are}} available under Specification.", "Im Abschnitt „Disposition“ {count, plural, one {steht # weitere Quellenbeschreibung} other {stehen # weitere Quellenbeschreibungen}}.", { count: accounts.length - 4 })}</p>}
   </section>;
 }
 
 export function BuilderAttribution({ organ }: { organ: OrganDetail }) {
+  const { t, formatNumber } = useUiLocale();
   const summary = organ.builderSummary;
   if (!organ.builder && !summary?.label) return null;
+  const qualification = summary?.selectionBasis === "most_documented_association"
+    ? t("organ.builder.attribution.mostDocumented", "The summary names the builder most frequently associated with this organ in the sources. This alone does not establish who originally built the organ or who last worked on it.", "Hier steht der Orgelbauer, der in den Quellen am häufigsten mit dieser Orgel in Verbindung gebracht wird. Daraus allein geht nicht hervor, wer die Orgel ursprünglich gebaut oder zuletzt daran gearbeitet hat.")
+    : summary?.qualification || t("organ.builder.attribution.general", "Consult the source evidence to see which work is attributed to each builder and when it took place.", "Aus den Quellenangaben geht hervor, welchem Orgelbauer welche Arbeiten und Datierungen zugeschrieben werden.");
+  const unknown = t("organ.builder.attribution.unknown", "Not recorded", "Nicht erfasst");
   return <details className="builder-attribution">
-    <summary>Builder attribution and date context</summary>
-    <p>{summary?.qualification || "The catalogue’s builder label is a source-linked summary. Consult the underlying assertions to establish who did what, and when."}</p>
+    <summary>{t("organ.builder.attribution.heading", "Builder attribution and dates", "Zuschreibung und Datierung der Orgelbauarbeiten")}</summary>
+    <p>{qualification}</p>
     {summary && <dl>
-      <div><dt>Associated actor records</dt><dd>{summary.documentedActorCount?.toLocaleString() ?? "Not recorded"}</dd></div>
-      <div><dt>Supporting assertions</dt><dd>{summary.assertionCount?.toLocaleString() ?? "Not recorded"}</dd></div>
-      <div><dt>Role in this summary</dt><dd>{summary.role || "Not established as a single role"}</dd></div>
-      <div><dt>Period in this summary</dt><dd>{summary.period || "Consult the dated source assertions"}</dd></div>
+      <div><dt>{t("organ.builder.attribution.actorCount", "Associated actor records", "Verknüpfte Datensätze zu Beteiligten")}</dt><dd>{summary.documentedActorCount == null ? unknown : formatNumber(summary.documentedActorCount)}</dd></div>
+      <div><dt>{t("organ.builder.attribution.assertionCount", "Supporting source assertions", "Zugrunde liegende Quellenangaben")}</dt><dd>{summary.assertionCount == null ? unknown : formatNumber(summary.assertionCount)}</dd></div>
+      <div><dt>{t("organ.builder.attribution.role", "Role in this summary", "Rolle in der Zusammenfassung")}</dt><dd>{summary.role || t("organ.builder.attribution.noRole", "No single role established", "Keine eindeutige Rolle belegt")}</dd></div>
+      <div><dt>{t("organ.builder.attribution.period", "Period in this summary", "Zeitraum in der Zusammenfassung")}</dt><dd>{summary.period || t("organ.builder.attribution.noPeriod", "See the dated source evidence", "Siehe Datierungen in den Quellenangaben")}</dd></div>
     </dl>}
-    <a href={summary?.claimsUrl || `/use-cases/research-workbench?view=claims&organ=${encodeURIComponent(organ.mdvsId)}`}>Read attributed source claims</a>
+    <a href={summary?.claimsUrl || `/use-cases/research-workbench?view=claims&organ=${encodeURIComponent(organ.mdvsId)}`}>{t("organ.builder.attribution.claims", "Read the source evidence", "Quellenangaben ansehen")}</a>
   </details>;
 }
 
 export function OrganLanding({ organ, onOpenTab }: { organ: OrganDetail; onOpenTab: (tab: "specification" | "history" | "identifiers" | "related") => void }) {
+  const { t } = useUiLocale();
   const descriptions = organ.specificationDescriptions || [];
-  const main = descriptions.find(item => item.kind === "main");
-  const alternatives = descriptions.filter(item => item.kind === "alternative");
-  const recovered = alternatives.some(item => item.chronology?.contract === "modavis.source-account-recovery/v1");
-  const facts = organ.publicProfile?.sections?.find(item => item.key === "overview")?.items || [];
-  const stopFact = facts.find(item => item.label === "Source-reported stops" || item.label === "Documented stops");
-  const stopValue = text(stopFact?.value);
-  const mainStops = /^\d+$/.test(stopValue) ? stopValue : null;
-  const stopGuidance = stopValue && !mainStops ? stopValue : null;
-  const events = organ.timeline || [];
+  const recoveredCount = descriptions.filter(item => item.chronology?.contract === "modavis.source-account-recovery/v1").length;
   const historyPending = Boolean(organ.deferredSections?.history && !organ.loadedSections?.history);
-  const sourceSummary = organ.sourceSummary;
-  const sourceCoverage = sourceSummary?.sourceRecords != null && sourceSummary.collections != null
-    ? `${sourceSummary.sourceRecords.toLocaleString()} source ${sourceSummary.sourceRecords === 1 ? "record" : "records"} from ${sourceSummary.collections.toLocaleString()} ${sourceSummary.collections === 1 ? "collection" : "collections"} support this page.`
-    : "Follow the source records supporting this page.";
-  const accountCount = descriptions.filter(item => item.chronology?.contract === "modavis.source-account-recovery/v1").length;
-  const recent = events.filter(item => item.date && item.date !== "Undated").slice(-3).reverse();
-  const link = (tab: "specification" | "history" | "identifiers" | "related", label: string) => <a className="landing-detail-link" href={`${organ.canonicalUrl}?tab=${tab}`} onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && event.button === 0) { event.preventDefault(); onOpenTab(tab); } }}>{label}<ArrowRight size={16} /></a>;
+  const recent = (organ.timeline || []).filter(item => item.date && item.date !== "Undated").slice(-3).reverse();
+  const recordPath = organ.pageUrl || organ.canonicalUrl;
+  const link = (tab: "specification" | "history" | "identifiers", label: string) => <a className="landing-detail-link" href={recordPath + (recordPath.includes("?") ? "&" : "?") + "tab=" + tab} onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) { event.preventDefault(); onOpenTab(tab); } }}>{label}<ArrowRight size={16} aria-hidden="true" /></a>;
   return <div className="organ-landing">
     <div className="organ-landing-grid">
-      <section className="organ-landing-card instrument-landing-card"><div className="landing-kicker"><Music2 size={18} /><h3>The instrument</h3></div>{mainStops ? <p className="landing-feature-number"><strong>{mainStops}</strong> {stopFact?.label === "Source-reported stops" ? "source-reported" : "documented"} stops</p> : <p role={stopGuidance ? "note" : undefined}>{stopGuidance || "Explore the documented specification and its source descriptions."}</p>}
+      {descriptions.length > 0 && <section className="organ-landing-section"><h3>{t("organ.landing.specifications", "Specification accounts", "Disposition laut Quellen")}</h3>
+        <ul className="landing-description-periods">{descriptions.slice(0, 4).map(item => <li key={item.id}>{item.periodLabel || (item.kind === "main" ? t("organ.landing.main", "Main description", "Hauptbeschreibung") : t("organ.landing.additional", "Additional description", "Weitere Beschreibung"))}</li>)}</ul>
+        {recoveredCount > 0 && <p>{t("organ.landing.recoveredCount", "{count, plural, one {# recovered specification account} other {# recovered specification accounts}} retained from the sources.", "Aus den Quellen {count, plural, one {wurde # Dispositionsbeschreibung erschlossen} other {wurden # Dispositionsbeschreibungen erschlossen}}.", { count: recoveredCount })}</p>}
         <RecoveredAccountTotals descriptions={descriptions} />
-        <p>{recovered ? "Source accounts keep specifications and their date wording separate. They do not establish distinct physical instruments." : alternatives.length > 0 ? `${alternatives.length} additional ${alternatives.length === 1 ? "description preserves" : "descriptions preserve"} other periods or instruments documented at this site.` : main ? "The main source description records the instrument’s disposition." : "Technical details are available where supplied by the sources."}</p>
-        {descriptions.length > 0 && <div className="landing-description-periods">{descriptions.slice(0, 4).map(item => <span key={item.id}>{item.periodLabel || (item.kind === "main" ? "Main description" : "Additional description")}</span>)}</div>}
-        {link("specification", "Explore specifications")}
+        {descriptions.length > 1 && <p>{t("organ.landing.accountScope", "Descriptions can concern different periods or instruments at this site. Establishing whether they concern the same instrument requires additional evidence.", "Die Beschreibungen können sich auf verschiedene Zeiträume oder Instrumente an diesem Standort beziehen. Ob sie dieselbe Orgel betreffen, muss gesondert belegt werden.")}</p>}
+        {link("specification", t("organ.landing.openSpecifications", "View specifications", "Disposition ansehen"))}
+      </section>}
+      <section className="organ-landing-section"><h3>{t("organ.landing.history", "Dated activities", "Datierte Tätigkeiten")}</h3>
+        {recent.length > 0 ? <ol className="landing-milestones">{recent.map((item, index) => <li key={text(item.id) || index}><time>{text(item.date)}</time><div><strong>{text(item.label || item.title)}</strong><ParticipantNames item={item} /></div></li>)}</ol> : <p>{historyPending ? t("organ.landing.historyPending", "Open the history for the activities and dates documented in the sources.", "Tätigkeiten und Datierungen laut Quellen stehen im Abschnitt „Geschichte“.") : t("organ.landing.noDates", "The available sources record no dated activities.", "In den verfügbaren Quellen sind keine datierten Tätigkeiten erfasst.")}</p>}
+        {link("history", t("organ.landing.openHistory", "Read the history", "Geschichte ansehen"))}
       </section>
-      <section className="organ-landing-card"><div className="landing-kicker"><History size={18} /><h3>Its history</h3></div>{organ.documentedStateSummary?.yearLabel && <p className="landing-history-range">{organ.documentedStateSummary.yearLabel}</p>}
-        {recent.length > 0 ? <ol className="landing-milestones">{recent.map((item, index) => <li key={text(item.id) || index}><time>{text(item.date)}</time><div><strong>{text(item.label || item.title)}</strong><ParticipantNames item={item} /></div></li>)}</ol> : <p>{historyPending ? "Open the history to read the documented activities and their source dates." : "No dated activities are recorded in the current sources."}</p>}
-        {link("history", `Read the history${organ.documentedStateSummary?.assertionCount ? ` · ${organ.documentedStateSummary.assertionCount} assertions` : ""}`)}
-      </section>
-      <section className="organ-landing-card"><div className="landing-kicker"><BookOpen size={18} /><h3>Explore the sources</h3></div><p>{sourceCoverage}</p><ul className="landing-source-links">{organ.sources.map(source => <li key={source.id}>{source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.source.replace(/^src:/, "")}</a> : source.source.replace(/^src:/, "")}</li>)}</ul>{link("identifiers", "Sources and identifiers")}</section>
+      {organ.sources.length > 0 && <section className="organ-landing-section"><h3>{t("organ.landing.sources", "Source records", "Quelldatensätze")}</h3><ul className="landing-source-links">{organ.sources.map((source, index) => <li key={source.id + ":" + index}>{source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.source.replace(/^src:/, "")}</a> : source.source.replace(/^src:/, "")}</li>)}</ul>{link("identifiers", t("organ.landing.openSources", "Sources and identifiers", "Quellen und Kennungen"))}</section>}
     </div>
-    {accountCount > 0 && <p className="record-scope-note">{accountCount.toLocaleString()} recovered specification {accountCount === 1 ? "account preserves" : "accounts preserve"} separate source descriptions. Account totals describe documents; physical instrument identity and present condition require their own evidence.</p>}
-    {(organ.virtualInstruments?.linked || 0) > 0 && <section className="organ-virtual-highlight"><Music2 size={24} /><div><h3>Play a virtual version</h3><p>{organ.virtualInstruments!.linked} virtual {organ.virtualInstruments!.linked === 1 ? "instrument is" : "instruments are"} linked to this organ. Explore the editions, software and documented relationship.</p></div>{link("related", "View virtual instruments")}</section>}
   </div>;
 }
 

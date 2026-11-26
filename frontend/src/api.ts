@@ -4188,9 +4188,11 @@ export interface PersonSummary {
   sampleOrgans?: CandidateEntitySample[];
   sourcePaths?: string[];
   evidenceSummary?: string | null;
+  evidenceReference?: { participantIndex?: number } | null;
   reviewStates?: Array<{ state: string; count: number }>;
   matchStates?: Array<{ state: string; count: number }>;
   roleTags: string[];
+  roleEvidenceKind?: string;
   identifiers?: Array<{ scheme?: string | null; value?: string | null; url?: string | null }>;
   badges?: string[];
   updatedAt?: string | null;
@@ -6850,7 +6852,7 @@ export async function fetchOrgan(id: string): Promise<OrganDetail> {
 }
 
 export async function fetchOrganMapContextProject(id: string): Promise<OrganMapContextProject> {
-  return getJson(`/api/organs/${encodeURIComponent(id)}/map-context.geolibre.json?v=6`);
+  return getJson(`/api/organs/${encodeURIComponent(id)}/map-context.geolibre.json?v=7`);
 }
 
 export async function fetchActorMapContextProject(id: string): Promise<ActorMapContextProject> {

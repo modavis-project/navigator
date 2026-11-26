@@ -1,7 +1,7 @@
 import type { UiText } from "./uiLocale";
 import type { AccountComparisonField, AccountRelatedReview, ComparableAccount } from "./specificationAccountComparison";
 import { capturedRowsLabel, technicalComparisonLabel, technicalFactDifferenceLabel } from "./sourceComparisonPresentation";
-import type { OrganParityTechnicalFact, OrganTechnicalComparisonGroup } from "./api";
+import type { OrganParityTechnicalFact, OrganTechnicalComparisonGroup, SpecificationDescription } from "./api";
 
 const technicalFieldGerman: Record<string, string> = {
   stop_total: "Registerzahl",
@@ -34,6 +34,11 @@ export function capturedStopSummary(t: UiText, account: Pick<ComparableAccount, 
   return account.coverage === "retained_source_transfer"
     ? t("organ.spec.stopRows.retained", "{count, plural, one {# retained stop row} other {# retained stop rows}}", "{count, plural, one {# übernommener Registereintrag} other {# übernommene Registereinträge}}", {count})
     : t("organ.spec.stopRows.captured", "{count, plural, one {# captured stop row} other {# captured stop rows}}", "{count, plural, one {# erfasster Registereintrag} other {# erfasste Registereinträge}}", {count});
+}
+
+export function specificationPeriodLabel(t: UiText, description: Pick<SpecificationDescription, "periodLabel" | "timeKind">) {
+  const century = description.timeKind === "century" && /^(\d+)(?:st|nd|rd|th) century$/i.exec(description.periodLabel);
+  return century ? t("organ.spec.period.century", description.periodLabel, "{century}. Jahrhundert", { century: century[1] }) : description.periodLabel;
 }
 
 const differenceGerman: Record<string, readonly [string, string]> = {

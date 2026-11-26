@@ -1,6 +1,8 @@
 import { Braces, ExternalLink } from "lucide-react";
 import { lazy, ReactNode, Suspense, useCallback, useEffect, useState } from "react";
 import type { EntityExportManifest } from "./api";
+import { LoadingContent } from "./LoadingContent";
+import { useUiLocale } from "./uiLocale";
 
 export type EntityPageTab = "overview" | "export";
 const ResourceView = lazy(() => import("./resourceView").then(module => ({ default: module.ResourceView })));
@@ -127,43 +129,44 @@ export function EntityTabPanel({
 }
 
 export function EntityExportPanel({ manifest }: { manifest?: EntityExportManifest | null }) {
+  const { t } = useUiLocale();
   if (!manifest) {
     return (
       <section className="panel-block export-unavailable" role="status">
         <Braces size={24} aria-hidden="true" />
         <div>
-          <h2>Export unavailable</h2>
-          <p>No public machine-readable representation is included for this record in the active dataset version.</p>
+          <h2>{t("entity.export.unavailable", "Export unavailable", "Kein Export verfügbar")}</h2>
+          <p>{t("entity.export.unavailableDetail", "No public machine-readable representation is included for this record in the active dataset version.", "Die aktuelle Version des Datensatzes enthält für diesen Eintrag keine öffentliche maschinenlesbare Darstellung.")}</p>
         </div>
       </section>
     );
   }
   return (
     <div className="entity-export-panel">
-      <Suspense fallback={<p className="notice" role="status">Loading retained resources…</p>}><ResourceView owner={manifest.mdvsId} /></Suspense>
+      <Suspense fallback={<LoadingContent label={t("entity.export.loading", "Loading retained resources…", "Ressourcen werden geladen …")} />}><ResourceView owner={manifest.mdvsId} /></Suspense>
       <section className="panel-block export-introduction">
-        <p className="eyebrow">MODAVIS Ontology Network datasheet</p>
-        <h2 id="entity-export-heading" tabIndex={-1}>Linked data for this entity</h2>
-        <p>This datasheet describes the entity in the MODAVIS Ontology Network and links each representation to the exact dataset version used to create it.</p>
-        <div className="export-identity"><span>Entity</span><code>{manifest.mdvsId}</code><span>Contract</span><code>{manifest.contract}</code></div>
+        <p className="eyebrow">{t("entity.export.datasheet", "MODAVIS Ontology Network datasheet", "Datenblatt des MODAVIS Ontology Network")}</p>
+        <h2 id="entity-export-heading" tabIndex={-1}>{t("entity.export.linkedData", "Linked data for this entity", "Verknüpfte Daten zu diesem Eintrag")}</h2>
+        <p>{t("entity.export.scope", "This datasheet describes the entity in the MODAVIS Ontology Network and links each representation to the exact dataset version used to create it.", "Das Datenblatt beschreibt den Eintrag im MODAVIS Ontology Network. Für jedes Exportformat ist die zugrunde liegende Version des Datensatzes angegeben.")}</p>
+        <div className="export-identity"><span>{t("entity.export.entity", "Entity", "Eintrag")}</span><code>{manifest.mdvsId}</code><span>{t("entity.export.contract", "Contract", "Exportspezifikation")}</span><code>{manifest.contract}</code></div>
       </section>
       <section className="panel-block">
-        <h2>Native MODAVIS formats</h2>
-        <p>Equivalent serializations of the native public graph for software, repositories, and command-line tools.</p>
+        <h2>{t("entity.export.nativeFormats", "Native MODAVIS formats", "Native MODAVIS-Formate")}</h2>
+        <p>{t("entity.export.nativeScope", "Equivalent serializations of the native public graph for software, repositories, and command-line tools.", "Gleichwertige Serialisierungen des öffentlichen MODAVIS-Datengraphen für Software, Repositorien und Kommandozeilenwerkzeuge.")}</p>
         <div className="export-format-grid">{manifest.native.map((item) => <a href={item.url} key={item.key} className="export-format-card">
-          <Braces size={20} aria-hidden="true" /><strong>{item.label}</strong><span>{item.mediaType}</span><small>Versioned representation</small>
+          <Braces size={20} aria-hidden="true" /><strong>{item.label}</strong><span>{item.mediaType}</span><small>{t("entity.export.versioned", "Versioned representation", "Darstellung mit Versionsangabe")}</small>
         </a>)}</div>
       </section>
       <section className="panel-block">
-        <h2>Semantic profiles</h2>
-        <p>Read-only mappings support discovery and exchange while preserving the native MODAVIS graph as the authoritative representation.</p>
-        <div className="public-record-list">{manifest.profiles.map((item) => <a href={item.url} key={item.key}><strong>{item.label}</strong><span>{item.format || "JSON-LD"} profile{item.mediaType ? ` · ${item.mediaType}` : ""}</span></a>)}</div>
+        <h2>{t("entity.export.semanticProfiles", "Semantic profiles", "Semantische Profile")}</h2>
+        <p>{t("entity.export.profileScope", "Read-only mappings support discovery and exchange while preserving the native MODAVIS graph as the authoritative representation.", "Die nur lesbaren Abbildungen erleichtern die Recherche und den Datenaustausch. Maßgeblich bleibt der ursprüngliche MODAVIS-Datengraph.")}</p>
+        <div className="public-record-list">{manifest.profiles.map((item) => <a href={item.url} key={item.key}><strong>{item.label}</strong><span>{t("entity.export.profile", "{format} profile", "{format}-Profil", { format: item.format || "JSON-LD" })}{item.mediaType ? ` · ${item.mediaType}` : ""}</span></a>)}</div>
       </section>
       <section className="panel-block">
-        <h2>Source-dependent structured data</h2>
-        <p>View the publication-safe structured projections supporting this entity. Original source prose and media bytes remain governed by their source records.</p>
-        <a className="public-action-link" href={manifest.sourceDataUrl}>Open source data index <ExternalLink size={15} /></a>
-        {manifest.sourceDataUrl.endsWith("/sources") && <p className="export-evidence-coverage"><a className="public-action-link" href={manifest.sourceDataUrl.replace(/\/sources$/, "/evidence")}>Inspect evidence coverage <ExternalLink size={15} /></a><small>Distinguishes available evidence context, source context, and missing field provenance.</small></p>}
+        <h2>{t("entity.export.sourceData", "Source-dependent structured data", "Strukturierte Daten aus den Quellen")}</h2>
+        <p>{t("entity.export.sourceScope", "View the public structured data supporting this entity. The source records govern access to the original texts and media.", "Hier finden Sie die veröffentlichten strukturierten Angaben zu diesem Eintrag. Der Zugang zu Originaltexten und Medien richtet sich nach den Bedingungen der jeweiligen Quelle.")}</p>
+        <a className="public-action-link" href={manifest.sourceDataUrl}>{t("entity.export.openSourceData", "Open source data index", "Verzeichnis der Quelldaten öffnen")} <ExternalLink size={15} aria-hidden="true" /></a>
+        {manifest.sourceDataUrl.endsWith("/sources") && <p className="export-evidence-coverage"><a className="public-action-link" href={manifest.sourceDataUrl.replace(/\/sources$/, "/evidence")}>{t("entity.export.evidence", "Inspect evidence coverage", "Beleglage prüfen")} <ExternalLink size={15} aria-hidden="true" /></a><small>{t("entity.export.evidenceScope", "Distinguishes available evidence context, source context, and missing field provenance.", "Die Übersicht zeigt, für welche Datenfelder Belege oder Quellenkontext vorliegen und wo Herkunftsangaben fehlen.")}</small></p>}
       </section>
     </div>
   );

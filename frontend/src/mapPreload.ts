@@ -1,5 +1,4 @@
 let runtimeRequest: Promise<Document> | undefined;
-let assetsPreloaded = false;
 
 export function readMapRuntime(): Promise<Document> {
   runtimeRequest ??= fetch("/geolibre/index.html", {
@@ -17,25 +16,9 @@ export function readMapRuntime(): Promise<Document> {
   return runtimeRequest;
 }
 
-/** Warm the pinned map bundle when a visitor points to or focuses a map button. */
+/** Check availability on map intent. Load GeoLibre's modules only when the map opens. */
 export function preloadMapRuntime(): void {
   const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
-  if (assetsPreloaded || connection?.saveData || connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g") return;
-  assetsPreloaded = true;
-  void readMapRuntime()
-    .then(page => {
-      for (const source of page.querySelectorAll('script[type="module"][src], link[rel="modulepreload"][href], link[rel="stylesheet"][href]')) {
-        const href = new URL(source.getAttribute("src") || source.getAttribute("href") || "", location.origin);
-        if (href.origin !== location.origin || !href.pathname.startsWith("/geolibre/assets/")) continue;
-        if (document.head.querySelector(`link[data-map-preload][href="${CSS.escape(href.href)}"]`)) continue;
-        const link = document.createElement("link");
-        link.dataset.mapPreload = "";
-        link.href = href.href;
-        link.rel = source.getAttribute("rel") === "stylesheet" ? "preload" : "modulepreload";
-        if (link.rel === "preload") link.as = "style";
-        link.crossOrigin = "anonymous";
-        document.head.append(link);
-      }
-    })
-    .catch(() => { assetsPreloaded = false; });
+  if (connection?.saveData || connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g") return;
+  void readMapRuntime().catch(() => {});
 }

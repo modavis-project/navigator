@@ -1,5 +1,5 @@
 import { useUiLocale, type UiText } from "./uiLocale";
-import { actionReviewCopy, capturedStopSummary, specificationFieldLabel } from "./specificationLabels";
+import { actionReviewCopy, capturedStopSummary, specificationFieldLabel, specificationPeriodLabel } from "./specificationLabels";
 import { JsonEvidence } from "./JsonEvidence";
 import { LoadingContent } from "./LoadingContent";
 import { useEffect, useRef, useState, type ReactNode } from "react";
@@ -191,7 +191,7 @@ export function ConfigurationChronology({ description }: { description?: Specifi
     .filter((date): date is string => Boolean(date)))].sort();
   const dated = sourceDatesConfiguration(description);
   return <section className="description-chronology" aria-label={t("organ.spec.configurationChronology.aria", "Configuration chronology", "Chronologie der Disposition")}>
-    {dated ? <p>{t("organ.spec.configurationChronology.dated", "Configuration dated by the source:", "Datierung der Disposition laut Quelle:")} <strong>{description.periodLabel}</strong>. Present condition is not established.</p>
+    {dated ? <p>{t("organ.spec.configurationChronology.dated", "Configuration dated by the source:", "Datierung der Disposition laut Quelle:")} <strong>{specificationPeriodLabel(t, description)}</strong>. {t("organ.spec.configurationChronology.present", "Present condition is not established.", "Der heutige Zustand ist dadurch nicht belegt.")}</p>
       : evidence.claims.length > 0 ? <p>{t("organ.spec.configurationChronology.dateWording", "Source date wording is retained below. A configuration date for this description is not established.", "Der Datierungswortlaut der Quelle ist unten wiedergegeben. Die Datierung der beschriebenen Disposition ist nicht belegt.")}</p>
         : <p>{t("organ.spec.configurationChronology.noDate", "A configuration date for this description is not established.", "Die Datierung der beschriebenen Disposition ist nicht belegt.")}</p>}
     {evidence.sourceDateQualification && <p>{t("organ.spec.configurationChronology.intervention", "The source dates the account and separately places it before or after an intervention. The intervention’s year is not established by that wording.", "Die Quelle datiert die Beschreibung und ordnet sie getrennt davon vor oder nach einem Eingriff ein. Aus dem Wortlaut geht das Jahr des Eingriffs nicht hervor.")}</p>}
@@ -365,10 +365,7 @@ export function DescriptionHistory({
       aria-label={t("organ.spec.descriptionHistory.aria", "Specification descriptions in history", "Quellenbeschreibungen zur Disposition im Geschichtsverlauf")}
     >
       <h3>{t("organ.spec.descriptionHistory.title", "Documented specifications", "Dokumentierte Dispositionen")}</h3>
-      <p>
-        Open a source description alongside the event history. These accounts do
-        not establish continuous physical states.
-      </p>
+      <p>{t("organ.spec.descriptionHistory.scope", "Open a source description alongside the event history. The descriptions alone do not establish continuity of the organ’s physical state.", "Hier können Sie die Quellenbeschreibungen neben dem zeitlichen Ablauf einsehen. Aus ihnen allein lässt sich nicht ableiten, ob die Orgel baulich unverändert blieb.")}</p>
       <div>
         {historical.map((d) => (
           <button
@@ -388,7 +385,7 @@ export function DescriptionHistory({
               })
             }
           >
-            <strong>{d.periodLabel}</strong>
+            <strong>{specificationPeriodLabel(t, d)}</strong>
             <span>
               {subject(t, d)} · {capturedStopSummary(t, d)}
             </span>
@@ -684,7 +681,7 @@ export function OrganSpecificationDescriptions({
               {t("organ.spec.componentIntro", "Explore full stop details, keyboards, pipe positions, tuning, and differences between sources. Each component set retains its own source. This evidence is not assigned to the selected historical description.", "Hier finden Sie Angaben zu Registern, Klaviaturen, Pfeifenpositionen und Stimmung sowie Unterschiede zwischen den Quellen. Jede Bauteilgruppe bleibt ihrer Quelle zugeordnet. Diese Belegdaten sind der ausgewählten historischen Beschreibung nicht zugewiesen.")}
             </p>
             <button type="button" onClick={() => changeView("descriptions")}>
-              {comparison ? t("organ.spec.returnComparison", "Return to account comparison", "Zurück zum Vergleich der Quellenbeschreibungen") : t("organ.spec.returnAccount", "Return to {account}", "Zurück zur Quellenbeschreibung „{account}“", {account:selected.periodLabel})}
+              {comparison ? t("organ.spec.returnComparison", "Return to account comparison", "Zurück zum Vergleich der Quellenbeschreibungen") : t("organ.spec.returnAccount", "Return to {account}", "Zurück zur Quellenbeschreibung „{account}“", {account:specificationPeriodLabel(t, selected)})}
             </button>
           </header>
           {descriptions.some((description) => description.coverage === "retained_source_transfer") && <p className="description-notice">{t("organ.spec.transfers", "This view includes retained source transfers. Their rows are not assigned to the separately recovered accounts. Open Source accounts to inspect each recovered stoplist and its source date.", "Diese Ansicht enthält übertragene Quelleneinträge. Die Zeilen sind den getrennt erschlossenen Quellenbeschreibungen nicht zugeordnet. Deren Registerlisten und Datierungen finden Sie unter „Quellenbeschreibungen“.")}</p>}
@@ -710,7 +707,7 @@ export function OrganSpecificationDescriptions({
                 onClick={() => select(d.id)}
               >
                 <strong>
-                  {d.periodLabel}
+                  {specificationPeriodLabel(t, d)}
                   {selected.id === d.id && (
                     <Check size={16} aria-hidden="true" />
                   )}
@@ -754,7 +751,7 @@ export function OrganSpecificationDescriptions({
                 <h3>
                   {comparison
                     ? t("organ.spec.compare", "Compare source accounts", "Quellenbeschreibungen vergleichen")
-                    : selected.periodLabel}
+                    : specificationPeriodLabel(t, selected)}
                 </h3>
                 <p>
                   {selected.source.source} ·{" "}
@@ -888,7 +885,7 @@ export function OrganSpecificationDescriptions({
                         <div className="description-unaligned">
                           {[data, otherData].map((d) => (
                             <section key={d.id}>
-                              <h4>{d.periodLabel}</h4>
+                              <h4>{specificationPeriodLabel(t, d)}</h4>
                               {d.groups
                                 .filter((g) =>
                                   g.entries.some((e) => e.kind === "stop"),
@@ -926,7 +923,7 @@ export function OrganSpecificationDescriptions({
                                 return (
                                   <div key={d.id}>
                                     <header>
-                                      <strong>{d.periodLabel}</strong>
+                                      <strong>{specificationPeriodLabel(t, d)}</strong>
                                       <small>{d.source.source}</small>
                                     </header>
                                     {g ? (
@@ -959,11 +956,9 @@ export function OrganSpecificationDescriptions({
                 ) : (
                   <>
                     <div className="description-metrics">
-                      <span>
-                        {data.stopCount > 0 ? <><strong>{data.stopCount}</strong> captured stop rows</> : <strong className="description-missing-count">{t("organ.spec.noRows", "No captured stop rows", "Keine erfassten Registereinträge")}</strong>}
-                      </span>
+                      {data.stopCount > 0 ? <span>{capturedStopSummary(t, data)}</span> : <span><strong className="description-missing-count">{t("organ.spec.noRows", "No captured stop rows", "Keine erfassten Registereinträge")}</strong></span>}
                       {data.stopCount > 0 && <span>
-                        <strong>{stopGroups.length}</strong> captured divisions with stops
+                        {t("organ.spec.capturedDivisions", "{count, plural, one {# captured division} other {# captured divisions}} with stops", "{count, plural, one {# erfasstes Werk} other {# erfasste Werke}} mit Registereinträgen", { count: stopGroups.length })}
                       </span>}
                       <OriginalSource description={data} />
                     </div>
@@ -1040,7 +1035,7 @@ export function OrganSpecificationDescriptions({
             <header>
               <div>
                 <span className="description-badge">
-                  {t("organ.spec.entry", "Source entry ·", "Quelleneintrag ·")} {evidence.description.periodLabel}
+                  {t("organ.spec.entry", "Source entry ·", "Quelleneintrag ·")} {specificationPeriodLabel(t, evidence.description)}
                 </span>
                 <h3 id="description-evidence-title">
                   {evidence.entry.label}

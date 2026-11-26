@@ -41,8 +41,8 @@ export function OrganOverview({
   const hasComparisons = comparisonGroups.length > 0 || technicalGroups.length > 0;
   const virtualCount = organ.virtualInstruments?.linked || 0;
   const recordPath = organ.pageUrl || organ.canonicalUrl || "/organs/" + encodeURIComponent(organ.mdvsId);
-  const tabLink = (tab: OverviewTab, text: string, className = "") => <a
-    className={"overview-tab-link " + className}
+  const tabLink = (tab: OverviewTab, text: string) => <a
+    className="overview-tab-link"
     href={recordPath + (recordPath.includes("?") ? "&" : "?") + "tab=" + tab}
     onClick={event => {
       if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
@@ -53,40 +53,48 @@ export function OrganOverview({
 
   return <div className="organ-overview">
     <section className="overview-at-a-glance" aria-labelledby={label + "-title"}>
-      <header><h2 id={label + "-title"}>{t("organ.overview.instrument", "Documented instrument", "Dokumentiertes Instrument")}</h2>
-        <p className="overview-source-scope">{t("organ.overview.scope", "Source accounts retain their own dates and attribution. These descriptions do not establish the organ’s present condition.", "Jede Quellenbeschreibung behält ihre Datierung und Quellenzuordnung. Aus diesen Beschreibungen lässt sich der heutige Zustand der Orgel nicht ableiten.")}</p>
+      <header>
+        <h2 id={label + "-title"}>{t("organ.overview.instrument", "Evidence for this record", "Quellenlage im Überblick")}</h2>
+        <p className="overview-source-scope">{t("organ.overview.scope", "Descriptions retain their source and date. They do not establish the organ’s present condition.", "Jede Beschreibung behält ihre Quellenangabe und Datierung. Der heutige Zustand der Orgel lässt sich daraus allein nicht ableiten.")}</p>
       </header>
-      <div className="overview-summary-grid">
-        <section className="overview-summary-card" aria-labelledby={label + "-specification"}>
+      <div className="overview-evidence-list">
+        <section className="overview-evidence-row" aria-labelledby={label + "-specification"}>
           <h3 id={label + "-specification"}><Music2 size={17} aria-hidden="true"/> {t("organ.overview.specification", "Specification", "Disposition")}</h3>
-          {stopValue ? numericStops
-            ? <p className="overview-stop-total"><strong>{stopValue}</strong><span>{t("organ.overview.stopLabel", stopFact?.label?.toLowerCase() || "source-reported stops", "Register laut Quelle")}</span></p>
-            : <p className="overview-quantity-qualification" role="note">{stopValue}</p>
-            : <p className="overview-card-description">{t("organ.overview.readSources", "Read the source specifications for the documented disposition.", "Lesen Sie die Quellenbeschreibungen zur dokumentierten Disposition.")}</p>}
-          {stopFact?.source && <p className="overview-fact-attribution">{stopFact.source}</p>}
-          {stopFact?.evidenceSummary && <p className="overview-fact-attribution">{stopFact.evidenceSummary}</p>}
-          {descriptions.length > 0 && <p className="overview-card-description">{t("organ.overview.descriptionCount", "{count, plural, one {# specification description} other {# specification descriptions}} · dates kept by account", "{count, plural, one {# Quellenbeschreibung} other {# Quellenbeschreibungen}} · mit eigener Datierung", {count:descriptions.length})}</p>}
-          {tabLink("specification", t("organ.overview.openSpecification", "Explore specifications", "Dispositionen ansehen"), "overview-primary-action")}
+          <div className="overview-evidence">
+            {stopValue && (numericStops
+              ? <p className="overview-stop-total"><strong>{stopValue}</strong><span>{t("organ.overview.stopLabel", stopFact?.label?.toLowerCase() || "source-reported stops", "Register laut Quelle")}</span></p>
+              : <p className="overview-quantity-qualification" role="note">{stopValue}</p>)}
+            {stopFact?.source && <p className="overview-fact-attribution">{stopFact.source}</p>}
+            {stopFact?.evidenceSummary && <p className="overview-fact-attribution">{stopFact.evidenceSummary}</p>}
+            {descriptions.length > 0
+              ? <p className="overview-evidence-description">{t("organ.overview.descriptionCount", "{count, plural, one {# specification description} other {# specification descriptions}}", "{count, plural, one {# Beschreibung der Disposition} other {# Beschreibungen der Disposition}}", {count:descriptions.length})}</p>
+              : !stopValue && <p className="overview-evidence-description">{t("organ.overview.readSources", "Technical details from the available sources.", "Technische Angaben aus den verfügbaren Quellen.")}</p>}
+          </div>
+          {tabLink("specification", t("organ.overview.openSpecification", "View specifications", "Disposition ansehen"))}
         </section>
-        <section className="overview-summary-card" aria-labelledby={label + "-history"}>
-          <h3 id={label + "-history"}><History size={17} aria-hidden="true"/> {t("organ.overview.history", "Documented history", "Dokumentierte Geschichte")}</h3>
-          {history?.yearLabel && <p className="overview-history-range">{history.yearLabel}<small>{t("organ.overview.historyDates", "Dates of recorded assertions", "Datierung der erfassten Angaben")}</small></p>}
-          <p className="overview-card-description">{history?.assertionCount != null
-            ? t("organ.overview.eventCount", "{count, plural, one {# source event assertion} other {# source event assertions}}. Separate sources may describe the same activity.", "{count, plural, one {# Ereignisangabe aus einer Quelle} other {# Ereignisangaben aus Quellen}}. Mehrere Quellen können dieselbe Tätigkeit beschreiben.", {count:history.assertionCount})
-            : t("organ.overview.historyIntro", "Explore documented activities, participants and their source dates.", "Erkunden Sie dokumentierte Tätigkeiten, Beteiligte und die Datierungen laut Quelle.")}</p>
-          {tabLink("history", t("organ.overview.openHistory", "Read the history", "Geschichte ansehen"), "overview-primary-action")}
+        <section className="overview-evidence-row" aria-labelledby={label + "-history"}>
+          <h3 id={label + "-history"}><History size={17} aria-hidden="true"/> {t("organ.overview.history", "History", "Geschichte")}</h3>
+          <div className="overview-evidence">
+            {history?.yearLabel && <p className="overview-history-range"><strong>{history.yearLabel}</strong><span>{t("organ.overview.historyDates", "Dates reported for events", "Datierung der Ereignisse laut Quellen")}</span></p>}
+            <p className="overview-evidence-description">{history?.assertionCount != null
+              ? t("organ.overview.eventCount", "{count, plural, one {# source assertion about an event} other {# source assertions about events}}", "{count, plural, one {# Ereignisangabe aus einer Quelle} other {# Ereignisangaben aus Quellen}}", {count:history.assertionCount})
+              : t("organ.overview.historyIntro", "Activities, participants and dates reported by the sources.", "Tätigkeiten, Beteiligte und Datierungen laut Quellen.")}</p>
+          </div>
+          {tabLink("history", t("organ.overview.openHistory", "Read the history", "Geschichte ansehen"))}
         </section>
-        <section className="overview-summary-card overview-source-card" aria-labelledby={label + "-sources"}>
+        <section className="overview-evidence-row" aria-labelledby={label + "-sources"}>
           <h3 id={label + "-sources"}><BookOpen size={17} aria-hidden="true"/> {t("organ.overview.sources", "Sources", "Quellen")}</h3>
-          <p className="overview-card-description">{sourceRecords != null
-            ? collections != null
-              ? t("organ.overview.sourceCollections", "This page draws on {count, plural, one {# source record} other {# source records}} from {collections, plural, one {# collection} other {# collections}}.", "Diese Seite stützt sich auf {count, plural, one {# Quelldatensatz} other {# Quelldatensätze}} aus {collections, plural, one {# Sammlung} other {# Sammlungen}}.", {count:sourceRecords,collections})
-              : t("organ.overview.sourceCount", "{count, plural, one {# source record supports} other {# source records support}} this page.", "Diese Seite stützt sich auf {count, plural, one {# Quelldatensatz} other {# Quelldatensätze}}.", {count:sourceRecords})
-            : t("organ.overview.sourceIntro", "Follow the source records supporting this page.", "Öffnen Sie die Quelldatensätze, auf denen diese Seite beruht.")}</p>
-          {sourceLinks.length > 0 && <ul className="overview-source-links">{sourceLinks.map((source, index) => <li key={source.id + ":" + index}>
-            {source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.source.replace(/^src:/, "")}</a> : source.source.replace(/^src:/, "")}
-          </li>)}</ul>}
-          {(organ.sources?.length || 0) > sourceLinks.length && <p className="overview-fact-attribution">{t("organ.overview.sourcePreview", "Showing {count, number} source links; the complete list is available below and under Sources and identifiers.", "Angezeigt werden {count, number} Quellenlinks. Die vollständige Liste finden Sie unten und unter „Quellen und Kennungen“.", {count:sourceLinks.length})}</p>}
+          <div className="overview-evidence">
+            <p className="overview-evidence-description">{sourceRecords != null
+              ? collections != null
+                ? t("organ.overview.sourceCollections", "{count, plural, one {# source record} other {# source records}} from {collections, plural, one {# collection} other {# collections}}", "{count, plural, one {# Quelldatensatz} other {# Quelldatensätze}} aus {collections, plural, one {# Sammlung} other {# Sammlungen}}", {count:sourceRecords,collections})
+                : t("organ.overview.sourceCount", "{count, plural, one {# source record} other {# source records}}", "{count, plural, one {# Quelldatensatz} other {# Quelldatensätze}}", {count:sourceRecords})
+              : t("organ.overview.sourceIntro", "Source records and their identifiers.", "Quelldatensätze und ihre Kennungen.")}</p>
+            {sourceLinks.length > 0 && <ul className="overview-source-links">{sourceLinks.map((source, index) => <li key={source.id + ":" + index}>
+              {source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.source.replace(/^src:/, "")}</a> : source.source.replace(/^src:/, "")}
+            </li>)}</ul>}
+            {(organ.sources?.length || 0) > sourceLinks.length && <p className="overview-fact-attribution">{t("organ.overview.sourcePreview", "See all source records under Sources and identifiers.", "Alle Quelldatensätze stehen unter „Quellen und Kennungen“.")}</p>}
+          </div>
           {tabLink("identifiers", t("organ.overview.openSources", "Sources and identifiers", "Quellen und Kennungen"))}
         </section>
       </div>
@@ -116,7 +124,7 @@ export function OrganOverview({
         <div className="overview-disclosure-body">{narrative}</div>
       </details>}
       <details className="overview-disclosure">
-        <summary><span>{t("organ.overview.fullContext", "Full instrument and source context", "Weitere Angaben zum Instrument und seinen Quellen")}<small>{t("organ.overview.fullContextNote", "Account totals, recorded milestones and source links", "Summen laut Quellenbeschreibung, erfasste Ereignisse und Quellenlinks")}</small></span></summary>
+        <summary><span>{t("organ.overview.fullContext", "Instrument and source details", "Angaben zum Instrument und zu seinen Quellen")}<small>{t("organ.overview.fullContextNote", "Dated events, specification accounts and source links", "Datierte Ereignisse, Dispositionsbeschreibungen und Quellenlinks")}</small></span></summary>
         <div className="overview-disclosure-body">{accountContext}</div>
       </details>
     </div>

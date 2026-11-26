@@ -107,3 +107,25 @@ def test_region_endpoint_limits_queries_and_reuses_the_same_representation():
                   "?bbox=1,2,3,4&zoom=3&zoom=5", "?bbox=1,4,3,2&zoom=3",
                   "?bbox=1,2,3,4&zoom=3&v=unknown"):
         assert client.get("/api/map/regions.geojson" + query).status_code == 400
+
+
+def test_country_search_aliases_open_the_retained_boundaries():
+    countries = [
+        ("locadmin:9d965de0a07e98b6c7dd88ef208fd5ff029df1a1cf30ab98", "Россия",
+         ("Russia", "Russian Federation", "Russland"), Point(37.62, 55.75)),
+        ("locadmin:aac146629766d3997eff80ae98c58306a3c459768e81ab68", "Maroc ⵍⵎⵖⵔⵉⴱ المغرب",
+         ("Morocco", "Marokko", "Marocco"), Point(-6.84, 34.02)),
+        ("locadmin:32c8f883e8661cbb35a1eed48bd864ee3f75bbf41f6157bb", "مصر",
+         ("Egypt", "Ägypten"), Point(31.24, 30.04)),
+    ]
+    areas = AreaIndex([area(identifier, "country", title) for identifier, title, _, _ in countries])
+    with gzip.open(BOUNDARIES, "rt", encoding="utf-8") as stream:
+        index = BoundaryIndex(json.load(stream), areas)
+    boundaries = {item["id"]: (item["url"], shape) for item, shape in zip(index.records, index.shapes)}
+
+    for identifier, title, aliases, point in countries:
+        url, polygon = boundaries[identifier]
+        assert polygon.covers(point)
+        for alias in aliases:
+            [(match, field)] = areas.suggest(alias, 6)
+            assert (match.identifier, match.title, match.link()["url"], field) == (identifier, title, url, "name")

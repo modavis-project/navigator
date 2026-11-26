@@ -13,6 +13,9 @@ separate terms.
 - **GeoLibre:** MIT, OpenGeoS and contributors. Its complete license is
   `web/geolibre/THIRD_PARTY_LICENSE.GeoLibre.txt` in the resources attachment.
   Bundled dependency notices and license files remain intact.
+- **MapLibre GL JS:** BSD-3-Clause, MapLibre contributors. The standalone map
+  viewer uses version 6.5.0. Its complete license is included in
+  `frontend/public/THIRD_PARTY_LICENSES.txt`.
 - **React, React DOM, Scheduler, Lucide, React Intl, FormatJS, and Vite/Rolldown runtime helpers:** the complete upstream runtime
   notices are retained in `frontend/public/THIRD_PARTY_LICENSES.txt`, copied into
   every frontend build. Exact versions and notice hashes are recorded in

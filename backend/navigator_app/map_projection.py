@@ -28,7 +28,10 @@ ORGAN_CONTEXT_BUILDER_ORIGIN_LAYER_ID = "modavis-organ-context-builder-origin-v1
 ACTOR_CONTEXT_LAYER_PREFIX = "modavis-actor-context-activity-v1-"
 PUBLIC_MAP_VECTOR_SOURCE_LAYER = "organ_sites"
 PUBLIC_MAP_MARKER_STYLE = "/api/map/marker-style.json"
-PUBLIC_MAP_STYLE_VERSION = 2
+PUBLIC_MAP_STYLE_VERSION = 6
+PUBLIC_MAP_DENSITY_FADE_START = 5.4
+PUBLIC_MAP_DENSITY_FADE_END = 6
+PUBLIC_MAP_OVERVIEW_SITE_LIMIT = 6
 PUBLIC_MAP_INITIAL_VIEW = {
     "center": [8.8, 50.2],
     "zoom": 3.35,
@@ -716,7 +719,7 @@ def public_tiled_geolibre_project(
                     else "persisted-position-density-to-site-groups"
                 ),
                 "renderingSemantics": (
-                    "counted-site-groups-through-zoom-11; individual-sites-from-zoom-12"
+                    "unnumbered-site-groups-through-zoom-11; individual-sites-from-zoom-12"
                     if native_markers else "density-cells-through-zoom-11; individual-sites-from-zoom-12"
                 ),
                 **({"precisionSemantics": "per-feature-coordinatePrecision"} if fallback else {}),
@@ -768,7 +771,7 @@ def public_tiled_geolibre_project(
             "geolibreCommit": GEOLIBRE_RUNTIME_COMMIT,
             "coordinateScope": coordinate_scope,
             "remoteGroupedSources": True,
-            "renderingModel": "counted-groups-to-individual-sites" if native_markers else "density-to-cluster-to-venue",
+            "renderingModel": "groups-to-individual-sites" if native_markers else "density-to-cluster-to-venue",
             "initialPayloadContainsGlobalFeatures": False,
             "tileMaxZoom": 14,
             "individualSiteMinZoom": 12,
@@ -795,74 +798,135 @@ def _map_basemap_style() -> dict[str, Any]:
 
 
 def public_map_marker_style(
-    *, project: Mapping[str, Any], origin: str,
+    *, project: Mapping[str, Any], origin: str, site_markers_only: bool = False,
+    combined_tile_url: str | None = None,
 ) -> dict[str, Any]:
-    """Add counted bubbles and site dots to the same native MVT sources GeoLibre queries."""
+    """Show density, sparse overview sites and closer groups on the same tile sources."""
     basemap = _map_basemap_style()
     sources = dict(basemap["sources"])
+    density_layers = []
     circles = []
-    labels = []
-    local_zoom = 6
+    show_density = not site_markers_only and "areaId" not in project.get("metadata", {})
+    fade_start = PUBLIC_MAP_DENSITY_FADE_START
+    fade_end = PUBLIC_MAP_DENSITY_FADE_END
     for layer in project["layers"]:
         if not layer["visible"]:
             continue
         layer_id = layer["id"]
         # The pinned GeoLibre runtime uses this source id for the interactive
         # project layer as well. Sharing it avoids a second vector tile source.
-        source_id = f"source-{layer_id}"
-        sources[source_id] = {
-            key: value for key, value in layer["source"].items()
-            if key not in {"sourceLayer", "sourceLayers"}
-        }
+        source_id = "source-modavis-combined-places-v1" if combined_tile_url else f"source-{layer_id}"
+        if source_id not in sources:
+            sources[source_id] = {
+                key: value for key, value in layer["source"].items()
+                if key not in {"sourceLayer", "sourceLayers"}
+            }
+            if combined_tile_url:
+                sources[source_id]["tiles"] = [combined_tile_url]
         source = {"source": source_id, "source-layer": PUBLIC_MAP_VECTOR_SOURCE_LAYER}
         fallback = layer_id == FALLBACK_MAP_LAYER_ID
+        # The native viewer renders both precision classes from one tile.
+        precision_filter = {"filter": ["==", ["get", "coordinateFallback"], fallback]} if combined_tile_url else {}
         color = "#895512" if fallback else "#225e55"
-        counted = [">", ["get", "point_count"], 1]
+        grouped = ["boolean", ["get", "aggregate"], False]
+        site_count = ["number", ["get", "point_count"], 1]
         source_grid = ["in", "source grid", ["downcase", ["get", "coordinatePrecision"]]]
+        regional_opacity = ["case", grouped, 0.40, 0.82]
+        regional_stroke_opacity = ["case", grouped, 0.68, 0.96]
+        if show_density and not (combined_tile_url and fallback):
+            light, low, middle, high, peak = (
+                (
+                    "rgba(209,153,65,0.1)", "rgba(194,134,53,0.27)", "rgba(165,106,30,0.56)",
+                    "rgba(129,78,20,0.77)", "rgba(137,85,18,0.88)",
+                )
+                if fallback
+                else (
+                    "rgba(118,173,151,0.1)", "rgba(78,151,133,0.27)", "rgba(47,132,113,0.56)",
+                    "rgba(25,100,85,0.77)", "rgba(34,94,85,0.88)",
+                )
+            )
+            density_layers.append({
+                "id": f"navigator-density-{layer_id}",
+                "type": "heatmap",
+                **source,
+                "maxzoom": fade_end,
+                "paint": {
+                    # The same number of mapped sites contributes the same
+                    # weight whether distributed across one sample or many.
+                    "heatmap-weight": ["/", site_count, 1000],
+                    "heatmap-radius": [
+                        "interpolate", ["linear"], ["zoom"], 0, 18, 3.35, 39, 4.8, 36, fade_end, 28,
+                    ],
+                    "heatmap-intensity": [
+                        "interpolate", ["linear"], ["zoom"], 0, 0.225, 2, 0.525, 3.35, 1.125, 4.8, 2.1, fade_end, 3,
+                    ],
+                    "heatmap-opacity": [
+                        "interpolate", ["linear"], ["zoom"], fade_start, 0.96, fade_end, 0,
+                    ],
+                    "heatmap-color": [
+                        "interpolate", ["linear"], ["heatmap-density"],
+                        0, "rgba(0,0,0,0)", 0.007, light, 0.04, low, 0.23, middle, 0.63, high, 1, peak,
+                    ],
+                },
+            })
+        if show_density:
+            # A low-density cell can be effectively transparent in the
+            # heatmap. Retain a small symbol for its documented coverage.
+            sparse_filter = ["<=", site_count, PUBLIC_MAP_OVERVIEW_SITE_LIMIT]
+            circles.append({
+                "id": f"navigator-marker-{layer_id}-overview",
+                "type": "circle",
+                **source,
+                "maxzoom": fade_end,
+                "filter": ["all", precision_filter["filter"], sparse_filter] if precision_filter else sparse_filter,
+                "paint": {
+                    "circle-radius": ["+", 2.1, ["*", 0.25, ["sqrt", site_count]]],
+                    "circle-color": color,
+                    "circle-opacity": ["interpolate", ["linear"], ["zoom"], fade_start, 0.87, fade_end, 0],
+                    "circle-stroke-color": "#fffdf6",
+                    "circle-stroke-width": 0.65,
+                    "circle-stroke-opacity": ["interpolate", ["linear"], ["zoom"], fade_start, 0.93, fade_end, 0],
+                },
+            })
         circles.append({
             "id": f"navigator-marker-{layer_id}",
             "type": "circle",
             **source,
+            **precision_filter,
+            # Composite paint expressions interpolate between tile zooms.
+            # Hide the circle layer until the density crossfade starts.
+            **({"minzoom": fade_start} if show_density else {}),
             "paint": {
                 "circle-radius": [
-                    "interpolate", ["linear"], ["zoom"], 5, ["get", "markerRadius"],
-                    8, ["*", 0.72, ["get", "markerRadius"]],
+                    "case", grouped, ["+", 2.45, ["*", 0.66, ["sqrt", ["min", site_count, 180]]]], 4.7,
                 ],
                 "circle-color": [
-                    "case", counted, color, source_grid, "#497c88",
+                    "case", grouped, color, source_grid, "#497c88",
                     "#c38b3e" if fallback else "#34756c",
                 ],
-                "circle-opacity": ["step", ["zoom"], 0.94, local_zoom, ["case", counted, 0.16, 0.78]],
-                "circle-stroke-color": ["step", ["zoom"], "#fffdf6", local_zoom, ["case", counted, color, "#fffdf6"]],
-                "circle-stroke-width": ["case", counted, 1.35, 1],
-                "circle-stroke-opacity": ["step", ["zoom"], 1, local_zoom, ["case", counted, 0.53, 0.92]],
-            },
-        })
-        labels.append({
-            "id": f"navigator-count-{layer_id}",
-            "type": "symbol",
-            **source,
-            "filter": counted,
-            "layout": {
-                "text-field": ["get", "clusterLabel"],
-                "text-font": ["Noto Sans Bold"],
-                "text-size": 11,
-                "text-allow-overlap": ["step", ["zoom"], True, local_zoom, False],
-                "text-ignore-placement": True,
-            },
-            "paint": {
-                "text-color": ["step", ["zoom"], "#ffffff", local_zoom, "#583607" if fallback else "#163d35"],
-                "text-halo-color": "#fffdf6",
-                "text-halo-width": ["step", ["zoom"], 0, local_zoom, 0.9],
+                "circle-opacity": (
+                    ["interpolate", ["linear"], ["zoom"], fade_start, 0, fade_end, regional_opacity]
+                    if show_density else regional_opacity
+                ),
+                "circle-stroke-color": ["case", grouped, color, "#fffdf6"],
+                "circle-stroke-width": ["case", grouped, 1.05, 1.1],
+                "circle-stroke-opacity": (
+                    ["interpolate", ["linear"], ["zoom"], fade_start, 0, fade_end, regional_stroke_opacity]
+                    if show_density else regional_stroke_opacity
+                ),
             },
         })
     basemap_layers = basemap["layers"]
     first_label = next((i for i, layer in enumerate(basemap_layers) if layer["type"] == "symbol"), len(basemap_layers))
+    first_line = next((i for i, layer in enumerate(basemap_layers) if layer["type"] == "line"), first_label)
     return {
         **basemap,
         "sprite": origin + basemap["sprite"],
         "sources": sources,
-        "layers": [*basemap_layers[:first_label], *circles, *labels, *basemap_layers[first_label:]],
+        "layers": [
+            *basemap_layers[:first_line], *density_layers,
+            *basemap_layers[first_line:first_label], *circles, *basemap_layers[first_label:],
+        ],
     }
 
 
@@ -879,9 +943,8 @@ def organ_context_geolibre_project(
 ) -> dict[str, Any]:
     """Build a small, read-only project for one organ detail modal.
 
-    Optional contextual layers are embedded once and start hidden. Navigator can
-    therefore toggle them through GeoLibre's scripting bridge without reloading
-    either the iframe or the global map catalogue.
+    Contextual layers are embedded once for in-place toggles. When there is no
+    current position, documented relocations provide the initial display.
     """
     current_features = _geojson_features(current_collection)
     movement_features = _geojson_features(movement_collection)
@@ -891,8 +954,7 @@ def organ_context_geolibre_project(
         coordinate_scope="all",
     )
     project["name"] = f"{organ_title} — organ context"
-    # The modal opens on the subject alone. Optional context may widen the view
-    # only after the visitor explicitly enables it.
+    # Prefer the subject's current positions when there are any.
     project["mapView"] = _map_view(current_features or movement_features)
     current_precision = str(
         ((current_features[0].get("properties") or {}).get("coordinatePrecision"))
@@ -918,7 +980,7 @@ def organ_context_geolibre_project(
     }
     for layer in project["layers"]:
         if layer.get("id") in movement_layer_ids:
-            layer["visible"] = False
+            layer["visible"] = not current_features and bool(movement_features)
 
     builder_features = _geojson_features(builder_collection)
     current_ids = {

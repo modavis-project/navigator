@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
+import { useUiLocale } from "./uiLocale";
 import "./release02Candidates.css";
 
 type CandidateAction = "all" | "linked" | "distinct";
@@ -174,9 +175,48 @@ const PAGE_SIZE = 25;
 
 export function Release02CandidateCatalog({
   initialCandidateId,
+  publicProjection = false,
 }: {
   initialCandidateId?: string;
+  publicProjection?: boolean;
 }) {
+  return publicProjection ? <RetiredCandidatePreview /> : <CandidateCatalog initialCandidateId={initialCandidateId} />;
+}
+
+function useCandidatePageMetadata(title: string) {
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = `${title} | MODAVIS Navigator`;
+    const existingRobots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    const robots = existingRobots ?? document.createElement("meta");
+    const previousRobots = existingRobots?.content;
+    if (!existingRobots) {
+      robots.name = "robots";
+      document.head.appendChild(robots);
+    }
+    robots.content = "noindex,nofollow";
+    return () => {
+      document.title = previousTitle;
+      if (!existingRobots) robots.remove();
+      else robots.content = previousRobots ?? "";
+    };
+  }, [title]);
+}
+
+function RetiredCandidatePreview() {
+  const { t } = useUiLocale();
+  const title = t("orgelseite.retired.title", "Orgelseite map preview ended", "Orgelseite-Kartenvorschau beendet");
+  useCandidatePageMetadata(title);
+  return (
+    <section className="panel-block">
+      <h1>{title}</h1>
+      <p>{t("orgelseite.retired.message", "This page was part of the Release 0.2 research preview. Browse published organ locations on the current map.", "Diese Seite gehörte zur Forschungsvorschau für Version 0.2. Die aktuelle Karte zeigt veröffentlichte Orgelstandorte.")}</p>
+      <a href="/map">{t("orgelseite.retired.map", "Open the current map", "Aktuelle Karte öffnen")}</a>
+    </section>
+  );
+}
+
+function CandidateCatalog({ initialCandidateId }: { initialCandidateId?: string }) {
   const route = useMemo(() => candidateRouteState(initialCandidateId), [initialCandidateId]);
   const [queryDraft, setQueryDraft] = useState(route.query);
   const [query, setQuery] = useState(route.query);
@@ -193,23 +233,7 @@ export function Release02CandidateCatalog({
   const [detailLoading, setDetailLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const previousTitle = document.title;
-    document.title = "Release 0.2 candidate evidence | MODAVIS Navigator";
-    const existingRobots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
-    const robots = existingRobots ?? document.createElement("meta");
-    const previousRobots = existingRobots?.content;
-    if (!existingRobots) {
-      robots.name = "robots";
-      document.head.appendChild(robots);
-    }
-    robots.content = "noindex,nofollow";
-    return () => {
-      document.title = previousTitle;
-      if (!existingRobots) robots.remove();
-      else robots.content = previousRobots ?? "";
-    };
-  }, []);
+  useCandidatePageMetadata("Release 0.2 candidate evidence");
 
   useEffect(() => {
     let cancelled = false;

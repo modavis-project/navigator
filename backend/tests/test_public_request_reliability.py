@@ -118,6 +118,44 @@ def test_deadline_is_consumed_across_statements_and_connection_wait(monkeypatch)
     assert not any("forbidden_after_expiry" in sql for sql, _ in commands)
 
 
+def test_transient_read_closes_connection_and_restores_pool_on_failure(monkeypatch):
+    events = []
+
+    class Connection:
+        @contextmanager
+        def transaction(self):
+            yield
+
+        def execute(self, sql):
+            assert sql == "SET TRANSACTION READ ONLY"
+            events.append("read only")
+
+    @contextmanager
+    def direct_connection(dsn, **options):
+        assert dsn == "fixture"
+        assert options["row_factory"] is db.dict_row
+        events.append("direct")
+        try:
+            yield Connection()
+        finally:
+            events.append("closed")
+
+    @contextmanager
+    def pooled_connection(timeout):
+        events.append("pool")
+        yield Connection()
+
+    monkeypatch.setattr(db.psycopg, "connect", direct_connection)
+    monkeypatch.setattr(db, "_pool", lambda settings: SimpleNamespace(connection=pooled_connection))
+    settings = SimpleNamespace(db_dsn="fixture")
+    with pytest.raises(RuntimeError, match="fixture failure"):
+        with db.transient_read_connections(), db.connect(settings):
+            raise RuntimeError("fixture failure")
+    with db.connect(settings):
+        pass
+    assert events == ["direct", "read only", "closed", "pool", "read only"]
+
+
 def test_sqlite_read_cancels_under_inherited_budget():
     connection = sqlite3.connect(":memory:")
     token = db.query_deadline.set(time.monotonic() + 0.005)

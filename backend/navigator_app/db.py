@@ -15,6 +15,7 @@ from .config import Settings
 
 
 query_deadline = ContextVar("navigator_query_deadline", default=None)
+_use_connection_pool = ContextVar("navigator_use_connection_pool", default=True)
 
 
 def constrain_sqlite_reads(connection, seconds=10):
@@ -87,12 +88,26 @@ class _DeadlineConnection:
 
 
 @contextmanager
+def transient_read_connections() -> Iterator[None]:
+    token = _use_connection_pool.set(False)
+    try:
+        yield
+    finally:
+        _use_connection_pool.reset(token)
+
+
+@contextmanager
 def connect(settings: Settings) -> Iterator[psycopg.Connection]:
     deadline = query_deadline.get()
     remaining = deadline - time.monotonic() if deadline is not None else None
     if remaining is not None and remaining <= 0:
         raise TimeoutError("Read query budget exhausted")
-    with _pool(settings).connection(timeout=remaining if remaining is not None else 10) as conn:
+    connection = (
+        _pool(settings).connection(timeout=remaining if remaining is not None else 10)
+        if _use_connection_pool.get()
+        else psycopg.connect(settings.db_dsn, row_factory=dict_row, autocommit=False)
+    )
+    with connection as conn:
         with conn.transaction():
             # Enforce the public application's contract even if an operator
             # accidentally supplies a writer role. Deployment grants remain

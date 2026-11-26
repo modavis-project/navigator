@@ -347,6 +347,8 @@ def create_public_app(
     distribution_catalogs = {settings.uri_release_version: dataset_catalog}
     release_history = dict(historical_repositories or {})
     if settings.public_release_history_path:
+        from .db import transient_read_connections
+
         history = json.loads(Path(settings.public_release_history_path).read_text(encoding="utf-8"))
         for version, entry in history.items():
             if version == settings.uri_release_version:
@@ -363,7 +365,9 @@ def create_public_app(
                 public_database_manifest_path=entry["manifestPath"],
                 public_release_history_path=None,
             ))
-            historical.assert_ready()
+            # Release each archive's startup connections before probing the next.
+            with transient_read_connections():
+                historical.assert_ready()
             release_history[version] = historical
             if entry.get("datasetDistributionManifestPath"):
                 catalog = DatasetDistributionCatalog.load(

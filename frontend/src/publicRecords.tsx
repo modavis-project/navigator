@@ -5,6 +5,8 @@ import { LoadingContent } from "./LoadingContent";
 import { EntityExportPanel, EntityPageTabs, EntityTabPanel, useEntityPageTab } from "./entityExport";
 import type { EntityExportManifest } from "./api";
 import { publicGetJson } from "./api";
+import { useUiLocale } from "./uiLocale";
+import { vocabularyReferenceLinks } from "./vocabularyReferenceLinks";
 
 export function useRecord<T>(path: string | null) {
   const [data, setData] = useState<T | null>(null);
@@ -102,6 +104,7 @@ interface SourceRecord {
   structuredJsonUrl?: string;
 }
 export function PublicSourcePage({ id }: { id: string }) {
+  const { t } = useUiLocale();
   const { data: source, error, retry } = useRecord<SourceRecord>(`/api/public/sources/${encodeURIComponent(id)}`);
   useEffect(() => { if (source) document.title = `${source.title} · Source record | MODAVIS Navigator`; }, [source]);
   if (error) return <RecordLoadFailure kind="source" error={error} onRetry={retry} />;
@@ -121,6 +124,7 @@ export function PublicSourcePage({ id }: { id: string }) {
           return <li key={singular}>{count > 0 ? <a href={`${source.organ.url}?tab=${tab}`}>{evidence}</a> : evidence}</li>;
         })}
       </ul>
+      <a href={vocabularyReferenceLinks.evidenceRoles}>{t("source.evidenceRoles", "Evidence roles in MODAVIS", "Rollen von Belegen in MODAVIS")}</a>
     </section>
     <section className="panel-block"><h2>Original source</h2><p>{source.sourceUrl ? "The linked source provides the original description and its context." : "The original source URL is unavailable."} Navigator retains separately attributed facts from this record.</p><div className="public-source-actions">{source.sourceUrl && <a className="public-action-link" href={source.sourceUrl} target="_blank" rel="noreferrer">Open original source <ExternalLink size={16} /></a>}{source.structuredJsonUrl && <a className="public-action-link" href={source.structuredJsonUrl}>Structured JSON <Braces size={16} /></a>}</div><p className="muted">Source identifier: <code>{source.id}</code></p></section>
   </article>;

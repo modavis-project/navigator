@@ -326,7 +326,9 @@ def create_public_app(
         if settings.dataset_distribution_manifest_path
         else None
     )
-    readiness = dict(repo.assert_ready())
+    from .db import transient_read_connections
+    with transient_read_connections():
+        readiness = dict(repo.assert_ready())
     from .catalogue_first_page import catalogue_snapshot
     from .public_read_cache import public_read_snapshot, register_public_read_cache
     binding = repo.snapshot_binding() if hasattr(repo, "snapshot_binding") else {}
@@ -347,8 +349,6 @@ def create_public_app(
     distribution_catalogs = {settings.uri_release_version: dataset_catalog}
     release_history = dict(historical_repositories or {})
     if settings.public_release_history_path:
-        from .db import transient_read_connections
-
         history = json.loads(Path(settings.public_release_history_path).read_text(encoding="utf-8"))
         for version, entry in history.items():
             if version == settings.uri_release_version:
@@ -356,6 +356,9 @@ def create_public_app(
             historical = PublicReleaseRepository(replace(
                 settings,
                 db_name=entry["database"],
+                # Historical readers use on-demand connections. Each database
+                # otherwise leaves its own idle pool after a public lookup.
+                db_pool_max_size=0,
                 uri_release_version=version,
                 public_source_release_version=entry.get("sourceReleaseVersion"),
                 uri_policy_version=entry.get("uriPolicyVersion", "auto"),
@@ -365,9 +368,7 @@ def create_public_app(
                 public_database_manifest_path=entry["manifestPath"],
                 public_release_history_path=None,
             ))
-            # Release each archive's startup connections before probing the next.
-            with transient_read_connections():
-                historical.assert_ready()
+            historical.assert_ready()
             release_history[version] = historical
             if entry.get("datasetDistributionManifestPath"):
                 catalog = DatasetDistributionCatalog.load(

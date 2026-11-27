@@ -104,7 +104,7 @@ def connect(settings: Settings) -> Iterator[psycopg.Connection]:
         raise TimeoutError("Read query budget exhausted")
     connection = (
         _pool(settings).connection(timeout=remaining if remaining is not None else 10)
-        if _use_connection_pool.get()
+        if settings.db_pool_max_size and _use_connection_pool.get()
         else psycopg.connect(settings.db_dsn, row_factory=dict_row, autocommit=False)
     )
     with connection as conn:

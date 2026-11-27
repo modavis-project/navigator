@@ -36,10 +36,10 @@ function load(runtime = {}) {
     Pill: ({children}) => React.createElement("span", null, children),
     BuilderAttribution: slot("builder-qualification"), OrganHeroMedia: slot("hero-media"),
     OrganSectionState: ({children}) => children,
-    OverviewTab: slot("overview"), SpecificationTab: slot("components"),
-    OrganSpecificationDescriptions: ({organ, components}) => React.createElement("section", {
+    OverviewTab: slot("overview"), SpecificationTab: slot("components"), OrganTuningEvidencePanel: slot("tuning-evidence"),
+    OrganSpecificationDescriptions: ({organ, components, tuningEvidence}) => React.createElement("section", {
       "data-slot": "source-accounts", "data-account-count": organ.specificationDescriptions.length,
-    }, components),
+    }, components, tuningEvidence),
     HistoryTab: slot("history"), ActivitiesTab: slot("activities"), MediaTab: slot("media"),
     ExportTab: slot("exports"), IdentifiersTab: slot("identifiers"), RelatedTab: slot("related"),
     PodRelatedResources: slot("pod-relations"), ContributionsTab: slot("contributions"), ResearchTab: slot("research"),
@@ -111,6 +111,7 @@ test("single and multiple main accounts use the account interface without requir
     const html = render({activeTab: "specification", organ: {...organ, specificationDescriptions: accounts}});
     assert.match(html, new RegExp(`data-slot="source-accounts" data-account-count="${accounts.length}"`));
     assert.match(html, /data-slot="components"/, "The full component interface remains reachable as a child slot");
+    assert.match(html, /data-slot="tuning-evidence"/, "The source-account interface receives the organ-wide tuning evidence");
   }
 });
 

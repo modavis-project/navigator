@@ -217,3 +217,25 @@ def test_specification_and_fact_comparison_preserve_raw_wording(values, summary_
     if summary_status == "source_code_only":
         assert evidence["preferredValue"] is None
         assert evidence["catalogRelation"]["matchingRecordCount"] == 0
+
+
+def test_organ_tuning_exposes_retained_bdo_url_only_for_exact_catalogue_relation():
+    repo = object.__new__(PublicReleaseRepository)
+    primary_url = "https://bund-deutscher-orgelbaumeister.de/stimmungen/template.htm?label=2hKi2"
+    repo._tuning_systems = lambda: [
+        {**item, "sourceUrl": primary_url} if item["id"] == "2hKi2" else item
+        for item in CATALOGUE
+    ]
+
+    def relation(wording, source="orgbase"):
+        return repo._organ_temperament_evidence([
+            {"source_value": wording, "source_key": source, "source_record_id": f"sr:{source}:1"},
+        ])["catalogRelation"]
+
+    exact = relation("Kirnberger II")
+    assert exact["exactRecordUrl"] == "/temperaments/2hKi2"
+    assert exact["exactRecordSourceUrl"] == primary_url
+    related = relation("Kirnberger II (modified)")
+    assert related["state"] == "candidate_set"
+    assert related["exactRecordSourceUrl"] is None
+    assert relation("2", "ohs")["exactRecordSourceUrl"] is None

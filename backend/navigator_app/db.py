@@ -54,7 +54,7 @@ def _pool(settings: Settings) -> ConnectionPool:
             pool = ConnectionPool(
                 conninfo=dsn,
                 min_size=0,
-                max_size=8,
+                max_size=settings.db_pool_max_size,
                 max_idle=30,
                 timeout=10,
                 open=True,

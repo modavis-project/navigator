@@ -1,0 +1,829 @@
+{
+  "version": "1.0.0",
+  "upstreamVersion": "1.6.0",
+  "sourceUrl": "https://doi.org/10.5281/zenodo.22308263",
+  "title": {
+    "en": "Pipe-organ specification vocabulary",
+    "de": "Vokabular zur Orgelbeschreibung"
+  },
+  "description": {
+    "en": "Multilingual terminology for recording and comparing pipe-organ specifications. Examples link to documented source wording.",
+    "de": "Mehrsprachige Terminologie zur Erfassung und zum Vergleich von Orgeldispositionen und technischen Angaben. Die Beispiele führen zu belegtem Quellenwortlaut."
+  },
+  "attribution": "MODAVIS Navigator. Evidence uses the MODAVIS Pipe Organ Dataset (POD) 1.6.0, by Dominik Ukolov. Editorial scope notes and definitions are authored for this edition. References retain their own attribution and terms.",
+  "rights": {
+    "en": "POD example links refer to the published POD under its stated license. The descriptions in this edition are original editorial text. The unpublished candidate seed does not specify a separate terminology-data license. Consult each cited publication for its terms.",
+    "de": "Die Beleglinks führen in den veröffentlichten POD mit den dort angegebenen Lizenzbedingungen. Die Beschreibungen dieser Ausgabe sind redaktionelle Originaltexte. Für das unveröffentlichte Kandidatenverzeichnis ist keine gesonderte Terminologiedatenlizenz angegeben. Für zitierte Veröffentlichungen gelten die jeweiligen Bedingungen."
+  },
+  "history": [
+    {
+      "version": "1.0.0",
+      "changes": {
+        "en": "Initial edition with actions, windchests, stop and division designations, and coupler functions.",
+        "de": "Erstausgabe mit Trakturen, Windladenbauarten, Register- und Werkbezeichnungen sowie Koppelfunktionen."
+      }
+    }
+  ],
+  "schemes": [
+    {
+      "id": "actions",
+      "code": "organ_specifications_actions",
+      "title": {
+        "en": "Actions",
+        "de": "Trakturen"
+      },
+      "description": {
+        "en": "Mechanisms that transmit movement or a control signal from a key or stop control to the controlled part of the organ.",
+        "de": "Mechanismen, die eine Bewegung oder ein Steuersignal von einer Taste oder Registerbetätigung zum gesteuerten Teil der Orgel übertragen."
+      },
+      "concepts": [
+        {
+          "id": "mechanical",
+          "code": "specification:actions:mechanical",
+          "labels": {
+            "en": "Mechanical action",
+            "de": "Mechanische Traktur"
+          },
+          "definition": {
+            "en": "Action that transmits movement through mechanical linkages.",
+            "de": "Traktur, die Bewegung über mechanische Verbindungen überträgt."
+          },
+          "scopeNote": {
+            "en": "Record key action and stop action in their respective fields. An exact wording match documents the source description. For mixed actions, keep the description of each component or division with its source.",
+            "de": "Spiel- und Registertraktur gehören in die jeweiligen Felder. Eine exakte Übereinstimmung belegt den Quellenwortlaut. Bei gemischten Trakturen bleiben die Beschreibungen der einzelnen Teile oder Werke mit ihren Quellen verbunden."
+          },
+          "references": [
+            {
+              "title": "Harrison & Harrison, Glossary",
+              "href": "https://www.harrisonorgans.com/glossary-2/"
+            },
+            {
+              "title": "Greifenberger Institut, Glossar zum Orgelbau",
+              "href": "https://greifenberger-institut.de/dt/wissensvermittlung/orgel/einleitung/glossar.php"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "key_action",
+              "wording": "Mechanical",
+              "href": "/vocab/usage/key_action?term=Mechanical&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 54330
+            },
+            {
+              "family": "stop_action",
+              "wording": "Mechanical",
+              "href": "/vocab/usage/stop_action?term=Mechanical&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 48490
+            },
+            {
+              "family": "key_action",
+              "wording": "Mécanique",
+              "href": "/vocab/usage/key_action?term=M%C3%A9canique&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 3862
+            },
+            {
+              "family": "stop_action",
+              "wording": "Mécanique",
+              "href": "/vocab/usage/stop_action?term=M%C3%A9canique&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 4388
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:action-mechanical"
+        },
+        {
+          "id": "pneumatic",
+          "code": "specification:actions:pneumatic",
+          "labels": {
+            "en": "Pneumatic action",
+            "de": "Pneumatische Traktur"
+          },
+          "definition": {
+            "en": "Action that uses air pressure differences to transmit or actuate a control.",
+            "de": "Traktur, die Luftdruckunterschiede zur Übertragung oder Ausführung eines Steuerbefehls nutzt."
+          },
+          "scopeNote": {
+            "en": "The general term leaves the construction, pressure system and type of pneumatic apparatus open. Record key and stop action separately.",
+            "de": "Der Oberbegriff lässt Bauweise, Drucksystem und Art der pneumatischen Einrichtung offen. Spiel- und Registertraktur werden getrennt erfasst."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "Orgelbau Mann, Orgellexikon",
+              "href": "https://www.orgelbau-mann.de/orgellexikon/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "key_action",
+              "wording": "Pneumatic",
+              "href": "/vocab/usage/key_action?term=Pneumatic&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 7472
+            },
+            {
+              "family": "stop_action",
+              "wording": "Pneumatic",
+              "href": "/vocab/usage/stop_action?term=Pneumatic&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 7897
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:action-pneumatic"
+        },
+        {
+          "id": "electrical",
+          "code": "specification:actions:electrical",
+          "labels": {
+            "en": "Electrical action",
+            "de": "Elektrische Traktur"
+          },
+          "definition": {
+            "en": "General designation for an action that transmits a control signal electrically.",
+            "de": "Allgemeine Bezeichnung für eine Traktur, die ein Steuersignal elektrisch überträgt."
+          },
+          "scopeNote": {
+            "en": "The general designation leaves direct electrical and electro-pneumatic actuation open. Determine either subtype from explicit evidence.",
+            "de": "Die allgemeine Bezeichnung lässt direkte elektrische und elektropneumatische Betätigung offen. Eine Unterart wird nur mit ausdrücklichem Beleg bestimmt."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "Orgelbau Mann, Orgellexikon",
+              "href": "https://www.orgelbau-mann.de/orgellexikon/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "key_action",
+              "wording": "Electrical",
+              "href": "/vocab/usage/key_action?term=Electrical&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 6187
+            },
+            {
+              "family": "stop_action",
+              "wording": "Electrical",
+              "href": "/vocab/usage/stop_action?term=Electrical&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 11364
+            },
+            {
+              "family": "key_action",
+              "wording": "Electrique",
+              "href": "/vocab/usage/key_action?term=Electrique&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 481
+            },
+            {
+              "family": "stop_action",
+              "wording": "Electrique",
+              "href": "/vocab/usage/stop_action?term=Electrique&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 648
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:action-electrical",
+          "related": [
+            "electro-pneumatic"
+          ]
+        },
+        {
+          "id": "electro-pneumatic",
+          "code": "specification:actions:electro-pneumatic",
+          "labels": {
+            "en": "Electro-pneumatic action",
+            "de": "Elektropneumatische Traktur"
+          },
+          "definition": {
+            "en": "Action in which an electrical signal controls pneumatic actuation.",
+            "de": "Traktur, bei der ein elektrisches Signal eine pneumatische Betätigung steuert."
+          },
+          "scopeNote": {
+            "en": "Use this more specific designation where the source identifies the electrical and pneumatic stages. Record key and stop action separately.",
+            "de": "Diese genauere Bezeichnung setzt voraus, dass die Quelle die elektrische und die pneumatische Stufe ausweist. Spiel- und Registertraktur werden getrennt erfasst."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "Orgelbau Mann, Orgellexikon",
+              "href": "https://www.orgelbau-mann.de/orgellexikon/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "key_action",
+              "wording": "Electropneumatic",
+              "href": "/vocab/usage/key_action?term=Electropneumatic&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 5903
+            },
+            {
+              "family": "stop_action",
+              "wording": "Electropneumatic",
+              "href": "/vocab/usage/stop_action?term=Electropneumatic&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 6218
+            },
+            {
+              "family": "stop_action",
+              "wording": "Electro-pneumatique",
+              "href": "/vocab/usage/stop_action?term=Electro-pneumatique&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 392
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:action-electropneumatic",
+          "related": [
+            "electrical"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "windchests",
+      "code": "organ_specifications_windchests",
+      "title": {
+        "en": "Windchest types",
+        "de": "Windladenbauarten"
+      },
+      "description": {
+        "en": "Construction types for assemblies that distribute wind to the pipes.",
+        "de": "Bauarten von Einrichtungen, die den Orgelwind an die Pfeifen verteilen."
+      },
+      "concepts": [
+        {
+          "id": "slider-chest",
+          "code": "specification:windchests:slider-chest",
+          "labels": {
+            "en": "Slider chest",
+            "de": "Schleiflade"
+          },
+          "definition": {
+            "en": "Windchest that uses movable perforated sliders to select which stops receive wind.",
+            "de": "Windlade, bei der bewegliche Lochleisten den Windweg für die jeweiligen Register freigeben oder sperren."
+          },
+          "scopeNote": {
+            "en": "This term describes a windchest design. Read each occurrence as a claim about the named source account. The action and layout of an individual chest require their own evidence.",
+            "de": "Der Begriff bezeichnet eine Windladenbauart. Jedes Vorkommen wird als Angabe der jeweiligen Quelle gelesen. Traktur und Aufbau einer einzelnen Lade bedürfen eigener Belege."
+          },
+          "references": [
+            {
+              "title": "Harrison & Harrison, Glossary",
+              "href": "https://www.harrisonorgans.com/glossary-2/"
+            },
+            {
+              "title": "Greifenberger Institut, Glossar zum Orgelbau",
+              "href": "https://greifenberger-institut.de/dt/wissensvermittlung/orgel/einleitung/glossar.php"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "windchests",
+              "wording": "Slider chests",
+              "href": "/vocab/usage/windchests?term=Slider+chests&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 56363
+            },
+            {
+              "family": "windchests",
+              "wording": "Slider chest",
+              "href": "/vocab/usage/windchests?term=Slider+chest&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 821
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:windchest-slider"
+        },
+        {
+          "id": "cone-chest",
+          "code": "specification:windchests:cone-chest",
+          "labels": {
+            "en": "Cone chest",
+            "de": "Kegellade"
+          },
+          "definition": {
+            "en": "Windchest in which cone-shaped valves control wind admission to the pipes.",
+            "de": "Windlade, bei der kegelförmige Ventile die Windzufuhr zu den Pfeifen steuern."
+          },
+          "scopeNote": {
+            "en": "This term describes a windchest design. Read each occurrence as a claim about the named source account. The action and layout of an individual chest require their own evidence.",
+            "de": "Der Begriff bezeichnet eine Windladenbauart. Jedes Vorkommen wird als Angabe der jeweiligen Quelle gelesen. Traktur und Aufbau einer einzelnen Lade bedürfen eigener Belege."
+          },
+          "references": [
+            {
+              "title": "Orgelbau Keinert, Orgellexikon",
+              "href": "https://www.orgelbau-keinert.de/informationen/lexikon/"
+            },
+            {
+              "title": "Greifenberger Institut, Glossar zum Orgelbau",
+              "href": "https://greifenberger-institut.de/dt/wissensvermittlung/orgel/einleitung/glossar.php"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "windchests",
+              "wording": "Cone chests",
+              "href": "/vocab/usage/windchests?term=Cone+chests&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 12883
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:windchest-cone"
+        }
+      ]
+    },
+    {
+      "id": "stop-designations",
+      "code": "organ_specifications_stop_designations",
+      "title": {
+        "en": "Stop designations",
+        "de": "Registerbezeichnungen"
+      },
+      "description": {
+        "en": "Names documented in stoplists, with their customary usage and limits of interpretation.",
+        "de": "In Dispositionen belegte Namen mit Hinweisen zu ihrem üblichen Gebrauch und zu den Grenzen der Deutung."
+      },
+      "concepts": [
+        {
+          "id": "principal",
+          "code": "specification:stop-designations:principal",
+          "labels": {
+            "en": "Principal",
+            "de": "Prinzipal"
+          },
+          "definition": {
+            "en": "Stop designation commonly used for a characteristic organ foundation tone.",
+            "de": "Registerbezeichnung, die häufig für eine den Orgelklang prägende Grundstimme verwendet wird."
+          },
+          "scopeNote": {
+            "en": "The evidence records a stop designation. Pitch, number of ranks, construction, voicing and physical identity require their own evidence.",
+            "de": "Der Beleg dokumentiert eine Registerbezeichnung. Tonlage, Chorzahl, Bauart, Intonation und die Identität eines konkreten Registers bedürfen eigener Belege."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "Orgelbau Mann, Orgellexikon",
+              "href": "https://www.orgelbau-mann.de/orgellexikon/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "stops",
+              "wording": "Principal",
+              "href": "/vocab/usage/stops?term=Principal&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 72623
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:stop-principal",
+          "related": [
+            "open-diapason"
+          ]
+        },
+        {
+          "id": "open-diapason",
+          "code": "specification:stop-designations:open-diapason",
+          "labels": {
+            "en": "Open Diapason",
+            "de": "Open Diapason"
+          },
+          "definition": {
+            "en": "English-language stop designation customarily used for an open foundation stop in the diapason tradition.",
+            "de": "Englischsprachige Registerbezeichnung, die üblicherweise für eine offene Grundstimme in der Diapason-Tradition steht."
+          },
+          "scopeNote": {
+            "en": "This is a historically related designation to Principal. Retain their distinct name evidence. Pitch, construction and voicing require their own evidence for the individual stop.",
+            "de": "Die Bezeichnung ist historisch mit dem Prinzipal verwandt. Die jeweiligen Namensbelege bleiben getrennt. Tonlage, Bauart und Intonation des einzelnen Registers bedürfen eigener Belege."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "American Guild of Organists, Glossary of Pipe Organ Terms",
+              "href": "https://old.agohq.org/glossary-of-terms/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "stops",
+              "wording": "Open Diapason",
+              "href": "/vocab/usage/stops?term=Open+Diapason&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 65668
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:stop-open-diapason",
+          "related": [
+            "principal"
+          ]
+        },
+        {
+          "id": "bourdon",
+          "code": "specification:stop-designations:bourdon",
+          "labels": {
+            "en": "Bourdon",
+            "de": "Bourdon"
+          },
+          "definition": {
+            "en": "Stop designation commonly associated with a stopped flue tone in several organ-building traditions.",
+            "de": "Registerbezeichnung, die in mehreren Orgelbautraditionen häufig für einen Gedacktklang verwendet wird."
+          },
+          "scopeNote": {
+            "en": "The evidence records a stop designation. Pitch, number of ranks, construction, voicing and physical identity require their own evidence.",
+            "de": "Der Beleg dokumentiert eine Registerbezeichnung. Tonlage, Chorzahl, Bauart, Intonation und die Identität eines konkreten Registers bedürfen eigener Belege."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "American Guild of Organists, Glossary of Pipe Organ Terms",
+              "href": "https://old.agohq.org/glossary-of-terms/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "stops",
+              "wording": "Bourdon",
+              "href": "/vocab/usage/stops?term=Bourdon&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 62239
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:stop-bourdon"
+        },
+        {
+          "id": "mixture",
+          "code": "specification:stop-designations:mixture",
+          "labels": {
+            "en": "Mixture",
+            "de": "Mixtur"
+          },
+          "definition": {
+            "en": "Stop designation commonly used for a compound stop whose ranks reinforce upper partials.",
+            "de": "Registerbezeichnung, die häufig für ein mehrchöriges Register zur Verstärkung höherer Teiltöne verwendet wird."
+          },
+          "scopeNote": {
+            "en": "The evidence records a stop designation. Pitch, number of ranks, construction, voicing and physical identity require their own evidence.",
+            "de": "Der Beleg dokumentiert eine Registerbezeichnung. Tonlage, Chorzahl, Bauart, Intonation und die Identität eines konkreten Registers bedürfen eigener Belege."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "Orgelbau Mann, Orgellexikon",
+              "href": "https://www.orgelbau-mann.de/orgellexikon/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "stops",
+              "wording": "Mixture",
+              "href": "/vocab/usage/stops?term=Mixture&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 32428
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:stop-mixture"
+        }
+      ]
+    },
+    {
+      "id": "division-designations",
+      "code": "organ_specifications_division_designations",
+      "title": {
+        "en": "Division designations",
+        "de": "Werkbezeichnungen"
+      },
+      "description": {
+        "en": "Names recorded for divisions of an organ. The designated division can have different layouts or control assignments in different instruments.",
+        "de": "Belegte Bezeichnungen für die Werke einer Orgel. Aufbau und Zuordnung zur Klaviatur können sich je nach Instrument unterscheiden."
+      },
+      "concepts": [
+        {
+          "id": "great",
+          "code": "specification:division-designations:great",
+          "labels": {
+            "en": "Great",
+            "de": "Great"
+          },
+          "definition": {
+            "en": "English division designation customarily used for a main manual division.",
+            "de": "Englische Werkbezeichnung, die üblicherweise das Hauptmanualwerk bezeichnet."
+          },
+          "scopeNote": {
+            "en": "This entry groups documented division wording in its own field. Establish keyboard assignment, position, enclosure and historical function from separate evidence.",
+            "de": "Dieser Eintrag bündelt belegten Wortlaut im Werkfeld. Klaviaturzuordnung, Aufstellung, Einhausung und historische Funktion werden anhand eigener Belege bestimmt."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "Harrison & Harrison, Glossary",
+              "href": "https://www.harrisonorgans.com/glossary-2/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "divisions",
+              "wording": "Great",
+              "href": "/vocab/usage/divisions?term=Great&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 23412
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:division-great"
+        },
+        {
+          "id": "swell",
+          "code": "specification:division-designations:swell",
+          "labels": {
+            "en": "Swell",
+            "de": "Swell"
+          },
+          "definition": {
+            "en": "English division designation traditionally associated with a manual division capable of dynamic shading.",
+            "de": "Englische Werkbezeichnung, die traditionell für ein schwellbares Manualwerk verwendet wird."
+          },
+          "scopeNote": {
+            "en": "This entry groups documented division wording in its own field. Establish keyboard assignment, position, enclosure and historical function from separate evidence.",
+            "de": "Dieser Eintrag bündelt belegten Wortlaut im Werkfeld. Klaviaturzuordnung, Aufstellung, Einhausung und historische Funktion werden anhand eigener Belege bestimmt."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "Harrison & Harrison, Glossary",
+              "href": "https://www.harrisonorgans.com/glossary-2/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "divisions",
+              "wording": "Swell",
+              "href": "/vocab/usage/divisions?term=Swell&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 20018
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:division-swell"
+        },
+        {
+          "id": "choir",
+          "code": "specification:division-designations:choir",
+          "labels": {
+            "en": "Choir",
+            "de": "Choir"
+          },
+          "definition": {
+            "en": "English division designation historically associated with an accompanying manual division.",
+            "de": "Englische Werkbezeichnung, die historisch mit einem begleitenden Manualwerk verbunden ist."
+          },
+          "scopeNote": {
+            "en": "This entry groups documented division wording in its own field. Establish keyboard assignment, position, enclosure and historical function from separate evidence.",
+            "de": "Dieser Eintrag bündelt belegten Wortlaut im Werkfeld. Klaviaturzuordnung, Aufstellung, Einhausung und historische Funktion werden anhand eigener Belege bestimmt."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "Harrison & Harrison, Glossary",
+              "href": "https://www.harrisonorgans.com/glossary-2/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "divisions",
+              "wording": "CHOIR",
+              "href": "/vocab/usage/divisions?term=CHOIR&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 7041
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:division-choir"
+        },
+        {
+          "id": "pedal",
+          "code": "specification:division-designations:pedal",
+          "labels": {
+            "en": "Pedal",
+            "de": "Pedal"
+          },
+          "definition": {
+            "en": "Designation for the pedal division in a recorded organ disposition.",
+            "de": "Bezeichnung für das Pedalwerk in einer dokumentierten Orgeldisposition."
+          },
+          "scopeNote": {
+            "en": "In this scheme Pedal denotes a division in a disposition. A pedal keyboard, its compass and any borrowed ranks are separate documented features.",
+            "de": "In diesem Vokabular bezeichnet Pedal ein Werk der Disposition. Pedalklaviatur, Tonumfang und etwaige aus anderen Werken übernommene Pfeifenreihen sind getrennt zu belegen."
+          },
+          "references": [
+            {
+              "title": "Organ Historical Society, Organ History Glossary",
+              "href": "https://organhistoricalsociety.org/OrganHistory/glossary.htm"
+            },
+            {
+              "title": "Harrison & Harrison, Glossary",
+              "href": "https://www.harrisonorgans.com/glossary-2/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "divisions",
+              "wording": "Pedal",
+              "href": "/vocab/usage/divisions?term=Pedal&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 60230
+            }
+          ],
+          "derivedFrom": "urn:modavis:terminology-seed:division-pedal"
+        }
+      ]
+    },
+    {
+      "id": "couplers",
+      "code": "organ_specifications_couplers",
+      "title": {
+        "en": "Coupler functions",
+        "de": "Koppelfunktionen"
+      },
+      "description": {
+        "en": "Terms for pitch relationships and a related control. A particular coupler’s sounding division, controlling keyboard or division and interval are separate facts.",
+        "de": "Begriffe für Tonhöhenbeziehungen und eine zugehörige Abschaltfunktion. Angekoppeltes Werk, spielende Klaviatur oder spielendes Werk und Intervall werden getrennt erfasst."
+      },
+      "concepts": [
+        {
+          "id": "unison",
+          "code": "specification:couplers:unison",
+          "labels": {
+            "en": "Unison coupler",
+            "de": "Normalkoppel"
+          },
+          "definition": {
+            "en": "Coupler that controls notes of the coupled division at the corresponding pitch without octave transposition.",
+            "de": "Koppel, die Töne des angekoppelten Werks in der entsprechenden Tonhöhe ohne Oktavtransposition ansteuert."
+          },
+          "scopeNote": {
+            "en": "An explicitly qualified coupler may be marked 8′. Preserve the two endpoints separately and leave the interval open where the source wording does not specify one.",
+            "de": "Eine ausdrücklich bezeichnete Normalkoppel kann mit 8′ angegeben sein. Beide Endpunkte werden getrennt erfasst. Ohne Angabe im Quellenwortlaut bleibt das Intervall offen."
+          },
+          "references": [
+            {
+              "title": "American Guild of Organists, Glossary of Pipe Organ Terms",
+              "href": "https://old.agohq.org/glossary-of-terms/"
+            },
+            {
+              "title": "Walcker Orgelbau, Dictionnaire des Orgues",
+              "href": "https://www.walcker.com/downloads/dictionnaire-des-orgues.pdf"
+            },
+            {
+              "title": "Craftsman Pipe Organs, How Pipe-Organ Couplers Work",
+              "href": "https://www.craftsmanpipeorgans.com/how-a-pipe-organ-works/pipes-and-tone-production/pipe-organ-couplers-work/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "coupler",
+              "wording": "Great to Pedal 8'",
+              "href": "/vocab/usage/coupler?term=Great+to+Pedal+8%27&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 592
+            },
+            {
+              "family": "coupler",
+              "wording": "Swell to Great 8'",
+              "href": "/vocab/usage/coupler?term=Swell+to+Great+8%27&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 306
+            }
+          ]
+        },
+        {
+          "id": "super-octave",
+          "code": "specification:couplers:super-octave",
+          "labels": {
+            "en": "Super-octave coupler",
+            "de": "Superoktavkoppel"
+          },
+          "definition": {
+            "en": "Coupler that adds notes an octave above the played note.",
+            "de": "Koppel, die beim Spielen die eine Oktave höher liegenden Töne hinzuschaltet."
+          },
+          "scopeNote": {
+            "en": "A source may call this an octave coupler or mark it 4′. Preserve its specified divisions and interval as separate facts. Many sources name only one division.",
+            "de": "In der Quelle kann die Koppel als Oktavkoppel oder mit 4′ bezeichnet sein. Die angegebenen Werke und das Intervall werden getrennt erfasst. Viele Quellen nennen nur ein Werk."
+          },
+          "references": [
+            {
+              "title": "American Guild of Organists, Glossary of Pipe Organ Terms",
+              "href": "https://old.agohq.org/glossary-of-terms/"
+            },
+            {
+              "title": "Walcker Orgelbau, Dictionnaire des Orgues",
+              "href": "https://www.walcker.com/downloads/dictionnaire-des-orgues.pdf"
+            },
+            {
+              "title": "Craftsman Pipe Organs, How Pipe-Organ Couplers Work",
+              "href": "https://www.craftsmanpipeorgans.com/how-a-pipe-organ-works/pipes-and-tone-production/pipe-organ-couplers-work/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "coupler",
+              "wording": "Swell octave",
+              "href": "/vocab/usage/coupler?term=Swell+octave&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 12212
+            },
+            {
+              "family": "coupler",
+              "wording": "Swell octave to Great",
+              "href": "/vocab/usage/coupler?term=Swell+octave+to+Great&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 4785
+            }
+          ]
+        },
+        {
+          "id": "sub-octave",
+          "code": "specification:couplers:sub-octave",
+          "labels": {
+            "en": "Sub-octave coupler",
+            "de": "Suboktavkoppel"
+          },
+          "definition": {
+            "en": "Coupler that adds notes an octave below the played note.",
+            "de": "Koppel, die beim Spielen die eine Oktave tiefer liegenden Töne hinzuschaltet."
+          },
+          "scopeNote": {
+            "en": "A source may mark this coupler 16′. Retain the exact source wording and record any identified endpoints independently of the octave shift.",
+            "de": "Die Quelle kann diese Koppel mit 16′ bezeichnen. Der genaue Quellenwortlaut bleibt erhalten. Belegte Endpunkte werden unabhängig von der Oktavverschiebung erfasst."
+          },
+          "references": [
+            {
+              "title": "American Guild of Organists, Glossary of Pipe Organ Terms",
+              "href": "https://old.agohq.org/glossary-of-terms/"
+            },
+            {
+              "title": "Walcker Orgelbau, Dictionnaire des Orgues",
+              "href": "https://www.walcker.com/downloads/dictionnaire-des-orgues.pdf"
+            },
+            {
+              "title": "Craftsman Pipe Organs, How Pipe-Organ Couplers Work",
+              "href": "https://www.craftsmanpipeorgans.com/how-a-pipe-organ-works/pipes-and-tone-production/pipe-organ-couplers-work/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "coupler",
+              "wording": "Swell suboctave",
+              "href": "/vocab/usage/coupler?term=Swell+suboctave&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 7860
+            },
+            {
+              "family": "coupler",
+              "wording": "Swell suboctave to Great",
+              "href": "/vocab/usage/coupler?term=Swell+suboctave+to+Great&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 3521
+            }
+          ]
+        },
+        {
+          "id": "unison-off",
+          "code": "specification:couplers:unison-off",
+          "labels": {
+            "en": "Unison off",
+            "de": "Äquallage ab"
+          },
+          "definition": {
+            "en": "Control that suppresses a division’s normal unison response, allowing octave coupling to sound without that response.",
+            "de": "Spielhilfe, die das Erklingen eines Werks in seiner regulären Äquallage unterdrückt und damit Spiel über Oktavkoppeln ohne diese Lage ermöglicht."
+          },
+          "scopeNote": {
+            "en": "Catalogue wording may group this control with couplers. Record the suppression function separately from any octave interval or coupled endpoints.",
+            "de": "Quellen können diese Spielhilfe bei den Koppeln aufführen. Die Abschaltfunktion wird getrennt von einem Oktavintervall oder Koppelendpunkt erfasst."
+          },
+          "references": [
+            {
+              "title": "Craftsman Pipe Organs, How Pipe-Organ Couplers Work",
+              "href": "https://www.craftsmanpipeorgans.com/how-a-pipe-organ-works/pipes-and-tone-production/pipe-organ-couplers-work/"
+            }
+          ],
+          "evidence": [
+            {
+              "family": "coupler",
+              "wording": "Swell unison off",
+              "href": "/vocab/usage/coupler?term=Swell+unison+off&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 2982
+            },
+            {
+              "family": "coupler",
+              "wording": "Choir unison off",
+              "href": "/vocab/usage/coupler?term=Choir+unison+off&match=exact&snapshot=fba89816c5a02c268b559d2b356c712b01e0fd890a11973b8f8e39989506c67e",
+              "occurrences": 1160
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

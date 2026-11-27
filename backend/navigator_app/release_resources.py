@@ -163,8 +163,11 @@ def register_release_resource_routes(app, release_repository, record_from_resolu
             response.set_etag(hashlib.sha256(body.encode()).hexdigest())
         else:
             human = human or policy.human_base + '/resources?' + urlencode({'uri':subject})
-            target = (human + ('&' if '?' in human else '?') + urlencode({'tab':'export','resource':subject})
-                      if chosen == 'html' else data_document + '.' + chosen)
+            if chosen == 'html':
+                target = (human if '/vocab/event-type/' in document else
+                          human + ('&' if '?' in human else '?') + urlencode({'tab':'export','resource':subject}))
+            else:
+                target = data_document + '.' + chosen
             response = Response(status=303)
             response.headers['Location'] = target
         response.headers['Vary'] = 'Accept, Accept-Profile'

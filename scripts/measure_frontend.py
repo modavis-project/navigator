@@ -9,12 +9,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_JAVASCRIPT_GZIP_BYTES = 300 * 1024
-MAX_CLIENT_GZIP_BYTES = 616 * 1024
+MAX_CLIENT_GZIP_BYTES = 591 * 1024
+MAX_VOCABULARY_GZIP_BYTES = 38 * 1024
 MAX_INITIAL_ASSET_GZIP_BYTES = 384 * 1024
 MAX_REGION_MAP_GZIP_BYTES = 11 * 1024
 MAX_MAP_VIEWER_GZIP_BYTES = 420 * 1024
 REGION_MAP_ASSET = re.compile(r"(?:assets/map(?:Regions|Markers)-[A-Za-z0-9_-]+\.(?:js|css)|geolibre-region-bridge\.mjs)")
 MAP_VIEWER_ASSET = re.compile(r"(?:map-viewer\.html|assets/(?:map-viewer|maplibre-gl-worker)-[A-Za-z0-9_-]+\.(?:js|css))")
+VOCABULARY_ASSET = re.compile(r"assets/(?:vocabulary(?:Hub|Records|Edition)|activityVocabularySearch|eventTypePicker)-[A-Za-z0-9_-]+\.(?:js|css)")
 HTML_ASSET_PATH = re.compile(r'\b(?:src|href)="(/assets/[^"]+\.(?:js|css))"')
 
 
@@ -35,6 +37,7 @@ def measure(directory):
     return {"contract": "modavis.navigator.frontend-measurement/v1", "files": files,
             "clientGzipBytes": sum(entry["gzipBytes"] for entry in client),
             "initialAssetGzipBytes": sum(entry["gzipBytes"] for entry in client if entry["path"] in initial_assets),
+            "vocabularyGzipBytes": sum(entry["gzipBytes"] for entry in client if VOCABULARY_ASSET.fullmatch(entry["path"])),
             "regionMapGzipBytes": sum(entry["gzipBytes"] for entry in client if REGION_MAP_ASSET.fullmatch(entry["path"])),
             "mapViewerGzipBytes": sum(entry["gzipBytes"] for entry in client if MAP_VIEWER_ASSET.fullmatch(entry["path"])),
             "largestJavaScriptGzipBytes": max((entry["gzipBytes"] for entry in client if entry["path"].endswith((".js", ".mjs"))), default=0)}
@@ -49,9 +52,11 @@ def main():
     report = measure(args.dist)
     region_bytes = report["regionMapGzipBytes"]
     viewer_bytes = report["mapViewerGzipBytes"]
+    vocabulary_bytes = report["vocabularyGzipBytes"]
     if (report["largestJavaScriptGzipBytes"] > MAX_JAVASCRIPT_GZIP_BYTES
             or report["initialAssetGzipBytes"] > MAX_INITIAL_ASSET_GZIP_BYTES
-            or report["clientGzipBytes"] - region_bytes - viewer_bytes > MAX_CLIENT_GZIP_BYTES
+            or report["clientGzipBytes"] - region_bytes - viewer_bytes - vocabulary_bytes > MAX_CLIENT_GZIP_BYTES
+            or vocabulary_bytes > MAX_VOCABULARY_GZIP_BYTES
             or region_bytes > MAX_REGION_MAP_GZIP_BYTES
             or viewer_bytes > MAX_MAP_VIEWER_GZIP_BYTES):
         raise SystemExit(
@@ -63,6 +68,7 @@ def main():
     if args.compare:
         earlier = json.loads(args.compare.read_text())
         earlier.setdefault("initialAssetGzipBytes", report["initialAssetGzipBytes"])
+        earlier.setdefault("vocabularyGzipBytes", report["vocabularyGzipBytes"])
         earlier.setdefault("regionMapGzipBytes", 0)
         earlier.setdefault("mapViewerGzipBytes", 0)
         if report != earlier:

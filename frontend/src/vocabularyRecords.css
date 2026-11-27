@@ -92,3 +92,117 @@
   .vr-actions { gap: 10px 14px; }
   .vr-actions > a { min-height: 36px; display: inline-flex; align-items: center; }
 }
+
+.vr-lookup {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  gap: .3rem;
+}
+
+.vr-suggestions {
+  position: absolute;
+  z-index: 15;
+  top: calc(100% + .2rem);
+  inset-inline: 0;
+  max-height: min(22rem, 55vh);
+  overflow-y: auto;
+  border: 1px solid #b9cec3;
+  border-radius: .6rem;
+  background: #fffefa;
+  color: #173a33;
+  box-shadow: 0 12px 24px #193b3b26;
+  padding: .3rem;
+}
+
+.vr-suggestions [role="group"] > p {
+  margin: .45rem .65rem .2rem;
+  color: #48645c;
+  font-size: .84rem;
+  font-weight: 650;
+}
+
+.vr-suggestions [role="option"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .15rem .6rem;
+  align-items: baseline;
+  padding: .55rem .65rem;
+  border-radius: .35rem;
+  cursor: pointer;
+}
+
+.vr-suggestions [role="option"][aria-selected="true"],
+.vr-suggestions [role="option"]:hover {
+  background: #e8f0e9;
+  outline: 1px solid #99b7ab;
+}
+
+.vr-suggestions [role="option"] span {
+  color: #48645c;
+  font-size: .86rem;
+}
+
+.vr-usage-summary,
+.vr-linked-terms {
+  padding-block: 1rem;
+  border-bottom: 1px solid #cbd9d2;
+}
+
+.vr-usage-summary h2,
+.vr-linked-terms h2 {
+  margin: 0 0 .45rem;
+}
+
+.vr-vocabulary-sets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-block: .85rem;
+}
+
+.vr-vocabulary-sets a {
+  padding: .5rem .7rem;
+  border: 1px solid #b9cec3;
+  border-radius: .45rem;
+  background: #edf3ed;
+  color: #184b40;
+  font-weight: 650;
+}
+
+.vr-search > .vr-lookup,
+.vh-search > .vr-lookup {
+  flex: 1 1 16rem;
+}
+
+.vr-category-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.vr-category-cards li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid #cbd9d2;
+  border-radius: .65rem;
+  background: #fffefa;
+}
+
+.vr-category-cards .vr-actions { margin-top: auto; }
+
+.vr-actor-reference a.vr-catalogue-link {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  padding: .45rem .8rem;
+  border: 1px solid #b9cec3;
+  border-radius: .45rem;
+  background: #edf3ed;
+  font-weight: 650;
+}

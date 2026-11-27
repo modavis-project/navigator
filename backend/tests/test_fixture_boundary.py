@@ -115,3 +115,11 @@ def test_explicit_missing_distribution_manifest_still_fails(monkeypatch, tmp_pat
     assert settings.dataset_distribution_manifest_path == str(missing)
     with pytest.raises(DatasetDistributionError, match="manifest is missing"):
         DatasetDistributionCatalog.load(settings.dataset_distribution_manifest_path)
+
+
+def test_pool_max_size_can_be_bounded_for_a_shared_database(monkeypatch):
+    monkeypatch.setenv("NAVIGATOR_DB_POOL_MAX_SIZE", "3")
+    assert load_settings().db_pool_max_size == 3
+    monkeypatch.setenv("NAVIGATOR_DB_POOL_MAX_SIZE", "0")
+    with pytest.raises(ValueError, match="NAVIGATOR_DB_POOL_MAX_SIZE"):
+        load_settings()

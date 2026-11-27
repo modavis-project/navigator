@@ -21,7 +21,7 @@ function load(name) {
   return exports;
 }
 const { SourceReportedTotals } = load("organSpecificationDescriptions");
-const { EventTransferEndpoints, SourceOccurrenceEvidence } = load("eventParticipation");
+const { EventTransferEndpoints, ParticipationRoleLink, SourceOccurrenceEvidence } = load("eventParticipation");
 const escape = value => value.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#x27;" }[c]));
 function renderTotal(span) {
   const summaryEvidence = { interpretation: "source_assertion", scope: "source_account", evidence: [span] };
@@ -81,4 +81,15 @@ test("a transfer card shows the documented endpoint even without a map connectio
   const html = renderToStaticMarkup(createElement(EventTransferEndpoints, { event }));
   assert.match(html, /<dt>Origin<\/dt><dd>Undocumented<\/dd>/);
   assert.match(html, /<dt>Destination<\/dt><dd><a href="\/places\/EXAMPLE">North Chapel<\/a>/);
+});
+
+
+test("a recorded participation role opens its person vocabulary entry", () => {
+  const reference = {
+    code: "activity_role.restorer", recordedCode: "restorer",
+    labels: { en: "Restorer", de: "Restauratorin oder Restaurator" },
+    href: "/vocab/editions/modavis/person-terms/activity-role.restorer",
+  };
+  assert.match(renderToStaticMarkup(createElement(ParticipationRoleLink, { reference })),
+    /href="\/vocab\/editions\/modavis\/person-terms\/activity-role\.restorer">Restorer<\/a>/);
 });

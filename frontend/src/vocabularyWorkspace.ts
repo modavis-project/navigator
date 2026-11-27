@@ -1,5 +1,6 @@
 import { isPublishedVocabularyCollection } from "./researchWorkspace";
 import {publicGetJson} from "./api";
+import {editionReadingUrl,vocabularyEditionRoute,vocabularyReaderAlias} from "./vocabularyRoutes";
 import {workspaceUrl, type NewWorkspaceView, type VocabularyBinding} from "./researchWorkspace";
 
 type Row=Record<string,any>;
@@ -104,11 +105,30 @@ export async function resolveVocabularyWorkspaceView(raw:string,signal?:AbortSig
     pin(params,"snapshot",data.publicCoreSha256);
     return result(url,params.get("term")?`${params.get("term")} · ${data.title||usage[1]}`:`${data.title||usage[1]} wordings`);
   }
+  const alias=vocabularyReaderAlias(url.pathname);
+  const edition=vocabularyEditionRoute(url.pathname);
+  if(edition) {
+    const {term, resource}=edition;
+    query(params,term?["language","snapshot"]:["language","q","offset","snapshot"]);
+    const language=params.get("language")||"en";
+    if(!["de","en"].includes(language))throw new Error("Choose English or German.");
+    const data=await get<Row>(editionReadingUrl(edition, params),signal);assertActive(signal);
+    const info=data.edition;
+    if(info?.id!==edition.edition||(term&&term!==data.term?.id))
+      throw new Error("The requested edition or term was not verified.");
+    const snapshot=pin(params,"snapshot",info.contentSha256);
+    const labels=data.term?.labels||info.schemes?.find((item:Row)=>item.id===edition.scheme)?.title||info.title;
+    return result(url,labels?.[language]||labels?.en||labels?.de||data.term?.code,{
+      kind:"edition",collection:edition.edition,snapshot,
+      collectionTitle:info.title?.[language]||info.title?.en||edition.edition,version:info.version,
+      ...(resource?{resource}:{})});
+  }
   const scoped=url.pathname.match(/^\/vocab\/([^/]+)\/concepts\/([^/]+)\/?$/),unscoped=url.pathname.match(/^\/vocab\/concepts\/([^/]+)\/?$/),scheme=url.pathname.match(/^\/vocab\/([^/]+)\/?$/);
-  if(scoped||unscoped||scheme) {
+  if(alias||scoped||unscoped||scheme) {
     const {parseVocabularyReadingQuery,loadVocabularyRecord}=await import("./vocabularyRecords");
     const parsed=parseVocabularyReadingQuery(url.search);
-    const props=scoped?{expectedSchemeId:decodeURIComponent(scoped[1]),conceptId:decodeURIComponent(scoped[2])}:unscoped?{conceptId:decodeURIComponent(unscoped[1])}:{schemeId:decodeURIComponent(scheme![1])};
+    const props=alias?(alias.conceptId?{expectedSchemeId:alias.schemeId,conceptId:alias.conceptId}:{schemeId:alias.schemeId})
+      :scoped?{expectedSchemeId:decodeURIComponent(scoped[1]),conceptId:decodeURIComponent(scoped[2])}:unscoped?{conceptId:decodeURIComponent(unscoped[1])}:{schemeId:decodeURIComponent(scheme![1])};
     const controller=signal?undefined:new AbortController();
     const data=await loadVocabularyRecord(props,parsed,signal||controller!.signal,get);assertActive(signal);
     const concept=data.kind==="concept"?data.concept:undefined,info=data.kind==="scheme"?data.scheme:concept!.scheme!;

@@ -204,6 +204,21 @@ def register_vocabulary_usage(app):
         content = canonical(usage(work,family,args,True)) if export else cached(family,tuple(sorted(args.items())))
         data = json.loads(content)
         data['capabilities'] = usage_capabilities(app, family)
+        if family == 'activities' and data.get('term') and data.get('match') == 'exact' and not export:
+            from .vocabulary_editions import ACTIVITY_GLOSSES
+            if gloss := ACTIVITY_GLOSSES.get(norm(data['term'])):
+                data['englishGloss'] = gloss
+        term = data.get('term')
+        if term and data.get('match') == 'exact' and not export:
+            editions = app.extensions.get('vocabulary_editions')
+            if editions and family in {'key_action', 'stop_action', 'windchests', 'stops', 'divisions', 'coupler'} and (terms := editions.specification_terms_for_wording(family, term)):
+                data['specificationTerms'] = terms
+            if family == 'coupler':
+                from .coupler_terms import coupler_wording
+                # Derive the reading from a retained original label, not the
+                # user's case-folded lookup text.
+                if data.get('variants') and (structured := coupler_wording(data['variants'][0]['label'])):
+                    data['couplerWording'] = structured
         content = canonical(data)
         # The registered research-package adapter turns complete JSON selections
         # into RO-Crate archives; it still requires an exact core pin and license.

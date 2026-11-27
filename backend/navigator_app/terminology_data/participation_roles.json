@@ -1,0 +1,187 @@
+{
+  "version": "1.1.0",
+  "scheme": "modavis_person_terminology",
+  "existingRoles": {
+    "builder": "/vocab/person-terms/activity-role.builder"
+  },
+  "concepts": [
+    {
+      "id": "activity-role.restorer",
+      "code": "activity_role.restorer",
+      "labels": {"en": "Restorer", "de": "Restauratorin oder Restaurator"},
+      "definition": {
+        "en": "A person or organisation documented as carrying out restoration work on an instrument in a particular intervention.",
+        "de": "Person oder Organisation, die bei einer konkreten Maßnahme nachweislich Restaurierungsarbeiten an einem Instrument ausgeführt hat."
+      },
+      "scopeNote": {
+        "en": "Use for a documented role in the intervention. A general mention of repair, maintenance, or restoration establishes the kind of work and needs separate evidence for the participant’s responsibility.",
+        "de": "Für eine belegte Rolle bei der Maßnahme. Eine allgemeine Angabe zu Reparatur, Wartung oder Restaurierung beschreibt die Arbeiten. Die Verantwortung der beteiligten Person oder Organisation ist gesondert zu belegen."
+      },
+      "recordedRoles": ["restorer"],
+      "evidence": [
+        {"label": {"en": "Restoration at St. Otmar, Hochmössingen", "de": "Restaurierung in St. Otmar, Hochmössingen"}, "href": "/events/event%3Ar05%3A1ca181485dba00e1e25139b488caa292"}
+      ]
+    },
+    {
+      "id": "activity-role.commissioning-party",
+      "code": "activity_role.commissioning_party",
+      "labels": {"en": "Commissioning party", "de": "Auftraggebende Partei"},
+      "definition": {
+        "en": "A person or organisation documented as placing a commission for a specific instrument, intervention, or performance.",
+        "de": "Person oder Organisation, die nachweislich ein bestimmtes Instrument, eine Maßnahme oder eine Aufführung in Auftrag gegeben hat."
+      },
+      "scopeNote": {
+        "en": "Apply when the commission and its commissioning party are documented. Record any funding, ownership, or execution as separate roles when supported by the evidence.",
+        "de": "Voraussetzung sind ein belegter Auftrag und die Angabe der auftraggebenden Partei. Finanzierung, Eigentum und Ausführung werden bei entsprechender Beleglage als gesonderte Rollen erfasst."
+      },
+      "recordedRoles": ["commissioning_party"],
+      "evidence": [
+        {"label": {"en": "musiXplora commissioning party", "de": "Auftraggebende Partei in musiXplora"}, "href": "https://musixplora.modavis.org/version/1/vocab/contribution-role/03.01."}
+      ]
+    },
+    {
+      "id": "activity-role.donor",
+      "code": "activity_role.donor",
+      "labels": {"en": "Donor", "de": "Schenkende Partei"},
+      "definition": {
+        "en": "A person or organisation documented as giving an instrument, component, money, or another resource as a gift in a particular event.",
+        "de": "Person oder Organisation, die bei einem bestimmten Ereignis nachweislich ein Instrument, ein Bauteil, Geld oder ein anderes Mittel unentgeltlich zugewendet hat."
+      },
+      "scopeNote": {
+        "en": "Record the documented giver and the gift separately. Use a directional ownership transfer only when a transfer of title is documented.",
+        "de": "Schenkende Partei und Zuwendung werden gesondert erfasst. Ein Eigentumsübergang wird nur bei entsprechendem Beleg angegeben."
+      },
+      "recordedRoles": ["donor"],
+      "evidence": [
+        {"label": {"en": "CIDOC CRM transfer of title from an actor", "de": "Eigentumsübertragung durch einen Akteur im CIDOC CRM"}, "href": "https://cidoc-crm.org/html/cidoc_crm_v7.1.3.html#P23"}
+      ]
+    },
+    {
+      "id": "activity-role.performer",
+      "code": "activity_role.performer",
+      "labels": {"en": "Performer", "de": "Interpretin oder Interpret"},
+      "definition": {
+        "en": "A person or ensemble documented as performing music in a particular performance or recording session.",
+        "de": "Person oder Ensemble, die beziehungsweise das nachweislich bei einer bestimmten Aufführung oder Aufnahme musiziert hat."
+      },
+      "scopeNote": {
+        "en": "Apply to the documented performance. A participant’s career, the organisation of the event, and the instrument they played can each have their own evidence.",
+        "de": "Die Rolle bezieht sich auf die belegte Aufführung. Der Beruf, die Organisation des Ereignisses und das gespielte Instrument können jeweils gesondert belegt sein."
+      },
+      "recordedRoles": ["performer"],
+      "evidence": [
+        {"label": {"en": "musiXplora performer", "de": "Interpretin oder Interpret in musiXplora"}, "href": "https://musixplora.modavis.org/version/1/vocab/contribution-role/02."}
+      ]
+    },
+    {
+      "id": "activity-role.owner",
+      "code": "activity_role.owner",
+      "labels": {"en": "Owner", "de": "Eigentümerin oder Eigentümer"},
+      "definition": {
+        "en": "A person or organisation holding title to the instrument at the time of the documented activity.",
+        "de": "Person oder Organisation, der das Instrument zum Zeitpunkt der dokumentierten Tätigkeit gehörte."
+      },
+      "scopeNote": {
+        "en": "Use for documented ownership. Record possession, custody, venue, and dates from their respective evidence.",
+        "de": "Für belegtes Eigentum. Besitz, Obhut, Standort und Datierung werden nach ihren jeweiligen Belegen erfasst."
+      },
+      "recordedRoles": ["owner"],
+      "evidence": [
+        {"label": {"en": "musiXplora owner", "de": "Eigentümerin oder Eigentümer in musiXplora"}, "href": "https://musixplora.modavis.org/version/1/vocab/contribution-role/03.08."}
+      ]
+    },
+    {
+      "id": "activity-role.custodian",
+      "code": "activity_role.custodian",
+      "labels": {"en": "Custodian", "de": "Verwahrende Partei"},
+      "definition": {
+        "en": "A person or organisation documented as holding the instrument in their care at the time of an activity.",
+        "de": "Person oder Organisation, in deren Obhut sich das Instrument zum Zeitpunkt der dokumentierten Tätigkeit nachweislich befand."
+      },
+      "scopeNote": {
+        "en": "Record this role when care or custody is documented. The kind of care and any legal title can have separate evidence.",
+        "de": "Die Rolle setzt belegte Betreuung oder Obhut voraus. Art der Betreuung und Eigentumsverhältnisse können gesondert belegt sein."
+      },
+      "recordedRoles": ["custodian"],
+      "evidence": [
+        {"label": {"en": "CIDOC CRM transfer of custody", "de": "Übertragung der Obhut im CIDOC CRM"}, "href": "https://cidoc-crm.org/html/cidoc_crm_v7.1.3.html#E10"}
+      ]
+    },
+    {
+      "id": "activity-role.custody-transferor",
+      "code": "activity_role.custody_transferor",
+      "labels": {"en": "Party surrendering custody", "de": "Partei, die die Obhut abgibt"},
+      "definition": {
+        "en": "A person or organisation identified as surrendering custody of the instrument in the documented transfer.",
+        "de": "Person oder Organisation, die bei der dokumentierten Übergabe nachweislich die Obhut über das Instrument abgegeben hat."
+      },
+      "scopeNote": {
+        "en": "The direction follows the recorded transfer. Identify the receiving party and any ownership change using their own evidence.",
+        "de": "Maßgeblich ist die belegte Übergaberichtung. Die übernehmende Partei und ein etwaiger Eigentumswechsel werden nach eigenen Belegen erfasst."
+      },
+      "recordedRoles": ["custody_transferor"],
+      "evidence": [
+        {"label": {"en": "CIDOC CRM custody surrendered by", "de": "Abgebende Partei bei der Übertragung der Obhut im CIDOC CRM"}, "href": "https://cidoc-crm.org/html/cidoc_crm_v7.1.3.html#P28"}
+      ]
+    },
+    {
+      "id": "activity-role.custody-recipient",
+      "code": "activity_role.custody_recipient",
+      "labels": {"en": "Party receiving custody", "de": "Partei, die die Obhut übernimmt"},
+      "definition": {
+        "en": "A person or organisation identified as receiving custody of the instrument in the documented transfer.",
+        "de": "Person oder Organisation, die bei der dokumentierten Übergabe nachweislich die Obhut über das Instrument übernommen hat."
+      },
+      "scopeNote": {
+        "en": "The direction follows the recorded transfer. Identify the surrendering party and any ownership change using their own evidence.",
+        "de": "Maßgeblich ist die belegte Übergaberichtung. Die abgebende Partei und ein etwaiger Eigentumswechsel werden nach eigenen Belegen erfasst."
+      },
+      "recordedRoles": ["custody_recipient"],
+      "evidence": [
+        {"label": {"en": "CIDOC CRM custody received by", "de": "Übernehmende Partei bei der Übertragung der Obhut im CIDOC CRM"}, "href": "https://cidoc-crm.org/html/cidoc_crm_v7.1.3.html#P29"}
+      ]
+    }
+  ],
+  "links": [
+    {
+      "scheme": "contribution-role",
+      "concept": "04.02.02.",
+      "targetScheme": "modavis_person_terminology",
+      "targetCode": "activity_role.restorer",
+      "relation": "contextual",
+      "basis": "editorial_overlap",
+      "note": {"en": "The musiXplora contribution role covers restoration work. The MODAVIS role applies to a particular documented instrument intervention.", "de": "Die Mitwirkungsrolle in musiXplora umfasst Restaurierungsarbeiten. Die MODAVIS-Rolle bezieht sich auf eine bestimmte dokumentierte Maßnahme an einem Instrument."},
+      "evidenceUrl": "https://musixplora.modavis.org/version/1/vocab/contribution-role/04.02.02."
+    },
+    {
+      "scheme": "contribution-role",
+      "concept": "03.01.",
+      "targetScheme": "modavis_person_terminology",
+      "targetCode": "activity_role.commissioning_party",
+      "relation": "contextual",
+      "basis": "editorial_overlap",
+      "note": {"en": "Both terms describe commissioning. The MODAVIS role is tied to the particular documented commission.", "de": "Beide Begriffe beschreiben die Auftragserteilung. Die MODAVIS-Rolle ist an den konkret belegten Auftrag gebunden."},
+      "evidenceUrl": "https://musixplora.modavis.org/version/1/vocab/contribution-role/03.01."
+    },
+    {
+      "scheme": "contribution-role",
+      "concept": "02.",
+      "targetScheme": "modavis_person_terminology",
+      "targetCode": "activity_role.performer",
+      "relation": "contextual",
+      "basis": "editorial_overlap",
+      "note": {"en": "The contribution role identifies an interpreter or performer. The MODAVIS role specifies their participation in a documented performance or recording.", "de": "Die Mitwirkungsrolle bezeichnet Interpretinnen und Interpreten. Die MODAVIS-Rolle beschreibt ihre Beteiligung an einer konkret belegten Aufführung oder Aufnahme."},
+      "evidenceUrl": "https://musixplora.modavis.org/version/1/vocab/contribution-role/02."
+    },
+    {
+      "scheme": "contribution-role",
+      "concept": "03.08.",
+      "targetScheme": "modavis_person_terminology",
+      "targetCode": "activity_role.owner",
+      "relation": "contextual",
+      "basis": "editorial_overlap",
+      "note": {"en": "The musiXplora role describes ownership. The MODAVIS role identifies the owner in the context of a particular documented activity.", "de": "Die Mitwirkungsrolle in musiXplora beschreibt das Eigentum. Die MODAVIS-Rolle bezeichnet die eigentumsberechtigte Person oder Organisation im Kontext einer konkret belegten Tätigkeit."},
+      "evidenceUrl": "https://musixplora.modavis.org/version/1/vocab/contribution-role/03.08."
+    }
+  ]
+}

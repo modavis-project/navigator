@@ -80,6 +80,27 @@ test('controlled aliases resolve to canonical exact term links without losing re
   assert.equal(retain(view).views[0].binding.snapshot, CONTROLLED);
 });
 
+test('short public vocabulary term links can be saved with the original citation binding', async () => {
+  const view = await resolve('/vocab/activity-types/repair?snapshot='+CONTROLLED, undefined, readControlled);
+  assert.equal(asUrl(view.url).pathname, '/vocab/modavis_activity_types/concepts/activitype%3Arepair');
+  assert.equal(view.binding.resource, concept.code);
+  assert.equal(view.binding.snapshot, CONTROLLED);
+});
+
+test('musiXplora bookmarks pin the exact edition and preserve the source key', async () => {
+  const path = '/vocab/musixplora/contribution-role/09.08.';
+  const view = await resolve(path+'?language=de', undefined, async url => {
+    assert.equal(url, '/api'+path+'?language=de');
+    return {edition: {id: 'musixplora', contentSha256: GRAPH}, term: {id: '09.08.', labels: {de: 'Konzert', en: 'concert'}}};
+  });
+  assert.equal(view.title, 'Konzert');
+  assert.equal(asUrl(view.url).pathname, path);
+  assert.equal(asUrl(view.url).searchParams.get('snapshot'), GRAPH);
+  assert.equal(retain(view).views[0].url, view.url);
+  assert.equal(view.binding.resource, 'contribution-role/09.08.');
+  assert.match(evidence(view), /snapshot=/);
+});
+
 test('controlled scheme lists retain the whole-scheme hash and native language/query parameters', async () => {
   const calls = [];
   const view = await resolve('/vocab/MDVS%3AVOCB%3AACTIVITIES?q=repair&language_code=de&offset=15&limit=15', undefined,

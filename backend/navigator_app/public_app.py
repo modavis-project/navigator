@@ -483,6 +483,8 @@ def create_public_app(
     register_terminology_routes(app)
     from .vocabulary_references import register_vocabulary_references
     register_vocabulary_references(app)
+    from .vocabulary_editions import register_vocabulary_editions
+    register_vocabulary_editions(app, repo)
     from .vocabulary_catalogue import register_vocabulary_catalogue
     register_vocabulary_catalogue(app, repo)
     from .region_boundaries import register_region_boundaries
@@ -1039,19 +1041,29 @@ def create_public_app(
             return jsonify({"error": "unsupported_event_route_filter"}), 400
         if request.args.get("sort") not in {None, "", "newest", "oldest", "type"}:
             return jsonify({"error": "unsupported_event_sort"}), 400
-        return jsonify(repo.list_events(
-            query=request.args.get("q") or None,
-            participant=participant or None,
-            subject=request.args.get("subject") or None,
-            event_type=request.args.get("type") or None,
-            route=route,
-            source=request.args.get("source") or None,
-            year_from=year_from,
-            year_to=year_to,
-            sort=request.args.get("sort") or None,
-            limit=_bounded(request.args.get("limit"), 30),
-            offset=_bounded(request.args.get("offset"), 0, 0, 1_000_000),
-        ))
+        concept = request.args.getlist("concept")
+        if concept and (len(concept) != 1 or not re.fullmatch(r"[A-Za-z0-9._:-]{1,160}", concept[0])):
+            return jsonify({"error": "invalid_event_concept"}), 400
+        try:
+            result = repo.list_events(
+                query=request.args.get("q") or None,
+                participant=participant or None,
+                subject=request.args.get("subject") or None,
+                event_type=request.args.get("type") or None,
+                route=route,
+                source=request.args.get("source") or None,
+                year_from=year_from,
+                year_to=year_to,
+                sort=request.args.get("sort") or None,
+                limit=_bounded(request.args.get("limit"), 30),
+                offset=_bounded(request.args.get("offset"), 0, 0, 1_000_000),
+                **({"event_concept": concept[0]} if concept else {}),
+            )
+        except LookupError:
+            if not concept:
+                raise
+            return jsonify({"error": "activity_vocabulary_concept_not_found"}), 404
+        return jsonify(result)
 
     @app.get("/api/events/<path:event_id>")
     def event_detail(event_id: str):
@@ -1219,7 +1231,11 @@ def create_public_app(
             require_snapshot(values, pinned['contentSha256'])
         result = repo.public_vocabulary_concepts(scheme=values.get('scheme_code'), query=values.get('q', ''),
             language=values.get('language'), limit=bounded_integer(values, 'limit', 200, 1, 500), offset=bounded_integer(values, 'offset', 0, 0, 100000))
-        return jsonify({**result, 'contentSha256': pinned['contentSha256'] if pinned else None})
+        editions = app.extensions.get('vocabulary_editions')
+        if editions:
+            result = {**result, 'items': [editions.project(item) for item in result['items']]}
+        return jsonify({**result,
+                        'contentSha256': pinned['contentSha256'] if pinned else None})
 
     @app.get("/api/vocab/concepts/<path:identifier>")
     @vocabulary_endpoint
@@ -1233,7 +1249,9 @@ def create_public_app(
             raise ValueError('Schema categories have no controlled vocabulary snapshot')
         if pinned:
             require_snapshot(values, pinned['contentSha256'])
-        return jsonify({'concept': concept, 'contentSha256': pinned['contentSha256'] if pinned else None})
+        editions = app.extensions.get('vocabulary_editions')
+        return jsonify({'concept': editions.project(concept) if editions else concept,
+                        'contentSha256': pinned['contentSha256'] if pinned else None})
 
     @app.get("/api/vocab/source-terms/<path:identifier>")
     @vocabulary_endpoint

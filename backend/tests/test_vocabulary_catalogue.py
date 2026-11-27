@@ -110,6 +110,42 @@ def test_catalogue_keeps_record_kinds_units_and_action_fields_separate(applicati
     assert all('physical' not in item['countUnit'] for item in wordings.values())
 
 
+def test_activity_lookup_binds_all_inputs_and_preserves_exact_source_wording(application, monkeypatch):
+    catalogue = application.extensions['vocabulary_catalogue']
+    monkeypatch.setattr(catalogue.repo, 'public_vocabulary_event_facets', lambda: [
+        {'code': 'repair', 'conceptCode': 'repair'},
+        {'code': 'Ablehnung', 'sourceWording': 'Ablehnung'},
+        {'code': 'contextual_statement'},
+    ])
+    with catalogue.work().connect() as connection:
+        connection.executemany('''insert into term_occurrence(id,kind,label,search)
+            values(?, 'activities', ?, ?)''', [
+            ('b', 'ablehnung', 'ablehnung'), ('a', 'Ablehnung', 'ablehnung'),
+            ('c', 'Réglage', 'réglage'),
+        ])
+    client = application.test_client()
+    scheme = catalogue.repo.public_vocabulary_snapshot('modavis_activity_types')
+    url = '/api/vocab/activity-lookup?' + urlencode({
+        'snapshot': scheme['contentSha256'], 'coreSnapshot': CORE, 'indexSnapshot': INDEX,
+    })
+    response = client.get(url)
+    assert response.status_code == 200
+    result = response.json
+    assert result['contentSha256'] == scheme['contentSha256']
+    assert (result['publicCoreSha256'], result['researchIndexSha256']) == (CORE, INDEX)
+    assert result['concepts'][0]['labels'][1] == {'label': 'Reparatur', 'languageCode': 'de'}
+    assert result['wordings'][0] == {
+        'key': 'ablehnung', 'label': 'Ablehnung', 'occurrences': 2,
+        'href': '/vocab/usage/activities?term=Ablehnung&match=exact&snapshot=' + CORE,
+    }
+    assert result['wordings'][1]['label'] == 'Réglage'
+    assert result['eventFacets'][2] == {'code': 'contextual_statement'}
+    assert client.get(url, headers={'If-None-Match': response.headers['ETag']}).status_code == 304
+    for name in ('snapshot', 'coreSnapshot', 'indexSnapshot'):
+        assert client.get('/api/vocab/activity-lookup?' + name + '=').status_code == 400
+        assert client.get('/api/vocab/activity-lookup?' + name + '=unavailable').status_code == 409
+
+
 def test_registry_search_pages_and_language_preserve_original_candidate_payload(application):
     client = application.test_client()
     first = client.get('/api/vocab/registry?limit=1').json

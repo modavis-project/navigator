@@ -100,13 +100,13 @@ test("concept requests carry the expected scheme and refuse wrong-scheme or unve
   await assert.rejects(api.loadVocabularyRecord({ conceptId: concept.code }, { ...query, snapshot: pin }, new AbortController().signal, async () => ({ concept })), error => error.status === 409);
 });
 
-test("scheme pagination and concept links retain query and exact displayed snapshot", () => {
+test("scheme pagination retains the query and concept links retain just the snapshot", () => {
   const html = render(api.VocabularySchemeReading, { scheme, list: { items: [concept], total: 70, offset: 30, limit: 30 }, query: { ...query, q: "repair", offset: 30 }, contentSha256: pin });
   assert.match(html, /70 governed concepts · whole scheme/);
   assert.match(html, /70 matching governed concepts/);
   for (const link of links(html).filter(link => ["Previous page", "Next page", "Repair"].includes(link.text))) {
     const url = new URL(link.href, "https://navigator.test");
-    assert.equal(url.searchParams.get("q"), "repair");
+    assert.equal(url.searchParams.get("q"), link.text === "Repair" ? null : "repair");
     assert.equal(url.searchParams.get("snapshot"), pin);
   }
   assert.equal(links(html).filter(link => ["Previous page", "Next page"].includes(link.text)).length, 2);
@@ -152,6 +152,7 @@ test("source mappings, public event assertions and reverse evidence retain disti
   const html = render(api.VocabularyConceptReading, { concept: item, query });
   assert.ok(links(html).some(link => link.href === "/vocab/source-terms/TERM%3AA%2FB"));
   assert.ok(links(html).some(link => link.href === "/events/EVENT%3A1"));
+  assert.ok(links(html).some(link => link.href === "/events?concept=activitype%3Arepair" && link.text === "View all 8 linked events"));
   assert.match(html, /events.type/);
   assert.match(html, /Source scope retained/);
   assert.match(html, /8 event assertions/);
@@ -159,16 +160,30 @@ test("source mappings, public event assertions and reverse evidence retain disti
   assert.match(html, /the reported total is 4/);
 });
 
-test("schema categories are never advertised as controlled concepts or downloadable vocabulary snapshots", () => {
-  const category = { code: "person", preferredLabel: "Person", definition: "A retained schema category.", recordKind: "schema_category", scheme: { code: "modavis_entity_types", name: "Public entity types", version: "1.6.0" }, labels: [] };
-  const html = render(api.VocabularyConceptReading, { concept: category, query });
-  assert.match(html, /Schema category/);
-  assert.match(html, /Copy category code/);
-  assert.doesNotMatch(html, /Controlled vocabulary concept|SKOS \/ Turtle|Source-term registry mappings/);
-  assert.ok(links(html).some(link => link.href === "/persons"));
-  const list = render(api.VocabularySchemeReading, { scheme: { ...category.scheme, recordKind: "schema_categories", categoryCount: 2, conceptCount: 0 }, list: { items: [category], total: 2, offset: 0, limit: 30 }, query });
-  assert.match(list, /2 schema categories · whole category set/);
-  assert.doesNotMatch(list, /0 governed concepts|Cite and download/);
+test("actor catalogue types have a separate reference and exact directory links", () => {
+  const scheme = { code: "modavis_entity_types", name: "Public entity types", version: "1.6.0",
+    recordKind: "schema_categories", categoryCount: 2, conceptCount: 0 };
+  const categories = [
+    { code: "person", preferredLabel: "Person" },
+    { code: "organization", preferredLabel: "Organisation" },
+  ].map(item => ({ ...item, recordKind: "schema_category", scheme, labels: [] }));
+  const list = render(api.VocabularySchemeReading, { scheme, list: { items: categories, total: 2, offset: 0, limit: 30 }, query });
+  assert.match(list, /Person and organisation records/);
+  assert.match(list, /Catalogue reference/);
+  assert.doesNotMatch(list, /<form|Per page|0 governed concepts|Cite and download/);
+  for (const category of categories) {
+    const directory = `/persons?entity_class=${category.code}`;
+    assert.ok(links(list).some(link => link.href === directory));
+    assert.ok(links(list).some(link => link.href === `/vocab/modavis_entity_types/concepts/${category.code}`));
+    const html = render(api.VocabularyConceptReading, { concept: category, query });
+    assert.match(html, /Copy category code/);
+    assert.doesNotMatch(html, /Controlled vocabulary concept|Recorded labels|SKOS \/ Turtle|Source-term registry mappings/);
+    assert.ok(links(html).some(link => link.href === directory));
+    assert.ok(links(html).some(link => link.href === `/api/vocab/concepts/${category.code}?scheme_code=modavis_entity_types`));
+  }
+  const scoped = render(api.VocabularySchemeReading, { scheme, list: { items: [], total: 0, offset: 0, limit: 30 }, query: { ...query, q: "none" } });
+  assert.match(scoped, /No record types match this view/);
+  assert.ok(links(scoped).some(link => link.href === "/vocab/modavis_entity_types" && link.text === "Show both record types"));
 });
 
 test("loading never announces a measured zero, while refused pins offer explicit recovery without blind retry", () => {

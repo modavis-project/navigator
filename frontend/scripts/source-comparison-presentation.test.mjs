@@ -101,6 +101,27 @@ test("the organ tuning panel preserves raw codes without offering unverified cat
   });
   assert.match(equivalent, /Equivalent source wording/);
   assert.match(equivalent, /href="\/temperaments\?q=Equal&amp;scope=evidence"/);
+
+  const sourceEntry = "https://bund-deutscher-orgelbaumeister.de/stimmungen/template.htm?label=2hKi2";
+  const panelInput = {
+    status: "single_source", preferredValue: "Kirnberger II",
+    assertions: [{...code, value: "Kirnberger II", valueKind: "wording"}],
+  };
+  const exact = renderPanel({...panelInput, catalogRelation: {
+    state: "exact_record", targetUrl: "/temperaments/2hKi2", exactRecordSourceUrl: sourceEntry,
+  }});
+  assert.match(exact, /href="\/temperaments\/2hKi2"/);
+  assert.ok(exact.includes(`href="${sourceEntry}"`));
+  assert.match(exact, /Open the BDO source entry/);
+
+  const related = renderPanel({...panelInput, catalogRelation: {
+    state: "candidate_set", targetUrl: safeLink, exactRecordSourceUrl: sourceEntry, matchingRecordCount: 2,
+  }});
+  assert.doesNotMatch(related, /bund-deutscher-orgelbaumeister|Open the BDO source entry/);
+  assert.doesNotMatch(renderPanel({...panelInput, catalogRelation: {
+    state: "exact_record", targetUrl: "/temperaments/2hKi2",
+    exactRecordSourceUrl: "https://bund-deutscher-orgelbaumeister.de.example.org/stimmungen/",
+  }}), /example\.org|Open the BDO source entry/);
 });
 
 test("component markers attach only to the supplied field or explicit presentation alias", () => {
@@ -110,6 +131,24 @@ test("component markers attach only to the supplied field or explicit presentati
   assert.equal(helpers.comparisonsForComponentField(fields, "unrelated").length, 0);
   assert.equal(helpers.comparisonsForComponentField(fields, "name").length, 0);
   assert.equal(helpers.componentVariantKind([{status: "variant", variantKind: "equivalent_notation"}, {status: "variant", variantKind: "name_variant"}]), "source_wording");
+});
+
+test("record reference links open published schemes or exact reference concepts", () => {
+  const { vocabularyReferenceLinks } = load("vocabularyReferenceLinks.ts", {}, { URLSearchParams });
+  const base = "https://navigator.modavis.org";
+  for (const [key, scheme] of [["evidenceRoles", "evidence-role"], ["heritageRecognition", "heritage-recognition-status"]]) {
+    const link = new URL(vocabularyReferenceLinks[key], base);
+    assert.equal(link.pathname, "/vocab/reference");
+    assert.equal(link.searchParams.get("collection"), "network");
+    assert.equal(link.searchParams.get("scheme"), `https://w3id.org/modavis/vocab/${scheme}`);
+    assert.equal(link.searchParams.has("uri"), false);
+  }
+  const organ = new URL(vocabularyReferenceLinks.pipeOrgan, base);
+  assert.equal(organ.pathname, "/vocab/reference");
+  assert.equal(organ.searchParams.get("uri"), "https://w3id.org/modavis/vocab/instrument-type/pipe-organ");
+  const omaro = new URL(vocabularyReferenceLinks.omaroOrgan, base);
+  assert.equal(omaro.pathname, "/vocab/omaro");
+  assert.equal(omaro.searchParams.get("uri"), "http://www.mimo-db.eu/InstrumentsKeywords/2266");
 });
 
 test("a value-local comparison opens enclosing disclosures and focuses the exact field", () => {

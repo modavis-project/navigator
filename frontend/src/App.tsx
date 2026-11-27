@@ -3,6 +3,7 @@ import { EVENT_PAGE_SIZE, loadCataloguePage, ORGAN_PAGE_SIZE, PERSON_PAGE_SIZE }
 import { formatDateTime, formatFieldValue, formatInteger, friendlyLabel } from "./formatting";
 import { positiveRouteInt } from "./routeParameters";
 import { temperamentOrganHref } from "./temperamentOccurrences";
+import { vocabularyReferenceLinks } from "./vocabularyReferenceLinks";
 import { ResearchWorkspace } from "./ResearchWorkspacePanel";
 import { RouteBoundary } from "./RouteBoundary";
 import { LoadingContent, UpdatingContent } from "./LoadingContent";
@@ -10,7 +11,7 @@ import { jsonRequestCache } from "./requestCache";
 import { fetchDiscoveryContext } from "./api";
 import { PageFaq } from "./PageFaq";
 import { ActorRelationshipPages, useActorCollection } from "./actorCollections";
-import { ContextualEventSummary, EventTransferEndpoints, eventSourcePresentation, ParticipantIdentityNote, ParticipantSourceEvidence, SourceOccurrenceEvidence } from "./eventParticipation";
+import { ContextualEventSummary, EventTransferEndpoints, eventSourcePresentation, ParticipantIdentityNote, ParticipantSourceEvidence, ParticipationRoleLink, SourceOccurrenceEvidence } from "./eventParticipation";
 import { UiLanguagePreviewNotice, UiLanguageSelector, useUiLocale } from "./uiLocale";
 import { publicOrganTabLabel, publicPageLabel, publicSectionLabel } from "./uiLabels";
 import { EntityExportPanel, EntityPageTabs, EntityTabPanel, useEntityPageTab } from "./entityExport";
@@ -344,13 +345,15 @@ import {
   componentMetricValue,
   reportedManualCount,
 } from "./reviewerPresentation";
-import { vocabularyUsageFamily } from "./vocabularyRoutes";
+import { vocabularyEditionRoute, vocabularyReaderAlias, vocabularyUsageFamily, type VocabularyEditionId } from "./vocabularyRoutes";
 const PodRelatedResources = lazy(() => import("./PodExplorerRelated").then(module => ({ default: module.PodRelatedResources })));
 const VocabularyHub = lazy(() => import("./vocabularyHub").then(module => ({ default: module.VocabularyHub })));
+const EventTypePicker = lazy(() => import("./eventTypePicker").then(module => ({ default: module.EventTypePicker })));
 const VocabularyUsage = lazy(() => import("./vocabularyHub").then(module => ({ default: module.VocabularyUsage })));
 const CandidateVocabularyPage = lazy(() => import("./vocabularyHub").then(module => ({ default: module.CandidateVocabularyPage })));
 const ReferenceVocabulary = lazy(() => import("./referenceVocabulary").then(module => ({ default: module.ReferenceVocabulary })));
 const PublicVocabularyRecords = lazy(() => import("./vocabularyRecords").then(module => ({ default: module.PublicVocabularyRecords })));
+const VocabularyEdition = lazy(() => import("./vocabularyEdition"));
 const OmaroCard = lazy(() => import("./omaro").then(module => ({ default: module.OmaroCard })));
 const OmaroExplorer = lazy(() => import("./omaro").then(module => ({ default: module.OmaroExplorer })));
 const ActorResearchPanel = lazy(() => import("./organologicalResearch").then(module => ({ default: module.ActorResearchPanel })));
@@ -507,6 +510,7 @@ type PublicVocabRoute =
   | { kind: "release"; id: string }
   | { kind: "concept"; id: string; schemeId?: string }
   | { kind: "usage"; id: string }
+  | { kind: "edition"; edition: VocabularyEditionId; scheme?: string; term?: string }
   | { kind: "source_term"; id: string };
 type ProcessorActorPermissionState = {
   actorId?: string | null;
@@ -1130,6 +1134,11 @@ function routeResearchRoute(): ResearchRoute | null {
 
 function routePublicVocabRoute(): PublicVocabRoute | null {
   if (window.location.pathname.match(/^\/vocab\/?$/)) return { kind: "catalog" };
+  const edition = vocabularyEditionRoute(window.location.pathname);
+  if (edition) return { kind: "edition", ...edition };
+  const alias = vocabularyReaderAlias(window.location.pathname);
+  if (alias) return alias.conceptId ? { kind: "concept", id: alias.conceptId, schemeId: alias.schemeId }
+    : { kind: "scheme", id: alias.schemeId };
   const usageFamily = vocabularyUsageFamily(window.location.pathname);
   if (usageFamily) return {kind: "usage", id: usageFamily};
   const releaseMatch = window.location.pathname.match(/^\/vocab\/releases\/([^/]+)\/?$/);
@@ -6692,10 +6701,19 @@ function eventDateLabel(event: EventListResponse["items"][number] | EventDetail)
   return start || end || "Date not supplied";
 }
 
-function eventTypeBrowseHref(code?: string | null): string | null {
+function eventTypeBrowseHref(code?: string | null, sourceWording?: string | null): string | null {
+  if (sourceWording?.trim()) return `/vocab/usage/activities?${new URLSearchParams({ term: sourceWording, match: "exact" })}`;
   return code && !code.startsWith("source-only:")
     ? `/vocab/${encodeURIComponent("modavis_activity_types")}/concepts/${encodeURIComponent(code)}`
     : null;
+}
+
+function EventTypeBadge({ event, label }: { event: EventListResponse["items"][number]; label?: string }) {
+  const { t } = useUiLocale();
+  const { sourceOnly } = eventSourcePresentation(event);
+  const title = label || (sourceOnly && event.sourceEventType) || event.type.name || event.type.code || t("event.catalogue.event", "Event", "Ereignis");
+  const href = eventTypeBrowseHref(sourceOnly ? null : event.type.code, sourceOnly ? event.sourceEventType : null);
+  return <Pill tone="strong">{href ? <a href={href}>{title}</a> : title}</Pill>;
 }
 
 const RELOCATION_EVENT_TYPE = "activitype:relocation";
@@ -6719,6 +6737,7 @@ function EventDirectoryPage({ publicProjection = false, releaseContext }: {
   const relocationType = publicProjection ? "transfer" : RELOCATION_EVENT_TYPE;
   const [query, setQuery] = useState(params.get("q") || "");
   const [type, setType] = useState(params.get("type") || params.get("event_type") || "");
+  const [concept, setConcept] = useState(publicProjection ? params.get("concept") || "" : "");
   const [source, setSource] = useState(params.get("source") || "");
   const [yearFrom, setYearFrom] = useState(params.get("year_from") || "");
   const [yearTo, setYearTo] = useState(params.get("year_to") || "");
@@ -6733,7 +6752,7 @@ function EventDirectoryPage({ publicProjection = false, releaseContext }: {
   const [error, setError] = useState<string | null>(null);
   const textFilterEdited = useRef(false);
   const pageSize = EVENT_PAGE_SIZE;
-  const selection = [query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort];
+  const selection = [query, type, concept, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort];
   const activeFilterCount = selection.filter(Boolean).length;
   const defaultSelection = activeFilterCount === 0 && offset === 0;
   const requestKey = JSON.stringify([...selection, offset]);
@@ -6747,6 +6766,7 @@ function EventDirectoryPage({ publicProjection = false, releaseContext }: {
       loadCataloguePage("events", releaseContext, defaultSelection, controller.signal, () => fetchEvents({
         query,
         type,
+        concept,
         source,
         yearFrom,
         yearTo,
@@ -6767,6 +6787,7 @@ function EventDirectoryPage({ publicProjection = false, releaseContext }: {
           [
             ["q", query],
             ["type", type],
+            ["concept", concept],
             ["source", source],
             ["year_from", yearFrom],
             ["year_to", yearTo],
@@ -6796,16 +6817,15 @@ function EventDirectoryPage({ publicProjection = false, releaseContext }: {
       window.clearTimeout(timer);
       controller.abort();
     };
-  }, [query, type, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset, requestKey, releaseContext, defaultSelection]);
+  }, [query, type, concept, source, yearFrom, yearTo, subject, participant, completeness, routeState, sort, offset, requestKey, releaseContext, defaultSelection]);
 
   const total = response?.total ?? 0;
   const eventTypeOptions = response?.facets?.eventTypes ?? [];
   const relocationTypeOption = eventTypeOptions.find((option) => option.code === relocationType);
   const displayedType = type || (routeState ? relocationType : "");
   const relocationSelected = displayedType === relocationType;
-  const selectedTypeOption = eventTypeOptions.find((option) => option.code === displayedType);
-  const primaryTypeOptions = eventTypeOptions.slice(0, 8);
-  const otherTypeOptions = eventTypeOptions.slice(8).sort((a, b) => (a.displayName || a.name).localeCompare(b.displayName || b.name));
+  const resolvedConcept = response?.filters.concept;
+  const requestedConceptLabel = response?.filters.conceptLabel;
   const showsEndpoints = relocationSelected || Boolean(routeState);
   const advancedFilterCount = [
     source,
@@ -6823,6 +6843,7 @@ function EventDirectoryPage({ publicProjection = false, releaseContext }: {
     textFilterEdited.current = false;
     setQuery("");
     setType("");
+    setConcept("");
     setSource("");
     setYearFrom("");
     setYearTo("");
@@ -6890,31 +6911,20 @@ function EventDirectoryPage({ publicProjection = false, releaseContext }: {
             />
           </div>
         </label>
-        <div className="event-type-control">
-          <label>
-            <span>{t("event.catalogue.type", "Event type", "Ereignistyp")}</span>
-            <select
-              value={displayedType}
-              onChange={(event) => {
-                updateEventFilter(setType, event.target.value);
-                if (event.target.value !== relocationType) setRouteState("");
-              }}
-              aria-describedby="event-type-filter-help"
-            >
-              <option value="">{t("event.catalogue.allTypes", "All event types", "Alle Ereignistypen")}</option>
-              {primaryTypeOptions.length > 0 && <optgroup label={t("event.catalogue.commonTypes", "Most frequent types", "Häufigste Ereignistypen")}>
-                {primaryTypeOptions.map((option) => <option key={option.code} value={option.code}>{option.displayName || option.name} ({formatNumber(option.count)})</option>)}
-              </optgroup>}
-              {otherTypeOptions.length > 0 && <optgroup label={t("event.catalogue.otherTypes", "Other recorded types", "Weitere erfasste Ereignistypen")}>
-                {otherTypeOptions.map((option) => <option key={option.code} value={option.code}>{option.displayName || option.name} ({formatNumber(option.count)})</option>)}
-              </optgroup>}
-              {displayedType && !selectedTypeOption && <option value={displayedType}>{friendlyLabel(displayedType.replace("activitype:", ""))}</option>}
-            </select>
-          </label>
-          <small id="event-type-filter-help">
-            <a href="/vocab/modavis_activity_types">{t("event.catalogue.browseTerms", "browse definitions and source terms", "Definitionen und Quellenbegriffe ansehen")}</a>
-          </small>
-        </div>
+        <Suspense fallback={<label><span>{t("event.catalogue.type", "Event type", "Ereignistyp")}</span><input disabled /></label>}>
+          <EventTypePicker
+            facets={eventTypeOptions}
+            value={displayedType}
+            publicProjection={publicProjection}
+            concept={concept && (typeof resolvedConcept === "string" && resolvedConcept ? resolvedConcept : concept)}
+            conceptLabel={typeof requestedConceptLabel === "string" && concept ? requestedConceptLabel : ""}
+            onClearConcept={() => updateEventFilter(setConcept, "")}
+            onChange={(value) => {
+              updateEventFilter(setType, value);
+              if (value !== relocationType) setRouteState("");
+            }}
+          />
+        </Suspense>
         <label>
           <span>{t("event.catalogue.from", "From year", "Ab Jahr")}</span>
           <input inputMode="numeric" value={yearFrom} onChange={(event) => updateEventFilter(setYearFrom, event.target.value, true)} placeholder={t("event.catalogue.fromHint", "e.g. 1700", "z. B. 1700")} />
@@ -7007,7 +7017,7 @@ function EventDirectoryPage({ publicProjection = false, releaseContext }: {
         {(response?.items ?? []).map((event) => (
           <article className="event-card" key={event.mdvsId}>
             <div className="event-card-heading">
-              <Pill tone="strong">{event.mappingKind !== "source_only" && event.type.mappingKind !== "source_only" && eventTypeBrowseHref(event.type.code) ? <a href={eventTypeBrowseHref(event.type.code) || undefined}>{event.type.name || event.type.code || "Event"}</a> : event.type.name || "Event"}</Pill>
+              <EventTypeBadge event={event} />
               {(event.mappingKind === "source_only" || event.type.mappingKind === "source_only") && <span className="event-mapping-status source-only">{t("event.catalogue.sourceOnly", "Source-only wording · no narrower type inferred", "Quellenwortlaut · kein engerer Typ abgeleitet")}</span>}
               {event.temporalStatus?.code === "future-dated" && <span className="event-temporal-status future" title={event.temporalStatus.explanation}><AlertCircle size={13} aria-hidden="true" /> {event.temporalStatus.label}</span>}
             </div>
@@ -7077,7 +7087,7 @@ function EventDetailPage({ actor, eventId }: { actor?: NavigatorActor; eventId: 
   const hasDocumentedEndpoint = Boolean(event.transferEndpoints?.origin.length || event.transferEndpoints?.destination.length || event.movement?.origin?.title || event.movement?.destination?.title);
   const sourceReported = Boolean(event.sourceEventType);
   const { sourceOnly, contextAssessment } = eventSourcePresentation(event);
-  const typeLabel = sourceOnly ? event.title : controlledTitle;
+  const typeLabel = sourceOnly ? event.sourceEventType || event.title : controlledTitle;
   const description = event.description !== event.title ? event.description : null;
   const descriptionInHero = contextAssessment || event.movement?.status === "mapped";
   const descriptionInDetails = descriptionInHero ? null : description;
@@ -7086,7 +7096,7 @@ function EventDetailPage({ actor, eventId }: { actor?: NavigatorActor; eventId: 
     <article className="event-detail">
       <header className="event-detail-hero">
         <div><p className="eyebrow">{contextAssessment ? "Retained source context" : sourceOnly ? "Source-only event wording" : sourceReported ? "Source-reported event" : "Canonical event"}</p><h1>{event.title}</h1>{hasDistinctSourceWording && !sourceOnly && <p className="event-source-wording">Controlled type: <strong>{controlledTitle}</strong></p>}{sourceOnly && <p className="event-source-wording">No narrower controlled event type is inferred from this wording.</p>}{descriptionInHero && description && <p>{description}</p>}</div>
-        <div className="event-identity"><Pill tone="strong">{!sourceOnly && eventTypeBrowseHref(event.type.code) ? <a href={eventTypeBrowseHref(event.type.code) || undefined}>{typeLabel}</a> : typeLabel}</Pill><code>{event.mdvsId}</code>{event.movement?.status === "mapped" && event.movement.mapUrl && <a className="event-map-link" href={event.movement.mapUrl}><MapIcon size={14} aria-hidden="true" /> Show connection on map</a>}{event.externalIdentifiers.map((identifier) => <code key={identifier.id}>{identifier.type_name || identifier.type_code}: {identifier.identifier}</code>)}</div>
+        <div className="event-identity"><EventTypeBadge event={event} label={typeLabel} /><code>{event.mdvsId}</code>{event.movement?.status === "mapped" && event.movement.mapUrl && <a className="event-map-link" href={event.movement.mapUrl}><MapIcon size={14} aria-hidden="true" /> Show connection on map</a>}{event.externalIdentifiers.map((identifier) => <code key={identifier.id}>{identifier.type_name || identifier.type_code}: {identifier.identifier}</code>)}</div>
       </header>
       {event.temporalStatus?.code === "future-dated" && <aside className="event-future-date-note" role="note"><AlertCircle size={18} aria-hidden="true" /><div><strong>{event.temporalStatus.label}</strong><p>{event.temporalStatus.explanation}</p></div></aside>}
       <div className="event-detail-grid">
@@ -7098,7 +7108,17 @@ function EventDetailPage({ actor, eventId }: { actor?: NavigatorActor; eventId: 
         {event.temporalClaims.length > 0 && <section><h3>When</h3>{event.temporalClaims.map((claim) => <p key={claim.id}><strong>{claim.rawExpression || [claim.startDate?.slice(0, 10), claim.endDate?.slice(0, 10)].filter(Boolean).join("–")}</strong>{[claim.precisionName, claim.certaintyName].filter(Boolean).length > 0 && <><br /><span>{[claim.precisionName, claim.certaintyName].filter(Boolean).join(" · ")}</span></>}</p>)}</section>}
         {event.locations.length > 0 && <section><h3>Where</h3>{event.locations.map((location) => { const label = location.title || location.mdvsId || `Event location ${location.id}`; return <p key={location.id}>{location.pageUrl ? <a href={location.pageUrl}>{label}</a> : label}{location.role?.name ? ` · ${location.role.name}` : ""}</p>; })}</section>}
         {event.subjects.length > 0 && <section><h3>Affected entities</h3>{event.subjects.map((subject) => <p key={subject.id}>{subject.pageUrl ? <a href={subject.pageUrl}>{subject.title}</a> : subject.title}</p>)}</section>}
-        {event.participants.length > 0 && <section><h3>Participants</h3>{event.participants.map((participant) => <div key={participant.id}><p>{participant.pageUrl ? <a href={participant.pageUrl}>{participant.title}</a> : participant.title}{participant.role?.name ? ` · ${friendlyLabel(participant.role.name)}` : ""}<ParticipantIdentityNote participant={participant} /></p><ParticipantSourceEvidence participant={participant} /></div>)}</section>}
+        {event.participants.length > 0 && <section><h3>Participants</h3>{event.participants.map((participant) => {
+          const roleName = participant.role?.name;
+          const recordedRole = participant.participationRole;
+          const distinctSourceLabel = roleName && roleName.trim().toLowerCase() !== recordedRole?.recordedCode;
+          return <div key={participant.id}><p>
+            {participant.pageUrl ? <a href={participant.pageUrl}>{participant.title}</a> : participant.title}
+            {recordedRole && <> · <ParticipationRoleLink reference={recordedRole} /></>}
+            {distinctSourceLabel && ` · ${friendlyLabel(roleName)}`}
+            <ParticipantIdentityNote participant={participant} />
+          </p><ParticipantSourceEvidence participant={participant} /></div>;
+        })}</section>}
         {isRelocationWithoutRoute && <section className="event-evidence-note">
           <h3>{t("event.detail.endpointEvidence", "Endpoint evidence", "Belege zu den Endpunkten")}</h3>
           <p>{hasDocumentedEndpoint
@@ -7359,6 +7379,7 @@ function PublicVocabularyRoutePage({
   if (route.kind === "catalog") {
     return <VocabularyHub />;
   }
+  if (route.kind === "edition") return <VocabularyEdition edition={route.edition} scheme={route.scheme} term={route.term} />;
   if (route.kind === "usage") return <VocabularyUsage key={route.id} family={route.id}/>;
   if (route.kind === "scheme") {
     if (route.id === "omaro") return <OmaroExplorer />;
@@ -12452,6 +12473,7 @@ function candidatePublicSupportCards(
 }
 
 function SourcePublicOrientation({ record }: { record: SourceRecordDetail }) {
+  const { t } = useUiLocale();
   const primaryEntity = record.supportedEntities?.[0];
   return (
     <section className="public-evidence-summary source-public-summary" aria-label="Public source summary">
@@ -12466,6 +12488,7 @@ function SourcePublicOrientation({ record }: { record: SourceRecordDetail }) {
       <div className="source-public-actions">
         {primaryEntity?.pageUrl && <a className="primary-action" href={primaryEntity.pageUrl}>Open {primaryEntity.kindLabel?.toLowerCase() || "entity"} in Navigator</a>}
         {record.source.url && <a href={record.source.url} target="_blank" rel="noreferrer">Open original {record.source.name} page</a>}
+        <a href={vocabularyReferenceLinks.evidenceRoles}>{t("source.evidenceRoles", "Evidence roles in MODAVIS", "Rollen von Belegen in MODAVIS")}</a>
       </div>
     </section>
   );
@@ -13640,6 +13663,12 @@ function CanonicalActorPage({ category, id, staffMode }: { category: string; id:
               <p>{formatInteger(actor.eventEvidence.eventCount)} event records across {formatInteger(actor.eventEvidence.sourceRecordCount)} source records have an established participant link to this identity.</p>
               {actor.eventEvidence.combinedSourceRecordCount != null && <p>The directory counts {formatInteger(actor.eventEvidence.combinedSourceRecordCount)} distinct source records across builder and event evidence. These evidence sets can overlap.</p>}
               <p>{actor.eventEvidence.scope}</p>
+              {Boolean(actor.eventEvidence.participationRoles?.length) && <p>
+                {t("actor.participationRoles", "Recorded participation roles", "Belegte Mitwirkungsrollen")}{" "}
+                {actor.eventEvidence.participationRoles?.map((reference, index) => <span key={reference.code}>
+                  {index > 0 && ", "}<ParticipationRoleLink reference={reference} />
+                </span>)}
+              </p>}
             </div>
             <a className="button-like" href={actor.eventEvidence.directoryUrl}>Explore all participant events</a>
           </section>}
@@ -16717,6 +16746,10 @@ function OrganPage({
         {organ.candidateContext && <p>{organ.candidateContext.label}. {t("organ.page.candidateBase", "Based on release {release}.", "Grundlage ist die Version {release}.", { release: organ.candidateContext.parentRelease })}</p>}
         <p>{t("organ.page.recordSourceScope", "Source descriptions retain their own dates and attribution. An earlier description can refer to a different instrument at the same place.", "Die Beschreibungen behalten ihre Datierung und ihre Zuordnung zur jeweiligen Quelle. Eine frühere Beschreibung kann eine andere Orgel am selben Standort betreffen.")}</p>
         <a href="/about/release">{t("organ.page.readDataset", "Read about the dataset and its sources", "Mehr zum Datensatz und seinen Quellen")}</a>
+        {publicProjection && <ul>
+          <li><a href={vocabularyReferenceLinks.pipeOrgan}>{t("organ.page.pipeOrganType", "Pipe organ in the MODAVIS vocabulary", "Pfeifenorgel im MODAVIS-Vokabular")}</a></li>
+          <li><a href={vocabularyReferenceLinks.omaroOrgan}>{t("organ.page.omaroReference", "Organ terminology and classification in OMARO", "Orgelbezeichnungen und Klassifikation in OMARO")}</a></li>
+        </ul>}
       </PublicModal>}
       {recordModal === "citation" && <PublicModal title={t("organ.page.citationTitle", "Cite this organ record", "Diesen Orgeldatensatz zitieren")} onClose={() => setRecordModal(null)}>
         <p className="record-citation-text">{organ.citation.recommendedCitation}</p>
@@ -17403,6 +17436,9 @@ function OrganTuningEvidencePanel({ organ }: { organ: OrganDetail }) {
   const temperamentTarget = relation.state === "exact_record" || relation.state === "candidate_set"
     ? relation.targetUrl || relation.exactRecordUrl
     : null;
+  const bdoSource = relation.state === "exact_record" && relation.exactRecordSourceUrl?.startsWith("https://bund-deutscher-orgelbaumeister.de/stimmungen/")
+    ? relation.exactRecordSourceUrl
+    : null;
   const temperamentStatuses: Record<string, string> = {
     agreement: t("organ.tuning.agreement", "Source wording agrees", "Übereinstimmender Quellenwortlaut"),
     single_source: t("organ.tuning.oneSource", "One source record", "Ein Quelldatensatz"),
@@ -17447,6 +17483,9 @@ function OrganTuningEvidencePanel({ organ }: { organ: OrganDetail }) {
           {temperamentTarget && <a className="organ-temperament-value-link" href={temperamentTarget}>
             {relation.state === "exact_record" ? t("organ.tuning.openExact", "Open linked temperament record", "Verknüpften Stimmungseintrag öffnen")
               : t("organ.tuning.browseRelated", "{count, plural, one {Browse # related temperament entry} other {Browse # related temperament entries}}", "{count, plural, one {# verwandten Stimmungseintrag ansehen} other {# verwandte Stimmungseinträge ansehen}}", {count: relation.matchingRecordCount ?? 0})}
+          </a>}
+          {bdoSource && <a className="organ-temperament-value-link" href={bdoSource} target="_blank" rel="noreferrer">
+            {t("organ.tuning.openBdoSource", "Open the BDO source entry", "Originaleintrag beim BDO öffnen")}
           </a>}
         </div>
       </div>}
@@ -24220,8 +24259,10 @@ function Timeline({ items, staffMode, focusedEventId = "" }: { items: Record<str
         const originalLabel = cleanCapturedDisplayText(item.label || t("organ.timeline.activity", "Activity", "Tätigkeit"));
         const displayLabel = item.sourceReported === true && item.sourceOnly !== true
           ? organActivityTypeLabel(t, String(item.eventType || ""), originalLabel) : originalLabel;
+        const recordedType = item.sourceOnly && typeof item.sourceEventType === "string" ? item.sourceEventType : null;
+        const vocabularyHref = eventTypeBrowseHref(item.sourceOnly ? null : String(item.eventType || ""), recordedType);
         const typeLabel = item.sourceOnly
-          ? friendlyLabel(String(item.eventType))
+          ? recordedType || friendlyLabel(String(item.eventType))
           : organActivityTypeLabel(t, String(item.eventType), friendlyLabel(String(item.eventType).replace(/^activitype:/, "")));
         const focused = Boolean(focusedEventId && eventIdentifier === focusedEventId);
         const sourceAttributions = Array.isArray(item.sourceAttributions)
@@ -24247,7 +24288,7 @@ function Timeline({ items, staffMode, focusedEventId = "" }: { items: Record<str
                 : null}
             {item.mappingKind ? <span>{t("organ.timeline.mapping", "Mapping: {mapping}", "Zuordnung: {mapping}", {mapping:friendlyLabel(String(item.mappingKind))})}</span> : null}
             {item.place ? <span>{String(item.place)}</span> : null}
-            {item.eventType ? <span>{t("organ.timeline.type", "Type:", "Typ:")} {!item.sourceOnly && eventTypeBrowseHref(String(item.eventType)) ? <a href={eventTypeBrowseHref(String(item.eventType)) || undefined}>{typeLabel}</a> : typeLabel}</span> : null}
+            {item.eventType ? <span>{t("organ.timeline.type", "Type:", "Typ:")} {vocabularyHref ? <a href={vocabularyHref}>{typeLabel}</a> : typeLabel}</span> : null}
             {Array.isArray(item.participants) && item.participants.filter(isRecord).map((participant, participantIndex) => {
               const name = String(participant.name || t("organ.timeline.unknownParticipant", "Unknown participant", "Unbekannte beteiligte Person"));
               const pageUrl = participant.pageUrl ? String(participant.pageUrl) : "";

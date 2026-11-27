@@ -1,6 +1,6 @@
 import { JsonEvidence } from "./JsonEvidence";
 import { useUiLocale } from "./uiLocale";
-import type { EventSummary } from "./api";
+import type { EventSummary, ParticipationRoleReference } from "./api";
 type ParticipationEvidence = {
   resolutionState?: unknown;
   pageUrl?: unknown;
@@ -46,6 +46,11 @@ export function EventTransferEndpoints({ event }: { event: EventSummary }) {
       {!endpoints[role].length && <dd>{t("event.catalogue.endpointUnknown", "Undocumented", "Nicht dokumentiert")}</dd>}
     </div>)}
   </dl>;
+}
+
+export function ParticipationRoleLink({ reference }: { reference: ParticipationRoleReference }) {
+  const { locale } = useUiLocale();
+  return <a href={reference.href}>{reference.labels[locale]}</a>;
 }
 
 export function ParticipantIdentityNote({ participant }: { participant: ParticipationEvidence }) {

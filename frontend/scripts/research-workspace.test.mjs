@@ -4,9 +4,15 @@ import vm from 'node:vm';
 import test from 'node:test';
 import ts from 'typescript';
 
-const context = {exports: {}, URL, URLSearchParams, Blob};
-const source = readFileSync(new URL('../src/researchWorkspace.ts', import.meta.url), 'utf8');
-vm.runInNewContext(ts.transpileModule(source, {compilerOptions: {target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS}}).outputText, context);
+const compilerOptions = {target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS};
+const compiled = name => ts.transpileModule(readFileSync(new URL(`../src/${name}.ts`, import.meta.url), 'utf8'), {compilerOptions}).outputText;
+const routes = {exports: {}};
+vm.runInNewContext(compiled('vocabularyRoutes'), routes);
+const context = {exports: {}, URL, URLSearchParams, Blob, require: id => {
+  if (id === './vocabularyRoutes') return routes.exports;
+  throw new Error(`Unexpected workspace dependency ${id}`);
+}};
+vm.runInNewContext(compiled('researchWorkspace'), context);
 const api = context.exports, snapshot = 'a'.repeat(64), assessment = 'b'.repeat(64), revision = 'c'.repeat(64);
 const empty = () => api.createWorkspace(snapshot, assessment, '2026-10-30T10:00:00.000Z');
 const record = number => ({kind: 'organ', id: `MDVS:ENTY:TEST-000${number}-A`, title: `Example organ ${number}`, url: `/organs/TEST-000${number}-A`});

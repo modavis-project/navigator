@@ -1,3 +1,5 @@
+import { vocabularyEditionRoute, type VocabularyEditionId } from "./vocabularyRoutes";
+
 export const WORKSPACE_SCHEMA = 'modavis.research-workspace/v2';
 const LEGACY_SCHEMA = 'modavis.research-workspace/v1';
 export const WORKSPACE_KEY = 'modavis.research-workspace.v1';
@@ -22,6 +24,7 @@ export type VocabularyBinding = BindingDescription & (
   | {kind: 'candidate'; collection: 'registry'; publicCoreSha256: string; researchIndexSha256: string}
   | {kind: 'published'; collection: PublishedVocabularyCollection}
   | {kind: 'omaro'; collection: 'omaro'}
+  | {kind: 'edition'; collection: VocabularyEditionId}
 );
 export type WorkspaceView = {id: string; title: string; url: string; savedAt: string; count?: number; unit?: string; binding?: VocabularyBinding};
 export type NewWorkspaceView = Omit<WorkspaceView, 'id' | 'savedAt'>;
@@ -136,6 +139,12 @@ export function validateVocabularyBinding(value: unknown, link: string): Vocabul
     if (!['instruments', 'hs', 'ontology'].includes(params.get('collection') ?? 'instruments')) throw new Error('The retained OMARO collection is unavailable.');
     selectedResource = params.has('uri') ? absoluteResource(params.get('uri')) : null;
     allowed = ['collection', 'uri', 'q', 'language', 'resolution', 'offset', 'limit', 'snapshot'];
+  } else if (kind === 'edition') {
+    const route = vocabularyEditionRoute(url.pathname);
+    if (!route || route.edition !== collection) throw new Error('The retained vocabulary edition and link disagree.');
+    if (!['en', 'de'].includes(params.get('language') ?? 'en')) throw new Error('Unsupported vocabulary display language.');
+    selectedResource = route.resource ?? null;
+    allowed = selectedResource ? ['language', 'snapshot'] : ['language', 'q', 'offset', 'snapshot'];
   } else throw new Error('Unsupported vocabulary binding or collection route.');
   for (const key of params.keys()) {
     if (!allowed.includes(key) || params.getAll(key).length !== 1) throw new Error('Unsupported or repeated retained vocabulary parameter.');

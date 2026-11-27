@@ -14,6 +14,7 @@ from urllib.parse import quote, urlencode
 
 from flask import request
 
+from .public_catalog_context import ACTIVITY_VOCABULARY_SCHEME
 from .research_workbench import canonical, norm
 from .vocabulary_query import (VocabularyUnavailable, bounded_integer, byte_response,
     query_arguments, require_snapshot, vocabulary_endpoint, workbench_resource)
@@ -22,6 +23,8 @@ from .vocabulary_usage import FAMILIES, FAMILY_GROUPS, FAMILY_DESCRIPTIONS, usag
 CONTRACT = 'modavis.navigator.vocabulary-catalogue/v1'
 REGISTRY_CONTRACT = 'modavis.navigator.candidate-terminology-reader/v1'
 REGISTRY_PINS = frozenset({'snapshot', 'coreSnapshot', 'indexSnapshot'})
+ACTIVITY_LOOKUP_CONTRACT = 'modavis.navigator.activity-lookup/v1'
+ACTIVITY_LOOKUP_WORDING_LIMIT = 2000
 SCHEME_TITLES = {
     'urn:modavis:terminology-seed:action': 'Action designations',
     'urn:modavis:terminology-seed:windchest': 'Windchest designations',
@@ -40,6 +43,59 @@ class VocabularyCatalogue:
 
     def work(self):
         return workbench_resource(self.app)
+
+    @lru_cache(maxsize=1)
+    def _activity_wordings(self, core_sha, index_sha):
+        with self.work().connect() as connection:
+            rows = connection.execute('''SELECT grouped.search, grouped.occurrences,
+                (SELECT term.label FROM term_occurrence AS term INDEXED BY term_kind_name
+                 WHERE term.kind='activities' AND term.search=grouped.search
+                 ORDER BY term.id LIMIT 1) AS label
+                FROM (SELECT search, count(*) AS occurrences
+                      FROM term_occurrence INDEXED BY term_kind_name
+                      WHERE kind='activities' GROUP BY search ORDER BY search LIMIT ?) AS grouped''',
+                (ACTIVITY_LOOKUP_WORDING_LIMIT + 1,)).fetchall()
+        if len(rows) > ACTIVITY_LOOKUP_WORDING_LIMIT:
+            raise OverflowError('The activity wording inventory exceeds the compact lookup limit. Browse recorded wordings for full results.')
+        return tuple({
+            'key': row['search'], 'label': row['label'], 'occurrences': row['occurrences'],
+            'href': '/vocab/usage/activities?' + urlencode({
+                'term': row['label'], 'match': 'exact', 'snapshot': core_sha,
+            }),
+        } for row in rows)
+
+    def activity_lookup(self, values):
+        snapshot = self.repo.public_vocabulary_snapshot(ACTIVITY_VOCABULARY_SCHEME)
+        if snapshot is None:
+            raise LookupError('Activity vocabulary snapshot is unavailable')
+        content_sha = snapshot['contentSha256']
+        require_snapshot(values, content_sha)
+        work = self.work()
+        core_sha = work.manifest['core']['sha256']
+        index_sha = work.manifest['index']['sha256']
+        require_snapshot(values, core_sha, 'coreSnapshot')
+        require_snapshot(values, index_sha, 'indexSnapshot')
+        declared = work.manifest.get('facets', {}).get('termKinds')
+        if declared is not None and 'activities' not in declared:
+            raise VocabularyUnavailable('Activity source wordings are unavailable for this snapshot')
+        items = []
+        for concept in snapshot['concepts']:
+            code = concept['code']
+            items.append({
+                'code': code, 'mdvsId': concept.get('mdvsId'),
+                'preferredLabel': concept.get('preferredLabel'), 'definition': concept.get('definition'),
+                'labels': [{'label': label['label'], 'languageCode': label.get('languageCode')}
+                           for label in concept.get('labels', []) if label.get('label')],
+                'href': f'/vocab/{ACTIVITY_VOCABULARY_SCHEME}/concepts/{quote(code, safe="")}?snapshot={content_sha}',
+            })
+        result = {
+            'contract': ACTIVITY_LOOKUP_CONTRACT,
+            'contentSha256': content_sha, 'publicCoreSha256': core_sha, 'researchIndexSha256': index_sha,
+            'concepts': items, 'wordings': [dict(row) for row in self._activity_wordings(core_sha, index_sha)],
+            'eventFacets': [dict(row) for row in self.repo.public_vocabulary_event_facets()],
+        }
+        overlay = self.app.extensions.get('vocabulary_editions')
+        return overlay.lookup(result) if overlay else result
 
     @lru_cache(maxsize=1)
     def _seed(self, index_sha, seed_sha):
@@ -258,6 +314,13 @@ def register_vocabulary_catalogue(app, repo):
     def vocabulary_catalogue():
         query_arguments(request.args, set())
         return byte_response(canonical(catalogue.document())+'\n', 'application/json')
+
+    @app.get('/api/vocab/activity-lookup')
+    @vocabulary_endpoint
+    def vocabulary_activity_lookup():
+        values = query_arguments(request.args, REGISTRY_PINS, pins=REGISTRY_PINS)
+        result = catalogue.activity_lookup(values)
+        return byte_response(canonical(result)+'\n', 'application/json', content_sha256=result['contentSha256'])
 
     @app.get('/api/vocab/registry')
     @vocabulary_endpoint

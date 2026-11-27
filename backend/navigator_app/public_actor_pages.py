@@ -4,6 +4,7 @@ from functools import lru_cache
 from urllib.parse import quote
 
 from .db import connect
+from .participation_vocabulary import participation_role_reference, recorded_participation_roles
 from .public_catalog_context import catalogue_path
 
 SCHEMA = "release_1_5_public"
@@ -50,14 +51,27 @@ class PublicActorPagesMixin:
             return None
         with connect(self.settings) as conn:
             counts = conn.execute(f"""
-                SELECT count(*) AS event_count, count(distinct e.source_record_id) AS source_count
-                FROM {SCHEMA}.documented_event e
-                WHERE e.event_id IN (SELECT c.event_id FROM {SCHEMA}.documented_event_context c
-                    WHERE c.participants_json::jsonb @> %(participant)s::jsonb)
-                """, {"participant": json.dumps([{"targetId": mdvs_id}])}).fetchone()
+                WITH matched AS MATERIALIZED (
+                    SELECT e.source_record_id, c.participants_json::jsonb AS participants
+                    FROM {SCHEMA}.documented_event_context c
+                    JOIN {SCHEMA}.documented_event e USING (event_id)
+                    WHERE c.participants_json::jsonb @> %(participant)s::jsonb
+                )
+                SELECT count(*) AS event_count, count(distinct source_record_id) AS source_count,
+                       ARRAY(SELECT DISTINCT lower(btrim(p.value->>'role')) AS code
+                             FROM matched m
+                             CROSS JOIN LATERAL jsonb_array_elements(m.participants) p(value)
+                             WHERE p.value->>'targetId'=%(id)s
+                               AND lower(btrim(p.value->>'role'))=ANY(%(roles)s)
+                             ORDER BY code) AS role_codes
+                FROM matched
+                """, {"participant": json.dumps([{"targetId": mdvs_id}]), "id": mdvs_id,
+                      "roles": recorded_participation_roles()}).fetchone()
             directory = conn.execute(f"""SELECT source_record_count FROM {SCHEMA}.actor_directory_entry
                 WHERE entry_kind='canonical_actor' AND entry_id=%(id)s""", {"id": mdvs_id}).fetchone()
+        references = [participation_role_reference(role) for role in counts["role_codes"]]
         return {"eventCount": int(counts["event_count"]), "sourceRecordCount": int(counts["source_count"]),
+                **({"participationRoles": references} if references else {}),
                 "combinedSourceRecordCount": int(directory["source_record_count"]) if directory else None,
                 "directoryUrl": f"/events?participant={quote(mdvs_id, safe='')}",
                 "apiUrl": f"/api/events?participant={quote(mdvs_id, safe='')}",

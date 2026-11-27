@@ -143,3 +143,7 @@
 .vh-registry-downloads { padding: 20px; background: #f2f5ec; border: 1px solid #d4dfce; border-radius: 9px; margin-top: 24px; }
 .vh-registry-downloads h2 { font-size: 22px; }
 .vh-registry-downloads p { font-size: 13px; }
+
+.vh-schema-reference { padding-block: .75rem; }
+.vh-schema-reference :is(p, ul) { margin: 0; }
+.vh-schema-reference ul { padding-inline-start: 1.15rem; }

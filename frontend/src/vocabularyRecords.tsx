@@ -5,6 +5,9 @@ import type { VocabularyConcept, VocabularyMapping, VocabularyScheme } from "./a
 import { PublicReadError } from "./requestCache";
 import "./vocabularyRecords.css";
 import { SaveVocabularyTerm } from "./SaveVocabularyTerm";
+import { ActivityVocabularyInput, activityMatches, useActivityVocabularyLookup } from "./activityVocabularySearch";
+import { OtherVocabularies } from "./vocabularyEdition";
+import { useUiLocale } from "./uiLocale";
 
 export interface PublicVocabularyRecordsProps {
   schemeId?: string;
@@ -21,8 +24,17 @@ export interface VocabularyReadingQuery {
   snapshot?: string;
 }
 
+type EditionConcept = VocabularyConcept & {
+  editionLabels?: Record<string, string>;
+  editionDefinitions?: Record<string, string>;
+  editionScopeNotes?: Record<string, string>;
+  readerHref?: string;
+  termUri?: string;
+  otherVocabularies?: Parameters<typeof OtherVocabularies>[0]["links"];
+};
+
 interface ConceptList {
-  items: VocabularyConcept[];
+  items: EditionConcept[];
   total: number;
   offset: number;
   limit: number;
@@ -33,7 +45,7 @@ interface ConceptList {
 
 export type VocabularyRecordData =
   | { kind: "scheme"; scheme: VocabularyScheme; list: ConceptList; contentSha256?: string | null }
-  | { kind: "concept"; concept: VocabularyConcept; contentSha256?: string | null };
+  | { kind: "concept"; concept: EditionConcept; contentSha256?: string | null };
 
 interface VocabularySnapshot {
   citation: string;
@@ -105,7 +117,7 @@ export async function loadVocabularyRecord(props: PublicVocabularyRecordsProps, 
     const params = new URLSearchParams();
     if (props.expectedSchemeId) params.set("scheme_code", props.expectedSchemeId);
     if (query.snapshot) params.set("snapshot", query.snapshot);
-    const response = await get<{ concept: VocabularyConcept; contentSha256?: string | null }>(
+    const response = await get<{ concept: EditionConcept; contentSha256?: string | null }>(
       `/api/vocab/concepts/${encodeURIComponent(props.conceptId)}${params.size ? `?${params}` : ""}`, signal);
     active();
     if (!response.concept || (props.expectedSchemeId && response.concept.scheme?.code !== props.expectedSchemeId))
@@ -205,6 +217,81 @@ function SnapshotAccess({ scheme, snapshot, reference }: { scheme: string; snaps
   </details>;
 }
 
+type ActorCategory = Pick<EditionConcept, "code" | "preferredLabel" | "definition">;
+const ACTOR_REFERENCE = "/vocab/modavis_entity_types";
+
+function ActorCategoryReference({ categories, query, version, selected, list, resultsId }: {
+  categories: ActorCategory[]; query: VocabularyReadingQuery; version?: string | null;
+  selected?: EditionConcept; list?: ConceptList; resultsId?: string;
+}) {
+  const { t } = useUiLocale();
+  const headingId = useId();
+  const overview = t("vocab.actor.title", "Person and organisation records", "Datensätze zu Personen und Organisationen");
+  const content = (category: ActorCategory) => category.code === "person" ? {
+    name: t("vocab.actor.person", "Person", "Person"),
+    description: t("vocab.actor.personNote", "A record about an individual, such as an organ builder or performer.",
+      "Ein Datensatz zu einer einzelnen Person, etwa aus dem Orgelbau oder der Musikpraxis."),
+    browse: t("vocab.actor.people", "Browse people", "Personen ansehen"),
+  } : {
+    name: t("vocab.actor.organisation", "Organisation", "Organisation"),
+    description: t("vocab.actor.organisationNote", "A record about an organisation, company or workshop.",
+      "Ein Datensatz zu einer Organisation, einem Unternehmen oder einer Werkstatt."),
+    browse: t("vocab.actor.organisations", "Browse organisations", "Organisationen ansehen"),
+  };
+  const detail = selected && content(selected);
+  const view = vocabularyReadingHref(selected ? conceptPath(selected) : ACTOR_REFERENCE, query);
+  return <article className="vocabulary-reader vr-actor-reference" aria-labelledby={headingId}>
+    <nav className="vr-breadcrumbs" aria-label={t("vocab.actor.breadcrumb", "Breadcrumb", "Brotkrumennavigation")}>
+      <a href="/vocab">{t("vocab.actor.vocabularies", "Vocabularies", "Vokabulare")}</a>
+      {detail ? <><a href={ACTOR_REFERENCE}>{overview}</a><span aria-current="page">{detail.name}</span></>
+        : <span aria-current="page">{t("vocab.actor.reference", "Catalogue reference", "Katalogreferenz")}</span>}
+    </nav>
+    <header className="vr-header"><div>
+      <p className="eyebrow">{t("vocab.actor.reference", "Catalogue reference", "Katalogreferenz")}</p>
+      <h1 id={headingId}>{detail?.name || overview}</h1>
+      <p>{detail?.description || t("vocab.actor.intro",
+        "These two record types describe who is represented in Navigator’s actor catalogue.",
+        "Diese beiden Datensatzarten zeigen, wer im Akteurskatalog des Navigators erfasst ist.")}</p>
+    </div>{version && <div className="vr-version"><strong>POD {version}</strong></div>}</header>
+    {selected && detail ? <div className="vr-actions">
+      <a className="vr-catalogue-link" href={`/persons?entity_class=${encodeURIComponent(selected.code)}`}>{detail.browse}</a>
+      <SaveVocabularyTerm contextKey={view} label="Save category" />
+    </div> : <section id={resultsId} tabIndex={-1} className="vr-results" aria-label={overview}>
+      {categories.length ? <ul className="vr-category-cards">{categories.map(category => {
+        const type = content(category);
+        const key = encodeURIComponent(category.code);
+        return <li key={category.code}>
+          <h2>{type.name}</h2>
+          <p>{type.description}</p>
+          <div className="vr-actions">
+            <a className="vr-catalogue-link" href={`/persons?entity_class=${key}`}>{type.browse}</a>
+            <a href={`${ACTOR_REFERENCE}/concepts/${key}`}>
+              {t("vocab.actor.categoryDetail", "{name} record type", "Datensatzart „{name}“", { name: type.name })}
+            </a>
+          </div>
+        </li>;
+      })}</ul> : <p>{t("vocab.actor.empty", "No record types match this view.", "In dieser Ansicht wurden keine passenden Datensatzarten gefunden.")}</p>}
+      {list && (query.q || query.language || list.offset > 0 || list.limit < list.total) &&
+        <p><a href={ACTOR_REFERENCE} onClick={followQuery}>{t("vocab.actor.showAll", "Show both record types", "Beide Datensatzarten anzeigen")}</a></p>}
+    </section>}
+    <details className="vr-disclosure">
+      <summary>{t("vocab.actor.data", "Schema and API details", "Schema- und API-Details")}</summary>
+      <div className="vr-disclosure-body">
+        <dl className="vr-facts"><div><dt>{t("vocab.actor.code", "Schema code", "Schemacode")}</dt><dd><code>modavis_entity_types</code></dd></div>
+          {selected && <div><dt>{t("vocab.actor.category", "Type code", "Typcode")}</dt><dd><code>{selected.code}</code></dd></div>}
+        </dl>
+        <div className="vr-actions">
+          <a href={selected
+            ? `/api/vocab/concepts/${encodeURIComponent(selected.code)}?scheme_code=modavis_entity_types`
+            : "/api/vocab/concepts?scheme_code=modavis_entity_types"}>{t("vocab.actor.json", "View JSON", "JSON ansehen")}</a>
+          {selected ? <CopyValue label={t("vocab.actor.copyCode", "Copy category code", "Kategoriecode kopieren")} value={selected.code} />
+            : <SaveVocabularyTerm contextKey={view} label="Save catalogue reference" />}
+        </div>
+      </div>
+    </details>
+  </article>;
+}
+
 export function VocabularySchemeReading({ scheme, list, query, contentSha256 }: {
   scheme: VocabularyScheme; list: ConceptList; query: VocabularyReadingQuery; contentSha256?: string | null;
 }) {
@@ -218,9 +305,17 @@ export function VocabularySchemeReading({ scheme, list, query, contentSha256 }: 
       window.history.replaceState({ ...window.history.state, vocabularyResultsFocus: false }, "");
     }
   }, [list, resultsId]);
-  const path = schemePath(scheme.code);
+  const { locale, t } = useUiLocale();
+  const isActivity = scheme.code === "modavis_activity_types";
+  const path = isActivity ? "/vocab/activity-types" : scheme.code === "modavis_person_terminology" ? "/vocab/person-terms" : schemePath(scheme.code);
+  const matches = useActivityVocabularyLookup(isActivity && Boolean(query.q), contentSha256 || query.snapshot);
+  const additionalMatches = activityMatches(matches?.data, query.q, locale)
+    .filter(match => match.kind === "wording" || !list.items.some(term => term.preferredLabel === match.title || term.editionLabels?.de === match.title))
+    .slice(0, 8);
   const scope = scheme.recordKind === "schema_categories";
   const bound = { ...query, snapshot: contentSha256 || query.snapshot };
+  if (scope && scheme.code === "modavis_entity_types") return <ActorCategoryReference categories={list.items}
+    query={query} version={scheme.version} list={list} resultsId={resultsId} />;
   const total = scope ? scheme.categoryCount : scheme.conceptCount;
   const unit = scope ? "schema categories" : "governed concepts";
   const submit = (event: FormEvent<HTMLFormElement>) => {
@@ -232,7 +327,10 @@ export function VocabularySchemeReading({ scheme, list, query, contentSha256 }: 
     <header className="vr-header"><div><p className="eyebrow">{scope ? "Public schema" : "Controlled vocabulary"}</p><h1 id={titleId}>{scheme.name || scheme.code}</h1><p>{scheme.description || (scope ? "Categories used to organize public records." : "Recorded concepts and definitions in the selected POD.")}</p></div>
       <div className="vr-version"><span>Recorded version</span><strong>{scheme.version || "Not supplied"}</strong>{typeof total === "number" && <span>{number(total)} {unit} · whole {scope ? "category set" : "scheme"}</span>}</div></header>
     <form className="vr-search" role="search" aria-label={`Search ${scope ? "schema categories" : "this vocabulary"}`} method="get" action={path} onSubmit={submit}>
-      <label><span>Find a {scope ? "category" : "concept"}</span><input name="q" type="search" value={draft} maxLength={200} onChange={event => setDraft(event.target.value)} placeholder="Search labels, codes and definitions" /></label>
+      {isActivity ? <ActivityVocabularyInput name="q" value={draft} onChange={setDraft} snapshot={bound.snapshot}
+        label={t("vocab.reader.findTerm", "Find a concept or source term", "Begriff oder Quellenwortlaut suchen")}
+        placeholder={t("vocab.reader.matchFields", "Search labels, definitions and source wording", "Benennungen, Definitionen und Quellenwortlaut durchsuchen")} />
+        : <label><span>Find a {scope ? "category" : "concept"}</span><input name="q" type="search" value={draft} maxLength={200} onChange={event => setDraft(event.target.value)} placeholder="Search labels, codes and definitions" /></label>}
       <button type="submit">Search</button>
       {(query.q || query.language) && <a href={vocabularyReadingHref(path, bound, { q: "", language: undefined, offset: 0 })} onClick={followQuery}>Clear filters</a>}
     </form>
@@ -240,13 +338,22 @@ export function VocabularySchemeReading({ scheme, list, query, contentSha256 }: 
     <div className="vr-list-controls">{(list.languages?.length || query.language) ? <label>Recorded label language <select value={query.language || ""} onChange={event => updateLocation(vocabularyReadingHref(path, bound, { language: event.target.value || undefined, offset: 0 }))}><option value="">All recorded languages</option>{[...new Set([...(list.languages || []), ...(query.language ? [query.language] : [])])].map(code => <option key={code} value={code}>{code}</option>)}</select></label> : null}
       <label>Per page <select value={query.limit} onChange={event => updateLocation(vocabularyReadingHref(path, bound, { limit: Number(event.target.value), offset: 0 }))}>{[...new Set([15, 30, 60, 100, query.limit])].sort((a, b) => a - b).map(value => <option key={value} value={value}>{value}</option>)}</select></label></div>
     {query.language && <p className="vr-note">{list.languageFilterScope || "Shows concepts with a retained label in this language. Display titles are not new translations."}</p>}
+    {additionalMatches.length > 0 && <section className="vr-linked-terms">
+      <h2>{t("vocab.reader.additionalMatches", "Matches in the bilingual edition and source wording", "Treffer in der zweisprachigen Ausgabe und im Quellenwortlaut")}</h2>
+      <ul className="vr-record-list">{additionalMatches.map(match => <li key={match.href}><article>
+        <h3><a href={match.href}>{match.title}</a></h3>
+        <p>{match.kind === "concept" ? "Controlled concept" : "Recorded source wording"}
+          {match.subtitle && ` · ${match.subtitle}`}{match.count != null && ` · ${number(match.count)} event assertions`}</p>
+      </article></li>)}</ul>
+    </section>}
     <section id={resultsId} tabIndex={-1} className="vr-results" aria-labelledby={`${resultsId}-title`}>
       <div className="vr-section-title"><h2 id={`${resultsId}-title`}>{scope ? "Categories" : "Concepts"}</h2><p role="status">{number(list.total)} matching {unit}{list.items.length > 0 && ` · ${number(list.offset + 1)}–${number(list.offset + list.items.length)} shown`}</p></div>
       {list.items.length === 0 ? <div className="vr-empty"><h3>{list.total > 0 ? "This page is beyond the results" : `No ${scope ? "categories" : "concepts"} match this view`}</h3><p>{list.total > 0 ? "Return to the first page while keeping your search and snapshot." : "Try a shorter label or a concept code, or clear the filters."}</p><a href={vocabularyReadingHref(path, bound, list.total > 0 ? { offset: 0 } : { q: "", language: undefined, offset: 0 })} onClick={followQuery}>{list.total > 0 ? "Go to first page" : "Show all records in this scheme"}</a></div>
-        : <ol className="vr-record-list" start={list.offset + 1}>{list.items.map(concept => <li key={concept.mdvsId || concept.code}><article><div className="vr-record-title"><h3><a href={vocabularyReadingHref(conceptPath(concept), bound)}>{concept.preferredLabel || concept.code}</a></h3><code>{concept.code}</code></div><p className="vr-definition">{concept.definition || "No definition is included in this snapshot."}</p><div className="vr-label-summary">{[...new Set((concept.labels || []).map(label => label.languageCode).filter(Boolean))].map(code => <span key={code}>{code}</span>)}{concept.recordKind === "schema_category" && <span>Schema category</span>}</div></article></li>)}</ol>}
+        : <ol className="vr-record-list" start={list.offset + 1}>{list.items.map(concept => <li key={concept.mdvsId || concept.code}><article><div className="vr-record-title"><h3><a href={pinned(concept.readerHref || conceptPath(concept), bound.snapshot)}>{concept.editionLabels?.[locale] || concept.preferredLabel || concept.code}</a></h3><code>{concept.code}</code></div><p className="vr-definition">{concept.editionDefinitions?.[locale] || concept.definition || "No definition is included in this snapshot."}</p><div className="vr-label-summary">{[...new Set((concept.labels || []).map(label => label.languageCode).filter(Boolean))].map(code => <span key={code}>{code}</span>)}{concept.recordKind === "schema_category" && <span>Schema category</span>}</div></article></li>)}</ol>}
       {(list.offset > 0 || list.offset + list.items.length < list.total) && <nav className="vr-pagination" aria-label="Vocabulary result pages">{list.offset > 0 && <a rel="prev" href={vocabularyReadingHref(path, bound, { offset: Math.max(0, list.offset - list.limit) })} onClick={followQuery}>Previous page</a>}{list.offset + list.limit < list.total && <a rel="next" href={vocabularyReadingHref(path, bound, { offset: list.offset + list.limit })} onClick={followQuery}>Next page</a>}</nav>}
     </section>
     <details className="vr-disclosure"><summary>Coverage and vocabulary identity</summary><div className="vr-disclosure-body"><dl className="vr-facts"><div><dt>Scheme code</dt><dd><code>{scheme.code}</code></dd></div>{scheme.mdvsId && <div><dt>MDVS identifier</dt><dd><code>{scheme.mdvsId}</code></dd></div>}</dl><p>{scope ? "These categories organize the public schema. They have no independently governed concept identity or vocabulary snapshot." : scheme.mappingCount == null ? "Source-term registry mapping totals are not included. This does not establish that no mappings exist." : `${number(scheme.mappingCount)} registry mappings have qualified occurrence evidence in the public subset. This does not count all authoritative mappings.`}</p></div></details>
+    {!scope && <p><a href="/vocab/editions/modavis">Download the bilingual vocabulary edition</a></p>}
     {!scope && scheme.snapshot && <SnapshotAccess scheme={scheme.code} snapshot={contentSha256 || query.snapshot} />}
   </article>;
 }
@@ -259,15 +366,21 @@ function SourceMapping({ mapping }: { mapping: VocabularyMapping }) {
   return <article className="vr-evidence-item"><h3>{href ? <a href={href}>{label}</a> : label}</h3><p>{mapping.mappingKind ? `${words(mapping.mappingKind)} relation` : "Mapping relation not recorded"}{mapping.confidence != null && ` · ${Math.round(mapping.confidence * 100)}% recorded confidence`}</p>{mapping.scopeNote && <p>{mapping.scopeNote}</p>}<dl className="vr-facts"><div><dt>Source</dt><dd>{term?.sourceKey || "Not recorded"}</dd></div><div><dt>Source field</dt><dd>{[term?.sourceTable, term?.sourceField].filter(Boolean).join(".") || "Not recorded"}</dd></div><div><dt>Term class</dt><dd>{term?.termClass || "Not recorded"}</dd></div><div><dt>Context</dt><dd>{mapping.context?.code || "Not recorded"}</dd></div><div><dt>Language</dt><dd>{term?.languageCode || "Not recorded"}</dd></div></dl>{mapping.reviewStatus && <p>Recorded review status: {mapping.reviewStatus}</p>}{mapping.version && <p>Mapping version: {mapping.version}</p>}{term?.scopeNote && <p>Source-term scope: {term.scopeNote}</p>}{mapping.mdvsId && <code>{mapping.mdvsId}</code>}</article>;
 }
 
-export function VocabularyConceptReading({ concept, query, contentSha256 }: { concept: VocabularyConcept; query: VocabularyReadingQuery; contentSha256?: string | null }) {
+export function VocabularyConceptReading({ concept, query, contentSha256 }: { concept: EditionConcept; query: VocabularyReadingQuery; contentSha256?: string | null }) {
   const titleId = useId();
+  const { locale, t } = useUiLocale();
   const scope = concept.recordKind === "schema_category";
   const scheme = concept.scheme?.code || "";
+  if (scope && scheme === "modavis_entity_types") return <ActorCategoryReference categories={[]}
+    query={query} version={concept.datasetVersion || concept.scheme?.version} selected={concept} />;
+
   const bound = { ...query, snapshot: contentSha256 || query.snapshot };
   const path = conceptPath(concept);
-  const href = vocabularyReadingHref(path, bound);
+  const href = pinned(path, bound.snapshot);
   const origin = typeof window === "undefined" ? "" : window.location.origin;
   const pageUrl = `${origin}${href}`;
+  const browseUrl = `${origin}${concept.readerHref || path}`;
+  const title = concept.editionLabels?.[locale] || concept.preferredLabel || concept.code;
   const labels = concept.labels || [];
   const languageCount = new Set(labels.map(label => label.languageCode).filter(Boolean)).size;
   const mappings = concept.sourceTermMappings || [];
@@ -282,9 +395,29 @@ export function VocabularyConceptReading({ concept, query, contentSha256 }: { co
   const apiHref = `/api/vocab/concepts/${encodeURIComponent(concept.code)}${apiParams.size ? `?${apiParams}` : ""}`;
   return <article className="vocabulary-reader" aria-labelledby={titleId}>
     <nav className="vr-breadcrumbs" aria-label="Breadcrumb"><a href="/vocab">Vocabularies</a>{scheme && <a href={vocabularyReadingHref(schemePath(scheme), bound)}>{concept.scheme?.name || scheme}</a>}<span aria-current="page">{concept.preferredLabel || concept.code}</span></nav>
-    <header className="vr-header"><div><p className="eyebrow">{scope ? "Schema category" : "Controlled vocabulary concept"}</p><h1 id={titleId}>{concept.preferredLabel || concept.code}</h1><p className="vr-lifecycle">{status}{concept.datasetVersion && ` · POD ${concept.datasetVersion}`}</p></div><div className="vr-version"><span>{scope ? "Schema version" : "Recorded vocabulary version"}</span><strong>{concept.scheme?.version || "Not supplied"}</strong></div></header>
-    <section className="vr-definition-section"><h2>Recorded definition</h2><p className="vr-definition">{concept.definition || "No definition is included in this snapshot."}</p></section>
-    <div className="vr-actions"><SaveVocabularyTerm contextKey={href} label={scope ? "Save category" : "Save term"} /><CopyValue label={scope ? "Copy category code" : "Copy identifier"} value={concept.mdvsId || concept.code} /><CopyValue label="Copy page link" value={pageUrl} /><a href={apiHref}>Record JSON</a>{scope && <a href={concept.code === "organization" ? "/organizations" : "/persons"}>Browse {concept.code === "organization" ? "organisations" : "people"}</a>}{scheme === "modavis_activity_types" && <a href={`/use-cases/research-workbench?view=terms&mode=activities&concept=${encodeURIComponent(concept.code)}`}>Research source occurrences</a>}</div>
+    <header className="vr-header"><div><p className="eyebrow">{scope ? "Schema category" : "Controlled vocabulary concept"}</p><h1 id={titleId}>{title}</h1><p className="vr-lifecycle">{status}{concept.datasetVersion && ` · POD ${concept.datasetVersion}`}</p></div><div className="vr-version"><span>{scope ? "Schema version" : "Recorded vocabulary version"}</span><strong>{concept.scheme?.version || "Not supplied"}</strong></div></header>
+    <section className="vr-definition-section"><h2>{t("vocab.reader.definition", "Definition", "Definition")}</h2><p className="vr-definition">{concept.editionDefinitions?.[locale] || concept.definition || "No definition is included in this snapshot."}</p>
+      {concept.editionLabels?.de && concept.editionDefinitions?.de && locale !== "de" && <p lang="de"><strong>{concept.editionLabels.de}</strong> · {concept.editionDefinitions.de}</p>}
+      {concept.editionLabels?.en && concept.editionDefinitions?.en && locale === "de" && <p lang="en"><strong>{concept.editionLabels.en}</strong> · {concept.editionDefinitions.en}</p>}
+      {concept.editionScopeNotes && <details className="vr-disclosure"><summary>{t("vocab.reader.scope", "Scope note", "Hinweis zum Gebrauch")}</summary>
+        <p lang={locale}>{concept.editionScopeNotes[locale] || concept.editionScopeNotes.en}</p>
+        {locale !== "de" && concept.editionScopeNotes.de && <p lang="de">{concept.editionScopeNotes.de}</p>}
+      </details>}
+    </section>
+    {usage && <section className="vr-usage-summary">
+      <h2>{t("vocab.reader.linkedEvents", "Linked public events", "Verknüpfte öffentliche Ereignisse")}</h2>
+      <p>{t("vocab.reader.eventAssertionCount",
+        "{count, plural, =0 {No event assertions are linked to this concept in POD {version}.} one {# mapped event assertion in POD {version}.} other {# mapped event assertions in POD {version}.}}",
+        "{count, plural, =0 {Im POD {version} sind keine Ereignisbelege mit diesem Begriff verknüpft.} one {# zugeordneter Ereignisbeleg im POD {version}.} other {# zugeordnete Ereignisbelege im POD {version}.}}",
+        { count: usage.occurrenceCount, version: concept.datasetVersion || "" })}</p>
+      {usage.occurrenceCount > 0 && <a href={`/events?concept=${encodeURIComponent(concept.code)}`}>
+        {t("vocab.reader.openLinkedEvents", "{count, plural, one {View linked event} other {View all # linked events}}",
+          "{count, plural, one {Verknüpftes Ereignis ansehen} other {Alle # verknüpften Ereignisse ansehen}}", { count: usage.occurrenceCount })}
+      </a>}
+    </section>}
+    <OtherVocabularies links={concept.otherVocabularies} language={locale} />
+    <div className="vr-actions"><SaveVocabularyTerm contextKey={href} label={scope ? "Save category" : "Save term"} /><CopyValue label={scope ? "Copy category code" : "Copy identifier"} value={concept.mdvsId || concept.code} />{concept.termUri && <CopyValue label="Copy term URI" value={concept.termUri} />}<CopyValue label="Copy page link" value={browseUrl} />
+      {bound.snapshot && <CopyValue label="Copy snapshot link" value={pageUrl} />}<a href={apiHref}>Record JSON</a>{scope && <a href={concept.code === "organization" ? "/organizations" : "/persons"}>Browse {concept.code === "organization" ? "organisations" : "people"}</a>}{scheme === "modavis_activity_types" && Boolean(usage?.occurrenceCount) && <a href={`/use-cases/research-workbench?view=terms&mode=activities&concept=${encodeURIComponent(concept.code)}`}>Research source occurrences</a>}</div>
     <section className="vr-reading-guide"><h2>How to read this {scope ? "category" : "concept"}</h2><p>{scope ? "This is a record category used by the public catalogue. It is separate from the governed terminology and has no newly assigned concept identifier." : "The definition and labels below are retained from the selected POD. Source-term mappings and documented-event mappings describe different evidence and are shown separately. A matching word alone does not establish equivalence."}</p></section>
     <section className="vr-labels"><div className="vr-section-title"><h2>Recorded labels and languages</h2><p>{number(labels.length)} {labels.length === 1 ? "label" : "labels"} · {number(languageCount)} recorded language {languageCount === 1 ? "code" : "codes"}</p></div>{labels.length ? <ul>{labels.map((label, index) => <li key={`${label.id || index}:${label.languageCode}:${label.label}`}><div><strong lang={label.languageCode || undefined}>{label.label || "Label text not included"}</strong><span>{label.labelTypeId === 4 ? "Recorded full label" : "Recorded label"}{label.label === concept.preferredLabel ? " · used as this page’s title" : ""}</span></div><div><span>{label.languageEndonym || label.languageName || "Language not recorded"}</span>{label.languageCode && <code>{label.languageCode}</code>}</div></li>)}</ul> : <p>No separate language-label records are included for this {scope ? "category" : "concept"}.</p>}</section>
     {!scope && <details className="vr-disclosure"><summary>Source-term registry mappings <span>{concept.sourceMappingCount == null ? "Count not included" : `${number(concept.sourceMappingCount)} in the public subset`}</span></summary><div className="vr-disclosure-body"><p>{concept.mappingEvidenceScope || "Mappings retain their source term and context. This public view is a bounded subset of the authoritative registry."}</p>{mappings.length ? mappings.map((mapping, index) => <SourceMapping key={mapping.mdvsId || index} mapping={mapping} />) : <p>{concept.sourceMappingCount == null ? "Registry evidence is not included in this snapshot. Absence here does not establish that no mappings exist." : "No registry mappings have qualified occurrence evidence in this public subset. Unlinked historical mappings remain outside this view."}</p>}{concept.sourceMappingCount != null && concept.sourceMappingCount > mappings.length && <p>Showing {number(mappings.length)} of {number(concept.sourceMappingCount)} reported mappings. The record JSON retains the supplied evidence.</p>}</div></details>}
@@ -306,7 +439,17 @@ export function PublicVocabularyRecords(props: PublicVocabularyRecordsProps) {
   const path = typeof window === "undefined" ? (props.schemeId ? schemePath(props.schemeId) : "/vocab") : window.location.pathname;
   let query: VocabularyReadingQuery | undefined;
   let invalid: ReadingFailure | undefined;
-  try { query = parseVocabularyReadingQuery(search); } catch (error) { invalid = { message: (error as Error).message, status: 400 }; }
+  try {
+    const params = new URLSearchParams(search);
+    const resource = params.get("resource");
+    if (props.expectedSchemeId === "modavis_activity_types" && props.conceptId?.startsWith("activitype:")
+        && params.getAll("tab").length === 1 && params.getAll("resource").length === 1 && params.get("tab") === "export"
+        && resource === `https://w3id.org/modavis/vocab/event-type/${props.conceptId}`) {
+      params.delete("tab");
+      params.delete("resource");
+    }
+    query = parseVocabularyReadingQuery(params.toString());
+  } catch (error) { invalid = { message: (error as Error).message, status: 400 }; }
   const key = query ? JSON.stringify([props.schemeId, props.conceptId, props.expectedSchemeId, query]) : null;
   const result = useReading<VocabularyRecordData>(key, signal => loadVocabularyRecord(props, query!, signal));
   const data = result.data;

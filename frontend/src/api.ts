@@ -2617,6 +2617,7 @@ export interface OrganTechnicalEvidence {
       targetUrl?: string | null;
       exactRecordId?: string | null;
       exactRecordUrl?: string | null;
+      exactRecordSourceUrl?: string | null;
       state: "exact_record" | "candidate_set" | "controlled_concept_only" | "source_wording_only" | string;
       guidance: string;
       searchInterpretation?: TemperamentSearchInterpretation | null;
@@ -4531,6 +4532,7 @@ export interface CanonicalActorDetail {
     eventCount: number;
     sourceRecordCount: number;
     combinedSourceRecordCount: number | null;
+    participationRoles?: ParticipationRoleReference[];
     directoryUrl: string;
     apiUrl: string;
     scope: string;
@@ -5111,7 +5113,15 @@ export interface EventTemporalClaim {
   isPrimary: boolean;
 }
 
+export interface ParticipationRoleReference {
+  code: string;
+  recordedCode: string;
+  labels: { en: string; de: string };
+  href: string;
+}
+
 export interface EventRelatedEntity {
+  participationRole?: ParticipationRoleReference;
   resolutionState?: string | null;
   sourceWording?: string | null;
   identityEvidence?: Record<string, unknown> | null;
@@ -5195,6 +5205,15 @@ export interface EventDetail extends EventSummary {
   urls: { page: string; api: string; citation: string; research: string };
 }
 
+export interface EventTypeFacet {
+  code: string;
+  name: string;
+  displayName?: string;
+  mappingKind?: "controlled" | "source_only" | string;
+  count: number;
+  vocabularyUrl?: string | null;
+}
+
 export interface EventListResponse {
   items: EventSummary[];
   total: number;
@@ -5202,7 +5221,7 @@ export interface EventListResponse {
   offset: number;
   filters: Record<string, unknown>;
   facets?: {
-    eventTypes: Array<{ code: string; name: string; displayName?: string; mappingKind?: "controlled" | "source_only" | string; count: number; vocabularyUrl?: string | null }>;
+    eventTypes: EventTypeFacet[];
   };
 }
 
@@ -6755,11 +6774,12 @@ export async function fetchOrgans(params: OrganFilters & { limit?: number; offse
   return getJson(`/api/organs?${search.toString()}`, { signal });
 }
 
-export async function fetchEvents(params: { query?: string; subject?: string; type?: string; yearFrom?: number | string; yearTo?: number | string; place?: string; participant?: string; source?: string; completeness?: string; routeState?: string; sort?: string; limit?: number; offset?: number } = {}, signal?: AbortSignal): Promise<EventListResponse> {
+export async function fetchEvents(params: { query?: string; subject?: string; type?: string; concept?: string; yearFrom?: number | string; yearTo?: number | string; place?: string; participant?: string; source?: string; completeness?: string; routeState?: string; sort?: string; limit?: number; offset?: number } = {}, signal?: AbortSignal): Promise<EventListResponse> {
   const search = new URLSearchParams({ limit: String(params.limit ?? 30), offset: String(params.offset ?? 0) });
   if (params.query) search.set("q", params.query);
   if (params.subject) search.set("subject", params.subject);
   if (params.type) search.set("type", params.type);
+  if (params.concept) search.set("concept", params.concept);
   if (params.yearFrom) search.set("year_from", String(params.yearFrom));
   if (params.yearTo) search.set("year_to", String(params.yearTo));
   if (params.place) search.set("place", params.place);

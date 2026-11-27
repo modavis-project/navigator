@@ -66,6 +66,7 @@ const resourceKind = {
   candidate: ['Candidate terminology', 'Terminologievorschläge'],
   published: ['Published reference', 'Veröffentlichte Referenz'],
   omaro: ['OMARO reference', 'OMARO-Referenz'],
+  edition: ['Vocabulary edition', 'Vokabularausgabe'],
 } as const;
 const recordKinds: Record<string, [string, string]> = {
   organ: ['organ', 'Orgel'], person: ['person', 'Person'], organization: ['organization', 'Organisation'],

@@ -29,6 +29,7 @@ class Settings:
     public_release_history_path: str | None = None
     db_host: str = ""
     db_port: int = 5432
+    db_pool_max_size: int = 8
     db_name: str = ""
     db_user: str = ""
     db_password: str = ""
@@ -130,6 +131,9 @@ def load_settings() -> Settings:
         raise ValueError(
             "NAVIGATOR_DATA_PROFILE must be 'full' or 'pod-1.5-public'"
         )
+    pool_size = _int_env("NAVIGATOR_DB_POOL_MAX_SIZE", 8)
+    if not 1 <= pool_size <= 8:
+        raise ValueError("NAVIGATOR_DB_POOL_MAX_SIZE must be between 1 and 8")
     return Settings(
         data_profile=data_profile,
         public_database_manifest_path=(
@@ -138,6 +142,7 @@ def load_settings() -> Settings:
         public_release_history_path=os.getenv("NAVIGATOR_PUBLIC_RELEASE_HISTORY") or None,
         db_host=os.getenv("DB_HOST", ""),
         db_port=_int_env("DB_PORT", 5432),
+        db_pool_max_size=pool_size,
         db_name=os.getenv("DB_NAME", ""),
         db_user=os.getenv("DB_USER", ""),
         db_password=os.getenv("DB_PASSWORD", ""),

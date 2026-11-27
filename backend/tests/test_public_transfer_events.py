@@ -3,11 +3,12 @@ from types import SimpleNamespace
 
 import pytest
 
-from navigator_app import public_repository
+from navigator_app import public_catalog_context, public_repository
 from navigator_app.config import Settings
 from navigator_app.public_app import create_public_app
 from navigator_app.public_relocations import matches_endpoint_filter, movement_context, transfer_endpoints
 from navigator_app.public_repository import PublicReleaseRepository
+from navigator_app.uri_policy import UriPolicy
 
 
 UNMAPPED = {
@@ -142,3 +143,79 @@ def test_event_list_binds_route_and_endpoint_name_selection(monkeypatch, route, 
         assert "or e.event_id=ANY(%(endpoint_name_ids)s)" in sql
         assert parameters["route_ids"] == selected_ids
         assert parameters["endpoint_name_ids"] == ["origin"]
+
+
+def test_event_list_uses_governed_concept_codes_and_ids_independently_of_facet_type(monkeypatch):
+    activity = {"code": "activitype:relocation", "mdvsId": "MDVS:VOCB:TYPE-0001-A",
+                "preferredLabel": "Relocation", "scheme": {"code": "modavis_activity_types"}}
+    person_role = {"code": "personrole:performer", "mdvsId": "MDVS:VOCB:TYPE-0002-A",
+                   "preferredLabel": "Performer", "scheme": {"code": "modavis_person_terminology"}}
+    queries = []
+
+    class Connection:
+        def execute(self, sql, parameters):
+            queries.append((sql, dict(parameters)))
+            return SimpleNamespace(fetchone=lambda: {"count": 0}, fetchall=lambda: [])
+
+    @contextmanager
+    def connect(_):
+        yield Connection()
+
+    monkeypatch.setattr(public_repository, "connect", connect)
+    repo = object.__new__(PublicReleaseRepository)
+    repo.settings = None
+    repo.assert_ready = lambda: {}
+    repo._public_vocabulary = lambda: [activity, person_role]
+    repo._public_event_facets = lambda: []
+    settings = Settings(uri_release_version="1.6.0")
+    application_repo = SimpleNamespace(assert_ready=lambda: {}, policy=UriPolicy.from_settings(settings),
+                                      list_events=repo.list_events)
+    client = create_public_app(settings, repository=application_repo).test_client()
+
+    for identifier in (activity["code"], activity["mdvsId"]):
+        response = client.get("/api/events", query_string={"concept": identifier, "type": "transfer", "offset": 12})
+        assert response.status_code == 200
+        assert response.json["filters"]["concept"] == activity["code"]
+        assert response.json["filters"]["conceptLabel"] == "Relocation"
+        assert response.json["offset"] == 12
+    assert len(queries) == 4
+    for sql, parameters in queries:
+        assert "e.source_only=0 AND e.concept_code=ANY(%(concept_ids)s)" in sql
+        assert "coalesce(e.controlled_event_type,e.source_event_type,'unspecified')=%(event_type)s" in sql
+        assert parameters["concept_ids"] == sorted([activity["code"], activity["mdvsId"]])
+        assert parameters["event_type"] == "transfer"
+
+    for invalid in ("concept=", "concept=first&concept=second", "concept=invalid%20literal"):
+        assert client.get("/api/events?" + invalid).status_code == 400
+    for unknown in ("transfer", person_role["code"], "source-only:abc"):
+        assert client.get("/api/events", query_string={"concept": unknown}).status_code == 404
+    assert len(queries) == 4
+    unfiltered = client.get("/api/events")
+    assert unfiltered.status_code == 200
+    assert "concept" not in unfiltered.json["filters"]
+
+
+def test_activity_facet_links_require_an_exact_source_wording_or_governed_mapping(monkeypatch):
+    activity = {"code": "activitype:relocation", "mdvsId": "MDVS:VOCB:TYPE-0001-A",
+                "preferredLabel": "Relocation", "scheme": {"code": "modavis_activity_types"}}
+    rows = [
+        {"value": "Transfer", "concept_code": activity["mdvsId"], "literal_wording": False},
+        {"value": "Ablehnung", "concept_code": None, "literal_wording": True},
+        {"value": "contextual_statement", "concept_code": None, "literal_wording": False},
+        {"value": "Unknown", "concept_code": "unrecognized", "literal_wording": False},
+    ]
+
+    @contextmanager
+    def connect(_):
+        yield SimpleNamespace(execute=lambda _: SimpleNamespace(fetchall=lambda: rows))
+
+    monkeypatch.setattr(public_catalog_context, "connect", connect)
+    repo = object.__new__(PublicReleaseRepository)
+    repo.settings = None
+    repo._public_vocabulary = lambda: [activity]
+    assert repo.public_vocabulary_event_facets() == [
+        {"code": "Transfer", "conceptCode": "activitype:relocation"},
+        {"code": "Ablehnung", "sourceWording": "Ablehnung"},
+        {"code": "contextual_statement"},
+        {"code": "Unknown"},
+    ]

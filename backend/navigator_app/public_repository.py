@@ -2523,6 +2523,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
                 "catalogRecordCount": len(matcher.records), "matchingRecordCount": len(matches),
                 "browseUrl": target_url, "targetUrl": target_url, "exactRecordId": exact_id,
                 "exactRecordUrl": target_url if exact_id else None,
+                "exactRecordSourceUrl": matcher.records[exact_id].get("sourceUrl") if exact_id else None,
                 "state": state, "guidance": guidance, "searchInterpretation": None,
             },
         }
@@ -3142,7 +3143,7 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
     @lru_cache(maxsize=128)
     def list_events(
         self, *, query: str | None = None, subject: str | None = None,
-        event_type: str | None = None, source: str | None = None,
+        event_type: str | None = None, source: str | None = None, event_concept: str | None = None,
         participant: str | None = None,
         year_from: int | None = None, year_to: int | None = None,
         sort: str | None = None, limit: int = 30, offset: int = 0, route: str | None = None, **_: Any,
@@ -3178,6 +3179,14 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         if event_type:
             clauses.append("coalesce(e.controlled_event_type,e.source_event_type,'unspecified')=%(event_type)s")
             params["event_type"] = event_type
+        concept = None
+        if event_concept:
+            concept = self.public_event_vocabulary_concept(event_concept)
+            if concept is None:
+                raise LookupError("Activity vocabulary concept is unavailable")
+            # Match the exact governed identities counted by publicEventUsage.
+            clauses.append("e.source_only=0 AND e.concept_code=ANY(%(concept_ids)s)")
+            params["concept_ids"] = sorted({value for value in (concept["code"], concept.get("mdvsId")) if value})
         if source:
             clauses.append("e.source_key=%(source)s")
             params["source"] = source
@@ -3219,7 +3228,8 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
         facets = self._public_event_facets()
         return {
             "items": [self._event_summary(row) for row in self._event_context(rows)], "total": total, "limit": limit, "offset": offset,
-            "filters": {"query": query or "", "subject": subject or "", "participant": participant or "", "type": event_type or "", "source": source or "", "yearFrom": year_from, "yearTo": year_to, "sort": sort or "newest", "route": route or ""},
+            "filters": {"query": query or "", "subject": subject or "", "participant": participant or "", "type": event_type or "", "source": source or "", "yearFrom": year_from, "yearTo": year_to, "sort": sort or "newest", "route": route or "",
+                        **({"concept": concept["code"], "conceptLabel": concept.get("preferredLabel") or concept["code"]} if concept else {})},
             "facets": {"eventTypes": [{"code": row["value"], "name": row["value"], "displayName": str(row["value"]).replace("_", " ").title(), "count": row["count"]} for row in facets]},
         }
 
@@ -3252,9 +3262,15 @@ class PublicReleaseRepository(PublicActorDirectoryMixin, PublicActorPagesMixin, 
             }
             for index, value in enumerate(dates)
         ]
-        result["participants"] = [{**p, "id": f"{event_id}:participant:{index}",
-            "title": p["name"], "role": {"name": ", ".join(p.get("activities") or [p.get("role") or "Participant"])}}
-            for index, p in enumerate(result["participants"])]
+        from .participation_vocabulary import participation_role_reference
+        participants = []
+        for index, participant in enumerate(result["participants"]):
+            item = {**participant, "id": f"{event_id}:participant:{index}", "title": participant["name"],
+                    "role": {"name": ", ".join(participant.get("activities") or [participant.get("role") or "Participant"])}}
+            if reference := participation_role_reference(participant.get("role")):
+                item["participationRole"] = reference
+            participants.append(item)
+        result["participants"] = participants
         result["locations"] = [{"id": f"{event_id}:place:{index}", "title": p["name"],
             "role": {"name": p.get("role") or "Documented place"}} for index, p in enumerate(result["places"])]
         movement = result.get("movement") or {}

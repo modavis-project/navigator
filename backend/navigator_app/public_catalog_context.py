@@ -12,6 +12,7 @@ from .public_relocations import movement_context, transfer_endpoints
 SCHEMA = "release_1_5_public"
 CONTRACT = "modavis.public-catalog-context/v1"
 EXPORT_CONTRACT = "modavis.public-entity-export/v1"
+ACTIVITY_VOCABULARY_SCHEME = "modavis_activity_types"
 
 
 def decoded(value, fallback):
@@ -838,6 +839,40 @@ class PublicCatalogContext:
         codes = {row["concept_code"] for row in rows}
         matches = [v for v in values if (v["code"] in codes or v.get("mdvsId") in codes) and (not scheme or v["scheme"]["code"] == scheme)]
         return matches[0] if len(matches) == 1 else None
+
+    def public_event_vocabulary_concept(self, identifier):
+        matches = [
+            value for value in self._public_vocabulary()
+            if value["scheme"]["code"] == ACTIVITY_VOCABULARY_SCHEME
+            and identifier in (value["code"], value.get("mdvsId"))
+        ]
+        return matches[0] if len(matches) == 1 else None
+
+    @lru_cache(maxsize=1)
+    def public_vocabulary_event_facets(self):
+        """Associate a filter value only when every assertion supports the link."""
+        with connect(self.settings) as conn:
+            rows = conn.execute(f"""SELECT value,
+                CASE WHEN bool_and(source_only=0 AND governed_code IS NOT NULL)
+                          AND min(governed_code)=max(governed_code) THEN min(governed_code) END AS concept_code,
+                bool_and(source_only=1 AND source_event_type IS NOT NULL AND value=source_event_type) AS literal_wording
+                FROM (
+                    SELECT coalesce(e.controlled_event_type,e.source_event_type,'unspecified') AS value,
+                           e.source_only,e.source_event_type,coalesce(c.concept_code,m.concept_code) AS governed_code
+                    FROM {SCHEMA}.documented_event e
+                    LEFT JOIN {SCHEMA}.vocabulary_concept c ON c.concept_code=e.concept_code
+                    LEFT JOIN {SCHEMA}.vocabulary_concept m ON m.mdvs_id=e.concept_code
+                ) facets GROUP BY value ORDER BY value""").fetchall()
+        facets = []
+        for row in rows:
+            concept = self.public_event_vocabulary_concept(row["concept_code"]) if row["concept_code"] else None
+            if concept:
+                facets.append({"code": row["value"], "conceptCode": concept["code"]})
+            elif row["literal_wording"]:
+                facets.append({"code": row["value"], "sourceWording": row["value"]})
+            else:
+                facets.append({"code": row["value"]})
+        return facets
 
     @lru_cache(maxsize=1)
     def _public_vocabulary_event_usage(self):

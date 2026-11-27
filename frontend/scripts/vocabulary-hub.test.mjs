@@ -36,8 +36,9 @@ const collections = [
 
 test("catalogue renders controlled, schema, candidate and reference status with independent count units", () => {
   const html = render(hub.VocabularyDirectory, { collections });
-  for (const text of ["70", "controlled concepts", "2", "schema categories", "4", "candidate concepts", "Unpublished candidates", "Separate reference dataset"]) assert.ok(html.includes(text), text);
+  for (const text of ["70", "controlled concepts", "Catalogue reference", "Entity categories", "4", "candidate concepts", "Unpublished candidates", "Separate reference dataset"]) assert.ok(html.includes(text), text);
   assert.match(html, /More source fields/);
+  assert.match(html, /class="vh-context vh-schema-reference"[^>]*>[\s\S]*?Entity categories/);
   assert.match(html, /key_action/);
   assert.match(html, /stop_action/);
   assert.match(html, /windchests/);

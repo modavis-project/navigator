@@ -15,6 +15,7 @@ import { KeyboardEvent, MouseEvent, useEffect, useMemo, useState } from "react";
 import { useUiLocale } from "./uiLocale";
 import { LoadingContent } from "./LoadingContent";
 import { DALMATIA_FIRE_PATH } from "./surfaces";
+import { vocabularyReferenceLinks } from "./vocabularyReferenceLinks";
 import "./useCases.css";
 import "./dalmatiaFireUseCase.css";
 
@@ -668,7 +669,9 @@ export function DalmatiaFireUseCase({
         <div>
           <p className="eyebrow">{t("story.fire.boundary", "Interpretation", "Einordnung")}</p>
           <h2 id="fire-limitations-title">{t("story.fire.limitations", "Coverage and limitations", "Datengrundlage und Grenzen der Auswertung")}</h2>
-          <p>{t("story.fire.limitationsLead", "The following limits apply to the data and to the distance-based assessment.", "Die folgenden Einschränkungen betreffen die Datengrundlage und die Auswertung nach Entfernung.")}</p>
+          <p>{t("story.fire.limitationsLead", "The following limits apply to the data and to the distance-based assessment.", "Die folgenden Einschränkungen betreffen die Datengrundlage und die Auswertung nach Entfernung.")}{" "}
+            <a href={vocabularyReferenceLinks.heritageRecognition}>{t("story.fire.heritageVocabulary", "Heritage recognition statuses in the MODAVIS vocabulary", "Status der Anerkennung als Kulturerbe im MODAVIS-Vokabular")}</a>
+          </p>
         </div>
         <ul>
           {artifact.limitations.map((item) => <li key={item}>{locale === "de" ? FIRE_LIMITATIONS_GERMAN[item] ?? item : item}</li>)}

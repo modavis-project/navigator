@@ -6,7 +6,7 @@ counts have different units and must not be added into one concept total.
 | Collection | Meaning | Reading workflow |
 | --- | --- | --- |
 | POD controlled concepts | Terms already governed by the selected POD | Browse a scheme, search its recorded wording, then read definitions, labels and public usage. |
-| Schema categories | Categories used to describe the data model | Read the category separately from controlled concepts. |
+| Catalogue reference | Person and organisation record types in the public schema | Open the corresponding filtered actor catalogue or inspect the schema codes. |
 | Candidate terminology | Existing proposals and field-specific source matching rules | Read the candidate definition, lifecycle, evidence and original rule before following wording usage. |
 | Source wording | Verbatim designations and their public occurrences | Choose a field, search literal wording, inspect source records and qualified organ accounts. |
 | Published references | Independently versioned MODAVIS, VAO and OMARO resources | Browse source concepts or model resources, then retain the source version, rights and original distribution. |
@@ -100,3 +100,54 @@ Each endpoint accepts only its documented route-specific parameters, once each.
 A missing optional reference input remains unavailable rather than substituting
 another collection. These interfaces are read-only and do not edit POD data,
 promote candidate terms or assign reference classifications to organs.
+
+## Independent vocabulary editions
+
+The [MODAVIS vocabulary edition](/vocab/editions/modavis) provides activity and
+person terminology independently of the POD reader. It retains the published
+concept codes and English definitions and adds German activity labels and German
+definitions. The edition downloads have named SKOS schemes, language-tagged
+labels and definitions, version metadata and source attribution. The source POD
+is CC BY 4.0. The edition contains no POD usage counts. The frozen POD vocabulary
+downloads and their checksums continue to identify the original evidence.
+
+The [musiXplora vocabulary edition](/vocab/musixplora) displays the terminology of
+openMusiXplora data edition 1. The publication's source identifiers, spelling,
+aliases and role forms are retained. The edition's rights statement applies to
+its own metadata and descriptive text. Its JSON also retains documented
+crosswalks and editorial links where terminology overlaps. Published exact
+mappings and thematic or contextual relationships have distinct labels. A
+missing reviewed English label falls back to the original label.
+
+Activity autocomplete uses the pinned compact index at
+`/api/vocab/activity-lookup`. Findings distinguish controlled concepts and
+recorded wordings. Editorial English glosses are search aids and leave the
+original event type keys intact. Exact concept evidence uses
+`/events?concept=activitype%3Aorgan-building`; source wording such as Ablehnung
+keeps its original `type` filter. These select event assertions in the active POD.
+
+Short reader routes such as `/vocab/activity-types/concert` share the existing
+concept identity. Legacy reader URLs and pinned citations continue to resolve.
+The term URI and the exact POD evidence URL may be copied separately. The
+edition metadata API lists the versioned downloads and content checksum.
+
+## Pipe-organ specifications and participation
+
+The [pipe-organ specification edition](/vocab/organ-specifications) covers
+actions, windchests, stop designations, division designations and coupler
+functions. Every concept has an English and German definition, a scope note and
+links to documented wording or a technical reference. Links from exact POD
+wording identify the relevant vocabulary concept without replacing the source
+label or changing the underlying POD assertion.
+
+Coupler readings expose the sounding division, playing division, function and
+interval where the retained wording supports those fields. A bare direction
+does not supply an interval. Unordered or unfamiliar labels stay verbatim.
+The original values and their usage exports remain available.
+
+MODAVIS edition 1.1.0 adds participation roles to the person scheme. A role
+belongs to the particular activity where it is documented. Existing person
+occupations, original participant wording and POD identifiers retain their
+meaning. The 1.0.0 vocabulary distributions and their checksum remain
+addressable. Links to musiXplora mark contextual correspondences and retain the
+source vocabulary's separate identity.

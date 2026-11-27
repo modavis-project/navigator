@@ -1,0 +1,103 @@
+.event-type-picker {
+  position: relative;
+  min-width: 0;
+}
+
+.event-type-picker .event-filter-input {
+  gap: 0;
+}
+
+.event-type-picker .event-filter-input button {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  flex: 0 0 2.5rem;
+  margin: 0;
+  border: 0;
+  border-radius: 0 8px 8px 0;
+  background: transparent;
+  color: var(--text, #172522);
+  cursor: pointer;
+}
+
+.event-type-picker .event-filter-input button:hover {
+  background: #edf3ef;
+}
+
+.event-type-popup {
+  position: absolute;
+  z-index: 8;
+  inset: calc(100% + .25rem) auto auto 0;
+  box-sizing: border-box;
+  width: max(100%, min(21rem, 78vw));
+  overflow: hidden;
+  border: 1px solid var(--border, #cfd8df);
+  border-radius: 8px;
+  background: var(--surface, #fff);
+  color: var(--text, #172522);
+  box-shadow: 0 .45rem 1rem rgba(28, 56, 46, .14);
+}
+
+.event-type-popup ul {
+  max-height: min(17rem, 40vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0;
+  padding: .2rem;
+  list-style: none;
+}
+
+.event-type-popup li {
+  display: grid;
+  align-content: center;
+  gap: .06rem;
+  min-height: 2.75rem;
+  padding: .22rem .58rem;
+  border-radius: 5px;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.event-type-popup [aria-selected="true"] {
+  font-weight: 700;
+}
+
+.event-type-popup [data-active="true"],
+.event-type-popup li:hover {
+  background: #e4efe8;
+  color: #173b35;
+}
+
+.event-type-matches {
+  padding: .45rem .72rem;
+  border-top: 1px solid var(--border, #cfd8df);
+}
+
+.event-type-matches, .event-type-popup li small, .event-concept-filter small {
+  color: var(--muted, #526263);
+  font-size: .76rem;
+}
+
+.event-concept-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .05rem .45rem;
+}
+
+.event-concept-filter button {
+  min-height: 2rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--link, #285d53);
+  font: inherit;
+  font-size: .76rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 560px) {
+  .event-type-popup { width: 100%; }
+}

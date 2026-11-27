@@ -17,6 +17,7 @@ function load(name, pathname, search = "") {
     require: id => {
       if (id === "./uiLocale") return load("uiLocale", pathname, search).exports;
       if (id === "./LoadingContent") return { LoadingContent, UpdatingContent };
+      if (id === "./activityVocabularySearch") return { ActivityVocabularyInput: () => null };
       if (id === "./entityExport") return {
         useEntityPageTab: () => ({ activeTab: "overview", selectTab: () => {} }),
         EntityPageTabs: () => null,

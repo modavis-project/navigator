@@ -63,8 +63,10 @@ role; the application additionally starts read-only transactions. No saved
 endpoint, default password or private workspace is needed for default tests.
 
 `python3 scripts/measure_frontend.py` enforces 300 KiB gzip for the largest
-JavaScript file and 616 KiB gzip for the application JavaScript, CSS and HTML,
-including on-demand area pages. The map interaction assets have an 11 KiB
+JavaScript file and 591 KiB gzip for general application JavaScript, CSS and
+HTML, including on-demand area pages. Vocabulary readers, suggestions and the
+event type picker have a separate 38 KiB gzip budget. First-page assets still
+have their 384 KiB gzip budget. The map interaction assets have an 11 KiB
 gzip budget. The standalone public map viewer, including its MapLibre worker,
 has a separate 420 KiB gzip budget. The total includes both groups of assets.
 Gzip uses level 9 and a fixed timestamp for comparable measurements. The

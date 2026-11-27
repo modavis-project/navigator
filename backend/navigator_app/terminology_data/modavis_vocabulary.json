@@ -1,0 +1,1069 @@
+{
+  "version": "1.0.0",
+  "upstreamVersion": "1.6.0",
+  "sourceUrl": "https://doi.org/10.5281/zenodo.22308263",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "Dominik Ukolov, MODAVIS Pipe Organ Dataset (POD) 1.6.0. German activity labels and definitions translated for Navigator.",
+  "schemes": [
+    {
+      "id": "activity-types",
+      "code": "modavis_activity_types",
+      "title": {
+        "en": "MODAVIS activity terminology",
+        "de": "MODAVIS-Terminologie für Tätigkeiten"
+      },
+      "concepts": [
+        {
+          "id": "3d-scanning",
+          "code": "activitype:3d-scanning",
+          "mdvsId": "MDVS:VOCB:PNAB-KAEB-B",
+          "labels": {
+            "en": "3D Scanning",
+            "de": "3D-Scan"
+          },
+          "definition": {
+            "en": "Three-dimensional scanning",
+            "de": "Dreidimensionale Erfassung durch Scannen."
+          }
+        },
+        {
+          "id": "acquisition",
+          "code": "activitype:acquisition",
+          "mdvsId": "MDVS:VOCB:AJKB-TXJ2-2",
+          "labels": {
+            "en": "Acquisition",
+            "de": "Erwerb"
+          },
+          "definition": {
+            "en": "Acquiring new items",
+            "de": "Erwerb neuer Objekte."
+          }
+        },
+        {
+          "id": "archival-research",
+          "code": "activitype:archival-research",
+          "mdvsId": "MDVS:VOCB:3B3V-KB55-5",
+          "labels": {
+            "en": "Archival Research",
+            "de": "Archivrecherche"
+          },
+          "definition": {
+            "en": "Research in archives",
+            "de": "Forschung in Archiven."
+          }
+        },
+        {
+          "id": "cataloging",
+          "code": "activitype:cataloging",
+          "mdvsId": "MDVS:VOCB:7KGD-V71J-J",
+          "labels": {
+            "en": "Cataloging",
+            "de": "Katalogisierung"
+          },
+          "definition": {
+            "en": "Systematic cataloging",
+            "de": "Systematische Erfassung in einem Katalog."
+          }
+        },
+        {
+          "id": "collaboration",
+          "code": "activitype:collaboration",
+          "mdvsId": "MDVS:VOCB:QAPV-XMKQ-Q",
+          "labels": {
+            "en": "Collaboration",
+            "de": "Zusammenarbeit"
+          },
+          "definition": {
+            "en": "Collaborative projects",
+            "de": "Gemeinschaftlich durchgeführte Projekte."
+          }
+        },
+        {
+          "id": "community-event",
+          "code": "activitype:community-event",
+          "mdvsId": "MDVS:VOCB:B032-9H7B-B",
+          "labels": {
+            "en": "Community Event",
+            "de": "Veranstaltung für die örtliche Gemeinschaft"
+          },
+          "definition": {
+            "en": "Community activities",
+            "de": "Aktivitäten der örtlichen Gemeinschaft."
+          }
+        },
+        {
+          "id": "concert",
+          "code": "activitype:concert",
+          "mdvsId": "MDVS:VOCB:SHXH-K3PE-E",
+          "labels": {
+            "en": "Concert",
+            "de": "Konzert"
+          },
+          "definition": {
+            "en": "Public concert or musical event",
+            "de": "Öffentliches Konzert oder öffentliche Musikveranstaltung."
+          },
+          "scopeNote": {
+            "en": "Use for a documented public concert or musical event. Use the more specific Recital concept when the source identifies a solo organ recital. Record a rehearsal or a liturgical service according to its documented purpose.",
+            "de": "Für belegte öffentliche Konzerte oder Musikveranstaltungen. Ist in der Quelle ein Solokonzert für Orgel angegeben, gilt der engere Begriff Orgel-Solokonzert. Proben und Gottesdienste werden nach ihrem belegten Zweck erfasst."
+          }
+        },
+        {
+          "id": "condition-assessment",
+          "code": "activitype:condition-assessment",
+          "mdvsId": "MDVS:VOCB:6V81-XW5N-N",
+          "labels": {
+            "en": "Condition Assessment",
+            "de": "Zustandsbewertung"
+          },
+          "definition": {
+            "en": "Physical condition evaluation",
+            "de": "Beurteilung des materiellen Zustands."
+          }
+        },
+        {
+          "id": "conservation",
+          "code": "activitype:conservation",
+          "mdvsId": "MDVS:VOCB:F9FS-FG12-2",
+          "labels": {
+            "en": "Conservation",
+            "de": "Konservierung"
+          },
+          "definition": {
+            "en": "Professional conservation and preservation",
+            "de": "Fachgerechte Konservierung und Erhaltung."
+          }
+        },
+        {
+          "id": "consultation",
+          "code": "activitype:consultation",
+          "mdvsId": "MDVS:VOCB:J699-WNG6-6",
+          "labels": {
+            "en": "Consultation",
+            "de": "Beratung"
+          },
+          "definition": {
+            "en": "Professional consultation",
+            "de": "Fachliche Beratung."
+          }
+        },
+        {
+          "id": "deaccession",
+          "code": "activitype:deaccession",
+          "mdvsId": "MDVS:VOCB:77NS-PT5N-N",
+          "labels": {
+            "en": "Deaccession",
+            "de": "Aussonderung aus der Sammlung"
+          },
+          "definition": {
+            "en": "Removing from collection",
+            "de": "Entnahme von Objekten aus dem Sammlungsbestand."
+          }
+        },
+        {
+          "id": "deinstallation",
+          "code": "activitype:deinstallation",
+          "mdvsId": "MDVS:VOCB:CN6Y-N1CZ-Z",
+          "labels": {
+            "en": "Deinstallation",
+            "de": "Abbau einer Ausstellung"
+          },
+          "definition": {
+            "en": "Exhibition removal",
+            "de": "Abbau einer Ausstellung."
+          }
+        },
+        {
+          "id": "demonstration",
+          "code": "activitype:demonstration",
+          "mdvsId": "MDVS:VOCB:5VPX-W9SB-B",
+          "labels": {
+            "en": "Demonstration",
+            "de": "Vorführung"
+          },
+          "definition": {
+            "en": "Practical demonstration",
+            "de": "Praktische Vorführung."
+          }
+        },
+        {
+          "id": "digital",
+          "code": "activitype:digital",
+          "mdvsId": "MDVS:VOCB:B74Q-VZQW-W",
+          "labels": {
+            "en": "Digital",
+            "de": "Digitale Aktivitäten"
+          },
+          "definition": {
+            "en": "Digital and media activities",
+            "de": "Aktivitäten im Bereich Digitalisierung und Medien."
+          }
+        },
+        {
+          "id": "digitization",
+          "code": "activitype:digitization",
+          "mdvsId": "MDVS:VOCB:MZZE-6J7Q-Q",
+          "labels": {
+            "en": "Digitization",
+            "de": "Digitalisierung"
+          },
+          "definition": {
+            "en": "Digital capture and archiving",
+            "de": "Digitale Erfassung und Archivierung."
+          }
+        },
+        {
+          "id": "documentation",
+          "code": "activitype:documentation",
+          "mdvsId": "MDVS:VOCB:JXQ3-Q94N-N",
+          "labels": {
+            "en": "Documentation",
+            "de": "Dokumentation"
+          },
+          "definition": {
+            "en": "Recording and documenting heritage",
+            "de": "Erfassung und Dokumentation von Kulturgut."
+          }
+        },
+        {
+          "id": "education",
+          "code": "activitype:education",
+          "mdvsId": "MDVS:VOCB:SMD0-QK1M-M",
+          "labels": {
+            "en": "Education",
+            "de": "Bildung und Unterricht"
+          },
+          "definition": {
+            "en": "Educational programs and teaching",
+            "de": "Bildungsprogramme und Unterricht."
+          }
+        },
+        {
+          "id": "engagement",
+          "code": "activitype:engagement",
+          "mdvsId": "MDVS:VOCB:271H-PG9G-G",
+          "labels": {
+            "en": "Engagement",
+            "de": "Beteiligung der Öffentlichkeit"
+          },
+          "definition": {
+            "en": "Public and community engagement",
+            "de": "Einbindung der Öffentlichkeit und der örtlichen Gemeinschaft."
+          }
+        },
+        {
+          "id": "environmental-monitoring",
+          "code": "activitype:environmental-monitoring",
+          "mdvsId": "MDVS:VOCB:038K-8ZHD-D",
+          "labels": {
+            "en": "Environmental Monitoring",
+            "de": "Überwachung der Umgebungsbedingungen"
+          },
+          "definition": {
+            "en": "Condition monitoring",
+            "de": "Überwachung von Bedingungen in der Umgebung des Objekts."
+          }
+        },
+        {
+          "id": "exhibition",
+          "code": "activitype:exhibition",
+          "mdvsId": "MDVS:VOCB:7BXB-24W7-7",
+          "labels": {
+            "en": "Exhibition",
+            "de": "Ausstellung"
+          },
+          "definition": {
+            "en": "Public exhibition and display",
+            "de": "Öffentliches Ausstellen und Präsentieren."
+          }
+        },
+        {
+          "id": "guided-tour",
+          "code": "activitype:guided-tour",
+          "mdvsId": "MDVS:VOCB:QDW9-Q57M-M",
+          "labels": {
+            "en": "Guided Tour",
+            "de": "Führung"
+          },
+          "definition": {
+            "en": "Guided heritage tour",
+            "de": "Geführte Besichtigung von Kulturgut."
+          }
+        },
+        {
+          "id": "installation",
+          "code": "activitype:installation",
+          "mdvsId": "MDVS:VOCB:XXDM-JBHX-X",
+          "labels": {
+            "en": "Installation",
+            "de": "Ausstellungsaufbau"
+          },
+          "definition": {
+            "en": "Exhibition installation",
+            "de": "Aufbau einer Ausstellung."
+          }
+        },
+        {
+          "id": "interpretation",
+          "code": "activitype:interpretation",
+          "mdvsId": "MDVS:VOCB:DTFX-ZK7W-W",
+          "labels": {
+            "en": "Interpretation",
+            "de": "Vermittlung"
+          },
+          "definition": {
+            "en": "Interpretive materials",
+            "de": "Materialien zur Vermittlung von Kulturgut."
+          }
+        },
+        {
+          "id": "inventory",
+          "code": "activitype:inventory",
+          "mdvsId": "MDVS:VOCB:TM1W-E537-7",
+          "labels": {
+            "en": "Inventory",
+            "de": "Bestandsaufnahme"
+          },
+          "definition": {
+            "en": "Physical inventory",
+            "de": "Bestandsaufnahme der vorhandenen Objekte."
+          }
+        },
+        {
+          "id": "lecture",
+          "code": "activitype:lecture",
+          "mdvsId": "MDVS:VOCB:DVB6-BT5M-M",
+          "labels": {
+            "en": "Lecture",
+            "de": "Vortrag"
+          },
+          "definition": {
+            "en": "Educational presentation",
+            "de": "Vortrag zur Wissensvermittlung."
+          }
+        },
+        {
+          "id": "liturgical-service",
+          "code": "activitype:liturgical-service",
+          "mdvsId": "MDVS:VOCB:86PC-NYMQ-Q",
+          "labels": {
+            "en": "Liturgical Service",
+            "de": "Gottesdienst"
+          },
+          "definition": {
+            "en": "Religious service performance",
+            "de": "Musikalische Mitwirkung an einem Gottesdienst."
+          }
+        },
+        {
+          "id": "loan-incoming",
+          "code": "activitype:loan-incoming",
+          "mdvsId": "MDVS:VOCB:SQA6-3H6K-K",
+          "labels": {
+            "en": "Incoming Loan",
+            "de": "Eingehende Leihe"
+          },
+          "definition": {
+            "en": "Borrowing items",
+            "de": "Entgegennahme von Leihgaben."
+          }
+        },
+        {
+          "id": "loan-outgoing",
+          "code": "activitype:loan-outgoing",
+          "mdvsId": "MDVS:VOCB:J1ZB-VR5Q-Q",
+          "labels": {
+            "en": "Outgoing Loan",
+            "de": "Ausgehende Leihe"
+          },
+          "definition": {
+            "en": "Lending items",
+            "de": "Überlassung von Objekten als Leihgabe."
+          }
+        },
+        {
+          "id": "management",
+          "code": "activitype:management",
+          "mdvsId": "MDVS:VOCB:HW07-CQ68-8",
+          "labels": {
+            "en": "Management",
+            "de": "Verwaltung"
+          },
+          "definition": {
+            "en": "Collection and administrative management",
+            "de": "Sammlungsverwaltung und administrative Tätigkeiten."
+          }
+        },
+        {
+          "id": "masterclass",
+          "code": "activitype:masterclass",
+          "mdvsId": "MDVS:VOCB:B9J2-3AG8-8",
+          "labels": {
+            "en": "Masterclass",
+            "de": "Meisterkurs"
+          },
+          "definition": {
+            "en": "Advanced instruction",
+            "de": "Unterricht für Fortgeschrittene."
+          }
+        },
+        {
+          "id": "measurement",
+          "code": "activitype:measurement",
+          "mdvsId": "MDVS:VOCB:J6SP-KVND-D",
+          "labels": {
+            "en": "Measurement",
+            "de": "Messung"
+          },
+          "definition": {
+            "en": "Technical measurements",
+            "de": "Technische Messungen."
+          }
+        },
+        {
+          "id": "organ-action-work",
+          "code": "activitype:organ-action-work",
+          "mdvsId": "MDVS:VOCB:3DXD-RBJ5-5",
+          "labels": {
+            "en": "Action Work",
+            "de": "Arbeiten an der Traktur"
+          },
+          "definition": {
+            "en": "Mechanical or electrical action repair",
+            "de": "Reparatur der mechanischen oder elektrischen Traktur."
+          }
+        },
+        {
+          "id": "organ-building",
+          "code": "activitype:organ-building",
+          "mdvsId": "MDVS:VOCB:WY12-0TN5-5",
+          "labels": {
+            "en": "Organ Building",
+            "de": "Orgelneubau"
+          },
+          "definition": {
+            "en": "Construction of new pipe organs",
+            "de": "Bau neuer Pfeifenorgeln."
+          }
+        },
+        {
+          "id": "organ-cleaning",
+          "code": "activitype:organ-cleaning",
+          "mdvsId": "MDVS:VOCB:39V2-7SAJ-J",
+          "labels": {
+            "en": "Organ Cleaning",
+            "de": "Orgelreinigung"
+          },
+          "definition": {
+            "en": "Cleaning of pipes and mechanisms",
+            "de": "Reinigung von Pfeifen und der Mechanik."
+          }
+        },
+        {
+          "id": "organ-conservation",
+          "code": "activitype:organ-conservation",
+          "mdvsId": "MDVS:VOCB:E1TE-W6WE-E",
+          "labels": {
+            "en": "Organ Conservation",
+            "de": "Orgelkonservierung"
+          },
+          "definition": {
+            "en": "Preservation of original materials",
+            "de": "Erhaltung der Originalsubstanz einer Orgel."
+          }
+        },
+        {
+          "id": "organ-console-work",
+          "code": "activitype:organ-console-work",
+          "mdvsId": "MDVS:VOCB:55NH-ZAHE-E",
+          "labels": {
+            "en": "Console Work",
+            "de": "Arbeiten am Spieltisch"
+          },
+          "definition": {
+            "en": "Console maintenance and repair",
+            "de": "Wartung und Reparatur des Spieltischs."
+          }
+        },
+        {
+          "id": "organ-dismantling",
+          "code": "activitype:organ-dismantling",
+          "mdvsId": "MDVS:VOCB:8J27-51HF-F",
+          "labels": {
+            "en": "Organ Dismantling",
+            "de": "Orgelabbau"
+          },
+          "definition": {
+            "en": "Careful disassembly for relocation",
+            "de": "Sorgfältiger Abbau einer Orgel zur Versetzung."
+          }
+        },
+        {
+          "id": "organ-inspection",
+          "code": "activitype:organ-inspection",
+          "mdvsId": "MDVS:VOCB:DSTP-DE4F-F",
+          "labels": {
+            "en": "Organ Inspection",
+            "de": "Orgelinspektion"
+          },
+          "definition": {
+            "en": "Technical assessment and evaluation",
+            "de": "Technische Untersuchung und Bewertung einer Orgel."
+          }
+        },
+        {
+          "id": "organ-installation",
+          "code": "activitype:organ-installation",
+          "mdvsId": "MDVS:VOCB:EJJK-VFN5-5",
+          "labels": {
+            "en": "Organ Installation",
+            "de": "Orgelaufbau"
+          },
+          "definition": {
+            "en": "Installation of new or relocated organs",
+            "de": "Aufbau neuer oder versetzter Orgeln."
+          }
+        },
+        {
+          "id": "organ-maintenance",
+          "code": "activitype:organ-maintenance",
+          "mdvsId": "MDVS:VOCB:JKE8-1MNM-M",
+          "labels": {
+            "en": "Organ Maintenance",
+            "de": "Orgelwartung"
+          },
+          "definition": {
+            "en": "Routine upkeep and preventive care",
+            "de": "Regelmäßige Pflege und vorbeugende Wartung."
+          }
+        },
+        {
+          "id": "organ-regulation",
+          "code": "activitype:organ-regulation",
+          "mdvsId": "MDVS:VOCB:46K6-4K51-1",
+          "labels": {
+            "en": "Organ Regulation",
+            "de": "Regulierung der Traktur"
+          },
+          "definition": {
+            "en": "Adjustment of mechanical action",
+            "de": "Justierung der mechanischen Traktur."
+          }
+        },
+        {
+          "id": "organ-repair",
+          "code": "activitype:organ-repair",
+          "mdvsId": "MDVS:VOCB:1BRD-ZZCJ-J",
+          "labels": {
+            "en": "Organ Repair",
+            "de": "Orgelreparatur"
+          },
+          "definition": {
+            "en": "Fixing damaged components",
+            "de": "Instandsetzung beschädigter Bauteile."
+          }
+        },
+        {
+          "id": "organ-restoration",
+          "code": "activitype:organ-restoration",
+          "mdvsId": "MDVS:VOCB:0QGR-3W6B-B",
+          "labels": {
+            "en": "Organ Restoration",
+            "de": "Orgelrestaurierung"
+          },
+          "definition": {
+            "en": "Complete historical restoration",
+            "de": "Umfassende Restaurierung einer historischen Orgel."
+          }
+        },
+        {
+          "id": "organ-tuning",
+          "code": "activitype:organ-tuning",
+          "mdvsId": "MDVS:VOCB:RC3P-W9AY-Y",
+          "labels": {
+            "en": "Organ Tuning",
+            "de": "Orgelstimmung"
+          },
+          "definition": {
+            "en": "Adjustment of pitch and intonation",
+            "de": "Einstellung der Tonhöhe und des Stimmungssystems."
+          }
+        },
+        {
+          "id": "organ-voicing",
+          "code": "activitype:organ-voicing",
+          "mdvsId": "MDVS:VOCB:9900-J7WB-B",
+          "labels": {
+            "en": "Organ Voicing",
+            "de": "Orgelintonation"
+          },
+          "definition": {
+            "en": "Adjustment of tonal quality",
+            "de": "Bearbeitung des Klangs der Orgelpfeifen."
+          }
+        },
+        {
+          "id": "organ-wind-system",
+          "code": "activitype:organ-wind-system",
+          "mdvsId": "MDVS:VOCB:5442-HSRK-K",
+          "labels": {
+            "en": "Wind System Service",
+            "de": "Wartung der Windversorgung"
+          },
+          "definition": {
+            "en": "Bellows and wind supply maintenance",
+            "de": "Wartung der Bälge und der Windversorgung."
+          }
+        },
+        {
+          "id": "organ-work",
+          "code": "activitype:organ-work",
+          "mdvsId": "MDVS:VOCB:6V7S-XWVA-A",
+          "labels": {
+            "en": "Organ Work",
+            "de": "Arbeiten an einer Orgel"
+          },
+          "definition": {
+            "en": "Activities specific to pipe organs",
+            "de": "Tätigkeiten, die sich auf Pfeifenorgeln beziehen."
+          }
+        },
+        {
+          "id": "other",
+          "code": "activitype:other",
+          "mdvsId": "MDVS:VOCB:HX5F-K5EC-C",
+          "labels": {
+            "en": "Other",
+            "de": "Sonstige Tätigkeit"
+          },
+          "definition": {
+            "en": "Other activities",
+            "de": "Sonstige Tätigkeiten."
+          }
+        },
+        {
+          "id": "outreach",
+          "code": "activitype:outreach",
+          "mdvsId": "MDVS:VOCB:06DE-JKNB-B",
+          "labels": {
+            "en": "Outreach",
+            "de": "Öffentlichkeitsarbeit"
+          },
+          "definition": {
+            "en": "Community outreach",
+            "de": "Angebote und Aktivitäten für die örtliche Gemeinschaft."
+          }
+        },
+        {
+          "id": "performance",
+          "code": "activitype:performance",
+          "mdvsId": "MDVS:VOCB:YZYX-RP70-0",
+          "labels": {
+            "en": "Performance",
+            "de": "Musikalische Aufführung"
+          },
+          "definition": {
+            "en": "Musical performance and events",
+            "de": "Musikalische Aufführungen und Veranstaltungen."
+          }
+        },
+        {
+          "id": "pest-management",
+          "code": "activitype:pest-management",
+          "mdvsId": "MDVS:VOCB:GP8B-72DX-X",
+          "labels": {
+            "en": "Pest Management",
+            "de": "Schädlingsmanagement"
+          },
+          "definition": {
+            "en": "Pest detection and control",
+            "de": "Erkennung und Bekämpfung von Schädlingen."
+          }
+        },
+        {
+          "id": "photography",
+          "code": "activitype:photography",
+          "mdvsId": "MDVS:VOCB:C666-3GAX-X",
+          "labels": {
+            "en": "Photography",
+            "de": "Fotografie"
+          },
+          "definition": {
+            "en": "Photographic documentation",
+            "de": "Fotografische Dokumentation."
+          }
+        },
+        {
+          "id": "planning",
+          "code": "activitype:planning",
+          "mdvsId": "MDVS:VOCB:WT8E-KSR3-3",
+          "labels": {
+            "en": "Planning",
+            "de": "Planung"
+          },
+          "definition": {
+            "en": "Project planning",
+            "de": "Planung von Projekten."
+          }
+        },
+        {
+          "id": "preservation",
+          "code": "activitype:preservation",
+          "mdvsId": "MDVS:VOCB:89E4-TY8T-T",
+          "labels": {
+            "en": "Preservation",
+            "de": "Langzeiterhaltung"
+          },
+          "definition": {
+            "en": "Long-term preservation",
+            "de": "Langfristige Erhaltung."
+          }
+        },
+        {
+          "id": "preventive-conservation",
+          "code": "activitype:preventive-conservation",
+          "mdvsId": "MDVS:VOCB:REYE-B2QP-P",
+          "labels": {
+            "en": "Preventive Conservation",
+            "de": "Präventive Konservierung"
+          },
+          "definition": {
+            "en": "Preventive measures",
+            "de": "Vorbeugende Maßnahmen zur Erhaltung."
+          }
+        },
+        {
+          "id": "provenance-research",
+          "code": "activitype:provenance-research",
+          "mdvsId": "MDVS:VOCB:DV2A-C71C-C",
+          "labels": {
+            "en": "Provenance Research",
+            "de": "Provenienzforschung"
+          },
+          "definition": {
+            "en": "Ownership history investigation",
+            "de": "Erforschung der Besitzgeschichte."
+          }
+        },
+        {
+          "id": "public-access",
+          "code": "activitype:public-access",
+          "mdvsId": "MDVS:VOCB:VF5N-F4ZC-C",
+          "labels": {
+            "en": "Public Access",
+            "de": "Öffentliche Zugänglichkeit"
+          },
+          "definition": {
+            "en": "General public access",
+            "de": "Allgemeiner Zugang für die Öffentlichkeit."
+          }
+        },
+        {
+          "id": "publication",
+          "code": "activitype:publication",
+          "mdvsId": "MDVS:VOCB:XF0D-MMMK-K",
+          "labels": {
+            "en": "Publication",
+            "de": "Publikation"
+          },
+          "definition": {
+            "en": "Research publications",
+            "de": "Veröffentlichungen aus der Forschung."
+          }
+        },
+        {
+          "id": "recital",
+          "code": "activitype:recital",
+          "mdvsId": "MDVS:VOCB:Y8AV-9J39-9",
+          "labels": {
+            "en": "Recital",
+            "de": "Orgel-Solokonzert"
+          },
+          "definition": {
+            "en": "Solo organ recital",
+            "de": "Konzert für Orgel solo."
+          }
+        },
+        {
+          "id": "recording-session",
+          "code": "activitype:recording-session",
+          "mdvsId": "MDVS:VOCB:19KX-MHFN-N",
+          "labels": {
+            "en": "Recording Session",
+            "de": "Aufnahmetermin"
+          },
+          "definition": {
+            "en": "Professional audio/video recording",
+            "de": "Professionelle Ton- oder Videoaufnahme."
+          }
+        },
+        {
+          "id": "rehearsal",
+          "code": "activitype:rehearsal",
+          "mdvsId": "MDVS:VOCB:R7JZ-11AN-N",
+          "labels": {
+            "en": "Rehearsal",
+            "de": "Probe"
+          },
+          "definition": {
+            "en": "Practice session",
+            "de": "Zusammenkunft zum Proben."
+          }
+        },
+        {
+          "id": "relocation",
+          "code": "activitype:relocation",
+          "mdvsId": "MDVS:VOCB:GK47-WDWK-K",
+          "labels": {
+            "en": "Relocation",
+            "de": "Versetzung"
+          },
+          "definition": {
+            "en": "Physical relocation",
+            "de": "Verlegung an einen anderen Standort."
+          }
+        },
+        {
+          "id": "research",
+          "code": "activitype:research",
+          "mdvsId": "MDVS:VOCB:AY2C-S5YG-G",
+          "labels": {
+            "en": "Research",
+            "de": "Forschung"
+          },
+          "definition": {
+            "en": "Academic or technical research",
+            "de": "Wissenschaftliche oder technische Forschung."
+          }
+        },
+        {
+          "id": "scientific-analysis",
+          "code": "activitype:scientific-analysis",
+          "mdvsId": "MDVS:VOCB:7SQ1-63VV-V",
+          "labels": {
+            "en": "Scientific Analysis",
+            "de": "Wissenschaftliche Analyse"
+          },
+          "definition": {
+            "en": "Scientific testing",
+            "de": "Wissenschaftliche Untersuchungen."
+          }
+        },
+        {
+          "id": "stabilization",
+          "code": "activitype:stabilization",
+          "mdvsId": "MDVS:VOCB:PRZ8-1NS4-4",
+          "labels": {
+            "en": "Stabilization",
+            "de": "Notstabilisierung"
+          },
+          "definition": {
+            "en": "Emergency stabilization",
+            "de": "Sofortmaßnahmen zur Stabilisierung."
+          }
+        },
+        {
+          "id": "treatment",
+          "code": "activitype:treatment",
+          "mdvsId": "MDVS:VOCB:3S84-09M0-0",
+          "labels": {
+            "en": "Treatment",
+            "de": "Konservatorische Behandlung"
+          },
+          "definition": {
+            "en": "Conservation treatment",
+            "de": "Konservatorische Behandlung eines Objekts."
+          }
+        },
+        {
+          "id": "valuation",
+          "code": "activitype:valuation",
+          "mdvsId": "MDVS:VOCB:VT3N-TBR9-9",
+          "labels": {
+            "en": "Valuation",
+            "de": "Wertermittlung"
+          },
+          "definition": {
+            "en": "Value assessment",
+            "de": "Ermittlung des Werts eines Objekts."
+          }
+        },
+        {
+          "id": "virtual-tour",
+          "code": "activitype:virtual-tour",
+          "mdvsId": "MDVS:VOCB:13TP-846H-H",
+          "labels": {
+            "en": "Virtual Tour",
+            "de": "Virtueller Rundgang"
+          },
+          "definition": {
+            "en": "Digital or virtual tours",
+            "de": "Digitaler oder virtueller Rundgang."
+          }
+        },
+        {
+          "id": "website-update",
+          "code": "activitype:website-update",
+          "mdvsId": "MDVS:VOCB:7D79-65ZV-V",
+          "labels": {
+            "en": "Website Update",
+            "de": "Aktualisierung einer Website"
+          },
+          "definition": {
+            "en": "Digital platform updates",
+            "de": "Aktualisierung digitaler Plattformen."
+          }
+        },
+        {
+          "id": "workshop",
+          "code": "activitype:workshop",
+          "mdvsId": "MDVS:VOCB:JERW-AYJE-E",
+          "labels": {
+            "en": "Workshop",
+            "de": "Workshop"
+          },
+          "definition": {
+            "en": "Educational workshop or training",
+            "de": "Workshop zur Wissensvermittlung oder Schulung."
+          }
+        }
+      ]
+    },
+    {
+      "id": "person-terms",
+      "code": "modavis_person_terminology",
+      "title": {
+        "en": "MODAVIS person terminology",
+        "de": "MODAVIS-Terminologie für Personen"
+      },
+      "concepts": [
+        {
+          "id": "activity-role.builder",
+          "code": "activity_role.builder",
+          "mdvsId": "MDVS:VOCB:GYNE-SB4N-N",
+          "labels": {
+            "de": "Erbauer",
+            "en": "Builder"
+          },
+          "definition": {
+            "en": "A role in a specific construction or production activity.",
+            "de": "Rolle innerhalb eines konkreten Bau- oder Herstellungsprozesses."
+          }
+        },
+        {
+          "id": "field.instrument-making",
+          "code": "field.instrument_making",
+          "mdvsId": "MDVS:VOCB:HTSY-YYWP-P",
+          "labels": {
+            "de": "Instrumentenbau",
+            "en": "Instrument making"
+          },
+          "definition": {
+            "en": "A field or sector concerned with making musical instruments; not itself a personal occupation statement.",
+            "de": "Fach- oder Tätigkeitsbereich der Herstellung von Musikinstrumenten. Die Bezeichnung gibt für sich genommen keinen Beruf einer Person an."
+          }
+        },
+        {
+          "id": "field.organ-building",
+          "code": "field.organ_building",
+          "mdvsId": "MDVS:VOCB:SX5Z-MQ3M-M",
+          "labels": {
+            "de": "Orgelbau",
+            "en": "Organ building"
+          },
+          "definition": {
+            "en": "The field or craft of building pipe organs.",
+            "de": "Fachgebiet oder Handwerk des Baus von Pfeifenorgeln."
+          }
+        },
+        {
+          "id": "institutional-context.church",
+          "code": "institutional_context.church",
+          "mdvsId": "MDVS:VOCB:SGT7-KWNS-S",
+          "labels": {
+            "de": "Kirche",
+            "en": "Church"
+          },
+          "definition": {
+            "en": "A church or ecclesiastical context.",
+            "de": "Kirche oder kirchliches Umfeld."
+          }
+        },
+        {
+          "id": "institutional-context.court",
+          "code": "institutional_context.court",
+          "mdvsId": "MDVS:VOCB:XKSX-40T8-8",
+          "labels": {
+            "de": "Hof",
+            "en": "Court"
+          },
+          "definition": {
+            "en": "A princely, royal, or noble court as a social and institutional context.",
+            "de": "Fürstlicher, königlicher oder adeliger Hof als soziales und institutionelles Umfeld."
+          }
+        },
+        {
+          "id": "occupation.harpsichord-maker",
+          "code": "occupation.harpsichord_maker",
+          "mdvsId": "MDVS:VOCB:K2JG-5A76-6",
+          "labels": {
+            "de": "Cembalobauer",
+            "en": "Harpsichord maker"
+          },
+          "definition": {
+            "en": "A person or workshop professionally engaged in building harpsichords.",
+            "de": "Person oder Werkstatt, die beruflich Cembali baut."
+          }
+        },
+        {
+          "id": "occupation.organ-builder",
+          "code": "occupation.organ_builder",
+          "mdvsId": "MDVS:VOCB:0VRY-TAQM-M",
+          "labels": {
+            "de": "Orgelbauer",
+            "en": "Organ builder"
+          },
+          "definition": {
+            "en": "A person or workshop professionally engaged in building pipe organs.",
+            "de": "Person oder Werkstatt, die beruflich Pfeifenorgeln baut."
+          }
+        },
+        {
+          "id": "occupation.organ-expert",
+          "code": "occupation.organ_expert",
+          "mdvsId": "MDVS:VOCB:PM3F-2AES-S",
+          "labels": {
+            "de": "Orgelsachverständiger",
+            "en": "Organ expert"
+          },
+          "definition": {
+            "en": "A person acting as an expert or consultant for pipe organs.",
+            "de": "Person, die als Sachverständige oder beratend für Pfeifenorgeln tätig ist."
+          }
+        },
+        {
+          "id": "occupation.piano-maker",
+          "code": "occupation.piano_maker",
+          "mdvsId": "MDVS:VOCB:KHKQ-1NPW-W",
+          "labels": {
+            "de": "Klavierbauer",
+            "en": "Piano maker"
+          },
+          "definition": {
+            "en": "A person or workshop professionally engaged in building pianos.",
+            "de": "Person oder Werkstatt, die beruflich Klaviere baut."
+          }
+        }
+      ]
+    }
+  ],
+  "history": [
+    {
+      "version": "1.0.0",
+      "changes": {
+        "en": "First independent edition of the two POD 1.6.0 schemes, with new German activity labels and German definitions.",
+        "de": "Erste eigenständige Ausgabe der beiden Vokabulare aus dem POD 1.6.0 mit neuen deutschen Tätigkeitsbezeichnungen und deutschen Definitionen."
+      }
+    }
+  ]
+}

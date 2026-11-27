@@ -401,9 +401,11 @@ export function DescriptionHistory({
 export function OrganSpecificationDescriptions({
   organ,
   components,
+  tuningEvidence,
 }: {
   organ: OrganDetail;
   components: ReactNode;
+  tuningEvidence: ReactNode;
 }) {
   const { t } = useUiLocale();
   const organId = organ.id;
@@ -1024,6 +1026,7 @@ export function OrganSpecificationDescriptions({
           </div>
         </div>
       )}
+      {view === "descriptions" && tuningEvidence}
       <dialog
         className="description-dialog"
         ref={dialog}

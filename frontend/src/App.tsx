@@ -16689,6 +16689,7 @@ function OrganPage({
         <OrganSectionState state={sectionLoads.specification} section="specification" onRetry={() => onSectionRetry("specification")}>
           {hasSpecificationDescriptions(organ) ? <OrganSpecificationDescriptions
             organ={organ}
+            tuningEvidence={<OrganTuningEvidencePanel organ={organ} />}
             components={<SpecificationTab
               actorId={actorId}
               organ={organ}
@@ -17460,7 +17461,7 @@ function OrganTuningEvidencePanel({ organ }: { organ: OrganDetail }) {
     <section className="organ-tuning-evidence" aria-labelledby="organ-tuning-title">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">{t("organ.tuning.title", "Tuning evidence", "Belege zur Stimmung")}</p>
+          <p className="eyebrow">{t("organ.tuning.scope", "Tuning evidence across source accounts", "Belege zur Stimmung aus allen Quellenbeschreibungen")}</p>
           <h3 id="organ-tuning-title">{t("organ.tuning.heading", "Pitch standard and temperament", "Stimmtonhöhe und Stimmung")}</h3>
         </div>
         <span>{t("organ.tuning.qualified", "Source-qualified", "Mit Quellenbezug")}</span>

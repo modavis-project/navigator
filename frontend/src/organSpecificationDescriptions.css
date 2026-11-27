@@ -1,6 +1,9 @@
 .specification-workspace {
   scroll-margin-top: 88px;
 }
+.specification-workspace > .organ-tuning-evidence {
+  margin: 0 24px 24px;
+}
 .specification-view-switch {
   display: flex;
   flex-wrap: wrap;
@@ -1094,6 +1097,9 @@
   }
 }
 @media (max-width: 850px) {
+  .specification-workspace > .organ-tuning-evidence {
+    margin: 0 18px 18px;
+  }
   .organ-descriptions {
     display: block;
     margin-top: 0;

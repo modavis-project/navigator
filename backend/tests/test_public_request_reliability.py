@@ -103,7 +103,7 @@ def test_deadline_is_consumed_across_statements_and_connection_wait(monkeypatch)
     monkeypatch.setattr(db, "_pool", lambda settings: Pool())
     token = db.query_deadline.set(110.0)
     try:
-        with db.connect(None) as conn:
+        with db.connect(db.Settings()) as conn:
             conn.execute("SELECT first_read")
             now[0] += 5
             conn.execute("SELECT second_read")
@@ -147,13 +147,17 @@ def test_transient_read_closes_connection_and_restores_pool_on_failure(monkeypat
 
     monkeypatch.setattr(db.psycopg, "connect", direct_connection)
     monkeypatch.setattr(db, "_pool", lambda settings: SimpleNamespace(connection=pooled_connection))
-    settings = SimpleNamespace(db_dsn="fixture")
+    settings = SimpleNamespace(db_dsn="fixture", db_pool_max_size=8)
     with pytest.raises(RuntimeError, match="fixture failure"):
         with db.transient_read_connections(), db.connect(settings):
             raise RuntimeError("fixture failure")
     with db.connect(settings):
         pass
     assert events == ["direct", "read only", "closed", "pool", "read only"]
+    events.clear()
+    with db.connect(SimpleNamespace(db_dsn="fixture", db_pool_max_size=0)):
+        pass
+    assert events == ["direct", "read only", "closed"]
 
 
 def test_sqlite_read_cancels_under_inherited_budget():
